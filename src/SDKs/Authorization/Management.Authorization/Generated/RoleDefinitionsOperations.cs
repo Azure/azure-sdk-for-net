@@ -8,27 +8,29 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Net;
+	using System.Net.Http;
+	using System.Net.Http.Headers;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
-    using Models;
+    using Microsoft.Rest.Azure.OData;
+	using Microsoft.Rest.Serialization;
+	using Models;
+    using Newtonsoft.Json;
 
-    /// <summary>
-    /// RoleDefinitionsOperations operations.
-    /// </summary>
-    internal partial class RoleDefinitionsOperations : IServiceOperations<AuthorizationManagementClient>, IRoleDefinitionsOperations
+	/// <summary>
+	/// RoleDefinitionsOperations operations.
+	/// </summary>
+	internal partial class RoleDefinitionsOperations : IServiceOperations<AuthorizationManagementClient>, IRoleDefinitionsOperations
     {
         /// <summary>
         /// Initializes a new instance of the RoleDefinitionsOperations class.
@@ -38,11 +40,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         internal RoleDefinitionsOperations(AuthorizationManagementClient client)
         {
-            if (client == null) 
+            if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
-            this.Client = client;
+            Client = client;
         }
 
         /// <summary>
@@ -51,13 +53,13 @@ namespace Microsoft.Azure.Management.Authorization
         public AuthorizationManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Deletes the role definition.
+        /// Deletes a role definition.
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Role definition id.
+        /// The ID of the role definition to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -65,6 +67,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<RoleDefinition>> DeleteWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
@@ -79,12 +93,12 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+			if (this.Client.SubscriptionId == null)
+			{
+				throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+			}
+			// Tracing
+			bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
@@ -100,7 +114,6 @@ namespace Microsoft.Azure.Management.Authorization
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}").ToString();
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{roleDefinitionId}", Uri.EscapeDataString(roleDefinitionId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -108,10 +121,10 @@ namespace Microsoft.Azure.Management.Authorization
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new Uri(_url);
@@ -233,10 +246,10 @@ namespace Microsoft.Azure.Management.Authorization
         /// Get role definition by name (GUID).
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Role definition Id
+        /// The ID of the role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -244,6 +257,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<RoleDefinition>> GetWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
@@ -258,12 +283,12 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+			if (this.Client.SubscriptionId == null)
+			{
+				throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+			}
+			// Tracing
+			bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
@@ -279,18 +304,18 @@ namespace Microsoft.Azure.Management.Authorization
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}").ToString();
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{roleDefinitionId}", Uri.EscapeDataString(roleDefinitionId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
+			_url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+			List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
@@ -412,13 +437,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// Creates or updates a role definition.
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Role definition id.
+        /// The ID of the role definition.
         /// </param>
         /// <param name='roleDefinition'>
-        /// Role definition.
+        /// The values for the role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -426,6 +451,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<RoleDefinition>> CreateOrUpdateWithHttpMessagesAsync(string scope, string roleDefinitionId, RoleDefinition roleDefinition, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
@@ -444,12 +481,12 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+			if (this.Client.SubscriptionId == null)
+			{
+				throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+			}
+			// Tracing
+			bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
@@ -466,18 +503,18 @@ namespace Microsoft.Azure.Management.Authorization
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}").ToString();
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{roleDefinitionId}", Uri.EscapeDataString(roleDefinitionId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
+			_url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+			List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new Uri(_url);
@@ -508,9 +545,12 @@ namespace Microsoft.Azure.Management.Authorization
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(roleDefinition, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(roleDefinition != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(roleDefinition, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -599,10 +639,10 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get role definition by name (GUID).
+        /// Gets a role definition by ID.
         /// </summary>
         /// <param name='roleDefinitionId'>
-        /// Fully qualified role definition Id
+        /// The fully qualified role definition ID to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -610,6 +650,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<RoleDefinition>> GetByIdWithHttpMessagesAsync(string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (roleDefinitionId == null)
@@ -620,12 +672,12 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+			if (this.Client.SubscriptionId == null)
+			{
+				throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+			}
+			// Tracing
+			bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
@@ -639,18 +691,18 @@ namespace Microsoft.Azure.Management.Authorization
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleDefinitionId}").ToString();
             _url = _url.Replace("{roleDefinitionId}", roleDefinitionId);
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
+			_url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+			List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
@@ -769,11 +821,10 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get all role definitions that are applicable at scope and above. Use
-        /// atScopeAndBelow filter to search below the given scope as well
+        /// Get all role definitions that are applicable at scope and above.
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -784,6 +835,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(string scope, ODataQuery<RoleDefinitionFilter> odataQuery = default(ODataQuery<RoleDefinitionFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
@@ -794,12 +857,12 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+			if (this.Client.SubscriptionId == null)
+			{
+				throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+			}
+			// Tracing
+			bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
@@ -814,12 +877,12 @@ namespace Microsoft.Azure.Management.Authorization
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Authorization/roleDefinitions").ToString();
             _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
+			_url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+			List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
             {
                 var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
+                if (!string.IsNullOrEmpty(_odataFilter))
                 {
                     _queryParameters.Add(_odataFilter);
                 }
@@ -830,10 +893,10 @@ namespace Microsoft.Azure.Management.Authorization
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
@@ -952,8 +1015,7 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Get all role definitions that are applicable at scope and above. Use
-        /// atScopeAndBelow filter to search below the given scope as well
+        /// Get all role definitions that are applicable at scope and above.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -964,6 +1026,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<RoleDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
@@ -987,10 +1061,10 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);

@@ -8,42 +8,49 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Threading;
+	using System.Threading.Tasks;
+
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    
 
+    /// <summary>
+    /// Extension methods for ClassicAdministratorsOperations.
+    /// </summary>
     public static partial class ClassicAdministratorsOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of classic administrators for the subscription.
+            /// Gets service administrator, account administrator, and co-administrators for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='apiVersion'>
+            /// The API version to use for this operation.
             /// </param>
             public static IPage<ClassicAdministrator> List(this IClassicAdministratorsOperations operations, string apiVersion)
             {
-                return Task.Factory.StartNew(s => ((IClassicAdministratorsOperations)s).ListAsync(apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListAsync(apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of classic administrators for the subscription.
+            /// Gets service administrator, account administrator, and co-administrators for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='apiVersion'>
+            /// The API version to use for this operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ClassicAdministrator>> ListAsync( this IClassicAdministratorsOperations operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ClassicAdministrator>> ListAsync(this IClassicAdministratorsOperations operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -52,7 +59,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Gets a list of classic administrators for the subscription.
+            /// Gets service administrator, account administrator, and co-administrators for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,11 +69,11 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static IPage<ClassicAdministrator> ListNext(this IClassicAdministratorsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IClassicAdministratorsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of classic administrators for the subscription.
+            /// Gets service administrator, account administrator, and co-administrators for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,7 +84,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ClassicAdministrator>> ListNextAsync( this IClassicAdministratorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ClassicAdministrator>> ListNextAsync(this IClassicAdministratorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
