@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Devices.Fluent
     using Microsoft.Azure.Management.Devices;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class DevicesManager : Manager<IIotHubClient>, IDevicesManager
+    public class DevicesManager : Manager<IIotHubClient>, IDevicesManager, IBeta
     {
         #region ctrs
         private DevicesManager(RestClient restClient, string subscriptionId) :

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AnalysisServices.Fluent
     using Microsoft.Azure.Management.AnalysisServices;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class AnalysisServicesManager : Manager<IAnalysisServicesManagementClient>, IAnalysisServicesManager
+    public class AnalysisServicesManager : Manager<IAnalysisServicesManagementClient>, IAnalysisServicesManager, IBeta
     {
         #region ctrs
         private AnalysisServicesManager(RestClient restClient, string subscriptionId) :

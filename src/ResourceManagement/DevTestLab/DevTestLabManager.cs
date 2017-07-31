@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
     using Microsoft.Azure.Management.DevTestLab;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class DevTestLabManager : Manager<IDevTestLabsClient>, IDevTestLabManager
+    public class DevTestLabManager : Manager<IDevTestLabsClient>, IDevTestLabManager, IBeta
     {
         #region ctrs
         private DevTestLabManager(RestClient restClient, string subscriptionId) :

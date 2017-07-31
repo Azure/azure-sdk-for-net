@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Fluent
     using Microsoft.Azure.Management.CognitiveServices;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class CognitiveServicesManager : Manager<ICognitiveServicesManagementClient>, ICognitiveServicesManager
+    public class CognitiveServicesManager : Manager<ICognitiveServicesManagementClient>, ICognitiveServicesManager, IBeta
     {
         #region ctrs
         private CognitiveServicesManager(RestClient restClient, string subscriptionId) :

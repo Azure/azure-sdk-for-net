@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
     using Microsoft.Azure.Management.NotificationHubs;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class NotificationHubsManager : Manager<INotificationHubsManagementClient>, INotificationHubsManager
+    public class NotificationHubsManager : Manager<INotificationHubsManagementClient>, INotificationHubsManager, IBeta
     {
         #region ctrs
         private NotificationHubsManager(RestClient restClient, string subscriptionId) :

@@ -14,7 +14,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Monitor.Fluent
 {
-    public class MonitorManager : Manager<IMonitorManagementClient>, IMonitorManager
+    public class MonitorManager : Manager<IMonitorManagementClient>, IMonitorManager, IBeta
     {
         public IMonitorClient InnerEx { get; }
         

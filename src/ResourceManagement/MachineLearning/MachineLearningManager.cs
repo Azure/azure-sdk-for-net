@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
     using Microsoft.Azure.Management.MachineLearning;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class MachineLearningManager : Manager<IAzureMLWebServicesManagementClient>, IMachineLearningManager
+    public class MachineLearningManager : Manager<IAzureMLWebServicesManagementClient>, IMachineLearningManager, IBeta
     {
         #region ctrs
         private MachineLearningManager(RestClient restClient, string subscriptionId) :

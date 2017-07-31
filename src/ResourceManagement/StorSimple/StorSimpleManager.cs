@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.StorSimple;
-    public class StorSimpleManager : Manager<IStorSimple8000SeriesManagementClient>, IStorSimpleManager
+    public class StorSimpleManager : Manager<IStorSimple8000SeriesManagementClient>, IStorSimpleManager, IBeta
     {
         #region ctrs
         private StorSimpleManager(RestClient restClient, string subscriptionId) :

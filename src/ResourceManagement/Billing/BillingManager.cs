@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Fluent
     using Microsoft.Azure.Management.Billing;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class BillingManager : Manager<IBillingManagementClient>, IBillingManager
+    public class BillingManager : Manager<IBillingManagementClient>, IBillingManager, IBeta
     {
         #region ctrs
         private BillingManager(RestClient restClient, string subscriptionId) :

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Consumption.Fluent
     using Microsoft.Azure.Management.Consumption;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class ConsumptionManager : Manager<IConsumptionManagementClient>, IConsumptionManager
+    public class ConsumptionManager : Manager<IConsumptionManagementClient>, IConsumptionManager, IBeta
     {
         #region ctrs
         private ConsumptionManager(RestClient restClient, string subscriptionId) :

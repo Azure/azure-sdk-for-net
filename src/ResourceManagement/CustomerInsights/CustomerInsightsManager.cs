@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
     using Microsoft.Azure.Management.CustomerInsights;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class CustomerInsightsManager : Manager<ICustomerInsightsManagementClient>, ICustomerInsightsManager
+    public class CustomerInsightsManager : Manager<ICustomerInsightsManagementClient>, ICustomerInsightsManager, IBeta
     {
         #region ctrs
         private CustomerInsightsManager(RestClient restClient, string subscriptionId) :

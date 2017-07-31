@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class EventHubManager : Manager<IEventHubManagementClient>, IEventHubManager
+    public class EventHubManager : Manager<IEventHubManagementClient>, IEventHubManager, IBeta
     {
         #region ctrs
         private EventHubManager(RestClient restClient, string subscriptionId) :

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ServiceFabric;
-    public class ServiceFabricManager : Manager<IServiceFabricManagementClient>, IServiceFabricManager
+    public class ServiceFabricManager : Manager<IServiceFabricManagementClient>, IServiceFabricManager, IBeta
     {
         #region ctrs
         private ServiceFabricManager(RestClient restClient, string subscriptionId) :

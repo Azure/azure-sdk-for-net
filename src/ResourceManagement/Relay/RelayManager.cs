@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Relay.Fluent
     using Microsoft.Azure.Management.Relay;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class RelayManager : Manager<IRelayManagementClient>, IRelayManager
+    public class RelayManager : Manager<IRelayManagementClient>, IRelayManager, IBeta
     {
         #region ctrs
         private RelayManager(RestClient restClient, string subscriptionId) :

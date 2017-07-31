@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Logic.Fluent
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    public class LogicManager : Manager<ILogicManagementClient>, ILogicManager
+    public class LogicManager : Manager<ILogicManagementClient>, ILogicManager, IBeta
     {
         #region ctrs
         private LogicManager(RestClient restClient, string subscriptionId) :
