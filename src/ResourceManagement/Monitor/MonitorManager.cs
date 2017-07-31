@@ -14,23 +14,15 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 
 namespace Microsoft.Azure.Management.Monitor.Fluent
 {
-    public class MonitorManager : IMonitorManager
+    public class MonitorManager : Manager<IMonitorManagementClient>, IMonitorManager
     {
-        public IMonitorClient InnerClient { get; }
-        public IMonitorManagementClient InnerManagementClient { get; }
+        public IMonitorClient InnerEx { get; }
         
         #region ctrs
-        private MonitorManager(RestClient restClient, string subscriptionId)
+
+        private static IMonitorManagementClient GetInnerClient(RestClient restClient, string subscriptionId)
         {
-            InnerClient = new MonitorClient(new Uri(restClient.BaseUri),
-                restClient.Credentials,
-                restClient.RootHttpHandler,
-                restClient.Handlers.ToArray())
-            {
-                SubscriptionId = subscriptionId
-            };
-            
-            InnerManagementClient = new MonitorManagementClient(new Uri(restClient.BaseUri),
+            return new MonitorManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray())
@@ -38,6 +30,19 @@ namespace Microsoft.Azure.Management.Monitor.Fluent
                 SubscriptionId = subscriptionId
             };
         }
+        
+        private MonitorManager(RestClient restClient, string subscriptionId) :
+            base(restClient, subscriptionId, GetInnerClient(restClient, subscriptionId))
+        {
+            InnerEx = new MonitorClient(new Uri(restClient.BaseUri),
+                restClient.Credentials,
+                restClient.RootHttpHandler,
+                restClient.Handlers.ToArray())
+            {
+                SubscriptionId = subscriptionId
+            };
+        }
+        
         #endregion
         
         #region MonitorManager builder
@@ -107,9 +112,8 @@ namespace Microsoft.Azure.Management.Monitor.Fluent
     /// <summary>
     /// Entry point to Azure Monitor.
     /// </summary>
-    public interface IMonitorManager
+    public interface IMonitorManager : IManager<IMonitorManagementClient>
     {
-        IMonitorClient InnerClient { get; }
-        IMonitorManagementClient InnerManagementClient { get; }
+        IMonitorClient InnerEx { get; }
     }
 }
