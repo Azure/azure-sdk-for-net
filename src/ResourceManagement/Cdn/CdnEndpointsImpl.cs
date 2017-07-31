@@ -20,14 +20,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         {
             List<CdnEndpointImpl> childResources = new List<CdnEndpointImpl>();
 
-            foreach(var innerEndpoint in Parent.Manager.Inner.Endpoints.ListByProfile(Parent.ResourceGroupName, Parent.Name))
+            foreach(var innerEndpoint in Extensions.Synchronize(() => Parent.Manager.Inner.Endpoints.ListByProfileAsync(Parent.ResourceGroupName, Parent.Name)))
             {
                 var endpoint = new CdnEndpointImpl(innerEndpoint.Name, Parent, innerEndpoint);
 
-                foreach (var customDomain in Parent.Manager.Inner.CustomDomains.ListByEndpoint(
-                    Parent.ResourceGroupName, 
-                    Parent.Name, 
-                    innerEndpoint.Name))
+                foreach (var customDomain in 
+                    Extensions.Synchronize(() => Parent.Manager.Inner.CustomDomains.ListByEndpointAsync(
+                        Parent.ResourceGroupName, 
+                        Parent.Name, 
+                        innerEndpoint.Name)))
                 {
                     endpoint.WithCustomDomain(customDomain.HostName);
                 }

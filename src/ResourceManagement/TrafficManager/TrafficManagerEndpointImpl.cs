@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using TrafficManagerEndpoint.UpdateAzureEndpoint;
     using ResourceManager.Fluent.Core.ChildResourceActions;
     using Models;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for TrafficManagerEndpoint.
@@ -89,7 +92,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         ///GENMHASH:91BB0A08404D6D37671F71EB696F7DDA:C7EED8E9DF95CD503E77886E10606183
-        public TrafficManagerEndpointImpl FromRegion(Region location)
+        public TrafficManagerEndpointImpl FromRegion(Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region location)
         {
             Inner.EndpointLocation = location.Name;
             return this;
@@ -170,6 +173,63 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             return this;
         }
 
+        ///GENMHASH:4A45A5907E7D657D8DD40DC76FD41F58:93984FB229DD83A7718C89B007D276C9
+        public TrafficManagerEndpointImpl WithGeographicLocation(IGeographicLocation geographicLocation)
+        {
+            return this.WithGeographicLocation(geographicLocation.Code);
+        }
+
+        ///GENMHASH:A547F59734E4765D7E8C66BD9DEABC48:4394EC74F5644573990215653DA5A2D5
+        public TrafficManagerEndpointImpl WithGeographicLocations(IList<Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation> geographicLocations)
+        {
+            foreach(var location in geographicLocations) {
+                this.WithGeographicLocation(location);
+            }
+            return this;
+        }
+
+        ///GENMHASH:2B09C0B6E5A6C9EB0FD5F8E5B6F64071:10487097C091DC4BD14341EFE97436FA
+        public TrafficManagerEndpointImpl WithGeographicLocations(IList<string> geographicLocationCodes)
+        {
+            foreach(var locationCode in geographicLocationCodes) {
+                this.WithGeographicLocation(locationCode);
+            }
+            return this;
+        }
+
+
+        ///GENMHASH:D941F2842B927A4DB3CBC5C46BF0FB8C:3758D276108819137AC1BAC3E4F73D66
+        public TrafficManagerEndpointImpl WithGeographicLocation(string geographicLocationCode)
+        {
+            if (this.Inner.GeoMapping == null) {
+                this.Inner.GeoMapping = new List<string>();
+            }
+            if (!this.Inner.GeoMapping.Any(code => code.Equals(geographicLocationCode, System.StringComparison.OrdinalIgnoreCase)))
+            {
+                this.Inner.GeoMapping.Add(geographicLocationCode);
+            }
+            return this;
+        }
+
+        ///GENMHASH:6B5F84A9B6F2D8700DA3A5F71E5000F8:FB9D4C73535F411169B12EACB830D877
+        public TrafficManagerEndpointImpl WithoutGeographicLocation(IGeographicLocation geographicLocation)
+        {
+            return this.WithoutGeographicLocation(geographicLocation.Code);
+        }
+
+        ///GENMHASH:B75C241BF5B6DE548F6D8E4910E12E09:EC93F846A74453DA3A4CBDF41628EF0F
+        public TrafficManagerEndpointImpl WithoutGeographicLocation(string geographicLocationCode)
+        {
+            if (this.Inner.GeoMapping == null) {
+                return this;
+            }
+            this.Inner.GeoMapping = this.Inner.GeoMapping
+                .Where(code => !code.Equals(geographicLocationCode, System.StringComparison.OrdinalIgnoreCase))
+                .Select(code => code)
+                .ToList();
+            return this;
+        }
+
         ///GENMHASH:A4259C4B7C7D66426DF3049BC1F1EA7F:7ED9C9DE573E721F3D9C8B9D654C0F0E
         public TrafficManagerEndpointImpl ToFqdn(string externalFqdn)
         {
@@ -182,6 +242,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
             Inner.MinChildEndpoints = count;
             return this;
+        }
+
+        ///GENMHASH:F507C7F84BADE3B2935D09B0602D7DE3:645998E0C566D23B620982BEA38A808C
+        public IReadOnlyList<string> GeographicLocationCodes()
+        {
+            if (this.Inner.GeoMapping == null || this.Inner.GeoMapping.Count == 0) {
+                return new List<string>();
+            }
+            return new ReadOnlyCollection<string>(this.Inner.GeoMapping);
         }
 
         TrafficManagerProfile.Update.IUpdate ISettable<TrafficManagerProfile.Update.IUpdate>.Parent()

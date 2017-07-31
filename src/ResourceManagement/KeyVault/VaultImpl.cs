@@ -251,12 +251,20 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                     if (accessPolicy.UserPrincipalName != null)
                     {
                         tasks.Add(graphRbacManager.Users.GetByNameAsync(accessPolicy.UserPrincipalName, cancellationToken)
-                            .ContinueWith(user => accessPolicy.ForObjectId(Guid.Parse(user.Result.Id))));
+                            .ContinueWith(
+                                user => accessPolicy.ForObjectId(Guid.Parse(user.Result.Id)),
+                                cancellationToken,
+                                TaskContinuationOptions.ExecuteSynchronously,
+                                TaskScheduler.Default));
                     }
                     else if (accessPolicy.ServicePrincipalName != null)
                     {
                         tasks.Add(graphRbacManager.ServicePrincipals.GetByNameAsync(accessPolicy.ServicePrincipalName, cancellationToken)
-                            .ContinueWith(servicePrincipal => accessPolicy.ForObjectId(Guid.Parse(servicePrincipal.Result.Id))));
+                            .ContinueWith(
+                                servicePrincipal => accessPolicy.ForObjectId(Guid.Parse(servicePrincipal.Result.Id)),
+                                cancellationToken,
+                                TaskContinuationOptions.ExecuteSynchronously,
+                                TaskScheduler.Default));
                     }
                     else
                     {

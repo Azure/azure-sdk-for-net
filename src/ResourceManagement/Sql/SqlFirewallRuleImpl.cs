@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:11CCB9FA7CDA7C4110B5B485953F2C3A
         public void Delete()
         {
-            Manager.Inner.Servers.DeleteFirewallRule(ResourceGroupName, SqlServerName(), Name);
+            Extensions.Synchronize(() => Manager.Inner.Servers.DeleteFirewallRuleAsync(ResourceGroupName, SqlServerName(), Name));
         }
 
         ///GENMHASH:6ADF1ABD01F52EF2AB48EBDB916AC61B:0E617A4FA7C8B0429E44FA81A0CA93AE

@@ -25,25 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public static partial class VirtualMachineExtensionImagesOperationsExtensions
     {
-            /// <summary>
-            /// Gets a virtual machine extension image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// </param>
-            /// <param name='publisherName'>
-            /// </param>
-            /// <param name='type'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static VirtualMachineExtensionImageInner Get(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, string version)
-            {
-                return operations.GetAsync(location, publisherName, type, version).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a virtual machine extension image.
             /// </summary>
@@ -69,21 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of virtual machine extension image types.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// </param>
-            /// <param name='publisherName'>
-            /// </param>
-            public static IList<VirtualMachineExtensionImageInner> ListTypes(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName)
-            {
-                return operations.ListTypesAsync(location, publisherName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of virtual machine extension image types.
             /// </summary>
@@ -105,26 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of virtual machine extension image versions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// </param>
-            /// <param name='publisherName'>
-            /// </param>
-            /// <param name='type'>
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IList<VirtualMachineExtensionImageInner> ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, ODataQuery<VirtualMachineExtensionImageInner> odataQuery = default(ODataQuery<VirtualMachineExtensionImageInner>))
-            {
-                return operations.ListVersionsAsync(location, publisherName, type, odataQuery).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of virtual machine extension image versions.
             /// </summary>

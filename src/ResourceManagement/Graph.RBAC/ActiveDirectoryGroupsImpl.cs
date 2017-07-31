@@ -21,27 +21,27 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         IActiveDirectoryGroups
     {
         private GraphRbacManager manager;
-                internal  ActiveDirectoryGroupsImpl(GraphRbacManager manager)
+        internal ActiveDirectoryGroupsImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }
 
                 public ActiveDirectoryGroupImpl GetById(string objectId)
         {
-            return (ActiveDirectoryGroupImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (ActiveDirectoryGroupImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await Inner.GetAsync(id, cancellationToken));
         }
-        
-                public IActiveDirectoryGroup GetByName(string name)
+
+        public IActiveDirectoryGroup GetByName(string name)
         {
-            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<ADGroupInner> inners = await Inner.ListAsync(string.Format("displayName eq '{0}'", name), cancellationToken);
             if (inners == null || !inners.Any())
@@ -51,12 +51,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return WrapModel(inners.First());
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> List()
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> List()
         {
-            return WrapList(Inner.List());
+            return WrapList(Extensions.Synchronize(() => Inner.ListAsync()));
         }
 
-                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryGroup>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryGroup>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IActiveDirectoryGroup, ADGroupInner>.LoadPage(
                 async (cancellation) => await Inner.ListAsync(null, cancellation),
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 (inner) => WrapModel(inner), loadAllPages, cancellationToken);
         }
 
-                public IGroupsOperations Inner
+        public IGroupsOperations Inner
         {
             get
             {
@@ -78,14 +78,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             if (groupInner == null)
             {
-                return null;    
+                return null;
             }
             return new ActiveDirectoryGroupImpl(groupInner, manager);
         }
 
         IActiveDirectoryGroup ISupportsGettingById<IActiveDirectoryGroup>.GetById(string id)
         {
-            return WrapModel(manager.Inner.Groups.Get(id));
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.Groups.GetAsync(id)));
         }
 
         public IBlank Define(string name)
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            manager.Inner.Groups.Delete(id);
+            Extensions.Synchronize(() => manager.Inner.Groups.DeleteAsync(id));
         }
 
         public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

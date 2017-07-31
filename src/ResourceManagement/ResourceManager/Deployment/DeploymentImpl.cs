@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void Cancel()
         {
-            CancelAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => this.CancelAsync());
         }
 
         public async Task CancelAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeploymentExportResult ExportTemplate()
         {
-            return ExportTemplateAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => ExportTemplateAsync());
         }
 
         public async Task<IDeploymentExportResult> ExportTemplateAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            Manager.Inner.Deployments.BeginCreateOrUpdate(resourceGroupName, Name, inner);
+            Extensions.Synchronize(() => Manager.Inner.Deployments.BeginCreateOrUpdateAsync(resourceGroupName, Name, inner));
             return this;
         }
 
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            Manager.Inner.Deployments.CreateOrUpdate(ResourceGroupName, Name, inner);
+            Extensions.Synchronize(() => Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner));
             return this;
         }
 

@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class DeploymentOperationsExtensions
     {
-            /// <summary>
-            /// Get a list of deployments operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='operationId'>
-            /// Operation Id.
-            /// </param>
-            public static DeploymentOperationInner Get(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, string operationId)
-            {
-                return operations.GetAsync(resourceGroupName, deploymentName, operationId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of deployments operations.
             /// </summary>
@@ -68,26 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of deployments operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='top'>
-            /// Query parameters.
-            /// </param>
-            public static IPage<DeploymentOperationInner> List(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, int? top = default(int?))
-            {
-                return operations.ListAsync(resourceGroupName, deploymentName, top).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of deployments operations.
             /// </summary>
@@ -114,20 +76,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of deployments operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DeploymentOperationInner> ListNext(this IDeploymentOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of deployments operations.
             /// </summary>

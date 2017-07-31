@@ -111,12 +111,12 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         public Models.DatabaseAccountListConnectionStringsResultInner ListConnectionStrings(string groupName, string accountName)
         {
-            return this.ListConnectionStringsAsync(groupName, accountName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.ListConnectionStringsAsync(groupName, accountName));
         }
 
         public Models.DatabaseAccountListKeysResultInner ListKeys(string groupName, string accountName)
         {
-            return this.ListKeysAsync(groupName, accountName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.ListKeysAsync(groupName, accountName));
         }
 
         public async Task<Models.DatabaseAccountListKeysResultInner> ListKeysAsync(string groupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
@@ -126,8 +126,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         public void FailoverPriorityChange(string groupName, string accountName, IList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.Location> failoverLocations)
         {
-            this.FailoverPriorityChangeAsync(groupName, accountName, failoverLocations).GetAwaiter().GetResult();
-
+            Extensions.Synchronize(() => this.FailoverPriorityChangeAsync(groupName, accountName, failoverLocations));
         }
 
         public async Task RegenerateKeyAsync(string groupName, string accountName, string keyKind, CancellationToken cancellationToken = default(CancellationToken))
@@ -142,8 +141,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         public void RegenerateKey(string groupName, string accountName, string keyKind)
         {
-            this.RegenerateKeyAsync(groupName, accountName, keyKind).GetAwaiter().GetResult();
-
+            Extensions.Synchronize(() => this.RegenerateKeyAsync(groupName, accountName, keyKind));
         }
     }
 }

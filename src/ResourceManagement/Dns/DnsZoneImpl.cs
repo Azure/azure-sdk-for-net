@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using DnsZone.Definition;
     using Models;
     using System.Linq;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for DnsZone.
@@ -328,17 +329,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:3F0A6CC3DBBB3330F47E8737215D7ECE:89EB3CA649B988C6CE1268D1D2437E71
         public ISoaRecordSet GetSoaRecordSet()
         {
-            RecordSetInner inner = Manager.Inner.RecordSets.Get(ResourceGroupName, Name, "@", RecordType.SOA);
+            RecordSetInner inner = Extensions.Synchronize(() => Manager.Inner.RecordSets.GetAsync(ResourceGroupName, Name, "@", RecordType.SOA));
             return new SoaRecordSetImpl(this, inner);
         }
 
         ///GENMHASH:DAB4AD5D3ECB1C104BA24998D652F125:360292BEDD7386B9C66109E12C8F07EB
         private IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSetsIntern(string recordSetSuffix, int? pageSize)
         {
-            return Manager.Inner.RecordSets.ListByDnsZone(ResourceGroupName,
-                Name,
-                top: pageSize,
-                recordsetnamesuffix: recordSetSuffix).Select(inner =>
+            return Extensions.Synchronize(() => Manager.Inner.RecordSets.ListByDnsZoneAsync(
+                    ResourceGroupName,
+                    Name,
+                    top: pageSize,
+                    recordsetnamesuffix: recordSetSuffix))
+                .Select(inner =>
                 {
                     var recordSet = new DnsRecordSetImpl(this, inner);
                     switch(recordSet.RecordType())

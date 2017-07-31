@@ -22,20 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class ProvidersOperationsExtensions
     {
-            /// <summary>
-            /// Unregisters provider from a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
-            /// </param>
-            public static ProviderInner Unregister(this IProvidersOperations operations, string resourceProviderNamespace)
-            {
-                return operations.UnregisterAsync(resourceProviderNamespace).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Unregisters provider from a subscription.
             /// </summary>
@@ -56,20 +43,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Registers provider to be used with a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
-            /// </param>
-            public static ProviderInner Register(this IProvidersOperations operations, string resourceProviderNamespace)
-            {
-                return operations.RegisterAsync(resourceProviderNamespace).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Registers provider to be used with a subscription.
             /// </summary>
@@ -90,24 +64,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of resource providers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='top'>
-            /// Query parameters. If null is passed returns all deployments.
-            /// </param>
-            /// <param name='expand'>
-            /// The $expand query parameter. e.g. To include property aliases in response,
-            /// use $expand=resourceTypes/aliases.
-            /// </param>
-            public static IPage<ProviderInner> List(this IProvidersOperations operations, int? top = default(int?), string expand = default(string))
-            {
-                return operations.ListAsync(top, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of resource providers.
             /// </summary>
@@ -132,24 +89,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a resource provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
-            /// </param>
-            /// <param name='expand'>
-            /// The $expand query parameter. e.g. To include property aliases in response,
-            /// use $expand=resourceTypes/aliases.
-            /// </param>
-            public static ProviderInner Get(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string))
-            {
-                return operations.GetAsync(resourceProviderNamespace, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a resource provider.
             /// </summary>
@@ -174,20 +114,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of resource providers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ProviderInner> ListNext(this IProvidersOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of resource providers.
             /// </summary>

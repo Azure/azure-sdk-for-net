@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Threading;
 using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
 using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
@@ -136,7 +137,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public IReadOnlyList<StorageAccountKey> GetKeys()
         {
-            return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetKeysAsync());
         }
 
         public async Task<IReadOnlyList<StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -162,7 +163,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public IReadOnlyList<StorageAccountKey> RegenerateKey(string keyName)
         {
-            return RegenerateKeyAsync(keyName).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RegenerateKeyAsync(keyName));
         }
 
         public async Task<IReadOnlyList<StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken))

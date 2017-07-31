@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:DE7A9E25A3A0DA8C686B167840FC2C68
         public IEnumerable<IVirtualMachineExtensionImageVersion> List()
         {
-            return WrapList(this.client.ListVersions(
+            return WrapList(Extensions.Synchronize(() => this.client.ListVersionsAsync(
                 type.RegionName,
                 type.Publisher.Name,
-                type.Name));
+                type.Name)));
         }
 
         public async Task<IPagedCollection<IVirtualMachineExtensionImageVersion>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

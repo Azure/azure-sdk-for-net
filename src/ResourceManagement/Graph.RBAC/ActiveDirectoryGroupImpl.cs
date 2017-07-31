@@ -120,8 +120,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public IEnumerable<IActiveDirectoryObject> ListMembers()
         {
-            return manager.Inner.Groups.GetGroupMembers(Id())
-                .AsContinuousCollection(link => manager.Inner.Groups.GetGroupMembersNext(link))
+            return Extensions.Synchronize(() => manager.Inner.Groups.GetGroupMembersAsync(Id()))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => manager.Inner.Groups.GetGroupMembersNextAsync(link)))
                 .Select(t => WrapObjectInner(t));
         }
 

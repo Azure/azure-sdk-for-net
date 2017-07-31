@@ -7,6 +7,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -44,6 +46,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 .SetValue(page, list.ToList());
 
             return page;
+        }
+
+        public static TResult Synchronize<TResult>(Func<Task<TResult>> function)
+        {
+            return Task.Factory.StartNew(function, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
+                .Unwrap().GetAwaiter().GetResult();
+        }
+
+        public static void Synchronize(Func<Task> function)
+        {
+            Task.Factory.StartNew(function, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
     }
 }

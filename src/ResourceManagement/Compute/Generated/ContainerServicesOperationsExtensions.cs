@@ -22,23 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public static partial class ContainerServicesOperationsExtensions
     {
-            /// <summary>
-            /// Gets a list of container services in the specified subscription.
-            /// </summary>
-            /// <remarks>
-            /// Gets a list of container services in the specified subscription. The
-            /// operation returns properties of each container service including state,
-            /// orchestrator, number of masters and agents, and FQDNs of masters and
-            /// agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<ContainerServiceInner> List(this IContainerServicesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of container services in the specified subscription.
             /// </summary>
@@ -62,31 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a container service.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates a container service with the specified configuration of
-            /// orchestrator, masters, and agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='containerServiceName'>
-            /// The name of the container service in the specified subscription and
-            /// resource group.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create or Update a Container Service operation.
-            /// </param>
-            public static ContainerServiceInner CreateOrUpdate(this IContainerServicesOperations operations, string resourceGroupName, string containerServiceName, ContainerServiceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, containerServiceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a container service.
             /// </summary>
@@ -118,30 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the properties of the specified container service.
-            /// </summary>
-            /// <remarks>
-            /// Gets the properties of the specified container service in the specified
-            /// subscription and resource group. The operation returns the properties
-            /// including state, orchestrator, number of masters and agents, and FQDNs of
-            /// masters and agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='containerServiceName'>
-            /// The name of the container service in the specified subscription and
-            /// resource group.
-            /// </param>
-            public static ContainerServiceInner Get(this IContainerServicesOperations operations, string resourceGroupName, string containerServiceName)
-            {
-                return operations.GetAsync(resourceGroupName, containerServiceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the properties of the specified container service.
             /// </summary>
@@ -172,32 +109,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified container service.
-            /// </summary>
-            /// <remarks>
-            /// Deletes the specified container service in the specified subscription and
-            /// resource group. The operation does not delete other resources created as
-            /// part of creating a container service, including storage accounts, VMs, and
-            /// availability sets. All the other resources created with the container
-            /// service are part of the same resource group and can be deleted
-            /// individually.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='containerServiceName'>
-            /// The name of the container service in the specified subscription and
-            /// resource group.
-            /// </param>
-            public static void Delete(this IContainerServicesOperations operations, string resourceGroupName, string containerServiceName)
-            {
-                operations.DeleteAsync(resourceGroupName, containerServiceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified container service.
             /// </summary>
@@ -227,26 +139,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerServiceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets a list of container services in the specified resource group.
-            /// </summary>
-            /// <remarks>
-            /// Gets a list of container services in the specified subscription and
-            /// resource group. The operation returns properties of each container service
-            /// including state, orchestrator, number of masters and agents, and FQDNs of
-            /// masters and agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<ContainerServiceInner> ListByResourceGroup(this IContainerServicesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of container services in the specified resource group.
             /// </summary>
@@ -273,31 +166,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a container service.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates a container service with the specified configuration of
-            /// orchestrator, masters, and agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='containerServiceName'>
-            /// The name of the container service in the specified subscription and
-            /// resource group.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create or Update a Container Service operation.
-            /// </param>
-            public static ContainerServiceInner BeginCreateOrUpdate(this IContainerServicesOperations operations, string resourceGroupName, string containerServiceName, ContainerServiceInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, containerServiceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a container service.
             /// </summary>
@@ -329,32 +198,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified container service.
-            /// </summary>
-            /// <remarks>
-            /// Deletes the specified container service in the specified subscription and
-            /// resource group. The operation does not delete other resources created as
-            /// part of creating a container service, including storage accounts, VMs, and
-            /// availability sets. All the other resources created with the container
-            /// service are part of the same resource group and can be deleted
-            /// individually.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='containerServiceName'>
-            /// The name of the container service in the specified subscription and
-            /// resource group.
-            /// </param>
-            public static void BeginDelete(this IContainerServicesOperations operations, string resourceGroupName, string containerServiceName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, containerServiceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified container service.
             /// </summary>
@@ -384,26 +228,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerServiceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets a list of container services in the specified subscription.
-            /// </summary>
-            /// <remarks>
-            /// Gets a list of container services in the specified subscription. The
-            /// operation returns properties of each container service including state,
-            /// orchestrator, number of masters and agents, and FQDNs of masters and
-            /// agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ContainerServiceInner> ListNext(this IContainerServicesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of container services in the specified subscription.
             /// </summary>
@@ -430,26 +255,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of container services in the specified resource group.
-            /// </summary>
-            /// <remarks>
-            /// Gets a list of container services in the specified subscription and
-            /// resource group. The operation returns properties of each container service
-            /// including state, orchestrator, number of masters and agents, and FQDNs of
-            /// masters and agents.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ContainerServiceInner> ListByResourceGroupNext(this IContainerServicesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of container services in the specified resource group.
             /// </summary>

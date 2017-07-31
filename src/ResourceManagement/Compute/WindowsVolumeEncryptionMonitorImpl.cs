@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:FF7924BFEF46CE7F250D6F5B1A727744
         public IDiskVolumeEncryptionMonitor Refresh()
         {
-            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RefreshAsync());
         }
 
         ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:061A846F0F7CA8B3F2DF8CA79A8D8B5A

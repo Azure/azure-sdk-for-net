@@ -25,14 +25,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<ISubscription> List()
         {
-            return innerCollection.List()
-                                  .AsContinuousCollection(link => innerCollection.ListNext(link))
+            return Extensions.Synchronize(() => innerCollection.ListAsync())
+                                  .AsContinuousCollection(link => Extensions.Synchronize(() => innerCollection.ListNextAsync(link)))
                                   .Select(inner => WrapModel(inner));
         }
 
         public ISubscription GetById(string id)
         {
-            var inner = innerCollection.Get(id);
+            var inner = Extensions.Synchronize(() => innerCollection.GetAsync(id));
             if (inner == null)
             {
                 return null;

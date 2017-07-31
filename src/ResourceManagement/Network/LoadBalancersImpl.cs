@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public void Delete(string id)
         {
-            DeleteAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteAsync(id));
         }
 
         public async Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

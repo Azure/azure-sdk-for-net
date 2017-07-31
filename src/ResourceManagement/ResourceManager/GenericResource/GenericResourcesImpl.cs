@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            return CheckExistenceAsync(
+            return Extensions.Synchronize (() => CheckExistenceAsync(
                 resourceGroupName,
                 resourceProviderNamespace,
                 parentResourcePath,
                 resourceType,
                 resourceName,
-                apiVersion).ConfigureAwait(false).GetAwaiter().GetResult();
+                apiVersion));
         }
 
         public async Task<bool> CheckExistenceAsync(
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void Delete(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            Inner.Delete(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion);
+            Extensions.Synchronize(() => Inner.DeleteAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion));
         }
 
         public async Task DeleteAsync(
@@ -88,13 +88,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 parentResourcePath = "";
             }
 
-            GenericResourceInner inner = Inner.Get(
+            GenericResourceInner inner = Extensions.Synchronize(() => Inner.GetAsync(
                     resourceGroupName,
                     resourceProviderNamespace,
                     parentResourcePath,
                     resourceType,
                     resourceName,
-                    apiVersion);
+                    apiVersion));
             GenericResourceImpl resource = new GenericResourceImpl(
                     resourceName,
                     inner,
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
         {
-            MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources));
         }
 
         public async Task MoveResourcesAsync(
@@ -189,9 +189,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IGenericResource> ListByTag(string resourceGroupName, string tagName, string tagValue)
         {
-            return WrapList(Manager.Inner.ResourceGroups.ListResources(
-                    resourceGroupName, ResourceUtils.CreateODataFilterForTags(tagName, tagValue))
-                    .AsContinuousCollection((nextLink) => Manager.Inner.ResourceGroups.ListResourcesNext(nextLink)));
+            return WrapList(Extensions.Synchronize(() => Manager.Inner.ResourceGroups.ListResourcesAsync(
+                    resourceGroupName, ResourceUtils.CreateODataFilterForTags(tagName, tagValue)))
+                    .AsContinuousCollection((nextLink) => Extensions.Synchronize(() => Manager.Inner.ResourceGroups.ListResourcesNextAsync(nextLink))));
         }
 
         public async Task<IPagedCollection<IGenericResource>> ListByTagAsync(string resourceGroupName, string tagName, string tagValue, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

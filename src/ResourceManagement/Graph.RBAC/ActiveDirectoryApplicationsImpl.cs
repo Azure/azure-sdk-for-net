@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// The implementation of Applications and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryApplicationsImpl  :
-        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl,Models.ApplicationInner>,
+    public partial class ActiveDirectoryApplicationsImpl :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl, Models.ApplicationInner>,
         IActiveDirectoryApplications,
         IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IApplicationsOperations>
@@ -25,19 +25,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private IApplicationsOperations innerCollection;
         private GraphRbacManager manager;
 
-                public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             await innerCollection.DeleteAsync(id, cancellationToken);
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<ApplicationInner> inners = await manager.Inner.Applications.ListAsync(string.Format("displayName eq '{0}'", name), cancellationToken);
             if (inners == null || !inners.Any())
             {
                 inners = await manager.Inner.Applications.ListAsync(string.Format("appId eq '{0}'", name), cancellationToken);
             }
-            if (inners == null || ! inners.Any())
+            if (inners == null || !inners.Any())
             {
                 return null;
             }
@@ -47,19 +47,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> List()
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> List()
         {
             Func<ApplicationInner, IActiveDirectoryApplication> converter = inner =>
             {
-                return ((ActiveDirectoryApplicationImpl) WrapModel(inner)).RefreshCredentialsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                return Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(inner)).RefreshCredentialsAsync());
             };
 
-            return Inner.List()
-                        .AsContinuousCollection(link => Inner.ListNext(link))
+            return Extensions.Synchronize(() => Inner.ListAsync())
+                        .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListNextAsync(link)))
                         .Select(inner => converter(inner));
         }
 
-                public IApplicationsOperations Inner
+        public IApplicationsOperations Inner
         {
             get
             {
@@ -71,32 +71,32 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public ActiveDirectoryApplicationImpl GetById(string id)
         {
-            return (ActiveDirectoryApplicationImpl)((ActiveDirectoryApplicationImpl)WrapModel(innerCollection.Get(id))).RefreshCredentialsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return (ActiveDirectoryApplicationImpl) Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(Extensions.Synchronize(() => innerCollection.GetAsync(id)))).RefreshCredentialsAsync());
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await ((ActiveDirectoryApplicationImpl)WrapModel(await innerCollection.GetAsync(id, cancellationToken))).RefreshCredentialsAsync(cancellationToken);
         }
 
-                public IActiveDirectoryApplication GetByName(string spn)
+        public IActiveDirectoryApplication GetByName(string spn)
         {
-            return GetByNameAsync(spn).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(spn));
         }
 
-                public ActiveDirectoryApplicationImpl Define(string name)
+        public ActiveDirectoryApplicationImpl Define(string name)
         {
             return WrapModel(name);
         }
 
-                internal  ActiveDirectoryApplicationsImpl(GraphRbacManager graphRbacManager)
+        internal ActiveDirectoryApplicationsImpl(GraphRbacManager graphRbacManager)
         {
             this.innerCollection = graphRbacManager.Inner.Applications;
             this.manager = graphRbacManager;
 
         }
 
-                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryApplication>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryApplication>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IActiveDirectoryApplication, ApplicationInner>.LoadPageWithWrapModelAsync(
                 async (cancellation) => await Inner.ListAsync(null, cancellation),
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 loadAllPages, cancellationToken);
         }
 
-                protected override IActiveDirectoryApplication WrapModel(ApplicationInner applicationInner)
+        protected override IActiveDirectoryApplication WrapModel(ApplicationInner applicationInner)
         {
             if (applicationInner == null)
             {
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new ActiveDirectoryApplicationImpl(applicationInner, manager);
         }
 
-                protected override ActiveDirectoryApplicationImpl WrapModel(string name)
+        protected override ActiveDirectoryApplicationImpl WrapModel(string name)
         {
             return new ActiveDirectoryApplicationImpl(new ApplicationInner
             {
@@ -124,12 +124,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            innerCollection.Delete(id);
+            Extensions.Synchronize(() => innerCollection.DeleteAsync(id));
         }
 
         IActiveDirectoryApplication ISupportsGettingById<IActiveDirectoryApplication>.GetById(string id)
         {
-            return WrapModel(manager.Inner.Applications.Get(id));
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.Applications.GetAsync(id)));
         }
 
         IBlank ISupportsCreating<IBlank>.Define(string name)

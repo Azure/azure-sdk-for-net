@@ -50,5 +50,12 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         {
             return this.CheckDnsNameAvailability(dnsNameLabel) as Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult;
         }
+
+        /// <return>The default Geographic Hierarchy used by the Geographic traffic routing method.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfilesBeta.GetGeographicHierarchyRoot()
+        {
+            return this.GetGeographicHierarchyRoot() as Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation;
+        }
+
     }
 }

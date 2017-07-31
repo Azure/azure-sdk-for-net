@@ -23,21 +23,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// </summary>
     public static partial class ClassicAdministratorsOperationsExtensions
     {
-            /// <summary>
-            /// Gets service administrator, account administrator, and co-administrators
-            /// for the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
-            public static IPage<ClassicAdministrator> List(this IClassicAdministratorsOperations operations, string apiVersion)
-            {
-                return operations.ListAsync(apiVersion).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets service administrator, account administrator, and co-administrators
             /// for the subscription.
@@ -59,21 +45,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets service administrator, account administrator, and co-administrators
-            /// for the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ClassicAdministrator> ListNext(this IClassicAdministratorsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets service administrator, account administrator, and co-administrators
             /// for the subscription.
