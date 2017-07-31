@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.Filters
+namespace Microsoft.Azure.ServiceBus
 {
     /// <summary>
     /// Describes a filter expression that is evaluated against a Message.

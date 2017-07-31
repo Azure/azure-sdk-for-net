@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Filters;
+    using Primitives;
 
     /// <summary>
     /// The object used to communicate and transfer data with Service Bus.

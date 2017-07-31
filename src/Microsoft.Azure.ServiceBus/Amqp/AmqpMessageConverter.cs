@@ -11,8 +11,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Azure.Amqp;
     using Azure.Amqp.Encoding;
     using Azure.Amqp.Framing;
-    using Filters;
     using Framing;
+    using Primitives;
     using SBMessage = Message;
 
     static class AmqpMessageConverter

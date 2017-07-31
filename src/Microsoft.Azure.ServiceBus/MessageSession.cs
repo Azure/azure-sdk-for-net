@@ -10,6 +10,7 @@ namespace Microsoft.Azure.ServiceBus
     using Amqp;
     using Azure.Amqp;
     using Core;
+    using Primitives;
 
     internal class MessageSession : MessageReceiver, IMessageSession
     {

@@ -7,7 +7,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Primitives;
 
     /// <summary>
     /// QueueClient can be used for all basic interactions with a Service Bus Queue.

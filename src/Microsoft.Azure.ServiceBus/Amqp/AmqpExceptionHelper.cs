@@ -12,7 +12,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
-    using Microsoft.Azure.ServiceBus.Primitives;
 
     static class AmqpExceptionHelper
     {

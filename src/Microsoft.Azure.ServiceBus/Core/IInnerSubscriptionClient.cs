@@ -5,7 +5,6 @@ namespace Microsoft.Azure.ServiceBus.Core
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Filters;
 
     internal interface IInnerSubscriptionClient
     {

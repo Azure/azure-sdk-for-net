@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
+namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
     using System.Text;
@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
     /// </summary>
-    public abstract class TokenProvider
+    internal abstract class TokenProvider
     {
         internal static readonly TimeSpan DefaultTokenTimeout = TimeSpan.FromMinutes(60);
         internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;

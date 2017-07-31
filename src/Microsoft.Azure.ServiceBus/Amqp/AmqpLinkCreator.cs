@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
     internal abstract class AmqpLinkCreator
     {

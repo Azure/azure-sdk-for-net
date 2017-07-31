@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
+namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
     using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    public class SharedAccessSignatureTokenProvider : TokenProvider
+    internal class SharedAccessSignatureTokenProvider : TokenProvider
     {
         /// <summary>
         /// Represents 00:00:00 UTC Thursday 1, January 1970.

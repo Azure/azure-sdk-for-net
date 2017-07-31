@@ -5,12 +5,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
     using Core;
-    using ServiceBus.Primitives;
     using Xunit;
 
     public sealed class QueueSessionTests

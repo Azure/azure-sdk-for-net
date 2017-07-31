@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
+namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>
     /// Provides information about a security token such as audience, expiry time, and the string token value.
     /// </summary>
-    public class SecurityToken
+    internal class SecurityToken
     {
         // per Simple Web Token draft specification
         private const string TokenAudience = "Audience";

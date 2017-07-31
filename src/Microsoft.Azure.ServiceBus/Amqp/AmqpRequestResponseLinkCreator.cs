@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using Microsoft.Azure.Amqp;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
     internal class AmqpRequestResponseLinkCreator : AmqpLinkCreator
     {

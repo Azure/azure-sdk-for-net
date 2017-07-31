@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.Core
+namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Core;
 
     /// <summary> 
     /// Describes a Session client. A session client can be used to accept session objects which can be used to interact with all messages with the same sessionId. 

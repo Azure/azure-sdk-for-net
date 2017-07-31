@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using Primitives;
 
     /// <summary>
     /// Base Exception for various Service Bus errors.
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus
                     return baseMessage;
                 }
 
-                return "{0}, ({1})".FormatInvariant(this.ServiceBusNamespace);
+                return StringUtility.FormatInvariant("{0}, ({1})", this.ServiceBusNamespace);
             }
         }
 

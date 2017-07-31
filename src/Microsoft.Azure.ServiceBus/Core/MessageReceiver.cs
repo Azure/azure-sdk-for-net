@@ -148,7 +148,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
         /// Setting a non-zero value prefetches PrefetchCount number of messages.
-        /// Setting the value to zero turns prefetch off.</summary>
+        /// Setting the value to zero turns prefetch off.
+        /// Defaults to 0.
+        /// </summary>
         /// <remarks> 
         /// <para>
         /// When Prefetch is enabled, the receiver will quietly acquire more messages, up to the PrefetchCount limit, than what the application 

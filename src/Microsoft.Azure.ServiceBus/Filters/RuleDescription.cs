@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.Filters
+using Microsoft.Azure.ServiceBus.Primitives;
+
+namespace Microsoft.Azure.ServiceBus
 {
     /// <summary>
     /// Represents a description of a rule.
@@ -100,6 +102,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// Gets or sets the name of the rule.
         /// </summary>
         /// <value>Returns a <see cref="System.String" /> Representing the name of the rule.</value>
+        /// <remarks>Max allowed length of rule name is 50 chars.</remarks>
         public string Name
         {
             get

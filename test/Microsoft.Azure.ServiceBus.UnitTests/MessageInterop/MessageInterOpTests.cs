@@ -3,11 +3,11 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
-    using Microsoft.Azure.ServiceBus.InteropExtensions;
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
     using Xunit;
+    using InteropExtensions;
 
     public class MessageInteropTests
     {

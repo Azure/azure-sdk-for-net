@@ -7,8 +7,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using Core;
-    using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
 
     public class OnSessionQueueTests

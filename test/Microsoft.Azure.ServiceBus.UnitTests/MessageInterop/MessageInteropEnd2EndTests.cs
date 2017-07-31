@@ -4,13 +4,13 @@
 #if NET46
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
-    using Microsoft.Azure.ServiceBus.InteropExtensions;
     using Microsoft.ServiceBus.Messaging;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
+    using InteropExtensions;
 
     public class MessageInteropEnd2EndTests
     {

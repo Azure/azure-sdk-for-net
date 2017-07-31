@@ -8,8 +8,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Core;
-    using Filters;
-    using Primitives;
 
     /// <summary>
     /// SubscriptionClient can be used for all basic interactions with a Service Bus Subscription.

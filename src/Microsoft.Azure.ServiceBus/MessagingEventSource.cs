@@ -10,6 +10,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
     [EventSource(Name = "Microsoft-Azure-ServiceBus")]
     internal sealed class MessagingEventSource : EventSource

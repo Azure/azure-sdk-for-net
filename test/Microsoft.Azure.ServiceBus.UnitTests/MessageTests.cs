@@ -115,6 +115,35 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await queueClient.CloseAsync();
                 }
             }
+
+            [Fact]
+            [DisplayTestMethodName]
+            public async Task MessageWithMaxMessageSizeShouldWorkAsExpected()
+            {
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+
+                try
+                {
+                    int maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
+                    var maxPayload = Encoding.ASCII.GetBytes(new string('a', maxMessageSize));
+                    var maxSizeMessage = new Message(maxPayload);
+
+                    await queueClient.SendAsync(maxSizeMessage);
+
+                    var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
+                    await queueClient.CompleteAsync(receivedMaxSizeMessage.SystemProperties.LockToken);
+                    Assert.Equal(maxPayload, receivedMaxSizeMessage.Body);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            }
         }
     }
 }

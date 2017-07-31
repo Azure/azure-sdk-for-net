@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using Primitives;
 
     /// <summary>
     /// RetryPolicy implementation where the delay between retries will grow in a staggered exponential manner.

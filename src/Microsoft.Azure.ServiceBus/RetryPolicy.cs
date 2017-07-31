@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Primitives;
 
     /// <summary>
     /// Represents an abstraction for retrying messaging operations. Users should not 
