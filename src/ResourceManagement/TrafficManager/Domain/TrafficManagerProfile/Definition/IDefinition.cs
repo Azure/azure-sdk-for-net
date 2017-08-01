@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile
     /// The stage of the traffic manager profile definition allowing to specify the traffic routing method
     /// for the profile.
     /// </summary>
-    public interface IWithTrafficRoutingMethod 
+    public interface IWithTrafficRoutingMethod  : Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethodBeta
     {
         /// <summary>
         /// Specifies that end user traffic should be distributed to the endpoints based on the weight assigned
@@ -181,5 +181,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> DefineAzureTargetEndpoint(string name);
+    }
+
+    /// <summary>
+    /// The stage of the traffic manager profile definition allowing to specify the traffic routing method
+    /// for the profile.
+    /// </summary>
+    public interface IWithTrafficRoutingMethodBeta :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that end user traffic should be routed to the endpoint that is designated to serve users
+        /// geographic region.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint WithGeographicBasedRouting();
     }
 }

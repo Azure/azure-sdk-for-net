@@ -7719,7 +7719,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"tra82f65369dc\",\r\n      \"ttl\": 300\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/\"\r\n    },\r\n    \"endpoints\": []\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
@@ -7787,7 +7787,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-1?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-1?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-1\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-3e69367862-1\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 1\r\n  }\r\n}",
@@ -7855,7 +7855,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-8?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-8?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-8\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-4ee33910aa-3\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 8\r\n  }\r\n}",
@@ -7923,7 +7923,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-9?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-9\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-4ee33910aa-4\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 9\r\n  }\r\n}",
@@ -7991,7 +7991,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-2?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-2?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-2\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-3e69367862-2\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 2\r\n  }\r\n}",
@@ -8059,7 +8059,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-5?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-5?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-5\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-3e69367862-5\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 5\r\n  }\r\n}",
@@ -8127,7 +8127,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-10?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-10?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTEwP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-10\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-4ee33910aa-5\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 10\r\n  }\r\n}",
@@ -8195,7 +8195,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-6?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-6?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-6\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-4ee33910aa-1\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 6\r\n  }\r\n}",
@@ -8263,7 +8263,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-7?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-7?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-7\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-4ee33910aa-2\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 7\r\n  }\r\n}",
@@ -8331,7 +8331,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-3?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-3?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-3\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-3e69367862-3\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 3\r\n  }\r\n}",
@@ -8399,7 +8399,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-4?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/trafficmanagerprofiles/tra82f65369dc/azureEndpoints/azendpoint-4?api-version=2017-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzU0OWY0NzUtZGVlOC00MjhjLWJiMTktODI5YTU1ZTUyZjc3L3Jlc291cmNlR3JvdXBzLzViNmEwYTFmYTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvdHJhODJmNjUzNjlkYy9henVyZUVuZHBvaW50cy9hemVuZHBvaW50LTQ/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azendpoint-4\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/azureEndpoints\",\r\n  \"properties\": {\r\n    \"targetResourceId\": \"/subscriptions/c549f475-dee8-428c-bb19-829a55e52f77/resourceGroups/5b6a0a1fa9/providers/Microsoft.Network/publicIPAddresses/vm-3e69367862-4\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"weight\": 1,\r\n    \"priority\": 4\r\n  }\r\n}",

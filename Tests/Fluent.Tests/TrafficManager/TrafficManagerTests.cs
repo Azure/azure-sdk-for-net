@@ -256,8 +256,92 @@ namespace Fluent.Tests
                 finally
                 {
                     try
-                    { 
-                        azure.ResourceGroups.DeleteByName(groupName);
+                    {
+                        azure.ResourceGroups.BeginDeleteByName(groupName);
+                    }
+                    catch { }
+                }
+            }
+        }
+
+        [Fact]
+        public void CanGetGeographicHierarchy()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+
+                var azure = TestHelper.CreateRollupClient();
+                var root = azure.TrafficManagerProfiles.GetGeographicHierarchyRoot();
+                Assert.NotNull(root);
+                Assert.NotNull(root.Code);
+                Assert.NotNull(root.ChildLocations);
+                Assert.NotNull(root.DescendantLocations);
+                Assert.False(root.ChildLocations.Count == 0);
+                Assert.False(root.DescendantLocations.Count == 0);
+            }
+        }
+
+        [Fact]
+        public void CanCreateUpdateProfileWithGeographicEndpoint()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                var region = Region.USEast;
+
+                var groupName = TestUtilities.GenerateName("rgchashtm");
+                var tmProfileName = TestUtilities.GenerateName("tm");
+                var tmProfileDnsLabel = TestUtilities.GenerateName("tmdns");
+
+                var azure = TestHelper.CreateRollupClient();
+
+                try
+                {
+                    var geographicLocation = azure.TrafficManagerProfiles.GetGeographicHierarchyRoot();
+
+                    IGeographicLocation california = geographicLocation.DescendantLocations.FirstOrDefault(l => l.Name.Equals("California", StringComparison.OrdinalIgnoreCase));
+                    IGeographicLocation bangladesh = geographicLocation.DescendantLocations.FirstOrDefault(l => l.Name.Equals("Bangladesh", StringComparison.OrdinalIgnoreCase));
+
+                    Assert.NotNull(california);
+                    Assert.NotNull(bangladesh);
+
+                    var profile = azure.TrafficManagerProfiles.Define(tmProfileName)
+                        .WithNewResourceGroup(groupName, region)
+                        .WithLeafDomainLabel(tmProfileDnsLabel)
+                        .WithGeographicBasedRouting()
+                        .DefineExternalTargetEndpoint("external-ep-1")
+                            .ToFqdn("www.gitbook.com")
+                            .FromRegion(Region.AsiaEast)
+                            .WithGeographicLocation(california)
+                            .WithGeographicLocation(bangladesh)
+                            .Attach()
+                        .WithHttpsMonitoring()
+                        .WithTimeToLive(500)
+                        .Create();
+
+                    Assert.NotNull(profile.Inner);
+                    Assert.True(profile.TrafficRoutingMethod.Equals(TrafficRoutingMethod.Geographic));
+                    Assert.True(profile.ExternalEndpoints.ContainsKey("external-ep-1"));
+                    var endpoint = profile.ExternalEndpoints["external-ep-1"];
+                    Assert.NotNull(endpoint.GeographicLocationCodes);
+                    Assert.Equal(2, endpoint.GeographicLocationCodes.Count());
+
+                    profile.Update()
+                        .UpdateExternalTargetEndpoint("external-ep-1")
+                            .WithoutGeographicLocation(california)
+                            .Parent()
+                        .Apply();
+
+                    Assert.True(profile.TrafficRoutingMethod.Equals(TrafficRoutingMethod.Geographic));
+                    Assert.True(profile.ExternalEndpoints.ContainsKey("external-ep-1"));
+                    endpoint = profile.ExternalEndpoints["external-ep-1"];
+                    Assert.NotNull(endpoint.GeographicLocationCodes);
+                    Assert.Equal(1, endpoint.GeographicLocationCodes.Count());
+                }
+                finally
+                {
+                    try
+                    {
+                        azure.ResourceGroups.BeginDeleteByName(groupName);
                     }
                     catch { }
                 }

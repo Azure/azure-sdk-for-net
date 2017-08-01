@@ -16,9 +16,162 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition;
     using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update;
     using Microsoft.Azure.Management.TrafficManager.Fluent.Models;
+    using System.Collections.Generic;
 
     internal partial class TrafficManagerEndpointImpl 
     {
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithGeographicLocationBeta<TrafficManagerProfile.Definition.IWithCreate>.WithGeographicLocation(IGeographicLocation geographicLocation)
+        {
+            return this.WithGeographicLocation(geographicLocation) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithGeographicLocationBeta<TrafficManagerProfile.Definition.IWithCreate>.WithGeographicLocation(string geographicLocationCode)
+        {
+            return this.WithGeographicLocation(geographicLocationCode) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocations">The geographic locations.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithGeographicLocationBeta<TrafficManagerProfile.Definition.IWithCreate>.WithGeographicLocations(IList<Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation> geographicLocations)
+        {
+            return this.WithGeographicLocations(geographicLocations) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCodes">The geographic location codes.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithGeographicLocationBeta<TrafficManagerProfile.Definition.IWithCreate>.WithGeographicLocations(IList<string> geographicLocationCodes)
+        {
+            return this.WithGeographicLocations(geographicLocationCodes) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithGeographicLocationBeta<TrafficManagerProfile.Update.IUpdate>.WithGeographicLocation(IGeographicLocation geographicLocation)
+        {
+            return this.WithGeographicLocation(geographicLocation) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithGeographicLocationBeta<TrafficManagerProfile.Update.IUpdate>.WithGeographicLocation(string geographicLocationCode)
+        {
+            return this.WithGeographicLocation(geographicLocationCode) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocations">The geographic locations.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithGeographicLocationBeta<TrafficManagerProfile.Update.IUpdate>.WithGeographicLocations(IList<Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation> geographicLocations)
+        {
+            return this.WithGeographicLocations(geographicLocations) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCodes">The geographic location codes.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithGeographicLocationBeta<TrafficManagerProfile.Update.IUpdate>.WithGeographicLocations(IList<string> geographicLocationCodes)
+        {
+            return this.WithGeographicLocations(geographicLocationCodes) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta.WithGeographicLocation(IGeographicLocation geographicLocation)
+        {
+            return this.WithGeographicLocation(geographicLocation) as TrafficManagerEndpoint.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta.WithGeographicLocation(string geographicLocationCode)
+        {
+            return this.WithGeographicLocation(geographicLocationCode) as TrafficManagerEndpoint.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocations">The geographic locations.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta.WithGeographicLocations(IList<Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation> geographicLocations)
+        {
+            return this.WithGeographicLocations(geographicLocations) as TrafficManagerEndpoint.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCodes">The geographic location codes.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta.WithGeographicLocations(IList<string> geographicLocationCodes)
+        {
+            return this.WithGeographicLocations(geographicLocationCodes) as TrafficManagerEndpoint.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location to be removed from the endpoint's geographic location entries.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta.WithoutGeographicLocation(IGeographicLocation geographicLocation)
+        {
+            return this.WithoutGeographicLocation(geographicLocation) as TrafficManagerEndpoint.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the geographic location to be removed from the endpoint's geographic location entries.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta.WithoutGeographicLocation(string geographicLocationCode)
+        {
+            return this.WithoutGeographicLocation(geographicLocationCode) as TrafficManagerEndpoint.Update.IUpdate;
+        }
+
         /// <summary>
         /// Specifies that this endpoint should be excluded from receiving traffic.
         /// </summary>
@@ -43,7 +196,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region region)
         {
             return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
@@ -54,7 +207,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.FromRegion(Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region region)
         {
             return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
@@ -251,7 +404,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region region)
         {
             return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
@@ -262,7 +415,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.FromRegion(Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region region)
         {
             return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
@@ -295,7 +448,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="location">The location.</param>
         /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithSourceTrafficRegion.FromRegion(Region location)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithSourceTrafficRegion.FromRegion(Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region location)
         {
             return this.FromRegion(location) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
@@ -318,6 +471,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithNestedProfileConfig.ToProfile(ITrafficManagerProfile nestedProfile)
         {
             return this.ToProfile(nestedProfile) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
+        }
+
+        /// <summary>
+        /// Gets the geographic location codes indicating the locations to which traffic will be distributed.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpointBeta.GeographicLocationCodes
+        {
+            get
+            {
+                return this.GeographicLocationCodes() as System.Collections.Generic.IReadOnlyList<string>;
+            }
         }
 
         /// <summary>
