@@ -51,6 +51,37 @@ Note that all output files from a job, including task outputs, are stored in the
 [storage throttling limits](https://azure.microsoft.com/en-us/documentation/articles/storage-performance-checklist/#blobs)
 may be enforced if a large number of tasks try to persist files at the same time. 
 
+### Persisting Files in Pool Start Task Code
+
+The pool start task is not part of a job, so has no job ID or task ID.  To persist a file from a
+pool start task, use the StartTaskOutputStorage constructor that takes a CloudStorageAccount and a pool ID,
+or the constructor that takes a container URL:
+
+    var linkedStorageAccount = new CloudStorageAccount(/* credentials */);
+    var poolId = Environment.GetEnvironmentVariable("AZ_BATCH_POOL_ID");
+    var nodeId = Environment.GetEnvironmentVariable("AZ_BATCH_NODE_ID");
+    
+    var taskOutputStorage = new StartTaskOutputStorage(linkedStorageAccount, poolId, nodeId);
+    
+    await taskOutputStorage.SaveAsync(TaskOutputKind.TaskLog, "install.log");
+
+### Persisting Files in Job Preparation or Release Task Code
+
+The job preparation and job release tasks run on every node where the job runs.  The task has a single ID
+but can have different outputs on each node, which makes it unsuitable for the normal task output storage.
+To persist a file from a job preparation or release task, use the SpecialTaskOutputStorage constructor that
+takes a CloudStorageAccount, job ID and node ID, or the constructor that takes a container URL and node ID:
+
+    var linkedStorageAccount = new CloudStorageAccount(/* credentials */);
+    var jobId = Environment.GetEnvironmentVariable("AZ_BATCH_JOB_ID");
+    var taskId = Environment.GetEnvironmentVariable("AZ_BATCH_TASK_ID");
+    var poolId = Environment.GetEnvironmentVariable("AZ_BATCH_POOL_ID");
+    var nodeId = Environment.GetEnvironmentVariable("AZ_BATCH_NODE_ID");
+    
+    var taskOutputStorage = new SpecialTaskOutputStorage(linkedStorageAccount, jobId, taskId, poolId, nodeId);
+    
+    await taskOutputStorage.SaveAsync(TaskOutputKind.TaskLog, "install.log");
+
 ### Listing and Retrieving Files in Client Code
 
 To access persisted files from client code, you must configure the client with
@@ -70,13 +101,51 @@ methods on CloudJob and CloudTask.
         await jobOutputBlob.DownloadToFileAsync("movie.mp4", FileMode.Create);
     }
 
+For job preparation and release tasks, use SpecialTaskOutputStorage, or the extension
+methods on CloudJob.  **TODO: should this be available from the ComputeNode as well?**
+
+    var job = await batchClient.JobOperations.GetJobAsync(jobId);
+    var jobPreparationTaskOutputStorage = job.JobPreparationTaskOutputStorage(linkedStorageAccount, nodeId);  // TODO: assumes we are okay with getting the poolId from job.ExecutionInformation - this could be missing if the job was gotten with a $select clause
+
+    var logBlobs = jobPreparationTaskOutputStorage.ListOutputs(TaskOutputKind.TaskLog)
+                                                  .Cast<CloudBlockBlob>();
+
+    foreach (var logBlob in logBlobs)
+    {
+        var downloadPath = GetDownloadPath(logBlob.Uri);
+        await logBlob.DownloadToFileAsync(downloadPath, FileMode.Create);
+    }
+
+For start task outputs, use StartTaskOutputStorage, or the extension methods on
+ComputeNode.
+
+    var node = await batchClient.PoolOperations.GetComputeNodeAsync(poolId, nodeId);
+    var startTaskOutputStorage = node.StartTaskOutputStorage(linkedStorageAccount);
+
+    var logBlobs = startTaskOutputStorage.ListOutputs(TaskOutputKind.TaskLog)
+                                         .Cast<CloudBlockBlob>();
+
+    foreach (var logBlob in logBlobs)
+    {
+        var downloadPath = GetDownloadPath(logBlob.Uri);
+        await logBlob.DownloadToFileAsync(downloadPath, FileMode.Create);
+    }
+
 ## Conventions
 
 The conventions library defines paths in Azure blob storage for output storage.
+
 All outputs from a job, including task outputs, are stored in a single container.
 Within that container, outputs are stored by kind and (for task outputs) task ID.
-This section describes the conventions for the job output container name and for
-paths within the job output container.
+(There are additional conventions for tasks that may run on multiple nodes using the
+same ID, such as job preparation tasks.)
+
+Similarly, all outputs relating to a pool (specifically start task outputs) are
+stored in a single container.  Within that container, outputs are stored by kind
+and by node ID.
+
+This section describes the conventions for the output container names and for
+paths within the output containers.
 
 ### Job Output Container Name
 
@@ -118,10 +187,11 @@ unique container names, while preserving human readability as far as possible,
 by where possible using the job ID, and in other cases including a prefix
 based on the job ID.
 
-### Blob Path
+### Job Output Blob Path
 
-The blob path within the container depends on whether the output is being stored
-as a job output or task output.
+The blob path within the job output container depends on whether the output is being stored
+as a job output or task output, and for task outputs whether the task runs on
+multiple nodes (such as the job preparation task).
 
 Job outputs are stored as "${kind}/{filename}".  For example, if the file
 "out/mergeresults.txt" is stored under JobOutputKind.JobOutput, then its path
@@ -131,6 +201,29 @@ Task outputs are stored as "{taskid}/${kind}/{filename}".  For example, if
 the file "analytics.log" from task "analysis-309" is stored under TaskOutputKind.TaskLog,
 then its path within the container is "analysis-309/$TaskLog/analytics.log".
 
+Job preparation and release task outputs are stored as "{taskId}/{poolId}/{nodeId}/${kind}/{filename}".
+For example, if the file "install.log" from job preparation task "jobpreparation"
+on node "node123" is stored under TaskOutputKind.TaskLog, then its path within the
+container is "jobpreparation/node123/$TaskLog/install.log".
+
+**TODO: validate that node IDs always give legal blob names.**
+
 The purpose behind this structure is to enable clients to readily locate
 outputs based on their kind - for example, "list the main outputs of the job"
 or "list the log files for task analysis-309".
+
+### Pool Output Container Name
+
+The pool output container name is calculated from its ID using the same algorithm
+as for the job output container name, except using the prefix "pool-" instead of
+"job-" in all places.
+
+**TODO: add examples a la job output container.**
+
+### Pool Output Blob Path
+
+Start task outputs are stored as "starttask/{nodeId}/${kind}/{filename}".  For example,
+if the file "analytics.log" from node "node123" is stored under TaskOutputKind.TaskLog,
+then its path within the container is "starttask/node123/$TaskLog/analytics.log".
+
+**TODO: validate that node IDs always give legal blob names.**
