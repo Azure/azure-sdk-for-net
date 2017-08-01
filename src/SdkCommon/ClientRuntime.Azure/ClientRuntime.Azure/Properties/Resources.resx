@@ -172,6 +172,9 @@ Parameter name: {0}</value>
   <data name="LongRunningOperationFailed" xml:space="preserve">
     <value>Long running operation failed with status '{0}'.</value>
   </data>
+  <data name="LROOperationFailedAdditionalInfo" xml:space="preserve">
+    <value>Long running operation failed with status '{0}'. Additional Info:'{1}'</value>
+  </data>
   <data name="NoBody" xml:space="preserve">
     <value>The response from long running operation does not contain a body.</value>
   </data>

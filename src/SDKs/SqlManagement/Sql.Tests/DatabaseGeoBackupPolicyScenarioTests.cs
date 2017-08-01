@@ -32,7 +32,7 @@ namespace Sql.Tests
                 Assert.NotNull(db1);
 
                 // List Geo Backup Policy
-                IEnumerable<GeoBackupPolicy> policies = sqlClient.Databases.ListGeoBackupPolicies(resourceGroup.Name, server.Name, dbName);
+                IEnumerable<GeoBackupPolicy> policies = sqlClient.GeoBackupPolicies.ListByDatabase(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(1, policies.Count());
 
                 GeoBackupPolicy policy = policies.First();
@@ -41,19 +41,19 @@ namespace Sql.Tests
                 Assert.Equal("Premium", policy.StorageType);
 
                 // Get Geo Backup Policy
-                policy = sqlClient.Databases.GetGeoBackupPolicy(resourceGroup.Name, server.Name, dbName);
+                policy = sqlClient.GeoBackupPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal("Default", policy.Name);
                 Assert.Equal(GeoBackupPolicyState.Enabled, policy.State);
                 Assert.Equal("Premium", policy.StorageType);
 
                 // Update policy
-                sqlClient.Databases.CreateOrUpdateGeoBackupPolicy(resourceGroup.Name, server.Name, dbName, new GeoBackupPolicy
+                sqlClient.GeoBackupPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new GeoBackupPolicy
                 {
                     State = GeoBackupPolicyState.Disabled
                 });
 
                 // List Geo Backup Policy
-                policies = sqlClient.Databases.ListGeoBackupPolicies(resourceGroup.Name, server.Name, dbName);
+                policies = sqlClient.GeoBackupPolicies.ListByDatabase(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(1, policies.Count());
 
                 policy = policies.First();
@@ -62,7 +62,7 @@ namespace Sql.Tests
                 Assert.Equal("Premium", policy.StorageType);
 
                 // Get Geo Backup Policy
-                policy = sqlClient.Databases.GetGeoBackupPolicy(resourceGroup.Name, server.Name, dbName);
+                policy = sqlClient.GeoBackupPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal("Default", policy.Name);
                 Assert.Equal(GeoBackupPolicyState.Disabled, policy.State);
                 Assert.Equal("Premium", policy.StorageType);

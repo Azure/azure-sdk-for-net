@@ -42,8 +42,7 @@ namespace Sql.Tests
                     },
                     ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint()
                     {
-                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Automatic,
-                        FailoverWithDataLossGracePeriodMinutes = 120,
+                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Manual,
                     },
                     PartnerServers = new List<PartnerInfo>()
                     {
@@ -56,6 +55,31 @@ namespace Sql.Tests
 
                 var failoverGroupOnPartner = sqlClient.FailoverGroups.Get(resourceGroup.Name, targetServer.Name, failoverGroupName);
                 Assert.NotNull(failoverGroupOnPartner);
+
+                // Update a few settings
+                //
+                var fgPatchInput = new FailoverGroupUpdate
+                {
+                    ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint
+                    {
+                        FailoverPolicy = ReadOnlyEndpointFailoverPolicy.Enabled
+                    },
+                    ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint
+                    {
+                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Automatic,
+                        FailoverWithDataLossGracePeriodMinutes = 120
+                    },
+                    Tags = new Dictionary<string, string> { { "tag1", "value1" } }
+                };
+                
+                var failoverGroupUpdated2 = sqlClient.FailoverGroups.Update(resourceGroup.Name, sourceServer.Name, failoverGroupName, fgPatchInput);
+
+                // Set expectations and verify update
+                //
+                fgInput.ReadWriteEndpoint = fgPatchInput.ReadWriteEndpoint;
+                fgInput.ReadOnlyEndpoint = fgPatchInput.ReadOnlyEndpoint;
+                fgInput.Tags = fgPatchInput.Tags;
+                SqlManagementTestUtilities.ValidateFailoverGroup(fgInput, failoverGroupUpdated2, failoverGroupName);
 
                 // Create a database in the primary server
                 //
