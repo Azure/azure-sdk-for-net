@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// The implementation of Users and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryUsersImpl  :
-        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
+    public partial class ActiveDirectoryUsersImpl :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl, Models.UserInner>,
         IActiveDirectoryUsers,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUsersOperations>
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public ActiveDirectoryUserImpl GetById(string objectId)
         {
-            return (ActiveDirectoryUserImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
+            return (ActiveDirectoryUserImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public ActiveDirectoryUserImpl GetByName(string upn)
         {
-            return (ActiveDirectoryUserImpl) Extensions.Synchronize(() => GetByNameAsync(upn));
+            return (ActiveDirectoryUserImpl)Extensions.Synchronize(() => GetByNameAsync(upn));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))

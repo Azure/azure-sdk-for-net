@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleDefinitionImpl GetById(string objectId)
         {
-            return (RoleDefinitionImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
+            return (RoleDefinitionImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleDefinitionImpl GetByScopeAndRoleName(string scope, string roleName)
         {
-            return (RoleDefinitionImpl) Extensions.Synchronize(() => GetByScopeAndRoleNameAsync(scope, roleName));
+            return (RoleDefinitionImpl)Extensions.Synchronize(() => GetByScopeAndRoleNameAsync(scope, roleName));
         }
 
         public async Task<IPagedCollection<IRoleDefinition>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleDefinitionImpl GetByScope(string scope, string name)
         {
-            return (RoleDefinitionImpl) Extensions.Synchronize(() => GetByScopeAsync(scope, name));
+            return (RoleDefinitionImpl)Extensions.Synchronize(() => GetByScopeAsync(scope, name));
         }
 
         public IRoleDefinitionsOperations Inner

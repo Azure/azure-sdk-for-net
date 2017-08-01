@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleAssignmentImpl GetById(string objectId)
         {
-            return (RoleAssignmentImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
+            return (RoleAssignmentImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleAssignmentImpl GetByScope(string scope, string name)
         {
-            return (RoleAssignmentImpl) Extensions.Synchronize(() => GetByScopeAsync(scope, name));
+            return (RoleAssignmentImpl)Extensions.Synchronize(() => GetByScopeAsync(scope, name));
         }
 
         public IRoleAssignmentsOperations Inner
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
 
-        internal  RoleAssignmentsImpl(GraphRbacManager manager)
+        internal RoleAssignmentsImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// Implementation for User and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryUserImpl  :
+    public partial class ActiveDirectoryUserImpl :
         CreatableUpdatable<IActiveDirectoryUser, UserInner, ActiveDirectoryUserImpl, IHasId, ActiveDirectoryUser.Update.IUpdate>,
         IActiveDirectoryUser,
         ActiveDirectoryUser.Definition.IDefinition,
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
 
-        internal  ActiveDirectoryUserImpl(UserInner innerObject, GraphRbacManager manager)
-                : base (innerObject.DisplayName, innerObject)
+        internal ActiveDirectoryUserImpl(UserInner innerObject, GraphRbacManager manager)
+                : base(innerObject.DisplayName, innerObject)
         {
             this.manager = manager;
             this.createParameters = new UserCreateParametersInner
@@ -43,32 +43,32 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             };
         }
 
-                public string Mail()
+        public string Mail()
         {
             return Inner.Mail;
         }
 
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public string SignInName()
+        public string SignInName()
         {
             return Inner.SignInName;
         }
 
-                public string Id()
+        public string Id()
         {
             return Inner.ObjectId;
         }
 
-                public string UserPrincipalName()
+        public string UserPrincipalName()
         {
             return Inner.UserPrincipalName;
         }
 
-                public string MailNickname()
+        public string MailNickname()
         {
             return Inner.MailNickname;
         }
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.emailAlias = emailAlias;
             return this;
         }
-        
+
         public ActiveDirectoryUserImpl WithPassword(string password)
         {
             createParameters.PasswordProfile = new PasswordProfile
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             return await manager.Inner.Users.GetAsync(Id(), cancellationToken);
         }
-        
+
         private bool IsInCreateMode()
         {
             return Id() == null;

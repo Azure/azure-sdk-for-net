@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    public partial class ServicePrincipalImpl  :
-        CreatableUpdatable<IServicePrincipal,ServicePrincipalInner,ServicePrincipalImpl,IHasId,ServicePrincipal.Update.IUpdate>,
+    public partial class ServicePrincipalImpl :
+        CreatableUpdatable<IServicePrincipal, ServicePrincipalInner, ServicePrincipalImpl, IHasId, ServicePrincipal.Update.IUpdate>,
         IServicePrincipal,
         IDefinition,
         IUpdate,
@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         private GraphRbacManager manager;
 
-        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
-        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
+        private Dictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
+        private Dictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
         private Dictionary<string, IRoleAssignment> cachedRoleAssignments;
 
         private ServicePrincipalCreateParametersInner createParameters;
         private ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable;
-        private Dictionary<string,BuiltInRole> rolesToCreate;
+        private Dictionary<string, BuiltInRole> rolesToCreate;
         private ISet<string> rolesToDelete;
 
         internal string assignedSubscription;
@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name) where T : class
         {
-            return new PasswordCredentialImpl<T>(name, (IHasCredential<T>) this);
+            return new PasswordCredentialImpl<T>(name, (IHasCredential<T>)this);
         }
 
-                internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<KeyCredential> keyCredentials = await manager.Inner.ServicePrincipals.ListKeyCredentialsAsync(Id(), cancellationToken);
             this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
@@ -74,22 +74,22 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public bool IsInCreateMode()
+        public bool IsInCreateMode()
         {
             return Id() == null;
         }
 
-                public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
+        public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
         {
             return WithNewRole(role, resourceGroup.Id);
         }
 
-                public ServicePrincipalImpl WithNewRoleInSubscription(BuiltInRole role, string subscriptionId)
+        public ServicePrincipalImpl WithNewRoleInSubscription(BuiltInRole role, string subscriptionId)
         {
             this.assignedSubscription = subscriptionId;
             return WithNewRole(role, "subscriptions/" + subscriptionId);
@@ -101,12 +101,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
+        public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
         {
-            return new CertificateCredentialImpl<T>(name, (IHasCredential<T>) this);
+            return new CertificateCredentialImpl<T>(name, (IHasCredential<T>)this);
         }
 
-                public ServicePrincipalImpl WithoutCredential(string name)
+        public ServicePrincipalImpl WithoutCredential(string name)
         {
             if (cachedPasswordCredentials.ContainsKey(name))
             {
@@ -119,14 +119,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
+        public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
         {
             AddCreatableDependency(applicationCreatable as IResourceCreator<IHasId>);
             this.applicationCreatable = applicationCreatable;
             return this;
         }
 
-                public ServicePrincipalImpl WithNewApplication(string signOnUrl)
+        public ServicePrincipalImpl WithNewApplication(string signOnUrl)
         {
             return WithNewApplication(manager.Applications.Define(signOnUrl)
                     .WithSignOnUrl(signOnUrl)
@@ -152,68 +152,68 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.passwordCredentialsToDelete = new HashSet<string>();
         }
 
-                public ServicePrincipalImpl WithCertificateCredential<T>(CertificateCredentialImpl<T> credential) where T : class
+        public ServicePrincipalImpl WithCertificateCredential<T>(CertificateCredentialImpl<T> credential) where T : class
         {
             this.certificateCredentialsToCreate.Add(credential);
             return this;
         }
 
-                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
         {
             return new ReadOnlyDictionary<string, ICertificateCredential>(cachedCertificateCredentials);
         }
 
-                protected override async Task<Models.ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<Models.ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await manager.Inner.ServicePrincipals.GetAsync(Id(), cancellationToken);
         }
 
-                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
         {
             return new ReadOnlyDictionary<string, IPasswordCredential>(cachedPasswordCredentials);
         }
 
-                public ServicePrincipalImpl WithNewRole(BuiltInRole role, string scope)
+        public ServicePrincipalImpl WithNewRole(BuiltInRole role, string scope)
         {
             this.rolesToCreate.Add(scope, role);
             return this;
         }
 
-                public ServicePrincipalImpl WithExistingApplication(string id)
+        public ServicePrincipalImpl WithExistingApplication(string id)
         {
             createParameters.AppId = id;
             return this;
         }
 
-                public ServicePrincipalImpl WithExistingApplication(IActiveDirectoryApplication application)
+        public ServicePrincipalImpl WithExistingApplication(IActiveDirectoryApplication application)
         {
             createParameters.AppId = application.ApplicationId;
             return this;
         }
 
-                public IReadOnlyList<string> ServicePrincipalNames()
+        public IReadOnlyList<string> ServicePrincipalNames()
         {
             return Inner.ServicePrincipalNames.ToList().AsReadOnly();
         }
 
-                public ServicePrincipalImpl WithPasswordCredential<T>(PasswordCredentialImpl<T> credential) where T : class
+        public ServicePrincipalImpl WithPasswordCredential<T>(PasswordCredentialImpl<T> credential) where T : class
         {
             this.passwordCredentialsToCreate.Add(credential);
             return this;
         }
 
-                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             SetInner(await GetInnerAsync(cancellationToken));
             return await RefreshCredentialsAsync(cancellationToken);
         }
 
-                public string Id()
+        public string Id()
         {
             return Inner.ObjectId;
         }
 
-                public string ApplicationId()
+        public string ApplicationId()
         {
             return Inner.AppId;
         }
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             {
                 if (password is PasswordCredentialImpl<IWithCreate>)
                 {
-                    await ((PasswordCredentialImpl<IWithCreate>) password).ExportAuthFileAsync(this, cancellationToken);
+                    await ((PasswordCredentialImpl<IWithCreate>)password).ExportAuthFileAsync(this, cancellationToken);
                 }
                 else
                 {

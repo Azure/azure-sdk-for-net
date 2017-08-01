@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// The implementation of Users and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryGroupsImpl  :
-        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroupImpl,Models.ADGroupInner>,
+    public partial class ActiveDirectoryGroupsImpl :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroupImpl, Models.ADGroupInner>,
         IActiveDirectoryGroups
     {
         private GraphRbacManager manager;
@@ -26,9 +26,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.manager = manager;
         }
 
-                public ActiveDirectoryGroupImpl GetById(string objectId)
+        public ActiveDirectoryGroupImpl GetById(string objectId)
         {
-            return (ActiveDirectoryGroupImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
+            return (ActiveDirectoryGroupImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public ActiveDirectoryApplicationImpl GetById(string id)
         {
-            return (ActiveDirectoryApplicationImpl) Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(Extensions.Synchronize(() => innerCollection.GetAsync(id)))).RefreshCredentialsAsync());
+            return (ActiveDirectoryApplicationImpl)Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(Extensions.Synchronize(() => innerCollection.GetAsync(id)))).RefreshCredentialsAsync());
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

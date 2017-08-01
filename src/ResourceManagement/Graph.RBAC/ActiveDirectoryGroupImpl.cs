@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// Implementation for Group and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryGroupImpl  :
+    public partial class ActiveDirectoryGroupImpl :
         CreatableUpdatable<IActiveDirectoryGroup, ADGroupInner, ActiveDirectoryGroupImpl, IHasId, ActiveDirectoryGroup.Update.IUpdate>,
         IActiveDirectoryGroup,
         ActiveDirectoryGroup.Definition.IDefinition,
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return Inner.Mail;
         }
 
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                internal  ActiveDirectoryGroupImpl(ADGroupInner innerModel, GraphRbacManager manager)
-                    : base(innerModel.DisplayName, innerModel)
+        internal ActiveDirectoryGroupImpl(ADGroupInner innerModel, GraphRbacManager manager)
+            : base(innerModel.DisplayName, innerModel)
         {
             this.manager = manager;
             this.createParameters = new GroupCreateParametersInner
@@ -53,12 +53,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             membersToRemove = new HashSet<string>();
         }
 
-                public string Id()
+        public string Id()
         {
             return Inner.ObjectId;
         }
 
-                public bool SecurityEnabled()
+        public bool SecurityEnabled()
         {
             return Inner.SecurityEnabled ?? false;
         }

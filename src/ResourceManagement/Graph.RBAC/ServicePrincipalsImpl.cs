@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.manager = graphRbacManager;
         }
 
-                public ServicePrincipalImpl GetById(string id)
+        public ServicePrincipalImpl GetById(string id)
         {
-            return (ServicePrincipalImpl) Extensions.Synchronize(() => GetByIdAsync(id));
+            return (ServicePrincipalImpl)Extensions.Synchronize(() => GetByIdAsync(id));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
