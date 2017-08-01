@@ -33,7 +33,7 @@ namespace Fluent.Tests.Graph.RBAC
                 try
                 {
                     servicePrincipal = manager.ServicePrincipals.Define(name)
-                            .WithNewApplication("http://easycreate.azure.com/anotherapp/40")
+                            .WithNewApplication("http://easycreate.azure.com/anotherapp/" + name)
                             .DefinePasswordCredential("sppass")
                                 .WithPasswordValue("StrongPass!12")
                                 .Attach()
@@ -44,6 +44,29 @@ namespace Fluent.Tests.Graph.RBAC
                     Assert.Equal(2, servicePrincipal.ServicePrincipalNames.Count);
                     Assert.Equal(1, servicePrincipal.PasswordCredentials.Count);
                     Assert.Equal(0, servicePrincipal.CertificateCredentials.Count);
+
+                    // Get
+                    servicePrincipal = manager.ServicePrincipals.GetByName(servicePrincipal.ApplicationId);
+                    Assert.NotNull(servicePrincipal);
+                    Assert.NotNull(servicePrincipal.ApplicationId);
+                    Assert.Equal(2, servicePrincipal.ServicePrincipalNames.Count);
+                    Assert.Equal(1, servicePrincipal.PasswordCredentials.Count);
+                    Assert.Equal(0, servicePrincipal.CertificateCredentials.Count);
+
+                    // Update
+                    servicePrincipal.Update()
+                            .WithoutCredential("sppass")
+                            .DefineCertificateCredential("spcert")
+                                .WithAsymmetricX509Certificate()
+                                .WithPublicKey(File.ReadAllBytes("Assets/myTest.cer"))
+                                .WithDuration(TimeSpan.FromDays(1))
+                                .Attach()
+                            .Apply();
+                    Assert.NotNull(servicePrincipal);
+                    Assert.NotNull(servicePrincipal.ApplicationId);
+                    Assert.Equal(2, servicePrincipal.ServicePrincipalNames.Count);
+                    Assert.Equal(0, servicePrincipal.PasswordCredentials.Count);
+                    Assert.Equal(1, servicePrincipal.CertificateCredentials.Count);
                 }
                 finally
                 {
@@ -66,6 +89,7 @@ namespace Fluent.Tests.Graph.RBAC
                 string subscriptionId = TestHelper.CreateResourceManager().SubscriptionId;
                 string authFile = "mytest.azureauth";
                 string name = SdkContext.RandomResourceName("javasdksp", 20);
+                string rgName = SdkContext.RandomResourceName("rg", 20);
                 try
                 {
                     servicePrincipal = manager.ServicePrincipals.Define(name)
@@ -93,7 +117,26 @@ namespace Fluent.Tests.Graph.RBAC
                     SdkContext.DelayProvider.Delay(10000);
                     IResourceManager resourceManager = Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager.Authenticate(
                         new AzureCredentialsFactory().FromFile(authFile)).WithSubscription(subscriptionId);
-                    Assert.NotNull(resourceManager.ResourceGroups.List());
+                    var group = resourceManager.ResourceGroups.Define(rgName).WithRegion(Region.USWest).Create();
+
+                    // Update
+                    IRoleAssignment ra = servicePrincipal.RoleAssignments.First();
+                    servicePrincipal.Update()
+                            .WithoutRole(ra)
+                            .WithNewRoleInResourceGroup(BuiltInRole.Contributor, group)
+                            .Apply();
+
+                    SdkContext.DelayProvider.Delay(120000);
+                    Assert.NotNull(resourceManager.ResourceGroups.GetByName(group.Name));
+                    try
+                    {
+                        resourceManager.ResourceGroups.Define(rgName + "2")
+                                .WithRegion(Region.USWest).Create();
+                    }
+                    catch (Exception)
+                    {
+                        // expected
+                    }
                 }
                 finally
                 {

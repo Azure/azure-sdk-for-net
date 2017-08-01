@@ -53,5 +53,43 @@ namespace Fluent.Tests.Graph.RBAC
                 Assert.Equal("Reader zero", user.Name);
             }
         }
+
+        [Fact]
+        public void CanCreateUser()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                IGraphRbacManager manager = TestHelper.CreateGraphRbacManager();
+                var name = SdkContext.RandomResourceName("user", 16);
+                var user = manager.Users.Define("Automatic " + name)
+                        .WithEmailAlias(name)
+                        .WithPassword("StrongPass!123")
+                        .WithPromptToChangePasswordOnLogin(true)
+                        .Create();
+
+                Assert.NotNull(user);
+                Assert.NotNull(user.Id);
+            }
+        }
+
+        [Fact]
+        public void CanUpdateUser()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                IGraphRbacManager manager = TestHelper.CreateGraphRbacManager();
+                var name = SdkContext.RandomResourceName("user", 16);
+                var user = manager.Users.Define("Test " + name)
+                        .WithEmailAlias(name)
+                        .WithPassword("StrongPass!123")
+                        .Create();
+
+                user = user.Update()
+                        .WithUsageLocation(CountryISOCode.Australia)
+                        .Apply();
+
+                Assert.Equal(CountryISOCode.Australia, user.UsageLocation);
+            }
+        }
     }
 }

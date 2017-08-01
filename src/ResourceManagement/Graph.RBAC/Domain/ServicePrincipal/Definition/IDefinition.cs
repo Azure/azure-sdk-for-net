@@ -2,12 +2,20 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition
 {
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
+
+    /// <summary>
+    /// A service principal definition allowing role assignments to be added.
+    /// </summary>
+    public interface IWithRoleAssignment  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithRoleAssignmentBeta
+    {
+    }
 
     /// <summary>
     /// A service principal definition allowing credentials to be specified.
@@ -57,9 +65,32 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
     /// <summary>
     /// A service principal definition allowing role assignments to be added.
     /// </summary>
-    public interface IWithRoleAssignment  :
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithRoleAssignmentBeta
+    public interface IWithRoleAssignmentBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
+        /// <summary>
+        /// Assigns a new role to the service principal.
+        /// </summary>
+        /// <param name="role">The role to assign to the service principal.</param>
+        /// <param name="resourceGroup">The resource group the service principal can access.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup);
+
+        /// <summary>
+        /// Assigns a new role to the service principal.
+        /// </summary>
+        /// <param name="role">The role to assign to the service principal.</param>
+        /// <param name="subscriptionId">The subscription the service principal can access.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewRoleInSubscription(BuiltInRole role, string subscriptionId);
+
+        /// <summary>
+        /// Assigns a new role to the service principal.
+        /// </summary>
+        /// <param name="role">The role to assign to the service principal.</param>
+        /// <param name="scope">The scope the service principal can access.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewRole(BuiltInRole role, string scope);
     }
 
     /// <summary>
@@ -116,36 +147,5 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
         /// <param name="signOnUrl">The new application's sign on URL.</param>
         /// <return>The next stage of the service principal definition.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewApplication(string signOnUrl);
-    }
-
-    /// <summary>
-    /// A service principal definition allowing role assignments to be added.
-    /// </summary>
-    public interface IWithRoleAssignmentBeta  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
-    {
-        /// <summary>
-        /// Assigns a new role to the service principal.
-        /// </summary>
-        /// <param name="role">The role to assign to the service principal.</param>
-        /// <param name="resourceGroup">The resource group the service principal can access.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup);
-
-        /// <summary>
-        /// Assigns a new role to the service principal.
-        /// </summary>
-        /// <param name="role">The role to assign to the service principal.</param>
-        /// <param name="subscriptionId">The subscription the service principal can access.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewRoleInSubscription(BuiltInRole role, string subscriptionId);
-
-        /// <summary>
-        /// Assigns a new role to the service principal.
-        /// </summary>
-        /// <param name="role">The role to assign to the service principal.</param>
-        /// <param name="scope">The scope the service principal can access.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewRole(BuiltInRole role, string scope);
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Update;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
@@ -12,16 +13,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// </summary>
     public interface IServicePrincipal  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IIndexable,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ServicePrincipalInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ServicePrincipal.Update.IUpdate>
     {
         /// <summary>
         /// Gets the list of names.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<string> ServicePrincipalNames { get; }
+
+        /// <summary>
+        /// Gets the mapping from scopes to role assignments.
+        /// </summary>
+        System.Collections.Generic.ISet<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> RoleAssignments { get; }
 
         /// <summary>
         /// Gets app id.

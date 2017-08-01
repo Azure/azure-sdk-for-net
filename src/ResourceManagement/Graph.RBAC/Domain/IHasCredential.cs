@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// An interface representing a model that can attach a credential.
     /// </summary>
-    public interface IHasCredential<T> :
+    public interface IHasCredential<T>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
         where T : class
     {

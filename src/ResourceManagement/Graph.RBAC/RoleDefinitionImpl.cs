@@ -5,11 +5,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    public partial class RoleDefinitionImpl  :
+    public partial class RoleDefinitionImpl :
         Wrapper<Models.RoleDefinitionInner>,
         IRoleDefinition
     {
@@ -19,12 +20,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private string servicePrincipalName;
         private string roleDefinitionId;
         private string roleName;
-                public GraphRbacManager Manager()
+
+        string IHasId.Id => Inner.Id;
+
+        string IHasName.Name => Inner.Name;
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public ISet<Models.Permission> Permissions()
+        public ISet<Models.Permission> Permissions()
         {
             if (Inner.Properties == null)
             {
@@ -33,18 +41,18 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new HashSet<Models.Permission>(Inner.Properties.Permissions);
         }
 
-                internal  RoleDefinitionImpl(RoleDefinitionInner innerObject, GraphRbacManager manager)
-                    : base(innerObject)
+        internal RoleDefinitionImpl(RoleDefinitionInner innerObject, GraphRbacManager manager)
+            : base(innerObject)
         {
             this.manager = manager;
         }
 
-                public string Name()
+        public string Name()
         {
             return Inner.Name;
         }
 
-                public string RoleName()
+        public string RoleName()
         {
             if (Inner.Properties == null)
             {
@@ -53,7 +61,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return Inner.Properties.RoleName;
         }
 
-                public string Description()
+        public string Description()
         {
             if (Inner.Properties == null)
             {
@@ -62,12 +70,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return Inner.Properties.Description;
         }
 
-                public string Id()
+        public string Id()
         {
             return Inner.Id;
         }
 
-                public string Type()
+        public string Type()
         {
             if (Inner.Properties == null)
             {
@@ -76,7 +84,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return Inner.Properties.Type;
         }
 
-                public ISet<string> AssignableScopes()
+        public ISet<string> AssignableScopes()
         {
             if (Inner.Properties == null)
             {

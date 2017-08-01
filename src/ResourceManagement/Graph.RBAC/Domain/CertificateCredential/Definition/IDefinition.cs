@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The entirety of a credential definition.
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
-    public interface IDefinition<ParentT>  :
+    public interface IDefinition<ParentT> :
         Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithCertificateType<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithPublicKey<ParentT>,
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The credential definition stage allowing the certificate type to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithCertificateType<ParentT> 
+    public interface IWithCertificateType<ParentT>
     {
         /// <summary>
         /// Specifies the type of the certificate to be symmetric.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// using  WithAttach.attach().
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithAttach<ParentT>  :
+    public interface IWithAttach<ParentT> :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithStartDate<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithDuration<ParentT>,
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// <summary>
     /// A credential definition stage allowing specifying the password for the private key for exporting an auth file.
     /// </summary>
-    public interface IWithAuthFileCertificatePassword<ParentT> 
+    public interface IWithAuthFileCertificatePassword<ParentT>
     {
         /// <summary>
         /// Export the information of this service principal into an auth file.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The credential definition stage allowing the duration of key validity to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithDuration<ParentT> 
+    public interface IWithDuration<ParentT>
     {
         /// <summary>
         /// Specifies the duration for which password or key would be valid. Default value is 1 year.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The credential definition stage allowing the public key to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithPublicKey<ParentT> 
+    public interface IWithPublicKey<ParentT>
     {
         /// <summary>
         /// Specifies the public key for an asymmetric X509 certificate.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// <summary>
     /// A credential definition stage allowing specifying the private key for exporting an auth file.
     /// </summary>
-    public interface IWithAuthFileCertificate<ParentT> 
+    public interface IWithAuthFileCertificate<ParentT>
     {
         /// <summary>
         /// Export the information of this service principal into an auth file.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// <summary>
     /// A credential definition stage allowing exporting the auth file for the service principal.
     /// </summary>
-    public interface IWithAuthFile<ParentT> 
+    public interface IWithAuthFile<ParentT>
     {
         /// <summary>
         /// Export the information of this service principal into an auth file.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The credential definition stage allowing the secret key to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithSymmetricKey<ParentT> 
+    public interface IWithSymmetricKey<ParentT>
     {
         /// <summary>
         /// Specifies the secret key for a symmetric encryption.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The first stage of a credential definition.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IBlank<ParentT>  :
+    public interface IBlank<ParentT> :
         Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithCertificateType<ParentT>
     {
     }
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
     /// The credential definition stage allowing start date to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithStartDate<ParentT> 
+    public interface IWithStartDate<ParentT>
     {
         /// <summary>
         /// Specifies the start date after which password or key would be valid. Default value is current time.

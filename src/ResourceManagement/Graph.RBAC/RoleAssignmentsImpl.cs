@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition;
 
     /// <summary>
     /// The implementation of RoleAssignments and its parent interfaces.
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleAssignmentImpl GetById(string objectId)
         {
-            return (RoleAssignmentImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
+            return (RoleAssignmentImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public RoleAssignmentImpl GetByScope(string scope, string name)
         {
-            return (RoleAssignmentImpl) Extensions.Synchronize(() => GetByScopeAsync(scope, name));
+            return (RoleAssignmentImpl)Extensions.Synchronize(() => GetByScopeAsync(scope, name));
         }
 
         public IRoleAssignmentsOperations Inner
@@ -75,6 +76,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return manager.RoleInner.RoleAssignments;
             }
         }
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
 
         internal RoleAssignmentsImpl(GraphRbacManager manager)
         {
@@ -101,6 +104,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public override void DeleteById(string id)
         {
             Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.DeleteByIdAsync(id));
+        }
+
+        IRoleAssignment ISupportsGettingById<IRoleAssignment>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.GetByIdAsync(id)));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

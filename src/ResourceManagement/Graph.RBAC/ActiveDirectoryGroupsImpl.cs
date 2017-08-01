@@ -10,12 +10,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System.Linq;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition;
+    using System;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
     /// </summary>
     public partial class ActiveDirectoryGroupsImpl :
-        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroupImpl, Models.ADGroupInner>,
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroupImpl, Models.ADGroupInner>,
         IActiveDirectoryGroups
     {
         private GraphRbacManager manager;
@@ -24,14 +26,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.manager = manager;
         }
 
-        public GraphRbacManager Manager()
-        {
-            return manager;
-        }
-
         public ActiveDirectoryGroupImpl GetById(string objectId)
         {
-            return (ActiveDirectoryGroupImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
+            return (ActiveDirectoryGroupImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -75,6 +72,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
         protected override IActiveDirectoryGroup WrapModel(ADGroupInner groupInner)
         {
             if (groupInner == null)
@@ -82,6 +81,34 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return null;
             }
             return new ActiveDirectoryGroupImpl(groupInner, manager);
+        }
+
+        IActiveDirectoryGroup ISupportsGettingById<IActiveDirectoryGroup>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.Groups.GetAsync(id)));
+        }
+
+        public IBlank Define(string name)
+        {
+            return WrapModel(name);
+        }
+
+        public override void DeleteById(string id)
+        {
+            Extensions.Synchronize(() => manager.Inner.Groups.DeleteAsync(id));
+        }
+
+        public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await manager.Inner.Groups.DeleteAsync(id, cancellationToken);
+        }
+
+        protected override ActiveDirectoryGroupImpl WrapModel(string name)
+        {
+            return new ActiveDirectoryGroupImpl(new ADGroupInner
+            {
+                DisplayName = name
+            }, manager);
         }
     }
 }

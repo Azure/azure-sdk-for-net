@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryApplicationImpl  :
-        CreatableUpdatable<IActiveDirectoryApplication,ApplicationInner,ActiveDirectoryApplicationImpl,IHasId,IUpdate>,
+    public partial class ActiveDirectoryApplicationImpl :
+        CreatableUpdatable<IActiveDirectoryApplication, ApplicationInner, ActiveDirectoryApplicationImpl, IHasId, IUpdate>,
         IActiveDirectoryApplication,
         IDefinition,
         IUpdate,
@@ -28,9 +28,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private GraphRbacManager manager;
         private ApplicationCreateParametersInner createParameters;
         private ApplicationUpdateParametersInner updateParameters;
-        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
-        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
-                public ActiveDirectoryApplicationImpl WithAvailableToOtherTenants(bool availableToOtherTenants)
+        private Dictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
+        private Dictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
+
+        string IHasId.Id => Inner.ObjectId;
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        public ActiveDirectoryApplicationImpl WithAvailableToOtherTenants(bool availableToOtherTenants)
         {
             if (IsInCreateMode())
             {
@@ -43,12 +48,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name) where T : class
+        public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name) where T : class
         {
-            return new PasswordCredentialImpl<T>(name, (IHasCredential<T>) this);
+            return new PasswordCredentialImpl<T>(name, (IHasCredential<T>)this);
         }
 
-                public IReadOnlyList<string> ApplicationPermissions()
+        public IReadOnlyList<string> ApplicationPermissions()
         {
             if (Inner.AppPermissions == null)
             {
@@ -57,7 +62,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return Inner.AppPermissions.ToList().AsReadOnly();
         }
 
-                internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<KeyCredential> keyCredentials = await manager.Inner.Applications.ListKeyCredentialsAsync(Id(), cancellationToken);
             this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
@@ -78,7 +83,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public ActiveDirectoryApplicationImpl WithIdentifierUrl(string identifierUrl)
+        public ActiveDirectoryApplicationImpl WithIdentifierUrl(string identifierUrl)
         {
             if (IsInCreateMode())
             {
@@ -90,7 +95,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
             else
             {
-                if (updateParameters.IdentifierUris == null) {
+                if (updateParameters.IdentifierUris == null)
+                {
                     updateParameters.IdentifierUris = new List<string>(IdentifierUris());
                 }
                 updateParameters.IdentifierUris.Add(identifierUrl);
@@ -98,8 +104,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                internal  ActiveDirectoryApplicationImpl(ApplicationInner innerObject, GraphRbacManager manager)
-                    : base(innerObject.DisplayName, innerObject)
+        internal ActiveDirectoryApplicationImpl(ApplicationInner innerObject, GraphRbacManager manager)
+            : base(innerObject.DisplayName, innerObject)
         {
             this.manager = manager;
             this.createParameters = new ApplicationCreateParametersInner
@@ -112,7 +118,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             };
         }
 
-                public ActiveDirectoryApplicationImpl WithSignOnUrl(string signOnUrl)
+        public ActiveDirectoryApplicationImpl WithSignOnUrl(string signOnUrl)
         {
             if (IsInCreateMode())
             {
@@ -125,7 +131,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return WithReplyUrl(signOnUrl);
         }
 
-                public ISet<string> ReplyUrls()
+        public ISet<string> ReplyUrls()
         {
             if (Inner.ReplyUrls == null)
             {
@@ -134,7 +140,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new System.Collections.Generic.HashSet<string>(Inner.ReplyUrls);
         }
 
-                public IUpdate WithoutIdentifierUrl(string identifierUrl)
+        public IUpdate WithoutIdentifierUrl(string identifierUrl)
         {
             if (updateParameters.IdentifierUris != null)
             {
@@ -143,7 +149,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
         {
             if (cachedCertificateCredentials == null)
             {
@@ -152,17 +158,17 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new ReadOnlyDictionary<string, ICertificateCredential>(cachedCertificateCredentials);
         }
 
-                protected override async Task<Models.ApplicationInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<Models.ApplicationInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await manager.Inner.Applications.GetAsync(Id(), cancellationToken);
         }
 
-                public bool AvailableToOtherTenants()
+        public bool AvailableToOtherTenants()
         {
             return Inner.AvailableToOtherTenants ?? false;
         }
 
-                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
         {
             if (cachedPasswordCredentials == null)
             {
@@ -171,7 +177,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new ReadOnlyDictionary<string, IPasswordCredential>(cachedPasswordCredentials);
         }
 
-                public ActiveDirectoryApplicationImpl WithPasswordCredential<T>(PasswordCredentialImpl<T> credential) where T : class
+        public ActiveDirectoryApplicationImpl WithPasswordCredential<T>(PasswordCredentialImpl<T> credential) where T : class
         {
             if (IsInCreateMode())
             {
@@ -183,7 +189,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
             else
             {
-                if (updateParameters.PasswordCredentials == null) {
+                if (updateParameters.PasswordCredentials == null)
+                {
                     updateParameters.PasswordCredentials = new List<Models.PasswordCredential>();
                 }
                 updateParameters.PasswordCredentials.Add(credential.Inner);
@@ -191,7 +198,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public ISet<string> IdentifierUris()
+        public ISet<string> IdentifierUris()
         {
             if (Inner.IdentifierUris == null)
             {
@@ -200,12 +207,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new HashSet<string>(Inner.IdentifierUris);
         }
 
-                public string Id()
+        public string Id()
         {
             return Inner.ObjectId;
         }
 
-                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode())
             {
@@ -224,33 +231,35 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public bool IsInCreateMode()
+        public bool IsInCreateMode()
         {
             return Id() == null;
         }
 
-                public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
+        public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
         {
-            return new CertificateCredentialImpl<T>(name, (IHasCredential<T>) this);
+            return new CertificateCredentialImpl<T>(name, (IHasCredential<T>)this);
         }
 
-                public ActiveDirectoryApplicationImpl WithCertificateCredential<T>(CertificateCredentialImpl<T> credential) where T : class
+        public ActiveDirectoryApplicationImpl WithCertificateCredential<T>(CertificateCredentialImpl<T> credential) where T : class
         {
             if (IsInCreateMode())
             {
-                if (createParameters.KeyCredentials == null) {
+                if (createParameters.KeyCredentials == null)
+                {
                     createParameters.KeyCredentials = new List<KeyCredential>();
                 }
                 createParameters.KeyCredentials.Add(credential.Inner);
             }
             else
             {
-                if (updateParameters.KeyCredentials == null) {
+                if (updateParameters.KeyCredentials == null)
+                {
                     updateParameters.KeyCredentials = new List<KeyCredential>();
                 }
                 updateParameters.KeyCredentials.Add(credential.Inner);
@@ -258,7 +267,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public Uri SignOnUrl()
+        public Uri SignOnUrl()
         {
             try
             {
@@ -270,7 +279,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public ActiveDirectoryApplicationImpl WithoutReplyUrl(string replyUrl)
+        public ActiveDirectoryApplicationImpl WithoutReplyUrl(string replyUrl)
         {
             if (updateParameters.ReplyUrls != null)
             {
@@ -279,7 +288,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public ActiveDirectoryApplicationImpl WithoutCredential(string name)
+        public ActiveDirectoryApplicationImpl WithoutCredential(string name)
         {
             if (cachedPasswordCredentials.ContainsKey(name))
             {
@@ -294,29 +303,31 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             SetInner(await GetInnerAsync(cancellationToken));
             return await RefreshCredentialsAsync(cancellationToken);
         }
 
-                public string ApplicationId()
+        public string ApplicationId()
         {
             return Inner.AppId;
         }
 
-                public ActiveDirectoryApplicationImpl WithReplyUrl(string replyUrl)
+        public ActiveDirectoryApplicationImpl WithReplyUrl(string replyUrl)
         {
             if (IsInCreateMode())
             {
-                if (createParameters.ReplyUrls == null) {
+                if (createParameters.ReplyUrls == null)
+                {
                     createParameters.ReplyUrls = new List<string>();
                 }
                 createParameters.ReplyUrls.Add(replyUrl);
             }
             else
             {
-                if (updateParameters.ReplyUrls == null) {
+                if (updateParameters.ReplyUrls == null)
+                {
                     updateParameters.ReplyUrls = new List<string>(ReplyUrls());
                 }
                 updateParameters.ReplyUrls.Add(replyUrl);

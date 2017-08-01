@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Rest;
     using System;
     using System.Linq;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Definition;
 
     /// <summary>
     /// The implementation of Applications and its parent interfaces.
@@ -23,10 +24,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         private IApplicationsOperations innerCollection;
         private GraphRbacManager manager;
-        public GraphRbacManager Manager()
-        {
-            return this.manager;
-        }
 
         public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -70,9 +67,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
         public ActiveDirectoryApplicationImpl GetById(string id)
         {
-            return (ActiveDirectoryApplicationImpl) Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(Extensions.Synchronize(() => innerCollection.GetAsync(id)))).RefreshCredentialsAsync());
+            return (ActiveDirectoryApplicationImpl)Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(Extensions.Synchronize(() => innerCollection.GetAsync(id)))).RefreshCredentialsAsync());
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -126,6 +125,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public override void DeleteById(string id)
         {
             Extensions.Synchronize(() => innerCollection.DeleteAsync(id));
+        }
+
+        IActiveDirectoryApplication ISupportsGettingById<IActiveDirectoryApplication>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.Applications.GetAsync(id)));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Rest;
     using System;
     using System.Linq;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
@@ -29,14 +30,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.manager = graphRbacManager;
         }
 
-        public GraphRbacManager Manager()
-        {
-            return this.manager;
-        }
-
         public ServicePrincipalImpl GetById(string id)
         {
-            return (ServicePrincipalImpl) Extensions.Synchronize(() => GetByIdAsync(id));
+            return (ServicePrincipalImpl)Extensions.Synchronize(() => GetByIdAsync(id));
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -105,6 +101,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager
+        {
+            get
+            {
+                return manager;
+            }
+        }
+
         protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
         {
             return servicePrincipalInner == null ? null : new ServicePrincipalImpl(servicePrincipalInner, manager);
@@ -121,6 +125,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public override void DeleteById(string id)
         {
             Extensions.Synchronize(() => Inner.DeleteAsync(id));
+        }
+
+        IServicePrincipal ISupportsGettingById<IServicePrincipal>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.ServicePrincipals.GetAsync(id)));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }
