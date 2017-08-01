@@ -35,20 +35,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IEnumerable<DomainInner> List(this IDomainsOperations operations, ODataQuery<UserInner> odataQuery = default(ODataQuery<UserInner>))
-            {
-                return ((IDomainsOperations)operations).ListAsync(odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of domains for the current tenant.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -58,20 +44,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a specific domain in the current tenant.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='domainName'>
-            /// name of the domain.
-            /// </param>
-            public static DomainInner Get(this IDomainsOperations operations, string domainName)
-            {
-                return operations.GetAsync(domainName).GetAwaiter().GetResult();
             }
 
             /// <summary>
