@@ -153,9 +153,16 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
         /// <summary>
         /// Specifies the encryption settings on the account. The default
         /// setting is unencrypted.
+        /// TODO: This overload should be deprecated and removed (the new fully fluent encryption withers replaces this).
         /// </summary>
         /// <param name="encryption">The encryption setting.</param>
-        /// <return>The nest stage of storage account definition.</return>
+        /// <return>The next stage of storage account definition.</return>
         Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption);
+
+        /// <summary>
+        /// Enables encryption for all storage services in the account that supports encryption.
+        /// </summary>
+        /// <return>The next stage of storage account definition.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithCreate WithEncryption();
     }
 }

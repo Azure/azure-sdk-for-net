@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
             if (currentStorageAccount == null && storageAccountToSet == null && storageAccountCreatable == null)
             {
-                WithNewStorageAccount(SdkContext.RandomResourceName(Name, 20), Storage.Fluent.Models.SkuName.StandardGRS);
+                WithNewStorageAccount(SdkContext.RandomResourceName(Name, 20).Replace("-", String.Empty), Storage.Fluent.Models.SkuName.StandardGRS);
             }
             return await base.CreateAsync(cancellationToken);
         }

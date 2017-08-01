@@ -24,7 +24,12 @@ namespace Fluent.Tests.WebApp
                 string WebAppName1 = TestUtilities.GenerateName("java-webapp-");
                 string WebAppName2 = TestUtilities.GenerateName("java-webapp-");
                 string WebAppName3 = TestUtilities.GenerateName("java-webapp-");
-                string StorageName1 = TestUtilities.GenerateName("javastore");
+                string StorageName1 = TestUtilities.GenerateName("javast");
+                if (StorageName1.Length >= 23)
+                {
+                    StorageName1 = StorageName1.Substring(0, 20);
+                }
+                StorageName1 = StorageName1.Replace("-", string.Empty);
 
                 var appServiceManager = TestHelper.CreateAppServiceManager();
 

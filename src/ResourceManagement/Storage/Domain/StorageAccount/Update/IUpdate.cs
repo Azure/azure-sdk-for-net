@@ -93,11 +93,24 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <summary>
+        /// Disables encryption for all storage services in the account that supports encryption.
+        /// </summary>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithoutEncryption();
+
+        /// <summary>
         /// Specifies the encryption setting on the account.
         /// The default setting is unencrypted.
+        /// TODO: This overload should be deprecated and removed (the new fully fluent encryption withers replaces this).
         /// </summary>
         /// <param name="encryption">The encryption setting.</param>
         /// <return>The nest stage of storage account update.</return>
         Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithEncryption(Encryption encryption);
+
+        /// <summary>
+        /// Enables encryption for all storage services in the account that supports encryption.
+        /// </summary>
+        /// <return>The next stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithEncryption();
     }
 }
