@@ -26,7 +26,7 @@ namespace Sql.Tests
 {
     public class SqlManagementTestUtilities
     {
-        private static readonly TestEnvironment _environment = new TestEnvironment(TryGetEnvironmentOrAppSetting("TEST_CSM_ORGID_AUTHENTICATION"));
+        private static readonly TestEnvironment _environment = new TestEnvironment(Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION"));
 
         // We now load default locations from environment variable.
         // Tests were recorded with this appended to DefaultLocationId=japaneast;DefaultLocation=Japan East;DefaultSecondaryLocationId=centralus;DefaultSecondaryLocation=Central US;DefaultStagePrimaryLocation=North Europe;DefaultStageSecondaryLocation=SouthEast Asia;DefaultEuapPrimaryLocation=East US 2 EUAP;DefaultEuapPrimaryLocationId=eastus2euap
@@ -141,23 +141,7 @@ namespace Sql.Tests
 
             return result.AccessToken;
         }
-
-        public static string TryGetEnvironmentOrAppSetting(string settingName, string defaultValue = null)
-        {
-            var value = Environment.GetEnvironmentVariable(settingName);
-
-            // We don't use IsNullOrEmpty because an empty setting overrides what's on AppSettings.
-            if (value == null)
-            {
-                var config = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile("appsettings.json").Build();
-                value = config.GetSection("AppSettings:" + settingName).Value;
-            }
-
-            return value ?? defaultValue;
-        }
-
+        
         public const string TestPrefix = "sqlcrudtest-";
 
         public static string GenerateName(
