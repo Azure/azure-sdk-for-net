@@ -68,7 +68,7 @@ namespace Sql.Tests
                     {
                         { "asdf", "zxcv" }
                     };
-                var updateServer1 = sqlClient.Servers.Update(resourceGroup.Name, serverNameV12, new Server { Tags = newTags });
+                var updateServer1 = sqlClient.Servers.Update(resourceGroup.Name, serverNameV12, new ServerUpdate { Tags = newTags });
                 SqlManagementTestUtilities.ValidateServer(updateServer1, serverNameV12, login, version12, newTags, SqlManagementTestUtilities.DefaultLocationId);
 
                 // Drop server, update count

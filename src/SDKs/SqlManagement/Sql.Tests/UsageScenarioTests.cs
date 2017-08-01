@@ -24,7 +24,7 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // Get server Usages
-                IEnumerable<ServerUsage> serverUsages = sqlClient.Servers.ListUsages(resourceGroup.Name, server.Name);
+                IEnumerable<ServerUsage> serverUsages = sqlClient.ServerUsages.ListByServer(resourceGroup.Name, server.Name);
                 Assert.True(serverUsages.Count(s => s.ResourceName == server.Name) > 1);
 
                 // Create a database and get usages
@@ -34,7 +34,7 @@ namespace Sql.Tests
                     Location = server.Location
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
-                IEnumerable<DatabaseUsage> databaseUsages = sqlClient.Databases.ListUsages(resourceGroup.Name, server.Name, dbName);
+                IEnumerable<DatabaseUsage> databaseUsages = sqlClient.DatabaseUsages.ListByDatabase(resourceGroup.Name, server.Name, dbName);
                 Assert.True(databaseUsages.Where(db => db.ResourceName == dbName).Count() == 1);
             }
         }

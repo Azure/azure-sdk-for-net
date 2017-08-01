@@ -207,14 +207,14 @@ namespace Sql.Tests
 
                 // Create server LTR backup vault
                 Server server = context.CreateServer(resourceGroup);
-                BackupLongTermRetentionVault serverVault = sqlClient.Servers.CreateBackupLongTermRetentionVault(
+                BackupLongTermRetentionVault serverVault = sqlClient.BackupLongTermRetentionVaults.CreateOrUpdate(
                     resourceGroup.Name, server.Name, new BackupLongTermRetentionVault
                     {
                         RecoveryServicesVaultResourceId = vault.Id
                     });
 
                 // Get server LTR backup vault
-                serverVault = sqlClient.Servers.GetBackupLongTermRetentionVault(resourceGroup.Name, server.Name);
+                serverVault = sqlClient.BackupLongTermRetentionVaults.Get(resourceGroup.Name, server.Name);
 
                 // Create database LTR policy
                 Database db = sqlClient.Databases.CreateOrUpdate(
@@ -222,16 +222,16 @@ namespace Sql.Tests
                     server.Name,
                     databaseName: SqlManagementTestUtilities.GenerateName(), 
                     parameters: new Database(resourceGroup.Location));
-                BackupLongTermRetentionPolicy databasePolicy = sqlClient.Databases.CreateOrUpdateLongTermRetentionPolicy(
+                BackupLongTermRetentionPolicy databasePolicy = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdate(
                     resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy(
                         BackupLongTermRetentionPolicyState.Enabled,
                         policy.Id));
 
                 // Get database LTR policy
-                databasePolicy = sqlClient.Databases.GetBackupLongTermRetentionPolicy(resourceGroup.Name, server.Name, db.Name);
+                databasePolicy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, db.Name);
 
                 // Update database LTR policy
-                databasePolicy = sqlClient.Databases.CreateOrUpdateLongTermRetentionPolicy(
+                databasePolicy = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdate(
                     resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy(
                         BackupLongTermRetentionPolicyState.Disabled,
                         policy.Id /* policy Id must be set even when disabling */));

@@ -183,6 +183,11 @@ namespace Sql.Tests
 
         public static void AssertCollection<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
+            if (Equals(expected, actual))
+            {
+                return;
+            }
+
             Assert.Equal(expected.Count(), actual.Count());
 
             foreach (var elem in expected)
@@ -385,6 +390,7 @@ namespace Sql.Tests
 
             AssertCollection(expected.Databases, actual.Databases);
             AssertCollection(expected.PartnerServers.Select(s => s.Id), actual.PartnerServers.Select(s => s.Id));
+            AssertCollection(expected.Tags, actual.Tags);
         }
 
         public static void ValidateFirewallRule(FirewallRule expected, FirewallRule actual, string name)
@@ -436,7 +442,7 @@ namespace Sql.Tests
                             Location = SqlManagementTestUtilities.DefaultLocation,
                             Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
-                    
+
                     test(resourceClient, sqlClient, resourceGroup);
                 }
                 finally

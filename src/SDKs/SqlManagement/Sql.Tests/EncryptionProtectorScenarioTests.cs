@@ -30,24 +30,24 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateServerKey(serverKey, serverKeyName, "AzureKeyVault", serverKeyUri);
 
                 // Update to Key Vault
-                sqlClient.Servers.CreateOrUpdateEncryptionProtector(resourceGroup.Name, server.Name, new EncryptionProtector()
+                sqlClient.EncryptionProtectors.CreateOrUpdate(resourceGroup.Name, server.Name, new EncryptionProtector()
                 {
                     ServerKeyName = serverKeyName,
                     ServerKeyType = "AzureKeyVault"
                 });
 
-                EncryptionProtector encProtector1 = sqlClient.Servers.GetEncryptionProtector(resourceGroup.Name, server.Name);
+                EncryptionProtector encProtector1 = sqlClient.EncryptionProtectors.Get(resourceGroup.Name, server.Name);
                 Assert.Equal("AzureKeyVault", encProtector1.ServerKeyType);
                 Assert.Equal(serverKeyName, encProtector1.ServerKeyName);
 
                 // Update to Service Managed
-                sqlClient.Servers.CreateOrUpdateEncryptionProtector(resourceGroup.Name, server.Name, new EncryptionProtector()
+                sqlClient.EncryptionProtectors.CreateOrUpdate(resourceGroup.Name, server.Name, new EncryptionProtector()
                 {
                     ServerKeyName = "ServiceManaged",
                     ServerKeyType = "ServiceManaged"
                 });
 
-                EncryptionProtector encProtector2 = sqlClient.Servers.GetEncryptionProtector(resourceGroup.Name, server.Name);
+                EncryptionProtector encProtector2 = sqlClient.EncryptionProtectors.Get(resourceGroup.Name, server.Name);
                 Assert.Equal("ServiceManaged", encProtector2.ServerKeyType);
                 Assert.Equal("ServiceManaged", encProtector2.ServerKeyName);
             });
