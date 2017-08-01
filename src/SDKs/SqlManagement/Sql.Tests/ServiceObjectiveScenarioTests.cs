@@ -19,7 +19,7 @@ namespace Sql.Tests
                 Server server = context.CreateServer(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                var serviceObjectives = sqlClient.Servers.ListServiceObjectives(resourceGroup.Name, server.Name);
+                var serviceObjectives = sqlClient.ServiceObjectives.ListByServer(resourceGroup.Name, server.Name);
 
                 foreach(ServiceObjective objective in serviceObjectives)
                 {
@@ -29,7 +29,7 @@ namespace Sql.Tests
                     Assert.NotNull(objective.Enabled);
 
                     // Assert Get finds the service objective from List
-                    Assert.NotNull(sqlClient.Servers.GetServiceObjective(resourceGroup.Name, server.Name, objective.Name));
+                    Assert.NotNull(sqlClient.ServiceObjectives.Get(resourceGroup.Name, server.Name, objective.Name));
                 }
             }
         }

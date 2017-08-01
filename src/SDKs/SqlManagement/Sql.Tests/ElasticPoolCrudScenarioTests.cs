@@ -124,7 +124,7 @@ namespace Sql.Tests
             };
             var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
             SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
-            var epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            var epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(1, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
@@ -136,7 +136,7 @@ namespace Sql.Tests
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput2);
             SqlManagementTestUtilities.ValidateElasticPool(epInput2, returnedEp, epName);
-            epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(2, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
@@ -149,7 +149,7 @@ namespace Sql.Tests
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput3);
             SqlManagementTestUtilities.ValidateElasticPool(epInput3, returnedEp, epName);
-            epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(3, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
@@ -162,7 +162,7 @@ namespace Sql.Tests
 
             returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput4);
             SqlManagementTestUtilities.ValidateElasticPool(epInput4, returnedEp, epName);
-            epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            epa = sqlClient.ElasticPoolActivities.ListByElasticPool(resourceGroup.Name, server.Name, epName);
             Assert.NotNull(epa);
             Assert.Equal(4, epa.Count());
             Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
