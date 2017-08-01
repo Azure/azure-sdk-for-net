@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;
     using System.Collections.Generic;
     using System;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation for IStorageAccount.
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:E4DFA7EA15F8324FB60C810D0C96D2FF:1BCD5CF569F11AB6F798D4F3A5BFC786
         public IReadOnlyList<Models.StorageAccountKey> GetKeys()
         {
-            return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetKeysAsync());
         }
 
         ///GENMHASH:2751D8683222AD34691166D915065302:626481EC1E21C06AD0B6BDD35321AA29
@@ -148,7 +149,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:FE5C90217FF36474FA8DE7E91403E40F:8A9D1B7CB45D0ABAC76D65E99FADA580
         public IReadOnlyList<Models.StorageAccountKey> RegenerateKey(string keyName)
         {
-            return RegenerateKeyAsync(keyName).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RegenerateKeyAsync(keyName));
         }
 
         ///GENMHASH:AC9981EE195A3F3ECFFF4F080A6FEAAD:0AE932BB7FDBF07328B9F81662B43B8C
