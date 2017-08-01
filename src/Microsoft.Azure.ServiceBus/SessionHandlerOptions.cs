@@ -36,16 +36,13 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the session pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; set; }
+        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
 
         /// <summary>Gets or sets the duration for which the session lock will be renewed automatically.</summary>
         /// <value>The duration for which the session renew its state.</value>
         public TimeSpan MaxAutoRenewDuration
         {
-            get
-            {
-                return this.maxAutoRenewDuration;
-            }
+            get => this.maxAutoRenewDuration;
 
             set
             {
@@ -58,10 +55,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The time to wait for receiving the message.</value>
         public TimeSpan MessageWaitTimeout
         {
-            get
-            {
-                return this.messageWaitTimeout;
-            }
+            get => this.messageWaitTimeout;
 
             set
             {
@@ -74,10 +68,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum number of sessions that the User wants to handle concurrently.</value>
         public int MaxConcurrentSessions
         {
-            get
-            {
-                return this.maxConcurrentSessions;
-            }
+            get => this.maxConcurrentSessions;
 
             set
             {

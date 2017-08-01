@@ -36,16 +36,13 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; set; }
+        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {
-            get
-            {
-                return this.maxConcurrentCalls;
-            }
+            get => this.maxConcurrentCalls;
 
             set
             {
@@ -69,10 +66,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum duration during which locks are automatically renewed.</value>
         public TimeSpan MaxAutoRenewDuration
         {
-            get
-            {
-                return this.maxAutoRenewDuration;
-            }
+            get => this.maxAutoRenewDuration;
 
             set
             {
@@ -83,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;        
 
-        internal TimeSpan ReceiveTimeOut { get; set; }
+        internal TimeSpan ReceiveTimeOut { get; }
 
         internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
         {

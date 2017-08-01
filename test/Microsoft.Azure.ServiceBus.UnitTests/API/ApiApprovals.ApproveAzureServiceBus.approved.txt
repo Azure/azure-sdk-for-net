@@ -161,7 +161,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public MessageHandlerOptions(System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public bool AutoComplete { get; set; }
-        public System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> ExceptionReceivedHandler { get; set; }
+        public System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> ExceptionReceivedHandler { get; }
         public System.TimeSpan MaxAutoRenewDuration { get; set; }
         public int MaxConcurrentCalls { get; set; }
     }
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public SessionHandlerOptions(System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public bool AutoComplete { get; set; }
-        public System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> ExceptionReceivedHandler { get; set; }
+        public System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> ExceptionReceivedHandler { get; }
         public System.TimeSpan MaxAutoRenewDuration { get; set; }
         public int MaxConcurrentSessions { get; set; }
         public System.TimeSpan MessageWaitTimeout { get; set; }
