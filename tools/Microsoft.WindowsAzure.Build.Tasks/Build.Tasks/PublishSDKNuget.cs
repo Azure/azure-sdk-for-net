@@ -15,8 +15,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
     public class PublishSDKNuget : Task
     {
-        //const string SDK_NUGET_APIKEY_ENV = "NetSdkNugetApiKey";
-        //const string DEFUALT_NUGET_URI = "https://www.nuget.org";
         #region fields
         /// <summary>
         /// 
@@ -95,7 +93,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         
         public bool SkipNugetPublishing { get; set; }
 
-        public bool DebugOutput { get; set; }
+        public bool TaskDebugOutput { get; set; }
 
         public List<NugetPublishStatus> NugetPublishStatus { get; private set; }
 
@@ -223,7 +221,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             }
 
             nug.PublishToPath = PublishNugetToPath;
-            nug.PublishSymbolToPath = PublishNugetToPath;
             nug.SkipPublishingNuget = SkipNugetPublishing;
             nug.SkipPublishingSymbols = SkipSymbolPublishing;
             nug.ApiKey = ApiKey;
@@ -235,12 +232,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             List<NugetPublishStatus> publishStatusList = nug.Publish(nupkgs);
             return publishStatusList;
-            //NugetPublishStatus = publishStatusList;
         }
 
         private void DebugInfo()
         {
-            if(DebugOutput)
+            if(TaskDebugOutput)
             {
                 LogInfo("UserId: {0}", UserId);
                 LogInfo("Nuget Package Name: {0}", NugetPackageName);
