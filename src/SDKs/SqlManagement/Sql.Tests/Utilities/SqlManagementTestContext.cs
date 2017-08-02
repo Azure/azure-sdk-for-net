@@ -53,7 +53,7 @@ namespace Sql.Tests
 
         public ResourceGroup CreateResourceGroup()
         {
-            return CreateResourceGroup(SqlManagementTestUtilities.DefaultLocation);
+            return CreateResourceGroup(TestEnvironmentUtilities.DefaultLocation);
         }
 
         public ResourceGroup CreateResourceGroup(string location)
@@ -76,7 +76,7 @@ namespace Sql.Tests
 
         public Server CreateServer(ResourceGroup resourceGroup)
         {
-            return CreateServer(resourceGroup, SqlManagementTestUtilities.DefaultLocation);
+            return CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultLocation);
         }
 
         public Server CreateServer(ResourceGroup resourceGroup, string location)

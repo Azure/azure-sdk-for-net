@@ -24,7 +24,7 @@ namespace Sql.Tests
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 // Basic setup
-                var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
+                var location = TestEnvironmentUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
                 VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, location: location, subnetCount: 2);
 
@@ -84,7 +84,7 @@ namespace Sql.Tests
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 // Basic setup
-                var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
+                var location = TestEnvironmentUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
                 VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, location: location, subnetCount: 1);
 
@@ -115,7 +115,7 @@ namespace Sql.Tests
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 // Basic setup
-                var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
+                var location = TestEnvironmentUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
                 VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, location: location, subnetCount: 2);
 

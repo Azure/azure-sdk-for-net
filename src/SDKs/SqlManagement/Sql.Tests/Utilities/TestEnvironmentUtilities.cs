@@ -9,6 +9,75 @@ namespace Sql.Tests
 {
     public static class TestEnvironmentUtilities
     {
+        private const string _environmentVariableName = "TEST_CSM_ORGID_AUTHENTICATION";
+
+        private static readonly TestEnvironment _environment = 
+            new TestEnvironment(Environment.GetEnvironmentVariable(_environmentVariableName));
+
+        // We now load default locations from environment variable.
+        // Tests were recorded with this appended to DefaultLocationId=japaneast;DefaultLocation=Japan East;DefaultSecondaryLocationId=centralus;DefaultSecondaryLocation=Central US;DefaultStagePrimaryLocation=North Europe;DefaultStageSecondaryLocation=SouthEast Asia;DefaultEuapPrimaryLocation=East US 2 EUAP;DefaultEuapPrimaryLocationId=eastus2euap
+        public static string DefaultLocation
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultLocation");
+            }
+        }
+        public static string DefaultLocationId
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultLocationId");
+            }
+        }
+
+        public static string DefaultSecondaryLocationId
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultSecondaryLocationId");
+            }
+        }
+
+        public static string DefaultSecondaryLocation
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultSecondaryLocation");
+            }
+        }
+        public static string DefaultStagePrimaryLocation
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultStagePrimaryLocation", DefaultLocation);
+            }
+        }
+
+        public static string DefaultStageSecondaryLocation
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultStageSecondaryLocation", DefaultSecondaryLocation);
+            }
+        }
+
+        public static string DefaultEuapPrimaryLocation
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultEuapPrimaryLocation", DefaultLocation);
+            }
+        }
+
+        public static string DefaultEuapPrimaryLocationId
+        {
+            get
+            {
+                return GetValueFromEnvironment("DefaultEuapPrimaryLocationId", DefaultLocationId);
+            }
+        }
+
         /// <summary>
         /// Gets the AAD user object id.
         /// </summary>
@@ -82,6 +151,34 @@ namespace Sql.Tests
             {
                 return HttpMockServer.Variables[key];
             }
+        }
+
+        /// <summary>
+        /// Gets values from the loaded environment
+        /// </summary>
+        private static string GetValueFromEnvironment(string key, string backupValue = null)
+        {
+            return GetOrAddVariable(key, () => 
+            {
+                string value;
+                bool successful = _environment.ConnectionString.KeyValuePairs.TryGetValue(key, out value);
+
+                if (!successful)
+                {
+                    // For variables that may default to other locations (i.e. stage location, if not provided, should default to default production location),
+                    // Check if the backup value is not null and return that if the the environment variable is not found.
+                    if(backupValue != null)
+                    {
+                        return backupValue;
+                    }
+
+                    throw new KeyNotFoundException(
+                        string.Format("Value for key '{0}' was not found in environment variable '{1}'.  Ensure this value is included in the environment variable.",
+                            key, _environmentVariableName));
+                }
+
+                return value;
+            });
         }
     }
 }

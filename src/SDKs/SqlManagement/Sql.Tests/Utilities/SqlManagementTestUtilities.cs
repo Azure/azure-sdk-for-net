@@ -21,78 +21,13 @@ using Sql.Tests.Utilities;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Rest.Azure;
+using System.Threading;
 
 namespace Sql.Tests
 {
     public class SqlManagementTestUtilities
     {
-        private static readonly TestEnvironment _environment = new TestEnvironment(Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION"));
-
-        // We now load default locations from environment variable.
-        // Tests were recorded with this appended to DefaultLocationId=japaneast;DefaultLocation=Japan East;DefaultSecondaryLocationId=centralus;DefaultSecondaryLocation=Central US;DefaultStagePrimaryLocation=North Europe;DefaultStageSecondaryLocation=SouthEast Asia;DefaultEuapPrimaryLocation=East US 2 EUAP;DefaultEuapPrimaryLocationId=eastus2euap
-        public static string DefaultLocation
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultLocation"];
-            }
-        }
-        public static string DefaultLocationId
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultLocationId"];
-            }
-        }
-
-        public static string DefaultSecondaryLocationId
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultSecondaryLocationId"];
-            }
-        }
-
-        public static string DefaultSecondaryLocation
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultSecondaryLocation"];
-            }
-        }
-
-        public static string DefaultStagePrimaryLocation
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultStagePrimaryLocation"];
-            }
-        }
-
-        public static string DefaultStageSecondaryLocation
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultStageSecondaryLocation"];
-            }
-        }
-
-        public static string DefaultEuapPrimaryLocation
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultEuapPrimaryLocation"];
-            }
-        }
-
-        public static string DefaultEuapPrimaryLocationId
-        {
-            get
-            {
-                return _environment.ConnectionString.KeyValuePairs["DefaultEuapPrimaryLocationId"];
-            }
-        }
-
         public const string DefaultLogin = "dummylogin";
         public const string DefaultPassword = "Un53cuRE!";
 
@@ -423,7 +358,7 @@ namespace Sql.Tests
                         rgName,
                         new ResourceGroup
                         {
-                            Location = SqlManagementTestUtilities.DefaultLocation,
+                            Location = TestEnvironmentUtilities.DefaultLocation,
                             Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
 
@@ -441,7 +376,7 @@ namespace Sql.Tests
 
         internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test)
         {
-            RunTestInNewV12Server(suiteName, testName, testPrefix, test, SqlManagementTestUtilities.DefaultLocation);
+            RunTestInNewV12Server(suiteName, testName, testPrefix, test, TestEnvironmentUtilities.DefaultLocation);
         }
 
         internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test, string location)
@@ -515,7 +450,7 @@ namespace Sql.Tests
                         rgName,
                         new ResourceGroup
                         {
-                            Location = SqlManagementTestUtilities.DefaultLocation,
+                            Location = TestEnvironmentUtilities.DefaultLocation,
                             Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
 
@@ -592,6 +527,24 @@ namespace Sql.Tests
         {
             string vaultName = keyBundle.KeyIdentifier.VaultWithoutScheme.Split('.').First();
             return $"{vaultName}_{keyBundle.KeyIdentifier.Name}_{keyBundle.KeyIdentifier.Version}";
+        }
+
+        public static void ExecuteWithRetry(System.Action action, TimeSpan timeout, TimeSpan RecordRetryDelay, Func<CloudException, bool> acceptedErrorFunction)
+        {
+            DateTime startTime = DateTime.UtcNow;
+            TimeSpan retryDelay = HttpMockServer.Mode == HttpRecorderMode.Record ? TimeSpan.FromSeconds(5) : TimeSpan.Zero;
+            while (true)
+            {
+                try
+                {
+                    action();
+                }
+                catch (CloudException e) when (
+                        acceptedErrorFunction(e) && DateTime.UtcNow < startTime + timeout)
+                {
+                    Thread.Sleep(retryDelay);
+                }
+            }
         }
     }
 }
