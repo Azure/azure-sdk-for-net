@@ -1,0 +1,74 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/providers/microsoft.insights/logprofiles/default?api-version=2016-03-01",
+            "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHMvbG9ncHJvZmlsZXMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+            "RequestMethod": "PATCH",
+            "RequestBody": "{\r\n  \"properties\": {\r\n    \"storageAccountId\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-Storage-westus/providers/microsoft.storage/storageaccounts/salp1\",\r\n    \"locations\": [\r\n      \"global\",\r\n      \"eastus\"\r\n    ],\r\n    \"categories\": [\r\n      \"Delete\",\r\n      \"Write\"\r\n    ],\r\n    \"retentionPolicy\": {\r\n      \"enabled\": true,\r\n      \"days\": 4\r\n    }\r\n  }\r\n}",
+            "RequestHeaders": {
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Content-Length": [
+                    "392"
+                ],
+                "x-ms-client-request-id": [
+                    "2f9188f8-5e89-4c09-87b4-723ab2fe1928"
+                ],
+                "accept-language": [
+                    "en-US"
+                ],
+                "User-Agent": [
+                    "FxVersion/4.7.2053.0",
+                    "OSName/WindowsServer2012R2Standard",
+                    "OSVersion/6.3.9600",
+                    "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"code\": \"Method not allowed\",\r\n  \"message\": \"Exception of type 'Microsoft.WindowsAzure.Management.Monitoring.MonitoringServiceException' was thrown.\"\r\n}",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "145"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Expires": [
+                    "-1"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "Strict-Transport-Security": [
+                    "max-age=31536000; includeSubDomains"
+                ],
+                "x-ms-request-id": [
+                    "00000000-0000-0000-0000-000000000000"
+                ],
+                "x-ms-ratelimit-remaining-subscription-writes": [
+                    "1199"
+                ],
+                "x-ms-correlation-request-id": [
+                    "41445ab7-b527-4446-a7a5-f72f74811c04"
+                ],
+                "x-ms-routing-request-id": [
+                    "WESTUS:20170802T020614Z:41445ab7-b527-4446-a7a5-f72f74811c04"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Wed, 02 Aug 2017 02:06:14 GMT"
+                ],
+                "Server": [
+                    "Microsoft-IIS/8.5"
+                ]
+            },
+            "StatusCode": 405
+        }
+    ],
+    "Names": {},
+    "Variables": {
+        "SubscriptionId": "07c0b09d-9f69-4e6e-8d05-f59f67299cb2"
+    }
+}

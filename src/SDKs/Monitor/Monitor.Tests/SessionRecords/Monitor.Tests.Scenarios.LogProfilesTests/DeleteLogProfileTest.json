@@ -1,0 +1,65 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/providers/microsoft.insights/logprofiles/default?api-version=2016-03-01",
+            "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHMvbG9ncHJvZmlsZXMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+            "RequestMethod": "DELETE",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "x-ms-client-request-id": [
+                    "f13f15e5-5e19-441e-86f2-5dc8bb110e9d"
+                ],
+                "accept-language": [
+                    "en-US"
+                ],
+                "User-Agent": [
+                    "FxVersion/4.7.2053.0",
+                    "OSName/WindowsServer2012R2Standard",
+                    "OSVersion/6.3.9600",
+                    "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+                ]
+            },
+            "ResponseBody": "",
+            "ResponseHeaders": {
+                "Content-Length": [
+                    "0"
+                ],
+                "Expires": [
+                    "-1"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "Strict-Transport-Security": [
+                    "max-age=31536000; includeSubDomains"
+                ],
+                "x-ms-request-id": [
+                    "05b48adc-c806-4ff6-a287-e510534cbbad"
+                ],
+                "x-ms-ratelimit-remaining-subscription-writes": [
+                    "1198"
+                ],
+                "x-ms-correlation-request-id": [
+                    "889e66dc-d06b-45cc-bdcf-8c6105af2ec1"
+                ],
+                "x-ms-routing-request-id": [
+                    "WESTUS:20170802T020930Z:889e66dc-d06b-45cc-bdcf-8c6105af2ec1"
+                ],
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Date": [
+                    "Wed, 02 Aug 2017 02:09:30 GMT"
+                ],
+                "Server": [
+                    "Microsoft-IIS/8.5"
+                ]
+            },
+            "StatusCode": 200
+        }
+    ],
+    "Names": {},
+    "Variables": {
+        "SubscriptionId": "07c0b09d-9f69-4e6e-8d05-f59f67299cb2"
+    }
+}

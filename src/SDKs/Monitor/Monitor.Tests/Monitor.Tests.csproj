@@ -5,13 +5,31 @@
     <Description>Monitor.Tests Class library</Description>
     <PackageId>Monitor.Tests</PackageId>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452</TargetFrameworks>
+    <!-- TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks -->
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />
+	  <!-- PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.0.0" / >
+	  <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.8" / >
+	  <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" / -->
+    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
+	  <ProjectReference Include="..\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 </Project>
