@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Rest.Azure
 {
-    public static class AzureClientExtensions
+    public static partial class AzureClientExtensions
     {
         /// <summary>
         /// Gets operation result for long running operations.
@@ -356,6 +356,8 @@ namespace Microsoft.Rest.Azure
             }
             return true;
         }
+   
+/*
 
         /// <summary>
         /// Updates PollingState from GET operations.
@@ -395,17 +397,57 @@ namespace Microsoft.Rest.Azure
                 pollingState.Status = AzureAsyncOperation.SuccessStatus;
             }
 
-            pollingState.Error = new CloudError()
+            pollingState = UpdatePollingStateForFailedState<TBody, THeader>(pollingState, responseWithResource, client);
+
+            if(pollingState?.Error == null)
             {
-                Code = pollingState.Status,
-                Message = string.Format(Resources.LongRunningOperationFailed, pollingState.Status)
-            };
+                pollingState.Error = new CloudError()
+                {
+                    Code = pollingState.Status,
+                    Message = string.Format(Resources.LongRunningOperationFailed, pollingState.Status)
+                };
+            }
+            
             pollingState.Response = responseWithResource.Response;
             pollingState.Request = responseWithResource.Request;
             pollingState.Resource = responseWithResource.Body.ToObject<TBody>(JsonSerializer
                 .Create(client.DeserializationSettings));
             pollingState.ResourceHeaders = responseWithResource.Headers.ToObject<THeader>(JsonSerializer
                 .Create(client.DeserializationSettings));
+        }
+
+        internal static PollingState<TBody, THeader> UpdatePollingStateForFailedState<TBody, THeader>(PollingState<TBody, THeader> pollState,
+            AzureOperationResponse<JObject, JObject> responseWithResource, IAzureClient client) where TBody: class where THeader:class
+        {
+            PollingState<TBody, THeader> pollingState = pollState;
+
+            if (AzureAsyncOperation.FailedStatuses.Any(
+                        s => s.Equals(pollingState.Status, StringComparison.OrdinalIgnoreCase)))
+            {
+                CloudError CError = null;
+
+                string responseContent = Task.Run(async () => await responseWithResource.Response.Content.ReadAsStringAsync().ConfigureAwait(false)).Result;
+                try
+                {
+                    CError = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, client.DeserializationSettings);
+                }
+                catch (JsonException)
+                {
+                    // failed to deserialize, return empty body
+                }
+
+                pollingState.CloudException = new CloudException(string.Format(CultureInfo.InvariantCulture,
+                Resources.LongRunningOperationFailed, pollingState.Status))
+                {
+                    Body = CError,
+                    Request = new HttpRequestMessageWrapper(responseWithResource.Request, null),
+                    Response = new HttpResponseMessageWrapper(responseWithResource.Response, responseContent)
+                };
+
+                pollingState.Error = CError;
+            }
+
+            return pollingState;
         }
 
         /// <summary>
@@ -469,6 +511,8 @@ namespace Microsoft.Rest.Azure
             {
                 throw new CloudException("The response from long running operation does not have a valid status code.");
             }
+
+            return;
         }
 
         /// <summary>
@@ -516,6 +560,8 @@ namespace Microsoft.Rest.Azure
             }
             catch { };
         }
+        
+        */
 
         /// <summary>
         /// Gets a resource from the specified URL.
