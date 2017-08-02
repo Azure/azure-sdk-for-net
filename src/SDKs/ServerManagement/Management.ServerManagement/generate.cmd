@@ -4,14 +4,4 @@
 ::
 
 @echo off
-set autoRestVersion=0.17.0-Nightly20161003
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/fearthecowboy/azure-rest-api-specs/master/arm-servermanagement/2015-07-01-preview/servermanagement.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
-
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.ServerManagement %autoRestVersion% %generateFolder% 
+call %~dp0..\..\..\..\tools\generate.cmd servermanagement/resource-manager %*

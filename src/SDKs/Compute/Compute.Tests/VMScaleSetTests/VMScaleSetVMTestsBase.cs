@@ -89,6 +89,26 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// Validate if encryption settings are populated in DiskInstanceView as part of VM instance view
+        /// </summary>
+        protected void ValidateEncryptionSettingsInVMScaleSetVMInstanceView(
+            VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView,
+            bool hasManagedDisks)
+        {
+            Assert.True(hasManagedDisks); // VMSS disk encryption is supported only with managed disks
+            Assert.NotNull(vmScaleSetVMInstanceView);
+            Assert.NotNull(vmScaleSetVMInstanceView.Disks);
+            Assert.True(vmScaleSetVMInstanceView.Disks.Any());
+
+            DiskInstanceView diskInstanceView = vmScaleSetVMInstanceView.Disks.First();
+            Assert.NotNull(diskInstanceView.EncryptionSettings);
+            Assert.True(diskInstanceView.EncryptionSettings.Any());
+
+            DiskEncryptionSettings encryptionSettings = diskInstanceView.EncryptionSettings.First();
+            Assert.NotNull(encryptionSettings.Enabled);
+        }
+
         protected VirtualMachineScaleSetVM GenerateVMScaleSetVMModel(VirtualMachineScaleSet inputVMScaleSet, string instanceId, bool hasManagedDisks = false)
         {
             VirtualMachineScaleSetVM expectedVirtualMachineScaleSetVM = new VirtualMachineScaleSetVM()
