@@ -1,8 +1,7 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
 ### Changes in 2.3.0-preview
-- Create an inheritance structure for GET and LIST ADLS
-accounts.
+- Create an inheritance structure for GET and LIST ADLS accounts.
 - This also follows the Basic<Object> -> Object inheritance pattern.
 - Standardized the parameter name for file paths (e.g. fileDestination to path)
 
