@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "55dea3b8-e6dc-412a-a10a-7b046eab2c60"
+          "1c859036-2e3b-40fd-9706-a37315d8eafe"
         ],
         "accept-language": [
           "en-US"
@@ -26,7 +26,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Tue, 01 Aug 2017 02:05:56 GMT"
+          "Tue, 01 Aug 2017 23:28:10 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -38,7 +38,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "284fccf1-c12b-4e77-aaa5-0bbb790e9ee9"
+          "d3c96068-0c1b-4230-94e6-b8a129abc1c3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -50,13 +50,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "be7b5433-01fa-4a25-a2bf-f8f65fde5c32"
+          "8ad004fd-e807-4a13-bd83-2d7f06256359"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170801T020556Z:be7b5433-01fa-4a25-a2bf-f8f65fde5c32"
+          "WESTUS:20170801T232810Z:8ad004fd-e807-4a13-bd83-2d7f06256359"
         ]
       },
       "StatusCode": 200
@@ -64,6 +64,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2"
+    "SubscriptionId": "b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2",
+    "DefaultLocation": "Japan East"
   }
 }

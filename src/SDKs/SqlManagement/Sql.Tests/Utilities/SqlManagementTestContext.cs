@@ -25,19 +25,11 @@ namespace Sql.Tests
 
         private readonly MockContext _mockContext;
 
-        private readonly RecordedDelegatingHandler _handler = new RecordedDelegatingHandler
-        {
-            StatusCodeToReturn = HttpStatusCode.OK,
-            IsPassThrough = true
-        };
-
         private bool disposedValue = false; // To detect redundant calls
 
         private readonly Dictionary<Type, IDisposable> _serviceClientCache = new Dictionary<Type, IDisposable>();
 
         private readonly List<ResourceGroup> _resourceGroups = new List<ResourceGroup>();
-
-        public RecordedDelegatingHandler Handler { get { return _handler; } }
 
         public TServiceClient GetClient<TServiceClient>() where TServiceClient :class, IDisposable
         {
