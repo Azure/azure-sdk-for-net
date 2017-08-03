@@ -29,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// The MessageReceiver provides advanced functionality that is not found in the 
     /// <see cref="QueueClient" /> or <see cref="SubscriptionClient" />. For instance, 
     /// <see cref="ReceiveAsync()"/>, which allows you to receive messages on demand, but also requires
-    /// you to manually renew locks using <see cref="RenewLockAsync(string)"/>.
+    /// you to manually renew locks using <see cref="RenewLockAsync(Message)"/>.
     /// </remarks>
     /// <seealso cref="MessageReceiver"/>
     /// <seealso cref="QueueClient"/>
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         Task DeferAsync(string lockToken);
 
         /// <summary>
-        /// Renews the lock on the message specified by the lock token. The lock will be renewed based on the setting specified on the queue.
+        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
         /// </summary>
-        /// <param name="lockToken">The lock token of the <see cref="Message" />.</param>
+        /// <param name="message"> <see cref="Message" />.</param>
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this 
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// the entity's LockDuration. 
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
-        Task<DateTime> RenewLockAsync(string lockToken);
+        Task RenewLockAsync(Message message);
 
         /// <summary>
         /// Fetches the next active message without changing the state of the receiver or the message source.

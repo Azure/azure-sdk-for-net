@@ -370,7 +370,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> ReceiveAsync(int maxMessageCount, System.TimeSpan operationTimeout);
         System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> ReceiveDeferredMessageAsync(long sequenceNumber);
         System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> ReceiveDeferredMessageAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers);
-        System.Threading.Tasks.Task<System.DateTime> RenewLockAsync(string lockToken);
+        System.Threading.Tasks.Task RenewLockAsync(Microsoft.Azure.ServiceBus.Message message);
     }
     public interface IMessageSender : Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity { }
     public interface IReceiverClient : Microsoft.Azure.ServiceBus.IClientEntity
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageHandlerOptions) { }
         public override void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
-        public System.Threading.Tasks.Task<System.DateTime> RenewLockAsync(string lockToken) { }
+        public System.Threading.Tasks.Task RenewLockAsync(Microsoft.Azure.ServiceBus.Message message) { }
         public override void UnregisterPlugin(string serviceBusPluginName) { }
     }
     public class MessageSender : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IMessageSender, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity

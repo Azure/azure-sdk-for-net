@@ -187,7 +187,7 @@ namespace Microsoft.Azure.ServiceBus
                     if (!this.pumpCancellationToken.IsCancellationRequested &&
                         !renewLockCancellationToken.IsCancellationRequested)
                     {
-                        await this.messageReceiver.RenewLockAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+                        await this.messageReceiver.RenewLockAsync(message).ConfigureAwait(false);
                         MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
                     }
                     else

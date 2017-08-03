@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// The MessageReceiver provides advanced functionality that is not found in the 
     /// <see cref="QueueClient" /> or <see cref="SubscriptionClient" />. For instance, 
     /// <see cref="ReceiveAsync()"/>, which allows you to receive messages on demand, but also requires
-    /// you to manually renew locks using <see cref="RenewLockAsync(string)"/>.
+    /// you to manually renew locks using <see cref="RenewLockAsync(Message)"/>.
     /// It uses AMQP protocol to communicate with service.
     /// </remarks>
     public class MessageReceiver : ClientEntity, IMessageReceiver
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Renews the lock on the message specified by the lock token. The lock will be renewed based on the setting specified on the queue.
         /// </summary>
-        /// <param name="lockToken">The lock token of the <see cref="Message" />.</param>
+        /// <param name="message"> <see cref="Message" />.</param>
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this 
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
@@ -558,19 +558,18 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// the entity's LockDuration. 
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
-        public async Task<DateTime> RenewLockAsync(string lockToken)
+        public async Task RenewLockAsync(Message message)
         {
             this.ThrowIfNotPeekLockMode();
 
-            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
+            MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, message.SystemProperties.LockToken);
 
-            DateTime lockedUntilUtc = DateTime.Now;
             try
             {
                 await this.RetryPolicy.RunOperation(
                     async () =>
                     {
-                        lockedUntilUtc = await this.OnRenewLockAsync(lockToken).ConfigureAwait(false);
+                        message.SystemProperties.LockedUntilUtc = await this.OnRenewLockAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
                     }, this.OperationTimeout)
                     .ConfigureAwait(false);
             }
@@ -581,7 +580,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             MessagingEventSource.Log.MessageRenewLockStop(this.ClientId);
-            return lockedUntilUtc;
         }
 
         /// <summary>

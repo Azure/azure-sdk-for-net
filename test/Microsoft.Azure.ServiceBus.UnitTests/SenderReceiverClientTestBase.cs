@@ -126,16 +126,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             TestUtility.Log("Sleeping 10 seconds...");
             await Task.Delay(TimeSpan.FromSeconds(10));
 
-            DateTime lockedUntilUtcTime = await messageReceiver.RenewLockAsync(receivedMessages.First().SystemProperties.LockToken);
-            TestUtility.Log($"After First Renewal: {lockedUntilUtcTime}");
-            Assert.True(lockedUntilUtcTime >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+            
+            await messageReceiver.RenewLockAsync(message);
+            TestUtility.Log($"After First Renewal: {message.SystemProperties.LockedUntilUtc}");
+            Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 
             TestUtility.Log("Sleeping 5 seconds...");
             await Task.Delay(TimeSpan.FromSeconds(5));
 
-            lockedUntilUtcTime = await messageReceiver.RenewLockAsync(receivedMessages.First().SystemProperties.LockToken);
-            TestUtility.Log($"After Second Renewal: {lockedUntilUtcTime}");
-            Assert.True(lockedUntilUtcTime >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(5));
+            await messageReceiver.RenewLockAsync(message);
+            TestUtility.Log($"After Second Renewal: {message.SystemProperties.LockedUntilUtc}");
+            Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(5));
 
             // Complete Messages
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
