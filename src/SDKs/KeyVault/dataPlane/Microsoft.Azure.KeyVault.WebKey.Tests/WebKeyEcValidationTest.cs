@@ -3,6 +3,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 // 
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using Xunit;
@@ -44,6 +45,9 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void RoundTripP256Test()
         {
+            if (!IsECDsaSupported())
+                return;
+
             var usePrivateKey = true;
 
             using (var ecdsa = new ECDsaCng(CngKey.Create(CngAlgorithm.ECDsaP256, "P256ecdsa", cngKeyCreationParameters)))
@@ -64,6 +68,9 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void RoundTripP384Test()
         {
+            if (!IsECDsaSupported())
+                return;
+
             var usePrivateKey = true;
 
             using (var ecdsa = new ECDsaCng(CngKey.Create(CngAlgorithm.ECDsaP384, "P384ecdsa", cngKeyCreationParameters)))
@@ -84,6 +91,9 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void RoundTripP521Test()
         {
+            if (!IsECDsaSupported())
+                return;
+
             var usePrivateKey = true;
 
             using (var ecdsa = new ECDsaCng(CngKey.Create(CngAlgorithm.ECDsaP521, "P521ecdsa", cngKeyCreationParameters)))
@@ -104,6 +114,9 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void PublicOnlyKeyTest()
         {
+            if (!IsECDsaSupported())
+                return;
+
             var usePrivateKey = false;
 
             using (var ecdsa = new ECDsaCng(CngKey.Create(CngAlgorithm.ECDsaP256, "P256ecdsa", cngKeyCreationParameters)))
@@ -125,6 +138,9 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void PrivateSignPublicVerifyTest()
         {
+            if (!IsECDsaSupported())
+                return;
+
             using (var ecdsa = new ECDsaCng(CngKey.Create(CngAlgorithm.ECDsaP256, "P256ecdsa", cngKeyCreationParameters)))
             {
                 var publicKey = new JsonWebKey(ecdsa, false);
@@ -136,10 +152,28 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void PublicSignPrivateVerifyTest()
         {
+            if (!IsECDsaSupported())
+                return;
+
             using (var ecdsa = new ECDsaCng(CngKey.Create(CngAlgorithm.ECDsaP256, "P256ecdsa", cngKeyCreationParameters)))
             {
                 var publicKey = new JsonWebKey(ecdsa, false);
                 Assert.Throws<CryptographicException>(() => publicKey.ToECDsa(true));
+            }
+        }
+
+        /// <summary>
+        /// Temporary hack to make build pass on Linux with .NET Core.
+        /// </summary>
+        private static bool IsECDsaSupported()
+        {
+            try
+            {
+                Console.WriteLine("Attempting to access property {0}...", CngAlgorithm.ECDsaP256);
+                return true;
+            } catch (PlatformNotSupportedException)
+            {
+                return false;
             }
         }
 
