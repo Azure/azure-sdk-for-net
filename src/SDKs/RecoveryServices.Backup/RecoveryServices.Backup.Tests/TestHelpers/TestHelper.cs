@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
     public class TestHelper : IDisposable
     {
         public string ResourceGroup = "SwaggerTestRg";
-        public string VaultName = "SDKTestRsVault";
-        public string Location = "westus";
+        public string VaultName = "NetSDKTestRsVault";
+        public string Location = "westcentralus";
         public string FabricName = "Azure";
 
         public RecoveryServicesClient VaultClient { get; private set; }
@@ -176,6 +176,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             Assert.NotNull(jobResponse.JobId);
 
             return jobResponse.JobId;
+        }
+
+        public IPage<JobResource> ListBackupJobs()
+        {
+           return BackupClient.BackupJobs.List(VaultName, ResourceGroup);
         }
 
         public void WaitForJobCompletion(string jobId)
