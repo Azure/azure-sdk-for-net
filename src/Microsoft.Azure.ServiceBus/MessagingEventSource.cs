@@ -10,6 +10,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
+    using Microsoft.Azure.ServiceBus.Amqp;
     using Microsoft.Azure.ServiceBus.Primitives;
 
     [EventSource(Name = "Microsoft-Azure-ServiceBus")]
@@ -1034,7 +1035,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.AmqpLinkCreationException(entityPath, session.ToString(), session.State.ToString(), session.TerminalException != null ? session.TerminalException.ToString() : string.Empty, connection.ToString(), connection.State.ToString(), exception.ToString());
+                this.AmqpLinkCreationException(entityPath, session.ToString(), session.State.ToString(), session.GetInnerException()?.ToString() ?? string.Empty, connection.ToString(), connection.State.ToString(), exception.ToString());
             }
         }
 
@@ -1210,12 +1211,11 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void CreatingNewLink(string clientId, bool isSessionReceiver, string sessionId, bool isRequestResponseLink, Error linkError)
+        public void CreatingNewLink(string clientId, bool isSessionReceiver, string sessionId, bool isRequestResponseLink, Exception linkException)
         {
             if (this.IsEnabled())
             {
-                string linkErrorString = linkError != null ? linkError.Condition.Value : string.Empty;
-                this.CreatingNewLink(clientId, isSessionReceiver, sessionId ?? string.Empty, isRequestResponseLink, linkErrorString);
+                this.CreatingNewLink(clientId, isSessionReceiver, sessionId ?? string.Empty, isRequestResponseLink, linkException?.ToString() ?? string.Empty);
             }
         }
 
@@ -1226,19 +1226,18 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void SessionReceiverLinkClosed(string clientId, string sessionId, Error linkError)
+        public void SessionReceiverLinkClosed(string clientId, string sessionId, Exception linkException)
         {
             if (this.IsEnabled())
             {
-                string linkErrorString = linkError != null ? linkError.Condition.Value : string.Empty;
-                this.SessionReceiverLinkClosed(clientId, sessionId ?? string.Empty, linkErrorString);
+                this.SessionReceiverLinkClosed(clientId, sessionId ?? string.Empty, linkException?.ToString() ?? string.Empty);
             }
         }
 
-        [Event(106, Level = EventLevel.Error, Message = "SessionReceiver Link Closed. ClientId: {0}, SessionId: {1}, LinkError: {2}.")]
-        void SessionReceiverLinkClosed(string clientId, string sessionId, string linkError)
+        [Event(106, Level = EventLevel.Error, Message = "SessionReceiver Link Closed. ClientId: {0}, SessionId: {1}, linkException: {2}.")]
+        void SessionReceiverLinkClosed(string clientId, string sessionId, string linkException)
         {
-            WriteEvent(106, clientId, sessionId, linkError);
+            WriteEvent(106, clientId, sessionId, linkException);
         }
     }
 }
