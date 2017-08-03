@@ -357,7 +357,7 @@ namespace Microsoft.Rest.Azure
             return true;
         }
    
-/*
+      /*
 
         /// <summary>
         /// Updates PollingState from GET operations.
@@ -397,8 +397,6 @@ namespace Microsoft.Rest.Azure
                 pollingState.Status = AzureAsyncOperation.SuccessStatus;
             }
 
-            pollingState = UpdatePollingStateForFailedState<TBody, THeader>(pollingState, responseWithResource, client);
-
             if(pollingState?.Error == null)
             {
                 pollingState.Error = new CloudError()
@@ -414,40 +412,6 @@ namespace Microsoft.Rest.Azure
                 .Create(client.DeserializationSettings));
             pollingState.ResourceHeaders = responseWithResource.Headers.ToObject<THeader>(JsonSerializer
                 .Create(client.DeserializationSettings));
-        }
-
-        internal static PollingState<TBody, THeader> UpdatePollingStateForFailedState<TBody, THeader>(PollingState<TBody, THeader> pollState,
-            AzureOperationResponse<JObject, JObject> responseWithResource, IAzureClient client) where TBody: class where THeader:class
-        {
-            PollingState<TBody, THeader> pollingState = pollState;
-
-            if (AzureAsyncOperation.FailedStatuses.Any(
-                        s => s.Equals(pollingState.Status, StringComparison.OrdinalIgnoreCase)))
-            {
-                CloudError CError = null;
-
-                string responseContent = Task.Run(async () => await responseWithResource.Response.Content.ReadAsStringAsync().ConfigureAwait(false)).Result;
-                try
-                {
-                    CError = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, client.DeserializationSettings);
-                }
-                catch (JsonException)
-                {
-                    // failed to deserialize, return empty body
-                }
-
-                pollingState.CloudException = new CloudException(string.Format(CultureInfo.InvariantCulture,
-                Resources.LongRunningOperationFailed, pollingState.Status))
-                {
-                    Body = CError,
-                    Request = new HttpRequestMessageWrapper(responseWithResource.Request, null),
-                    Response = new HttpResponseMessageWrapper(responseWithResource.Response, responseContent)
-                };
-
-                pollingState.Error = CError;
-            }
-
-            return pollingState;
         }
 
         /// <summary>
