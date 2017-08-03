@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Sasl;
     using Microsoft.Azure.Amqp.Transport;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
     internal class AmqpConnectionHelper
     {
@@ -100,12 +101,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static AmqpConnectionSettings CreateAmqpConnectionSettings(uint maxFrameSize, string containerId, string hostName)
         {
-            AmqpConnectionSettings connectionSettings = new AmqpConnectionSettings
+            var connectionSettings = new AmqpConnectionSettings
             {
                 MaxFrameSize = maxFrameSize,
                 ContainerId = containerId,
                 HostName = hostName
             };
+
+            connectionSettings.AddProperty("product", ClientInfo.Product);
+            connectionSettings.AddProperty("version", ClientInfo.Version);
+            connectionSettings.AddProperty("framework", ClientInfo.Framework);
+            connectionSettings.AddProperty("platform", ClientInfo.Platform);
             return connectionSettings;
         }
     }
