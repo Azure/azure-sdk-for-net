@@ -44,12 +44,12 @@ namespace DataLakeAnalytics.Tests
                 var pipelineName = TestUtilities.GenerateName("jobPipeline");
                 var pipelineUri = string.Format("https://{0}.contoso.com/myJob", TestUtilities.GenerateName("pipelineuri"));
                 // Submit a job to the account
-                var jobToSubmit = new JobInformation
+                var jobToSubmit = new CreateJobParameters
                 {
                     Name = "azure sdk data lake analytics job",
                     DegreeOfParallelism = 2,
                     Type = JobType.USql,
-                    Properties = new USqlJobProperties
+                    Properties = new CreateUSqlJobProperties
                     {
                         Script = "DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;"
                     },
@@ -146,13 +146,24 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(1, listRecurrence.Count());
                 Assert.True(listRecurrence.Any(recurrence => recurrence.RecurrenceId == recurrenceId));
 
+                // Build a job to the account
+                var jobToBuild = new BuildJobParameters
+                {
+                    Name = "azure sdk data lake analytics job",
+                    Type = JobType.USql,
+                    Properties = new CreateUSqlJobProperties
+                    {
+                        Script = "DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;"
+                    }
+                };
+
                 // Just compile the job, which requires a jobId in the job object
-                var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
+                var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToBuild);
                 Assert.NotNull(compileResponse);
 
                 // now compile a broken job and verify diagnostics report an error
                 jobToSubmit.Properties.Script = "DROP DATABASE IF EXIST FOO; CREATE DATABASE FOO;";
-                compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
+                compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToBuild);
                 Assert.NotNull(compileResponse);
 
                 Assert.Equal(1, ((USqlJobProperties)compileResponse.Properties).Diagnostics.Count);

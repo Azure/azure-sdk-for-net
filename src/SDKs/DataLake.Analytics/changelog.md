@@ -1,4 +1,22 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
+### Changes in 3.1.0-preview
+- Create an explicit set of parameters for job submission. NOTE: Only
+U-SQL is supported in this change, no hive jobs are supported at
+present.
+  - For jobs submission, change JobInformation to CreateJobParameters
+    - For the properties use the right object (e.g. USqlJobProperties to CreateUSqlJobProperties)
+  - For building jobs, change JobInformation to BuildJobParameters
+    - For the properties use the right object (e.g. USqlJobProperties to CreateUSqlJobProperties)
+	- Note that the following fields are not part of BuildJobParameters
+	  - degreeOfParallelism
+	  - priority
+	  - related
+- Create a "Basic" jobInformation that is returned for LIST calls
+- Setup inheritance for GET jobs
+- Create an inheritance structure for GET and LIST ADLA
+accounts.
+- This also follows the Basic<Object> -> Object inheritance pattern.
+
 ### Changes in 3.0.1
 - Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
 
