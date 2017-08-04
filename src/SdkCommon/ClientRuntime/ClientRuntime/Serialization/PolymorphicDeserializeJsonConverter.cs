@@ -6,6 +6,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using System.Linq;
 
 namespace Microsoft.Rest.Serialization
 {
@@ -48,6 +49,23 @@ namespace Microsoft.Rest.Serialization
         }
 
         /// <summary>
+        /// Case insensitive (and reduced version) of JToken.SelectToken which unfortunately does not offer
+        /// such functionality and has made all potential extension points `internal`.
+        /// </summary>
+        private JToken SelectTokenCaseInsensitive(JObject obj, string path)
+        {
+            JToken result = obj;
+            foreach (var pathComponent in path.Split('.'))
+            {
+                result = (result as JObject)?
+                    .Properties()
+                    .FirstOrDefault(p => string.Equals(p.Name, pathComponent, StringComparison.OrdinalIgnoreCase))?
+                    .Value;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Reads a JSON field and deserializes into an appropriate object based on discriminator
         /// field and object name. If JsonObject attribute is available, its value is used instead.
         /// </summary>
@@ -75,7 +93,7 @@ namespace Microsoft.Rest.Serialization
             // parse properties
             foreach (var expectedProperty in contract.Properties)
             {
-                var property = item.SelectToken(expectedProperty.PropertyName);
+                var property = SelectTokenCaseInsensitive(item, expectedProperty.PropertyName);
                 if (property != null)
                 {
                     var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
