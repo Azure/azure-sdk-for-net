@@ -58,7 +58,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
                 var ecdsa_jwk = jwk.ToECDsa(usePrivateKey);
                 
                 Assert.Equal(ecdsa_jwk.KeySize, ecdsa.KeySize);
-#if NET452
+#if FullNetFx
                 Assert.Equal(ecdsa_jwk.SignatureAlgorithm, ecdsa.SignatureAlgorithm);
 #endif
                 SignVerify(ecdsa_jwk);
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
                 var ecdsa_jwk = jwk.ToECDsa(usePrivateKey);
 
                 Assert.Equal(ecdsa_jwk.KeySize, ecdsa.KeySize);
-#if NET452
+#if FullNetFx
                 Assert.Equal(ecdsa_jwk.SignatureAlgorithm, ecdsa.SignatureAlgorithm);
 #endif
                 SignVerify(ecdsa_jwk);
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
                 var ecdsa_jwk = jwk.ToECDsa(usePrivateKey);
 
                 Assert.Equal(ecdsa_jwk.KeySize, ecdsa.KeySize);
-#if NET452
+#if FullNetFx
                 Assert.Equal(ecdsa_jwk.SignatureAlgorithm, ecdsa.SignatureAlgorithm);
 #endif
                 SignVerify(ecdsa_jwk);
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
                 var ecdsa_jwk = jwk.ToECDsa(usePrivateKey);
 
                 Assert.Equal(ecdsa_jwk.KeySize, ecdsa.KeySize);
-#if NET452
+#if FullNetFx
                 Assert.Equal(ecdsa_jwk.SignatureAlgorithm, ecdsa.SignatureAlgorithm);
                 // Private key doesn't exist. Sign should fail with Key is missing.
                 Assert.Throws<CryptographicException>(()=>SignVerify(ecdsa_jwk));

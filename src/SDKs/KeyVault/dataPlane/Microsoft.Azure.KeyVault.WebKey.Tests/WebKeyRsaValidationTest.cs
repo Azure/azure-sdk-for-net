@@ -27,7 +27,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             byte[] plainText = null;
 
-#if NET452
+#if FullNetFx
             if ( key is RSACryptoServiceProvider )
             {
                 plainText = ( ( RSACryptoServiceProvider )key ).Decrypt( cipherText, true );
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             byte[] cipherText = null;
 
-#if NET452
+#if FullNetFx
             if ( key is RSACryptoServiceProvider )
             {
                 cipherText = ( ( RSACryptoServiceProvider )key ).Encrypt( _plainText, true );
