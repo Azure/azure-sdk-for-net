@@ -1,9 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Sql.Tests.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Sql.Tests
 {
@@ -78,6 +83,19 @@ namespace Sql.Tests
             }
         }
 
+        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
+        {
+            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+
+            var context = new AuthenticationContext(authority);
+            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
+            var clientCredential = new ClientCredential(authClientId, authSecret);
+            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
+
+            return result.AccessToken;
+        }
+
         /// <summary>
         /// Gets the AAD user object id.
         /// </summary>
@@ -95,15 +113,14 @@ namespace Sql.Tests
                 objectIdKey,
                 () =>
                 {
-                    TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
                     string objectId;
-                    if (testEnvironment.ConnectionString.KeyValuePairs.TryGetValue(objectIdKey, out objectId))
+                    if (_environment.ConnectionString.KeyValuePairs.TryGetValue(objectIdKey, out objectId))
                     {
                         return objectId;
                     }
                     else
                     {
-                        string servicePrincipal = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+                        string servicePrincipal = _environment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
 
                         throw new KeyNotFoundException(
                             string.Format(
@@ -127,8 +144,7 @@ namespace Sql.Tests
                 tenantIdKey,
                 () =>
                 {
-                    TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-                    return testEnvironment.Tenant;
+                    return _environment.Tenant;
                 });
         }
 
@@ -179,6 +195,12 @@ namespace Sql.Tests
 
                 return value;
             });
+        }
+
+        public static KeyVaultClient GetKeyVaultClient()
+        {
+            DelegatingHandler mockServer = HttpMockServer.CreateInstance();
+            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), handlers: mockServer);
         }
     }
 }

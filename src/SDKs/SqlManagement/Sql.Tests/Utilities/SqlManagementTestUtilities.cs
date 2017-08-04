@@ -31,25 +31,6 @@ namespace Sql.Tests
     {
         public const string DefaultLogin = "dummylogin";
         public const string DefaultPassword = "Un53cuRE!";
-
-        public static KeyVaultClient GetKeyVaultClient()
-        {
-            DelegatingHandler mockServer = HttpMockServer.CreateInstance();
-            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), handlers: mockServer);
-        }
-
-        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-
-            var context = new AuthenticationContext(authority);
-            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
-            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
-            var clientCredential = new ClientCredential(authClientId, authSecret);
-            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
-
-            return result.AccessToken;
-        }
         
         public const string TestPrefix = "sqlcrudtest-";
 
@@ -366,7 +347,7 @@ namespace Sql.Tests
 
             var sqlClient = context.GetClient<SqlManagementClient>();
             var keyVaultManagementClient = context.GetClient<KeyVaultManagementClient>();
-            var keyVaultClient = SqlManagementTestUtilities.GetKeyVaultClient();
+            var keyVaultClient = TestEnvironmentUtilities.GetKeyVaultClient();
 
             // Prepare vault permissions for the server
             var serverPermissions = new Permissions()
@@ -409,21 +390,20 @@ namespace Sql.Tests
             return $"{vaultName}_{keyBundle.KeyIdentifier.Name}_{keyBundle.KeyIdentifier.Version}";
         }
 
-        public static void ExecuteWithRetry(System.Action action, TimeSpan timeout, TimeSpan RecordRetryDelay, Func<CloudException, bool> acceptedErrorFunction)
+        public static void ExecuteWithRetry(System.Action action, TimeSpan timeout, TimeSpan retryDelay, Func<CloudException, bool> acceptedErrorFunction)
         {
             DateTime timeoutTime = DateTime.Now.Add(timeout);
-            TimeSpan retryDelay = HttpMockServer.Mode == HttpRecorderMode.Record ? TimeSpan.FromSeconds(5) : TimeSpan.Zero;
-            while (true)
+            bool passed = false;
+            while (DateTime.Now < timeoutTime && !passed)
             {
                 try
                 {
                     action();
-                    return;
+                    passed = true;
                 }
-                catch (CloudException e) when (
-                        acceptedErrorFunction(e) && DateTime.UtcNow < timeoutTime)
+                catch (CloudException e) when (acceptedErrorFunction(e))
                 {
-                    Thread.Sleep(retryDelay);
+                    TestUtilities.Wait(retryDelay);
                 }
             }
         }
