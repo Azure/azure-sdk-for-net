@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The name of the resource group the virtual machine in the scale set is in.</param>
         /// <param name="name">The name of the virtual machine scale set.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.PowerOffAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetsBeta.PowerOffAsync(string groupName, string name, CancellationToken cancellationToken)
         {
 
             await this.PowerOffAsync(groupName, name, cancellationToken);
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
         /// <param name="name">The name of the virtual machine scale set.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.ReimageAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetsBeta.ReimageAsync(string groupName, string name, CancellationToken cancellationToken)
         {
 
             await this.ReimageAsync(groupName, name, cancellationToken);
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
         /// <param name="name">The name of the virtual machine scale set.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.StartAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetsBeta.StartAsync(string groupName, string name, CancellationToken cancellationToken)
         {
 
             await this.StartAsync(groupName, name, cancellationToken);
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
         /// <param name="name">The name of the virtual machine scale set.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.DeallocateAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetsBeta.DeallocateAsync(string groupName, string name, CancellationToken cancellationToken)
         {
 
             await this.DeallocateAsync(groupName, name, cancellationToken);
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
         /// <param name="name">The virtual machine scale set name.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.RestartAsync(string groupName, string name, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetsBeta.RestartAsync(string groupName, string name, CancellationToken cancellationToken)
         {
 
             await this.RestartAsync(groupName, name, cancellationToken);

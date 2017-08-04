@@ -1748,12 +1748,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 || this.Inner.DiagnosticsProfile.BootDiagnostics == null)
             {
                 return diskStorageAccount;
-            }
-            if (this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri != null)
+            } else if (this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri != null)
             {
                 return diskStorageAccount;
-            }
-            if (this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled.HasValue 
+            } else if (this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled.HasValue 
                 && this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled == true)
             {
                 if (this.creatableDiagnosticsStorageAccountKey != null)

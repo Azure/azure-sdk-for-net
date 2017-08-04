@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="resourceGroupName">The resource group name.</param>
         /// <param name="diskName">The disk name.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IDisks.RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IDisksBeta.RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken)
         {
 
             await this.RevokeAccessAsync(resourceGroupName, diskName, cancellationToken);
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="accessLevel">Access level.</param>
         /// <param name="accessDuration">Access duration.</param>
         /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the disk.</returna>
-        async Task<string> Microsoft.Azure.Management.Compute.Fluent.IDisks.GrantAccessAsync(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken)
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.IDisksBeta.GrantAccessAsync(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken)
         {
             return await this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration, cancellationToken);
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The resource group name.</param>
         /// <param name="diskName">The disk name.</param>
-        void Microsoft.Azure.Management.Compute.Fluent.IDisks.RevokeAccess(string resourceGroupName, string diskName)
+        void Microsoft.Azure.Management.Compute.Fluent.IDisksBeta.RevokeAccess(string resourceGroupName, string diskName)
         {
 
             this.RevokeAccess(resourceGroupName, diskName);
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="accessLevel">Access level.</param>
         /// <param name="accessDuration">Access duration.</param>
         /// <return>The read-only SAS URI to the disk.</return>
-        string Microsoft.Azure.Management.Compute.Fluent.IDisks.GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
+        string Microsoft.Azure.Management.Compute.Fluent.IDisksBeta.GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
         {
             return this.GrantAccess(resourceGroupName, diskName, accessLevel, accessDuration);
         }

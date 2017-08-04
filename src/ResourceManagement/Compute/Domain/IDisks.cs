@@ -24,41 +24,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IDisk>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Compute.Fluent.IComputeManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.IDisksOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.IDisksOperations>,
+        Microsoft.Azure.Management.Compute.Fluent.IDisksBeta
     {
-        /// <summary>
-        /// Revoke access granted to the snapshot asynchronously.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="diskName">The disk name.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Revoke access granted to a disk.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="diskName">The disk name.</param>
-        void RevokeAccess(string resourceGroupName, string diskName);
-
-        /// <summary>
-        /// Grants access to a disk.
-        /// </summary>
-        /// <param name="resourceGroupName">A resource group name.</param>
-        /// <param name="diskName">A disk name.</param>
-        /// <param name="accessLevel">Access level.</param>
-        /// <param name="accessDuration">Access duration.</param>
-        /// <return>The read-only SAS URI to the disk.</return>
-        string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration);
-
-        /// <summary>
-        /// Grants access to the disk asynchronously.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="diskName">The disk name.</param>
-        /// <param name="accessLevel">Access level.</param>
-        /// <param name="accessDuration">Access duration.</param>
-        /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the disk.</returna>
-        Task<string> GrantAccessAsync(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

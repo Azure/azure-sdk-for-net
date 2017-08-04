@@ -24,42 +24,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.ISnapshot>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Compute.Fluent.IComputeManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.ISnapshotsOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.ISnapshotsOperations>,
+        Microsoft.Azure.Management.Compute.Fluent.ISnapshotsBeta
     {
-        /// <summary>
-        /// Revoke access granted to the snapshot asynchronously.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="snapName">The snapshot name.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RevokeAccessAsync(string resourceGroupName, string snapName, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Revoke access granted to a snapshot.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="snapName">The snapshot name.</param>
-        void RevokeAccess(string resourceGroupName, string snapName);
-
-        /// <summary>
-        /// Grants access to a snapshot.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="snapshotName">The snapshot name.</param>
-        /// <param name="accessLevel">Access level.</param>
-        /// <param name="accessDuration">Access duration.</param>
-        /// <return>The read-only SAS URI to the snapshot.</return>
-        string GrantAccess(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration);
-
-        /// <summary>
-        /// Grants access to the snapshot asynchronously.
-        /// </summary>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="snapshotName">The snapshot name.</param>
-        /// <param name="accessLevel">Access level.</param>
-        /// <param name="accessDuration">Access duration.</param>
-        /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the snapshot.</returna>
-        Task<string> GrantAccessAsync(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken = default(CancellationToken));
-
     }
 }
