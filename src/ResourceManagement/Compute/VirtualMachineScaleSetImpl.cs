@@ -37,7 +37,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IDefinitionManagedOrUnmanaged,
         IDefinitionManaged,
         IDefinitionUnmanaged,
-        IUpdate
+        IUpdate,
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate,
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply
     {
         // Clients
         private IStorageManager storageManager;

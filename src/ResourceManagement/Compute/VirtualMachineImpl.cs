@@ -33,7 +33,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachine.DefinitionManagedOrUnmanaged.IDefinitionManagedOrUnmanaged,
         VirtualMachine.DefinitionManaged.IDefinitionManaged,
         VirtualMachine.DefinitionUnmanaged.IDefinitionUnmanaged,
-        VirtualMachine.Update.IUpdate
+        VirtualMachine.Update.IUpdate,
+        VirtualMachine.Definition.IWithRoleAndScopeOrCreate,
+        VirtualMachine.Update.IWithRoleAndScopeOrUpdate
     {
         private readonly IStorageManager storageManager;
         private readonly INetworkManager networkManager;

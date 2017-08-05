@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
     /// <summary>
     /// The stage of a virtual machine definition containing various settings when virtual machine is created from image.
@@ -369,7 +370,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithSecondaryNetworkInterface,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithExtension,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPlan,
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithBootDiagnostics
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithBootDiagnostics,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedServiceIdentity
     {
     }
 
@@ -1014,5 +1016,74 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="publicKey">An SSH public key in the PEM format.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateUnmanaged WithSsh(string publicKey);
+    }
+
+
+
+    /// <summary>
+    /// The stage of the virtual machine definition allowing to enable Managed Service Identity.
+    /// </summary>
+    public interface IWithManagedServiceIdentity :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRoleAndScopeOrCreate WithManagedServiceIdentity();
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="tokenPort">The port on the virtual machine where access token is available.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRoleAndScopeOrCreate WithManagedServiceIdentity(int tokenPort);
+    }
+
+    /// <summary>
+    /// The stage of the Managed Service Identity enabled virtual machine allowing to set role
+    /// assignment for a scope.
+    /// </summary>
+    public interface IWithRoleAndScopeOrCreate :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate
+    {
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the access described
+        /// in the given role definition with scope of access limited to the ARM resource identified
+        /// by the resource ID specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="roleDefinitionId">Access role definition to assigned to the virtual machine.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRoleAndScopeOrCreate WithRoleDefinitionBasedAccessTo(string scope, string roleDefinitionId);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the given access role
+        /// with scope of access limited to the current resource group that the virtual machine
+        /// resides.
+        /// </summary>
+        /// <param name="asRole">Access role to assigned to the virtual machine.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRoleAndScopeOrCreate WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the given access role
+        /// with scope of access limited to the ARM resource identified by the resource ID specified
+        /// in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="asRole">Access role to assigned to the virtual machine.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRoleAndScopeOrCreate WithRoleBasedAccessTo(string scope, BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the access described
+        /// in the given role definition with scope of access limited to the current resource group that
+        /// the virtual machine resides.
+        /// </summary>
+        /// <param name="roleDefinitionId">Access role definition to assigned to the virtual machine.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithRoleAndScopeOrCreate WithRoleDefinitionBasedAccessToCurrentResourceGroup(string roleDefinitionId);
     }
 }
