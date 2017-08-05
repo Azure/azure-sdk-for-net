@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a subnet of a virtual network.
+    /// A client-side representation of a subnet of a virtual network.
     /// </summary>
     public interface ISubnet  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.SubnetInner>,
