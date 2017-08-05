@@ -219,7 +219,10 @@ namespace Microsoft.Azure.ServiceBus
                         MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
                         await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
                         callbackExceptionOccured = true;
-                        await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false);
+                        if (!(exception is MessageLockLostException || exception is SessionLockLostException))
+                        {
+                            await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false); 
+                        }
                     }
                     finally
                     {
