@@ -3,14 +3,13 @@
   <PropertyGroup>
     <PackageId>ApiManagement.Tests</PackageId>
     <Description>ApiManagement.Tests Class Library</Description>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0-preview</Version>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>ApiManagementManagement.Tests</AssemblyName>    
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <Version>1.0.0-preview</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,22 +36,7 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Resources\SwaggerPetStoreV2.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\SwaggerPetStoreV2Expected.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\WADLYahoo.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\WADLYahooModified.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Weather.wsdl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\wsdl11.xsd">
+    <None Update="Resources\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

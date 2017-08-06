@@ -21,17 +21,13 @@ namespace ApiManagement.Tests
 {
     public class ApiManagementTestBase : TestBase
     {
-        private const string TenantIdKey = "TenantId";
-        private const string ObjectIdKey = "ObjectId";
         private const string SubIdKey = "SubId";
-        private const string ApplicationIdKey = "ApplicationId";
         private const string ServiceNameKey = "ServiceName";
         private const string ResourceGroupNameKey = "ResourceGroup";
         private const string LocationKey = "Location";
         private const string TestCertificateKey = "TestCertificate";
         private const string TestCertificatePasswordKey = "TestCertificatePassword";
-
-        public string tenantId { get; set; }
+        
         public string location { get; set; }
         public string subscriptionId { get; set; }
         public ApiManagementClient client { get; set; }
@@ -63,39 +59,37 @@ namespace ApiManagement.Tests
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                this.serviceName = testEnv.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ServiceNameKey);
+                this.serviceName = testEnv.ConnectionString.KeyValuePairs[ServiceNameKey];
                 if (string.IsNullOrEmpty(this.serviceName))
                 {
                     this.serviceName = TestUtilities.GenerateName("sdktestapim");
                 }
 
-                this.location = testEnv.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(LocationKey);
+                this.location = testEnv.ConnectionString.KeyValuePairs[LocationKey];
                 if (string.IsNullOrEmpty(this.location))
                 {
                     this.location = GetLocation();
                 }
 
-                this.rgName = testEnv.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ResourceGroupNameKey);
+                this.rgName = testEnv.ConnectionString.KeyValuePairs[ResourceGroupNameKey];
                 if (string.IsNullOrEmpty(this.rgName))
                 {
                     rgName = TestUtilities.GenerateName("sdktestrg");
                     resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location });
                 }
                                 
-                this.base64EncodedTestCertificateData = testEnv.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(TestCertificateKey);
+                this.base64EncodedTestCertificateData = testEnv.ConnectionString.KeyValuePairs[TestCertificateKey];
                 if (!string.IsNullOrEmpty(this.base64EncodedTestCertificateData))
                 {
                     HttpMockServer.Variables[TestCertificateKey] = base64EncodedTestCertificateData;
                 }
-                this.testCertificatePassword = testEnv.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(TestCertificatePasswordKey);
+                this.testCertificatePassword = testEnv.ConnectionString.KeyValuePairs[TestCertificatePasswordKey];
                 if(!string.IsNullOrEmpty(this.testCertificatePassword))
                 {
                     HttpMockServer.Variables[TestCertificatePasswordKey] = testCertificatePassword;
                 }
-
-                this.tenantId = testEnv.Tenant;
+                
                 this.subscriptionId = testEnv.SubscriptionId;
-                HttpMockServer.Variables[TenantIdKey] = tenantId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;                
                 HttpMockServer.Variables[ServiceNameKey] = this.serviceName;
                 HttpMockServer.Variables[LocationKey] = this.location;
@@ -103,9 +97,7 @@ namespace ApiManagement.Tests
             }
             else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                this.tenantId = testEnv.Tenant;
                 this.subscriptionId = testEnv.SubscriptionId;
-                tenantId = HttpMockServer.Variables[TenantIdKey];
                 subscriptionId = HttpMockServer.Variables[SubIdKey];
                 rgName = HttpMockServer.Variables[ResourceGroupNameKey];
                 serviceName = HttpMockServer.Variables[ServiceNameKey];
