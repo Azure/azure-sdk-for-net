@@ -1,9 +1,24 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
 ### Changes in 2.3.0-preview
-- Create an inheritance structure for GET and LIST ADLS accounts.
-- This also follows the Basic<Object> -> Object inheritance pattern.
-- Standardized the parameter name for file paths (e.g. fileDestination to path)
+
+**Breaking change**
+
+- When getting a list of accounts, the object type that is returned is DataLakeAnalyticsAccountBasic and not DataLakeAnalyticsAccount (more information on the difference is below in the Notes section)
+- Standardized the parameter name for file paths in the url (e.g. fileDestination to path)
+
+**Notes**
+
+- When getting a list of accounts, the account information for each account now includes a strict subset of the account information that is returned when getting a single account 
+    - There are two ways to get a list of accounts: List and ListByResource methods
+    - The following fields are included in the account information when getting a list of accounts, which is less than the account information retrieved for a single account:
+        - provisioningState
+        - state
+        - creationTime
+        - lastModifiedTime
+        - endpoint
+- When retrieving account information, an account id field called "accountId" is now included.
+    - accountId's description: The unique identifier associated with this Data Lake Analytics account.
 
 ### Changes in 2.2.0
 - Marking the 2.*.*-preview changes as stable for the second official release of the Data Lake Store SDK.
