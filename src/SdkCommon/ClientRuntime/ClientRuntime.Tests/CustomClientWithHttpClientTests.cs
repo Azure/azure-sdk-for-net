@@ -148,6 +148,23 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal("DelayingResponse", delayedContent);
         }
 
+        /// <summary>
+        /// This is to verify if a HttpClient is passed, we still add default userAgent information
+        /// inside defaultheaders of the passed in HttpClient
+        /// </summary>
+        [Fact]
+        public void NullReferenceExceptionAfterClientDispose()
+        {
+            ContosoServiceClient contosoClient = new ContosoServiceClient(null);
+            HttpResponseMessage response = contosoClient.DoSyncWork();
+            string cont = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.NotNull(response);
+
+            contosoClient.Dispose();
+
+            Assert.ThrowsAny<NullReferenceException>(() => SendAndReceiveResponse(contosoClient.HttpClient));
+        }
+
 
         /// <summary>
         /// THe HttpClient that is provided to ServiceClient will have it's own set of UserAgent information
@@ -189,7 +206,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Version.TryParse(fxVer.Product.Version, out defaultVersion);
             Assert.Equal(defaultVersion.ToString(), "1.0.0.0");
         }
-
 
         private HttpResponseMessage SendAndReceiveResponse(HttpClient httpClient)
         {
