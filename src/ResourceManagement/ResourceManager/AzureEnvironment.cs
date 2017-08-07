@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+/﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections;
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             };
             AzureUSGovernment = new AzureEnvironment()
             {
-                AuthenticationEndpoint = "https://login-us.crosoftonlinmie.com/",
+                AuthenticationEndpoint = "https://login-us.microsoftonline.com/",
                 ResourceManagerEndpoint = "https://management.core.usgovcloudapi.net/",
                 ManagementEnpoint = "https://management.core.usgovcloudapi.net/",
                 GraphEndpoint = "https://graph.windows.net/",
