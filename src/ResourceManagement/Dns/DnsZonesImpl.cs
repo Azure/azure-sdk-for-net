@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:39C3F7BAA4073DBF7D9C81AC4336F2D1:32FF50F6C08B8687F5130EDE8E5BA465
         public void DeleteByResourceGroupName(string resourceGroupName, string zoneName, string eTagValue)
         {
-            DeleteByResourceGroupNameAsync(resourceGroupName, zoneName, eTagValue).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByResourceGroupNameAsync(resourceGroupName, zoneName, eTagValue));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:A17E5445D2F99DCCB7C75768B0291EED:46771EA9A18C8A10AFFAEA5F5B47057F
         public void DeleteById(string id, string eTagValue)
         {
-            DeleteByIdAsync(id, eTagValue).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByIdAsync(id, eTagValue));
         }
 
         ///GENMHASH:888AD5B0E0B6C157410F28C8D7AB0DD6:65F3733A4D17B7CA277164946BAE2A98

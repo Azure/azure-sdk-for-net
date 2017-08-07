@@ -37,6 +37,7 @@ using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+using Microsoft.Azure.Management.Network.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1637,7 +1638,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             StringBuilder builder = new StringBuilder()
                 .Append("Active Directory Application: ").Append(application.Id)
                 .Append("\n\tName: ").Append(application.Name)
-                .Append("\n\tSign on URL: ").Append(application.SignOnUrl)
+                .Append("\n\tSign on URL: ").Append(application.SignOnUrl.ToString())
                 .Append("\n\tReply URLs:");
             foreach (string replyUrl in application.ReplyUrls)
             {
@@ -1729,6 +1730,143 @@ namespace Microsoft.Azure.Management.Samples.Common
                 .Append("\n\tPrincipal Id: ").Append(roleAssignment.PrincipalId)
                 .Append("\n\tRole Definition Id: ").Append(roleAssignment.RoleDefinitionId);
             Utilities.Log(builder.ToString());
+        }
+
+        public static void Print(INetworkWatcher nw)
+        {
+            StringBuilder builder = new StringBuilder()
+                .Append("Network Watcher: ").Append(nw.Id)
+                .Append("\n\tName: ").Append(nw.Name)
+                .Append("\n\tResource group name: ").Append(nw.ResourceGroupName)
+                .Append("\n\tRegion name: ").Append(nw.RegionName);
+            Utilities.Log(builder.ToString());
+        }
+
+        public static void Print(IPacketCapture resource)
+        {
+            StringBuilder sb = new StringBuilder().Append("Packet Capture: ").Append(resource.Id)
+                .Append("\n\tName: ").Append(resource.Name)
+                .Append("\n\tTarget id: ").Append(resource.TargetId)
+                .Append("\n\tTime limit in seconds: ").Append(resource.TimeLimitInSeconds)
+                .Append("\n\tBytes to capture per packet: ").Append(resource.BytesToCapturePerPacket)
+                .Append("\n\tProvisioning state: ").Append(resource.ProvisioningState)
+                .Append("\n\tStorage location:")
+                .Append("\n\tStorage account id: ").Append(resource.StorageLocation.StorageId)
+                .Append("\n\tStorage account path: ").Append(resource.StorageLocation.StoragePath)
+                .Append("\n\tFile path: ").Append(resource.StorageLocation.FilePath)
+                .Append("\n\t Packet capture filters: ").Append(resource.Filters.Count);
+            foreach (var filter in resource.Filters)
+            {
+                sb.Append("\n\t\tProtocol: ").Append(filter.Protocol);
+                sb.Append("\n\t\tLocal IP address: ").Append(filter.LocalIPAddress);
+                sb.Append("\n\t\tRemote IP address: ").Append(filter.RemoteIPAddress);
+                sb.Append("\n\t\tLocal port: ").Append(filter.LocalPort);
+                sb.Append("\n\t\tRemote port: ").Append(filter.RemotePort);
+            }
+            Utilities.Log(sb.ToString());
+        }
+
+        public static void Print(IVerificationIPFlow resource)
+        {
+            Utilities.Log(new StringBuilder("IP flow verification: ")
+                .Append("\n\tAccess: ").Append(resource.Access)
+                .Append("\n\tRule name: ").Append(resource.RuleName)
+                .ToString());
+        }
+
+        public static void Print(ITopology resource)
+        {
+            StringBuilder sb = new StringBuilder().Append("Topology: ").Append(resource.Id)
+                .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                .Append("\n\tCreated time: ").Append(resource.CreatedTime)
+                .Append("\n\tLast modified time: ").Append(resource.LastModifiedTime);
+            foreach (var tr in resource.Resources.Values)
+            {
+                sb.Append("\n\tTopology resource: ").Append(tr.Id)
+                    .Append("\n\t\tName: ").Append(tr.Name)
+                    .Append("\n\t\tLocation: ").Append(tr.Location)
+                    .Append("\n\t\tAssociations:");
+                foreach (var association in tr.Associations)
+                {
+                    sb.Append("\n\t\t\tName:").Append(association.Name)
+                        .Append("\n\t\t\tResource id:").Append(association.ResourceId)
+                        .Append("\n\t\t\tAssociation type:").Append(association.AssociationType);
+                }
+            }
+            Utilities.Log(sb.ToString());
+        }
+
+        public static void Print(IFlowLogSettings resource)
+        {
+            Utilities.Log(new StringBuilder().Append("Flow log settings: ")
+                .Append("Target resource id: ").Append(resource.TargetResourceId)
+                .Append("\n\tFlow log enabled: ").Append(resource.Enabled)
+                .Append("\n\tStorage account id: ").Append(resource.StorageId)
+                .Append("\n\tRetention policy enabled: ").Append(resource.IsRetentionEnabled)
+                .Append("\n\tRetention policy days: ").Append(resource.RetentionDays)
+                .ToString());
+        }
+
+        public static void Print(ISecurityGroupView resource)
+        {
+            StringBuilder sb = new StringBuilder().Append("Security group view: ")
+                .Append("\n\tVirtual machine id: ").Append(resource.VMId);
+            foreach (var sgni in resource.NetworkInterfaces.Values)
+            {
+                sb.Append("\n\tSecurity group network interface:").Append(sgni.Id)
+                    .Append("\n\t\tSecurity group network interface:")
+                    .Append("\n\t\tEffective security rules:");
+                foreach (var rule in sgni.SecurityRuleAssociations.EffectiveSecurityRules)
+                {
+                    sb.Append("\n\t\t\tName: ").Append(rule.Name)
+                        .Append("\n\t\t\tDirection: ").Append(rule.Direction)
+                        .Append("\n\t\t\tAccess: ").Append(rule.Access)
+                        .Append("\n\t\t\tPriority: ").Append(rule.Priority)
+                        .Append("\n\t\t\tSource address prefix: ").Append(rule.SourceAddressPrefix)
+                        .Append("\n\t\t\tSource port range: ").Append(rule.SourcePortRange)
+                        .Append("\n\t\t\tDestination address prefix: ").Append(rule.DestinationAddressPrefix)
+                        .Append("\n\t\t\tDestination port range: ").Append(rule.DestinationPortRange)
+                        .Append("\n\t\t\tProtocol: ").Append(rule.Protocol);
+                }
+                sb.Append("\n\t\tSubnet:").Append(sgni.SecurityRuleAssociations.SubnetAssociation.Id);
+                printSecurityRule(sb, sgni.SecurityRuleAssociations.SubnetAssociation.SecurityRules);
+                if (sgni.SecurityRuleAssociations.NetworkInterfaceAssociation != null)
+                {
+                    sb.Append("\n\t\tNetwork interface:")
+                        .Append(sgni.SecurityRuleAssociations.NetworkInterfaceAssociation.Id);
+                    printSecurityRule(sb, sgni.SecurityRuleAssociations.NetworkInterfaceAssociation.SecurityRules);
+                }
+                sb.Append("\n\t\tDefault security rules:");
+                printSecurityRule(sb, sgni.SecurityRuleAssociations.DefaultSecurityRules);
+            }
+            Utilities.Log(sb.ToString());
+        }
+
+        private static void printSecurityRule(StringBuilder sb, IList<SecurityRuleInner> rules)
+        {
+            foreach (var rule in rules)
+            {
+                sb.Append("\n\t\t\tName: ").Append(rule.Name)
+                    .Append("\n\t\t\tDirection: ").Append(rule.Direction)
+                    .Append("\n\t\t\tAccess: ").Append(rule.Access)
+                    .Append("\n\t\t\tPriority: ").Append(rule.Priority)
+                    .Append("\n\t\t\tSource address prefix: ").Append(rule.SourceAddressPrefix)
+                    .Append("\n\t\t\tSource port range: ").Append(rule.SourcePortRange)
+                    .Append("\n\t\t\tDestination address prefix: ").Append(rule.DestinationAddressPrefix)
+                    .Append("\n\t\t\tDestination port range: ").Append(rule.DestinationPortRange)
+                    .Append("\n\t\t\tProtocol: ").Append(rule.Protocol)
+                    .Append("\n\t\t\tDescription: ").Append(rule.Description)
+                    .Append("\n\t\t\tProvisioning state: ").Append(rule.ProvisioningState);
+            }
+        }
+
+        public static void Print(INextHop resource)
+        {
+            StringBuilder sb = new StringBuilder("Next hop: ")
+                .Append("Next hop type: ").Append(resource.NextHopType)
+                .Append("\n\tNext hop ip address: ").Append(resource.NextHopIpAddress)
+                .Append("\n\tRoute table id: ").Append(resource.RouteTableId);
+            Utilities.Log(sb.ToString());
         }
 
         public static void CreateCertificate(string domainName, string pfxPath, string password)

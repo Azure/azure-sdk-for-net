@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         ///GENMHASH:E4DFA7EA15F8324FB60C810D0C96D2FF:F6AE67E7333EEB65ADB6D0D8BBE8B1A9
         protected IAuthorizationKeys GetKeys()
         {
-            return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetKeysAsync());
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         ///GENMHASH:DF4D523C032086042E747B7880875BA8:FD18BE4C1993EC7B8551146DDA176FAC
         protected IAuthorizationKeys RegenerateKey(Policykey policykey)
         {
-            return RegenerateKeyAsync(policykey).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RegenerateKeyAsync(policykey));
         }
 
         /// <summary>

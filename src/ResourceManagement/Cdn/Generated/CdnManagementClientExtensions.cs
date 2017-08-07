@@ -22,21 +22,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public static partial class CdnManagementClientExtensions
     {
-            /// <summary>
-            /// Check the availability of a resource name. This is needed for resources
-            /// where name is globally unique, such as a CDN endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// The resource name to validate.
-            /// </param>
-            public static CheckNameAvailabilityOutputInner CheckNameAvailability(this ICdnManagementClient operations, string name)
-            {
-                return operations.CheckNameAvailabilityAsync(name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Check the availability of a resource name. This is needed for resources
             /// where name is globally unique, such as a CDN endpoint.
@@ -58,18 +44,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Check the quota and actual usage of the CDN profiles under the given
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<ResourceUsageInner> ListResourceUsage(this ICdnManagementClient operations)
-            {
-                return operations.ListResourceUsageAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Check the quota and actual usage of the CDN profiles under the given
             /// subscription.
@@ -88,17 +63,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the available CDN REST API operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<OperationInner> ListOperations(this ICdnManagementClient operations)
-            {
-                return operations.ListOperationsAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the available CDN REST API operations.
             /// </summary>
@@ -116,21 +81,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Check the quota and actual usage of the CDN profiles under the given
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceUsageInner> ListResourceUsageNext(this ICdnManagementClient operations, string nextPageLink)
-            {
-                return operations.ListResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Check the quota and actual usage of the CDN profiles under the given
             /// subscription.
@@ -152,20 +103,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the available CDN REST API operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<OperationInner> ListOperationsNext(this ICdnManagementClient operations, string nextPageLink)
-            {
-                return operations.ListOperationsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the available CDN REST API operations.
             /// </summary>

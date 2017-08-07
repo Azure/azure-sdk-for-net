@@ -24,18 +24,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// </summary>
     public static partial class UsageOperationsExtensions
     {
-            /// <summary>
-            /// Gets the current usage count and the limit for the resources under the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<Usage> List(this IUsageOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the current usage count and the limit for the resources under the
             /// subscription.

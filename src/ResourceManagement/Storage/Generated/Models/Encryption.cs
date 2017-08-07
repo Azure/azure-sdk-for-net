@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent.Models
             Services = services;
             CustomInit();
         }
+
         /// <summary>
         /// Static constructor for Encryption class.
         /// </summary>

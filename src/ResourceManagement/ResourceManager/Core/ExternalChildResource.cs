@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public virtual FluentModelT Refresh()
         {
-            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RefreshAsync());
         }
 
         public virtual async Task<FluentModelT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))

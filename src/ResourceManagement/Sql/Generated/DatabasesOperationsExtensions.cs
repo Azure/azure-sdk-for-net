@@ -24,32 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public static partial class DatabasesOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the Azure SQL database replication link with the given ID. Cannot
-            /// be done during failover.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database that has the replication link to be
-            /// dropped.
-            /// </param>
-            /// <param name='linkId'>
-            /// The ID of the replication link to be deleted.
-            /// </param>
-            public static void DeleteReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
-            {
-                operations.DeleteReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the Azure SQL database replication link with the given ID. Cannot
             /// be done during failover.
@@ -79,30 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.DeleteReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL database replication link.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to get the link for.
-            /// </param>
-            /// <param name='linkId'>
-            /// The replication link ID to be retrieved.
-            /// </param>
-            public static ReplicationLinkInner GetReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
-            {
-                return operations.GetReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL database replication link.
             /// </summary>
@@ -133,31 +85,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Failover the Azure SQL database replication link with the given ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database that has the replication link to be
-            /// failed over.
-            /// </param>
-            /// <param name='linkId'>
-            /// The ID of the replication link to be failed over.
-            /// </param>
-            public static void FailoverReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
-            {
-                operations.FailoverReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Failover the Azure SQL database replication link with the given ID.
             /// </summary>
@@ -186,32 +114,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.FailoverReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Force failover the Azure SQL database replication link with the given ID
-            /// which may result in data loss.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database that has the replication link to be
-            /// failed over.
-            /// </param>
-            /// <param name='linkId'>
-            /// The ID of the replication link to be failed over.
-            /// </param>
-            public static void FailoverReplicationLinkAllowDataLoss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
-            {
-                operations.FailoverReplicationLinkAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Force failover the Azure SQL database replication link with the given ID
             /// which may result in data loss.
@@ -241,27 +144,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.FailoverReplicationLinkAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about Azure SQL database replication links.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to retrieve links for.
-            /// </param>
-            public static IEnumerable<ReplicationLinkInner> ListReplicationLinks(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.ListReplicationLinksAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about Azure SQL database replication links.
             /// </summary>
@@ -289,27 +172,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Pause an Azure SQL Data Warehouse database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL Data Warehouse database to pause.
-            /// </param>
-            public static void PauseDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.PauseDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Pause an Azure SQL Data Warehouse database.
             /// </summary>
@@ -334,27 +197,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.PauseDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Resume an Azure SQL Data Warehouse database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL Data Warehouse database to resume.
-            /// </param>
-            public static void ResumeDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.ResumeDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Resume an Azure SQL Data Warehouse database.
             /// </summary>
@@ -379,28 +222,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.ResumeDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Returns a list of Azure SQL database restore points.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database from which to retrieve available restore
-            /// points.
-            /// </param>
-            public static IEnumerable<RestorePointInner> ListRestorePoints(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.ListRestorePointsAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns a list of Azure SQL database restore points.
             /// </summary>
@@ -429,32 +251,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new Azure SQL database or updates an existing Azure SQL database.
-            /// Location is a required property in the request body, and it must be the
-            /// same as the location of the SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be operated on (updated or created).
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for creating or updating a database.
-            /// </param>
-            public static DatabaseInner CreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new Azure SQL database or updates an existing Azure SQL database.
             /// Location is a required property in the request body, and it must be the
@@ -487,27 +284,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an Azure SQL database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be deleted.
-            /// </param>
-            public static void Delete(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.DeleteAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an Azure SQL database.
             /// </summary>
@@ -532,32 +309,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
-            /// </param>
-            /// <param name='expand'>
-            /// The comma separated list of child objects to expand in the response.
-            /// Possible properties: serviceTierAdvisors, upgradeHint,
-            /// transparentDataEncryption.
-            /// </param>
-            public static DatabaseInner Get(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, serverName, databaseName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL database.
             /// </summary>
@@ -590,24 +342,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about an Azure SQL database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static IEnumerable<DatabaseInner> ListByServer(this IDatabasesOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about an Azure SQL database.
             /// </summary>
@@ -632,27 +367,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about Azure SQL database usages.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database.
-            /// </param>
-            public static IEnumerable<DatabaseMetric> ListUsages(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.ListUsagesAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about Azure SQL database usages.
             /// </summary>
@@ -680,30 +395,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets information about a service tier advisor.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of database.
-            /// </param>
-            /// <param name='serviceTierAdvisorName'>
-            /// The name of service tier advisor.
-            /// </param>
-            public static ServiceTierAdvisorInner GetServiceTierAdvisor(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string serviceTierAdvisorName)
-            {
-                return operations.GetServiceTierAdvisorAsync(resourceGroupName, serverName, databaseName, serviceTierAdvisorName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about a service tier advisor.
             /// </summary>
@@ -734,27 +426,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about service tier advisors for specified database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of database.
-            /// </param>
-            public static IEnumerable<ServiceTierAdvisorInner> ListServiceTierAdvisors(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.ListServiceTierAdvisorsAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about service tier advisors for specified database.
             /// </summary>
@@ -782,33 +454,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates an Azure SQL Database Transparent Data Encryption
-            /// Operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database for which setting the Transparent Data
-            /// Encryption applies.
-            /// </param>
-            /// <param name='status'>
-            /// The status of the Azure SQL Database Transparent Data Encryption. Possible
-            /// values include: 'Enabled', 'Disabled'
-            /// </param>
-            public static TransparentDataEncryptionInner CreateOrUpdateTransparentDataEncryptionConfiguration(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, TransparentDataEncryptionStates? status = default(TransparentDataEncryptionStates?))
-            {
-                return operations.CreateOrUpdateTransparentDataEncryptionConfigurationAsync(resourceGroupName, serverName, databaseName, status).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an Azure SQL Database Transparent Data Encryption
             /// Operation.
@@ -842,28 +488,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets an Azure SQL Database Transparent Data Encryption Response.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database for which the Transparent Data
-            /// Encryption applies.
-            /// </param>
-            public static TransparentDataEncryptionInner GetTransparentDataEncryptionConfiguration(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.GetTransparentDataEncryptionConfigurationAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an Azure SQL Database Transparent Data Encryption Response.
             /// </summary>
@@ -892,29 +517,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns an Azure SQL Database Transparent Data Encryption Activity
-            /// Response.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database for which the Transparent Data
-            /// Encryption applies.
-            /// </param>
-            public static IEnumerable<TransparentDataEncryptionActivity> ListTransparentDataEncryptionActivity(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.ListTransparentDataEncryptionActivityAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns an Azure SQL Database Transparent Data Encryption Activity
             /// Response.
@@ -944,31 +547,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Failover the Azure SQL database replication link with the given ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database that has the replication link to be
-            /// failed over.
-            /// </param>
-            /// <param name='linkId'>
-            /// The ID of the replication link to be failed over.
-            /// </param>
-            public static void BeginFailoverReplicationLink(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
-            {
-                operations.BeginFailoverReplicationLinkAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Failover the Azure SQL database replication link with the given ID.
             /// </summary>
@@ -997,32 +576,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.BeginFailoverReplicationLinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Force failover the Azure SQL database replication link with the given ID
-            /// which may result in data loss.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database that has the replication link to be
-            /// failed over.
-            /// </param>
-            /// <param name='linkId'>
-            /// The ID of the replication link to be failed over.
-            /// </param>
-            public static void BeginFailoverReplicationLinkAllowDataLoss(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
-            {
-                operations.BeginFailoverReplicationLinkAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Force failover the Azure SQL database replication link with the given ID
             /// which may result in data loss.
@@ -1052,27 +606,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.BeginFailoverReplicationLinkAllowDataLossWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Pause an Azure SQL Data Warehouse database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL Data Warehouse database to pause.
-            /// </param>
-            public static void BeginPauseDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.BeginPauseDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Pause an Azure SQL Data Warehouse database.
             /// </summary>
@@ -1097,27 +631,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.BeginPauseDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Resume an Azure SQL Data Warehouse database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL Data Warehouse database to resume.
-            /// </param>
-            public static void BeginResumeDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.BeginResumeDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Resume an Azure SQL Data Warehouse database.
             /// </summary>
@@ -1142,32 +656,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.BeginResumeDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates a new Azure SQL database or updates an existing Azure SQL database.
-            /// Location is a required property in the request body, and it must be the
-            /// same as the location of the SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be operated on (updated or created).
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for creating or updating a database.
-            /// </param>
-            public static DatabaseInner BeginCreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new Azure SQL database or updates an existing Azure SQL database.
             /// Location is a required property in the request body, and it must be the

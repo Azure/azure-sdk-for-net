@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class SecurityRulesOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the specified network security rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='securityRuleName'>
-            /// The name of the security rule.
-            /// </param>
-            public static void Delete(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
-            {
-                operations.DeleteAsync(resourceGroupName, networkSecurityGroupName, securityRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified network security rule.
             /// </summary>
@@ -65,26 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Get the specified network security rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='securityRuleName'>
-            /// The name of the security rule.
-            /// </param>
-            public static SecurityRuleInner Get(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
-            {
-                return operations.GetAsync(resourceGroupName, networkSecurityGroupName, securityRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get the specified network security rule.
             /// </summary>
@@ -111,30 +73,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a security rule in the specified network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='securityRuleName'>
-            /// The name of the security rule.
-            /// </param>
-            /// <param name='securityRuleParameters'>
-            /// Parameters supplied to the create or update network security rule
-            /// operation.
-            /// </param>
-            public static SecurityRuleInner CreateOrUpdate(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRuleInner securityRuleParameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a security rule in the specified network security group.
             /// </summary>
@@ -165,23 +104,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all security rules in a network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            public static IPage<SecurityRuleInner> List(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName)
-            {
-                return operations.ListAsync(resourceGroupName, networkSecurityGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all security rules in a network security group.
             /// </summary>
@@ -205,26 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified network security rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='securityRuleName'>
-            /// The name of the security rule.
-            /// </param>
-            public static void BeginDelete(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, networkSecurityGroupName, securityRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified network security rule.
             /// </summary>
@@ -248,30 +152,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates or updates a security rule in the specified network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='securityRuleName'>
-            /// The name of the security rule.
-            /// </param>
-            /// <param name='securityRuleParameters'>
-            /// Parameters supplied to the create or update network security rule
-            /// operation.
-            /// </param>
-            public static SecurityRuleInner BeginCreateOrUpdate(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRuleInner securityRuleParameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a security rule in the specified network security group.
             /// </summary>
@@ -302,20 +183,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all security rules in a network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SecurityRuleInner> ListNext(this ISecurityRulesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all security rules in a network security group.
             /// </summary>

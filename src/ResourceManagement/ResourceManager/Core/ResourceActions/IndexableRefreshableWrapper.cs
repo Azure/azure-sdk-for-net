@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public override IFluentResourceT Refresh()
         {
-            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RefreshAsync(CancellationToken.None));
         }
 
         public override async Task<IFluentResourceT> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))

@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:CAE7C5956C89A3353EA5E0FC6E8AD675:39D1FBA4A37519D7E29877939A31F436
         public IVirtualMachineExtensionImage GetImage()
         {
-            VirtualMachineExtensionImageInner inner = this.client.Get(this.RegionName(),
+            VirtualMachineExtensionImageInner inner = Extensions.Synchronize(() => this.client.GetAsync(this.RegionName(),
                 this.Type().Publisher.Name,
                 this.Type().Name,
-                this.Name());
+                this.Name()));
             return new VirtualMachineExtensionImageImpl(this, inner);
         }
 

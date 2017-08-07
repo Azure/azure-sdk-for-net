@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             Func<SiteInner, IWebApp> converter = inner =>
             {
-                return PopulateModelAsync(inner).ConfigureAwait(false).GetAwaiter().GetResult();
+                return Extensions.Synchronize(() => PopulateModelAsync(inner));
             };
 
-            return Inner.ListByResourceGroup(resourceGroupName)
-                        .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link))
+            return Extensions.Synchronize(() => Inner.ListByResourceGroupAsync(resourceGroupName))
+                        .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListByResourceGroupNextAsync(link)))
                         .Select(inner => converter(inner));
         }
 

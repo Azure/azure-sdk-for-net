@@ -21,6 +21,26 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicatio
     }
 
     /// <summary>
+    /// The stage of application update allowing specifying identifier URLs.
+    /// </summary>
+    public interface IWithIdentifierUrl 
+    {
+        /// <summary>
+        /// Adds an identifier URL to the application.
+        /// </summary>
+        /// <param name="identifierUrl">Unique URI that Azure AD can use for this app.</param>
+        /// <return>The next stage in application update.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithIdentifierUrl(string identifierUrl);
+
+        /// <summary>
+        /// Removes an identifier URL from the application.
+        /// </summary>
+        /// <param name="identifierUrl">Identifier URI to remove.</param>
+        /// <return>The next stage in application update.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithoutIdentifierUrl(string identifierUrl);
+    }
+
+    /// <summary>
     /// The stage of application update allowing specifying reply URLs.
     /// </summary>
     public interface IWithReplyUrl 
@@ -54,23 +74,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicatio
     }
 
     /// <summary>
-    /// The stage of application update allowing specifying identifier URLs.
+    /// The stage of application update allowing specifying if the application can be used in multiple tenants.
     /// </summary>
-    public interface IWithIdentifierUrl 
+    public interface IWithMultiTenant 
     {
         /// <summary>
-        /// Adds an identifier URL to the application.
+        /// Specifies if the application can be used in multiple tenants.
         /// </summary>
-        /// <param name="identifierUrl">Unique URI that Azure AD can use for this app.</param>
+        /// <param name="availableToOtherTenants">True if this application is available in other tenants.</param>
         /// <return>The next stage in application update.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithIdentifierUrl(string identifierUrl);
-
-        /// <summary>
-        /// Removes an identifier URL from the application.
-        /// </summary>
-        /// <param name="identifierUrl">Identifier URI to remove.</param>
-        /// <return>The next stage in application update.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithoutIdentifierUrl(string identifierUrl);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithAvailableToOtherTenants(bool availableToOtherTenants);
     }
 
     /// <summary>
@@ -98,18 +111,5 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicatio
         /// <param name="name">The name of the key.</param>
         /// <return>The next stage of the application update.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithoutCredential(string name);
-    }
-
-    /// <summary>
-    /// The stage of application update allowing specifying if the application can be used in multiple tenants.
-    /// </summary>
-    public interface IWithMultiTenant 
-    {
-        /// <summary>
-        /// Specifies if the application can be used in multiple tenants.
-        /// </summary>
-        /// <param name="availableToOtherTenants">True if this application is available in other tenants.</param>
-        /// <return>The next stage in application update.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update.IUpdate WithAvailableToOtherTenants(bool availableToOtherTenants);
     }
 }

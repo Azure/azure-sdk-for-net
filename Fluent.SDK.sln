@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KeyVault.Fluent", "src\ResourceManagement\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent.csproj", "{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Network.Fluent", "src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj", "{D691D295-110E-4451-8E3B-A34C0131E7F8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Redis.Fluent", "src\ResourceManagement\RedisCache\Microsoft.Azure.Management.Redis.Fluent.csproj", "{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "src\ResourceManagement\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent.csproj", "{E5C3B599-F17E-4BE2-9E67-97246EB14162}"
@@ -38,6 +36,37 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "src\ResourceManagement\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent.csproj", "{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search.Fluent", "src\ResourceManagement\Search\Microsoft.Azure.Management.Search.Fluent.csproj", "{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.EventHub.Fluent", "src\ResourceManagement\EventHub\Microsoft.Azure.Management.EventHub.Fluent.csproj", "{6E9CB016-8636-406A-85F8-68A4C8F4E016}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ServiceFabric.Fluent", "src\ResourceManagement\ServiceFabric\Microsoft.Azure.Management.ServiceFabric.Fluent.csproj", "{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.NotificationHubs.Fluent", "src\ResourceManagement\NotificationHubs\Microsoft.Azure.Management.NotificationHubs.Fluent.csproj", "{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.AnalysisServices.Fluent", "src\ResourceManagement\AnalysisServices\Microsoft.Azure.Management.AnalysisServices.Fluent.csproj", "{69603DFA-9788-4B8C-BC1C-516AB66FEF83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Billing.Fluent", "src\ResourceManagement\Billing\Microsoft.Azure.Management.Billing.Fluent.csproj", "{153715E6-A0D9-457C-9FF6-EEC40966C4AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.CognitiveServices.Fluent", "src\ResourceManagement\CognitiveServices\Microsoft.Azure.Management.CognitiveServices.Fluent.csproj", "{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Consumption.Fluent", "src\ResourceManagement\Consumption\Microsoft.Azure.Management.Consumption.Fluent.csproj", "{7538AD9B-8B0D-4FC7-A588-664870D7DA69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.CustomerInsights.Fluent", "src\ResourceManagement\CustomerInsights\Microsoft.Azure.Management.CustomerInsights.Fluent.csproj", "{13259162-BE9F-490C-AF20-8A74F7F4F476}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DevTestLab.Fluent", "src\ResourceManagement\DevTestLab\Microsoft.Azure.Management.DevTestLab.Fluent.csproj", "{28EEEDD3-5701-489D-BA0F-CE703F631E12}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Devices.Fluent", "src\ResourceManagement\Devices\Microsoft.Azure.Management.Devices.Fluent.csproj", "{0D5A89E7-9192-4DDA-8653-1631A68B7160}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Logic.Fluent", "src\ResourceManagement\Logic\Microsoft.Azure.Management.Logic.Fluent.csproj", "{B4F8F116-107E-4DA3-A129-084022D2F06B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.MachineLearning.Fluent", "src\ResourceManagement\MachineLearning\Microsoft.Azure.Management.MachineLearning.Fluent.csproj", "{81CEE721-ECD7-4945-BB74-8092AA18A1E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Relay.Fluent", "src\ResourceManagement\Relay\Microsoft.Azure.Management.Relay.Fluent.csproj", "{683CEC93-0470-442B-B354-CB1061AA7A55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.StorSimple.Fluent", "src\ResourceManagement\StorSimple\Microsoft.Azure.Management.StorSimple.Fluent.csproj", "{046B7792-F579-4F39-B7AA-1A9B37692D92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Network.Fluent", "src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj", "{88481C19-87BA-4746-BFB3-FAB663434EB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Monitor.Fluent", "src\ResourceManagement\Monitor\Microsoft.Azure.Management.Monitor.Fluent.csproj", "{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,10 +114,6 @@ Global
 		{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +142,70 @@ Global
 		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69603DFA-9788-4B8C-BC1C-516AB66FEF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69603DFA-9788-4B8C-BC1C-516AB66FEF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69603DFA-9788-4B8C-BC1C-516AB66FEF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69603DFA-9788-4B8C-BC1C-516AB66FEF83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683CEC93-0470-442B-B354-CB1061AA7A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683CEC93-0470-442B-B354-CB1061AA7A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683CEC93-0470-442B-B354-CB1061AA7A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683CEC93-0470-442B-B354-CB1061AA7A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

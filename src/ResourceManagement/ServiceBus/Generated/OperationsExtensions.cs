@@ -20,17 +20,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// </summary>
     public static partial class OperationsExtensions
     {
-            /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<Operation> List(this IOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the available ServiceBus REST API operations.
             /// </summary>
@@ -48,20 +38,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the available ServiceBus REST API operations.
             /// </summary>

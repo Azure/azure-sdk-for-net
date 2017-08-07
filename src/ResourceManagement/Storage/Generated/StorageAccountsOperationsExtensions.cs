@@ -24,19 +24,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// </summary>
     public static partial class StorageAccountsOperationsExtensions
     {
-            /// <summary>
-            /// Checks that the storage account name is valid and is not already in use.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            public static CheckNameAvailabilityResultInner CheckNameAvailability(this IStorageAccountsOperations operations, string name)
-            {
-                return operations.CheckNameAvailabilityAsync(name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks that the storage account name is valid and is not already in use.
             /// </summary>
@@ -56,32 +44,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Asynchronously creates a new storage account with the specified parameters.
-            /// If an account is already created and a subsequent create request is issued
-            /// with different properties, the account properties will be updated. If an
-            /// account is already created and a subsequent create or update request is
-            /// issued with the exact same set of properties, the request will succeed.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to provide for the created account.
-            /// </param>
-            public static StorageAccountInner Create(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountCreateParametersInner parameters)
-            {
-                return operations.CreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Asynchronously creates a new storage account with the specified parameters.
             /// If an account is already created and a subsequent create request is issued
@@ -114,25 +77,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a storage account in Microsoft Azure.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            public static void Delete(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a storage account in Microsoft Azure.
             /// </summary>
@@ -155,27 +100,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Returns the properties for the specified storage account including but not
-            /// limited to name, SKU name, location, and account status. The ListKeys
-            /// operation should be used to retrieve storage keys.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            public static StorageAccountInner GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.GetPropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns the properties for the specified storage account including but not
             /// limited to name, SKU name, location, and account status. The ListKeys
@@ -203,37 +128,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// The update operation can be used to update the SKU, encryption, access
-            /// tier, or tags for a storage account. It can also be used to map the account
-            /// to a custom domain. Only one custom domain is supported per storage
-            /// account; the replacement/change of custom domain is not supported. In order
-            /// to replace an old custom domain, the old value must be cleared/unregistered
-            /// before a new value can be set. The update of multiple properties is
-            /// supported. This call does not change the storage keys for the account. If
-            /// you want to change the storage account keys, use the regenerate keys
-            /// operation. The location and name of the storage account cannot be changed
-            /// after creation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to provide for the updated account.
-            /// </param>
-            public static StorageAccountInner Update(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountUpdateParametersInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The update operation can be used to update the SKU, encryption, access
             /// tier, or tags for a storage account. It can also be used to map the account
@@ -271,18 +166,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all the storage accounts available under the subscription. Note that
-            /// storage keys are not returned; use the ListKeys operation for this.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<StorageAccountInner> List(this IStorageAccountsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all the storage accounts available under the subscription. Note that
             /// storage keys are not returned; use the ListKeys operation for this.
@@ -301,22 +185,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all the storage accounts available under the given resource group.
-            /// Note that storage keys are not returned; use the ListKeys operation for
-            /// this.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            public static IEnumerable<StorageAccountInner> ListByResourceGroup(this IStorageAccountsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all the storage accounts available under the given resource group.
             /// Note that storage keys are not returned; use the ListKeys operation for
@@ -339,25 +208,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the access keys for the specified storage account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            public static StorageAccountListKeysResultInner ListKeys(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the access keys for the specified storage account.
             /// </summary>
@@ -383,27 +234,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Regenerates one of the access keys for the specified storage account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='keyName'>
-            /// </param>
-            public static StorageAccountListKeysResultInner RegenerateKey(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string keyName)
-            {
-                return operations.RegenerateKeyAsync(resourceGroupName, accountName, keyName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerates one of the access keys for the specified storage account.
             /// </summary>
@@ -431,32 +262,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 }
             }
 
-            /// <summary>
-            /// Asynchronously creates a new storage account with the specified parameters.
-            /// If an account is already created and a subsequent create request is issued
-            /// with different properties, the account properties will be updated. If an
-            /// account is already created and a subsequent create or update request is
-            /// issued with the exact same set of properties, the request will succeed.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to provide for the created account.
-            /// </param>
-            public static StorageAccountInner BeginCreate(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountCreateParametersInner parameters)
-            {
-                return operations.BeginCreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Asynchronously creates a new storage account with the specified parameters.
             /// If an account is already created and a subsequent create request is issued

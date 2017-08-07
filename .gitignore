@@ -12,6 +12,8 @@
 .vs/
 *.lock.json
 developer/
+.idea/
+*.userprefs
 
 # Build results
 binaries/

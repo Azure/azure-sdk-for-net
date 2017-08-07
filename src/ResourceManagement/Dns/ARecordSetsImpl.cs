@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:B94D04B9D91F75559A6D8E405D4A72FD:14206AD3A35D0E04558660C133F8DA1D
         protected override IEnumerable<IARecordSet> ListIntern(string recordSetNameSuffix, int? pageSize)
         {
-            return WrapList(dnsZone.Manager.Inner.RecordSets.ListByType(dnsZone.ResourceGroupName,
+            return WrapList(Extensions.Synchronize(() => dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName,
                                                                 dnsZone.Name,
                                                                 recordType,
                                                                 top: pageSize,
-                                                                recordsetnamesuffix: recordSetNameSuffix)
-                                                                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
+                                                                recordsetnamesuffix: recordSetNameSuffix))
+                                                    .AsContinuousCollection(link => Extensions.Synchronize(() => dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync(link))));
         }
 
         ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:29F76B986FA21FD2583D531C098AD879

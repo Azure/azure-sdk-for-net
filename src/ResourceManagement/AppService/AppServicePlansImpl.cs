@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public IEnumerable<IAppServicePlan> ListByGroup(string resourceGroupName)
         {
-            return WrapList(Inner.ListByResourceGroup(resourceGroupName)
-                                 .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link)));
+            return WrapList(Extensions.Synchronize(() => Inner.ListByResourceGroupAsync(resourceGroupName))
+                                 .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListByResourceGroupNextAsync(link))));
         }
         protected async override Task<IPage<AppServicePlanInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {

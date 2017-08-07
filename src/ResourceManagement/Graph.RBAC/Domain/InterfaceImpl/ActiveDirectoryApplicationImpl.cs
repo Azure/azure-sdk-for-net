@@ -6,13 +6,86 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Definition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Update;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.UpdateDefinition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.UpdateDefinition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
-    using System;
 
-    public partial class ActiveDirectoryApplicationImpl
+    public partial class ActiveDirectoryApplicationImpl 
     {
+        /// <summary>
+        /// Removes a reply URL.
+        /// </summary>
+        /// <param name="replyUrl">The reply URL to remove.</param>
+        /// <return>The next stage in application update.</return>
+        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithReplyUrl.WithoutReplyUrl(string replyUrl)
+        {
+            return this.WithoutReplyUrl(replyUrl) as ActiveDirectoryApplication.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Adds a reply URL to the application.
+        /// </summary>
+        /// <param name="replyUrl">URIs to which Azure AD will redirect in response to an OAuth 2.0 request.</param>
+        /// <return>The next stage in application update.</return>
+        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithReplyUrl.WithReplyUrl(string replyUrl)
+        {
+            return this.WithReplyUrl(replyUrl) as ActiveDirectoryApplication.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Adds a reply URL to the application.
+        /// </summary>
+        /// <param name="replyUrl">URIs to which Azure AD will redirect in response to an OAuth 2.0 request.</param>
+        /// <return>The next stage in application definition.</return>
+        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithReplyUrl.WithReplyUrl(string replyUrl)
+        {
+            return this.WithReplyUrl(replyUrl) as ActiveDirectoryApplication.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies if the application can be used in multiple tenants.
+        /// </summary>
+        /// <param name="availableToOtherTenants">True if this application is available in other tenants.</param>
+        /// <return>The next stage in application update.</return>
+        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithMultiTenant.WithAvailableToOtherTenants(bool availableToOtherTenants)
+        {
+            return this.WithAvailableToOtherTenants(availableToOtherTenants) as ActiveDirectoryApplication.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies if the application can be used in multiple tenants.
+        /// </summary>
+        /// <param name="availableToOtherTenants">True if this application is available in other tenants.</param>
+        /// <return>The next stage in application definition.</return>
+        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithMultiTenant.WithAvailableToOtherTenants(bool availableToOtherTenants)
+        {
+            return this.WithAvailableToOtherTenants(availableToOtherTenants) as ActiveDirectoryApplication.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the sign on URL.
+        /// </summary>
+        /// <param name="signOnUrl">The URL where users can sign in and use this app.</param>
+        /// <return>The next stage in application update.</return>
+        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithSignOnUrl.WithSignOnUrl(string signOnUrl)
+        {
+            return this.WithSignOnUrl(signOnUrl) as ActiveDirectoryApplication.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the sign on URL.
+        /// </summary>
+        /// <param name="signOnUrl">The URL where users can sign in and use this app.</param>
+        /// <return>The next stage in application definition.</return>
+        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithSignOnUrl.WithSignOnUrl(string signOnUrl)
+        {
+            return this.WithSignOnUrl(signOnUrl) as ActiveDirectoryApplication.Definition.IWithCreate;
+        }
+
         /// <summary>
         /// Attach a credential to this model.
         /// </summary>
@@ -104,96 +177,43 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Specifies if the application can be used in multiple tenants.
+        /// Adds an identifier URL to the application.
         /// </summary>
-        /// <param name="availableToOtherTenants">True if this application is available in other tenants.</param>
+        /// <param name="identifierUrl">Unique URI that Azure AD can use for this app.</param>
         /// <return>The next stage in application update.</return>
-        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithMultiTenant.WithAvailableToOtherTenants(bool availableToOtherTenants)
+        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithIdentifierUrl.WithIdentifierUrl(string identifierUrl)
         {
-            return this.WithAvailableToOtherTenants(availableToOtherTenants) as ActiveDirectoryApplication.Update.IUpdate;
+            return this.WithIdentifierUrl(identifierUrl) as ActiveDirectoryApplication.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies if the application can be used in multiple tenants.
+        /// Removes an identifier URL from the application.
         /// </summary>
-        /// <param name="availableToOtherTenants">True if this application is available in other tenants.</param>
+        /// <param name="identifierUrl">Identifier URI to remove.</param>
+        /// <return>The next stage in application update.</return>
+        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithIdentifierUrl.WithoutIdentifierUrl(string identifierUrl)
+        {
+            return this.WithoutIdentifierUrl(identifierUrl) as ActiveDirectoryApplication.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Adds an identifier URL to the application.
+        /// </summary>
+        /// <param name="identifierUrl">Unique URI that Azure AD can use for this app.</param>
         /// <return>The next stage in application definition.</return>
-        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithMultiTenant.WithAvailableToOtherTenants(bool availableToOtherTenants)
+        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithIdentifierUrl.WithIdentifierUrl(string identifierUrl)
         {
-            return this.WithAvailableToOtherTenants(availableToOtherTenants) as ActiveDirectoryApplication.Definition.IWithCreate;
+            return this.WithIdentifierUrl(identifierUrl) as ActiveDirectoryApplication.Definition.IWithCreate;
         }
 
         /// <summary>
-        /// Gets the manager client of this resource type.
+        /// Gets the application permissions.
         /// </summary>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>.Manager
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.ApplicationPermissions
         {
             get
             {
-                return this.Manager() as Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager;
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
-            }
-        }
-
-        /// <summary>
-        /// Removes a reply URL.
-        /// </summary>
-        /// <param name="replyUrl">The reply URL to remove.</param>
-        /// <return>The next stage in application update.</return>
-        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithReplyUrl.WithoutReplyUrl(string replyUrl)
-        {
-            return this.WithoutReplyUrl(replyUrl) as ActiveDirectoryApplication.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Adds a reply URL to the application.
-        /// </summary>
-        /// <param name="replyUrl">URIs to which Azure AD will redirect in response to an OAuth 2.0 request.</param>
-        /// <return>The next stage in application update.</return>
-        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithReplyUrl.WithReplyUrl(string replyUrl)
-        {
-            return this.WithReplyUrl(replyUrl) as ActiveDirectoryApplication.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Adds a reply URL to the application.
-        /// </summary>
-        /// <param name="replyUrl">URIs to which Azure AD will redirect in response to an OAuth 2.0 request.</param>
-        /// <return>The next stage in application definition.</return>
-        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithReplyUrl.WithReplyUrl(string replyUrl)
-        {
-            return this.WithReplyUrl(replyUrl) as ActiveDirectoryApplication.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Gets the mapping of certificate credentials from their names.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.CertificateCredentials
-        {
-            get
-            {
-                return this.CertificateCredentials() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential>;
-            }
-        }
-
-        /// <summary>
-        /// Gets the mapping of password credentials from their names.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.PasswordCredentials
-        {
-            get
-            {
-                return this.PasswordCredentials() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential>;
+                return this.ApplicationPermissions() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 
@@ -220,13 +240,13 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Gets the home page of the application.
+        /// Gets the mapping of certificate credentials from their names.
         /// </summary>
-        Uri Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.SignOnUrl
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.CertificateCredentials
         {
             get
             {
-                return this.SignOnUrl() as Uri;
+                return this.CertificateCredentials() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential>;
             }
         }
 
@@ -253,64 +273,25 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Gets the application permissions.
+        /// Gets the home page of the application.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.ApplicationPermissions
+        System.Uri Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.SignOnUrl
         {
             get
             {
-                return this.ApplicationPermissions() as System.Collections.Generic.IReadOnlyList<string>;
+                return this.SignOnUrl() as System.Uri;
             }
         }
 
         /// <summary>
-        /// Removes an identifier URL from the application.
+        /// Gets the mapping of password credentials from their names.
         /// </summary>
-        /// <param name="identifierUrl">Identifier URI to remove.</param>
-        /// <return>The next stage in application update.</return>
-        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithIdentifierUrl.WithoutIdentifierUrl(string identifierUrl)
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.PasswordCredentials
         {
-            return this.WithoutIdentifierUrl(identifierUrl) as ActiveDirectoryApplication.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Adds an identifier URL to the application.
-        /// </summary>
-        /// <param name="identifierUrl">Unique URI that Azure AD can use for this app.</param>
-        /// <return>The next stage in application update.</return>
-        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithIdentifierUrl.WithIdentifierUrl(string identifierUrl)
-        {
-            return this.WithIdentifierUrl(identifierUrl) as ActiveDirectoryApplication.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Adds an identifier URL to the application.
-        /// </summary>
-        /// <param name="identifierUrl">Unique URI that Azure AD can use for this app.</param>
-        /// <return>The next stage in application definition.</return>
-        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithIdentifierUrl.WithIdentifierUrl(string identifierUrl)
-        {
-            return this.WithIdentifierUrl(identifierUrl) as ActiveDirectoryApplication.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Specifies the sign on URL.
-        /// </summary>
-        /// <param name="signOnUrl">The URL where users can sign in and use this app.</param>
-        /// <return>The next stage in application update.</return>
-        ActiveDirectoryApplication.Update.IUpdate ActiveDirectoryApplication.Update.IWithSignOnUrl.WithSignOnUrl(string signOnUrl)
-        {
-            return this.WithSignOnUrl(signOnUrl) as ActiveDirectoryApplication.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Specifies the sign on URL.
-        /// </summary>
-        /// <param name="signOnUrl">The URL where users can sign in and use this app.</param>
-        /// <return>The next stage in application definition.</return>
-        ActiveDirectoryApplication.Definition.IWithCreate ActiveDirectoryApplication.Definition.IWithSignOnUrl.WithSignOnUrl(string signOnUrl)
-        {
-            return this.WithSignOnUrl(signOnUrl) as ActiveDirectoryApplication.Definition.IWithCreate;
+            get
+            {
+                return this.PasswordCredentials() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential>;
+            }
         }
     }
 }

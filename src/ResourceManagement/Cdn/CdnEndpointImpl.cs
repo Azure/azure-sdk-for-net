@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:AD2E24D9DFB738D4BF1A5F65CE996552:03764A67ECF90331193C59D0D3F1DA4D
         public CustomDomainValidationResult ValidateCustomDomain(string hostName)
         {
-            return ValidateCustomDomainAsync(hostName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => ValidateCustomDomainAsync(hostName));
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:A5F7C81073BA64AE03AC5C595EE8B6E5
@@ -516,10 +516,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             customDomainList.Clear();
             deletedCustomDomainList.Clear();
             customDomainList.AddRange(
-                Parent.Manager.Inner.CustomDomains.ListByEndpoint(
+                Extensions.Synchronize(() => Parent.Manager.Inner.CustomDomains.ListByEndpointAsync(
                     Parent.ResourceGroupName,
                     Parent.Name,
-                    Name()));
+                    Name())));
             return this;
         }
 
@@ -635,11 +635,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:89CD44AA5060CAB16CB0AF1FB046BC64:0A693DB1A3AF2F29E579F4E675DE54E9
         public IEnumerable<ResourceUsage> ListResourceUsage()
         {
-            return Parent.Manager.Inner.Endpoints.ListResourceUsage(
+            return Extensions.Synchronize(() => Parent.Manager.Inner.Endpoints.ListResourceUsageAsync(
                                             Parent.ResourceGroupName,
                                             Parent.Name,
-                                            Name())
-                     .AsContinuousCollection(link => Parent.Manager.Inner.Endpoints.ListResourceUsageNext(link))
+                                            Name()))
+                     .AsContinuousCollection(link => Extensions.Synchronize(() => Parent.Manager.Inner.Endpoints.ListResourceUsageNextAsync(link)))
                      .Select(inner => new ResourceUsage(inner));
         }
 

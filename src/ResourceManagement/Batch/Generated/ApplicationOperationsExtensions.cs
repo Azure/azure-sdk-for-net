@@ -22,29 +22,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// </summary>
     public static partial class ApplicationOperationsExtensions
     {
-            /// <summary>
-            /// Adds an application to the specified Batch account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters for the request.
-            /// </param>
-            public static ApplicationInner Create(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationCreateParametersInner parameters = default(ApplicationCreateParametersInner))
-            {
-                return operations.CreateAsync(resourceGroupName, accountName, applicationId, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Adds an application to the specified Batch account.
             /// </summary>
@@ -74,26 +52,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            public static void Delete(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId)
-            {
-                operations.DeleteAsync(resourceGroupName, accountName, applicationId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an application.
             /// </summary>
@@ -117,26 +76,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about the specified application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            public static ApplicationInner Get(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId)
-            {
-                return operations.GetAsync(resourceGroupName, accountName, applicationId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about the specified application.
             /// </summary>
@@ -163,29 +103,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates settings for the specified application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters for the request.
-            /// </param>
-            public static void Update(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParametersInner parameters)
-            {
-                operations.UpdateAsync(resourceGroupName, accountName, applicationId, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates settings for the specified application.
             /// </summary>
@@ -212,26 +130,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Lists all of the applications in the specified account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='maxresults'>
-            /// The maximum number of items to return in the response.
-            /// </param>
-            public static IPage<ApplicationInner> List(this IApplicationOperations operations, string resourceGroupName, string accountName, int? maxresults = default(int?))
-            {
-                return operations.ListAsync(resourceGroupName, accountName, maxresults).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the applications in the specified account.
             /// </summary>
@@ -258,20 +157,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the applications in the specified account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ApplicationInner> ListNext(this IApplicationOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the applications in the specified account.
             /// </summary>

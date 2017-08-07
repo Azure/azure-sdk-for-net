@@ -24,30 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public static partial class ServersOperationsExtensions
     {
-            /// <summary>
-            /// Creates or updates an Azure SQL server firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for creating or updating a firewall rule.
-            /// </param>
-            public static ServerFirewallRuleInner CreateOrUpdateFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName, ServerFirewallRuleInner parameters)
-            {
-                return operations.CreateOrUpdateFirewallRuleAsync(resourceGroupName, serverName, firewallRuleName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an Azure SQL server firewall rule.
             /// </summary>
@@ -78,27 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an Azure SQL server firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
-            /// </param>
-            public static void DeleteFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
-            {
-                operations.DeleteFirewallRuleAsync(resourceGroupName, serverName, firewallRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an Azure SQL server firewall rule.
             /// </summary>
@@ -123,27 +80,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.DeleteFirewallRuleWithHttpMessagesAsync(resourceGroupName, serverName, firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Returns an Azure SQL server firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the Azure SQL server firewall rule.
-            /// </param>
-            public static ServerFirewallRuleInner GetFirewallRule(this IServersOperations operations, string resourceGroupName, string serverName, string firewallRuleName)
-            {
-                return operations.GetFirewallRuleAsync(resourceGroupName, serverName, firewallRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns an Azure SQL server firewall rule.
             /// </summary>
@@ -171,24 +108,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns a list of Azure SQL server firewall rules.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static IEnumerable<ServerFirewallRuleInner> ListFirewallRules(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListFirewallRulesAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns a list of Azure SQL server firewall rules.
             /// </summary>
@@ -213,17 +133,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about an Azure SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<ServerInner> List(this IServersOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about an Azure SQL server.
             /// </summary>
@@ -241,27 +151,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new Azure SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for creating or updating a server.
-            /// </param>
-            public static ServerInner CreateOrUpdate(this IServersOperations operations, string resourceGroupName, string serverName, ServerInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new Azure SQL server.
             /// </summary>
@@ -289,24 +179,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static void Delete(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                operations.DeleteAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a SQL server.
             /// </summary>
@@ -328,24 +201,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static ServerInner GetByResourceGroup(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.GetByResourceGroupAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL server.
             /// </summary>
@@ -370,21 +226,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about an Azure SQL server.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            public static IEnumerable<ServerInner> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about an Azure SQL server.
             /// </summary>
@@ -406,24 +248,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about Azure SQL server usage.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static IEnumerable<ServerMetric> ListUsages(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListUsagesAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about Azure SQL server usage.
             /// </summary>
@@ -448,27 +273,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL database Service Objective.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='serviceObjectiveName'>
-            /// The name of the service objective to retrieve.
-            /// </param>
-            public static ServiceObjectiveInner GetServiceObjective(this IServersOperations operations, string resourceGroupName, string serverName, string serviceObjectiveName)
-            {
-                return operations.GetServiceObjectiveAsync(resourceGroupName, serverName, serviceObjectiveName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL database Service Objective.
             /// </summary>
@@ -496,24 +301,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about Azure SQL database Service Objectives.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static IEnumerable<ServiceObjectiveInner> ListServiceObjectives(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListServiceObjectivesAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about Azure SQL database Service Objectives.
             /// </summary>

@@ -10,42 +10,43 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System.Linq;
+    using System;
 
     /// <summary>
     /// The implementation of RoleDefinitions and its parent interfaces.
     /// </summary>
-    public partial class RoleDefinitionsImpl  :
-        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition,Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleDefinitionImpl,Models.RoleDefinitionInner>,
+    public partial class RoleDefinitionsImpl :
+        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition, Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleDefinitionImpl, Models.RoleDefinitionInner>,
         IRoleDefinitions,
         IHasInner<IRoleDefinitionsOperations>
     {
         private GraphRbacManager manager;
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public RoleDefinitionImpl GetById(string objectId)
+        public RoleDefinitionImpl GetById(string objectId)
         {
-            return (RoleDefinitionImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (RoleDefinitionImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await manager.RoleInner.RoleDefinitions.GetByIdAsync(id, cancellationToken));
         }
-        
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken))
+
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await manager.RoleInner.RoleDefinitions.GetAsync(scope, name, cancellationToken));
         }
 
-                public RoleDefinitionImpl GetByScopeAndRoleName(string scope, string roleName)
+        public RoleDefinitionImpl GetByScopeAndRoleName(string scope, string roleName)
         {
-            return (RoleDefinitionImpl) GetByScopeAndRoleNameAsync(scope, roleName).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (RoleDefinitionImpl)Extensions.Synchronize(() => GetByScopeAndRoleNameAsync(scope, roleName));
         }
 
-                public async Task<IPagedCollection<IRoleDefinition>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IPagedCollection<IRoleDefinition>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IRoleDefinition, RoleDefinitionInner>.LoadPage(
                 async (cancelltation) => await manager.RoleInner.RoleDefinitions.ListAsync(scope, null, cancelltation),
@@ -53,22 +54,22 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 WrapModel, true, cancellationToken);
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> ListByScope(string scope)
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> ListByScope(string scope)
         {
-            return WrapList(manager.RoleInner.RoleDefinitions.List(scope));
+            return WrapList(Extensions.Synchronize(() => manager.RoleInner.RoleDefinitions.ListAsync(scope)));
         }
 
-                internal  RoleDefinitionsImpl(GraphRbacManager manager)
+        internal RoleDefinitionsImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }
 
-                public RoleDefinitionImpl GetByScope(string scope, string name)
+        public RoleDefinitionImpl GetByScope(string scope, string name)
         {
-            return (RoleDefinitionImpl) GetByScopeAsync(scope, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (RoleDefinitionImpl)Extensions.Synchronize(() => GetByScopeAsync(scope, name));
         }
 
-                public IRoleDefinitionsOperations Inner
+        public IRoleDefinitionsOperations Inner
         {
             get
             {
@@ -76,7 +77,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                protected override IRoleDefinition WrapModel(RoleDefinitionInner roleDefinitionInner)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        protected override IRoleDefinition WrapModel(RoleDefinitionInner roleDefinitionInner)
         {
             if (roleDefinitionInner == null)
             {
@@ -84,8 +87,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
             return new RoleDefinitionImpl(roleDefinitionInner, manager);
         }
-        
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByScopeAndRoleNameAsync(string scope, string roleName, CancellationToken cancellationToken = default(CancellationToken))
+
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByScopeAndRoleNameAsync(string scope, string roleName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var inners = await Inner.ListAsync(scope, string.Format("roleName eq '{0}'", roleName), cancellationToken);
             if (inners == null || !inners.Any())
@@ -93,6 +96,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return null;
             }
             return WrapModel(inners.First());
+        }
+
+        IRoleDefinition ISupportsGettingById<IRoleDefinition>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.RoleInner.RoleDefinitions.GetByIdAsync(id)));
         }
     }
 }

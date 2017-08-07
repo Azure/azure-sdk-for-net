@@ -10,42 +10,43 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition;
 
     /// <summary>
     /// The implementation of RoleAssignments and its parent interfaces.
     /// </summary>
-    public partial class RoleAssignmentsImpl  :
-        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment,Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignmentImpl,Models.RoleAssignmentInner>,
+    public partial class RoleAssignmentsImpl :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment, Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignmentImpl, Models.RoleAssignmentInner>,
         IRoleAssignments,
         IHasInner<IRoleAssignmentsOperations>
     {
         private GraphRbacManager manager;
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public RoleAssignmentImpl GetById(string objectId)
+        public RoleAssignmentImpl GetById(string objectId)
         {
-            return (RoleAssignmentImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (RoleAssignmentImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await manager.RoleInner.RoleAssignments.GetByIdAsync(id, cancellationToken));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await manager.RoleInner.RoleAssignments.GetAsync(scope, name, cancellationToken));
         }
 
-                public RoleAssignmentImpl Define(string name)
+        public RoleAssignmentImpl Define(string name)
         {
             return WrapModel(name);
         }
 
-                public async Task<IPagedCollection<IRoleAssignment>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IPagedCollection<IRoleAssignment>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IRoleAssignment, RoleAssignmentInner>.LoadPage(
                 async (cancellation) => await manager.RoleInner.RoleAssignments.ListForScopeAsync(scope, null, cancellation),
@@ -53,22 +54,22 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 WrapModel, true, cancellationToken);
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> ListByScope(string scope)
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> ListByScope(string scope)
         {
-            return WrapList(manager.RoleInner.RoleAssignments.ListForScope(scope));
+            return WrapList(Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.ListForScopeAsync(scope)));
         }
 
-                public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             await manager.RoleInner.RoleAssignments.DeleteByIdAsync(id, cancellationToken);
         }
 
-                public RoleAssignmentImpl GetByScope(string scope, string name)
+        public RoleAssignmentImpl GetByScope(string scope, string name)
         {
-            return (RoleAssignmentImpl) GetByScopeAsync(scope, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (RoleAssignmentImpl)Extensions.Synchronize(() => GetByScopeAsync(scope, name));
         }
 
-                public IRoleAssignmentsOperations Inner
+        public IRoleAssignmentsOperations Inner
         {
             get
             {
@@ -76,12 +77,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                internal  RoleAssignmentsImpl(GraphRbacManager manager)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
+
+        internal RoleAssignmentsImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }
 
-                protected override IRoleAssignment WrapModel(RoleAssignmentInner roleAssignmentInner)
+        protected override IRoleAssignment WrapModel(RoleAssignmentInner roleAssignmentInner)
         {
             if (roleAssignmentInner == null)
             {
@@ -90,7 +93,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new RoleAssignmentImpl(roleAssignmentInner, manager);
         }
 
-                protected override RoleAssignmentImpl WrapModel(string name)
+        protected override RoleAssignmentImpl WrapModel(string name)
         {
             return new RoleAssignmentImpl(new RoleAssignmentInner
             {
@@ -100,7 +103,17 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            manager.RoleInner.RoleAssignments.DeleteById(id);
+            Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.DeleteByIdAsync(id));
+        }
+
+        IRoleAssignment ISupportsGettingById<IRoleAssignment>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.GetByIdAsync(id)));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

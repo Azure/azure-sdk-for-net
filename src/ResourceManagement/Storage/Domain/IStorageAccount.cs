@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     public interface IStorageAccount  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Storage.Fluent.IStorageManager,Models.StorageAccountInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<StorageAccount.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<StorageAccount.Update.IUpdate>,
+        Microsoft.Azure.Management.Storage.Fluent.IStorageAccountBeta
     {
         /// <summary>
         /// Gets the creation date and time of the storage account in UTC.
@@ -86,8 +87,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets the encryption settings on the account. If unspecified the account
-        /// is unencrypted.
+        /// Gets the encryption settings on the account.
+        /// TODO: This getter should be deprecated and removed (the new fully fluent encryption replaces this).
         /// </summary>
         Models.Encryption Encryption { get; }
 

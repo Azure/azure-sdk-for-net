@@ -12,42 +12,44 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Linq;
     using Rest.Azure;
     using System.Net;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUser.Definition;
+    using System;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryUsersImpl  :
-        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
+    public partial class ActiveDirectoryUsersImpl :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl, Models.UserInner>,
         IActiveDirectoryUsers,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUsersOperations>
     {
         private GraphRbacManager manager;
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public ActiveDirectoryUserImpl GetById(string objectId)
+        public ActiveDirectoryUserImpl GetById(string objectId)
         {
-            return (ActiveDirectoryUserImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (ActiveDirectoryUserImpl)Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await Inner.GetAsync(id, cancellationToken));
         }
-        
-                internal  ActiveDirectoryUsersImpl(GraphRbacManager manager)
+
+        internal ActiveDirectoryUsersImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }
 
-                public ActiveDirectoryUserImpl GetByName(string upn)
+        public ActiveDirectoryUserImpl GetByName(string upn)
         {
-            return (ActiveDirectoryUserImpl) GetByNameAsync(upn).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (ActiveDirectoryUserImpl)Extensions.Synchronize(() => GetByNameAsync(upn));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             UserInner inner = null;
             try
@@ -84,12 +86,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> List()
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> List()
         {
-            return WrapList(this.manager.Inner.Users.List());
+            return WrapList(Extensions.Synchronize(() => this.manager.Inner.Users.ListAsync()));
         }
 
-                public IUsersOperations Inner
+        public IUsersOperations Inner
         {
             get
             {
@@ -97,7 +99,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
+
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IActiveDirectoryUser, UserInner>.LoadPage(
                 async (cancellation) => await Inner.ListAsync(null, cancellation),
@@ -105,13 +109,46 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 WrapModel, loadAllPages, cancellationToken);
         }
 
-                protected override IActiveDirectoryUser WrapModel(UserInner userInner)
+        protected override IActiveDirectoryUser WrapModel(UserInner userInner)
         {
             if (userInner == null)
             {
                 return null;
             }
             return new ActiveDirectoryUserImpl(userInner, manager);
+        }
+
+        IActiveDirectoryUser ISupportsGettingById<IActiveDirectoryUser>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.Users.GetAsync(id)));
+        }
+
+        public IBlank Define(string name)
+        {
+            return WrapModel(name);
+        }
+
+        public override void DeleteById(string id)
+        {
+            Extensions.Synchronize(() => manager.Inner.Users.DeleteAsync(id));
+        }
+
+        public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await manager.Inner.Users.DeleteAsync(id, cancellationToken);
+        }
+
+        protected override ActiveDirectoryUserImpl WrapModel(string name)
+        {
+            return new ActiveDirectoryUserImpl(new UserInner
+            {
+                DisplayName = name
+            }, manager);
+        }
+
+        IActiveDirectoryUser ISupportsGettingByName<IActiveDirectoryUser>.GetByName(string name)
+        {
+            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

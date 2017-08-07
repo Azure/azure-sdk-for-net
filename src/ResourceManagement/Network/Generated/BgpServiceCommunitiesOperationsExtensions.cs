@@ -22,17 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class BgpServiceCommunitiesOperationsExtensions
     {
-            /// <summary>
-            /// Gets all the available bgp service communities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<BgpServiceCommunityInner> List(this IBgpServiceCommunitiesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the available bgp service communities.
             /// </summary>
@@ -50,20 +40,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the available bgp service communities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<BgpServiceCommunityInner> ListNext(this IBgpServiceCommunitiesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the available bgp service communities.
             /// </summary>

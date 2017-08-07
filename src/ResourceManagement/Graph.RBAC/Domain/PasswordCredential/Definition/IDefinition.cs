@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// using  WithAttach.attach().
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithAttach<ParentT>  :
+    public interface IWithAttach<ParentT> :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithStartDate<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithDuration<ParentT>,
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// The credential definition stage allowing the the password or certificate to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithKey<ParentT> 
+    public interface IWithKey<ParentT>
     {
         /// <summary>
         /// Use a password as a key.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// The credential definition stage allowing start date to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithStartDate<ParentT> 
+    public interface IWithStartDate<ParentT>
     {
         /// <summary>
         /// Specifies the start date after which password or key would be valid. Default value is current time.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// The entirety of a credential definition.
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
-    public interface IDefinition<ParentT>  :
+    public interface IDefinition<ParentT> :
         Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT>
     {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// The credential definition stage allowing the duration of key validity to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithDuration<ParentT> 
+    public interface IWithDuration<ParentT>
     {
         /// <summary>
         /// Specifies the duration for which password or key would be valid. Default value is 1 year.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// <summary>
     /// A credential definition stage allowing exporting the auth file for the service principal.
     /// </summary>
-    public interface IWithAuthFile<ParentT> 
+    public interface IWithAuthFile<ParentT>
     {
         /// <summary>
         /// Export the information of this service principal into an auth file.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     /// The first stage of a credential definition.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IBlank<ParentT>  :
+    public interface IBlank<ParentT> :
         Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithKey<ParentT>
     {
     }
