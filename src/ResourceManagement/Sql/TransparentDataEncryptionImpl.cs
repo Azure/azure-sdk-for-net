@@ -22,10 +22,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:C183D7089E5DF699C59758CC103308DF:0F2852A05859CF21CF78B54DB31431CD
         public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities()
         {
-            return this.databasesInner.ListTransparentDataEncryptionActivity(
-                this.ResourceGroupName(),
-                this.SqlServerName(),
-                this.DatabaseName()).Select(transparentDataEncryptionActivity => new TransparentDataEncryptionActivityImpl(transparentDataEncryptionActivity)).ToList();
+            return Extensions.Synchronize(() => this.databasesInner.ListTransparentDataEncryptionActivityAsync(
+                    this.ResourceGroupName(),
+                    this.SqlServerName(),
+                    this.DatabaseName()))
+                .Select(transparentDataEncryptionActivity => new TransparentDataEncryptionActivityImpl(transparentDataEncryptionActivity)).ToList();
         }
 
         ///GENMHASH:E9EDBD2E8DC2C547D1386A58778AA6B9:9FE42D967416923E070F823D07063A47
@@ -51,11 +52,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             Inner.Status = transparentDataEncryptionState;
             this.SetInner(
-                this.databasesInner.CreateOrUpdateTransparentDataEncryptionConfiguration(
+                Extensions.Synchronize(() => this.databasesInner.CreateOrUpdateTransparentDataEncryptionConfigurationAsync(
                     this.ResourceGroupName(),
                     this.SqlServerName(),
                     this.DatabaseName(),
-                    Inner.Status));
+                    Inner.Status)));
 
             return this;
         }

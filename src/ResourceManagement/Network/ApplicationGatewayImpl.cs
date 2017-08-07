@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (Inner.SslPolicy != null && Inner.SslPolicy.DisabledSslProtocols != null)
             {
                 Inner.SslPolicy.DisabledSslProtocols.Remove(protocol.ToString());
-                if(Inner.SslPolicy.DisabledSslProtocols.Count == 0)
+                if (Inner.SslPolicy.DisabledSslProtocols.Count == 0)
                 {
                     WithoutAnyDisabledSslProtocols();
                 }
@@ -125,12 +125,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             var protocols = policy.DisabledSslProtocols;
-            if(protocols == null)
-            {  
+            if (protocols == null)
+            {
                 protocols = new List<string>();
-                policy.DisabledSslProtocols = protocols;  
-            }  
-            return policy;  
+                policy.DisabledSslProtocols = protocols;
+            }
+            return policy;
         }
 
 
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             Inner.Sku.Capacity = capacity;
             return this;
         }
-        
+
         ///GENMHASH:43D0A80DA689D640320A61D90075ADE8:FC98A09D6ECDCD30021D0B597F97C70C
         internal ApplicationGatewayImpl WithBackendHttpConfiguration(ApplicationGatewayBackendHttpConfigurationImpl httpConfig)
         {
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             backendHttpConfigs.TryGetValue(name, out config);
             return (ApplicationGatewayBackendHttpConfigurationImpl)config;
         }
-        
+
         ///GENMHASH:A0A23179FBDC541925212899C1A48667:2ECFEA1CD411E1F5B44424C5D9DDACA5
         public ApplicationGatewayImpl WithoutBackendIPAddress(string ipAddress)
         {
@@ -874,7 +874,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             EnsureDefaultPrivateFrontend().WithPrivateIPAddressStatic(ipAddress);
             return this;
         }
-        
+
         ///GENMHASH:5D0DD8101FDDEC22F1DD348B5DADC47F:0DDB5F3E565736FD6F95B08EE958E156
         public ApplicationGatewayIPConfigurationImpl DefineDefaultIPConfiguration()
         {
@@ -990,7 +990,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             listeners.Remove(name);
             return this;
         }
-        
+
         ///GENMHASH:9EE982E7421C1A20C7BB22556011B5DC:345F6A97C61E955CCFAB88208C749162
         internal ApplicationGatewayImpl WithRequestRoutingRule(ApplicationGatewayRequestRoutingRuleImpl rule)
         {
@@ -1086,7 +1086,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             sslCerts.Remove(name);
             return this;
         }
-        
+
         ///GENMHASH:80375A07B813FDE5A15028546D4FB694:130D5B3A30C34F066046287000EF7300
         internal ApplicationGatewayImpl WithConfig(ApplicationGatewayIPConfigurationImpl config)
         {
@@ -1138,12 +1138,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (defaultPublicFrontend != null && defaultPublicFrontend.PublicIPAddressId() == null)
             {
                 // If default public frontend requested but no PIP specified, create one
-                Task pipTask = EnsureDefaultPipDefinition().CreateAsync(cancellationToken).ContinueWith(
-                    antecedent => {
-                        var publicIP = antecedent.Result;
-                        // Attach the created PIP when available
-                        defaultPublicFrontend.WithExistingPublicIPAddress(publicIP);
-                    });
+                Task pipTask = EnsureDefaultPipDefinition().CreateAsync(cancellationToken)
+                    .ContinueWith(
+                        antecedent =>
+                        {
+                            var publicIP = antecedent.Result;
+                            // Attach the created PIP when available
+                            defaultPublicFrontend.WithExistingPublicIPAddress(publicIP);
+                        },
+                        cancellationToken,
+                        TaskContinuationOptions.ExecuteSynchronously,
+                        TaskScheduler.Default);
                 tasks.Add(pipTask);
             }
 
@@ -1164,29 +1169,38 @@ namespace Microsoft.Azure.Management.Network.Fluent
             else
             {
                 // But if default IP config does not have a subnet specified, then create a default VNet
-                Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync(cancellationToken).ContinueWith(antecedent =>
-                {
-                    //... and assign the created VNet to the default IP config
-                    var network = antecedent.Result;
-                    defaultIPConfig.WithExistingSubnet(network, DEFAULT);
-                    if (defaultPrivateFrontend != null)
+                Task networkTask = EnsureDefaultNetworkDefinition().CreateAsync(cancellationToken)
+                .ContinueWith(antecedent =>
                     {
-                        // If a private frontend is also requested, then use the same VNet for the private frontend as for the IP config
-                        /* TODO: Not sure if the assumption of the same subnet for the frontend and the IP config will hold in
-                         * the future, but the existing ARM template for App Gateway for some reason uses the same subnet for the
-                         * IP config and the private frontend. Also, trying to use different subnets results in server error today saying they
-                         * have to be the same. This may need to be revisited in the future however, as this is somewhat inconsistent
-                         * with what the documentation says.
-                         */
-                        UseSubnetFromIPConfigForFrontend(defaultIPConfig, defaultPrivateFrontend);
-                    }
-                });
+                        //... and assign the created VNet to the default IP config
+                        var network = antecedent.Result;
+                        defaultIPConfig.WithExistingSubnet(network, DEFAULT);
+                        if (defaultPrivateFrontend != null)
+                        {
+                            // If a private frontend is also requested, then use the same VNet for the private frontend as for the IP config
+                            /* TODO: Not sure if the assumption of the same subnet for the frontend and the IP config will hold in
+                             * the future, but the existing ARM template for App Gateway for some reason uses the same subnet for the
+                             * IP config and the private frontend. Also, trying to use different subnets results in server error today saying they
+                             * have to be the same. This may need to be revisited in the future however, as this is somewhat inconsistent
+                             * with what the documentation says.
+                             */
+                            UseSubnetFromIPConfigForFrontend(defaultIPConfig, defaultPrivateFrontend);
+                        }
+                    },
+                    cancellationToken,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
                 tasks.Add(networkTask);
             }
 
-            var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(antecedent => {
-                return Manager().Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
-            });
+            var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(
+                antecedent =>
+                {
+                    return Manager().Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
+                },
+                cancellationToken,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
 
             return await appGatewayInnerTask.Result;
         }
@@ -1288,9 +1302,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
             foreach (var config in backendHttpConfigs.Values)
             {
                 // Clear deleted probe references  
-                SubResource configRef;                
+                SubResource configRef;
                 configRef = config.Inner.Probe;
-                if (configRef != null && !Probes().ContainsKey(ResourceUtils.NameFromResourceId(configRef.Id))) {
+                if (configRef != null && !Probes().ContainsKey(ResourceUtils.NameFromResourceId(configRef.Id)))
+                {
                     config.Inner.Probe = null;
                 }
             }
@@ -1516,7 +1531,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:CC9715A22AECD112176C927FAD1E7A41:878620025FD4DBD54E68E653EC6A401A
         private ApplicationGatewayIPConfigurationImpl EnsureDefaultIPConfig()
         {
-            ApplicationGatewayIPConfigurationImpl ipConfig = (ApplicationGatewayIPConfigurationImpl) DefaultIPConfiguration();
+            ApplicationGatewayIPConfigurationImpl ipConfig = (ApplicationGatewayIPConfigurationImpl)DefaultIPConfiguration();
             if (ipConfig == null)
             {
                 string name = SdkContext.RandomResourceName("ipcfg", 11);

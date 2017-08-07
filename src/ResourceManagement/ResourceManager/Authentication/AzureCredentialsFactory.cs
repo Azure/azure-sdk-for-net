@@ -3,10 +3,12 @@
 
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
@@ -130,17 +132,30 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
                 { "graphurl", AzureEnvironment.AzureGlobalCloud.GraphEndpoint }
             };
 
-            File.ReadLines(authFile)
-                .All(line =>
-                {
-                    if (line.Trim().StartsWith("#"))
-                        return true; // Ignore comments
+            var lines = File.ReadLines(authFile);
+            if (lines.First().Trim().StartsWith("{"))
+            {
+                string json = string.Join("", lines);
+                AuthFile jsonConfig = Rest.Serialization.SafeJsonConvert.DeserializeObject<AuthFile>(json);
+                jsonConfig.GetType()
+                    .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+                    .ToList()
+                    .ForEach(info => config[info.Name] = (string)info.GetValue(jsonConfig));
+            }
+            else
+            {
+                lines.All(line =>
+                    {
+                        if (line.Trim().StartsWith("#"))
+                            return true; // Ignore comments
                     var keyVal = line.Trim().Split(new char[] { '=' }, 2);
-                    if(keyVal.Length < 2)
-                        return true; // Ignore lines that don't look like $$$=$$$
+                        if (keyVal.Length < 2)
+                            return true; // Ignore lines that don't look like $$$=$$$
                     config[keyVal[0].ToLowerInvariant()] = keyVal[1];
-                    return true;
-                });
+                        return true;
+                    });
+            }
+
 
             var env = new AzureEnvironment()
             {
@@ -151,11 +166,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             };
 
             AzureCredentials credentials;
-            if (config.ContainsKey("key"))
+            if (config.ContainsKey("key") && config["key"] != null)
             {
                 credentials = FromServicePrincipal(config["client"], config["key"], config["tenant"], env);
             }
-            else if (config.ContainsKey("certificate"))
+            else if (config.ContainsKey("certificate") && config["certificate"] != null)
             {
                 string certificatePath = config["certificate"].Replace("\\:", ":").Replace("\\\\", "\\");
                 if (!File.Exists(certificatePath))
@@ -171,6 +186,39 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             }
             credentials.WithDefaultSubscription(config["subscription"]);
             return credentials;
+        }
+
+        private class AuthFile
+        {
+            [JsonProperty("clientId")]
+            private string client;
+
+            [JsonProperty("tenantId")]
+            private string tenant;
+
+            [JsonProperty("clientSecret")]
+            private string key;
+
+            [JsonProperty("clientCertificate")]
+            private string certificate;
+
+            [JsonProperty("clientCertificatePassword")]
+            private string certificatepassword;
+
+            [JsonProperty("subscriptionId")]
+            private string subscription;
+
+            [JsonProperty("activeDirectoryEndpointUrl")]
+            private string authurl;
+
+            [JsonProperty("resourceManagerEndpointUrl")]
+            private string baseurl;
+
+            [JsonProperty("managementEndpointUrl")]
+            private string managementuri;
+
+            [JsonProperty("activeDirectoryGraphResourceId")]
+            private string graphurl;
         }
     }
 }

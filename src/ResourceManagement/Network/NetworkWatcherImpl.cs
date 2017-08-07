@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using NetworkWatcher.Definition;
     using NetworkWatcher.Update;
@@ -60,16 +61,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:E85C9E0FD0DD69D8054769E60F0023E7:08E9F33BF19AA5A33146856680A21489
         public TopologyImpl GetTopology(string targetResourceGroup)
         {
-            TopologyInner topologyInner = this.Manager.Inner.NetworkWatchers
-                .GetTopology(this.ResourceGroupName, this.Name, targetResourceGroup);
+            TopologyInner topologyInner = Extensions.Synchronize(() => this.Manager.Inner.NetworkWatchers
+                .GetTopologyAsync(this.ResourceGroupName, this.Name, targetResourceGroup));
             return new TopologyImpl(this, topologyInner, targetResourceGroup);
         }
 
         ///GENMHASH:F57C7696A3ED75E619C8E1A9DFE5EA61:9938198EE6EDB0DC20C3A7100AD87595
         public IFlowLogSettings GetFlowLogSettings(string nsgId)
         {
-            FlowLogInformationInner flowLogInformationInner = this.Manager.Inner.NetworkWatchers
-                .GetFlowLogStatus(this.ResourceGroupName, this.Name, nsgId);
+            FlowLogInformationInner flowLogInformationInner = Extensions.Synchronize(() => this.Manager.Inner.NetworkWatchers
+                .GetFlowLogStatusAsync(this.ResourceGroupName, this.Name, nsgId));
             return new FlowLogSettingsImpl(this, flowLogInformationInner, nsgId);
         }
 
@@ -91,8 +92,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C71E107FA8B2DA3EDF8CE88700E11F09:960DE2BF69BF56B713EE1D6546783210
         public ISecurityGroupView GetSecurityGroupView(string vmId)
         {
-            SecurityGroupViewResultInner securityGroupViewResultInner = this.Manager.Inner.NetworkWatchers
-                .GetVMSecurityRules(this.ResourceGroupName, this.Name, vmId);
+            SecurityGroupViewResultInner securityGroupViewResultInner = Extensions.Synchronize(() => this.Manager.Inner.NetworkWatchers
+                .GetVMSecurityRulesAsync(this.ResourceGroupName, this.Name, vmId));
             return new SecurityGroupViewImpl(this, securityGroupViewResultInner, vmId);
         }
 

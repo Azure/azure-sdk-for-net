@@ -11,55 +11,51 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Rest;
     using System;
     using System.Linq;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
     /// </summary>
-    public partial class ServicePrincipalsImpl  :
-        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal,Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl,Models.ServicePrincipalInner>,
+    public partial class ServicePrincipalsImpl :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal, Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl, Models.ServicePrincipalInner>,
         IServicePrincipals,
         IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipalsOperations>
     {
         private IServicePrincipalsOperations innerCollection;
         private GraphRbacManager manager;
-                internal  ServicePrincipalsImpl(GraphRbacManager graphRbacManager)
+        internal ServicePrincipalsImpl(GraphRbacManager graphRbacManager)
         {
             this.innerCollection = graphRbacManager.Inner.ServicePrincipals;
             this.manager = graphRbacManager;
         }
 
-                public GraphRbacManager Manager()
+        public ServicePrincipalImpl GetById(string id)
         {
-            return this.manager;
+            return (ServicePrincipalImpl)Extensions.Synchronize(() => GetByIdAsync(id));
         }
 
-                public ServicePrincipalImpl GetById(string id)
-        {
-            return (ServicePrincipalImpl) GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await ((ServicePrincipalImpl)WrapModel(await innerCollection.GetAsync(id, cancellationToken))).RefreshCredentialsAsync(cancellationToken);
         }
 
-                public IServicePrincipal GetByName(string spn)
+        public IServicePrincipal GetByName(string spn)
         {
-            return GetByNameAsync(spn).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(spn));
         }
 
-                public ServicePrincipalImpl Define(string name)
+        public ServicePrincipalImpl Define(string name)
         {
             return WrapModel(name);
         }
 
-                public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             await manager.Inner.ServicePrincipals.DeleteAsync(id, cancellationToken);
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<ServicePrincipalInner> inners = await manager.Inner.ServicePrincipals.ListAsync(string.Format("displayName eq '{0}'", name), cancellationToken);
             if (inners == null || !inners.Any())
@@ -76,19 +72,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> List()
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> List()
         {
             Func<ServicePrincipalInner, IServicePrincipal> converter = inner =>
             {
-                return ((ServicePrincipalImpl)WrapModel(inner)).RefreshCredentialsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                return Extensions.Synchronize(() => ((ServicePrincipalImpl)WrapModel(inner)).RefreshCredentialsAsync());
             };
 
-            return Inner.List()
-                        .AsContinuousCollection(link => Inner.ListNext(link))
+            return Extensions.Synchronize(() => Inner.ListAsync())
+                        .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListNextAsync(link)))
                         .Select(inner => converter(inner));
         }
 
-                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IServicePrincipal>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IServicePrincipal>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IServicePrincipal, ServicePrincipalInner>.LoadPageWithWrapModelAsync(
                 async (cancellation) => await innerCollection.ListAsync(null, cancellation),
@@ -97,7 +93,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 loadAllPages, cancellationToken);
         }
 
-                public IServicePrincipalsOperations Inner
+        public IServicePrincipalsOperations Inner
         {
             get
             {
@@ -105,12 +101,20 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager
+        {
+            get
+            {
+                return manager;
+            }
+        }
+
+        protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
         {
             return servicePrincipalInner == null ? null : new ServicePrincipalImpl(servicePrincipalInner, manager);
         }
 
-                protected override ServicePrincipalImpl WrapModel(string name)
+        protected override ServicePrincipalImpl WrapModel(string name)
         {
             return new ServicePrincipalImpl(new ServicePrincipalInner
             {
@@ -120,7 +124,17 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            Inner.Delete(id);
+            Extensions.Synchronize(() => Inner.DeleteAsync(id));
+        }
+
+        IServicePrincipal ISupportsGettingById<IServicePrincipal>.GetById(string id)
+        {
+            return WrapModel(Extensions.Synchronize(() => manager.Inner.ServicePrincipals.GetAsync(id)));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

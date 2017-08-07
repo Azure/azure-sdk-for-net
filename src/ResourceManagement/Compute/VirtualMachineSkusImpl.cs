@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:F06F4A28DDFE89624259B7BA06AB2A0E
         public IEnumerable<IVirtualMachineSku> List()
         {
-            return WrapList(innerCollection.ListSkus(offer.Region.Name, offer.Publisher.Name, offer.Name));
+            return WrapList(Extensions.Synchronize(() => innerCollection.ListSkusAsync(offer.Region.Name, offer.Publisher.Name, offer.Name)));
         }
 
         public async Task<IPagedCollection<IVirtualMachineSku>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

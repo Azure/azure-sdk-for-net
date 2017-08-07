@@ -10,7 +10,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     /// </summary>
     public interface ITrafficManagerEndpoint  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IExternalChildResource<Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpoint,Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfile>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.EndpointInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.EndpointInner>, 
+        Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerEndpointBeta
     {
         /// <summary>
         /// Gets the priority of the endpoint which is used when traffic manager profile is configured with

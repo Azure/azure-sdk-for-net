@@ -344,6 +344,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         }
 
         /// <summary>
+        /// Specifies that end user traffic should be routed to the endpoint that is designated to serve users
+        /// geographic region.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithTrafficRoutingMethodBeta.WithGeographicBasedRouting()
+        {
+            return this.WithGeographicBasedRouting() as TrafficManagerProfile.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies the traffic routing method for the profile.
         /// </summary>
         /// <param name="routingMethod">The traffic routing method for the profile.</param>
@@ -382,6 +392,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithPriorityBasedRouting()
         {
             return this.WithPriorityBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint;
+        }
+
+        /// <summary>
+        /// Specifies that end user traffic should be routed to the endpoint that is designated to serve users
+        /// geographic region.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethodBeta.WithGeographicBasedRouting()
+        {
+            return this.WithGeographicBasedRouting() as TrafficManagerProfile.Definition.IWithEndpoint;
         }
 
         /// <summary>

@@ -9,35 +9,13 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public partial class RoleDefinitionImpl 
     {
         /// <summary>
-        /// Gets the name of the resource.
+        /// Gets role definition assignable scopes.
         /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.AssignableScopes
         {
             get
             {
-                return this.Name();
-            }
-        }
-
-        /// <summary>
-        /// Gets the role type.
-        /// </summary>
-        string Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Type
-        {
-            get
-            {
-                return this.Type();
-            }
-        }
-
-        /// <summary>
-        /// Gets role definition permissions.
-        /// </summary>
-        System.Collections.Generic.ISet<Models.Permission> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Permissions
-        {
-            get
-            {
-                return this.Permissions() as System.Collections.Generic.ISet<Models.Permission>;
+                return this.AssignableScopes() as System.Collections.Generic.ISet<string>;
             }
         }
 
@@ -53,6 +31,28 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
+        /// Gets role definition permissions.
+        /// </summary>
+        System.Collections.Generic.ISet<Models.Permission> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Permissions
+        {
+            get
+            {
+                return this.Permissions() as System.Collections.Generic.ISet<Models.Permission>;
+            }
+        }
+
+        /// <summary>
+        /// Gets the role type.
+        /// </summary>
+        string Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Type
+        {
+            get
+            {
+                return this.Type();
+            }
+        }
+
+        /// <summary>
         /// Gets the role definition description.
         /// </summary>
         string Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Description
@@ -60,39 +60,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             get
             {
                 return this.Description();
-            }
-        }
-
-        /// <summary>
-        /// Gets role definition assignable scopes.
-        /// </summary>
-        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.AssignableScopes
-        {
-            get
-            {
-                return this.AssignableScopes() as System.Collections.Generic.ISet<string>;
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
-            }
-        }
-
-        /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>.Manager
-        {
-            get
-            {
-                return this.Manager() as Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager;
             }
         }
     }

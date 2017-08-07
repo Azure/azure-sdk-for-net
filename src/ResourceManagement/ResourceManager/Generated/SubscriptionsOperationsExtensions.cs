@@ -24,20 +24,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class SubscriptionsOperationsExtensions
     {
-            /// <summary>
-            /// Gets a list of the subscription locations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            public static IEnumerable<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
-            {
-                return operations.ListLocationsAsync(subscriptionId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of the subscription locations.
             /// </summary>
@@ -58,20 +45,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets details about particular subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription.
-            /// </param>
-            public static SubscriptionInner Get(this ISubscriptionsOperations operations, string subscriptionId)
-            {
-                return operations.GetAsync(subscriptionId).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets details about particular subscription.
             /// </summary>
@@ -92,17 +66,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of the subscriptionIds.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<SubscriptionInner> List(this ISubscriptionsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of the subscriptionIds.
             /// </summary>
@@ -120,20 +84,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of the subscriptionIds.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SubscriptionInner> ListNext(this ISubscriptionsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of the subscriptionIds.
             /// </summary>

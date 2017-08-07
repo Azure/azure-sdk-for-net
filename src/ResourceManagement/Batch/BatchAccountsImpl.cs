@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
 
         public void Delete(string groupName, string name)
         {
-            Inner.Delete(groupName, name);
+            Extensions.Synchronize(() => Inner.DeleteAsync(groupName, name));
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:0EB96B74B82C153C18B62BE83EB415B1
@@ -114,7 +114,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:F8EF648D033A93895EA3A4E4EB60B9B2:F0DC62FB7F617AF3C57F4F01580CC827
         internal int GetBatchAccountQuotaByLocation(Region region)
         {
-            return Manager.Inner.Location.GetQuotas(region.Name).AccountQuota.GetValueOrDefault();
+            return Extensions.Synchronize(() => Manager.Inner.Location.GetQuotasAsync(region.Name))
+                        .AccountQuota.GetValueOrDefault();
         }
     }
 }

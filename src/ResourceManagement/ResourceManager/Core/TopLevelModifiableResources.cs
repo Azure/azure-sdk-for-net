@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public virtual IEnumerable<IFluentResourceT> List()
         {
-            return WrapList(this.ListInnerAsync(default(CancellationToken)).GetAwaiter().GetResult().AsContinuousCollection(link => ListInnerNextAsync(link, default(CancellationToken)).GetAwaiter().GetResult()));
+            
+            return WrapList(Extensions.Synchronize(() => this.ListInnerAsync(default(CancellationToken)))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => ListInnerNextAsync(link, default(CancellationToken)))));
         }
 
         public virtual IEnumerable<IFluentResourceT> ListByResourceGroup(string resourceGroupName)
         {
-            return WrapList(this.ListInnerByGroupAsync(resourceGroupName, default(CancellationToken)).GetAwaiter().GetResult().AsContinuousCollection(link => ListInnerByGroupNextAsync(link, default(CancellationToken)).GetAwaiter().GetResult()));
+            return WrapList(Extensions.Synchronize(() => this.ListInnerByGroupAsync(resourceGroupName, default(CancellationToken)))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => ListInnerByGroupNextAsync(link, default(CancellationToken)))));
         }
 
         public virtual async Task<IPagedCollection<IFluentResourceT>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

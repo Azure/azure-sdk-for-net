@@ -22,22 +22,22 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:8B3976582303B73AC81C5220073E2D55:A4104491D327BA3667E857CA7A2EC15D
         public CheckNameAvailabilityResult CheckEndpointNameAvailability(string name)
         {
-            return CheckEndpointNameAvailabilityAsync(name).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CheckEndpointNameAvailabilityAsync(name));
         }
 
         ///GENMHASH:2CEB6E35574F5C7F1D19ADAC97C93D65:1B5FDD33003D9073F97F1C9831CA2660
         public IEnumerable<Operation> ListOperations()
         {
-            return Manager.Inner.ListOperations()
-                                .AsContinuousCollection(link => Manager.Inner.ListOperationsNext(link))
+            return Extensions.Synchronize(() => Manager.Inner.ListOperationsAsync())
+                                .AsContinuousCollection(link => Extensions.Synchronize(() => Manager.Inner.ListOperationsNextAsync(link)))
                                 .Select(inner=> new Operation(inner));
         }
 
         ///GENMHASH:89CD44AA5060CAB16CB0AF1FB046BC64:416FABEC3862B2A47FF2F9DD56AFEFF6
         public IEnumerable<ResourceUsage> ListResourceUsage()
         {
-            return Manager.Inner.ListResourceUsage()
-                                .AsContinuousCollection(link => Manager.Inner.ListResourceUsageNext(link))
+            return Extensions.Synchronize(() => Manager.Inner.ListResourceUsageAsync())
+                                .AsContinuousCollection(link => Extensions.Synchronize(() => Manager.Inner.ListResourceUsageNextAsync(link)))
                                 .Select(inner => new ResourceUsage(inner));
 
         }
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:6F0D776A3FBBF84EE0312C9E28F2D855:EC99713AFF94DCD8E902241A49011E4B
         public IEnumerable<EdgeNode> ListEdgeNodes()
         {
-            return Manager.Inner.EdgeNodes.List()
-                                .AsContinuousCollection(link => Manager.Inner.EdgeNodes.ListNext(link))
+            return Extensions.Synchronize(() => Manager.Inner.EdgeNodes.ListAsync())
+                                .AsContinuousCollection(link => Extensions.Synchronize(() => Manager.Inner.EdgeNodes.ListNextAsync(link)))
                                 .Select(inner => new EdgeNode(inner));
         }
 
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 
         public string GenerateSsoUri(string resourceGroupName, string profileName)
         {
-            return GenerateSsoUriAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GenerateSsoUriAsync(resourceGroupName, profileName));
         }
 
         ///GENMHASH:2404C5CA15B0D5D6226D2C7D01E79303:FA381ABED6F4688FD47A380CF0F41845

@@ -14,31 +14,46 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Linq;
     using System;
     using Rest.Azure;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Update;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    public partial class ServicePrincipalImpl  :
-        Creatable<IServicePrincipal,ServicePrincipalInner,ServicePrincipalImpl,IHasId>,
+    public partial class ServicePrincipalImpl :
+        CreatableUpdatable<IServicePrincipal, ServicePrincipalInner, ServicePrincipalImpl, IHasId, ServicePrincipal.Update.IUpdate>,
         IServicePrincipal,
         IDefinition,
-        IHasCredential<IWithCreate>
+        IUpdate,
+        IHasCredential<IWithCreate>,
+        IHasCredential<IUpdate>
     {
         private GraphRbacManager manager;
+
+        private Dictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
+        private Dictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
+        private Dictionary<string, IRoleAssignment> cachedRoleAssignments;
+
         private ServicePrincipalCreateParametersInner createParameters;
-        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
-        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
         private ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable;
-        private Dictionary<string,BuiltInRole> roles;
+        private Dictionary<string, BuiltInRole> rolesToCreate;
+        private ISet<string> rolesToDelete;
+
         internal string assignedSubscription;
-        private IList<Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredentialImpl<IWithCreate>> certificateCredentials;
-        private IList<Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredentialImpl<IWithCreate>> passwordCredentials;
-                public PasswordCredentialImpl<ServicePrincipal.Definition.IWithCreate> DefinePasswordCredential(string name)
+        private IList<ICertificateCredential> certificateCredentialsToCreate;
+        private IList<IPasswordCredential> passwordCredentialsToCreate;
+        private ISet<string> certificateCredentialsToDelete;
+        private ISet<string> passwordCredentialsToDelete;
+
+        string IHasId.Id => Inner.ObjectId;
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
+
+        public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name) where T : class
         {
-            return new PasswordCredentialImpl<IWithCreate>(name, this);
+            return new PasswordCredentialImpl<T>(name, (IHasCredential<T>)this);
         }
 
-                internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<KeyCredential> keyCredentials = await manager.Inner.ServicePrincipals.ListKeyCredentialsAsync(Id(), cancellationToken);
             this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
@@ -59,40 +74,59 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public bool IsInCreateMode()
+        public bool IsInCreateMode()
         {
-            return true;
+            return Id() == null;
         }
 
-                public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
+        public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
         {
             return WithNewRole(role, resourceGroup.Id);
         }
 
-                public ServicePrincipalImpl WithNewRoleInSubscription(BuiltInRole role, string subscriptionId)
+        public ServicePrincipalImpl WithNewRoleInSubscription(BuiltInRole role, string subscriptionId)
         {
             this.assignedSubscription = subscriptionId;
             return WithNewRole(role, "subscriptions/" + subscriptionId);
         }
 
-                public CertificateCredentialImpl<ServicePrincipal.Definition.IWithCreate> DefineCertificateCredential(string name)
+        public ServicePrincipalImpl WithoutRole(IRoleAssignment roleAssignment)
         {
-            return new CertificateCredentialImpl<IWithCreate>(name, this);
+            this.rolesToDelete.Add(roleAssignment.Id);
+            return this;
         }
 
-                public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
+        public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
+        {
+            return new CertificateCredentialImpl<T>(name, (IHasCredential<T>)this);
+        }
+
+        public ServicePrincipalImpl WithoutCredential(string name)
+        {
+            if (cachedPasswordCredentials.ContainsKey(name))
+            {
+                passwordCredentialsToDelete.Add(name);
+            }
+            else if (cachedCertificateCredentials.ContainsKey(name))
+            {
+                certificateCredentialsToDelete.Add(name);
+            }
+            return this;
+        }
+
+        public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
         {
             AddCreatableDependency(applicationCreatable as IResourceCreator<IHasId>);
             this.applicationCreatable = applicationCreatable;
             return this;
         }
 
-                public ServicePrincipalImpl WithNewApplication(string signOnUrl)
+        public ServicePrincipalImpl WithNewApplication(string signOnUrl)
         {
             return WithNewApplication(manager.Applications.Define(signOnUrl)
                     .WithSignOnUrl(signOnUrl)
@@ -107,153 +141,238 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             {
                 AccountEnabled = true
             };
-            this.roles = new Dictionary<string, BuiltInRole>();
-            this.certificateCredentials = new List<CertificateCredentialImpl<IWithCreate>>();
-            this.passwordCredentials = new List<PasswordCredentialImpl<IWithCreate>>();
+            this.cachedRoleAssignments = new Dictionary<string, IRoleAssignment>();
+            this.rolesToCreate = new Dictionary<string, BuiltInRole>();
+            this.rolesToDelete = new HashSet<string>();
+            this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
+            this.cachedPasswordCredentials = new Dictionary<string, IPasswordCredential>();
+            this.certificateCredentialsToCreate = new List<ICertificateCredential>();
+            this.passwordCredentialsToCreate = new List<IPasswordCredential>();
+            this.certificateCredentialsToDelete = new HashSet<string>();
+            this.passwordCredentialsToDelete = new HashSet<string>();
         }
 
-                public ServicePrincipalImpl WithCertificateCredential(CertificateCredentialImpl<IWithCreate> credential)
+        public ServicePrincipalImpl WithCertificateCredential<T>(CertificateCredentialImpl<T> credential) where T : class
         {
-            if (createParameters.KeyCredentials == null)
-            {
-                createParameters.KeyCredentials = new List<KeyCredential>();
-            }
-            createParameters.KeyCredentials.Add(credential.Inner);
-            this.certificateCredentials.Add(credential);
+            this.certificateCredentialsToCreate.Add(credential);
             return this;
         }
 
-                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
         {
-            if (cachedCertificateCredentials == null)
-            {
-                return null;
-            }
             return new ReadOnlyDictionary<string, ICertificateCredential>(cachedCertificateCredentials);
         }
 
-                protected override async Task<Models.ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<Models.ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await manager.Inner.ServicePrincipals.GetAsync(Id(), cancellationToken);
         }
 
-                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
         {
-            if (cachedPasswordCredentials == null)
-            {
-                return null;
-            }
             return new ReadOnlyDictionary<string, IPasswordCredential>(cachedPasswordCredentials);
         }
 
-                public ServicePrincipalImpl WithNewRole(BuiltInRole role, string scope)
+        public ServicePrincipalImpl WithNewRole(BuiltInRole role, string scope)
         {
-            this.roles.Add(scope, role);
+            this.rolesToCreate.Add(scope, role);
             return this;
         }
 
-                public ServicePrincipalImpl WithExistingApplication(string id)
+        public ServicePrincipalImpl WithExistingApplication(string id)
         {
             createParameters.AppId = id;
             return this;
         }
 
-                public ServicePrincipalImpl WithExistingApplication(IActiveDirectoryApplication application)
+        public ServicePrincipalImpl WithExistingApplication(IActiveDirectoryApplication application)
         {
             createParameters.AppId = application.ApplicationId;
             return this;
         }
 
-                public IReadOnlyList<string> ServicePrincipalNames()
+        public IReadOnlyList<string> ServicePrincipalNames()
         {
             return Inner.ServicePrincipalNames.ToList().AsReadOnly();
         }
 
-                public ServicePrincipalImpl WithPasswordCredential(PasswordCredentialImpl<IWithCreate> credential)
+        public ServicePrincipalImpl WithPasswordCredential<T>(PasswordCredentialImpl<T> credential) where T : class
         {
-            if (createParameters.PasswordCredentials == null)
-            {
-                createParameters.PasswordCredentials = new List<Models.PasswordCredential>();
-            }
-            createParameters.PasswordCredentials.Add(credential.Inner);
-            this.passwordCredentials.Add(credential);
+            this.passwordCredentialsToCreate.Add(credential);
             return this;
         }
 
-                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             SetInner(await GetInnerAsync(cancellationToken));
             return await RefreshCredentialsAsync(cancellationToken);
         }
 
-                public string Id()
+        public string Id()
         {
             return Inner.ObjectId;
         }
 
-                public string ApplicationId()
+        public string ApplicationId()
         {
             return Inner.AppId;
         }
 
-                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public ISet<IRoleAssignment> RoleAssignments()
         {
-            if (applicationCreatable != null)
-            {
-                IActiveDirectoryApplication application = (IActiveDirectoryApplication)base.CreatedResource(applicationCreatable.Key);
-                createParameters.AppId = application.ApplicationId;
-            }
-            ServicePrincipalInner inner = await manager.Inner.ServicePrincipals.CreateAsync(createParameters, cancellationToken);
-            SetInner(inner);
-            IServicePrincipal sp = await RefreshCredentialsAsync(cancellationToken);
+            return new HashSet<IRoleAssignment>(cachedRoleAssignments.Values.ToArray());
+        }
 
-            if (roles == null || !roles.Any())
+        public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (IsInCreateMode())
+            {
+                if (applicationCreatable != null)
+                {
+                    IActiveDirectoryApplication application = (IActiveDirectoryApplication)base.CreatedResource(applicationCreatable.Key);
+                    createParameters.AppId = application.ApplicationId;
+                }
+                ServicePrincipalInner inner = await manager.Inner.ServicePrincipals.CreateAsync(createParameters, cancellationToken);
+                SetInner(inner);
+            }
+
+            Task.WaitAll(
+                SubmitCredentialsAsync(this, cancellationToken),
+                SubmitRolesAsync(this, cancellationToken));
+
+            foreach (IPasswordCredential password in passwordCredentialsToCreate)
+            {
+                if (password is PasswordCredentialImpl<IWithCreate>)
+                {
+                    await ((PasswordCredentialImpl<IWithCreate>)password).ExportAuthFileAsync(this, cancellationToken);
+                }
+                else
+                {
+                    await ((PasswordCredentialImpl<IUpdate>)password).ExportAuthFileAsync(this, cancellationToken);
+                }
+            }
+            foreach (ICertificateCredential certificate in certificateCredentialsToCreate)
+            {
+                if (certificate is CertificateCredentialImpl<IWithCreate>)
+                {
+                    await ((CertificateCredentialImpl<IWithCreate>)certificate).ExportAuthFileAsync(this, cancellationToken);
+                }
+                else
+                {
+                    await ((CertificateCredentialImpl<IUpdate>)certificate).ExportAuthFileAsync(this, cancellationToken);
+                }
+            }
+            passwordCredentialsToCreate.Clear();
+            certificateCredentialsToCreate.Clear();
+
+            return await RefreshCredentialsAsync(cancellationToken);
+        }
+
+        private async Task<IServicePrincipal> SubmitCredentialsAsync(IServicePrincipal sp, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (certificateCredentialsToCreate.Count == 0 && certificateCredentialsToDelete.Count == 0 &&
+                passwordCredentialsToCreate.Count == 0 && passwordCredentialsToDelete.Count == 0)
             {
                 return sp;
             }
 
-            foreach (KeyValuePair<string, BuiltInRole> role in roles)
+            if (certificateCredentialsToCreate.Count > 0 || certificateCredentialsToDelete.Count > 0)
             {
-                int limit = 30;
-                while (true)
+                var newCerts = new Dictionary<string, ICertificateCredential>(cachedCertificateCredentials);
+                foreach (string delete in certificateCredentialsToDelete)
                 {
-                    try
-                    {
-                        IRoleAssignment roleAssignment = await manager.RoleAssignments.Define(SdkContext.RandomGuid())
-                            .ForServicePrincipal(sp)
-                            .WithBuiltInRole(role.Value)
-                            .WithScope(role.Key)
-                            .CreateAsync(cancellationToken);
-                        break;
-                    }
-                    catch (CloudException e)
-                    {
-                        if (--limit < 0)
-                        {
-                            throw e;
-                        }
-                        else if (e.Body != null && "PrincipalNotFound".Equals(e.Body.Code, StringComparison.OrdinalIgnoreCase))
-                        {
-                            await SdkContext.DelayProvider.DelayAsync((30 - limit) * 1000, cancellationToken);
-                        }
-                        else
-                        {
-                            throw e;
-                        }
-                    }
+                    newCerts.Remove(delete);
                 }
+                foreach (ICertificateCredential create in certificateCredentialsToCreate)
+                {
+                    newCerts.Add(create.Name, create);
+                }
+                await Manager().Inner.ServicePrincipals.UpdateKeyCredentialsAsync(
+                    sp.Id,
+                    new KeyCredentialsUpdateParametersInner
+                    {
+                        Value = newCerts.Values.Select(c => c.Inner).ToList()
+                    },
+                    cancellationToken);
+            }
+            if (passwordCredentialsToCreate.Count > 0 || passwordCredentialsToDelete.Count > 0)
+            {
+                var newPasses = new Dictionary<string, IPasswordCredential>(cachedPasswordCredentials);
+                foreach (string delete in passwordCredentialsToDelete)
+                {
+                    newPasses.Remove(delete);
+                }
+                foreach (IPasswordCredential create in passwordCredentialsToCreate)
+                {
+                    newPasses.Add(create.Name, create);
+                }
+                await Manager().Inner.ServicePrincipals.UpdatePasswordCredentialsAsync(
+                    sp.Id,
+                    new PasswordCredentialsUpdateParametersInner
+                    {
+                        Value = newPasses.Values.Select(c => c.Inner).ToList()
+                    },
+                    cancellationToken);
             }
 
-            foreach (PasswordCredentialImpl<IWithCreate> password in passwordCredentials)
+            passwordCredentialsToDelete.Clear();
+            certificateCredentialsToDelete.Clear();
+            return await RefreshAsync(cancellationToken);
+        }
+
+        private async Task<IServicePrincipal> SubmitRolesAsync(IServicePrincipal sp, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Delete
+            if (rolesToDelete.Count > 0)
             {
-                await password.ExportAuthFileAsync(this, cancellationToken);
-            }
-            foreach (CertificateCredentialImpl<IWithCreate> certificate in certificateCredentials)
-            {
-                await certificate.ExportAuthFileAsync(this, cancellationToken);
+                foreach (string roleId in rolesToDelete)
+                {
+                    await Manager().RoleAssignments.DeleteByIdAsync(roleId);
+                    cachedRoleAssignments.Remove(roleId);
+                }
+                rolesToDelete.Clear();
             }
 
-            return this;
+            // Create
+            if (rolesToCreate.Count > 0)
+            {
+                foreach (KeyValuePair<string, BuiltInRole> role in rolesToCreate)
+                {
+                    int limit = 30;
+                    while (true)
+                    {
+                        try
+                        {
+                            IRoleAssignment roleAssignment = await manager.RoleAssignments.Define(SdkContext.RandomGuid())
+                                .ForServicePrincipal(sp)
+                                .WithBuiltInRole(role.Value)
+                                .WithScope(role.Key)
+                                .CreateAsync(cancellationToken);
+                            cachedRoleAssignments.Add(roleAssignment.Id, roleAssignment);
+                            break;
+                        }
+                        catch (CloudException e)
+                        {
+                            if (--limit < 0)
+                            {
+                                throw e;
+                            }
+                            else if (e.Body != null && "PrincipalNotFound".Equals(e.Body.Code, StringComparison.OrdinalIgnoreCase))
+                            {
+                                await SdkContext.DelayProvider.DelayAsync((30 - limit) * 1000, cancellationToken);
+                            }
+                            else
+                            {
+                                throw e;
+                            }
+                        }
+                    }
+
+                }
+                rolesToCreate.Clear();
+            }
+
+            return sp;
         }
     }
 }

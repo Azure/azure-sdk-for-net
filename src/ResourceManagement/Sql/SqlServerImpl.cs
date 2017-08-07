@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using ResourceManager.Fluent;
     using ResourceManager.Fluent.Core.ResourceActions;
@@ -90,9 +91,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:2A59E18DA93663D485FB24124FE696D7:A9A12F1824E7FC07247043927FEEBFC2
         public IList<IServiceObjective> ListServiceObjectives()
         {
-            var serviceObjectives = Manager.Inner.Servers.ListServiceObjectives(
+            var serviceObjectives = Extensions.Synchronize(() => Manager.Inner.Servers.ListServiceObjectivesAsync(
                 ResourceGroupName,
-                Name);
+                Name));
             return serviceObjectives.Select((serviceObjectiveInner) => (IServiceObjective)new ServiceObjectiveImpl(
                 serviceObjectiveInner, Manager.Inner.Servers)).ToList();
         }
@@ -114,9 +115,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:42238C96020583EAD41C40C184F554ED:69F489ECA959B263C944C8127108388F
         public IReadOnlyDictionary<string, Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool> ListRecommendedElasticPools()
         {
-            var recommendedElasticPools = Manager.Inner.RecommendedElasticPools.List(
+            var recommendedElasticPools = Extensions.Synchronize(() => Manager.Inner.RecommendedElasticPools.ListAsync(
                 ResourceGroupName,
-                Name);
+                Name));
 
             return new ReadOnlyDictionary<string, IRecommendedElasticPool>(recommendedElasticPools.ToDictionary(
                     recommendedElasticPoolInner => recommendedElasticPoolInner.Name,
@@ -177,9 +178,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:0E666BFDFC9A666CA31FD735D7839414:2AAE577C01D4088729534C3BC39664A7
         public IReadOnlyList<IServerMetric> ListUsages()
         {
-            var usages = Manager.Inner.Servers.ListUsages(
+            var usages = Extensions.Synchronize(() => Manager.Inner.Servers.ListUsagesAsync(
                 ResourceGroupName,
-                Name);
+                Name));
             return usages.Select((serverMetricInner) => (IServerMetric)new ServerMetricImpl(serverMetricInner)).ToList();
         }
 
@@ -275,7 +276,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public IServiceObjective GetServiceObjective(string serviceObjectiveName)
         {
             return new ServiceObjectiveImpl(
-                Manager.Inner.Servers.GetServiceObjective(ResourceGroupName, Name, serviceObjectiveName),
+                Extensions.Synchronize(() => Manager.Inner.Servers.GetServiceObjectiveAsync(ResourceGroupName, Name, serviceObjectiveName)),
                 Manager.Inner.Servers);
         }
 

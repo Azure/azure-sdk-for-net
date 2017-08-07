@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IProvider GetByName(string resourceProviderNamespace)
         {
-            return new ProviderImpl(client.Get(resourceProviderNamespace));
+            return new ProviderImpl(Extensions.Synchronize(() => client.GetAsync(resourceProviderNamespace)));
         }
 
         public async Task<IProvider> GetByNameAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IProvider> List()
         {
-            return client.List()
-                         .AsContinuousCollection(link => client.ListNext(link))
+            return Extensions.Synchronize(() => client.ListAsync())
+                         .AsContinuousCollection(link => Extensions.Synchronize(() => client.ListNextAsync(link)))
                          .Select(inner => WrapModel(inner));
         }
 
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IProvider Register(string resourceProviderNamespace)
         {
-            return WrapModel(client.Register(resourceProviderNamespace));
+            return WrapModel(Extensions.Synchronize(() => client.RegisterAsync(resourceProviderNamespace)));
         }
 
         public async Task<IProvider> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IProvider Unregister(string resourceProviderNamespace)
         {
-            return UnregisterAsync(resourceProviderNamespace).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => UnregisterAsync(resourceProviderNamespace));
         }
 
         public async Task<IProvider> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))

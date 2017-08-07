@@ -43,10 +43,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:C183D7089E5DF699C59758CC103308DF:9A4ADAD649EDB890CDCEB767D8708E33
         public IReadOnlyList<IElasticPoolActivity> ListActivities()
         {
-            var activities = Manager.Inner.ElasticPools.ListActivity(
+            var activities = Extensions.Synchronize(() => Manager.Inner.ElasticPools.ListActivityAsync(
                 ResourceGroupName,
                 SqlServerName(),
-                Name);
+                Name));
 
             var activitiesToReturn = new List<IElasticPoolActivity>();
             foreach (var elasticPoolActivityInner in activities)
@@ -110,10 +110,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:CD775E31F43CBA6304D6EEA9E01682A1:2A3515CB32DF22200CBB032FFC4BCCFC
         public IReadOnlyList<ISqlDatabase> ListDatabases()
         {
-            var databases = Manager.Inner.ElasticPools.ListDatabases(
+            var databases = Extensions.Synchronize(() => Manager.Inner.ElasticPools.ListDatabasesAsync(
                         ResourceGroupName,
                         SqlServerName(),
-                        Name);
+                        Name));
             return databases.Select((databaseInner) => (ISqlDatabase)new SqlDatabaseImpl(
                 databaseInner.Name,
                 databaseInner,
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:EBCADD6850E9711DA91415429B1577E3
         public void Delete()
         {
-            Manager.Inner.ElasticPools.Delete(ResourceGroupName, SqlServerName(), Name);
+            Extensions.Synchronize(() => Manager.Inner.ElasticPools.DeleteAsync(ResourceGroupName, SqlServerName(), Name));
         }
 
         ///GENMHASH:D7949083DDCDE361387E2A975A1A1DE5:D78C4C70C8A28CECCD68CF0E66EED127
@@ -155,10 +155,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:DA730BE4F3BEA4D8DCD1631C079435CB:2D0DE4C2F41ED4D39BD2E654A3511EEE
         public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> ListDatabaseActivities()
         {
-            var databaseActivities = Manager.Inner.ElasticPools.ListDatabaseActivity(
+            var databaseActivities = Extensions.Synchronize(() => Manager.Inner.ElasticPools.ListDatabaseActivityAsync(
                     ResourceGroupName,
                     SqlServerName(),
-                    Name);
+                    Name));
             return databaseActivities.Select((elasticPoolDatabaseActivityInner) => (IElasticPoolDatabaseActivity)new ElasticPoolDatabaseActivityImpl(elasticPoolDatabaseActivityInner)).ToList();
         }
 
@@ -171,11 +171,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1C25D7B8D9084176A24655682A78634D:ABBCB4CE203E2AC2B27991A84095239D
         public ISqlDatabase GetDatabase(string databaseName)
         {
-            DatabaseInner database = Manager.Inner.ElasticPools.GetDatabase(
+            DatabaseInner database = Extensions.Synchronize(() => Manager.Inner.ElasticPools.GetDatabaseAsync(
                 ResourceGroupName,
                 SqlServerName(),
                 Name,
-                databaseName);
+                databaseName));
             return new SqlDatabaseImpl(database.Name, database, Manager);
         }
 

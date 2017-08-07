@@ -22,35 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// </summary>
     public static partial class ZonesOperationsExtensions
     {
-            /// <summary>
-            /// Creates or updates a DNS zone. Does not modify DNS records within the zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate operation.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// The etag of the DNS zone. Omit this value to always overwrite the current
-            /// zone. Specify the last-seen etag value to prevent accidentally overwritting
-            /// any concurrent changes.
-            /// </param>
-            /// <param name='ifNoneMatch'>
-            /// Set to '*' to allow a new DNS zone to be created, but to prevent updating
-            /// an existing zone. Other values will be ignored.
-            /// </param>
-            public static ZoneInner CreateOrUpdate(this IZonesOperations operations, string resourceGroupName, string zoneName, ZoneInner parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, zoneName, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a DNS zone. Does not modify DNS records within the zone.
             /// </summary>
@@ -86,29 +58,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a DNS zone. WARNING: All DNS records in the zone will also be
-            /// deleted. This operation cannot be undone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='ifMatch'>
-            /// The etag of the DNS zone. Omit this value to always delete the current
-            /// zone. Specify the last-seen etag value to prevent accidentally deleting any
-            /// concurrent changes.
-            /// </param>
-            public static ZoneDeleteResultInner Delete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
-            {
-                return operations.DeleteAsync(resourceGroupName, zoneName, ifMatch).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a DNS zone. WARNING: All DNS records in the zone will also be
             /// deleted. This operation cannot be undone.
@@ -138,24 +88,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a DNS zone. Retrieves the zone properties, but not the record sets
-            /// within the zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            public static ZoneInner Get(this IZonesOperations operations, string resourceGroupName, string zoneName)
-            {
-                return operations.GetAsync(resourceGroupName, zoneName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a DNS zone. Retrieves the zone properties, but not the record sets
             /// within the zone.
@@ -180,24 +113,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the DNS zones within a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='top'>
-            /// The maximum number of record sets to return. If not specified, returns up
-            /// to 100 record sets.
-            /// </param>
-            public static IPage<ZoneInner> ListByResourceGroup(this IZonesOperations operations, string resourceGroupName, int? top = default(int?))
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName, top).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the DNS zones within a resource group.
             /// </summary>
@@ -222,21 +138,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the DNS zones in all resource groups in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='top'>
-            /// The maximum number of DNS zones to return. If not specified, returns up to
-            /// 100 zones.
-            /// </param>
-            public static IPage<ZoneInner> List(this IZonesOperations operations, int? top = default(int?))
-            {
-                return operations.ListAsync(top).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the DNS zones in all resource groups in a subscription.
             /// </summary>
@@ -258,29 +160,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a DNS zone. WARNING: All DNS records in the zone will also be
-            /// deleted. This operation cannot be undone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='ifMatch'>
-            /// The etag of the DNS zone. Omit this value to always delete the current
-            /// zone. Specify the last-seen etag value to prevent accidentally deleting any
-            /// concurrent changes.
-            /// </param>
-            public static ZoneDeleteResultInner BeginDelete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
-            {
-                return operations.BeginDeleteAsync(resourceGroupName, zoneName, ifMatch).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a DNS zone. WARNING: All DNS records in the zone will also be
             /// deleted. This operation cannot be undone.
@@ -310,20 +190,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the DNS zones within a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ZoneInner> ListByResourceGroupNext(this IZonesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the DNS zones within a resource group.
             /// </summary>
@@ -344,20 +211,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the DNS zones in all resource groups in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ZoneInner> ListNext(this IZonesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the DNS zones in all resource groups in a subscription.
             /// </summary>

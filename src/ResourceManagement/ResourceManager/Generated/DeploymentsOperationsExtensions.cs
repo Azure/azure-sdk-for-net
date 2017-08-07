@@ -23,23 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class DeploymentsOperationsExtensions
     {
-            /// <summary>
-            /// Delete deployment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment to be deleted.
-            /// </param>
-            public static void Delete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
-            {
-                operations.DeleteAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete deployment.
             /// </summary>
@@ -60,23 +44,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Checks whether deployment exists.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to check. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            public static bool CheckExistence(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
-            {
-                return operations.CheckExistenceAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks whether deployment exists.
             /// </summary>
@@ -100,26 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Create a named template deployment using a template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='parameters'>
-            /// Additional parameters supplied to the operation.
-            /// </param>
-            public static DeploymentExtendedInner CreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, deploymentName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create a named template deployment using a template.
             /// </summary>
@@ -146,23 +95,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a deployment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            public static DeploymentExtendedInner Get(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
-            {
-                return operations.GetAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a deployment.
             /// </summary>
@@ -186,23 +119,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Cancel a currently running template deployment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            public static void Cancel(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
-            {
-                operations.CancelAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Cancel a currently running template deployment.
             /// </summary>
@@ -223,26 +140,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.CancelWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Validate a deployment template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='parameters'>
-            /// Deployment to validate.
-            /// </param>
-            public static DeploymentValidateResultInner Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters)
-            {
-                return operations.ValidateAsync(resourceGroupName, deploymentName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Validate a deployment template.
             /// </summary>
@@ -269,23 +167,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Exports a deployment template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            public static DeploymentExportResultInner ExportTemplate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
-            {
-                return operations.ExportTemplateAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Exports a deployment template.
             /// </summary>
@@ -309,23 +191,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a list of deployments.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to filter by. The name is case insensitive.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<DeploymentExtendedInner> List(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>))
-            {
-                return ((IDeploymentsOperations)operations).ListAsync(resourceGroupName, odataQuery).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of deployments.
             /// </summary>
@@ -349,23 +215,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Delete deployment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment to be deleted.
-            /// </param>
-            public static void BeginDelete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, deploymentName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete deployment.
             /// </summary>
@@ -386,26 +236,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Create a named template deployment using a template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='deploymentName'>
-            /// The name of the deployment.
-            /// </param>
-            /// <param name='parameters'>
-            /// Additional parameters supplied to the operation.
-            /// </param>
-            public static DeploymentExtendedInner BeginCreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, deploymentName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create a named template deployment using a template.
             /// </summary>
@@ -432,20 +263,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a list of deployments.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DeploymentExtendedInner> ListNext(this IDeploymentsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of deployments.
             /// </summary>

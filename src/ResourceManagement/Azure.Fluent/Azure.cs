@@ -154,6 +154,15 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        /// <returns>entry point to managing network watchers</returns>
+        public INetworkWatchers NetworkWatchers
+        {
+            get
+            {
+                return networkManager.NetworkWatchers;
+            }
+        }
+
         /// <returns>entry point to managing deployments</returns>
         public IDeployments Deployments
         {
@@ -632,6 +641,8 @@ namespace Microsoft.Azure.Management.Fluent
         ILoadBalancers LoadBalancers { get; }
 
         IApplicationGateways ApplicationGateways { get; }
+
+        INetworkWatchers NetworkWatchers { get; }
 
         IWebApps WebApps { get; }
 

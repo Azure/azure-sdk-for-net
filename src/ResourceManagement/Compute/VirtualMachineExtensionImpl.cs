@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:955D294F6E1F6B9054F1EABE1AE05EA2:3B40334C37474720957E6C6B24FC2D63
         public VirtualMachineExtensionInstanceView GetInstanceView()
         {
-            return GetInstanceViewAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return ResourceManager.Fluent.Core.Extensions.Synchronize(() => GetInstanceViewAsync());
         }
     }
 }

@@ -20,7 +20,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<INetworkUsage> ListByRegion(string regionName)
         {
-            return WrapList(client.Usages.List(regionName).AsContinuousCollection(link => client.Usages.ListNext(link)));
+            return WrapList(Extensions.Synchronize(() => client.Usages.ListAsync(regionName))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => client.Usages.ListNextAsync(link))));
         }
 
         public IEnumerable<INetworkUsage> ListByRegion(Region region)

@@ -125,28 +125,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
-            }
-        }
-
-        /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>.Manager
-        {
-            get
-            {
-                return this.Manager() as Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager;
-            }
-        }
-
-        /// <summary>
         /// Specifies the scope of the role assignment to be a resource group.
         /// </summary>
         /// <param name="resourceGroup">The resource group the assignee is assigned to access.</param>

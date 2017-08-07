@@ -22,23 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class NetworkInterfacesOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the specified network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            public static void Delete(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
-            {
-                operations.DeleteAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified network interface.
             /// </summary>
@@ -59,26 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about the specified network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            /// <param name='expand'>
-            /// Expands referenced resources.
-            /// </param>
-            public static NetworkInterfaceInner Get(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, networkInterfaceName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about the specified network interface.
             /// </summary>
@@ -105,26 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update network interface operation.
-            /// </param>
-            public static NetworkInterfaceInner CreateOrUpdate(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, NetworkInterfaceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, networkInterfaceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a network interface.
             /// </summary>
@@ -151,17 +97,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network interfaces in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListAll(this INetworkInterfacesOperations operations)
-            {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network interfaces in a subscription.
             /// </summary>
@@ -179,20 +115,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network interfaces in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> List(this INetworkInterfacesOperations operations, string resourceGroupName)
-            {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network interfaces in a resource group.
             /// </summary>
@@ -213,23 +136,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all route tables applied to a network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            public static EffectiveRouteListResultInner GetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
-            {
-                return operations.GetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all route tables applied to a network interface.
             /// </summary>
@@ -253,23 +160,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network security groups applied to a network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            public static EffectiveNetworkSecurityGroupListResultInner ListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
-            {
-                return operations.ListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network security groups applied to a network interface.
             /// </summary>
@@ -293,27 +184,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets information about all network interfaces in a virtual machine in a
-            /// virtual machine scale set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualMachineScaleSetName'>
-            /// The name of the virtual machine scale set.
-            /// </param>
-            /// <param name='virtualmachineIndex'>
-            /// The virtual machine index.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListVirtualMachineScaleSetVMNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex)
-            {
-                return operations.ListVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about all network interfaces in a virtual machine in a
             /// virtual machine scale set.
@@ -341,23 +212,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network interfaces in a virtual machine scale set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualMachineScaleSetName'>
-            /// The name of the virtual machine scale set.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListVirtualMachineScaleSetNetworkInterfaces(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName)
-            {
-                return operations.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network interfaces in a virtual machine scale set.
             /// </summary>
@@ -381,32 +236,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get the specified network interface in a virtual machine scale set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualMachineScaleSetName'>
-            /// The name of the virtual machine scale set.
-            /// </param>
-            /// <param name='virtualmachineIndex'>
-            /// The virtual machine index.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            /// <param name='expand'>
-            /// Expands referenced resources.
-            /// </param>
-            public static NetworkInterfaceInner GetVirtualMachineScaleSetNetworkInterface(this INetworkInterfacesOperations operations, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default(string))
-            {
-                return operations.GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get the specified network interface in a virtual machine scale set.
             /// </summary>
@@ -439,23 +269,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            public static void BeginDelete(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified network interface.
             /// </summary>
@@ -476,26 +290,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates or updates a network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update network interface operation.
-            /// </param>
-            public static NetworkInterfaceInner BeginCreateOrUpdate(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, NetworkInterfaceInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, networkInterfaceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a network interface.
             /// </summary>
@@ -522,23 +317,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all route tables applied to a network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            public static EffectiveRouteListResultInner BeginGetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
-            {
-                return operations.BeginGetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all route tables applied to a network interface.
             /// </summary>
@@ -562,23 +341,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network security groups applied to a network interface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkInterfaceName'>
-            /// The name of the network interface.
-            /// </param>
-            public static EffectiveNetworkSecurityGroupListResultInner BeginListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
-            {
-                return operations.BeginListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network security groups applied to a network interface.
             /// </summary>
@@ -602,20 +365,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network interfaces in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListAllNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network interfaces in a subscription.
             /// </summary>
@@ -636,20 +386,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network interfaces in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network interfaces in a resource group.
             /// </summary>
@@ -670,21 +407,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets information about all network interfaces in a virtual machine in a
-            /// virtual machine scale set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListVirtualMachineScaleSetVMNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return operations.ListVirtualMachineScaleSetVMNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about all network interfaces in a virtual machine in a
             /// virtual machine scale set.
@@ -706,20 +429,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network interfaces in a virtual machine scale set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkInterfaceInner> ListVirtualMachineScaleSetNetworkInterfacesNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return operations.ListVirtualMachineScaleSetNetworkInterfacesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network interfaces in a virtual machine scale set.
             /// </summary>

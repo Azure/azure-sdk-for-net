@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:FF7924BFEF46CE7F250D6F5B1A727744
         public IDiskVolumeEncryptionMonitor Refresh()
         {
-            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return ResourceManager.Fluent.Core.Extensions.Synchronize(() => RefreshAsync());
         }
 
         /// <return>The instance view status collection associated with the encryption extension.</return>
