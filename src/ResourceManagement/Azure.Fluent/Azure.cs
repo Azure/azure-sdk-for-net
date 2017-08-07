@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.Search.Fluent;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.Management.Fluent
         private ICdnManager cdnManager;
         private IRedisManager redisManager;
         private IAppServiceManager appServiceManager;
+        private ISearchManager searchManager;
         private IServiceBusManager serviceBusManager;
         private IRegistryManager registryManager;
         private IDocumentDBManager documentDBManager;
@@ -304,6 +306,14 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public ISearchServices SearchServices
+        {
+            get
+            {
+                return searchManager.SearchServices;
+            }
+        }
+
         public IServiceBusNamespaces ServiceBusNamespaces
         {
             get
@@ -402,6 +412,7 @@ namespace Microsoft.Azure.Management.Fluent
             redisManager = RedisManager.Authenticate(restClient, subscriptionId);
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
+            searchManager = SearchManager.Authenticate(restClient, subscriptionId);
             serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
             registryManager = RegistryManager.Authenticate(restClient, subscriptionId);
             documentDBManager = DocumentDBManager.Authenticate(restClient, subscriptionId);
@@ -636,6 +647,8 @@ namespace Microsoft.Azure.Management.Fluent
         IWebApps WebApps { get; }
 
         IAppServiceManager AppServices { get; }
+
+        ISearchServices SearchServices { get; }
 
         IServiceBusNamespaces ServiceBusNamespaces { get; }
 
