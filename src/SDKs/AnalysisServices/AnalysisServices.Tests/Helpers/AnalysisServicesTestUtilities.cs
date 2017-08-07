@@ -42,8 +42,12 @@ namespace AnalysisServices.Tests.Helpers
         public static ResourceSku DefaultSku = new ResourceSku
         {
             Name = "S1",
-            Tier = "Standard"
+            Tier = "Standard",
+            Capacity = 1
         };
+
+        private static int DefaultCapacity = 1;
+        private static ConnectionMode DefaultQuerypoolConnectionMode = ConnectionMode.All;
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
@@ -69,7 +73,8 @@ namespace AnalysisServices.Tests.Helpers
                             'type':'Microsoft.AnalysisServices/servers',
                             'location':'{3}',
                             'sku':{{
-                                'name':'{4}'
+                                'name':'{4}',
+                                'capacity':{10}
                             }},
                             'tags':{5},
                             'properties':{{
@@ -79,7 +84,8 @@ namespace AnalysisServices.Tests.Helpers
                                 'asAdministrators':{{
                                 'members':{8}
                                 }},
-                                'backupBlobContainerUri':'{9}'
+                                'backupBlobContainerUri':'{9}',
+                                'querypoolConnectionMode':'{11}'
                             }}
                             }}";
             
@@ -96,7 +102,9 @@ namespace AnalysisServices.Tests.Helpers
                 provisioningState,
                 state,
                 admins,
-                DefaultBackupBlobContainerUri);
+                DefaultBackupBlobContainerUri,
+                DefaultCapacity,
+                DefaultQuerypoolConnectionMode.ToString());
         }
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
