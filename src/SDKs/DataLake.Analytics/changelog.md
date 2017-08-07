@@ -3,7 +3,7 @@
 
 **Breaking changes**
 
-- Revised the inheritance structure for objects dealing with job creation and building.
+- Revised the inheritance structure for objects dealing with job creation, building, and retrieving.
     - NOTE: Only U-SQL is supported in this change; therefore, Hive is not supported.
     - When submitting jobs, change JobInformation objects to CreateJobParameters.
         - When setting the properties for the CreateJobParameters object, be sure to change the USqlJobProperties object to a CreateUSqlJobProperties object.
@@ -13,6 +13,8 @@
             - degreeOfParallelism
             - priority
             - related
+    - When getting a list of jobs, the object type that is returned is JobInformationBasic and not JobInformation (more information on the difference is below in the Notes section)
+- When getting a list of accounts, the object type that is returned is DataLakeAnalyticsAccountBasic and not DataLakeAnalyticsAccount (more information on the difference is below in the Notes section)
 
 **Notes**
 	  
