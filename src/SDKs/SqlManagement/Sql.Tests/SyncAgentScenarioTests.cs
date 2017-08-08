@@ -49,7 +49,7 @@ namespace Sql.Tests
                 // List sync agent
                 IPage<SyncAgent> listAgents = sqlClient.SyncAgents.ListByServer(resourceGroup.Name, server.Name);
                 Assert.Equal(1, listAgents.Count());
-                Assert.Equal(agentName, listAgents.FirstOrDefault()?.Name);
+                Assert.Equal(agentName, listAgents.Single().Name);
 
                 // Generate key
                 SyncAgentKeyProperties agentKey = sqlClient.SyncAgents.GenerateKey(resourceGroup.Name, server.Name, agentName);

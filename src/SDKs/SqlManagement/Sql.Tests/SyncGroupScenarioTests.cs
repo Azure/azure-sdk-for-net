@@ -68,7 +68,7 @@ namespace Sql.Tests
                 IPage<SyncGroup> listSyncGroups = sqlClient.SyncGroups.ListByDatabase(resourceGroup.Name, server.Name, testDatabaseName);
                 Assert.NotNull(listSyncGroups);
                 Assert.Equal(1, listSyncGroups.Count());
-                Assert.Equal(syncGroupName, listSyncGroups.FirstOrDefault()?.Name);
+                Assert.Equal(syncGroupName, listSyncGroups.Single().Name);
 
                 // Update sync group
                 int interval2 = 600;
@@ -86,8 +86,14 @@ namespace Sql.Tests
                 Assert.Equal(conflictPolicy, getUpdatedSyncGroup.ConflictResolutionPolicy);
                 Assert.Equal(syncDatabase.Id, getUpdatedSyncGroup.SyncDatabaseId);
 
-                // Refresh hub schema
-                sqlClient.SyncGroups.RefreshHubSchema(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName);
+				// Update sync group with an empty model
+				Assert.Throws<CloudException>(() =>
+				{
+					sqlClient.SyncGroups.Update(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName, new SyncGroup());
+				});
+
+				// Refresh hub schema
+				sqlClient.SyncGroups.RefreshHubSchema(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName);
 
                 // List hub schemas
                 IPage<SyncFullSchemaProperties> listHubSchemas = sqlClient.SyncGroups.ListHubSchemas(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName);

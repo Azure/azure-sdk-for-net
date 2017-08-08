@@ -93,7 +93,7 @@ namespace Sql.Tests
                 IPage<SyncMember> listSyncMembers = sqlClient.SyncMembers.ListBySyncGroup(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName);
                 Assert.NotNull(listSyncMembers);
                 Assert.Equal(1, listSyncMembers.Count());
-                Assert.Equal(syncMemberName, listSyncMembers.FirstOrDefault()?.Name);
+                Assert.Equal(syncMemberName, listSyncMembers.Single().Name);
 
                 // Update sync member
                 string updateSyncMemberDirection = SyncDirection.Bidirectional;
@@ -108,8 +108,14 @@ namespace Sql.Tests
                 Assert.Equal(updateSyncMemberDirection, updateSyncMember.SyncDirection);
                 Assert.NotEqual(syncMemberDirection, updateSyncMemberDirection);
 
-                // Refresh member schemas
-                sqlClient.SyncMembers.RefreshMemberSchema(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName, syncMemberName);
+				// Update sync member with an empty model
+				Assert.Throws<CloudException>(() =>
+				{
+					sqlClient.SyncMembers.Update(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName, syncMemberName, new SyncMember());
+				});
+
+				// Refresh member schemas
+				sqlClient.SyncMembers.RefreshMemberSchema(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName, syncMemberName);
 
                 // List member schemas
                 IPage<SyncFullSchemaProperties> memberSchemas = sqlClient.SyncMembers.ListMemberSchemas(resourceGroup.Name, server.Name, testDatabaseName, syncGroupName, syncMemberName);
