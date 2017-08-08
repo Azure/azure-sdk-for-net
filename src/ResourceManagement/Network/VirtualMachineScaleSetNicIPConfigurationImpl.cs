@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core;
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVTY2FsZVNldE5pY0lwQ29uZmlndXJhdGlvbkltcGw=
     internal partial class VirtualMachineScaleSetNicIPConfigurationImpl :
-        NicIpConfigurationBaseImpl<VirtualMachineScaleSetNetworkInterfaceImpl, IVirtualMachineScaleSetNetworkInterface>,
+        NicIPConfigurationBaseImpl<VirtualMachineScaleSetNetworkInterfaceImpl, IVirtualMachineScaleSetNetworkInterface>,
         IVirtualMachineScaleSetNicIPConfiguration
     {
         ///GENMHASH:7BFCE86155E2F16ACE271E0FA19BB7FC:5EEEAB2F8988D6716EFD5040E545E7F4

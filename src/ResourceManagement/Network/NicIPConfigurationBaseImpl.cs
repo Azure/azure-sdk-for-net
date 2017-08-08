@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <typeparam name="ParentImplT">Parent implementation.</typeparam>
     /// <typeparam name="IParentT">Parent interface.</typeparam>
 
-    internal partial class NicIPConfigurationBaseImpl<ParentImplT, IParentT> : 
-        ChildResource<NetworkInterfaceIPConfigurationInner, ParentImplT, IParentT>,
-        IHasSubnet, IHasPrivateIPAddress, INicIPConfigurationBase
-        where ParentImplT : IParentT
+    internal partial class NicIPConfigurationBaseImpl<ParentImplT, ParentT> : 
+        ChildResource<NetworkInterfaceIPConfigurationInner, ParentImplT, ParentT>,
+        INicIPConfigurationBase
+        where ParentImplT : ParentT where ParentT : IHasManager<INetworkManager>
     {
         private INetworkManager networkManager;
 
@@ -47,58 +47,39 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:8AA9D9D4B919CCB8947405FAA41035E2:FF8C06269C32F184B39DCFD10D8279BF
+        ///GENMHASH:F4EEE08685E447AE7D2A8F7252EC223A:516B6A004CB15A757AC222DE49CEC6EC
         internal string PrivateIPAddress()
         {
             return Inner.PrivateIPAddress;
         }
 
-        ///GENMHASH:26736A6ADD939D26955E1B3CFAB3B027:2C25BDFE4E41DBF371885298367C4492
+        ///GENMHASH:FCB784E90DCC27EAC6AD4B4C988E2752:925E8594616C741FD699EF2269B3D731
         internal IPAllocationMethod PrivateIPAllocationMethod()
         {
             return IPAllocationMethod.Parse(Inner.PrivateIPAllocationMethod);
         }
 
-        ///GENMHASH:EE78F7961283D288F33B68D99551BF42:2998B7C29D7594E92074D408F4F66760
+        ///GENMHASH:572B5A1179A4B2EF64D68C0E25834020:D53CEB54EB83B4CD2AFB7B489DE5E4E6
         internal IPVersion PrivateIPAddressVersion()
         {
             return IPVersion.Parse(Inner.PrivateIPAddressVersion);
         }
 
-        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:AAA4FE3C44C931AA498D248FB062890E
-        internal string NetworkId()
-        {
-            SubResource subnetRef = Inner.Subnet;
-            if (subnetRef == null)
-            {
-                return null;
-            }
-            return ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id);
-        }
-
         ///GENMHASH:09E2C45F8481740F588302FB0C7A7C68:EEA5AE07BF27BC623913227E0050ECA2
         internal INetwork GetNetwork()
         {
-            string id = this.NetworkId();
-            if (id == null)
-            {
-                return null;
-            }
-            return this.networkManager.Networks.GetById(id);
+            string id = NetworkId();
+            return (id != null) ? networkManager.Networks.GetById(id) : null;
         }
 
-        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:CDB148CDC15BCCE466D60D90BEDEA616
+        ///GENMHASH:C57133CD301470A479B3BA07CD283E86:1F748ABB2BF391EB5FEEFD3546A4C7A8
         internal string SubnetName()
         {
             SubResource subnetRef = Inner.Subnet;
-            if (subnetRef == null)
-            {
-                return null;
-            }
-            return ResourceUtils.NameFromResourceId(subnetRef.Id);
+            return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
         }
 
-        ///GENMHASH:744A3724C9A3248553B33B2939CE091A:47A4EFA20BF9EBE9F94B6AF74FC75F03
+        ///GENMHASH:744A3724C9A3248553B33B2939CE091A:B91782240ED4E9E0E9CD0089AA8E08B6
         internal IReadOnlyList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
         {
             var inboundNatPoolRefs = Inner.LoadBalancerInboundNatRules;
@@ -113,10 +94,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(reference.Id);
                 ILoadBalancer loadBalancer;
-                if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
+                if (!loadBalancers.TryGetValue(loadBalancerId.ToLower(), out loadBalancer))
                 {
                     loadBalancer = this.networkManager.LoadBalancers.GetById(loadBalancerId);
-                    loadBalancers[loadBalancerId] = loadBalancer;
+                    loadBalancers[loadBalancerId.ToLower()] = loadBalancer;
                 }
                 string ruleName = ResourceUtils.NameFromResourceId(reference.Id);
                 rules.Add(loadBalancer.InboundNatRules[ruleName]);
@@ -124,7 +105,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return rules;
         }
 
-        ///GENMHASH:D5259819D030517B66106CDFA84D3219:3471F8356719EA5868DD7F34332B58E4
+        ///GENMHASH:D5259819D030517B66106CDFA84D3219:52A28D2529D3E09774E3F4F8685E67EC
         internal IReadOnlyList<ILoadBalancerBackend> ListAssociatedLoadBalancerBackends()
         {
             var backendRefs = Inner.LoadBalancerBackendAddressPools;
@@ -139,15 +120,80 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id);
                 ILoadBalancer loadBalancer;
-                if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
+                if (!loadBalancers.TryGetValue(loadBalancerId.ToLower(), out loadBalancer))
                 {
-                    loadBalancer = this.networkManager.LoadBalancers.GetById(loadBalancerId);
-                    loadBalancers[loadBalancerId] = loadBalancer;
+                    loadBalancer = networkManager.LoadBalancers.GetById(loadBalancerId);
+                    loadBalancers[loadBalancerId.ToLower()] = loadBalancer;
                 }
                 string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
                 ILoadBalancerBackend backend;
                 if (loadBalancer.Backends.TryGetValue(backendName, out backend))
                     backends.Add(backend);
+            }
+            return backends;
+        }
+
+        ///GENMHASH:1C444C90348D7064AB23705C542DDF18:AAA4FE3C44C931AA498D248FB062890E
+        internal string NetworkId()
+        {
+            SubResource subnetRef = Inner.Subnet;
+            return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
+        }
+
+
+        ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:91A166D41391DA35AAD7B2223B2992C5
+        public INetworkSecurityGroup GetNetworkSecurityGroup()
+        {
+            INetwork network = this.GetNetwork();
+            if (network == null)
+            {
+                return null;
+            }
+            
+            string subnetName = SubnetName();
+            if (subnetName == null)
+            {
+                return null;
+            }
+
+            ISubnet subnet;
+            if(network.Subnets.TryGetValue(subnetName, out subnet))
+            {
+                return subnet.GetNetworkSecurityGroup();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        ///GENMHASH:AB4065B8BA3CBEBBFE2194997931C513:9F5EC22819D02223DAAD78B94E1B5130
+        public IReadOnlyList<IApplicationGatewayBackend> ListAssociatedApplicationGatewayBackends()
+        {
+            //return ((NetworkManager)Parent.Manager).ListAssociatedApplicationGatewayBackends(Inner.ApplicationGatewayBackendAddressPools);
+
+            IDictionary<string, IApplicationGateway> appGateways = new Dictionary<string, IApplicationGateway>();
+            List<IApplicationGatewayBackend> backends = new List<IApplicationGatewayBackend>();
+            var backendRefs = Inner.ApplicationGatewayBackendAddressPools;
+            if (backendRefs != null)
+            {
+                foreach (var backendRef in backendRefs)
+                {
+                    string appGatewayId = ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id);
+                    IApplicationGateway appGateway;
+                    if (!appGateways.TryGetValue(appGatewayId.ToLower(), out appGateway))
+                    {
+                        appGateway = Parent.Manager.ApplicationGateways.GetById(appGatewayId);
+                        appGateways[appGatewayId.ToLower()] = appGateway;
+                    }
+
+                    string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
+                    IApplicationGatewayBackend backend = null;
+                    if (appGateway.Backends.TryGetValue(backendName, out backend))
+                    {
+                        backends.Add(backend);
+                    }
+                }
             }
             return backends;
         }
