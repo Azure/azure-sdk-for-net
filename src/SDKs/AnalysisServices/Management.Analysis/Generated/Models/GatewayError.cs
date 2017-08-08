@@ -12,33 +12,30 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Analysis;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An object that represents enumerating SKUs for new resources
+    /// Detail of gateway errors
     /// </summary>
-    public partial class SkuEnumerationForNewResourceResult
+    public partial class GatewayError
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SkuEnumerationForNewResourceResult class.
+        /// Initializes a new instance of the GatewayError class.
         /// </summary>
-        public SkuEnumerationForNewResourceResult()
+        public GatewayError()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SkuEnumerationForNewResourceResult class.
+        /// Initializes a new instance of the GatewayError class.
         /// </summary>
-        /// <param name="value">The collection of available SKUs for new
-        /// resources</param>
-        public SkuEnumerationForNewResourceResult(IList<ResourceSku> value = default(IList<ResourceSku>))
+        /// <param name="code">Error code of list gateway.</param>
+        /// <param name="message">Error message of list gateway.</param>
+        public GatewayError(string code = default(string), string message = default(string))
         {
-            Value = value;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -48,10 +45,16 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of available SKUs for new resources
+        /// Gets or sets error code of list gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ResourceSku> Value { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets error message of list gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
