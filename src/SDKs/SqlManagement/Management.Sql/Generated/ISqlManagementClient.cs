@@ -227,6 +227,21 @@ namespace Microsoft.Azure.Management.Sql
         IServerKeysOperations ServerKeys { get; }
 
         /// <summary>
+        /// Gets the ISyncAgentsOperations.
+        /// </summary>
+        ISyncAgentsOperations SyncAgents { get; }
+
+        /// <summary>
+        /// Gets the ISyncGroupsOperations.
+        /// </summary>
+        ISyncGroupsOperations SyncGroups { get; }
+
+        /// <summary>
+        /// Gets the ISyncMembersOperations.
+        /// </summary>
+        ISyncMembersOperations SyncMembers { get; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
