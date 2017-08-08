@@ -28,6 +28,8 @@ using CoreFtp;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 using Renci.SshNet;
+using Microsoft.Azure.Management.Search.Fluent;
+using Microsoft.Azure.Management.Search.Fluent.Models;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 using System.Threading;
@@ -302,6 +304,34 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 builder.Append("\n\t\tAccessRight: ")
                         .Append("\n\t\t\tName :").Append(right.ToString());
+            }
+
+            Log(builder.ToString());
+        }
+
+        public static void Print(Search.Fluent.ISearchService searchService)
+        {
+            var adminKeys = searchService.GetAdminKeys();
+            var queryKeys = searchService.ListQueryKeys();
+
+            StringBuilder builder = new StringBuilder()
+                    .Append("Service bus subscription: ").Append(searchService.Id)
+                    .Append("\n\tResource group: ").Append(searchService.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(searchService.Region)
+                    .Append("\n\tSku: ").Append(searchService.Sku.Name)
+                    .Append("\n\tStatus: ").Append(searchService.Status)
+                    .Append("\n\tProvisioning State: ").Append(searchService.ProvisioningState)
+                    .Append("\n\tHosting Mode: ").Append(searchService.HostingMode)
+                    .Append("\n\tReplicas: ").Append(searchService.ReplicaCount)
+                    .Append("\n\tPartitions: ").Append(searchService.PartitionCount)
+                    .Append("\n\tPrimary Admin Key: ").Append(adminKeys.PrimaryKey)
+                    .Append("\n\tSecondary Admin Key: ").Append(adminKeys.SecondaryKey)
+                    .Append("\n\tQuery keys:");
+
+            foreach (IQueryKey queryKey in queryKeys)
+            {
+                builder.Append("\n\t\tKey name: ").Append(queryKey.Name);
+                builder.Append("\n\t\t   Value: ").Append(queryKey.Key);
             }
 
             Log(builder.ToString());
