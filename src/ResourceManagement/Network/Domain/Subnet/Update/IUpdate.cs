@@ -12,6 +12,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.Subnet.Update
     public interface IWithNetworkSecurityGroup 
     {
         /// <summary>
+        /// Removes the association of this subnet with any network security group.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate WithoutNetworkSecurityGroup();
+
+        /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
         /// <param name="resourceId">The resource ID of the network security group.</param>
