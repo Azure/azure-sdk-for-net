@@ -56,11 +56,13 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // validate the server creation process
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.Equal(1, resultGet.Sku.Capacity);
                 Assert.NotEmpty(resultGet.ServerFullName);
                 Assert.Equal(2, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
                 Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
+                Assert.Equal(ConnectionMode.All, resultGet.QuerypoolConnectionMode);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
                 // Confirm that the server creation did succeed
@@ -76,12 +78,14 @@ namespace AnalysisServices.Tests.ScenarioTests
                 var updatedAdministrators = AnalysisServicesTestUtilities.DefaultAdministrators;
                 updatedAdministrators.Add("aztest2@stabletest.ccsctp.net");
 
+                var newSku = resultGet.Sku;
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
-                    {
-                        Sku = resultGet.Sku,
-                        Tags = updatedTags,
-                        AsAdministrators = new ServerAdministrators(updatedAdministrators),
-                        BackupBlobContainerUri = AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri
+                {
+                    Sku = newSku,
+                    Tags = updatedTags,
+                    AsAdministrators = new ServerAdministrators(updatedAdministrators),
+                    BackupBlobContainerUri = AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri,
+                    QuerypoolConnectionMode= ConnectionMode.ReadOnly
                 };
 
                 AnalysisServicesServer resultUpdate = null;
@@ -111,6 +115,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.True(resultGet.Tags.ContainsKey("updated1"));
                 Assert.Equal(3, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal(AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
+                Assert.Equal(ConnectionMode.ReadOnly, resultGet.QuerypoolConnectionMode);
 
                 // Create another server and ensure that list account returns both
                 var secondServer = AnalysisServicesTestUtilities.DefaultServerName + '2';
@@ -209,10 +214,12 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
                 Assert.NotEmpty(resultGet.ServerFullName);
                 Assert.Equal(analysisServicesServer.Sku.Name, resultGet.Sku.Name);
+                Assert.Equal(1, resultGet.Sku.Capacity);
                 Assert.Equal(2, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
                 Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+                Assert.Equal(ConnectionMode.All, resultGet.QuerypoolConnectionMode);
 
                 // Confirm that the server creation did succeed
                 Assert.True(resultGet.ProvisioningState == "Succeeded");
@@ -221,10 +228,10 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // Scale up the server and verify
                 SkuEnumerationForExistingResourceResult skusListForExisting = client.Servers.ListSkusForExisting(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
                 ResourceSku newSku = skusListForExisting.Value.Where(detail => detail.Sku.Name != analysisServicesServer.Sku.Name).First().Sku;
-
+                
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
                 {
-                    Sku = newSku
+                    Sku = newSku,
                 };
 
                 var resultUpdate = client.Servers.Update(
@@ -248,12 +255,220 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
                 Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
-
+                
                 // delete the server with its old name, which should also succeed.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
             }
         }
 
+        [Fact]
+        public void ScaleOutTest()
+        {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = this.GetAnalysisServicesClient(context);
+
+                try
+                {
+                    AnalysisServicesServer analysisServicesServer = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+
+                    AnalysisServicesServer resultCreate = null;
+                    try
+                    {
+                        // Create a test server
+                        resultCreate =
+                            client.Servers.Create(
+                                AnalysisServicesTestUtilities.DefaultResourceGroup,
+                                AnalysisServicesTestUtilities.DefaultServerName,
+                                analysisServicesServer);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+
+                    Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
+                    Assert.Equal(resultCreate.State, "Succeeded");
+
+                    // get the server and ensure that all the values are properly set.
+                    var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    // validate the server creation process
+                    Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                    Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                    Assert.NotEmpty(resultGet.ServerFullName);
+                    Assert.Equal(analysisServicesServer.Sku.Name, resultGet.Sku.Name);
+                    Assert.Equal(1, resultGet.Sku.Capacity);
+                    Assert.Equal(2, resultGet.Tags.Count);
+                    Assert.True(resultGet.Tags.ContainsKey("key1"));
+                    Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
+                    Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+                    Assert.Equal(ConnectionMode.All, resultGet.QuerypoolConnectionMode);
+
+                    // Confirm that the server creation did succeed
+                    Assert.True(resultGet.ProvisioningState == "Succeeded");
+                    Assert.True(resultGet.State == "Succeeded");
+
+                    // Scale out from 1 to 2
+                    ResourceSku newSku = resultGet.Sku;
+                    newSku.Capacity = 2;
+
+                    AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
+                    {
+                        Sku = newSku
+                    };
+
+                    var resultUpdate = client.Servers.Update(
+                        AnalysisServicesTestUtilities.DefaultResourceGroup,
+                        AnalysisServicesTestUtilities.DefaultServerName,
+                        updateParameters);
+
+                    Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                    Assert.Equal("Succeeded", resultUpdate.State);
+
+                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    Assert.Equal(2, resultGet.Sku.Capacity);
+                    Assert.Equal(ConnectionMode.All, resultGet.QuerypoolConnectionMode);
+
+                    // Change connectionMode from All to ReadOnly
+                    updateParameters = new AnalysisServicesServerUpdateParameters()
+                    {
+                        QuerypoolConnectionMode = ConnectionMode.ReadOnly
+                    };
+
+                    resultUpdate = client.Servers.Update(
+                        AnalysisServicesTestUtilities.DefaultResourceGroup,
+                        AnalysisServicesTestUtilities.DefaultServerName,
+                        updateParameters);
+
+                    Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                    Assert.Equal("Succeeded", resultUpdate.State);
+
+                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    Assert.Equal(2, resultGet.Sku.Capacity);
+                    Assert.Equal(ConnectionMode.ReadOnly, resultGet.QuerypoolConnectionMode);
+
+                    // Scale in from 2 to 1
+                    newSku = resultGet.Sku;
+                    newSku.Capacity = 1;
+                    updateParameters = new AnalysisServicesServerUpdateParameters()
+                    {
+                        Sku = newSku,
+                        QuerypoolConnectionMode = ConnectionMode.ReadOnly
+                    };
+
+                    resultUpdate = client.Servers.Update(
+                        AnalysisServicesTestUtilities.DefaultResourceGroup,
+                        AnalysisServicesTestUtilities.DefaultServerName,
+                        updateParameters);
+
+                    Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                    Assert.Equal("Succeeded", resultUpdate.State);
+
+                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    Assert.Equal(1, resultGet.Sku.Capacity);
+                    Assert.Equal(ConnectionMode.ReadOnly, resultGet.QuerypoolConnectionMode);
+
+                    // Change connectionMode from ReadOnly to all
+                    updateParameters = new AnalysisServicesServerUpdateParameters()
+                    {
+                        QuerypoolConnectionMode = ConnectionMode.All
+                    };
+
+                    resultUpdate = client.Servers.Update(
+                        AnalysisServicesTestUtilities.DefaultResourceGroup,
+                        AnalysisServicesTestUtilities.DefaultServerName,
+                        updateParameters);
+
+                    Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                    Assert.Equal("Succeeded", resultUpdate.State);
+
+                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    Assert.Equal(1, resultGet.Sku.Capacity);
+                    Assert.Equal(ConnectionMode.All, resultGet.QuerypoolConnectionMode);
+
+                    // Change scale out properties to non-default (capacity != 1, querypoolConnectionMode = ReadOnly)
+                    newSku = resultGet.Sku;
+                    newSku.Capacity = 2;
+                    updateParameters = new AnalysisServicesServerUpdateParameters()
+                    {
+                        Sku = newSku,
+                        QuerypoolConnectionMode = ConnectionMode.ReadOnly
+                    };
+
+                    resultUpdate = client.Servers.Update(
+                        AnalysisServicesTestUtilities.DefaultResourceGroup,
+                        AnalysisServicesTestUtilities.DefaultServerName,
+                        updateParameters);
+
+                    Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                    Assert.Equal("Succeeded", resultUpdate.State);
+
+                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    Assert.Equal(2, resultGet.Sku.Capacity);
+                    Assert.Equal(ConnectionMode.ReadOnly, resultGet.QuerypoolConnectionMode);
+
+                    // Scale from S1 to S0 to verify that scale out properties are preserved
+                    newSku = resultGet.Sku;
+                    newSku.Name = "S0";
+                    updateParameters = new AnalysisServicesServerUpdateParameters()
+                    {
+                        Sku = newSku,
+                        QuerypoolConnectionMode = ConnectionMode.ReadOnly
+                    };
+
+                    resultUpdate = client.Servers.Update(
+                        AnalysisServicesTestUtilities.DefaultResourceGroup,
+                        AnalysisServicesTestUtilities.DefaultServerName,
+                        updateParameters);
+
+                    Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                    Assert.Equal("Succeeded", resultUpdate.State);
+
+                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                    Assert.Equal("S0", resultGet.Sku.Name);
+                    Assert.Equal(2, resultGet.Sku.Capacity);
+                    Assert.Equal(ConnectionMode.ReadOnly, resultGet.QuerypoolConnectionMode);
+                }
+                finally
+                {
+                    // delete the server with its old name, which should also succeed.
+                    client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+                }
+            }
+        }
+
+        [Fact]
+        public void ScaleOutThrowsExceptionForNonStandardSkuTest()
+        {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = this.GetAnalysisServicesClient(context);
+
+                SkuEnumerationForExistingResourceResult skusListForExisting = client.Servers.ListSkusForExisting(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+                ResourceSku newSku = skusListForExisting.Value.First(detail => detail.Sku.Tier != "Standard").Sku;
+                newSku.Capacity = 2;
+
+                var parameters = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+                parameters.Sku = newSku;
+
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => client.Servers.Create(
+                    AnalysisServicesTestUtilities.DefaultResourceGroup,
+                    AnalysisServicesTestUtilities.DefaultServerName,
+                    parameters));
+            }
+        }
     }
 }
