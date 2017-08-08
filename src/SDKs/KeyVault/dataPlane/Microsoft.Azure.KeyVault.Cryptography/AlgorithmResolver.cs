@@ -33,7 +33,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
 
             Default.AddAlgorithm( Rs256.AlgorithmName, new Rs256() );
 
-#if NET45
+#if FullNetFx
             Default.AddAlgorithm( RsNull.AlgorithmName, new RsNull() );
 #endif
         }
