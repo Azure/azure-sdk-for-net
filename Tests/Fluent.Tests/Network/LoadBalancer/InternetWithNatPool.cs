@@ -54,14 +54,36 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
 
                         // Frontends
-                        .WithExistingPublicIPAddress(existingPips.ElementAt(0))
+                        .DefinePublicFrontend("default")
+                            .WithExistingPublicIPAddress(existingPips.ElementAt(0))
+                            .Attach()
                         .DefinePublicFrontend("frontend1")
                             .WithExistingPublicIPAddress(existingPips.ElementAt(1))
                             .Attach()
 
+                        // Load balancing rules
+                        .DefineLoadBalancingRule("rule1")
+                            .WithProtocol(TransportProtocol.Tcp)    // Required
+                            .FromFrontend("frontend1")
+                            .FromFrontendPort(81)
+                            .ToBackend("backend1")
+                            .ToBackendPort(82)                    // Optionals
+                            .WithProbe("tcpProbe1")
+                            .WithIdleTimeoutInMinutes(10)
+                            .WithLoadDistribution(LoadDistribution.SourceIP)
+                            .Attach()
+
+                        // Inbound NAT pools
+                        .DefineInboundNatPool("natpool1")
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend("frontend1")
+                            .FromFrontendPortRange(2000, 2001)
+                            .ToBackendPort(8080)
+                            .Attach()
+
                         // Backends
-                        .WithExistingVirtualMachines(existingVMs.ToArray())
-                        .DefineBackend("backend1")
+                        .DefineBackend("default")
+                            .WithExistingVirtualMachines(existingVMs.ToArray())
                             .Attach()
 
                         // Probes
@@ -74,26 +96,6 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                             .WithRequestPath("/")       // Required
                             .WithIntervalInSeconds(13)  // Optionals
                             .WithNumberOfProbes(4)
-                            .Attach()
-
-                        // Load balancing rules
-                        .DefineLoadBalancingRule("rule1")
-                            .WithProtocol(TransportProtocol.Tcp)    // Required
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(81)
-                            .WithProbe("tcpProbe1")
-                            .WithBackend("backend1")
-                            .WithBackendPort(82)                    // Optionals
-                            .WithIdleTimeoutInMinutes(10)
-                            .WithLoadDistribution(LoadDistribution.SourceIP)
-                            .Attach()
-
-                        // Inbound NAT pools
-                        .DefineInboundNatPool("natpool1")
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend("frontend1")
-                            .WithFrontendPortRange(2000, 2001)
-                            .WithBackendPort(8080)
                             .Attach()
 
                         .Create();

@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class LoadBalancerBackendImpl :
         ChildResource<BackendAddressPoolInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerBackend,
-        IDefinition<LoadBalancer.Definition.IWithBackendOrProbe>,
+        IDefinition<LoadBalancer.Definition.IWithCreate>,
         IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         IUpdate
     {
@@ -27,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        ///GENMHASH:1FC649C97657147238976F3B54524F58:1DE7E24B5141F230DDAD34D53E6C0E04
+        ///GENMHASH:660646CB1AAA13CCBA50483108FFFCBF:1DE7E24B5141F230DDAD34D53E6C0E04
         internal IReadOnlyDictionary<string, string> BackendNicIPConfigurationNames()
         {
             // This assumes a NIC can only have one IP config associated with the backend of an LB,
@@ -44,9 +43,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             return ipConfigNames;
-
         }
-
+   
         ///GENMHASH:4EDB057B59A7F7BB0C722F8A1399C004:A2F94AF9792429D630DA94FCC75CFD8B
         internal IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
@@ -73,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:A2968EC81873609D937762599BD3CAF6:F9B61BF42E13154C4C28B7365CB04241
+        ///GENMHASH:A2968EC81873609D937762599BD3CAF6:6FF87412F1B970C11ADDF4400C94B874
         internal ISet<string> GetVirtualMachineIds ()
         {
             ISet<string> vmIds = new HashSet<string>();
@@ -106,7 +104,26 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            return Parent;
+            return Parent as LoadBalancer.Update.IUpdate;
+        }
+
+        ///GENMHASH:51B0C77EEF192BB5D98474B3557C874E:12D7DD62D5476B4902FDCE9A39A0D717
+        internal LoadBalancerBackendImpl WithExistingVirtualMachines(ICollection<IHasNetworkInterfaces> vms)
+        {
+            if (vms != null)
+            {
+                foreach(var vm in vms)
+                {
+                    Parent.WithExistingVirtualMachine(vm, Name());
+                }
+            }
+            return this;
+        }
+
+        ///GENMHASH:DFE9D388863B0ACFAC02ED04C33B6964:32CC04CBC7A0600E8B42E01CB9CE142B
+        internal LoadBalancerBackendImpl WithExistingVirtualMachines(params IHasNetworkInterfaces[] vms)
+        {
+            return (vms != null) ? this.WithExistingVirtualMachines(new List<IHasNetworkInterfaces>(vms)) : this;
         }
     }
 }

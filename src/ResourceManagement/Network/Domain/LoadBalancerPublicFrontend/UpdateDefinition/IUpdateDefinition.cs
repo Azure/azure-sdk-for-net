@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.U
     /// <summary>
     /// The final stage of the public frontend definition.
     /// At this stage, any remaining optional settings can be specified, or the frontend definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.U
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPublicIPAddress<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
 
     /// <summary>
     /// The entirety of a public frontend definition as part of an Internet-facing load balancer update.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.UpdateDefinition.IWithAttach<ParentT>,

@@ -60,8 +60,23 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                             .WithExistingPublicIPAddress(existingPips.ElementAt(0))
                             .Attach()
 
-                        // Backends
-                        .DefineBackend("backend1")
+                        // Load balancing rules
+                        .DefineLoadBalancingRule("rule1")
+                            .WithProtocol(TransportProtocol.Tcp)    // Required
+                            .FromFrontend("frontend1")
+                            .FromFrontendPort(81)
+                            .ToBackend("backend1")
+                            .ToBackendPort(82)                    // Optionals
+                            .WithProbe("tcpProbe1")
+                            .WithIdleTimeoutInMinutes(10)
+                            .WithLoadDistribution(LoadDistribution.SourceIP)
+                            .Attach()
+
+                        // Inbound NAT rules
+                        .DefineInboundNatRule("natrule1")
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend("frontend1")
+                            .FromFrontendPort(88)
                             .Attach()
 
                         // Probes
@@ -76,24 +91,6 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                             .WithNumberOfProbes(4)
                             .Attach()
 
-                        // Load balancing rules
-                        .DefineLoadBalancingRule("rule1")
-                            .WithProtocol(TransportProtocol.Tcp)    // Required
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(81)
-                            .WithProbe("tcpProbe1")
-                            .WithBackend("backend1")
-                            .WithBackendPort(82)                    // Optionals
-                            .WithIdleTimeoutInMinutes(10)
-                            .WithLoadDistribution(LoadDistribution.SourceIP)
-                            .Attach()
-
-                        // Inbound NAT rules
-                        .DefineInboundNatRule("natrule1")
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(88)
-                            .Attach()
                         .Create();
 
             // Connect NICs explicitly
@@ -180,7 +177,7 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
             // Update the load balancer
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             resource = resource.Update()
-                        .UpdateInternetFrontend("frontend1")
+                        .UpdatePublicFrontend("frontend1")
                             .WithExistingPublicIPAddress(existingPips.ElementAt(1))
                             .Parent()
                         .WithoutFrontend("default")
@@ -189,7 +186,7 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                         .WithoutInboundNatRule("natrule1")
                         .WithTag("tag1", "value1")
                         .WithTag("tag2", "value2")
-                        .Apply();
+                  .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
             Assert.Equal(0, resource.InboundNatRules.Count);
 

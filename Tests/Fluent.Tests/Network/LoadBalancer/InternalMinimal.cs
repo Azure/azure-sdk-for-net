@@ -51,20 +51,33 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
                         .WithRegion(loadBalancerHelper.Region)
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
-                        
-                        // Frontend (default)
-                        .WithFrontendSubnet(network, "subnet1")
-                        
+
+                        // Frontend
+                        .DefinePrivateFrontend("default")
+                            .WithExistingSubnet(network, "subnet1")
+                            .Attach()
+
+                        // LB rule
+                        .DefineLoadBalancingRule("default")
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend("default")
+                            .FromFrontendPort(80)
+                            .ToBackend("default")
+                            .WithProbe("default")
+                            .Attach()
+
                         // Backend (default)
-                        .WithExistingVirtualMachines(existingVMs.ToArray())
+                        .DefineBackend("default")
+                            .WithExistingVirtualMachines(existingVMs.ToArray())
+                            .Attach()
                         .DefineBackend("foo")
                             .Attach()
-                        
+
                         // Probe (default)
-                        .WithTcpProbe(22)
-                        
-                        // LB rule (default)
-                        .WithLoadBalancingRule(80, TransportProtocol.Tcp)
+                        .DefineTcpProbe("default")
+                            .WithPort(22)
+                            .Attach()
+
                         .Create();
 
             // Verify frontends
@@ -126,8 +139,8 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
             resource = resource.Update()
-                        .UpdateInternalFrontend("default")
-                            .WithExistingSubnet(this.network, "subnet2")
+                        .UpdatePrivateFrontend("default")
+                            .WithExistingSubnet(network, "subnet2")
                             .WithPrivateIPAddressStatic("10.0.0.13")
                             .Parent()
                         .UpdateTcpProbe("default")
@@ -139,15 +152,15 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                             .WithPort(443)
                             .Attach()
                         .UpdateLoadBalancingRule("default")
-                            .WithBackendPort(8080)
+                            .ToBackendPort(8080)
                             .WithIdleTimeoutInMinutes(11)
                             .Parent()
                         .DefineLoadBalancingRule("lbrule2")
                             .WithProtocol(TransportProtocol.Udp)
-                            .WithFrontend("default")
-                            .WithFrontendPort(22)
+                            .FromFrontend("default")
+                            .FromFrontendPort(22)
+                            .ToBackend("backend2")
                             .WithProbe("httpprobe")
-                            .WithBackend("backend2")
                             .Attach()
                         .DefineBackend("backend2")
                             .Attach()
