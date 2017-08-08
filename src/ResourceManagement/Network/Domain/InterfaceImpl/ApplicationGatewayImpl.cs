@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class ApplicationGatewayImpl 
     {
         /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.INetworkManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>.Manager
-        {
-            get
-            {
-                return this.Manager() as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
-            }
-        }
-
-        /// <summary>
         /// Begins the update of an existing backend on this application gateway.
         /// </summary>
         /// <param name="name">The name of the backend.</param>
