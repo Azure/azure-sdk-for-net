@@ -28,6 +28,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an immutable representation of the resource</returns>
         Task<T> GetByNameAsync (string name, CancellationToken cancellationToken = default(CancellationToken));
-
     }
 }
