@@ -20,18 +20,18 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     public class InternetWithNatRule : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIPAddresses pips;
-        private IVirtualMachines vms;
+        private IComputeManager computeManager;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
         public InternetWithNatRule(
-                IVirtualMachines vms,
+                IComputeManager computeManager,
                 [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -43,8 +43,8 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         {
             pips = resources.Manager.PublicIPAddresses;
             networks = resources.Manager.Networks;
-            availabilitySets = vms.Manager.AvailabilitySets;
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            availabilitySets = computeManager.AvailabilitySets;
+            var existingVMs = loadBalancerHelper.EnsureVMs(networks, computeManager, 2);
             Assert.Equal(2, existingVMs.Count());
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();

@@ -19,16 +19,16 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     public class InternetMinimal : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIPAddresses pips;
-        private IVirtualMachines vms;
+        private IComputeManager computeManager;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
         private IAvailabilitySets availabilitySets;
 
-        public InternetMinimal(IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
+        public InternetMinimal(IComputeManager computeManager, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -39,10 +39,10 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
             pips = resources.Manager.PublicIPAddresses;
-            availabilitySets = vms.Manager.AvailabilitySets;
+            availabilitySets = computeManager.AvailabilitySets;
             networks = resources.Manager.Networks;
 
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            var existingVMs = loadBalancerHelper.EnsureVMs(networks, computeManager, 2);
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer

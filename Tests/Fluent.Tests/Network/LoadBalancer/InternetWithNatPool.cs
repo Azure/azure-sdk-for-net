@@ -21,17 +21,17 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     public class InternetWithNatPool : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIPAddresses pips;
-        private IVirtualMachines vms;
+        private IComputeManager computeManager;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
-        public InternetWithNatPool(IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
+        public InternetWithNatPool(IComputeManager computeManager, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
 
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -42,10 +42,10 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
             pips = resources.Manager.PublicIPAddresses;
-            availabilitySets = vms.Manager.AvailabilitySets;
+            availabilitySets = computeManager.AvailabilitySets;
             networks = resources.Manager.Networks;
 
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            var existingVMs = loadBalancerHelper.EnsureVMs(networks, computeManager, 2);
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
 
             // Create a load balancer

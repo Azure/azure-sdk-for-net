@@ -18,18 +18,18 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     /// </summary>
     public class InternalMinimal : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
-        private IVirtualMachines vms;
+        private IComputeManager computeManager;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private INetwork network;
         private LoadBalancerHelper loadBalancerHelper;
 
         public InternalMinimal(
-            IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
+            IComputeManager computeManager, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -40,12 +40,12 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
             networks = resources.Manager.Networks;
-            availabilitySets = vms.Manager.AvailabilitySets;
+            availabilitySets = computeManager.AvailabilitySets;
 
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            var existingVMs = loadBalancerHelper.EnsureVMs(networks, computeManager, 2);
             
             // Must use the same VNet as the VMs
-            this.network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIPConfiguration.GetNetwork();
+            network = existingVMs.First().GetPrimaryNetworkInterface().PrimaryIPConfiguration.GetNetwork();
 
             // Create a load balancer
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)

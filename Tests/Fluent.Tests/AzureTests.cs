@@ -151,7 +151,7 @@ namespace Fluent.Tests.Network
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new LoadBalancerHelpers.InternetWithNatRule(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternetWithNatRule(azure.VirtualMachines.Manager)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
@@ -163,7 +163,7 @@ namespace Fluent.Tests.Network
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new LoadBalancerHelpers.InternetWithNatPool(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternetWithNatPool(azure.VirtualMachines.Manager)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
@@ -175,7 +175,7 @@ namespace Fluent.Tests.Network
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new LoadBalancerHelpers.InternetMinimal(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternetMinimal(azure.VirtualMachines.Manager)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
@@ -187,7 +187,7 @@ namespace Fluent.Tests.Network
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new LoadBalancerHelpers.InternalMinimal(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternalMinimal(azure.VirtualMachines.Manager)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
