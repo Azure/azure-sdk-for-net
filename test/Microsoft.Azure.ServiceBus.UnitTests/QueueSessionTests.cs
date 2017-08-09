@@ -5,7 +5,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Text;
     using System.Threading.Tasks;
     using Core;
@@ -72,7 +71,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message() { MessageId = messageId, SessionId = sessionId });
+                await sender.SendAsync(new Message()
+                {
+                    MessageId = messageId,
+                    SessionId = sessionId
+                });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
@@ -82,34 +85,28 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.True(message.MessageId == messageId);
 
                 var sessionStateString = "Received Message From Session!";
-                var sessionState = new MemoryStream(Encoding.UTF8.GetBytes(sessionStateString));
+                var sessionState = Encoding.UTF8.GetBytes(sessionStateString);
                 await sessionReceiver.SetStateAsync(sessionState);
                 TestUtility.Log($"Set Session State: {sessionStateString} for Session: {sessionReceiver.SessionId}");
 
                 var returnedSessionState = await sessionReceiver.GetStateAsync();
-                using (var reader = new StreamReader(returnedSessionState, Encoding.UTF8))
-                {
-                    var returnedSessionStateString = await reader.ReadToEndAsync();
-                    TestUtility.Log($"Get Session State Returned: {returnedSessionStateString} for Session: {sessionReceiver.SessionId}");
-                    Assert.Equal(sessionStateString, returnedSessionStateString);
-                }
+                var returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                TestUtility.Log($"Get Session State Returned: {returnedSessionStateString} for Session: {sessionReceiver.SessionId}");
+                Assert.Equal(sessionStateString, returnedSessionStateString);
 
                 // Complete message using Session Receiver
                 await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
                 TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
 
                 sessionStateString = "Completed Message On Session!";
-                sessionState = new MemoryStream(Encoding.UTF8.GetBytes(sessionStateString));
+                sessionState = Encoding.UTF8.GetBytes(sessionStateString);
                 await sessionReceiver.SetStateAsync(sessionState);
                 TestUtility.Log($"Set Session State: {sessionStateString} for Session: {sessionReceiver.SessionId}");
 
                 returnedSessionState = await sessionReceiver.GetStateAsync();
-                using (var reader = new StreamReader(returnedSessionState, Encoding.UTF8))
-                {
-                    var returnedSessionStateString = await reader.ReadToEndAsync();
-                    TestUtility.Log($"Get Session State Returned: {returnedSessionStateString} for Session: {sessionReceiver.SessionId}");
-                    Assert.Equal(sessionStateString, returnedSessionStateString);
-                }
+                returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                TestUtility.Log($"Get Session State Returned: {returnedSessionStateString} for Session: {sessionReceiver.SessionId}");
+                Assert.Equal(sessionStateString, returnedSessionStateString);
 
                 await sessionReceiver.CloseAsync();
             }

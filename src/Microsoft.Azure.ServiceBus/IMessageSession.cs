@@ -39,16 +39,16 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets the session state.
         /// </summary>
-        /// <returns>The session state stream.</returns>
-        Task<Stream> GetStateAsync();
+        /// <returns>The session state as byte array.</returns>
+        Task<byte[]> GetStateAsync();
 
         /// <summary>
         /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
         /// </summary>
-        /// <param name="sessionState">A <see cref="Stream"/> of session state</param>
+        /// <param name="sessionState">A byte array of session state</param>
         /// <returns>The asynchronous operation</returns>
         /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
-        Task SetStateAsync(Stream sessionState);
+        Task SetStateAsync(byte[] sessionState);
 
         /// <summary>
         /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.

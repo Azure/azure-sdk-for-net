@@ -87,9 +87,9 @@ namespace Microsoft.Azure.ServiceBus
     {
         System.DateTime LockedUntilUtc { get; }
         string SessionId { get; }
-        System.Threading.Tasks.Task<System.IO.Stream> GetStateAsync();
+        System.Threading.Tasks.Task<byte[]> GetStateAsync();
         System.Threading.Tasks.Task RenewSessionLockAsync();
-        System.Threading.Tasks.Task SetStateAsync(System.IO.Stream sessionState);
+        System.Threading.Tasks.Task SetStateAsync(byte[] sessionState);
     }
     public interface IQueueClient : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity
     {

@@ -42,12 +42,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string SessionId => this.SessionIdInternal;
 
-        public Task<Stream> GetStateAsync()
+        public Task<byte[]> GetStateAsync()
         {
             return this.OnGetStateAsync();
         }
 
-        public Task SetStateAsync(Stream sessionState)
+        public Task SetStateAsync(byte[] sessionState)
         {
             return this.OnSetStateAsync(sessionState);
         }
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus
             throw new InvalidOperationException($"{nameof(RenewLockAsync)} is not supported for Session. Use {nameof(RenewSessionLockAsync)} to renew sessions instead");
         }
 
-        protected async Task<Stream> OnGetStateAsync()
+        protected async Task<byte[]> OnGetStateAsync()
         {
             try
             {
@@ -76,12 +76,12 @@ namespace Microsoft.Azure.ServiceBus
 
                 AmqpResponseMessage amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
-                Stream sessionState = null;
+                byte[] sessionState = null;
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     if (amqpResponseMessage.Map[ManagementConstants.Properties.SessionState] != null)
                     {
-                        sessionState = new BufferListStream(new[] { amqpResponseMessage.GetValue<ArraySegment<byte>>(ManagementConstants.Properties.SessionState) });
+                        sessionState = amqpResponseMessage.GetValue<ArraySegment<byte>>(ManagementConstants.Properties.SessionState).Array;
                     }
                 }
                 else
@@ -97,22 +97,16 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        protected async Task OnSetStateAsync(Stream sessionState)
+        protected async Task OnSetStateAsync(byte[] sessionState)
         {
             try
             {
-                if (sessionState != null && sessionState.CanSeek && sessionState.Position != 0)
-                {
-                    throw new InvalidOperationException(Resources.CannotSerializeSessionStateWithPartiallyConsumedStream);
-                }
-
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 if (sessionState != null)
                 {
-                    BufferListStream buffer = BufferListStream.Create(sessionState, AmqpConstants.SegmentSize);
-                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+                    var value = new ArraySegment<byte>(sessionState);
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = value;
                 }
                 else

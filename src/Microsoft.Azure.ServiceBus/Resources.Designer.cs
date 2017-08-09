@@ -121,16 +121,7 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("CannotSendAnEmptyMessage", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Failed to serialize the session state because its state stream has been partially consumed..
-        /// </summary>
-        public static string CannotSerializeSessionStateWithPartiallyConsumedStream {
-            get {
-                return ResourceManager.GetString("CannotSerializeSessionStateWithPartiallyConsumedStream", resourceCulture);
-            }
-        }
-        
+               
         /// <summary>
         ///    Looks up a localized string similar to &apos;{0}&apos; contains character &apos;{1}&apos; which is not allowed because it is reserved in the Uri scheme..
         /// </summary>
