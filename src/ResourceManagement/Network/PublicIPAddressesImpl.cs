@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Implementation for PublicIPAddresses.
     /// </summary>
     
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uUHVibGljSVBBZGRyZXNzZXNJbXBs
     internal partial class PublicIPAddressesImpl :
         TopLevelModifiableResources<
             IPublicIPAddress,
@@ -23,12 +24,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IPublicIPAddresses
     {
         
+        ///GENMHASH:A1D964DB97779D812D0C93D447CB7818:6F402543E6A59425FA7E91D1FDA4819D
         internal PublicIPAddressesImpl(INetworkManager networkManager)
             : base(networkManager.Inner.PublicIPAddresses, networkManager)
         {
         }
 
         
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:FCFACB76B4D63EBF69321C444D37D659
         override protected PublicIPAddressImpl WrapModel(string name)
         {
             PublicIPAddressInner inner = new PublicIPAddressInner();
@@ -44,6 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         //$TODO: shoudl return PublicIPAddressImpl
 
         
+        ///GENMHASH:B52B92D4359429345BB9A526A6320669:A3D17BA35D1E31DF90DF0C3A7FAD85B5
         override protected IPublicIPAddress WrapModel(PublicIPAddressInner inner)
         {
             return new PublicIPAddressImpl(inner.Id, inner, Manager);
@@ -72,6 +76,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         
+        ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         internal PublicIPAddressImpl Define(string name)
         {
             return WrapModel(name);
