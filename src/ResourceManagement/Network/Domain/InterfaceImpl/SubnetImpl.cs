@@ -64,6 +64,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this.WithExistingNetworkSecurityGroup(resourceId) as Subnet.Update.IUpdate;
         }
 
+        /// <summary>
+        /// Removes the association of this subnet with any network security group.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Subnet.Update.IUpdate Subnet.Update.IWithNetworkSecurityGroup.WithoutNetworkSecurityGroup()
+        {
+            return this.WithoutNetworkSecurityGroup() as Subnet.Update.IUpdate;
+        }
+
         /// <return>
         /// The route table associated with this subnet, if any
         /// Note that this method will result in a call to Azure each time it is invoked.

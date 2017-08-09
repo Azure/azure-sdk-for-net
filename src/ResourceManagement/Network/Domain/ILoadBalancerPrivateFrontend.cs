@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// An immutable client-side representation of a private frontend of an internal load balancer.
+    /// A client-side representation of a private frontend of an internal load balancer.
     /// </summary>
     public interface ILoadBalancerPrivateFrontend  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

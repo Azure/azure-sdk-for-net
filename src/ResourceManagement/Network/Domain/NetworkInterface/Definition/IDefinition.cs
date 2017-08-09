@@ -149,6 +149,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
     }
 
     /// <summary>
+    /// The stage of the network interface definition allowing to enable accelerated networking.
+    /// </summary>
+    public interface IWithAcceleratedNetworking  :
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithAcceleratedNetworkingBeta
+    {
+    }
+
+    /// <summary>
     /// The stage of the network interface definition allowing to associate a secondary IP configurations.
     /// </summary>
     public interface IWithSecondaryIPConfiguration 
@@ -184,7 +192,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
 
     /// <summary>
     /// The stage of the network interface definition which contains all the minimum required inputs for
-    /// the resource to be created (via  WithCreate.create()), but also allows
+    /// the resource to be created, but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
@@ -193,6 +201,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIPAddress,
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithNetworkSecurityGroup,
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithSecondaryIPConfiguration,
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithAcceleratedNetworking,
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithLoadBalancer
     {
         /// <summary>
@@ -203,7 +212,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithInternalDnsNameLabel(string dnsNameLabel);
 
         /// <summary>
-        /// Enable IP forwarding in the network interface.
+        /// Enables IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithIPForwarding();
@@ -246,5 +255,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition
         /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
+    }
+
+    /// <summary>
+    /// The stage of the network interface definition allowing to enable accelerated networking.
+    /// </summary>
+    public interface IWithAcceleratedNetworkingBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Enables accelerated networking.
+        /// Note that additional steps need to be taken in the virtual machine itself for the virtual machine associated with this network interface to be able to
+        /// take advantage of accelerated networking. This feature might not be available in some regions, virtual machine sizes, or operating system versions.
+        /// It can be enabled only during the creation of a network interface, not during an update.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Definition.IWithCreate WithAcceleratedNetworking();
     }
 }

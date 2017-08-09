@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for load balancer management API in Azure.
     /// </summary>
     public interface ILoadBalancer  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.LoadBalancerInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules
+        Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules,
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBeta
     {
         /// <summary>
         /// Gets inbound NAT pools, indexed by name.
@@ -52,5 +52,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets backends for this load balancer to load balance the incoming traffic among, indexed by name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Backends { get; }
+
     }
 }

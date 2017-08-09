@@ -6,19 +6,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
-    internal partial class VirtualMachineScaleSetNicIPConfigurationImpl 
+    internal abstract partial class NicIPConfigurationBaseImpl<ParentImplT,ParentT>
     {
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
-        {
-            get
-            {
-                return this.Name();
-            }
-        }
-
         /// <summary>
         /// Gets the name of the subnet associated with this resource.
         /// </summary>
@@ -70,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets true if this is the primary ip configuration.
+        /// Gets true if this is the primary IP configuration.
         /// </summary>
         bool Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.IsPrimary
         {
@@ -86,6 +75,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this.ListAssociatedLoadBalancerBackends() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend>;
         }
 
+        /// <return>
+        /// The network security group, if any, associated with the subnet, if any, assigned to this network interface IP configuration
+        /// (Note that this results in additional calls to Azure.).
+        /// </return>
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase.GetNetworkSecurityGroup()
+        {
+            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
+        }
+
         /// <summary>
         /// Gets private IP address version.
         /// </summary>
@@ -95,6 +93,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return this.PrivateIPAddressVersion() as Models.IPVersion;
             }
+        }
+
+        /// <return>The application gateway backends associated with this network IP configuration.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBaseBeta.ListAssociatedApplicationGatewayBackends()
+        {
+            return this.ListAssociatedApplicationGatewayBackends() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend>;
         }
 
         /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>

@@ -9,10 +9,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.Definition
     public interface IWithFrontendPort<ReturnT> 
     {
         /// <summary>
-        /// Specifies the frontend port.
+        /// Specifies the frontend port to receive network traffic on.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        ReturnT WithFrontendPort(int port);
+        ReturnT FromFrontendPort(int port);
     }
 }

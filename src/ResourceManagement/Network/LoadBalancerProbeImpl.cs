@@ -11,11 +11,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class LoadBalancerProbeImpl :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerTcpProbe,
-        LoadBalancerTcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
+        LoadBalancerTcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithCreate>,
         LoadBalancerTcpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerTcpProbe.Update.IUpdate,
         ILoadBalancerHttpProbe,
-        LoadBalancerHttpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
+        LoadBalancerHttpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithCreate>,
         LoadBalancerHttpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerHttpProbe.Update.IUpdate
     {

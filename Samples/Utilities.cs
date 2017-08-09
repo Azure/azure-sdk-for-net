@@ -795,6 +795,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
 
             info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIPForwardingEnabled)
+                    .Append("\n\tAccelerated networking enabled: ").Append(resource.IsAcceleratedNetworkingEnabled)
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
                     .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIP)
                     .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIPAllocationMethod)

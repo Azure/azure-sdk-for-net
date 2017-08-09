@@ -72,7 +72,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
     /// <summary>
     /// The template for a virtual network update operation, containing all the settings that
     /// can be modified.
-    /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Network.Fluent.INetwork>,

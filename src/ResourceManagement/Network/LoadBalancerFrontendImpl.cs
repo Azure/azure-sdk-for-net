@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core.ChildResourceActions;
     using Models;
     using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// Implementation for PublicFrontend.
@@ -16,11 +18,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ChildResource<FrontendIPConfigurationInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerFrontend,
         ILoadBalancerPrivateFrontend,
-        LoadBalancerPrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>,
+        LoadBalancerPrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>,
         LoadBalancerPrivateFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerPrivateFrontend.Update.IUpdate,
         ILoadBalancerPublicFrontend,
-        LoadBalancerPublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
+        LoadBalancerPublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>,
         LoadBalancerPublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerPublicFrontend.Update.IUpdate
     {
@@ -75,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4EDB057B59A7F7BB0C722F8A1399C004:239049AD1BE51FBFCA5EFE2D3D90D634
-        internal IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule> LoadBalancingRules ()
+        internal IReadOnlyDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
             var rules = new Dictionary<string, ILoadBalancingRule>();
             if(Inner.LoadBalancingRules != null)
@@ -141,7 +143,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:E6CC43D15A29B0635E7C303E592E8569
         internal LoadBalancerFrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
         {
-            Inner.Subnet = new ResourceManager.Fluent.SubResource(parentNetworkResourceId + "/subnets/" + subnetName);
+            Inner.Subnet = new SubResource(parentNetworkResourceId + "/subnets/" + subnetName);
             Inner.PublicIPAddress = null; // Ensure no conflicting public and private settings
             return this;
         }
@@ -152,10 +154,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithExistingPublicIPAddress(pip.Id);
         }
 
-        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:488D62DEC18443445C34B6C753A0435A
+        ///GENMHASH:3C078CA3D79C59C878B566E6BDD55B86:488D62DEC18443445C34B6C753A0435A
         internal LoadBalancerFrontendImpl WithExistingPublicIPAddress (string resourceId)
         {
-            var pipRef = new Microsoft.Azure.Management.ResourceManager.Fluent.SubResource(id: resourceId);
+            var pipRef = new SubResource(id: resourceId);
             Inner.PublicIPAddress = pipRef;
 
             // Ensure no conflicting public and private settings
@@ -165,14 +167,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:1B49C92CBA9BDBBF9FBFD26544224384:2AADFAA8967336A82263A3FD701F270A
+        ///GENMHASH:C4684C8A47F80967DA864E1AB75147B5:2AADFAA8967336A82263A3FD701F270A
         internal LoadBalancerFrontendImpl WithoutPublicIPAddress ()
         {
             Inner.PublicIPAddress = null;
             return this;
         }
 
-        ///GENMHASH:EA98B464B10BD645EE3B0689825B43B8:75F72179E2B63A55332B5241A9093C17
+        ///GENMHASH:26224359DA104EABE1EDF7F491D110F7:75F72179E2B63A55332B5241A9093C17
         internal LoadBalancerFrontendImpl WithPrivateIPAddressDynamic ()
         {
             Inner.PrivateIPAddress = null;
@@ -183,7 +185,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:6CDEF6BE4432158ED3F8917E000EAD56:C9B470E114F7550FEADF055B40E01B61
+        ///GENMHASH:9946B3475EBD5468D4462F188EEE86C2:C9B470E114F7550FEADF055B40E01B61
         internal LoadBalancerFrontendImpl WithPrivateIPAddressStatic (string ipAddress)
         {
             Inner.PrivateIPAddress = ipAddress;
@@ -200,7 +202,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Parent.WithFrontend(this);
         }
 
-        ///GENMHASH:377296039E5241FB1B02988EFB811F77:EB7E862083A458D624358925C66523A7
+        ///GENMHASH:166583FE514624A3D800151836CD57C1:CC312A186A3A88FA6CF6445A4520AE59
         internal IPublicIPAddress GetPublicIPAddress ()
         {
             string pipId = PublicIPAddressId();
@@ -208,7 +210,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
-        public ISubnet GetSubnet()
+        internal ISubnet GetSubnet()
         {
             return Parent.Manager.GetAssociatedSubnet(Inner.Subnet);
         }
@@ -216,6 +218,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
             return Parent;
+        }
+
+        ///GENMHASH:1C505DCDEFCB5F029B7A60E2375286BF:BD825A25E67CC9C2CAF406B471E1375E
+        internal LoadBalancerFrontendImpl WithNewPublicIPAddress()
+        {
+            string dnsLabel = SdkContext.RandomResourceName("fe", 20);
+            WithNewPublicIPAddress(dnsLabel);
+            return this;
+        }
+
+        ///GENMHASH:52541ED0C8AE1806DF3F2DF0DE092357:3931F4672B59B1D0BB7EFD5866F5EA54
+        internal LoadBalancerFrontendImpl WithNewPublicIPAddress(ICreatable<IPublicIPAddress> creatable)
+        {
+            Parent.WithNewPublicIPAddress(creatable, Name());
+            return this;
+        }
+
+        ///GENMHASH:233A62609A15DC3B8EB48DD8DB699DDC:D94CE62BB4248EAE4D0375A25DF4B749
+        internal LoadBalancerFrontendImpl WithNewPublicIPAddress(string leafDnsLabel)
+        {
+            Parent.WithNewPublicIPAddress(leafDnsLabel, Name());
+            return this;
         }
     }
 }

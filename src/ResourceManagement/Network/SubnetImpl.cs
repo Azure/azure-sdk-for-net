@@ -21,10 +21,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Subnet.Update.IUpdate
     {
         ///GENMHASH:95294A80FBE609A8A5735E8840009FC0:C0847EA0CDA78F6D91EFD239C70F0FA7
-        internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner, parent)
+        internal SubnetImpl(SubnetInner inner, NetworkImpl parent) : base(inner, parent)
         {
         }
 
+        ///GENMHASH:800CEBA636763193270CED876CFEF15E:D03CF632A56161643BB9B792B63AEE9C
         internal ISet<INicIPConfiguration> GetNetworkInterfaceIPConfigurations()
         {
             var ipConfigs = new HashSet<INicIPConfiguration>();
@@ -71,6 +72,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return ipConfigs;
         }
 
+        ///GENMHASH:965854F936E6686E5CF712FF5E950D9E:49D3D07DD88DEEA404C2173A84254C19
         internal int NetworkInterfaceIPConfigurationCount()
         {
             var ipConfigRefs = Inner.IpConfigurations;
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:2E4015B29759BBD97527EBAE809B083C:92C42A9D6A5461310D3C0243B1847E84
-        internal INetworkSecurityGroup GetNetworkSecurityGroup ()
+        internal INetworkSecurityGroup GetNetworkSecurityGroup()
         {
             var nsgId = NetworkSecurityGroupId();
             return (nsgId != null)
@@ -159,14 +161,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:E56906080D3615F5D04C5EFAC903C1FB:FE030A8DB000669434FF6335D5D2136F
-        internal SubnetImpl WithAddressPrefix (string cidr)
+        internal SubnetImpl WithAddressPrefix(string cidr)
         {
             Inner.AddressPrefix = cidr;
             return this;
         }
 
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:3EB15D579457E999436D02A2F8EEB291
-        internal NetworkImpl Attach ()
+        internal NetworkImpl Attach()
         {
             return Parent.WithSubnet(this);
         }
@@ -175,5 +177,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             return Parent;
         }
+
+        ///GENMHASH:31626FBDA69232B7DD9945ADF14E191A:245758B25F0370039EC9345CF6DFAC4C
+        public SubnetImpl WithoutNetworkSecurityGroup()
+        {
+            Inner.NetworkSecurityGroup = null;
+            return this;
+        }
+
     }
 }

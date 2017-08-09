@@ -21,17 +21,17 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     public class InternetWithNatPool : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIPAddresses pips;
-        private IVirtualMachines vms;
+        private IComputeManager computeManager;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
-        public InternetWithNatPool(IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
+        public InternetWithNatPool(IComputeManager computeManager, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
 
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -42,26 +42,38 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
             pips = resources.Manager.PublicIPAddresses;
-            availabilitySets = vms.Manager.AvailabilitySets;
+            availabilitySets = computeManager.AvailabilitySets;
             networks = resources.Manager.Networks;
 
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            var existingVMs = loadBalancerHelper.EnsureVMs(networks, computeManager, 2);
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
+            IPublicIPAddress pip0 = resources.Manager.PublicIPAddresses.GetByResourceGroup(
+                loadBalancerHelper.GroupName,
+                loadBalancerHelper.PipNames[0]);
 
             // Create a load balancer
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
                         .WithRegion(loadBalancerHelper.Region)
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
 
-                        // Frontends
-                        .WithExistingPublicIPAddress(existingPips.ElementAt(0))
-                        .DefinePublicFrontend("frontend1")
-                            .WithExistingPublicIPAddress(existingPips.ElementAt(1))
+                        // Load balancing rules
+                        .DefineLoadBalancingRule("rule1")
+                            .WithProtocol(TransportProtocol.Tcp)    // Required
+                            .FromExistingPublicIPAddress(pip0)
+                            .FromFrontendPort(81)
+                            .ToBackend("backend1")
+                            .ToBackendPort(82)                    // Optionals
+                            .WithProbe("tcpProbe1")
+                            .WithIdleTimeoutInMinutes(10)
+                            .WithLoadDistribution(LoadDistribution.SourceIP)
                             .Attach()
 
-                        // Backends
-                        .WithExistingVirtualMachines(existingVMs.ToArray())
-                        .DefineBackend("backend1")
+                        // Inbound NAT pools
+                        .DefineInboundNatPool("natpool1")
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromExistingPublicIPAddress(pip0)
+                            .FromFrontendPortRange(2000, 2001)
+                            .ToBackendPort(8080)
                             .Attach()
 
                         // Probes
@@ -75,63 +87,46 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                             .WithIntervalInSeconds(13)  // Optionals
                             .WithNumberOfProbes(4)
                             .Attach()
-
-                        // Load balancing rules
-                        .DefineLoadBalancingRule("rule1")
-                            .WithProtocol(TransportProtocol.Tcp)    // Required
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(81)
-                            .WithProbe("tcpProbe1")
-                            .WithBackend("backend1")
-                            .WithBackendPort(82)                    // Optionals
-                            .WithIdleTimeoutInMinutes(10)
-                            .WithLoadDistribution(LoadDistribution.SourceIP)
-                            .Attach()
-
-                        // Inbound NAT pools
-                        .DefineInboundNatPool("natpool1")
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend("frontend1")
-                            .WithFrontendPortRange(2000, 2001)
-                            .WithBackendPort(8080)
+                        
+                        // Backends
+                        .DefineBackend("backend1")
+                            .WithExistingVirtualMachines(new List<IHasNetworkInterfaces>(existingVMs))
                             .Attach()
 
                         .Create();
 
             // Verify frontends
-            Assert.True(lb.Frontends.ContainsKey("frontend1"));
-            Assert.True(lb.Frontends.ContainsKey("default"));
-            Assert.Equal(lb.Frontends.Count, 2);
+            Assert.Equal(1, lb.Frontends.Count);
+            Assert.Equal(1, lb.PublicFrontends.Count);
+            Assert.Equal(0, lb.PrivateFrontends.Count);
+            var frontend = lb.Frontends.Values.First();
+            Assert.True(frontend.IsPublic);
+            var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
+            Assert.True(pip0.Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
 
             // Verify backends
-            Assert.True(lb.Backends.ContainsKey("default"));
-            Assert.True(lb.Backends.ContainsKey("backend1"));
-            Assert.Equal(lb.Backends.Count, 2);
+            Assert.Equal(1, lb.Backends.Count);
 
             // Verify probes
+            Assert.Equal(1, lb.HttpProbes.Count);
             Assert.True(lb.HttpProbes.ContainsKey("httpProbe1"));
+            Assert.Equal(1, lb.TcpProbes.Count);
             Assert.True(lb.TcpProbes.ContainsKey("tcpProbe1"));
-            Assert.True(!lb.HttpProbes.ContainsKey("default"));
-            Assert.True(!lb.TcpProbes.ContainsKey("default"));
 
             // Verify rules
+            Assert.Equal(1, lb.LoadBalancingRules.Count);
             Assert.True(lb.LoadBalancingRules.ContainsKey("rule1"));
-            Assert.True(!lb.LoadBalancingRules.ContainsKey("default"));
-            Assert.Equal(lb.LoadBalancingRules.Values.Count(), 1);
             var rule = lb.LoadBalancingRules["rule1"];
-            Assert.True(rule.Backend.Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
-            Assert.True(rule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
+            Assert.NotNull(rule.Backend);
             Assert.True(rule.Probe.Name.Equals("tcpProbe1", StringComparison.OrdinalIgnoreCase));
-            Assert.Equal(TransportProtocol.Tcp, rule.Protocol);
 
             // Verify inbound NAT pools
             Assert.True(lb.InboundNatPools.ContainsKey("natpool1"));
-            Assert.Equal(lb.InboundNatPools.Count, 1);
+            Assert.Equal(1, lb.InboundNatPools.Count);
             var inboundNatPool = lb.InboundNatPools["natpool1"];
-            Assert.True(inboundNatPool.Frontend.Name.Equals("frontend1"));
-            Assert.Equal(inboundNatPool.FrontendPortRangeStart, 2000);
-            Assert.Equal(inboundNatPool.FrontendPortRangeEnd, 2001);
-            Assert.Equal(inboundNatPool.BackendPort, 8080);
+            Assert.Equal(2000, inboundNatPool.FrontendPortRangeStart);
+            Assert.Equal(2001, inboundNatPool.FrontendPortRangeEnd);
+            Assert.Equal(8080, inboundNatPool.BackendPort);
 
             return lb;
         }
@@ -139,8 +134,6 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
             resource = resource.Update()
-                        .WithoutFrontend("default")
-                        .WithoutBackend("default")
                         .WithoutBackend("backend1")
                         .WithoutLoadBalancingRule("rule1")
                         .WithoutInboundNatPool("natpool1")
@@ -154,8 +147,9 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
             // Verify frontends
-            Assert.False(resource.Frontends.ContainsKey("default"));
             Assert.Equal(1, resource.Frontends.Count);
+            Assert.Equal(1, resource.PublicFrontends.Count);
+            Assert.Equal(0, resource.PrivateFrontends.Count);
 
             // Verify probes
             Assert.False(resource.HttpProbes.ContainsKey("httpProbe1"));
@@ -164,8 +158,6 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
             Assert.Equal(0, resource.TcpProbes.Count);
 
             // Verify backends
-            Assert.False(resource.Backends.ContainsKey("default"));
-            Assert.False(resource.Backends.ContainsKey("backend1"));
             Assert.Equal(0, resource.Backends.Count);
 
             // Verify rules

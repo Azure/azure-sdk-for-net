@@ -25,6 +25,88 @@ namespace Fluent.Tests.Compute.VirtualMachine
         private const string VMName = "chashvm";
 
         [Fact]
+        public void CanCreateWithNetworking()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                var GroupName = TestUtilities.GenerateName("rgfluentchash-");
+                var NsgName = TestUtilities.GenerateName("nsg");
+                var NetworkName = TestUtilities.GenerateName("net");
+                var VMName = TestUtilities.GenerateName("vm");
+                var computeManager = TestHelper.CreateComputeManager();
+                var resourceManager = TestHelper.CreateResourceManager();
+                var networkManager = TestHelper.CreateNetworkManager();
+
+                try
+                {
+                   var nsg = networkManager.NetworkSecurityGroups.Define(NsgName)
+                        .WithRegion(Location)
+                        .WithNewResourceGroup(GroupName)
+                        .DefineRule("rule1")
+                            .AllowInbound()
+                            .FromAnyAddress()
+                            .FromPort(80)
+                            .ToAnyAddress()
+                            .ToPort(80)
+                            .WithProtocol("tcp")
+                            .Attach()
+                        .Create();
+
+                    ICreatable<INetwork> networkDefinition = networkManager.Networks.Define(NetworkName)
+                        .WithRegion(Location)
+                        .WithExistingResourceGroup(GroupName)
+                        .WithAddressSpace("10.0.0.0/28")
+                        .DefineSubnet("subnet1")
+                            .WithAddressPrefix("10.0.0.0/29")
+                            .WithExistingNetworkSecurityGroup(nsg)
+                            .Attach();
+
+                    // Create  
+                    IVirtualMachine vm = computeManager.VirtualMachines.Define(VMName)
+                        .WithRegion(Location)
+                        .WithExistingResourceGroup(GroupName)
+                        .WithNewPrimaryNetwork(networkDefinition)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithoutPrimaryPublicIPAddress()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername("Foo12")
+                        .WithRootPassword("abc!@#F0orL")
+                        .Create();
+
+                    var primaryNic = vm.GetPrimaryNetworkInterface();
+                    Assert.NotNull(primaryNic);
+                    var primaryIpConfig = primaryNic.PrimaryIPConfiguration;
+                    Assert.NotNull(primaryIpConfig);
+
+                    // Fetch the NSG the way before v1.2  
+                    Assert.NotNull(primaryIpConfig.NetworkId);
+                    var network = primaryIpConfig.GetNetwork();
+                    Assert.NotNull(primaryIpConfig.SubnetName);
+                    ISubnet subnet = null;
+                    network.Subnets.TryGetValue(primaryIpConfig.SubnetName, out subnet);
+                    Assert.NotNull(subnet);
+                    nsg = subnet.GetNetworkSecurityGroup();
+                    Assert.NotNull(nsg);
+                    Assert.Equal(NsgName, nsg.Name);
+                    Assert.Equal(1, nsg.SecurityRules.Count);
+
+                    // Fetch the NSG the v1.2 way  
+                    nsg = primaryIpConfig.GetNetworkSecurityGroup();
+                    Assert.Equal(NsgName, nsg.Name);
+
+                }
+                finally
+                {
+                    try
+                    {
+                        resourceManager.ResourceGroups.BeginDeleteByName(GroupName);
+                    }
+                    catch { }
+                }
+            }
+        }
+
+        [Fact]
         public void CanCreate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))

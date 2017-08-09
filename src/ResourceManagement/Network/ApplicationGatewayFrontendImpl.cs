@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
             else
             {
-                return Parent.Manager().PublicIPAddresses.GetById(pipId);
+                return Parent.Manager.PublicIPAddresses.GetById(pipId);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
         public ISubnet GetSubnet()
         {
-            return Parent.Manager().GetAssociatedSubnet(Inner.Subnet);
+            return Parent.Manager.GetAssociatedSubnet(Inner.Subnet);
         }
 
         #endregion

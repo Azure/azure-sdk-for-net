@@ -46,12 +46,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         int TimeLimitInSeconds { get; }
 
         /// <summary>
-        /// Gets Stops a specified packet capture session asynchronously.
+        /// Stops a specified packet capture session asynchronously.
         /// </summary>
-        /// <summary>
-        /// Gets the handle to the REST call.
-        /// </summary>
-        Task StopAsync(CancellationToken cancellationToken);
+        /// <return>The handle to the REST call.</return>
+        Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the number of bytes captured per packet, the remaining bytes are truncated.
