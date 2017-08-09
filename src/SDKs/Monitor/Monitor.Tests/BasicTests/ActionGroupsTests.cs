@@ -17,6 +17,7 @@ namespace Monitor.Tests.BasicTests
     public class ActionGroupsTests : TestBase
     {
         [Fact]
+        [Trait("Category", "Mock")]
         public void CreateOrUpdateActionGroupTest()
         {
             ActionGroupResource expectedParameters = GetCreateOrUpdateActionGroupParameter();
@@ -39,6 +40,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void GetActionGroupTest()
         {
             var expectedActionGroup = GetCreateOrUpdateActionGroupParameter(name: "name4");
@@ -63,6 +65,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListActionGroupsBySusbscriptionTest()
         {
             List<ActionGroupResource> expectedParameters = GetActionGroups();
@@ -85,6 +88,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListActionGroupsByResourceGroupTest()
         {
             List<ActionGroupResource> expectedParameters = GetActionGroups();
@@ -107,6 +111,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void DeleteActionGroupTest()
         {
             var handler = new RecordedDelegatingHandler();
@@ -124,6 +129,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void EnableActionGroupTest()
         {
             var handler = new RecordedDelegatingHandler();
@@ -160,7 +166,7 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.Location, act.Location);
                 Assert.Equal(exp.GroupShortName, act.GroupShortName);
                 Assert.Equal(exp.Enabled, act.Enabled);
-                AreEqual(exp.Tags, act.Tags);
+                Utilities.AreEqual(exp.Tags, act.Tags);
                 AreEqual(exp.EmailReceivers, act.EmailReceivers);
                 AreEqual(exp.SmsReceivers, act.SmsReceivers);
                 AreEqual(exp.WebhookReceivers, act.WebhookReceivers);

@@ -17,6 +17,7 @@ namespace Monitor.Tests.BasicTests
     public class ActivityLogAlertsTests : TestBase
     {
         [Fact]
+        [Trait("Category", "Mock")]
         public void CreateOrUpdateActivityLogAlertsTest()
         {
             ActivityLogAlertResource expectedParameters = GetCreateOrUpdateActivityLogAlertParameter();
@@ -39,6 +40,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void GetActivityLogAlertTest()
         {
             var expectedActionGroup = GetCreateOrUpdateActivityLogAlertParameter(name: "name4");
@@ -63,6 +65,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListActivityLogAlertsBySusbscriptionTest()
         {
             List<ActivityLogAlertResource> expectedParameters = GetActionGroups();
@@ -85,6 +88,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListActivityLogAlertsByResourceGroupTest()
         {
             List<ActivityLogAlertResource> expectedParameters = GetActionGroups();
@@ -107,6 +111,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void DeleteActivityLogAlertTest()
         {
             var handler = new RecordedDelegatingHandler();
@@ -124,6 +129,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void UpdateActivityLogAlertTest()
         {
             ActivityLogAlertResource expectedParameters = GetCreateOrUpdateActivityLogAlertParameter();
@@ -173,8 +179,8 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.Location, act.Location);
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.Enabled, act.Enabled);
-                AreEqual(exp.Tags, act.Tags);
-                AreEqual(exp.Scopes, act.Scopes);
+                Utilities.AreEqual(exp.Tags, act.Tags);
+                Utilities.AreEqual(exp.Scopes, act.Scopes);
                 AreEqual(exp.Condition, act.Condition);
                 AreEqual(exp.Actions, act.Actions);
             }

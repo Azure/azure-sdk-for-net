@@ -1,0 +1,374 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL3Ztc2NhbGVzZXRyZy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2F1dG9zY2FsZXNldHRpbmdzL3NldHRpbmcxP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profiles\": [\r\n      {\r\n        \"name\": \"Profile1\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"fixedDate\": {\r\n          \"timeZone\": \"UTC\",\r\n          \"start\": \"2014-04-15T21:06:11.7882792Z\",\r\n          \"end\": \"2014-04-16T21:06:11.7882792Z\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"Profile2\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"recurrence\": {\r\n          \"frequency\": \"Week\",\r\n          \"schedule\": {\r\n            \"timeZone\": \"UTC-11\",\r\n            \"days\": [\r\n              \"Monday\"\r\n            ],\r\n            \"hours\": [\r\n              0\r\n            ],\r\n            \"minutes\": [\r\n              10\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"enabled\": true,\r\n    \"name\": \"setting1\",\r\n    \"targetResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2610"
+        ],
+        "x-ms-client-request-id": [
+          "c7ff7653-31bd-4b2e-b166-7e3926e3e62b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1\",\r\n  \"name\": \"setting1\",\r\n  \"type\": \"Microsoft.Insights/autoscaleSettings\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\"\r\n  },\r\n  \"properties\": {\r\n    \"profiles\": [\r\n      {\r\n        \"name\": \"Profile1\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricNamespace\": \"\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"fixedDate\": {\r\n          \"timeZone\": \"UTC\",\r\n          \"start\": \"2014-04-15T21:06:11.7882792Z\",\r\n          \"end\": \"2014-04-16T21:06:11.7882792Z\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"Profile2\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricNamespace\": \"\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"recurrence\": {\r\n          \"frequency\": \"Week\",\r\n          \"schedule\": {\r\n            \"timeZone\": \"UTC-11\",\r\n            \"days\": [\r\n              \"Monday\"\r\n            ],\r\n            \"hours\": [\r\n              0\r\n            ],\r\n            \"minutes\": [\r\n              10\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"enabled\": true,\r\n    \"name\": \"setting1\",\r\n    \"targetResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n    \"notifications\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1915"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "bbf70452-080a-40bd-a98e-9ff69c91d41a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "454b3ff7-1679-4eea-8a43-96a02d710ead"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170807T230911Z:454b3ff7-1679-4eea-8a43-96a02d710ead"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 07 Aug 2017 23:09:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL3Ztc2NhbGVzZXRyZy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2F1dG9zY2FsZXNldHRpbmdzL3NldHRpbmcxP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "87434039-64e5-4c27-9196-4c0ba873c827"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1\",\r\n  \"name\": \"setting1\",\r\n  \"type\": \"Microsoft.Insights/autoscaleSettings\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\"\r\n  },\r\n  \"properties\": {\r\n    \"profiles\": [\r\n      {\r\n        \"name\": \"Profile1\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricNamespace\": \"\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"fixedDate\": {\r\n          \"timeZone\": \"UTC\",\r\n          \"start\": \"2014-04-15T21:06:11.7882792Z\",\r\n          \"end\": \"2014-04-16T21:06:11.7882792Z\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"Profile2\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricNamespace\": \"\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"recurrence\": {\r\n          \"frequency\": \"Week\",\r\n          \"schedule\": {\r\n            \"timeZone\": \"UTC-11\",\r\n            \"days\": [\r\n              \"Monday\"\r\n            ],\r\n            \"hours\": [\r\n              0\r\n            ],\r\n            \"minutes\": [\r\n              10\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"enabled\": true,\r\n    \"name\": \"setting1\",\r\n    \"targetResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n    \"notifications\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1915"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6152f941-cf24-44fa-af04-02a585ab22aa"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14961"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c86dea6-6590-43d0-bd12-79f142808268"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170807T230911Z:5c86dea6-6590-43d0-bd12-79f142808268"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 07 Aug 2017 23:09:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL3Ztc2NhbGVzZXRyZy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2F1dG9zY2FsZXNldHRpbmdzL3NldHRpbmcxP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1cf222d6-fa9a-4f08-acc7-64b7af5e05c9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1\",\r\n  \"name\": \"setting1\",\r\n  \"type\": \"Microsoft.Insights/autoscaleSettings\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\"\r\n  },\r\n  \"properties\": {\r\n    \"profiles\": [\r\n      {\r\n        \"name\": \"Profile1\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricNamespace\": \"\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"fixedDate\": {\r\n          \"timeZone\": \"UTC\",\r\n          \"start\": \"2014-04-15T21:06:11.7882792Z\",\r\n          \"end\": \"2014-04-16T21:06:11.7882792Z\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"Profile2\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricNamespace\": \"\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"recurrence\": {\r\n          \"frequency\": \"Week\",\r\n          \"schedule\": {\r\n            \"timeZone\": \"UTC-11\",\r\n            \"days\": [\r\n              \"Monday\"\r\n            ],\r\n            \"hours\": [\r\n              0\r\n            ],\r\n            \"minutes\": [\r\n              10\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"enabled\": true,\r\n    \"name\": \"setting1\",\r\n    \"targetResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n    \"notifications\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1915"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "d34b700e-7b2f-410b-bf78-92aa8e8e63b4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-correlation-request-id": [
+          "b740bd59-03c2-4a54-9b2a-fd6d8f9f03d4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170807T230911Z:b740bd59-03c2-4a54-9b2a-fd6d8f9f03d4"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 07 Aug 2017 23:09:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL3Ztc2NhbGVzZXRyZy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2F1dG9zY2FsZXNldHRpbmdzL3NldHRpbmcxP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "74097e9a-d3d8-4ea8-9274-acbec5e9da31"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'microsoft.insights/autoscalesettings/setting1' under resource group 'vmscalesetrg' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "161"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "7ad7acb8-42e9-4115-8aea-84458ea854f1"
+        ],
+        "x-ms-correlation-request-id": [
+          "7ad7acb8-42e9-4115-8aea-84458ea854f1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170807T230912Z:7ad7acb8-42e9-4115-8aea-84458ea854f1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 07 Aug 2017 23:09:12 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL3Ztc2NhbGVzZXRyZy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2F1dG9zY2FsZXNldHRpbmdzL3NldHRpbmcxP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key2\": \"val2\"\r\n  },\r\n  \"properties\": {\r\n    \"profiles\": [\r\n      {\r\n        \"name\": \"Profile1\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"fixedDate\": {\r\n          \"timeZone\": \"UTC\",\r\n          \"start\": \"2014-04-15T21:06:11.7882792Z\",\r\n          \"end\": \"2014-04-16T21:06:11.7882792Z\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"Profile2\",\r\n        \"capacity\": {\r\n          \"minimum\": \"1\",\r\n          \"maximum\": \"10\",\r\n          \"default\": \"1\"\r\n        },\r\n        \"rules\": [\r\n          {\r\n            \"metricTrigger\": {\r\n              \"metricName\": \"Percentage CPU\",\r\n              \"metricResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\",\r\n              \"timeGrain\": \"PT1M\",\r\n              \"statistic\": \"Average\",\r\n              \"timeWindow\": \"PT1H\",\r\n              \"timeAggregation\": \"Maximum\",\r\n              \"operator\": \"Equals\",\r\n              \"threshold\": 80.0\r\n            },\r\n            \"scaleAction\": {\r\n              \"direction\": \"Increase\",\r\n              \"type\": \"ChangeCount\",\r\n              \"value\": \"1\",\r\n              \"cooldown\": \"PT20M\"\r\n            }\r\n          }\r\n        ],\r\n        \"recurrence\": {\r\n          \"frequency\": \"Week\",\r\n          \"schedule\": {\r\n            \"timeZone\": \"UTC-11\",\r\n            \"days\": [\r\n              \"Monday\"\r\n            ],\r\n            \"hours\": [\r\n              0\r\n            ],\r\n            \"minutes\": [\r\n              10\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"enabled\": false,\r\n    \"name\": \"setting1\",\r\n    \"targetResourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2624"
+        ],
+        "x-ms-client-request-id": [
+          "3433a85f-d6e6-467b-a61f-62b78d2659eb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"BadRequest\",\r\n  \"message\": \"The location is invalid.\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "58"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "00000000-0000-0000-0000-000000000000"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "ca5da4d1-5c14-4cbf-96dd-cbf8dba7a38e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170807T230911Z:ca5da4d1-5c14-4cbf-96dd-cbf8dba7a38e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 07 Aug 2017 23:09:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/vmscalesetrg/providers/microsoft.insights/autoscalesettings/setting1?api-version=2015-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL3Ztc2NhbGVzZXRyZy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2F1dG9zY2FsZXNldHRpbmdzL3NldHRpbmcxP2FwaS12ZXJzaW9uPTIwMTUtMDQtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "55618dba-a750-4147-a537-1da9e53f3da1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3ad0feae-6973-4beb-a0e3-424f0c3083ec"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "58d8032d-2aea-4d75-865c-76d221d33c13"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170807T230912Z:58d8032d-2aea-4d75-865c-76d221d33c13"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 07 Aug 2017 23:09:12 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "07c0b09d-9f69-4e6e-8d05-f59f67299cb2"
+  }
+}

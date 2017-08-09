@@ -19,6 +19,7 @@ namespace Monitor.Tests.BasicTests
         private static string DefaultName = "default";
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_CreateOrUpdateTest()
         {
             LogProfileResource expResponse = CreateLogProfile();
@@ -41,6 +42,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_DeleteTest()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -55,6 +57,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_GetTest()
         {
             var expResponse = CreateLogProfile();
@@ -74,6 +77,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_ListTest()
         {
             var logProfile = CreateLogProfile();
@@ -100,6 +104,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_UpdateTest()
         {
             LogProfileResource resource = CreateLogProfile();

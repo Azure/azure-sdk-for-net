@@ -17,6 +17,7 @@ namespace Monitor.Tests.BasicTests
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ServiceDiagnosticSettings_PutTest()
         {
             var expResponse = CreateDiagnosticSettings();
@@ -38,6 +39,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ServiceDiagnosticSettings_UpdateTest()
         {
             var resource = CreateDiagnosticSettings();
@@ -67,6 +69,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ServiceDiagnosticSettings_GetTest()
         {
             var expResponse = CreateDiagnosticSettings();

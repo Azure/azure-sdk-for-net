@@ -15,7 +15,6 @@ namespace Monitor.Tests.Scenarios
 {
     public class AutoscaleTests : TestBase
     {
-        // private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
         private const string ResourceUri = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset";
         private const string ResourceGroup = "vmscalesetrg";
 
@@ -29,79 +28,103 @@ namespace Monitor.Tests.Scenarios
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void CreateOrUpdateSettingTest()
+        public void MetricBasedFixedAndRecurrent()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                AutoscaleSettingResource expResponse = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "Percentage CPU");
+                AutoscaleSettingResource body = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "Percentage CPU");
 
                 var insightsClient = GetMonitorManagementClient(context, handler);
 
-                var actualResponse = insightsClient.AutoscaleSettings.CreateOrUpdate(
+                AutoscaleSettingResource actualResponse = insightsClient.AutoscaleSettings.CreateOrUpdate(
                     resourceGroupName: ResourceGroup, 
                     autoscaleSettingName: "setting1", 
-                    parameters: expResponse);
+                    parameters: body);
 
                 if (!this.IsRecording)
                 {
                     Check(actualResponse);
                 }
-            }
-        }
 
-        [Fact(Skip = "Request fail due to 'invalid location'")]
-        [Trait("Category", "Scenario")]
-        public void UpdateSettingTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                AutoscaleSettingResource resource = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "Percentage CPU");
-                var insightsClient = GetMonitorManagementClient(context, handler);
-
-                AutoscaleSettingResourcePatch pathResource = new AutoscaleSettingResourcePatch(
-                    name: resource.Name,
-                    tags: new Dictionary<string, string>
-                    {
-                        { "key2", "val2" }
-                    },
-                    notifications: resource.Notifications,
-                    enabled: false,
-                    profiles: resource.Profiles,
-                    targetResourceUri: resource.TargetResourceUri
-                );
-
-                var actualResponse = insightsClient.AutoscaleSettings.Update(
+                // Retrieve the setting created above
+                AutoscaleSettingResource recoveredSetting = insightsClient.AutoscaleSettings.Get(
                     resourceGroupName: ResourceGroup,
-                    autoscaleSettingName: "setting1",
-                    autoscaleSettingResource: pathResource);
-
-                if (!this.IsRecording)
-                {
-                    Check(actualResponse);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void GetAutoscaleSettingTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var expResponse = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "Percentage CPU");
-                var insightsClient = GetMonitorManagementClient(context, handler);
-
-                AutoscaleSettingResource actualResponse = insightsClient.AutoscaleSettings.Get(
-                    resourceGroupName: ResourceGroup, 
                     autoscaleSettingName: "setting1");
 
                 if (!this.IsRecording)
                 {
-                    Check(actualResponse);
+                    Check(recoveredSetting);
+
+                    // Compare the two of them
+                    Utilities.AreEqual(actualResponse, recoveredSetting);
                 }
+
+                var newTags = new Dictionary<string, string>
+                    {
+                        { "key2", "val2" }
+                    };
+
+                // Update the setting created above
+                // TODO: File bug since the request fails due to 'invalid location'
+                AutoscaleSettingResourcePatch pathResource = new AutoscaleSettingResourcePatch(
+                    name: recoveredSetting.Name,
+                    tags: newTags,
+                    notifications: recoveredSetting.Notifications,
+                    enabled: !recoveredSetting.Enabled,
+                    profiles: recoveredSetting.Profiles,
+                    targetResourceUri: recoveredSetting.TargetResourceUri
+                );
+
+                AutoscaleSettingResource updatedSetting = null;
+                Assert.Throws(
+                    typeof(ErrorResponseException), 
+                    () => updatedSetting = insightsClient.AutoscaleSettings.Update(
+                        resourceGroupName: ResourceGroup,
+                        autoscaleSettingName: "setting1",
+                        autoscaleSettingResource: pathResource));
+
+                if (!this.IsRecording && updatedSetting != null)
+                {
+                    Check(updatedSetting);
+
+                    // Check the changes from above
+                    Assert.NotEqual(recoveredSetting.Tags, updatedSetting.Tags);
+                    Assert.True(recoveredSetting.Enabled = !updatedSetting.Enabled);
+                    Assert.Equal(recoveredSetting.Name, updatedSetting.Name);
+                    Assert.Equal(recoveredSetting.Location, updatedSetting.Location);
+                    Assert.Equal(recoveredSetting.Id, updatedSetting.Id);
+                }
+
+                // Retrieve again the setting created above
+                AutoscaleSettingResource recoveredUpdatedSetting = insightsClient.AutoscaleSettings.Get(
+                    resourceGroupName: ResourceGroup,
+                    autoscaleSettingName: "setting1");
+
+                if (!this.IsRecording && updatedSetting != null)
+                {
+                    Check(recoveredUpdatedSetting);
+
+                    // Compare the two of them
+                    Assert.NotEqual(recoveredSetting.Tags, recoveredUpdatedSetting.Tags);
+                    Assert.True(recoveredSetting.Enabled = !recoveredUpdatedSetting.Enabled);
+                    Assert.Equal(recoveredSetting.Name, recoveredUpdatedSetting.Name);
+                    Assert.Equal(recoveredSetting.Location, recoveredUpdatedSetting.Location);
+                    Assert.Equal(recoveredSetting.Id, recoveredUpdatedSetting.Id);
+                }
+
+                // Remove the setting created above
+                insightsClient.AutoscaleSettings.Delete(
+                    resourceGroupName: ResourceGroup,
+                    autoscaleSettingName: "setting1");
+
+                // Retrieve again the setting created above (must fail)
+                Assert.Throws(
+                    typeof(ErrorResponseException),
+                    () => insightsClient.AutoscaleSettings.Get(
+                        resourceGroupName: ResourceGroup,
+                        autoscaleSettingName: "setting1"));
             }
         }
-
 
         /*  write-host -fore green "Creating webhook"
             $webhook1 = New-AzureRmAutoscaleWebhook -ServiceUri "http://myservice.com"
@@ -224,7 +247,8 @@ namespace Monitor.Tests.Scenarios
             }
             else
             {
-                Assert.Null(act);
+                // Guarantee failure, act should not be null
+                Assert.NotNull(act);
             }
         }
     }

@@ -1,0 +1,377 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtQWN0aXZpdHlMb2dBbGVydHMvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9hY3Rpb25Hcm91cHMvYW5keWdyb3VwLWRvbm90dXNlP2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"groupShortName\": \"andygroup\",\r\n    \"enabled\": false,\r\n    \"emailReceivers\": [\r\n      {\r\n        \"name\": \"emailreceiver\",\r\n        \"emailAddress\": \"andyshen@microsoft.com\"\r\n      }\r\n    ],\r\n    \"smsReceivers\": [\r\n      {\r\n        \"name\": \"smsreceiver\",\r\n        \"countryCode\": \"1\",\r\n        \"phoneNumber\": \"7817386781\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "408"
+        ],
+        "x-ms-client-request-id": [
+          "007ee392-6062-490c-a1d0-d4afacce01ab"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse\",\r\n  \"type\": \"Microsoft.Insights/ActionGroups\",\r\n  \"name\": \"andygroup-donotuse\",\r\n  \"location\": \"Global\",\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"groupShortName\": \"andygroup\",\r\n    \"enabled\": false,\r\n    \"emailReceivers\": [\r\n      {\r\n        \"name\": \"emailreceiver\",\r\n        \"emailAddress\": \"andyshen@microsoft.com\",\r\n        \"status\": \"Enabled\"\r\n      }\r\n    ],\r\n    \"smsReceivers\": [\r\n      {\r\n        \"name\": \"smsreceiver\",\r\n        \"countryCode\": \"1\",\r\n        \"phoneNumber\": \"7817386781\",\r\n        \"status\": \"Enabled\"\r\n      }\r\n    ],\r\n    \"webhookReceivers\": []\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "578"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "15004938-fa8b-45c8-91e0-0713edc4b72e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "979defb4-827c-400f-9819-fa1b09c27376"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170808T223715Z:979defb4-827c-400f-9819-fa1b09c27376"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Aug 2017 22:37:14 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtQWN0aXZpdHlMb2dBbGVydHMvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9hY3Rpb25Hcm91cHMvYW5keWdyb3VwLWRvbm90dXNlP2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "36559c65-4622-44c9-a93b-96bc0373536c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse\",\r\n  \"type\": \"Microsoft.Insights/ActionGroups\",\r\n  \"name\": \"andygroup-donotuse\",\r\n  \"location\": \"Global\",\r\n  \"kind\": null,\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"groupShortName\": \"andygroup\",\r\n    \"enabled\": false,\r\n    \"emailReceivers\": [\r\n      {\r\n        \"name\": \"emailreceiver\",\r\n        \"emailAddress\": \"andyshen@microsoft.com\",\r\n        \"status\": \"Enabled\"\r\n      }\r\n    ],\r\n    \"smsReceivers\": [\r\n      {\r\n        \"name\": \"smsreceiver\",\r\n        \"countryCode\": \"1\",\r\n        \"phoneNumber\": \"7817386781\",\r\n        \"status\": \"Enabled\"\r\n      }\r\n    ],\r\n    \"webhookReceivers\": []\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "578"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e88c68c4-b27f-4a34-a837-12ac0cda4404"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14973"
+        ],
+        "x-ms-correlation-request-id": [
+          "ee9acadc-172b-4110-89b8-02b130b076e2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170808T223716Z:ee9acadc-172b-4110-89b8-02b130b076e2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Aug 2017 22:37:15 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/providers/microsoft.insights/actionGroups?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHMvYWN0aW9uR3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "45018350-3d5a-4f2f-82fe-8e3eca859612"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse\",\r\n      \"type\": \"Microsoft.Insights/ActionGroups\",\r\n      \"name\": \"andygroup-donotuse\",\r\n      \"location\": \"Global\",\r\n      \"kind\": null,\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"groupShortName\": \"andygroup\",\r\n        \"enabled\": false,\r\n        \"emailReceivers\": [\r\n          {\r\n            \"name\": \"emailreceiver\",\r\n            \"emailAddress\": \"andyshen@microsoft.com\",\r\n            \"status\": \"Enabled\"\r\n          }\r\n        ],\r\n        \"smsReceivers\": [\r\n          {\r\n            \"name\": \"smsreceiver\",\r\n            \"countryCode\": \"1\",\r\n            \"phoneNumber\": \"7817386781\",\r\n            \"status\": \"Enabled\"\r\n          }\r\n        ],\r\n        \"webhookReceivers\": []\r\n      },\r\n      \"identity\": null\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-Storage-EastUS/providers/microsoft.insights/actionGroups/nj\",\r\n      \"type\": \"Microsoft.Insights/ActionGroups\",\r\n      \"name\": \"nj\",\r\n      \"location\": \"Global\",\r\n      \"kind\": null,\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"groupShortName\": \"nj\",\r\n        \"enabled\": true,\r\n        \"emailReceivers\": [],\r\n        \"smsReceivers\": [\r\n          {\r\n            \"name\": \"jaga-sms\",\r\n            \"countryCode\": \"1\",\r\n            \"phoneNumber\": \"4253011342\",\r\n            \"status\": \"Enabled\"\r\n          }\r\n        ],\r\n        \"webhookReceivers\": []\r\n      },\r\n      \"identity\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1040"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8e431924-44e0-4634-9054-24bcc615ead4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14972"
+        ],
+        "x-ms-correlation-request-id": [
+          "eb1ffb31-f7c1-4046-a660-aec405111a19"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170808T223716Z:eb1ffb31-f7c1-4046-a660-aec405111a19"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Aug 2017 22:37:15 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtQWN0aXZpdHlMb2dBbGVydHMvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9hY3Rpb25Hcm91cHM/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "10ce7f72-f734-4063-82f2-426b1eddbe35"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse\",\r\n      \"type\": \"Microsoft.Insights/ActionGroups\",\r\n      \"name\": \"andygroup-donotuse\",\r\n      \"location\": \"Global\",\r\n      \"kind\": null,\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"groupShortName\": \"andygroup\",\r\n        \"enabled\": false,\r\n        \"emailReceivers\": [\r\n          {\r\n            \"name\": \"emailreceiver\",\r\n            \"emailAddress\": \"andyshen@microsoft.com\",\r\n            \"status\": \"Enabled\"\r\n          }\r\n        ],\r\n        \"smsReceivers\": [\r\n          {\r\n            \"name\": \"smsreceiver\",\r\n            \"countryCode\": \"1\",\r\n            \"phoneNumber\": \"7817386781\",\r\n            \"status\": \"Enabled\"\r\n          }\r\n        ],\r\n        \"webhookReceivers\": []\r\n      },\r\n      \"identity\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "590"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "980af23b-b189-4b65-9ec4-4ff0044f5507"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14971"
+        ],
+        "x-ms-correlation-request-id": [
+          "aec7ec0a-017b-4c65-97b5-79ed1b426b6a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170808T223716Z:aec7ec0a-017b-4c65-97b5-79ed1b426b6a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Aug 2017 22:37:15 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse/subscribe?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtQWN0aXZpdHlMb2dBbGVydHMvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9hY3Rpb25Hcm91cHMvYW5keWdyb3VwLWRvbm90dXNlL3N1YnNjcmliZT9hcGktdmVyc2lvbj0yMDE3LTA0LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"receiverName\": \"emailreceiver\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "39"
+        ],
+        "x-ms-client-request-id": [
+          "9b9abb64-e6f9-4ffe-a2fc-2e9abddd58ff"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Code\": \"ReceiverAlreadyEnabled\",\r\n  \"Message\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "48"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "89f8bfc8-c7ff-404d-821f-0f2a1ea56afa"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "f735f71c-e4e2-47d6-b738-2c7aeec75144"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170808T223716Z:f735f71c-e4e2-47d6-b738-2c7aeec75144"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Aug 2017 22:37:15 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 409
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtQWN0aXZpdHlMb2dBbGVydHMvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9hY3Rpb25Hcm91cHMvYW5keWdyb3VwLWRvbm90dXNlP2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0a3c13e8-10a9-453e-997b-27a68f7449a4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "bbaf24f8-70d5-490c-878f-8499e9e0aaa3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "4867cc25-4d21-443b-9094-7a74a33d0e63"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170808T223718Z:4867cc25-4d21-443b-9094-7a74a33d0e63"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 08 Aug 2017 22:37:17 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "07c0b09d-9f69-4e6e-8d05-f59f67299cb2"
+  }
+}
