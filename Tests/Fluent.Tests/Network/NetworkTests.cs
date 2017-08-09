@@ -6,6 +6,7 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Text;
 using Xunit;
 
@@ -33,7 +34,7 @@ namespace Fluent.Tests.Network
                     .Create();
 
                 // Create a network
-                manager.Networks.Define(newName)
+                INetwork network = manager.Networks.Define(newName)
                         .WithRegion(region)
                         .WithNewResourceGroup(groupName)
                         .WithAddressSpace("10.0.0.0/28")
@@ -44,8 +45,27 @@ namespace Fluent.Tests.Network
                             .Attach()
                         .Create();
 
-                var resource = manager.Networks.GetByResourceGroup(groupName, newName);
-                resource = resource.Update()
+                // Verify subnets
+                Assert.Equal(2, network.Subnets.Count);
+                ISubnet subnet = network.Subnets["subnetA"];
+                Assert.Equal("10.0.0.0/29", subnet.AddressPrefix);
+                subnet = network.Subnets["subnetB"];
+                Assert.Equal("10.0.0.8/29", subnet.AddressPrefix);
+                Assert.True(nsg.Id.Equals(subnet.NetworkSecurityGroupId,  StringComparison.OrdinalIgnoreCase));
+
+                // Verify NSG
+                var subnets = nsg.Refresh().ListAssociatedSubnets();
+                Assert.Equal(1, subnets.Count);
+                subnet = subnets[0];
+                Assert.True(subnet.Name.Equals("subnetB", StringComparison.OrdinalIgnoreCase));
+                Assert.True(subnet.Parent.Name.Equals(newName, StringComparison.OrdinalIgnoreCase));
+                Assert.NotNull(subnet.NetworkSecurityGroupId);
+                INetworkSecurityGroup nsg2 = subnet.GetNetworkSecurityGroup();
+                Assert.NotNull(nsg2);
+                Assert.True(nsg2.Id.Equals(nsg.Id, StringComparison.OrdinalIgnoreCase));
+
+                network = manager.Networks.GetByResourceGroup(groupName, newName);
+                network = network.Update()
                     .WithTag("tag1", "value1")
                     .WithTag("tag2", "value2")
                     .WithAddressSpace("141.25.0.0/16")
@@ -53,18 +73,39 @@ namespace Fluent.Tests.Network
                     .WithoutSubnet("subnetA")
                     .UpdateSubnet("subnetB")
                         .WithAddressPrefix("141.25.0.8/29")
-                        .WithExistingNetworkSecurityGroup(nsg)
+                        .WithoutNetworkSecurityGroup()
                         .Parent()
                     .DefineSubnet("subnetD")
                         .WithAddressPrefix("141.25.0.16/29")
                         .WithExistingNetworkSecurityGroup(nsg)
                         .Attach()
                     .Apply();
-                Assert.True(resource.Tags.ContainsKey("tag1"));
 
-                manager.Networks.DeleteById(resource.Id);
+                // Verify subnets
+                Assert.Equal(3, network.Subnets.Count);
+                Assert.False(network.Subnets.ContainsKey("subnetA"));
+
+                Assert.True(network.Subnets.ContainsKey("subnetB"));
+                subnet = network.Subnets["subnetB"];
+                Assert.Equal("141.25.0.8/29", subnet.AddressPrefix);
+                Assert.Null(subnet.NetworkSecurityGroupId);
+
+                Assert.True(network.Subnets.ContainsKey("subnetC"));
+                subnet = network.Subnets["subnetC"];
+                Assert.Equal("141.25.0.0/29", subnet.AddressPrefix);
+                Assert.Null(subnet.NetworkSecurityGroupId);
+
+                Assert.True(network.Subnets.ContainsKey("subnetD"));
+                subnet = network.Subnets["subnetD"];
+                Assert.NotNull(subnet);
+                Assert.Equal("141.25.0.16/29", subnet.AddressPrefix);
+                Assert.True(nsg.Id.Equals(subnet.NetworkSecurityGroupId, StringComparison.OrdinalIgnoreCase));
+
+                Assert.True(network.Tags.ContainsKey("tag1"));
+
+                manager.Networks.DeleteById(network.Id);
                 manager.NetworkSecurityGroups.DeleteById(nsg.Id);
-                manager.ResourceManager.ResourceGroups.DeleteByName(groupName);
+                manager.ResourceManager.ResourceGroups.BeginDeleteByName(groupName);
             }
         }
 
