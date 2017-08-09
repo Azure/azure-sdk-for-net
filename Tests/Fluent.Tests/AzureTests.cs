@@ -145,6 +145,18 @@ namespace Fluent.Tests.Network
         }
 
         [Fact]
+        public void NatOnly()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                var azure = TestHelper.CreateRollupClient();
+
+                new LoadBalancerHelpers.InternetNatOnly(azure.VirtualMachines.Manager)
+                .RunTest(azure.LoadBalancers, azure.ResourceGroups);
+            }
+        }
+
+        [Fact]
         public void NatRules()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
