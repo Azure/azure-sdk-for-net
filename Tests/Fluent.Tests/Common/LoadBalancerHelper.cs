@@ -43,8 +43,7 @@ namespace Azure.Tests.Common
         // Ensure VMs for the LB
         public IEnumerable<IVirtualMachine> EnsureVMs(
             INetworks networks,
-            IVirtualMachines vms,
-            IAvailabilitySets availabilitySets,
+            IComputeManager computeManager,
             int count)
         {
             // Create a network for the VMs
@@ -57,7 +56,7 @@ namespace Azure.Tests.Common
                 .Create();
 
             // Define an availability set for the VMs
-            var availabilitySetDefinition = availabilitySets.Define("as" + TestId)
+            var availabilitySetDefinition = computeManager.AvailabilitySets.Define("as" + TestId)
                 .WithRegion(Region)
                 .WithExistingResourceGroup(GroupName)
                 .WithSku(AvailabilitySetSkuTypes.Managed);
@@ -70,7 +69,7 @@ namespace Azure.Tests.Common
             {
                 string vmName = TestUtilities.GenerateName("vm");
 
-                var vm = vms.Define(vmName)
+                var vm = computeManager.VirtualMachines.Define(vmName)
                     .WithRegion(Region)
                     .WithExistingResourceGroup(GroupName)
                     .WithExistingPrimaryNetwork(network)
@@ -86,7 +85,7 @@ namespace Azure.Tests.Common
                 vmDefinitions.Add(vm);
             }
 
-            var createdVMs = vms.Create(vmDefinitions.ToArray()); 
+            var createdVMs = computeManager.VirtualMachines.Create(vmDefinitions.ToArray()); 
 
             return createdVMs;
         }

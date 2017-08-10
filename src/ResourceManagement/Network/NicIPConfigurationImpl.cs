@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             this.networkManager = networkManager;
         }
 
-        ///GENMHASH:283CFC6EBD90D03165F029795BB0A81D:755A70E8170ABE5AC23D42E03EE7336A
+        ///GENMHASH:EFA3412991D5EA015E3A693B8641059A:6E359ADBD3D05D6ABDAF431DBDE4F635
         internal static NicIPConfigurationImpl PrepareNicIPConfiguration(string name, NetworkInterfaceImpl parent, INetworkManager networkManager)
         {
             NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
@@ -56,20 +56,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.Name;
         }
 
-        ///GENMHASH:8E78B2392D3D6F9CD12A41F263DE68A1:40A9660FDDD1BECDBEBCD406933EBC9B
+        ///GENMHASH:5EF934D4E2CF202DF23C026435D9F6D6:40A9660FDDD1BECDBEBCD406933EBC9B
         internal string PublicIPAddressId()
         {
             return (Inner.PublicIPAddress != null) ? Inner.PublicIPAddress.Id : null;
         }
 
-        ///GENMHASH:377296039E5241FB1B02988EFB811F77:AB140A12F9E596E2CB0F642A8D348B46
+        ///GENMHASH:166583FE514624A3D800151836CD57C1:8F485ACC852168F9BE0310C99854062E
         internal IPublicIPAddress GetPublicIPAddress()
         {
             string id = PublicIPAddressId();
             return (id != null) ? Parent.Manager.PublicIPAddresses.GetById(id) : null;
         }
 
-        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:4652AD8DEBE2130BB62A479BB6FEAD47
+        ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:E02BDC0972DED2429D8412C6E416C2BA
         internal NetworkInterfaceImpl Attach()
         {
             return Parent.WithIPConfiguration(this);
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:EA98B464B10BD645EE3B0689825B43B8:BF9C09A5F85740EB1DF5E781C47B92F3
+        ///GENMHASH:26224359DA104EABE1EDF7F491D110F7:BF9C09A5F85740EB1DF5E781C47B92F3
         internal NicIPConfigurationImpl WithPrivateIPAddressDynamic()
         {
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic.ToString();
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:6CDEF6BE4432158ED3F8917E000EAD56:98FC652F984FD82C56939807419E1B17
+        ///GENMHASH:9946B3475EBD5468D4462F188EEE86C2:B0B83C63E323AAB22F60069661B51903
         internal NicIPConfigurationImpl WithPrivateIPAddressStatic(string staticPrivateIPAddress)
         {
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static.ToString();
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:FE2FB4C2B86589D7D187246933236472:FAE89A61E89DFEABF380DF820A5ACC01
+        ///GENMHASH:52541ED0C8AE1806DF3F2DF0DE092357:C9196B5FC5D2D3679E623C4CBFC0DCED
         internal NicIPConfigurationImpl WithNewPublicIPAddress(ICreatable<IPublicIPAddress> creatable)
         {
             if (creatablePublicIPKey == null)
@@ -144,35 +144,35 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:9865456A38EDF249959594524980AA77:7B29468CDC459656909C083DB3E8BC68
+        ///GENMHASH:1C505DCDEFCB5F029B7A60E2375286BF:3FA7D2EF04027DEAAE836DB63A20039B
         internal NicIPConfigurationImpl WithNewPublicIPAddress()
         {
             string name = SdkContext.RandomResourceName("pip", 15);
             return WithNewPublicIPAddress(PrepareCreatablePublicIP(name, name));
         }
 
-        ///GENMHASH:978AA5D6B234EB71E90EC88584153043:1835AC76D7C732B190DA61AA166DF5E5
+
+        ///GENMHASH:233A62609A15DC3B8EB48DD8DB699DDC:5F2825180653A2E415C39BF41FD682D6
         internal NicIPConfigurationImpl WithNewPublicIPAddress(string leafDnsLabel)
         {
             return WithNewPublicIPAddress(
                 PrepareCreatablePublicIP(SdkContext.RandomResourceName("pip", 15), leafDnsLabel));
         }
 
-        ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:1D98EE3582EA8AC346853CFC679265D2
+        ///GENMHASH:BE684C4F4845D0C09A9399569DFB7A42:CDAC048B4CBF3DA15B57B59C55815FF9
         internal NicIPConfigurationImpl WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-
             return WithExistingPublicIPAddress(publicIPAddress.Id);
         }
 
-        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:1F2CFFCD82BB739E1AB254EDFD81BAFC
+        ///GENMHASH:3C078CA3D79C59C878B566E6BDD55B86:B0EE90118E4A03AFA2010FA1C9E67CB9
         internal NicIPConfigurationImpl WithExistingPublicIPAddress(string resourceId)
         {
             existingPublicIPAddressIdToAssociate = resourceId;
             return this;
         }
 
-        ///GENMHASH:1B49C92CBA9BDBBF9FBFD26544224384:D2568543D2B6FA67EEC6DB9538B32535
+        ///GENMHASH:C4684C8A47F80967DA864E1AB75147B5:D2568543D2B6FA67EEC6DB9538B32535
         internal NicIPConfigurationImpl WithoutPublicIPAddress()
         {
             removePrimaryPublicIPAssociation = true;
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:63C8240EDA17974D47E176085F22436A:2D595A527D306417A72C1C52A5906DB3
         private IList<BackendAddressPoolInner> EnsureBackendAddressPools()
         {
-            IList<BackendAddressPoolInner> poolRefs = Inner.LoadBalancerBackendAddressPools;
+            var poolRefs = Inner.LoadBalancerBackendAddressPools;
             if (poolRefs == null)
             {
                 poolRefs = new List<BackendAddressPoolInner>();
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return natRefs;
         }
 
-        ///GENMHASH:F0EFC1121F2CA438614E95E86C18505F:39E41A58CFED77300407A3F20BC69F43
+        ///GENMHASH:7CC443FD7234FBAB801F3A061377BC25:70718CC85D42345B50C772B8A152E349
         internal static void EnsureConfigurations(List<INicIPConfiguration> nicIPConfigurations)
         {
             foreach (var nicIPConfiguration in nicIPConfigurations)
@@ -253,11 +253,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:914020627FB9358A7D31FEE90CA38704:880DBC5A2E3782D786F8E47E6C363C0F
+        ///GENMHASH:E0B9B91DC16B93A3C858852892F4F123:631C9E4DDFCC0D3FEA55EFC5A50886C4
         private ICreatable<IPublicIPAddress> PrepareCreatablePublicIP(string name, string leafDnsLabel)
         {
-            PublicIPAddress.Definition.IWithGroup definitionWithGroup = this.networkManager.PublicIPAddresses.Define(name)
-                .WithRegion(this.Parent.RegionName);
+            PublicIPAddress.Definition.IWithGroup definitionWithGroup = networkManager.PublicIPAddresses.Define(name)
+                .WithRegion(Parent.RegionName);
 
             PublicIPAddress.Definition.IWithCreate definitionAfterGroup;
             if (Parent.NewGroup() != null)
@@ -282,22 +282,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <returns>the subnet resource</returns>
 
-        ///GENMHASH:D14BFB60D59198612CF4649F7C5412EA:CB9711B0085B05FCA1A439986E7C8A08
+        ///GENMHASH:D14BFB60D59198612CF4649F7C5412EA:6AE6C02C732BC5ACA4EF75F11D353A31
         private SubnetInner SubnetToAssociate()
         {
             SubnetInner subnetInner = new SubnetInner();
-            if (this.isInCreateMode)
+            if (isInCreateMode)
             {
-                if (this.creatableVirtualNetworkKey != null)
+                if (creatableVirtualNetworkKey != null)
                 {
-                    INetwork network = (INetwork)Parent.CreatedDependencyResource(this.creatableVirtualNetworkKey);
+                    INetwork network = (INetwork)Parent.CreatedDependencyResource(creatableVirtualNetworkKey);
                     subnetInner.Id = network.Inner.Subnets[0].Id;
                     return subnetInner;
                 }
 
-                foreach (var subnet in this.existingVirtualNetworkToAssociate.Inner.Subnets)
+                foreach (var subnet in existingVirtualNetworkToAssociate.Inner.Subnets)
                 {
-                    if (subnet.Name.Equals(this.subnetToAssociate, StringComparison.OrdinalIgnoreCase))
+                    if (subnet.Name.Equals(subnetToAssociate, StringComparison.OrdinalIgnoreCase))
                     {
                         subnetInner.Id = subnet.Id;
                         return subnetInner;
@@ -330,8 +330,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// not specified then existing associated (if any) public IP will be returned.
         /// </summary>
         /// <returns>public ip SubResource</returns>
-
-        ///GENMHASH:8D4DC1646027B23F9B0747B303606F35:FB5ABEA0B3E44F5F78C6CEF057F7B8BD
+        ///GENMHASH:B45B91A2577A6C77086C36AFAD21CB6C:0762B331D53D3FF3CD6E97D46248B648
         private SubResource PublicIPToAssociate()
         {
             string pipId = null;
@@ -362,7 +361,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return null;
         }
 
-        ///GENMHASH:F4D09499BC5D2BC9FBFD23F99BF3219B:98C9348F48818CBA9BE5411158A7ECB2
+        ///GENMHASH:DEFD17C7FB8B2DE605F5B8314F21538C:98C9348F48818CBA9BE5411158A7ECB2
         internal NicIPConfigurationImpl WithPrivateIPVersion(IPVersion ipVersion)
         {
             Inner.PrivateIPAddressVersion = ipVersion.ToString();

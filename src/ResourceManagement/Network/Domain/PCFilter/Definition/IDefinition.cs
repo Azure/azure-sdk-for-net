@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PCFilter.Definition
     /// <summary>
     /// Definition of packet capture filter.
     /// </summary>
-    /// <param><ParentT>.</param>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.PCFilter.Definition.IWithAttach<ParentT>
     {

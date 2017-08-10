@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Models;
     using ResourceManager.Fluent;
     using ResourceManager.Fluent.Core;
@@ -63,8 +64,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.FrontendPortRangeEnd;
         }
 
-        ///GENMHASH:5FDFF29CFA414BCAD7FFD0841828BB7A:E66486C2053EF1D55C02E6EF2E4B2E42
-        internal LoadBalancerInboundNatPoolImpl WithBackendPort (int port)
+        ///GENMHASH:8F944A7A767FBE2B46E3184BF5B97360:E66486C2053EF1D55C02E6EF2E4B2E42
+        internal LoadBalancerInboundNatPoolImpl ToBackendPort(int port)
         {
             Inner.BackendPort = port;
             return this;
@@ -77,16 +78,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:2EC798C5560EA4F2234EFA1478E59C04:ED14BC5AA9F9F6F99EFCC8B58BEBAC1E
-        internal LoadBalancerInboundNatPoolImpl WithFrontend (string frontendName)
+        ///GENMHASH:2D9662B3F1282EE75401F103D056E914:22A702C2907DEBB1DEFF4C61C1ADF17C
+        internal LoadBalancerInboundNatPoolImpl FromFrontend(string frontendName)
         {
             SubResource frontendRef = new SubResource(Parent.FutureResourceId() + "/frontendIPConfigurations/" + frontendName);
             Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
-        ///GENMHASH:403B7F42C07B9B8EADE72FC659A8AA2B:1E95E490A3C761C25CE742AF15819E05
-        internal LoadBalancerInboundNatPoolImpl WithFrontendPortRange (int from, int to)
+        ///GENMHASH:A35BE32FA7E3E3B6830FC9FC8FEB749B:D8E7C90FCF82DEB3BE8CE74FBEB12F82
+        internal LoadBalancerInboundNatPoolImpl FromFrontendPortRange(int from, int to)
         {
             Inner.FrontendPortRangeStart = from;
             Inner.FrontendPortRangeEnd = to;
@@ -102,6 +103,67 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
             return Parent;
+        }
+
+        ///GENMHASH:2E96099A7A467CF87865F3533CBDB32F:E43EAA0FF40B1EB92FF9CA531CE3334B
+        internal LoadBalancerInboundNatPoolImpl FromNewPublicIPAddress()
+        {
+            string dnsLabel = SdkContext.RandomResourceName("fe", 20);
+            return FromNewPublicIPAddress(dnsLabel);
+        }
+
+        ///GENMHASH:4F8AF5E60457FDACF0707ABBD081EACF:BB34114B12E158F7762684AAB656686B
+        internal LoadBalancerInboundNatPoolImpl FromNewPublicIPAddress(ICreatable<IPublicIPAddress> pipDefinition)
+        {
+            string frontendName = SdkContext.RandomResourceName("fe", 20);
+            Parent.WithNewPublicIPAddress(pipDefinition, frontendName);
+            FromFrontend(frontendName);
+            return this;
+        }
+
+        ///GENMHASH:231912283CEF63FBB9CE91CF555CD8FA:70F30E8379F2B602E1D713AD1CD4A187
+        internal LoadBalancerInboundNatPoolImpl FromNewPublicIPAddress(string leafDnsLabel)
+        {
+            string frontendName = SdkContext.RandomResourceName("fe", 20);
+            Parent.WithNewPublicIPAddress(leafDnsLabel, frontendName);
+            FromFrontend(frontendName);
+            return this;
+        }
+
+        ///GENMHASH:C4F27E8BA611AC74764FA8A94C3DF2D1:4D37ED0FD97954A596B35E0ADDA4A684
+        internal LoadBalancerInboundNatPoolImpl FromExistingPublicIPAddress(string resourceId)
+        {
+            return (null != resourceId) ? FromFrontend(Parent.EnsurePublicFrontendWithPip(resourceId).Name) : this;
+        }
+
+        ///GENMHASH:9B586EF5DD9ADE1279FCC07666652F54:23AD2163711B098A9F3D889DB9E53EF3
+        internal LoadBalancerInboundNatPoolImpl FromExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
+        {
+            return (publicIPAddress != null) ? FromExistingPublicIPAddress(publicIPAddress.Id) : this;
+        }
+
+        ///GENMHASH:9324AD10F20137C7B4A5F3C5B476CA6A:6BA1DB83FAA1442223CC13159CA8F7A7
+        internal LoadBalancerInboundNatPoolImpl FromExistingSubnet(ISubnet subnet)
+        {
+            return (null != subnet)
+                ? FromExistingSubnet(subnet.Parent.Id, subnet.Name)
+                : this;
+        }
+
+        ///GENMHASH:90E5ACF853A52D9A53EBCA4AC7C4B888:0FD858F3A293F1C544665B2A4D42EF9F
+        internal LoadBalancerInboundNatPoolImpl FromExistingSubnet(INetwork network, string subnetName)
+        {
+            return (null != network && null != subnetName)
+                ? FromExistingSubnet(network.Id, subnetName)
+                : this;
+        }
+
+        ///GENMHASH:C60D8F9466757FEBCFE50980D9C02838:37CE302E6C655B9B6D3C7054ECC43FE4
+        internal LoadBalancerInboundNatPoolImpl FromExistingSubnet(string networkResourceId, string subnetName)
+        {
+            return (null != networkResourceId && null != subnetName)
+                ? FromFrontend(Parent.EnsurePrivateFrontendWithSubnet(networkResourceId, subnetName).Name)
+                : this;
         }
     }
 }

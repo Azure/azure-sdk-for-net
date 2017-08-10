@@ -53,11 +53,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        internal INetworkManager Manager()
-        {
-            return base.Manager;
-        }
-
         #region WithDisabledSslProtocols
         internal ApplicationGatewayImpl WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
         {
@@ -200,7 +195,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:8E7C5AF309A720AEBD981CD714D58952
         public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager().ApplicationGateways.Inner.StartAsync(ResourceGroupName, Name, cancellationToken);
+            await Manager.ApplicationGateways.Inner.StartAsync(ResourceGroupName, Name, cancellationToken);
             await RefreshAsync(cancellationToken);
         }
 
@@ -219,7 +214,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D6FBED7FC7CBF34940541851FF5C3CC1:9E4F1BE9C6626B590BF7E05F4AD83D73
         public async Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager().ApplicationGateways.Inner.StopAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await Manager.ApplicationGateways.Inner.StopAsync(ResourceGroupName, Name, cancellationToken);
             await RefreshAsync(cancellationToken);
         }
 
@@ -1196,7 +1191,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(
                 antecedent =>
                 {
-                    return Manager().Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
+                    return Manager.Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
                 },
                 cancellationToken,
                 TaskContinuationOptions.ExecuteSynchronously,
@@ -1455,7 +1450,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (creatablePip == null)
             {
                 string pipName = SdkContext.RandomResourceName("pip", 9);
-                creatablePip = Manager().PublicIPAddresses.Define(pipName)
+                creatablePip = Manager.PublicIPAddresses.Define(pipName)
                     .WithRegion(RegionName)
                     .WithExistingResourceGroup(ResourceGroupName);
             }
@@ -1547,7 +1542,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (creatableNetwork == null)
             {
                 string vnetName = SdkContext.RandomResourceName("vnet", 10);
-                creatableNetwork = Manager().Networks.Define(vnetName)
+                creatableNetwork = Manager.Networks.Define(vnetName)
                     .WithRegion(Region)
                     .WithExistingResourceGroup(ResourceGroupName)
                     .WithAddressSpace("10.0.0.0/24")
@@ -1616,7 +1611,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:1559E5218F079E5EF7779F023F4EF358
         protected override async Task<ApplicationGatewayInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            return await Manager().Inner.ApplicationGateways.GetAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);
+            return await Manager.Inner.ApplicationGateways.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
         }
     }
 }

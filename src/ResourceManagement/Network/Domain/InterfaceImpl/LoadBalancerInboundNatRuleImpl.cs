@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     internal partial class LoadBalancerInboundNatRuleImpl 
     {
@@ -196,13 +197,75 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Specifies an existing private subnet to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this subnet, that is the frontend that will be used.
+        /// Else, an automatically named new private frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="networkResourceId">The resource ID of an existing network.</param>
+        /// <param name="subnetName">The name of an existing subnet within the specified network.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontendBeta<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.FromExistingSubnet(string networkResourceId, string subnetName)
+        {
+            return this.FromExistingSubnet(networkResourceId, subnetName) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies an existing private subnet to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this subnet, that is the frontend that will be used.
+        /// Else, an automatically named new private frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="network">An existing network.</param>
+        /// <param name="subnetName">The name of an existing subnet within the specified network.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontendBeta<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.FromExistingSubnet(INetwork network, string subnetName)
+        {
+            return this.FromExistingSubnet(network, subnetName) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies an existing private subnet to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this subnet, that is the frontend that will be used.
+        /// Else, an automatically named new private frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="subnet">An existing subnet.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontendBeta<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.FromExistingSubnet(ISubnet subnet)
+        {
+            return this.FromExistingSubnet(subnet) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
         /// Specifies the frontend to associate.
         /// </summary>
         /// <param name="frontendName">An existing frontend name.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontend<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.WithFrontend(string frontendName)
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontendBeta<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.FromFrontend(string frontendName)
         {
-            return this.WithFrontend(frontendName) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
+            return this.FromFrontend(frontendName) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies an existing public IP address to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this public IP address, that is the frontend that will be used.
+        /// Else, an automatically named new public frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontendBeta<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.FromExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
+        {
+            return this.FromExistingPublicIPAddress(publicIPAddress) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies an existing public IP address to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this public IP address, that is the frontend that will be used.
+        /// Else, an automatically named new public frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate> HasFrontend.UpdateDefinition.IWithFrontendBeta<LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>>.FromExistingPublicIPAddress(string resourceId)
+        {
+            return this.FromExistingPublicIPAddress(resourceId) as LoadBalancerInboundNatRule.UpdateDefinition.IWithFrontendPort<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -210,51 +273,149 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="frontendName">An existing frontend name from this load balancer.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasFrontend.Update.IWithFrontend<LoadBalancerInboundNatRule.Update.IUpdate>.WithFrontend(string frontendName)
+        LoadBalancerInboundNatRule.Update.IUpdate HasFrontend.Update.IWithFrontendBeta<LoadBalancerInboundNatRule.Update.IUpdate>.FromFrontend(string frontendName)
         {
-            return this.WithFrontend(frontendName) as LoadBalancerInboundNatRule.Update.IUpdate;
+            return this.FromFrontend(frontendName) as LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies the frontend to associate.
+        /// Specifies an existing private subnet to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this subnet, that is the frontend that will be used.
+        /// Else, an automatically named new private frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="networkResourceId">The resource ID of an existing network.</param>
+        /// <param name="subnetName">The name of an existing subnet within the specified network.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromExistingSubnet(string networkResourceId, string subnetName)
+        {
+            return this.FromExistingSubnet(networkResourceId, subnetName) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies an existing private subnet to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this subnet, that is the frontend that will be used.
+        /// Else, an automatically named new private frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="network">An existing network.</param>
+        /// <param name="subnetName">The name of an existing subnet within the specified network.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromExistingSubnet(INetwork network, string subnetName)
+        {
+            return this.FromExistingSubnet(network, subnetName) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies an existing private subnet to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this subnet, that is the frontend that will be used.
+        /// Else, an automatically named new private frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="subnet">An existing subnet.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromExistingSubnet(ISubnet subnet)
+        {
+            return this.FromExistingSubnet(subnet) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies the frontend to receive network traffic from.
         /// </summary>
         /// <param name="frontendName">An existing frontend name on this load balancer.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontend<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFrontend(string frontendName)
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromFrontend(string frontendName)
         {
-            return this.WithFrontend(frontendName) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+            return this.FromFrontend(frontendName) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
-        /// Specifies the backend port.
+        /// Specifies an existing public IP address to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this public IP address, that is the frontend that will be used.
+        /// Else, an automatically named new public frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
+        {
+            return this.FromExistingPublicIPAddress(publicIPAddress) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies an existing public IP address to receive network traffic from.
+        /// If this load balancer already has a frontend referencing this public IP address, that is the frontend that will be used.
+        /// Else, an automatically named new public frontend will be created implicitly on the load balancer.
+        /// </summary>
+        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromExistingPublicIPAddress(string resourceId)
+        {
+            return this.FromExistingPublicIPAddress(resourceId) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies that network traffic should be received on a new public IP address that is to be created along with the load balancer
+        /// in the same region and resource group but under the provided leaf DNS label, assuming it is available.
+        /// A new automatically-named public frontend will be implicitly created on this load balancer for each such new public IP address, so make
+        /// sure to use a unique DNS label.
+        /// </summary>
+        /// <param name="leafDnsLabel">A unique leaf DNS label to create the public IP address under.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromNewPublicIPAddress(string leafDnsLabel)
+        {
+            return this.FromNewPublicIPAddress(leafDnsLabel) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies that network traffic should be received on a new public IP address that is to be created along with the load balancer
+        /// based on the provided definition.
+        /// A new automatically-named public frontend will be implicitly created on this load balancer for each such new public IP address.
+        /// </summary>
+        /// <param name="pipDefinition">A definition for the new public IP.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> pipDefinition)
+        {
+            return this.FromNewPublicIPAddress(pipDefinition) as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies that network traffic should be received on a new public IP address that is to be automatically created woth default settings
+        /// along with the load balancer.
+        /// A new automatically-named public frontend will be implicitly created on this load balancer for each such new public IP address.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontend.Definition.IWithFrontendBeta<LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromNewPublicIPAddress()
+        {
+            return this.FromNewPublicIPAddress() as LoadBalancerInboundNatRule.Definition.IWithFrontendPort<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+        }
+
+        /// <summary>
+        /// Specifies a backend port to send network traffic to.
         /// If not specified, the same backend port number is assumed as that used by the frontend.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasBackendPort.UpdateDefinition.IWithBackendPort<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithBackendPort(int port)
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasBackendPort.UpdateDefinition.IWithBackendPort<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.ToBackendPort(int port)
         {
-            return this.WithBackendPort(port) as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.ToBackendPort(port) as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Specifies the backend port.
+        /// Specifies a backend port to send network traffic to.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasBackendPort.Update.IWithBackendPort<LoadBalancerInboundNatRule.Update.IUpdate>.WithBackendPort(int port)
+        LoadBalancerInboundNatRule.Update.IUpdate HasBackendPort.Update.IWithBackendPort<LoadBalancerInboundNatRule.Update.IUpdate>.ToBackendPort(int port)
         {
-            return this.WithBackendPort(port) as LoadBalancerInboundNatRule.Update.IUpdate;
+            return this.ToBackendPort(port) as LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies the backend port.
+        /// Specifies a backend port to send network traffic to.
         /// If not specified, the same backend port number is assumed as that used by the frontend.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasBackendPort.Definition.IWithBackendPort<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithBackendPort(int port)
+        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasBackendPort.Definition.IWithBackendPort<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.ToBackendPort(int port)
         {
-            return this.WithBackendPort(port) as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+            return this.ToBackendPort(port) as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
 
         /// <summary>
@@ -353,33 +514,33 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Specifies the frontend port.
+        /// Specifies the frontend port to receive network traffic on.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFrontendPort.UpdateDefinition.IWithFrontendPort<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.WithFrontendPort(int port)
+        LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> HasFrontendPort.UpdateDefinition.IWithFrontendPort<LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>>.FromFrontendPort(int port)
         {
-            return this.WithFrontendPort(port) as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+            return this.FromFrontendPort(port) as LoadBalancerInboundNatRule.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Specifies the frontend port.
+        /// Specifies the frontend port to receive network traffic on.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Update.IUpdate HasFrontendPort.Update.IWithFrontendPort<LoadBalancerInboundNatRule.Update.IUpdate>.WithFrontendPort(int port)
+        LoadBalancerInboundNatRule.Update.IUpdate HasFrontendPort.Update.IWithFrontendPort<LoadBalancerInboundNatRule.Update.IUpdate>.FromFrontendPort(int port)
         {
-            return this.WithFrontendPort(port) as LoadBalancerInboundNatRule.Update.IUpdate;
+            return this.FromFrontendPort(port) as LoadBalancerInboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies the frontend port.
+        /// Specifies the frontend port to receive network traffic on.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontendPort.Definition.IWithFrontendPort<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.WithFrontendPort(int port)
+        LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule> HasFrontendPort.Definition.IWithFrontendPort<LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>>.FromFrontendPort(int port)
         {
-            return this.WithFrontendPort(port) as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
+            return this.FromFrontendPort(port) as LoadBalancerInboundNatRule.Definition.IWithAttach<LoadBalancer.Definition.IWithCreateAndInboundNatRule>;
         }
     }
 }

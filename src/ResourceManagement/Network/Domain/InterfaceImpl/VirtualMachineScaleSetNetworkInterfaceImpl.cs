@@ -43,13 +43,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// Gets true if IP forwarding is enabled in this network interface.
         /// </summary>
         bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIPForwardingEnabled
         {
             get
             {
                 return this.IsIPForwardingEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets true if accelerated networkin is enabled for this network interface.
+        /// </summary>
+        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBaseBeta.IsAcceleratedNetworkingEnabled
+        {
+            get
+            {
+                return this.IsAcceleratedNetworkingEnabled();
             }
         }
 
