@@ -38,26 +38,26 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public void SetActiveSendReceiveLink(ActiveSendReceiveClientLink sendReceiveClientLink)
         {
             this.activeSendReceiveClientLink = sendReceiveClientLink;
-            this.activeSendReceiveClientLink.Link.Closed += new EventHandler(this.OnSendReceiveLinkClosed);
+            this.activeSendReceiveClientLink.Link.Closed += this.OnSendReceiveLinkClosed;
             if (this.activeSendReceiveClientLink.Link.State == AmqpObjectState.Opened)
             {
                 this.SetRenewCBSTokenTimer(sendReceiveClientLink);
             }
         }
 
+        void OnSendReceiveLinkClosed(object sender, EventArgs e)
+        {
+            this.ChangeRenewTimer(this.activeSendReceiveClientLink, Timeout.InfiniteTimeSpan);
+        }
+
         public void SetActiveRequestResponseLink(ActiveRequestResponseLink requestResponseLink)
         {
             this.activeRequestResponseClientLink = requestResponseLink;
-            this.activeRequestResponseClientLink.Link.Closed += new EventHandler(this.OnRequestResponseLinkClosed);
+            this.activeRequestResponseClientLink.Link.Closed += this.OnRequestResponseLinkClosed;
             if (this.activeRequestResponseClientLink.Link.State == AmqpObjectState.Opened)
             {
                 this.SetRenewCBSTokenTimer(requestResponseLink);
             }
-        }
-
-        void OnSendReceiveLinkClosed(object sender, EventArgs e)
-        {
-            this.ChangeRenewTimer(this.activeSendReceiveClientLink, Timeout.InfiniteTimeSpan);
         }
 
         void OnRequestResponseLinkClosed(object sender, EventArgs e)

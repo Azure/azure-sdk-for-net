@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.NotNull(session);
             Assert.NotNull(message);
 
-            this.totalMessageCount++;
+            Interlocked.Increment(ref this.totalMessageCount);
             TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
 
             if (this.receiveMode == ReceiveMode.PeekLock && !this.sessionHandlerOptions.AutoComplete)

@@ -8,6 +8,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using Core;
     using Xunit;
@@ -245,7 +246,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 async (message, token) =>
                 {
                     TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
-                    count++;
+                    Interlocked.Increment(ref count);
                     if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
                     {
                         await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
@@ -281,7 +282,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 async (message, token) => 
                 {
                     TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
-                    count++;
+                    Interlocked.Increment(ref count);
                     await Task.CompletedTask;
                 },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
