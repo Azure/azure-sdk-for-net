@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Network.Fluent.PacketCapture.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-
     using System.Collections.Generic;
 
     internal partial class PacketCaptureImpl 
@@ -31,6 +30,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Required if no local file path is provided.
         /// </summary>
         /// <param name="storageId">The ID of the storage account to save the packet capture session.</param>
+        /// <return>The next stage of the definition.</return>
         PacketCapture.Definition.IWithCreateAndStoragePath PacketCapture.Definition.IWithStorageLocation.WithStorageAccountId(string storageId)
         {
             return this.WithStorageAccountId(storageId) as PacketCapture.Definition.IWithCreateAndStoragePath;
@@ -100,13 +100,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets Stops a specified packet capture session asynchronously.
+        /// Stops a specified packet capture session asynchronously.
         /// </summary>
-        /// <summary>
-        /// Gets the handle to the REST call.
-        /// </summary>
+        /// <return>The handle to the REST call.</return>
         async Task Microsoft.Azure.Management.Network.Fluent.IPacketCapture.StopAsync(CancellationToken cancellationToken)
-        {           
+        {
+ 
             await this.StopAsync(cancellationToken);
         }
 
@@ -172,6 +171,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Network.Fluent.IPacketCapture.Stop()
         {
+ 
             this.Stop();
         }
 

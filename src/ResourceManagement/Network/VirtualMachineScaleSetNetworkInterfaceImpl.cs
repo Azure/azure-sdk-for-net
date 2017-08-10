@@ -41,6 +41,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             this.networkManager = networkManager;
         }
 
+        ///GENMHASH:FC029B56426CB2BA739B4DBD40ECED47:38C266FAF73EE2B36653A8316233F345
+        public bool IsAcceleratedNetworkingEnabled()
+        {
+            return (Inner.EnableAcceleratedNetworking.HasValue) ? Inner.EnableAcceleratedNetworking.Value : false;
+        }
+
         internal bool IsIPForwardingEnabled()
         {
             if (Inner.EnableIPForwarding.HasValue)

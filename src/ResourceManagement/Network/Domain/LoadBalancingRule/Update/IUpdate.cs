@@ -57,6 +57,25 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
     }
 
     /// <summary>
+    /// The stage of a load balancing rule update allowing to specify the probe to associate with the rule.
+    /// </summary>
+    public interface IWithProbe 
+    {
+        /// <summary>
+        /// Associates the specified existing HTTP or TCP probe of this load balancer with the load balancing rule.
+        /// </summary>
+        /// <param name="name">The name of an existing HTTP or TCP probe.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate WithProbe(string name);
+
+        /// <summary>
+        /// Removes any association with a probe and falls back to Azure's default probing mechanism.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IUpdate WithoutProbe();
+    }
+
+    /// <summary>
     /// The stage of a load balancing rule update allowing to modify the frontend port.
     /// </summary>
     public interface IWithFrontendPort  :
@@ -75,7 +94,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithBackendPort,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithFloatingIP,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithIdleTimeoutInMinutes,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithLoadDistribution
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithLoadDistribution,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update.IWithProbe
     {
     }
 

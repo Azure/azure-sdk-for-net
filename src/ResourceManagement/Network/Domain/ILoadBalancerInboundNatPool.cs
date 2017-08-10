@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// An immutable client-side representation of an inbound NAT rule.
+    /// A client-side representation of an inbound NAT pool.
     /// </summary>
     public interface ILoadBalancerInboundNatPool  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

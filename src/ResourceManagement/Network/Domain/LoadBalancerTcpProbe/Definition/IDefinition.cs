@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definit
     /// <summary>
     /// The final stage of the probe definition.
     /// At this stage, any remaining optional settings can be specified, or the probe definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The parent resource type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithIntervalInSeconds<ParentT>,
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definit
     /// <summary>
     /// The entirety of a probe definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IWithAttach<ParentT>,
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definit
     /// <summary>
     /// The stage of the TCP probe definition allowing to specify the probe interval.
     /// </summary>
-    /// <typeparam name="ParentT">The parent resource type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithIntervalInSeconds<ParentT> 
     {
         /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definit
     /// <summary>
     /// The stage of the TCP probe definition allowing to specify the port number to monitor.
     /// </summary>
-    /// <typeparam name="ParentT">The parent resource type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPort<ParentT> 
     {
         /// <summary>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definit
     /// <summary>
     /// The stage of the TCP probe definition allowing to specify the number of unsuccessful probes before failure is determined.
     /// </summary>
-    /// <typeparam name="ParentT">The parent resource type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithNumberOfProbes<ParentT> 
     {
         /// <summary>

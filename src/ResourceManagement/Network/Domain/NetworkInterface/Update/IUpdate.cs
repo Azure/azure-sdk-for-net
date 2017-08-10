@@ -49,7 +49,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
     /// <summary>
     /// The template for an update operation, containing all the settings that
     /// can be modified.
-    /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
@@ -61,7 +60,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithIPForwarding,
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithDnsServer,
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithIPConfiguration,
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithLoadBalancer
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithLoadBalancer,
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithAcceleratedNetworking
     {
     }
 
@@ -240,5 +240,26 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutIPForwarding();
+    }
+
+    /// <summary>
+    /// The stage of the network interface definition allowing to disable accelerated networking.
+    /// </summary>
+    public interface IWithAcceleratedNetworking  :
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IWithAcceleratedNetworkingBeta
+    {
+    }
+
+    /// <summary>
+    /// The stage of the network interface definition allowing to disable accelerated networking.
+    /// </summary>
+    public interface IWithAcceleratedNetworkingBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Disables accelerated networking.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutAcceleratedNetworking();
     }
 }

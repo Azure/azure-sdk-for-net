@@ -791,11 +791,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
             }
             string lbNetworkId = null;
-            foreach (ILoadBalancerFrontend frontEnd in loadBalancer.Frontends.Values)
+            foreach (ILoadBalancerPrivateFrontend frontEnd in loadBalancer.PrivateFrontends.Values)
             {
-                if (frontEnd.Inner.Subnet.Id != null)
+                if (frontEnd.NetworkId != null)
                 {
-                    lbNetworkId = ResourceUtils.ParentResourcePathFromResourceId(frontEnd.Inner.Subnet.Id);
+                    lbNetworkId = frontEnd.NetworkId;
                 }
             }
 

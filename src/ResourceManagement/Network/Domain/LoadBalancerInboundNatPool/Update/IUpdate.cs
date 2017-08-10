@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
         /// <param name="from">The starting port number, between 1 and 65534.</param>
         /// <param name="to">The ending port number, greater than the starting port number and no more than 65534.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate WithFrontendPortRange(int from, int to);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Update.IUpdate FromFrontendPortRange(int from, int to);
     }
 
     /// <summary>

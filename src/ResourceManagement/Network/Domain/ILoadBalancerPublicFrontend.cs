@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     /// <summary>
-    /// An immutable client-side representation of a public frontend of an Internet-facing load balancer.
+    /// A client-side representation of a public frontend of an Internet-facing load balancer.
     /// </summary>
     public interface ILoadBalancerPublicFrontend  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

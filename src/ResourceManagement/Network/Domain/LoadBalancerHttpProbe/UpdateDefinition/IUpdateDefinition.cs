@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The entirety of a probe definition as part of a load balancer update.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<ParentT>,
@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The final stage of the probe definition.
     /// At this stage, any remaining optional settings can be specified, or the probe definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithPort<ParentT>,
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The stage of the HTTP probe definition allowing to specify the number of unsuccessful probes before failure is determined.
     /// </summary>
-    /// <typeparam name="ParentT">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithNumberOfProbes<ParentT> 
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The stage of the HTTP probe definition allowing to specify the probe interval.
     /// </summary>
-    /// <typeparam name="ParentT">The parent resource type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithIntervalInSeconds<ParentT> 
     {
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The stage of the probe definition allowing to specify the port to monitor.
     /// </summary>
-    /// <typeparam name="ParentT">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPort<ParentT> 
     {
         /// <summary>
@@ -83,9 +83,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// <summary>
     /// The stage of the probe definition allowing to specify the HTTP request path for the probe to monitor.
     /// </summary>
-    /// <typeparam name="ParentT">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithRequestPath<ParentT> 
     {
+        /// <summary>
+        /// Specifies the HTTP request path for the probe to monitor.
+        /// </summary>
+        /// <param name="requestPath">A request path.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<ParentT> WithRequestPath(string requestPath);
     }
 }

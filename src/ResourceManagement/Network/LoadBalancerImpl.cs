@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Text;
     using System;
     using System.Threading;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     /// <summary>
     /// Implementation of the LoadBalancer interface.
@@ -29,7 +30,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancer.Definition.IDefinition,
         IUpdate
     {
-        static string Default = "default";
         private IDictionary<string, string> nicsInBackends = new Dictionary<string, string>();
         private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
 
@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private Dictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
 
         ///GENMHASH:A5942A0C76A5AF979ACC449D61F54472:55E548B15E635A8197D52049D3FAB8D3
+
         internal  LoadBalancerImpl (
             string name,
             LoadBalancerInner innerModel,
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:420B9F8BE887CC0E8BEEE7DBFEAED60C
+        ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:07F76B91153B1FE6C709A470C5523630
         override public async Task<ILoadBalancer> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await GetInnerAsync(cancellationToken);
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
+        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:5EE0BCA571B986920B8777C47D7E1803
         protected override async Task<LoadBalancerInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.LoadBalancers.GetAsync(ResourceGroupName, Name, cancellationToken: cancellationToken);
@@ -75,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             InitializeInboundNatPoolsFromInner();
         }
 
-        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:A2B77D58139C0FC91365D685293E8053
+        ///GENMHASH:AC21A10EE2E745A89E94E447800452C1:C43E642BBC26F26A6EAF8361D54DEB6B
         override protected void BeforeCreating ()
         {
             // Account for the newly created public IPs
@@ -95,53 +97,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update probes
             var innerProbes = InnersFromWrappers<ProbeInner, ILoadBalancerHttpProbe>(httpProbes.Values);
-            innerProbes = InnersFromWrappers(tcpProbes.Values, innerProbes);
-            if (innerProbes == null)
-            {
-                innerProbes = new List<ProbeInner>();
-            }
-            Inner.Probes = innerProbes;
+            Inner.Probes = InnersFromWrappers(tcpProbes.Values, innerProbes) ?? new List<ProbeInner>();
 
             // Reset and update backends
-            var innerBackends = InnersFromWrappers<BackendAddressPoolInner, ILoadBalancerBackend>(backends.Values);
-            if (null == innerBackends)
-            {
-                innerBackends = new List<BackendAddressPoolInner>();
-            }
-            Inner.BackendAddressPools = innerBackends;
+            Inner.BackendAddressPools = InnersFromWrappers<BackendAddressPoolInner, ILoadBalancerBackend>(backends.Values) ?? new List<BackendAddressPoolInner>();
 
             // Reset and update frontends
-            Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
-            var innerFrontends = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values);
-            if (null == innerFrontends)
-            {
-                innerFrontends = new List<FrontendIPConfigurationInner>();
-            }
-            Inner.FrontendIPConfigurations = innerFrontends;
+            Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, ILoadBalancerFrontend>(frontends.Values) ?? new List<FrontendIPConfigurationInner>();
 
             // Reset and update inbound NAT rules
-            var innerNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values);
-            if (null == innerNatRules)
-            {
-                innerNatRules = new List<InboundNatRuleInner>();
-            }
-            Inner.InboundNatRules = innerNatRules;
+            Inner.InboundNatRules = InnersFromWrappers<InboundNatRuleInner, ILoadBalancerInboundNatRule>(inboundNatRules.Values) ?? new List<InboundNatRuleInner>();
             foreach (var natRule in inboundNatRules.Values) {
                 // Clear deleted frontend references
                 var frontendRef = natRule.Inner.FrontendIPConfiguration;
-                if (frontendRef != null && !this.Frontends().ContainsKey(ResourceUtils.NameFromResourceId(frontendRef.Id)))
+                if (frontendRef != null && !Frontends().ContainsKey(ResourceUtils.NameFromResourceId(frontendRef.Id)))
                 {
                     natRule.Inner.FrontendIPConfiguration = null;
                 }
             }
 
             // Reset and update inbound NAT pools
-            var innerNatPools = InnersFromWrappers<InboundNatPoolInner, ILoadBalancerInboundNatPool>(inboundNatPools.Values);
-            if (null == innerNatPools)
-            {
-                innerNatPools = new List<InboundNatPoolInner>();
-            }
-            Inner.InboundNatPools = innerNatPools;
+            Inner.InboundNatPools = InnersFromWrappers<InboundNatPoolInner, ILoadBalancerInboundNatPool>(inboundNatPools.Values) ?? new List<InboundNatPoolInner>();
             foreach (var natPool in inboundNatPools.Values) {
                 // Clear deleted frontend references
                 var frontendRef = natPool.Inner.FrontendIPConfiguration;
@@ -152,12 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             // Reset and update load balancing rules
-            var innerRules = InnersFromWrappers<LoadBalancingRuleInner, ILoadBalancingRule>(loadBalancingRules.Values);
-            if (innerRules == null)
-            {
-                innerRules = new List<LoadBalancingRuleInner>();
-            }
-            Inner.LoadBalancingRules = innerRules;
+            Inner.LoadBalancingRules = InnersFromWrappers<LoadBalancingRuleInner, ILoadBalancingRule>(loadBalancingRules.Values) ?? new List<LoadBalancingRuleInner>();
             foreach (var lbRule in loadBalancingRules.Values) {
                 // Clear deleted frontend references
                 var frontendRef = lbRule.Inner.FrontendIPConfiguration;
@@ -183,7 +154,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:F91F57741BB7E185BF012523964DEED0:913EF94ED897E3845748DD6CF160D61F
+        ///GENMHASH:F91F57741BB7E185BF012523964DEED0:4D35F8C6136412D7A9A5FFDF704E896B
         override protected void AfterCreating ()
         {
             // Update the NICs to point to the backend pool
@@ -191,6 +162,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 List<Exception> nicExceptions = new List<Exception>();
 
+                // Update the NICs to point to the backend pool
                 foreach (var nicInBackend in nicsInBackends)
                 {
                     string nicId = nicInBackend.Key;
@@ -222,7 +194,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:7501824DEE4570F3E78F9698BA2828B0
+        ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:9E4F8026252C92149A652BE4B5C7D722
         protected async override Task<LoadBalancerInner> CreateInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.LoadBalancers.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
@@ -328,19 +300,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 .ToString();
         }
 
-        ///GENMHASH:246406B860B0B19EFB0E9B11EC82DA0F:AFEC509255ABE08FC417203DFF8CF829
+        ///GENMHASH:246406B860B0B19EFB0E9B11EC82DA0F:833B17009FF35743D36834ABBB879D14
         internal LoadBalancerImpl WithFrontend (LoadBalancerFrontendImpl frontend)
         {
-            if (frontend == null)
-                return null;
-            else
+            if (frontend != null)
             {
                 frontends[frontend.Name()] = frontend;
-                return this;
             }
+            return this;
         }
 
-        ///GENMHASH:64E42CE15DE3A150EC42DE2481D5E526:CB3A71B025CFA3400615CB6C028C92BB
+        ///GENMHASH:64E42CE15DE3A150EC42DE2481D5E526:8896B384A4EC2FA65D253008E5E42E2B
         internal LoadBalancerImpl WithProbe (LoadBalancerProbeImpl probe)
         {
             if (probe == null)
@@ -356,171 +326,58 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:333C1A12C26F7A62DCF62ABD2396653E:86453EFA7B9520152735FB981A0DB7E0
+        ///GENMHASH:333C1A12C26F7A62DCF62ABD2396653E:88D8263D5E5F61392470C09B0EF1938B
         internal LoadBalancerImpl WithLoadBalancingRule (LoadBalancingRuleImpl loadBalancingRule)
         {
-            if (loadBalancingRule == null)
-                return null;
-            else {
+            if (loadBalancingRule != null)
+            {
                 loadBalancingRules[loadBalancingRule.Name()] = loadBalancingRule;
-                return this;
             }
+            return this;
         }
 
-        ///GENMHASH:554A06FC8D7F7A98EA7BBC089864A7E0:811F64EF11CAFFC6E3928C92F87C970A
+        ///GENMHASH:554A06FC8D7F7A98EA7BBC089864A7E0:00D1EA5928DEA90E2505BE70BA76372C
         internal LoadBalancerImpl WithInboundNatRule (LoadBalancerInboundNatRuleImpl inboundNatRule)
         {
-            if (inboundNatRule == null)
-                return null;
-            else {
+            if (inboundNatRule != null)
+            {
                 inboundNatRules[inboundNatRule.Name()] = inboundNatRule;
-                return this;
             }
+            return this;
         }
 
-        ///GENMHASH:EEDAA901A91D9278E5CB6CC4ECF8561E:15D1B7E0FDC12BCE34A6DF99F6F7DA8B
+        ///GENMHASH:EEDAA901A91D9278E5CB6CC4ECF8561E:98640888B807006233FAB29F0223B74D
         internal LoadBalancerImpl WithInboundNatPool (LoadBalancerInboundNatPoolImpl inboundNatPool)
         {
-            if (inboundNatPool == null)
-                return null;
-            else {
+            if (inboundNatPool != null)
+            {
                 inboundNatPools[inboundNatPool.Name()] = inboundNatPool;
-                return this;
             }
+            return this;
         }
 
-        ///GENMHASH:74B04F72B00A53F95B09960843953FAA:B6A0CA4C00D439D0A62611FFBFCB1D01
+        ///GENMHASH:74B04F72B00A53F95B09960843953FAA:4F027AEBFAC53ECDC5ED96364FD97831
         internal LoadBalancerImpl WithBackend (LoadBalancerBackendImpl backend)
         {
-            if (backend == null)
-                return null;
-            else {
+            if (backend != null)
+            {
                 backends[backend.Name()] = backend;
-                return this;
             }
-        }
-
-        ///GENMHASH:9865456A38EDF249959594524980AA77:F11CAC055A6EC52B719989849E641491
-        internal LoadBalancerImpl WithNewPublicIPAddress ()
-        {
-            // Autogenerated DNS leaf label for the PIP
-            string dnsLeafLabel = Name.ToLower().Replace(" ", "").Replace("\t", "").Replace("\n", "");
-            return WithNewPublicIPAddress(dnsLeafLabel);
-        }
-
-        ///GENMHASH:978AA5D6B234EB71E90EC88584153043:1A0B53A6A261C7B22D07B78C2A5F3801
-        internal LoadBalancerImpl WithNewPublicIPAddress (string dnsLeafLabel)
-        {
-            var precreatablePIP = Manager.PublicIPAddresses.Define(dnsLeafLabel)
-                .WithRegion(Region);
-            ICreatable<IPublicIPAddress> creatablePip;
-            if (newGroup == null)
-            {
-                creatablePip = precreatablePIP.WithExistingResourceGroup(ResourceGroupName);
-            }
-            else
-            {
-                creatablePip = precreatablePIP.WithNewResourceGroup(newGroup);
-            }
-
-            return WithNewPublicIPAddress(creatablePip);
-        }
-
-        ///GENMHASH:FE2FB4C2B86589D7D187246933236472:88C4A2955702F46AE10229A90EB45585
-        internal LoadBalancerImpl WithNewPublicIPAddress(ICreatable<IPublicIPAddress> creatablePIP)
-        {
-            creatablePIPKeys.Add(creatablePIP.Key, Default);
-            AddCreatableDependency(creatablePIP as IResourceCreator<IHasId>);
             return this;
         }
 
-        ///GENMHASH:6FE68F40574F5B84C669001E20CC658F:B6D0870A3BC4BB18331A504A1F279958
-        internal LoadBalancerImpl WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
+        ///GENMHASH:380B462B2D97E5D84F07F3F7B18F67AF:9A9DA0D7B5F5A30A997CC412F2B0BE8B
+        internal LoadBalancerImpl WithExistingVirtualMachine(IHasNetworkInterfaces vm, string backendName)
         {
-            return WithExistingPublicIPAddress(publicIPAddress.Id, Default);
-        }
-
-        ///GENMHASH:864138CFB5238B5203B5286B54C52AE4:11E731FF72BB432C1D5A698D816EB629
-        private LoadBalancerImpl WithExistingPublicIPAddress (string resourceId, string frontendName)
-        {
-            if (frontendName == null) {
-                frontendName = Default;
-            }
-
-            return DefinePublicFrontend(frontendName)
-                .WithExistingPublicIPAddress(resourceId)
-                .Attach();
-        }
-
-        internal LoadBalancerImpl WithExistingSubnet (INetwork network, string subnetName)
-        {
-            return DefinePrivateFrontend(Default)
-                .WithExistingSubnet(network, subnetName)
-                .Attach();
-        }
-
-        ///GENMHASH:380B462B2D97E5D84F07F3F7B18F67AF:C52D7AB8B66B03B9F1C3D1A3699B905F
-        private LoadBalancerImpl WithExistingVirtualMachine (IHasNetworkInterfaces vm, string backendName)
-        {
-            if (backendName == null) {
-                backendName = Default;
-            }
-
-            DefineBackend(backendName).Attach();
-
-            if (vm.PrimaryNetworkInterfaceId != null) {
-                nicsInBackends[vm.PrimaryNetworkInterfaceId] = backendName.ToLower();
-            }
-
-            return this;
-        }
-
-        ///GENMHASH:DFE9D388863B0ACFAC02ED04C33B6964:030CDA714284493D175D06E0EC0DC0F0
-        internal LoadBalancerImpl WithExistingVirtualMachines (params IHasNetworkInterfaces[] vms)
-        {
-            if (vms != null) {
-                foreach (IHasNetworkInterfaces vm in vms) {
-                    WithExistingVirtualMachine(vm, null);
+            if (backendName != null)
+            {
+                DefineBackend(backendName).Attach();
+                if (vm.PrimaryNetworkInterfaceId != null)
+                {
+                    nicsInBackends[vm.PrimaryNetworkInterfaceId] = backendName.ToLower();
                 }
             }
             return this;
-        }
-
-        ///GENMHASH:681EAD9E22B4456AE914816B5A9E04E5:999E5525EF37760D980CB84E6FED7230
-        internal LoadBalancerImpl WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
-        {
-            DefineLoadBalancingRule(Default)
-                .WithFrontendPort(frontendPort)
-                .WithFrontend(Default)
-                .WithBackendPort(backendPort)
-                .WithBackend(Default)
-                .WithProtocol(protocol)
-                .WithProbe(Default)
-                .Attach();
-            return this;
-        }
-
-        ///GENMHASH:A35BE9E6064D3B6774D34DFEA041998E:4BAB91751BCC1B4FF8EBF5F20815D8A8
-        internal LoadBalancerImpl WithLoadBalancingRule(int port, TransportProtocol protocol)
-        {
-            return WithLoadBalancingRule(port, protocol, port);
-        }
-
-        ///GENMHASH:DFC0B302155195C00C3D13A6B803B984:A090671271F01103B33881CC6A8FD2B5
-        internal LoadBalancerImpl WithTcpProbe (int port)
-        {
-            return DefineTcpProbe(Default)
-                .WithPort(port)
-                .Attach();
-        }
-
-        ///GENMHASH:57438CDF8E0AD1C846578BD2FA407389:BBB570164B1B87E87935A91075A29D9F
-        internal LoadBalancerImpl WithHttpProbe (string path)
-        {
-            return DefineHttpProbe(Default)
-                .WithRequestPath(path)
-                .WithPort(80)
-                .Attach();
         }
 
         ///GENMHASH:83EB7E99BCC747CE59AF36FB9564E603:F43FF67D037F98DA2675C048997AB3E4
@@ -629,12 +486,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return DefineFrontend(name);
         }
 
-        ///GENMHASH:2CAA0883E5A09AD81DE423447D34059F:6E59FBC0A79C2E7A24C0489E77BA5388
+        ///GENMHASH:2CAA0883E5A09AD81DE423447D34059F:D0940B5B5FD34ED81BC375276F675E4B
         private LoadBalancerFrontendImpl DefineFrontend (string name)
         {
             ILoadBalancerFrontend frontend;
             if (!frontends.TryGetValue(name, out frontend))
             {
+                // Create if non-existent
                 FrontendIPConfigurationInner inner = new FrontendIPConfigurationInner()
                 {
                     Name = name
@@ -648,12 +506,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        ///GENMHASH:A21060E42B1DFECB63D4D27A101A8941:216CE2EE21AEF8230E16783DACA20570
+        ///GENMHASH:A21060E42B1DFECB63D4D27A101A8941:1DF3A4D565AC34CCC74741C6C36C9C4B
         internal LoadBalancerBackendImpl DefineBackend (string name)
         {
             ILoadBalancerBackend backend;
             if (!backends.TryGetValue(name, out backend))
             {
+                // Create if non-existent
                 BackendAddressPoolInner inner = new BackendAddressPoolInner()
                 {
                     Name = name
@@ -720,18 +579,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal LoadBalancerBackendImpl UpdateBackend (string name)
         {
             return TryGetValue<LoadBalancerBackendImpl, ILoadBalancerBackend>(name, backends);
-        }
-
-        ///GENMHASH:DC06D68BE187D2319D467B4F153BCADA:EE937BC7B114D92CB406766F267EDDE6
-        internal LoadBalancerFrontendImpl UpdateInternetFrontend (string name)
-        {
-            return UpdateFrontend(name);
-        }
-
-        ///GENMHASH:B2D72A99C1344D692AC00C2FAC29FF22:EE937BC7B114D92CB406766F267EDDE6
-        internal LoadBalancerFrontendImpl UpdateInternalFrontend (string name)
-        {
-            return UpdateFrontend(name);
         }
 
         private LoadBalancerFrontendImpl UpdateFrontend (string name)
@@ -819,7 +666,21 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return loadBalancingRules;
         }
 
-        ///GENMHASH:6352ECA72191EB7B29EABE1E30B18CF4:CF345546D001F32F4850EF402DE6ED22
+        ///GENMHASH:327A257714E97E0CC9195D07369866F6:4D7D14E19D9E3A3FB56435CFB0209907
+        internal IReadOnlyDictionary<string, ILoadBalancerPublicFrontend> PublicFrontends()
+        {
+            Dictionary<string, ILoadBalancerPublicFrontend> publicFrontends = new Dictionary<string, ILoadBalancerPublicFrontend>();
+            foreach (var frontend in Frontends().Values)
+            {
+                if (frontend.IsPublic)
+                {
+                    publicFrontends[frontend.Name] = (ILoadBalancerPublicFrontend)frontend;
+                }
+            }
+            return publicFrontends;
+        }
+
+        ///GENMHASH:49DF224622C157AFD9E284E410CDBB09:11DED4206FF1CBB0CC83F0C2CE7AE6E2
         internal IReadOnlyList<string> PublicIPAddressIds()
         {
             List<string> publicIPAddressIds = new List<string>();
@@ -835,18 +696,241 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return publicIPAddressIds;
         }
 
-        ///GENMHASH:AF5672F546B4A252E729CBD06FEDA19B:E2981ABD5069A930F56B7E822F9B5AD2
-        public LoadBalancerImpl WithFrontendSubnet(INetwork network, string subnetName)
+
+        ///GENMHASH:19F616FD24A9FEB061A4AD97B44DD095:345305550E7CF60E8C5F17B68CA0E7FE
+        internal ILoadBalancerPrivateFrontend EnsurePrivateFrontendWithSubnet(string networkId, string subnetName)
         {
-            return this.DefinePrivateFrontend(Default)
-                .WithExistingSubnet(network, subnetName)
-                .Attach();
+            var frontend = FindPrivateFrontendWithSubnet(networkId, subnetName);
+            if (networkId == null || subnetName == null)
+            {
+                return null;
+            }
+            else if (frontend != null)
+            {
+                return frontend;
+            }
+            else
+            {
+                // Create new frontend
+                LoadBalancerFrontendImpl fe = this.EnsureUniqueFrontend()
+                    .WithExistingSubnet(networkId, subnetName)
+                    .WithPrivateIPAddressDynamic();
+                    fe.Attach();
+                    return fe;
+            }
         }
 
-        ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:71CD922059C7BFD8A1A0B94B12F892B7
-        public LoadBalancerImpl WithExistingPublicIPAddress(string resourceId)
+        ///GENMHASH:A6CD452F7C969940992AA0D7720B2914:EE937BC7B114D92CB406766F267EDDE6
+        internal LoadBalancerFrontendImpl UpdatePublicFrontend(string name)
         {
-            return WithExistingPublicIPAddress(resourceId, Default);
+            return UpdateFrontend(name);
+        }
+
+        ///GENMHASH:7A47EDC250FB1D65BD3C85FBA997065A:EE937BC7B114D92CB406766F267EDDE6
+        internal LoadBalancerFrontendImpl UpdatePrivateFrontend(string name)
+        {
+            return UpdateFrontend(name);
+        }
+
+        ///GENMHASH:2B1D79EF0701484A69266710AE199343:AC8E9ABFEAE77AB7D8C62DCAA21B656D
+        internal IReadOnlyDictionary<string, ILoadBalancerPrivateFrontend> PrivateFrontends()
+        {
+            Dictionary<string, ILoadBalancerPrivateFrontend> privateFrontends = new Dictionary<string, ILoadBalancerPrivateFrontend>();
+            foreach (var frontend in Frontends().Values)
+            {
+                if (!frontend.IsPublic)
+                {
+                    privateFrontends[frontend.Name] = (ILoadBalancerPrivateFrontend)frontend;
+                }
+            }
+
+            return privateFrontends;
+        }
+
+        ///GENMHASH:0F90AC639E99A672487C916042DA1057:E5371A50C84CD990F8AB546C8D62DD21
+        internal LoadBalancerImpl WithExistingPublicIPAddress(string resourceId, string frontendName)
+        {
+            if (frontendName == null)
+            {
+                return EnsureUniqueFrontend()
+                    .WithExistingPublicIPAddress(resourceId)
+                    .Parent;
+            }
+            else
+            {
+                return DefinePublicFrontend(frontendName)
+                    .WithExistingPublicIPAddress(resourceId)
+                    .Attach();
+            }
+        }
+
+        ///GENMHASH:27A109C0DDBADE2383C4EF4AD6402921:A0B87FE96153C9B2635B99AD88333E3E
+        internal ILoadBalancerPrivateFrontend FindPrivateFrontendWithSubnet(string networkId, string subnetName)
+        {
+            if (null == networkId || null == subnetName)
+            {
+                return null;
+            }
+
+            // Use existing frontend already pointing at this PIP, if any
+            foreach (var frontend in PrivateFrontends().Values)
+            {
+                if (frontend.NetworkId == null || frontend.SubnetName == null)
+                {
+                    continue;
+                }
+                else if (networkId.Equals(frontend.NetworkId, StringComparison.CurrentCultureIgnoreCase) && subnetName.Equals(frontend.SubnetName, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return frontend;
+                }
+            }
+            return null;
+        }
+
+        ///GENMHASH:78875D7320F151C84C51611FC09D4CC2:3EAA4712B5C494AD4AB8E1AA820E5A1C
+        protected LoadBalancerFrontendImpl EnsureUniqueFrontend()
+        {
+            string name = SdkContext.RandomResourceName("frontend", 20);
+            LoadBalancerFrontendImpl frontend = DefineFrontend(name);
+            frontend.Attach();
+            return frontend;
+        }
+
+        ///GENMHASH:DAC7C95BFBE152B599EE795AE6AFEF02:6DA5669A031C8ADA844DD0A808F7E256
+        internal ILoadBalancerPublicFrontend FindFrontendByPublicIPAddress(IPublicIPAddress publicIPAddress)
+        {
+            if (publicIPAddress == null)
+            {
+                return null;
+            }
+            else
+            {
+                return FindFrontendByPublicIPAddress(publicIPAddress.Id);
+            }
+        }
+
+        ///GENMHASH:F6E2C642138E5C0CE20400B169E547D5:E812B3D5F4327FA2E71DF8EB96800C4C
+        internal ILoadBalancerPublicFrontend FindFrontendByPublicIPAddress(string pipId)
+        {
+            if (pipId == null)
+            {
+                return null;
+            }
+
+            // Use existing frontend already pointing at this PIP, if any
+            foreach (var frontend in PublicFrontends().Values)
+            {
+                if (frontend.PublicIPAddressId == null)
+                {
+                    continue;
+                }
+                else if (pipId.Equals(frontend.PublicIPAddressId, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return frontend;
+                }
+            }
+            return null;
+        }
+
+        ///GENMHASH:51714851388882936938461B23BE6E15:647F71B404B60D09BE9E1A19A4240853
+        internal LoadBalancerBackendImpl EnsureUniqueBackend()
+        {
+            string name = SdkContext.RandomResourceName("backend", 20);
+            LoadBalancerBackendImpl backend = DefineBackend(name);
+            backend.Attach();
+            return backend;
+        }
+
+        ///GENMHASH:5368AC7579C6EE249C0AD6A90678BF35:DBC4E47BA426D019C948CDD4FF3805F0
+        internal ILoadBalancerPublicFrontend EnsurePublicFrontendWithPip(string pipId)
+        {
+            var frontend = FindFrontendByPublicIPAddress(pipId);
+            if (pipId == null)
+            {
+                return null;
+            }
+            else if (frontend != null)
+            {
+                return frontend;
+            }
+            else
+            {
+                // Create new frontend
+                LoadBalancerFrontendImpl fe = EnsureUniqueFrontend()
+                    .WithExistingPublicIPAddress(pipId);
+                fe.Attach();
+                return fe;
+            }
+        }
+
+        ///GENMHASH:735F89D9F262D35C21C704F4E6923010:4B39DEE3BEA30CE34F8B69B44F6D8AA6
+        internal SubResource EnsureFrontendRef(string name)
+        {
+            // Ensure existence of frontend, creating one if needed
+            LoadBalancerFrontendImpl frontend;
+            if (name == null)
+            {
+                frontend = EnsureUniqueFrontend();
+            }
+            else
+            {
+                frontend = DefineFrontend(name);
+                frontend.Attach();
+            }
+
+            // Return frontend reference
+            return new SubResource(id: FutureResourceId() + "/frontendIPConfigurations/" + frontend.Name());
+        }
+
+        ///GENMHASH:0DD84D78FBDC44F17C987B4E4F0943A1:72AF6C9B67EFB1A3C9DC1BFCEB5C0559
+        internal LoadBalancerImpl WithNewPublicIPAddress(ICreatable<IPublicIPAddress> creatablePip, string frontendName)
+        {
+            string existingPipFrontendName = null;
+            creatablePIPKeys.TryGetValue(creatablePip.Key, out existingPipFrontendName);
+            if (frontendName == null)
+            {
+                if (existingPipFrontendName != null)
+                {
+                    // Reuse frontend already associated with this PIP
+                    frontendName = existingPipFrontendName;
+                }
+                else
+                {
+                    // Auto-named unique frontend
+                    frontendName = EnsureUniqueFrontend().Name();
+                }
+            }
+
+            if (existingPipFrontendName == null)
+            {
+                // No frontend associated with this PIP yet so create new association
+                creatablePIPKeys[creatablePip.Key] = frontendName;
+                AddCreatableDependency(creatablePip as IResourceCreator <IHasId>);
+            }
+            else if (!existingPipFrontendName.Equals(frontendName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                // Existing PIP definition already in use but under a different frontend, so error
+                throw new ArgumentOutOfRangeException("This public IP address definition is already associated with a frontend under a different name.");
+            }
+
+            return this;
+        }
+
+        ///GENMHASH:E7EE7F252C6DAC731132F0637AF275BB:E6A59D91BAA41B3643CF4769E510F3A6
+        internal LoadBalancerImpl WithNewPublicIPAddress(string dnsLeafLabel, string frontendName)
+        {
+            var precreatablePIP = Manager.PublicIPAddresses.Define(dnsLeafLabel)
+                .WithRegion(RegionName);
+            ICreatable<IPublicIPAddress> creatablePip;
+            if (newGroup == null)
+            {
+                creatablePip = precreatablePIP.WithExistingResourceGroup(ResourceGroupName).WithLeafDomainLabel(dnsLeafLabel);
+            }
+            else
+            {
+                creatablePip = precreatablePIP.WithNewResourceGroup(newGroup).WithLeafDomainLabel(dnsLeafLabel);
+            }
+            return WithNewPublicIPAddress(creatablePip, frontendName);
         }
     }
 }

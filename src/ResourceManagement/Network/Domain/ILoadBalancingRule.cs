@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// An immutable client-side representation of an HTTP load balancing rule.
+    /// A client-side representation of an HTTP load balancing rule.
     /// </summary>
     public interface ILoadBalancingRule  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

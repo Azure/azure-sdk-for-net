@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateD
     /// <summary>
     /// The entirety of a probe definition as part of a load balancer update.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<ParentT>,
@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateD
     /// <summary>
     /// The final stage of the probe definition.
     /// At this stage, any remaining optional settings can be specified, or the probe definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithNumberOfProbes<ParentT>,

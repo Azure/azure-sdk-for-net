@@ -10,6 +10,8 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Xunit;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using System.Collections.Generic;
 
 namespace Fluent.Tests.Network.LoadBalancerHelpers
 {
@@ -18,17 +20,14 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     /// </summary>
     public class InternetMinimal : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
-        private IPublicIPAddresses pips;
-        private IVirtualMachines vms;
-        private INetworks networks;
+        private IComputeManager computeManager;
         private LoadBalancerHelper loadBalancerHelper;
-        private IAvailabilitySets availabilitySets;
 
-        public InternetMinimal(IVirtualMachines vms, [CallerMemberName] string methodName = "testframework_failed")
+        public InternetMinimal(IComputeManager computeManager, [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -38,68 +37,53 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
 
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
-            pips = resources.Manager.PublicIPAddresses;
-            availabilitySets = vms.Manager.AvailabilitySets;
-            networks = resources.Manager.Networks;
-
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
-            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
+            var existingVMs = loadBalancerHelper.EnsureVMs(resources.Manager.Networks, computeManager, 2);
+            string pipDnsLabel = SdkContext.RandomResourceName("pip", 20);
 
             // Create a load balancer
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
                         .WithRegion(loadBalancerHelper.Region)
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
-                        
-                        // Frontend (default)
-                        .WithExistingPublicIPAddress(existingPips.ElementAt(0))
-                        
-                        // Backend (default)
-                        .WithExistingVirtualMachines(existingVMs.ToArray())
-                        
-                        // Probe (default)
-                        .WithTcpProbe(22)
-                        
-                        // LB rule (default)
-                        .WithLoadBalancingRule(80, TransportProtocol.Tcp)
+
+                        // LB rule
+                        .DefineLoadBalancingRule("lbrule1")
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromNewPublicIPAddress(pipDnsLabel)
+                            .FromFrontendPort(80)
+                            .ToExistingVirtualMachines(new List<IHasNetworkInterfaces>(existingVMs))
+                            .Attach()
                         .Create();
 
             // Verify frontends
-            Assert.True(lb.Frontends.ContainsKey("default"));
-            var frontend = lb.Frontends["default"];
+            Assert.Equal(1, lb.Frontends.Count);
+            Assert.Equal(1, lb.PublicFrontends.Count);
+            Assert.Equal(0, lb.PrivateFrontends.Count);
+            var frontend = lb.Frontends.Values.First();
             Assert.Equal(1, frontend.LoadBalancingRules.Count);
-            Assert.True("default".Equals(frontend.LoadBalancingRules.Values.First().Name, StringComparison.OrdinalIgnoreCase));
+            Assert.True("lbrule1".Equals(frontend.LoadBalancingRules.Values.First().Name, StringComparison.OrdinalIgnoreCase));
             Assert.True(frontend.IsPublic);
-            var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
-            Assert.True(existingPips.First().Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
+            var publicFrontend = (ILoadBalancerPublicFrontend) frontend;
+            IPublicIPAddress pip = publicFrontend.GetPublicIPAddress();
+            Assert.NotNull(pip);
+            Assert.True(pip.LeafDomainLabel.Equals(pipDnsLabel, StringComparison.OrdinalIgnoreCase));
 
             // Verify TCP probes
-            Assert.True(lb.TcpProbes.ContainsKey("default"));
-            Assert.Equal(1, lb.TcpProbes.Count);
-            var tcpProbe = lb.TcpProbes["default"];
-            Assert.True(tcpProbe.LoadBalancingRules.ContainsKey("default"));
-            Assert.Equal(1, tcpProbe.LoadBalancingRules.Count);
-            Assert.Equal(22, tcpProbe.Port);
-            Assert.Equal(ProbeProtocol.Tcp, tcpProbe.Protocol);
+            Assert.Equal(0, lb.TcpProbes.Count);
 
             // Verify rules
             Assert.Equal(1, lb.LoadBalancingRules.Count);
-            Assert.True(lb.LoadBalancingRules.ContainsKey("default"));
-            var lbrule = lb.LoadBalancingRules["default"];
-            Assert.True("default".Equals(lbrule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
-            Assert.True("default".Equals(lbrule.Probe.Name));
-            Assert.Equal(80, lbrule.BackendPort);
+            Assert.True(lb.LoadBalancingRules.ContainsKey("lbrule1"));
+            var lbrule = lb.LoadBalancingRules["lbrule1"];
             Assert.NotNull(lbrule.Frontend);
-            Assert.True("default".Equals(lbrule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(80, lbrule.BackendPort);
             Assert.Equal(80, lbrule.FrontendPort);
-            Assert.NotNull(lbrule.Probe);
-            Assert.True("default".Equals(lbrule.Probe.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.Null(lbrule.Probe);
             Assert.Equal(TransportProtocol.Tcp, lbrule.Protocol);
             Assert.NotNull(lbrule.Backend);
-            Assert.True("default".Equals(lbrule.Backend.Name, StringComparison.OrdinalIgnoreCase));
 
             // Verify backends
             Assert.Equal(1, lb.Backends.Count);
-            var backend = lb.Backends["default"];
+            var backend = lb.Backends.Values.First();
             Assert.NotNull(backend);
             Assert.Equal(2, backend.BackendNicIPConfigurationNames.Count);
             foreach (var vm in existingVMs)
@@ -113,73 +97,91 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
-            var existingPips = loadBalancerHelper.EnsurePIPs(pips);
-            var pip = existingPips.ElementAt(1);
+            var existingPips = loadBalancerHelper.EnsurePIPs(resource.Manager.PublicIPAddresses);
+            var pip = resource.Manager.PublicIPAddresses.GetByResourceGroup(
+                loadBalancerHelper.GroupName,
+                loadBalancerHelper.PipNames[0]);
+            Assert.NotNull(pip);
+            Assert.NotEqual(0, resource.Backends.Count);
+            var backend = resource.Backends.Values.First();
+            Assert.True(resource.LoadBalancingRules.ContainsKey("lbrule1"));
+            var lbRule = resource.LoadBalancingRules["lbrule1"];
+
             resource = resource.Update()
-                    .WithExistingPublicIPAddress(pip)
-                    .UpdateTcpProbe("default")
-                        .WithPort(22)
+                    .UpdatePublicFrontend(lbRule.Frontend.Name)
+                        .WithExistingPublicIPAddress(pip)
                         .Parent()
+                    .DefineTcpProbe("tcpprobe")
+                        .WithPort(22)
+                        .Attach()
                     .DefineHttpProbe("httpprobe")
                         .WithRequestPath("/foo")
                         .WithNumberOfProbes(3)
                         .WithPort(443)
                         .Attach()
-                    .UpdateLoadBalancingRule("default")
-                        .WithBackendPort(8080)
+                    .UpdateLoadBalancingRule("lbrule1")
+                        .ToBackendPort(8080)
                         .WithIdleTimeoutInMinutes(11)
+                        .WithProbe("tcpprobe")
                         .Parent()
                     .DefineLoadBalancingRule("lbrule2")
                         .WithProtocol(TransportProtocol.Udp)
-                        .WithFrontend("default")
-                        .WithFrontendPort(22)
+                        .FromFrontend(lbRule.Frontend.Name)
+                        .FromFrontendPort(22)
+                        .ToBackend("backend2")
                         .WithProbe("httpprobe")
-                        .WithBackend("backend2")
                         .Attach()
-                    .DefineBackend("backend2")
-                        .Attach()
-                    .WithoutBackend("default")
+                    .WithoutBackend(backend.Name)
                     .WithTag("tag1", "value1")
                     .WithTag("tag2", "value2")
                     .Apply();
+
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
             // Verify frontends
             Assert.Equal(1, resource.Frontends.Count);
-            var frontend = resource.Frontends["default"];
+            Assert.Equal(1, resource.PublicFrontends.Count);
+            Assert.Equal(0, resource.PrivateFrontends.Count);
+            var frontend = lbRule.Frontend;
             Assert.True(frontend.IsPublic);
             var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
             Assert.True(pip.Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
             Assert.Equal(2, publicFrontend.LoadBalancingRules.Count);
 
             // Verify probes
-            var tcpProbe = resource.TcpProbes["default"];
-            Assert.NotNull(tcpProbe);
+            Assert.True(resource.TcpProbes.ContainsKey("tcpprobe"));
+            var tcpProbe = resource.TcpProbes["tcpprobe"];
             Assert.Equal(22, tcpProbe.Port);
+            Assert.Equal(1, tcpProbe.LoadBalancingRules.Count);
+            Assert.True(tcpProbe.LoadBalancingRules.ContainsKey("lbrule1"));
 
+            Assert.True(resource.HttpProbes.ContainsKey("httpprobe"));
             var httpProbe = resource.HttpProbes["httpprobe"];
-            Assert.NotNull(httpProbe);
             Assert.Equal(3, httpProbe.NumberOfProbes);
             Assert.True("/foo".Equals(httpProbe.RequestPath, StringComparison.OrdinalIgnoreCase));
             Assert.True(httpProbe.LoadBalancingRules.ContainsKey("lbrule2"));
 
             // Verify backends
+            Assert.Equal(1, resource.Backends.Count);
             Assert.True(resource.Backends.ContainsKey("backend2"));
-            Assert.True(!resource.Backends.ContainsKey("default"));
+            Assert.True(!resource.Backends.ContainsKey(backend.Name));
 
             // Verify load balancing rules
-            var lbRule = resource.LoadBalancingRules["default"];
+            Assert.True(resource.LoadBalancingRules.ContainsKey("lbrule1"));
+            lbRule = resource.LoadBalancingRules["lbrule1"];
             Assert.NotNull(lbRule);
             Assert.Null(lbRule.Backend);
             Assert.Equal(8080, lbRule.BackendPort);
-            Assert.True("default".Equals(lbRule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.NotNull(lbRule.Frontend);
             Assert.Equal(11, lbRule.IdleTimeoutInMinutes);
+            Assert.NotNull(lbRule.Probe);
+            Assert.Equal(tcpProbe.Name, lbRule.Probe.Name);
 
+            Assert.True(resource.LoadBalancingRules.ContainsKey("lbrule2"));
             lbRule = resource.LoadBalancingRules["lbrule2"];
             Assert.NotNull(lbRule);
             Assert.Equal(22, lbRule.FrontendPort);
             Assert.NotNull(lbRule.Frontend);
-            Assert.True("default".Equals(lbRule.Frontend.Name, StringComparison.OrdinalIgnoreCase));
             Assert.True("httpprobe".Equals(lbRule.Probe.Name, StringComparison.OrdinalIgnoreCase));
             Assert.Equal(TransportProtocol.Udp, lbRule.Protocol);
             Assert.NotNull(lbRule.Backend);
