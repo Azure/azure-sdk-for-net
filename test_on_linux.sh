@@ -25,7 +25,7 @@ dotnet build src/ResourceManagement/Cdn/Microsoft.Azure.Management.Cdn.Fluent.cs
 dotnet build src/ResourceManagement/Compute/Microsoft.Azure.Management.Compute.Fluent.csproj -f $netstd13
 dotnet build src/ResourceManagement/ContainerRegistry/Microsoft.Azure.Management.ContainerRegistry.Fluent.csproj -f $netstd13
 dotnet build src/ResourceManagement/Dns/Microsoft.Azure.Management.Dns.Fluent.csproj -f $netstd13
-dotnet build src/ResourceManagement/DocumentDB/Microsoft.Azure.Management.DocumentDB.Fluent.csproj -f $netstd13
+dotnet build src/ResourceManagement/CosmosDB/Microsoft.Azure.Management.CosmosDB.Fluent.csproj -f $netstd13
 dotnet build src/ResourceManagement/KeyVault/Microsoft.Azure.Management.KeyVault.Fluent.csproj -f $netstd13
 dotnet build src/ResourceManagement/RedisCache/Microsoft.Azure.Management.Redis.Fluent.csproj -f $netstd13
 dotnet build src/ResourceManagement/ServiceBus/Microsoft.Azure.Management.ServiceBus.Fluent.csproj -f $netstd13
