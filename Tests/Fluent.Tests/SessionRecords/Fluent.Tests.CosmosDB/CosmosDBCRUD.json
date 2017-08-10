@@ -25238,7 +25238,7 @@
     }
   ],
   "Names": {
-    "DocumentDBCRUD": [
+    "CosmosDBCRUD": [
       "db1099",
       "dbsa8189",
       "ddbRg9389"
