@@ -41,7 +41,7 @@ namespace ManageSearch
                     throw new Exception("Search service name is not available: " + searchServiceName);
                 }
 
-                // Azure limits the number of free Search service resourse to one per subscription
+                // Azure limits the number of free Search service resource to one per subscription
                 // List all Search services in the subscription and skip if there is already one resource of type free SKU
                 var createFreeService = true;
                 var resources = azure.SearchServices.List();
@@ -78,7 +78,7 @@ namespace ManageSearch
 
                 ISearchService searchService = azure.SearchServices.Define(searchServiceName)
                         .WithRegion(Region)
-                        .WithExistingResourceGroup(rgName)
+                        .WithNewResourceGroup(rgName)
                         .WithStandardSku()
                         .WithPartitionCount(1)
                         .WithReplicaCount(1)
@@ -125,8 +125,8 @@ namespace ManageSearch
                         .WithTag("tag2", "value2")
                         .WithTag("tag3", "value3")
                         .WithoutTag("tag1")
-                        .WithReplicaCount(3)
-                        .WithPartitionCount(3)
+                        .WithReplicaCount(1)
+                        .WithPartitionCount(2)
                         .Apply();
 
                 Utilities.Print(searchService);

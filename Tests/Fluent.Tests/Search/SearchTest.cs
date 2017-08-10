@@ -55,12 +55,12 @@ namespace Fluent.Tests
                         .WithTag("tag2", "value2")
                         .WithTag("tag3", "value3")
                         .WithoutTag("tag1")
-                        .WithReplicaCount(2)
+                        .WithReplicaCount(1)
                         .WithPartitionCount(2)
                         .Apply();
                     Assert.True(searchService.Tags.ContainsKey("tag2"));
                     Assert.True(!searchService.Tags.ContainsKey("tag1"));
-                    Assert.Equal(2, searchService.ReplicaCount);
+                    Assert.Equal(1, searchService.ReplicaCount);
                     Assert.Equal(2, searchService.PartitionCount);
                     Assert.Equal(2, searchService.ListQueryKeys().Count);
 
@@ -185,11 +185,11 @@ namespace Fluent.Tests
                         .WithTag("tag2", "value2")
                         .WithTag("tag3", "value3")
                         .WithoutTag("tag1")
-                        .WithReplicaCount(3)
+                        .WithReplicaCount(1)
                         .Apply();
                     Assert.True(searchService.Tags.ContainsKey("tag2"));
                     Assert.True(!searchService.Tags.ContainsKey("tag1"));
-                    Assert.Equal(3, searchService.ReplicaCount);
+                    Assert.Equal(1, searchService.ReplicaCount);
                     Assert.Equal(1, searchService.PartitionCount);
                     Assert.Equal(1, searchService.ListQueryKeys().Count);
                 }
@@ -224,13 +224,13 @@ namespace Fluent.Tests
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithStandardSku()
-                        .WithPartitionCount(1)
+                        .WithPartitionCount(2)
                         .WithReplicaCount(1)
                         .WithTag("tag1", "value1")
                         .Create();
                     Assert.Equal(Microsoft.Azure.Management.Search.Fluent.Models.SkuName.Standard, searchService.Sku.Name);
                     Assert.Equal(1, searchService.ReplicaCount);
-                    Assert.Equal(1, searchService.PartitionCount);
+                    Assert.Equal(2, searchService.PartitionCount);
 
                     SdkContext.DelayProvider.Delay(5000);
 
