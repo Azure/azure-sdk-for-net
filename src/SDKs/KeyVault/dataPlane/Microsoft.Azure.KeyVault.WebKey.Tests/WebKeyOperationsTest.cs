@@ -62,6 +62,8 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             switch (kty)
             {
                 case JsonWebKeyType.Octet:
+                case JsonWebKeyType.EllipticCurve:
+                case JsonWebKeyType.EllipticCurveHsm:
                 case JsonWebKeyType.Rsa:
                 case JsonWebKeyType.RsaHsm:
                     // Supported types must have ClearMemory() implemented.

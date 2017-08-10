@@ -19,7 +19,7 @@ namespace Microsoft.Azure.KeyVault.Models
     /// Exception thrown for an invalid response with KeyVaultError
     /// information.
     /// </summary>
-#if NET45
+#if FullNetFx
     [System.Serializable]
 #endif
     public class KeyVaultErrorException : RestException
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.KeyVault.Models
         {
         }
 
-#if NET45 
+#if FullNetFx
         /// <summary>
         /// Initializes a new instance of the KeyVaultErrorException class.
         /// </summary>

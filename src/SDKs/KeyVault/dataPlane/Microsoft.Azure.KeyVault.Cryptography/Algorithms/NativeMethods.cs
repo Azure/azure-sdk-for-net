@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-#if NET45
+#if FullNetFx
 
 using System;
 using System.IO;
