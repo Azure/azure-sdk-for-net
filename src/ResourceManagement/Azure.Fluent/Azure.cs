@@ -21,7 +21,7 @@ using System.Linq;
 using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
 using ISubscription = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscription;
 using Microsoft.Azure.Management.ContainerRegistry.Fluent;
-using Microsoft.Azure.Management.DocumentDB.Fluent;
+using Microsoft.Azure.Management.CosmosDB.Fluent;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Fluent
         private IAppServiceManager appServiceManager;
         private IServiceBusManager serviceBusManager;
         private IRegistryManager registryManager;
-        private IDocumentDBManager documentDBManager;
+        private ICosmosDBManager documentDBManager;
 
         #endregion Service Managers
 
@@ -329,11 +329,11 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
-        public IDocumentDBAccounts DocumentDBAccounts
+        public ICosmosDBAccounts CosmosDBAccounts
         {
             get
             {
-                return documentDBManager.DocumentDBAccounts;
+                return documentDBManager.CosmosDBAccounts;
             }
         }
 
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.Fluent
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
             serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
             registryManager = RegistryManager.Authenticate(restClient, subscriptionId);
-            documentDBManager = DocumentDBManager.Authenticate(restClient, subscriptionId);
+            documentDBManager = CosmosDBManager.Authenticate(restClient, subscriptionId);
 
             SubscriptionId = subscriptionId;
             this.authenticated = authenticated;
@@ -652,7 +652,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         IContainerServices ContainerServices { get; }
 
-        IDocumentDBAccounts DocumentDBAccounts { get; }
+        ICosmosDBAccounts CosmosDBAccounts { get; }
 
         IRegistries ContainerRegistries { get; }
 

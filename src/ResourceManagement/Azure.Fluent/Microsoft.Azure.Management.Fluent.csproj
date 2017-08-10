@@ -36,7 +36,7 @@
     <PackageReference Include="Microsoft.Azure.Management.Compute.Fluent" Version="1.1.3" />
     <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.1.3" />
     <PackageReference Include="Microsoft.Azure.Management.Dns.Fluent" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Azure.Management.DocumentDB.Fluent" Version="1.1.3" />
+    <PackageReference Include="Microsoft.Azure.Management.CosmosDB.Fluent" Version="1.1.3" />
     <PackageReference Include="Microsoft.Azure.Management.Graph.RBAC.Fluent" Version="1.1.3" />
     <PackageReference Include="Microsoft.Azure.Management.KeyVault.Fluent" Version="1.1.3" />
     <PackageReference Include="Microsoft.Azure.Management.Network.Fluent" Version="1.1.3" />
@@ -76,7 +76,7 @@
     <ProjectReference Include="..\Compute\Microsoft.Azure.Management.Compute.Fluent.csproj" />
     <ProjectReference Include="..\ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.Fluent.csproj" />
     <ProjectReference Include="..\Dns\Microsoft.Azure.Management.Dns.Fluent.csproj" />
-    <ProjectReference Include="..\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent.csproj" />
+    <ProjectReference Include="..\CosmosDB\Microsoft.Azure.Management.CosmosDB.Fluent.csproj" />
     <ProjectReference Include="..\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent.csproj" />
     <ProjectReference Include="..\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent.csproj" />
     <ProjectReference Include="..\Network\Microsoft.Azure.Management.Network.Fluent.csproj" />

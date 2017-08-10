@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -58,7 +58,6 @@
     <Folder Include="Cdn\" />
     <Folder Include="Compute\" />
     <Folder Include="Dns\" />
-    <Folder Include="DocumentDB\" />
     <Folder Include="GraphRbac\" />
     <Folder Include="KeyVault\" />
     <Folder Include="Network\" />
@@ -79,7 +78,7 @@
     <ProjectReference Include="..\src\ResourceManagement\Compute\Microsoft.Azure.Management.Compute.Fluent.csproj" />
     <ProjectReference Include="..\src\ResourceManagement\ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.Fluent.csproj" />
     <ProjectReference Include="..\src\ResourceManagement\Dns\Microsoft.Azure.Management.Dns.Fluent.csproj" />
-    <ProjectReference Include="..\src\ResourceManagement\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent.csproj" />
+    <ProjectReference Include="..\src\ResourceManagement\CosmosDB\Microsoft.Azure.Management.CosmosDB.Fluent.csproj" />
     <ProjectReference Include="..\src\ResourceManagement\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent.csproj" />
     <ProjectReference Include="..\src\ResourceManagement\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent.csproj" />
     <ProjectReference Include="..\src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj" />
