@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
+    using System;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.ServiceBus.Primitives;
 
@@ -10,8 +11,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     {
         readonly string entityPath;
 
-        public AmqpRequestResponseLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings linkSettings, string clientId)
-            : base(entityPath, serviceBusConnection, requiredClaims, cbsTokenProvider, linkSettings, clientId)
+        public AmqpRequestResponseLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings linkSettings, string clientId)
+            : base(entityPath, serviceBusConnection, endpointAddress, requiredClaims, cbsTokenProvider, linkSettings, clientId)
         {
             this.entityPath = entityPath;
         }

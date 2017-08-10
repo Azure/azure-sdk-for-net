@@ -462,7 +462,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     public class static DataContractBinarySerializer<T>
     
     {
-        public static System.Runtime.Serialization.XmlObjectSerializer Instance;
+        public static readonly System.Runtime.Serialization.XmlObjectSerializer Instance;
     }
     public class static MessageInteropExtensions
     {

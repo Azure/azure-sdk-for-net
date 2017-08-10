@@ -13,14 +13,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     {
         readonly string entityPath;
         readonly ServiceBusConnection serviceBusConnection;
+        readonly Uri endpointAddress;
         readonly string[] requiredClaims;
         readonly ICbsTokenProvider cbsTokenProvider;
         readonly AmqpLinkSettings amqpLinkSettings;
 
-        protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings, string clientId)
+        protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings, string clientId)
         {
             this.entityPath = entityPath;
             this.serviceBusConnection = serviceBusConnection;
+            this.endpointAddress = endpointAddress;
             this.requiredClaims = requiredClaims;
             this.cbsTokenProvider = cbsTokenProvider;
             this.amqpLinkSettings = amqpLinkSettings;
@@ -29,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         protected string ClientId { get; }
 
-        public async Task<AmqpObject> CreateAndOpenAmqpLinkAsync()
+        public async Task<Tuple<AmqpObject, DateTime>> CreateAndOpenAmqpLinkAsync()
         {
             TimeoutHelper timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout);
 
@@ -39,12 +41,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             // Authenticate over CBS
             AmqpCbsLink cbsLink = connection.Extensions.Find<AmqpCbsLink>();
-            Uri address = new Uri(this.serviceBusConnection.Endpoint, this.entityPath);
-            string audience = address.AbsoluteUri;
-            string resource = address.AbsoluteUri;
-
-            MessagingEventSource.Log.AmqpSendAuthenticanTokenStart(address, audience, resource, this.requiredClaims);
-            await cbsLink.SendTokenAsync(this.cbsTokenProvider, address, audience, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            
+            string resource = this.endpointAddress.AbsoluteUri;
+            MessagingEventSource.Log.AmqpSendAuthenticanTokenStart(this.endpointAddress, resource, resource, this.requiredClaims);
+            DateTime cbsTokenExpiresAtUtc = await cbsLink.SendTokenAsync(this.cbsTokenProvider, this.endpointAddress, resource, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false);
             MessagingEventSource.Log.AmqpSendAuthenticanTokenStop();
 
             AmqpSession session = null;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 // Create Link
                 link = this.OnCreateAmqpLink(connection, this.amqpLinkSettings, session);
                 await link.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-                return link;
+                return new Tuple<AmqpObject, DateTime>(link, cbsTokenExpiresAtUtc);
             }
             catch (Exception exception)
             {

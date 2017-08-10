@@ -1239,5 +1239,20 @@ namespace Microsoft.Azure.ServiceBus
         {
             WriteEvent(106, clientId, sessionId, linkException);
         }
+
+        [NonEvent]
+        public void AmqpSendAuthenticanTokenException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpSendAuthenticanTokenException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(107, Level = EventLevel.Error, Message = "{0}: AmqpSendAuthenticanTokenException Exception: {1}.")]
+        void AmqpSendAuthenticanTokenException(string clientId, string exception)
+        {
+            this.WriteEvent(107, clientId, exception);
+        }
     }
 }
