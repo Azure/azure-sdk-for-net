@@ -14,6 +14,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <return>The application gateway backends associated with this network IP configuration.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> ListAssociatedApplicationGatewayBackends();
+        System.Collections.Generic.IReadOnlyCollection<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> ListAssociatedApplicationGatewayBackends();
     }
 }

@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
 
         ///GENMHASH:82305CFD5D0BD7F2FA9F4436265D03D0:F9A1E97A70112A4A49A03B59721E6617
-        public async Task<IEnumerable<string>> StartAsync(IList<string> applicationGatewayResourceIds, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<string>> StartAsync(ICollection<string> applicationGatewayResourceIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicationGatewayResourceIds == null) {
                 return null;
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         
         ///GENMHASH:41BB8BF7DF1D81A3B9ECC9E2D17E50EF:4B314BAEE0153BC215406EBCECE4B8B3
-        public void Start(IList<string> applicationGatewayResourceIds)
+        public void Start(ICollection<string> applicationGatewayResourceIds)
         {
             if (applicationGatewayResourceIds != null)
             {
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:D762A9F00C94F129D479DB22360B94B9:595B92642216D6FCA6CCF6168EC51669
-        public async Task<IEnumerable<string>> StopAsync(IList<string> applicationGatewayResourceIds, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<string>> StopAsync(ICollection<string> applicationGatewayResourceIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicationGatewayResourceIds == null) {
                 return null;
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         
         ///GENMHASH:C5B3134260871F3418B5AEF1F464309A:DCE259536A134606D748E7F3C69FBA49
-        public void Stop(IList<string> applicationGatewayResourceIds)
+        public void Stop(ICollection<string> applicationGatewayResourceIds)
         {
             if (applicationGatewayResourceIds != null)
             {
