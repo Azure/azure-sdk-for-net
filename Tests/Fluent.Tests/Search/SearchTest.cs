@@ -224,13 +224,13 @@ namespace Fluent.Tests
                         .WithRegion(Region.USEast)
                         .WithNewResourceGroup(rgName)
                         .WithStandardSku()
-                        .WithPartitionCount(2)
+                        .WithPartitionCount(1)
                         .WithReplicaCount(1)
                         .WithTag("tag1", "value1")
                         .Create();
                     Assert.Equal(Microsoft.Azure.Management.Search.Fluent.Models.SkuName.Standard, searchService.Sku.Name);
                     Assert.Equal(1, searchService.ReplicaCount);
-                    Assert.Equal(2, searchService.PartitionCount);
+                    Assert.Equal(1, searchService.PartitionCount);
 
                     SdkContext.DelayProvider.Delay(5000);
 

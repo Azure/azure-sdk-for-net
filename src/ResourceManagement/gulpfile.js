@@ -343,8 +343,9 @@ var handleInput = function (projects, cb) {
 }
 
 var codegen = function (project, cb) {
+    var outputDir = mappings[project].dir + '/Generated';
     if (!args['preserve']) {
-        deleteFolderRecursive(mappings[project].dir + '/Generated');
+        deleteFolderRecursive(outputDir);
     }
     console.log('Generating "' + project + '" from spec file ' + specRoot + '/' + mappings[project].source);
     var generator = 'Azure.CSharp.Fluent';
@@ -359,7 +360,7 @@ var codegen = function (project, cb) {
         ' -CodeGenerator ' + generator +
         ' -Namespace ' + mappings[project].package +
         ' -Input ' + specRoot + '/' + mappings[project].source +
-        ' -outputDirectory ' + mappings[project].dir +
+        ' -outputDirectory ' + outputDir +
         ' -Header MICROSOFT_MIT' +
         ' -RegenerateManager true' +
         ' -skipValidation true';
