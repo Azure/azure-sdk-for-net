@@ -82,7 +82,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             {
                 byte[] block = inputBuffer.Skip( inputOffset ).Take( inputCount ).ToArray();
 
-#if NET45
+#if FullNetFx
                 if ( _csp is RSACryptoServiceProvider )
                 {
                     return ( ( RSACryptoServiceProvider )_csp ).Decrypt( block, false );
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             {
                 byte[] block = inputBuffer.Skip( inputOffset ).Take( inputCount ).ToArray();
 
-#if NET45
+#if FullNetFx
                 if ( _csp is RSACryptoServiceProvider )
                 {
                     return ( ( RSACryptoServiceProvider )_csp ).Encrypt( block, false );
