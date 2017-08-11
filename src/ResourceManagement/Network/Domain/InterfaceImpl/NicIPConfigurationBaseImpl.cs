@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
-    internal abstract partial class NicIPConfigurationBaseImpl<ParentImplT,ParentT>
+    internal abstract partial class NicIPConfigurationBaseImpl<ParentImplT,ParentT> 
     {
         /// <summary>
         /// Gets the name of the subnet associated with this resource.
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <return>The application gateway backends associated with this network IP configuration.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBaseBeta.ListAssociatedApplicationGatewayBackends()
+        System.Collections.Generic.IReadOnlyCollection<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend> Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBaseBeta.ListAssociatedApplicationGatewayBackends()
         {
-            return this.ListAssociatedApplicationGatewayBackends() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend>;
+            return this.ListAssociatedApplicationGatewayBackends() as System.Collections.Generic.IReadOnlyCollection<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend>;
         }
 
         /// <return>The load balancer inbound NAT rules associated with this network interface IP configuration.</return>

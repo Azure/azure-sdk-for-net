@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="vms">Existing virtual machines.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.Definition.IWithBackendPort<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate> LoadBalancingRule.Definition.IWithVirtualMachineBeta<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate>.ToExistingVirtualMachines(IList<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms)
+        LoadBalancingRule.Definition.IWithBackendPort<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate> LoadBalancingRule.Definition.IWithVirtualMachineBeta<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate>.ToExistingVirtualMachines(ICollection<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms)
         {
             return this.ToExistingVirtualMachines(vms) as LoadBalancingRule.Definition.IWithBackendPort<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate>;
         }
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="vms">Existing virtual machines.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancingRule.UpdateDefinition.IWithBackendPort<LoadBalancer.Update.IUpdate> LoadBalancingRule.UpdateDefinition.IWithVirtualMachineBeta<LoadBalancer.Update.IUpdate>.ToExistingVirtualMachines(IList<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms)
+        LoadBalancingRule.UpdateDefinition.IWithBackendPort<LoadBalancer.Update.IUpdate> LoadBalancingRule.UpdateDefinition.IWithVirtualMachineBeta<LoadBalancer.Update.IUpdate>.ToExistingVirtualMachines(ICollection<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms)
         {
             return this.ToExistingVirtualMachines(vms) as LoadBalancingRule.UpdateDefinition.IWithBackendPort<LoadBalancer.Update.IUpdate>;
         }
