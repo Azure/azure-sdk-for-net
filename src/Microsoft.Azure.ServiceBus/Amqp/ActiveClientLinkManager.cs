@@ -68,13 +68,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         static async void OnRenewSendReceiveCBSToken(object state)
         {
             ActiveClientLinkManager thisPtr = (ActiveClientLinkManager)state;
-            await thisPtr.RenewCBSTokenAsync(thisPtr.activeSendReceiveClientLink);
+            await thisPtr.RenewCBSTokenAsync(thisPtr.activeSendReceiveClientLink).ConfigureAwait(false);
         }
 
         static async void OnRenewRequestResponseCBSToken(object state)
         {
             ActiveClientLinkManager thisPtr = (ActiveClientLinkManager)state;
-            await thisPtr.RenewCBSTokenAsync(thisPtr.activeRequestResponseClientLink);
+            await thisPtr.RenewCBSTokenAsync(thisPtr.activeRequestResponseClientLink).ConfigureAwait(false);
         }
 
         void SetRenewCBSTokenTimer(ActiveClientLinkObject activeClientLinkObject)

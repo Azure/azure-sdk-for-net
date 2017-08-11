@@ -352,7 +352,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
                 catch (Exception exception)
                 {
-                    throw AmqpExceptionHelper.GetClientException(exception, amqpLink?.GetTrackingId());
+                    throw AmqpExceptionHelper.GetClientException(exception, amqpLink?.GetTrackingId(), null, amqpLink?.Session.IsClosing() ?? false);
                 }
             }
         }

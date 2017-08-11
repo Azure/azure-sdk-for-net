@@ -160,7 +160,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return new ServiceBusException(true, message);
         }
 
-        public static Exception GetClientException(Exception exception, string referenceId = null, Exception innerException = null)
+        public static Exception GetClientException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
@@ -187,10 +187,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     return new ServiceBusCommunicationException(message, aggregateException);
 
                 case AmqpException amqpException:
-                    return amqpException.Error.ToMessagingContractException();
+                    return amqpException.Error.ToMessagingContractException(connectionError);
 
                 case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
-                    return amqpException.Error.ToMessagingContractException();
+                    return amqpException.Error.ToMessagingContractException(connectionError);
 
                 case OperationCanceledException _:
                     return new ServiceBusException(true, message, aggregateException);
