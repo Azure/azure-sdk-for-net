@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "src\ResourceManagement\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent.csproj", "{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search.Fluent", "src\ResourceManagement\Search\Microsoft.Azure.Management.Search.Fluent.csproj", "{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.EventHub.Fluent", "src\ResourceManagement\EventHub\Microsoft.Azure.Management.EventHub.Fluent.csproj", "{6E9CB016-8636-406A-85F8-68A4C8F4E016}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ServiceFabric.Fluent", "src\ResourceManagement\ServiceFabric\Microsoft.Azure.Management.ServiceFabric.Fluent.csproj", "{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}"
@@ -63,9 +65,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.StorSimple.Fluent", "src\ResourceManagement\StorSimple\Microsoft.Azure.Management.StorSimple.Fluent.csproj", "{046B7792-F579-4F39-B7AA-1A9B37692D92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Network.Fluent", "src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj", "{88481C19-87BA-4746-BFB3-FAB663434EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Network.Fluent", "src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj", "{88481C19-87BA-4746-BFB3-FAB663434EB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Monitor.Fluent", "src\ResourceManagement\Monitor\Microsoft.Azure.Management.Monitor.Fluent.csproj", "{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Monitor.Fluent", "src\ResourceManagement\Monitor\Microsoft.Azure.Management.Monitor.Fluent.csproj", "{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Scheduler.Fluent", "src\ResourceManagement\Scheduler\Microsoft.Azure.Management.Scheduler.Fluent.csproj", "{A49A03EA-43F2-418C-A261-CA72EFE16B31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +141,10 @@ Global
 		{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{579A3DAC-2247-45E1-B6B3-55A8EA17DF05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -201,6 +209,10 @@ Global
 		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49A03EA-43F2-418C-A261-CA72EFE16B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49A03EA-43F2-418C-A261-CA72EFE16B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49A03EA-43F2-418C-A261-CA72EFE16B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49A03EA-43F2-418C-A261-CA72EFE16B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

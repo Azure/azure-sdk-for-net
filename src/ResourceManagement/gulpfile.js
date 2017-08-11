@@ -270,6 +270,18 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.ContainerRegistry.Fluent',
         'args': '-FT 1',
     },
+    'search': {
+        'dir': 'Search',
+        'source': 'arm-search/2015-08-19/swagger/search.json',
+        'package': 'Microsoft.Azure.Management.Search.Fluent',
+        'args': '-FT 1'
+    },
+    'scheduler': {
+        'dir': 'Scheduler',
+        'source': 'arm-scheduler/2016-03-01/swagger/scheduler.json',
+        'package': 'Microsoft.Azure.Management.Scheduler.Fluent',
+        'args': '-FT 1'
+    },
     'documentdb': {
         'dir': 'DocumentDB',
         'source': 'arm-documentdb/2015-04-08/swagger/documentdb.json',
@@ -331,8 +343,9 @@ var handleInput = function (projects, cb) {
 }
 
 var codegen = function (project, cb) {
+    var outputDir = mappings[project].dir + '/Generated';
     if (!args['preserve']) {
-        deleteFolderRecursive(mappings[project].dir + '/Generated');
+        deleteFolderRecursive(outputDir);
     }
     console.log('Generating "' + project + '" from spec file ' + specRoot + '/' + mappings[project].source);
     var generator = 'Azure.CSharp.Fluent';
@@ -347,7 +360,7 @@ var codegen = function (project, cb) {
         ' -CodeGenerator ' + generator +
         ' -Namespace ' + mappings[project].package +
         ' -Input ' + specRoot + '/' + mappings[project].source +
-        ' -outputDirectory ' + mappings[project].dir +
+        ' -outputDirectory ' + outputDir +
         ' -Header MICROSOFT_MIT' +
         ' -RegenerateManager true' +
         ' -skipValidation true';
