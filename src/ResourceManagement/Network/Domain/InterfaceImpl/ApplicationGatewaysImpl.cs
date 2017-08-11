@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ids">Application gateway resource id.</param>
         /// <return>An emitter of the resource ID for each successfully started application gateway.</return>
-        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StartAsync(IList<string> ids, CancellationToken cancellationToken)
+        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StartAsync(ICollection<string> ids, CancellationToken cancellationToken)
         {
             return await this.StartAsync(ids, cancellationToken) as System.Collections.Generic.IEnumerable<string>;
         }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Stops the specified application gateways.
         /// </summary>
         /// <param name="ids">Application gateway resource ids.</param>
-        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Stop(IList<string> ids)
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Stop(ICollection<string> ids)
         {
  
             this.Stop(ids);
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ids">Application gateway resource id.</param>
         /// <return>An emitter of the resource ID for each successfully stopped application gateway.</return>
-        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StopAsync(IList<string> ids, CancellationToken cancellationToken)
+        async Task<System.Collections.Generic.IEnumerable<string>> Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.StopAsync(ICollection<string> ids, CancellationToken cancellationToken)
         {
             return await this.StopAsync(ids, cancellationToken) as System.Collections.Generic.IEnumerable<string>;
         }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Starts the specified application gateways.
         /// </summary>
         /// <param name="ids">Application gateway resource ids.</param>
-        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Start(IList<string> ids)
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateways.Start(ICollection<string> ids)
         {
  
             this.Start(ids);

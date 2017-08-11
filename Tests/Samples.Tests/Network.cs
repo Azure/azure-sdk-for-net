@@ -34,6 +34,15 @@ namespace Samples.Tests
                 ManageInternalLoadBalancer.Program.RunSample);
         }
 
+        [Fact(Skip="Temporarily disabled b/c it is broken by an apparent bug in DAG, that's being investigated")]
+        [Trait("Samples", "Network")]
+        public void CreateSimpleInternetFacingLoadBalancerTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                CreateSimpleInternetFacingLoadBalancer.Program.RunSample);
+        }
+
         [Fact]
         [Trait("Samples", "Network")]
         public void ManageInternetFacingLoadBalancerTest()
