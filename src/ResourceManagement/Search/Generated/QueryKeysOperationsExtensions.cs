@@ -46,33 +46,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static QueryKeyInner Create(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptionsInner searchManagementRequestOptions = default(SearchManagementRequestOptionsInner))
-            {
-                return operations.CreateAsync(resourceGroupName, searchServiceName, name, searchManagementRequestOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Generates a new query key for the specified Search service. You can create
-            /// up to 50 query keys per service.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the new query API key.
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -102,29 +75,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IEnumerable<QueryKeyInner> ListBySearchService(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, SearchManagementRequestOptionsInner searchManagementRequestOptions = default(SearchManagementRequestOptionsInner))
-            {
-                return operations.ListBySearchServiceAsync(resourceGroupName, searchServiceName, searchManagementRequestOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the list of query API keys for the given Azure Search service.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -134,35 +84,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the specified query key. Unlike admin keys, query keys are not
-            /// regenerated. The process for regenerating a query key is to delete and then
-            /// recreate it.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
-            /// </param>
-            /// <param name='key'>
-            /// The query key to be deleted. Query keys are identified by value, not by
-            /// name.
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static void Delete(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptionsInner searchManagementRequestOptions = default(SearchManagementRequestOptionsInner))
-            {
-                operations.DeleteAsync(resourceGroupName, searchServiceName, key, searchManagementRequestOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>

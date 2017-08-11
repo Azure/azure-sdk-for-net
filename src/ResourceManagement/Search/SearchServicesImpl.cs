@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:E7DE218262282EFE488CF13C22FA8423:7E200CDD53729E8602DA31CDFDDF2D00
         public IQueryKey CreateQueryKey(string resourceGroupName, string searchServiceName, string name)
         {
-            return new QueryKeyImpl(this.Manager.Inner.QueryKeys.Create(resourceGroupName, searchServiceName, name));
+            return new QueryKeyImpl(Extensions.Synchronize(() => this.Manager.Inner.QueryKeys.CreateAsync(resourceGroupName, searchServiceName, name)));
         }
 
         ///GENMHASH:B53AC706B26B156755A7FE389B3AC10A:92378743B59A5F7D5B69EC27F2F93024
         public IAdminKeys RegenerateAdminKeys(string resourceGroupName, string searchServiceName, AdminKeyKind keyKind)
         {
-            return new AdminKeysImpl(this.Manager.Inner.AdminKeys.Regenerate(resourceGroupName, searchServiceName, keyKind));
+            return new AdminKeysImpl(Extensions.Synchronize(() => this.Manager.Inner.AdminKeys.RegenerateAsync(resourceGroupName, searchServiceName, keyKind)));
         }
 
         ///GENMHASH:18E13CA84739461859EA4DED98BCCC94:26B9F10B49CBB33A64470D6B7F0851CD
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:178BF162835B0E3978203EDEF988B6EB:1C716C257AE3169C0236A38330AB11A1
         public IEnumerable<Microsoft.Azure.Management.Search.Fluent.ISearchService> ListByResourceGroup(string groupName)
         {
-            return this.Manager.Inner.Services.ListByResourceGroup(groupName).Select((inner) => WrapModel(inner));
+            return Extensions.Synchronize(() => this.Manager.Inner.Services.ListByResourceGroupAsync(groupName)).Select((inner) => WrapModel(inner));
         }
 
         ///GENMHASH:F5650D7DFD745AFD96D1AEF0353D5D98:D5ACE23BB00AF032073CD4CE9E7D550D
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:C4C74C5CA23BE3B4CAFEFD0EF23149A0:46199B320CF77BF7B0B5099E0636CD76
         public ICheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return new CheckNameAvailabilityResultImpl(this.Manager.Inner.Services.CheckNameAvailability(name));
+            return new CheckNameAvailabilityResultImpl(Extensions.Synchronize(() => this.Manager.Inner.Services.CheckNameAvailabilityAsync(name)));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:96BE46FF9750704AF77EAD7AFE062B24
@@ -130,13 +130,13 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:A5F897AF9D5CE32F1C11DB034C224BBE:EECAC1840030A22136E9DE1FC01E7F91
         public void DeleteQueryKey(string resourceGroupName, string searchServiceName, string key)
         {
-            this.Manager.Inner.QueryKeys.Delete(resourceGroupName, searchServiceName, key);
+            Extensions.Synchronize(() => this.Manager.Inner.QueryKeys.DeleteAsync(resourceGroupName, searchServiceName, key));
         }
 
         ///GENMHASH:105AF1ABAC4FD8AB777EADE9E164FB05:07CF09DED75A7CE1C3C4E4DD730FFDC8
         public IAdminKeys GetAdminKeys(string resourceGroupName, string searchServiceName)
         {
-            return new AdminKeysImpl(this.Manager.Inner.AdminKeys.Get(resourceGroupName, searchServiceName));
+            return new AdminKeysImpl(Extensions.Synchronize(() => this.Manager.Inner.AdminKeys.GetAsync(resourceGroupName, searchServiceName)));
         }
 
         ///GENMHASH:AF29CE8A45BF4D0D80B85F209E3F6C3F:BCF87312C92FD8ABD1A1106FC6174A8C
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         {
             List<QueryKeyImpl> queryKeys = new List<QueryKeyImpl>();
 
-            var queryKeyInners = this.Manager.Inner.QueryKeys.ListBySearchService(resourceGroupName, searchServiceName);
+            var queryKeyInners = Extensions.Synchronize(() => this.Manager.Inner.QueryKeys.ListBySearchServiceAsync(resourceGroupName, searchServiceName));
             if (queryKeyInners != null)
             {
                 foreach (var queryKeyInner in queryKeyInners)

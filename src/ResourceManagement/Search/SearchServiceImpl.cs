@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:FA57EF51D40283CC94BB7B6C4365AE07:4A9D25CE788FF7A3AE0C626358FBF79B
         public IAdminKeys GetAdminKeys()
         {
-            return new AdminKeysImpl(this.Manager.Inner.AdminKeys.Get(this.ResourceGroupName, this.Name));
+            return new AdminKeysImpl(Extensions.Synchronize(() => this.Manager.Inner.AdminKeys.GetAsync(this.ResourceGroupName, this.Name)));
         }
 
         ///GENMHASH:1BC6D5F265F3C32166DAEF04C8CF2C5F:FAB6E0B529548B70452AF83292E7CA38
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:9A1BAF4B55B6C6E919FD9546E00FBD58:34A7FCDE465704208C33E7FF3BE0AE5C
         public IAdminKeys RegenerateAdminKeys(AdminKeyKind keyKind)
         {
-            return new AdminKeysImpl(this.Manager.Inner.AdminKeys.Regenerate(this.ResourceGroupName, this.Name, keyKind));
+            return new AdminKeysImpl(Extensions.Synchronize(() => this.Manager.Inner.AdminKeys.RegenerateAsync(this.ResourceGroupName, this.Name, keyKind)));
         }
 
         ///GENMHASH:228D19CFE32F95F58B6A30660F9315FD:CCA4B133BFF259EEEF5962D1E1A0BDE3
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:BFCEBCFCA4A7A301C248E807E397B865:8B4CCB2CC011F00EEBF2800A84FF88ED
         public IQueryKey CreateQueryKey(string name)
         {
-            return new QueryKeyImpl(this.Manager.Inner.QueryKeys.Create(this.ResourceGroupName, this.Name, name));
+            return new QueryKeyImpl(Extensions.Synchronize(() => this.Manager.Inner.QueryKeys.CreateAsync(this.ResourceGroupName, this.Name, name)));
         }
 
         ///GENMHASH:7680DB5F34D39F5CF330CC24E6649F21:9D167B3BB48AF6094ED01878A892D752
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:D555A7773E06AE00E1EC9A726CE81C16:3A3B4410D5A527E6B14B3275C7D7F2DF
         public void DeleteQueryKey(string key)
         {
-            this.Manager.Inner.QueryKeys.Delete(this.ResourceGroupName, this.Name, key);
+            Extensions.Synchronize(() => this.Manager.Inner.QueryKeys.DeleteAsync(this.ResourceGroupName, this.Name, key));
         }
 
         ///GENMHASH:E850F7304F44C200E85091E4C1C7F8FF:F44E7840A0F5A6E0F0351CAD6DF613AE
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Search.Fluent
         {
             List<QueryKeyImpl> queryKeys = new List<QueryKeyImpl>();
 
-            var queryKeyInners = this.Manager.Inner.QueryKeys.ListBySearchService(this.ResourceGroupName, this.Name);
+            var queryKeyInners = Extensions.Synchronize(() => this.Manager.Inner.QueryKeys.ListBySearchServiceAsync(this.ResourceGroupName, this.Name));
             if (queryKeyInners != null)
             {
                 foreach (var queryKeyInner in queryKeyInners)
@@ -186,10 +186,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
 
         public async override Task<ISearchService> CreateResourceAsync(CancellationToken cancellationToken)
         {
-            if (IsInCreateMode)
-            {
-            }
-
             var inner = await this.Manager.Inner.Services.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner, cancellationToken: cancellationToken);
             SetInner(inner);
 
@@ -205,10 +201,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
         ///GENMHASH:359B78C1848B4A526D723F29D8C8C558:4884876671AF0E98273703F5FEAB903C
         protected async Task<Models.SearchServiceInner> CreateInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (IsInCreateMode)
-            {
-            }
-
             return await this.Manager.Inner.Services.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner, cancellationToken: cancellationToken);
         }
 

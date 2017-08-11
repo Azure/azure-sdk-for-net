@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
             /// <param name='jobName'>
             /// The job name.
             /// </param>
-            public static JobDefinitionInner Get(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName)
-            {
-                return operations.GetAsync(resourceGroupName, jobCollectionName, jobName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a job.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='jobName'>
-            /// The job name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,29 +47,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Provisions a new job or updates an existing job.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='jobName'>
-            /// The job name.
-            /// </param>
-            /// <param name='properties'>
-            /// Gets or sets the job properties.
-            /// </param>
-            public static JobDefinitionInner CreateOrUpdate(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobPropertiesInner properties = default(JobPropertiesInner))
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, jobCollectionName, jobName, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -139,29 +96,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
             /// <param name='properties'>
             /// Gets or sets the job properties.
             /// </param>
-            public static JobDefinitionInner Patch(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobPropertiesInner properties = default(JobPropertiesInner))
-            {
-                return operations.PatchAsync(resourceGroupName, jobCollectionName, jobName, properties).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Patches an existing job.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='jobName'>
-            /// The job name.
-            /// </param>
-            /// <param name='properties'>
-            /// Gets or sets the job properties.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -171,26 +105,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a job.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='jobName'>
-            /// The job name.
-            /// </param>
-            public static void Delete(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName)
-            {
-                operations.DeleteAsync(resourceGroupName, jobCollectionName, jobName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -231,52 +145,12 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
             /// <param name='jobName'>
             /// The job name.
             /// </param>
-            public static void Run(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName)
-            {
-                operations.RunAsync(resourceGroupName, jobCollectionName, jobName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Runs a job.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='jobName'>
-            /// The job name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RunAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RunWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists all jobs under the specified job collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<JobDefinitionInner> List(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, ODataQuery<JobStateFilterInner> odataQuery = default(ODataQuery<JobStateFilterInner>))
-            {
-                return operations.ListAsync(resourceGroupName, jobCollectionName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -323,29 +197,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<JobHistoryDefinition> ListJobHistory(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, ODataQuery<JobHistoryFilterInner> odataQuery = default(ODataQuery<JobHistoryFilterInner>))
-            {
-                return operations.ListJobHistoryAsync(resourceGroupName, jobCollectionName, jobName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists job history.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='jobCollectionName'>
-            /// The job collection name.
-            /// </param>
-            /// <param name='jobName'>
-            /// The job name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -366,20 +217,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<JobDefinitionInner> ListNext(this IJobsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all jobs under the specified job collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -389,20 +226,6 @@ namespace Microsoft.Azure.Management.Scheduler.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists job history.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<JobHistoryDefinition> ListJobHistoryNext(this IJobsOperations operations, string nextPageLink)
-            {
-                return operations.ListJobHistoryNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

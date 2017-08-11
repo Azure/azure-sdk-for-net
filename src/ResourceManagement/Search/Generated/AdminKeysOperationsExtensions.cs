@@ -41,30 +41,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static AdminKeyResultInner Get(this IAdminKeysOperations operations, string resourceGroupName, string searchServiceName, SearchManagementRequestOptionsInner searchManagementRequestOptions = default(SearchManagementRequestOptionsInner))
-            {
-                return operations.GetAsync(resourceGroupName, searchServiceName, searchManagementRequestOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the primary and secondary admin API keys for the specified Azure
-            /// Search service.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -74,34 +50,6 @@ namespace Microsoft.Azure.Management.Search.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Regenerates either the primary or secondary admin API key. You can only
-            /// regenerate one key at a time.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
-            /// </param>
-            /// <param name='keyKind'>
-            /// Specifies which key to regenerate. Valid values include 'primary' and
-            /// 'secondary'. Possible values include: 'primary', 'secondary'
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static AdminKeyResultInner Regenerate(this IAdminKeysOperations operations, string resourceGroupName, string searchServiceName, AdminKeyKind keyKind, SearchManagementRequestOptionsInner searchManagementRequestOptions = default(SearchManagementRequestOptionsInner))
-            {
-                return operations.RegenerateAsync(resourceGroupName, searchServiceName, keyKind, searchManagementRequestOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
