@@ -797,9 +797,10 @@ namespace Microsoft.Azure.ServiceBus.Core
                     a => receiveLink.EndReceiveMessages(a, out amqpMessages),
                     this).ConfigureAwait(false);
 
-                    if (receiveLink.GetInnerException() != null)
+                    Exception exception;
+                    if ((exception = receiveLink.GetInnerException()) != null)
                     {
-                        throw receiveLink.GetInnerException();
+                        throw exception;
                     }
 
                     if (hasMessages && amqpMessages != null)

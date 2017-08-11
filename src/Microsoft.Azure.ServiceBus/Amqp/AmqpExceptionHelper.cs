@@ -216,6 +216,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static Exception GetInnerException(this AmqpObject amqpObject)
         {
+            bool connectionError = false;
             Exception innerException;
             switch (amqpObject)
             {
@@ -224,6 +225,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     break;
 
                 case AmqpLink amqpLink:
+                    connectionError = amqpLink.Session.IsClosing();
                     innerException = amqpLink.TerminalException ?? amqpLink.Session.TerminalException ?? amqpLink.Session.Connection.TerminalException;
                     break;
 
@@ -235,7 +237,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     return null;
             }
 
-            return innerException == null ? null : GetClientException(innerException);
+            return innerException == null ? null : GetClientException(innerException, null, null, connectionError);
         }
     }
 }
