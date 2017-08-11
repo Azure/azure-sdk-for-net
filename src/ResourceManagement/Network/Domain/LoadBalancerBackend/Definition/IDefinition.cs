@@ -79,6 +79,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definiti
         /// </summary>
         /// <param name="vms">Existing virtual machines.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IWithAttach<ReturnT> WithExistingVirtualMachines(IList<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms);
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition.IWithAttach<ReturnT> WithExistingVirtualMachines(ICollection<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms);
     }
 }
