@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Starts update of an IP configuration.
         /// </summary>
         /// <param name="name">Name of the IP configuration.</param>
-        /// <return>The first stage of an IP configuration update.</return>
+        /// <return>The first stage of the update.</return>
         NicIPConfiguration.Update.IUpdate NetworkInterface.Update.IWithIPConfiguration.UpdateIPConfiguration(string name)
         {
             return this.UpdateIPConfiguration(name) as NicIPConfiguration.Update.IUpdate;
@@ -543,10 +543,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Starts definition of a secondary IP configuration.
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
-        /// <return>The first stage of a secondary IP configuration definition.</return>
+        /// <return>The first stage of the update.</return>
         NicIPConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate> NetworkInterface.Update.IWithIPConfiguration.DefineSecondaryIPConfiguration(string name)
         {
             return this.DefineSecondaryIPConfiguration(name) as NicIPConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Removes the specified IP configuration.
+        /// </summary>
+        /// <param name="name">The name of an existing IP configuration.</param>
+        /// <return>The next stage of the update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIPConfiguration.WithoutIPConfiguration(string name)
+        {
+            return this.WithoutIPConfiguration(name) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>

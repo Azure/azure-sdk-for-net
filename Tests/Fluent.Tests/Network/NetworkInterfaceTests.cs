@@ -12,11 +12,208 @@ using Xunit;
 using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Fluent.Tests.Network
 {
     public class NetworkInterface
     {
+        [Fact]
+        public void CanUseMultipleIPConfigs()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                var testId = TestUtilities.GenerateName("");
+                var networkManager = TestHelper.CreateNetworkManager();
+
+                string resourceGroupName = SdkContext.RandomResourceName("rg", 15);
+                string networkName = SdkContext.RandomResourceName("net", 15);
+                string[] nicNames = new string[3];
+                for (int i = 0; i < nicNames.Length; i++)
+                {
+                    nicNames[i] = SdkContext.RandomResourceName("nic", 15);
+                }
+
+                var network = networkManager.Networks.Define(networkName)
+                    .WithRegion(Region.USEast)
+                    .WithNewResourceGroup(resourceGroupName)
+                    .WithAddressSpace("10.0.0.0/27")
+                    .WithSubnet("subnet1", "10.0.0.0/28")
+                    .WithSubnet("subnet2", "10.0.0.16/28")
+                    .Create();
+
+                IList<ICreatable<INetworkInterface>> nicDefinitions = new List<ICreatable<INetworkInterface>> {
+                    // 0 - NIC that starts with one IP config and ends with two
+                    networkManager.NetworkInterfaces.Define(nicNames[0])
+                        .WithRegion(Region.USEast)
+                        .WithNewResourceGroup(resourceGroupName)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet("subnet1")
+                        .WithPrimaryPrivateIPAddressDynamic(),
+
+                    // 1 - NIC that starts with two IP configs and ends with one
+                    networkManager.NetworkInterfaces.Define(nicNames[1])
+                        .WithRegion(Region.USEast)
+                        .WithNewResourceGroup(resourceGroupName)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet("subnet1")
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .DefineSecondaryIPConfiguration("nicip2")
+                            .WithExistingNetwork(network)
+                            .WithSubnet("subnet1")
+                            .WithPrivateIPAddressDynamic()
+                            .Attach(),
+
+                    // 2 - NIC that starts with two IP configs and ends with two
+                    networkManager.NetworkInterfaces.Define(nicNames[2])
+                        .WithRegion(Region.USEast)
+                        .WithNewResourceGroup(resourceGroupName)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet("subnet1")
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .DefineSecondaryIPConfiguration("nicip2")
+                            .WithExistingNetwork(network)
+                            .WithSubnet("subnet1")
+                            .WithPrivateIPAddressDynamic()
+                            .Attach()
+                };
+
+                // Create the NICs in parallel
+                var createdNics = networkManager.NetworkInterfaces.Create(nicDefinitions);
+
+                INetworkInterface[] nics = new INetworkInterface[nicDefinitions.Count];
+                for (int i = 0; i < nicDefinitions.Count; i++)
+                {
+                    nics[i] = createdNics.FirstOrDefault(n => n.Key == nicDefinitions[i].Key);
+                }
+
+                INicIPConfiguration primaryIPConfig, secondaryIPConfig;
+                INetworkInterface nic;
+
+                // Verify NIC0
+                nic = nics[0];
+                Assert.NotNull(nic);
+                primaryIPConfig = nic.PrimaryIPConfiguration;
+                Assert.NotNull(primaryIPConfig);
+                Assert.True("subnet1".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                Assert.True(network.Id.Equals(primaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                // Verify NIC1
+                nic = nics[1];
+                Assert.NotNull(nic);
+                Assert.Equal(2, nic.IPConfigurations.Count);
+
+                primaryIPConfig = nic.PrimaryIPConfiguration;
+                Assert.NotNull(primaryIPConfig);
+                Assert.True("subnet1".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                Assert.True(network.Id.Equals(primaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                Assert.True(nic.IPConfigurations.TryGetValue("nicip2", out secondaryIPConfig));
+                Assert.True("subnet1".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                Assert.True(network.Id.Equals(secondaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                // Verify NIC2
+                nic = nics[2];
+                Assert.NotNull(nic);
+                Assert.Equal(2, nic.IPConfigurations.Count);
+
+                primaryIPConfig = nic.PrimaryIPConfiguration;
+                Assert.NotNull(primaryIPConfig);
+                Assert.True("subnet1".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                Assert.True(network.Id.Equals(primaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                Assert.True(nic.IPConfigurations.TryGetValue("nicip2", out secondaryIPConfig));
+                Assert.True("subnet1".Equals(secondaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                Assert.True(network.Id.Equals(secondaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                nic = null;
+
+                // Updates
+                IList<Task<INetworkInterface>> nicUpdates = new List<Task<INetworkInterface>>()
+                {
+                    // Update NIC0
+                    nics[0].Update()
+                        .DefineSecondaryIPConfiguration("nicip2")
+                            .WithExistingNetwork(network)
+                            .WithSubnet("subnet1")
+                            .WithPrivateIPAddressDynamic()
+                            .Attach()
+                        .ApplyAsync(),
+
+                    // Update NIC2
+                    nics[1].Update()
+                        .WithoutIPConfiguration("nicip2")
+                        .UpdateIPConfiguration("primary")
+                            .WithSubnet("subnet2")
+                            .Parent()
+                        .ApplyAsync(),
+
+                    // Update NIC3
+                    nics[2].Update()
+                        .WithoutIPConfiguration("nicip2")
+                        .DefineSecondaryIPConfiguration("nicip3")
+                            .WithExistingNetwork(network)
+                            .WithSubnet("subnet1")
+                            .WithPrivateIPAddressDynamic()
+                            .Attach()
+                        .ApplyAsync()
+                };
+
+                var updatedNics = Task.WhenAll(nicUpdates).Result;
+
+                // Verify updated NICs
+                foreach (var n in updatedNics)
+                {
+                    if (n.Id.Equals(nics[0].Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Verify NIC0
+                        Assert.Equal(2, n.IPConfigurations.Count);
+
+                        primaryIPConfig = n.PrimaryIPConfiguration;
+                        Assert.NotNull(primaryIPConfig);
+                        Assert.True("subnet1".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                        Assert.True(network.Id.Equals(primaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                        Assert.True(n.IPConfigurations.TryGetValue("nicip2", out secondaryIPConfig));
+                        Assert.True("subnet1".Equals(secondaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                        Assert.True(network.Id.Equals(secondaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+                    }
+                    else if (n.Id.Equals(nics[1].Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Verify NIC1
+                        Assert.Equal(1, n.IPConfigurations.Count);
+                        primaryIPConfig = n.PrimaryIPConfiguration;
+                        Assert.NotNull(primaryIPConfig);
+                        Assert.False("nicip2".Equals(primaryIPConfig.Name, StringComparison.OrdinalIgnoreCase));
+                        Assert.True("subnet2".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                        Assert.True(network.Id.Equals(primaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+                    }
+                    else if (n.Id.Equals(nics[2].Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Verify NIC3
+                        Assert.Equal(2, n.IPConfigurations.Count);
+
+                        primaryIPConfig = n.PrimaryIPConfiguration;
+                        Assert.NotNull(primaryIPConfig);
+                        Assert.False("nicip2".Equals(primaryIPConfig.Name, StringComparison.OrdinalIgnoreCase));
+                        Assert.False("nicip3".Equals(primaryIPConfig.Name, StringComparison.OrdinalIgnoreCase));
+                        Assert.True("subnet1".Equals(primaryIPConfig.SubnetName, StringComparison.OrdinalIgnoreCase));
+                        Assert.True(network.Id.Equals(primaryIPConfig.NetworkId, StringComparison.OrdinalIgnoreCase));
+
+                        Assert.True(n.IPConfigurations.TryGetValue("nicip3", out secondaryIPConfig));
+                        Assert.True("subnet1".Equals(secondaryIPConfig.SubnetName));
+                        Assert.True(network.Id.Equals(secondaryIPConfig.NetworkId));
+                    }
+                    else
+                    {
+                        Assert.True(false); // Unrecognized NIC ID 
+                    }
+                }
+                networkManager.ResourceManager.ResourceGroups.BeginDeleteByName(resourceGroupName);
+            }
+        }
+
         [Fact]
         public void CreateUpdate()
         {
@@ -49,7 +246,11 @@ namespace Fluent.Tests.Network
                         .WithAcceleratedNetworking()
                         .Create();
 
-                // Verifications
+                // Verify NIC settings
+                Assert.True(nic.IsAcceleratedNetworkingEnabled);
+                Assert.True(nic.IsIPForwardingEnabled);
+
+                // Veirfy IP configs
                 var ipConfig = nic.PrimaryIPConfiguration;
                 Assert.NotNull(ipConfig);
                 network = ipConfig.GetNetwork();
@@ -60,9 +261,18 @@ namespace Fluent.Tests.Network
                 var ipConfigs = subnet.GetNetworkInterfaceIPConfigurations();
                 Assert.NotNull(ipConfigs);
                 Assert.Equal(1, ipConfigs.Count);
-                var ipConfig2 = ipConfigs.First();
-                Assert.Equal(ipConfig.Name.ToLower(), ipConfig2.Name.ToLower());
-                Assert.True(nic.IsAcceleratedNetworkingEnabled);
+
+                INicIPConfiguration ipConfig2 = null;
+                foreach (var i in ipConfigs)
+                {
+                    if (i.Name.Equals(ipConfig.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        ipConfig2 = i;
+                        break;
+                    }
+                }
+                Assert.NotNull(ipConfig2);
+                Assert.True(ipConfig.Name.Equals(ipConfig2.Name, StringComparison.OrdinalIgnoreCase));
 
                 var resource = manager.NetworkInterfaces.GetById(nic.Id);
                 resource = resource.Update()
@@ -90,6 +300,8 @@ namespace Fluent.Tests.Network
 
                 manager.NetworkInterfaces.DeleteById(resource.Id);
                 resource.Manager.ResourceManager.ResourceGroups.BeginDeleteByName(resource.ResourceGroupName);
+
+                Assert.Equal(1, resource.IPConfigurations.Count);
             }
         }
 

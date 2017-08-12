@@ -108,15 +108,22 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         /// Starts definition of a secondary IP configuration.
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
-        /// <return>The first stage of a secondary IP configuration definition.</return>
+        /// <return>The first stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate> DefineSecondaryIPConfiguration(string name);
 
         /// <summary>
         /// Starts update of an IP configuration.
         /// </summary>
         /// <param name="name">Name of the IP configuration.</param>
-        /// <return>The first stage of an IP configuration update.</return>
+        /// <return>The first stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate UpdateIPConfiguration(string name);
+
+        /// <summary>
+        /// Removes the specified IP configuration.
+        /// </summary>
+        /// <param name="name">The name of an existing IP configuration.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutIPConfiguration(string name);
     }
 
     /// <summary>
