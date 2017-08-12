@@ -29,7 +29,7 @@ namespace Sql.Tests
                 // Create primary and partner servers
                 //
                 var sourceServer = context.CreateServer(resourceGroup);
-                var targetServer = context.CreateServer(resourceGroup, location: SqlManagementTestUtilities.DefaultSecondaryLocationId);
+                var targetServer = context.CreateServer(resourceGroup, location: TestEnvironmentUtilities.DefaultSecondaryLocationId);
 
                 // Create a failover group
                 //
@@ -124,24 +124,17 @@ namespace Sql.Tests
                 var primaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, sourceServer.Name, databaseName);
 
                 // A brief wait may be needed until the secondary database is fully created
-                Database secondaryDatabase;
-                DateTime startTime = DateTime.UtcNow;
-                TimeSpan retryTime = TimeSpan.FromMinutes(2);
-                TimeSpan retryDelay = HttpMockServer.Mode == HttpRecorderMode.Record ? TimeSpan.FromSeconds(5) : TimeSpan.Zero;
-                while (true)
+                Database secondaryDatabase = new Database();
+
+                SqlManagementTestUtilities.ExecuteWithRetry(() =>
                 {
-                    try
-                    {
-                        secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
-                        break;
-                    }
-                    catch (CloudException e) when (
-                        e.Response.StatusCode == HttpStatusCode.NotFound 
-                            && DateTime.UtcNow < startTime + retryTime)
-                    {
-                        Thread.Sleep(retryDelay);
-                    }
-                }
+                    secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
+                }, 
+                TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
+                (CloudException e) => 
+                {
+                    return e.Response.StatusCode == HttpStatusCode.NotFound;
+                });
 
                 Assert.NotNull(primaryDatabase.FailoverGroupId);
                 Assert.NotNull(secondaryDatabase.FailoverGroupId);

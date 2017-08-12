@@ -43,7 +43,12 @@ namespace Sql.Tests
             return client;
         }
 
-        public ResourceGroup CreateResourceGroup(string location = SqlManagementTestUtilities.DefaultLocationId)
+        public ResourceGroup CreateResourceGroup()
+        {
+            return CreateResourceGroup(TestEnvironmentUtilities.DefaultLocation);
+        }
+
+        public ResourceGroup CreateResourceGroup(string location)
         {
             ResourceManagementClient resourceClient = GetClient<ResourceManagementClient>();
 
@@ -61,7 +66,12 @@ namespace Sql.Tests
             return resourceGroup;
         }
 
-        public Server CreateServer(ResourceGroup resourceGroup, string location = SqlManagementTestUtilities.DefaultLocationId)
+        public Server CreateServer(ResourceGroup resourceGroup)
+        {
+            return CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultLocation);
+        }
+
+        public Server CreateServer(ResourceGroup resourceGroup, string location)
         {
             SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
 

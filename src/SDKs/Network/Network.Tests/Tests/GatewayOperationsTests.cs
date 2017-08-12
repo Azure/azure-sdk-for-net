@@ -827,10 +827,15 @@ namespace Networks.Tests
                 Assert.Equal(4, getVirtualNetworkGatewayConnectionResponse.RoutingWeight);
                 Assert.Equal("xyz", getVirtualNetworkGatewayConnectionResponse.SharedKey);
 
-                // 4. ListVitualNetworkGatewayConnections API
+                // 4A. ListVirtualNetworkGatewayConnections API
                 var listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
                 Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Count());
+
+                // 4B. VirtualNetworkGateway ListConnections API
+                var virtualNetworkGatewayListConnectionsResponse = networkManagementClient.VirtualNetworkGateways.ListConnections(resourceGroupName, virtualNetworkGatewayName);
+                Assert.Equal(1, virtualNetworkGatewayListConnectionsResponse.Count());
+                Assert.Equal(VirtualNetworkGatewayConnectionName, virtualNetworkGatewayListConnectionsResponse.First().Name);
 
                 // 5A. DeleteVirtualNetworkGatewayConnection API
                 networkManagementClient.VirtualNetworkGatewayConnections.Delete(resourceGroupName, VirtualNetworkGatewayConnectionName);

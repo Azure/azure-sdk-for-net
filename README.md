@@ -4,6 +4,10 @@
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
+### Download Packages
+
+For a full list of packages available for download in this repository, please see our [list of .NET SDK packages](https://github.com/Azure/azure-sdk-for-net/tree/psSdkJson6/Documentation/sdk-for-net-packages.md).
+
 ### Target Frameworks:
 
 * .NET Framework 4.5.2

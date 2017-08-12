@@ -226,6 +226,14 @@ namespace Networks.Tests
                 Assert.Equal("*", getNsgResponse.SecurityRules[1].SourceAddressPrefix);
                 Assert.Equal("656", getNsgResponse.SecurityRules[1].SourcePortRange);
 
+                // List Default Security Groups
+                var listDefaultSecurityGroups = networkManagementClient.DefaultSecurityRules.List(resourceGroupName, networkSecurityGroupName);
+                Assert.NotEqual(0, listDefaultSecurityGroups.Count());
+
+                // Get Defaul Security Group
+                var getDefaultSecurityGroups = networkManagementClient.DefaultSecurityRules.Get(resourceGroupName, networkSecurityGroupName, listDefaultSecurityGroups.First().Name);
+                Assert.Equal(listDefaultSecurityGroups.First().Name, getDefaultSecurityGroups.Name);
+
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
                 

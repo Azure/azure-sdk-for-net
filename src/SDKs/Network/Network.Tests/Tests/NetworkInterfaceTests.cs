@@ -154,6 +154,21 @@ namespace Networks.Tests
                 Assert.Equal(getSubnetResponse.Id, getNicResponse.IpConfigurations[0].Subnet.Id);
                 Assert.NotNull(getNicResponse.ResourceGuid);
 
+                // Verify List IpConfigurations in NetworkInterface
+                var listNicIpConfigurations = networkManagementClient.NetworkInterfaceIPConfigurations.List(resourceGroupName, nicName);
+                Assert.Equal(1, listNicIpConfigurations.Count());
+                Assert.Equal(ipConfigName, listNicIpConfigurations.First().Name);
+                Assert.NotNull(listNicIpConfigurations.First().Etag);
+
+                // Verify Get IpConfiguration in NetworkInterface
+                var getNicIpConfiguration = networkManagementClient.NetworkInterfaceIPConfigurations.Get(resourceGroupName, nicName, ipConfigName);
+                Assert.Equal(ipConfigName, getNicIpConfiguration.Name);
+                Assert.NotNull(getNicIpConfiguration.Etag);
+
+                // Verify List LoadBalancers in NetworkInterface
+                var listNicLoadBalancers = networkManagementClient.NetworkInterfaceLoadBalancers.List(resourceGroupName, nicName);
+                Assert.Equal(0, listNicLoadBalancers.Count());
+
                 // Get all Nics
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
                 Assert.Equal(1, getListNicResponse.Count());
