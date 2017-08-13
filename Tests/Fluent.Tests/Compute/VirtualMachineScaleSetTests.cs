@@ -634,8 +634,9 @@ namespace Fluent.Tests.Compute.VirtualMachine
                         .WithManagedServiceIdentity()
                         .Create();
 
+                    var authenticatedClient = TestHelper.CreateAuthenticatedClient();
                     //
-                    IServicePrincipal servicePrincipal = azure
+                    IServicePrincipal servicePrincipal = authenticatedClient
                             .ServicePrincipals
                             .GetById(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId);
 
@@ -659,7 +660,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
 
                     // Ensure no role assigned for resource group
                     //
-                    var rgRoleAssignments = azure.RoleAssignments.ListByScope(resourceGroup.Id);
+                    var rgRoleAssignments = authenticatedClient.RoleAssignments.ListByScope(resourceGroup.Id);
                     Assert.NotNull(rgRoleAssignments);
                     bool found = false;
                     foreach (var roleAssignment in rgRoleAssignments)
@@ -747,8 +748,9 @@ namespace Fluent.Tests.Compute.VirtualMachine
                         .WithRoleBasedAccessTo(storageAccount.Id, BuiltInRole.Contributor)
                         .Create();
 
+                    var authenticatedClient = TestHelper.CreateAuthenticatedClient();
                     //
-                    IServicePrincipal servicePrincipal = azure
+                    IServicePrincipal servicePrincipal = authenticatedClient
                             .ServicePrincipals
                             .GetById(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId);
 
@@ -772,7 +774,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
 
                     // Ensure role assigned for resource group
                     //
-                    var rgRoleAssignments = azure.RoleAssignments.ListByScope(resourceGroup.Id);
+                    var rgRoleAssignments = authenticatedClient.RoleAssignments.ListByScope(resourceGroup.Id);
                     Assert.NotNull(rgRoleAssignments);
                     bool found = false;
                     foreach (var roleAssignment in rgRoleAssignments)
@@ -787,7 +789,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
 
                     // Ensure role assigned for storage account
                     //
-                    var stgRoleAssignments = azure.RoleAssignments.ListByScope(storageAccount.Id);
+                    var stgRoleAssignments = authenticatedClient.RoleAssignments.ListByScope(storageAccount.Id);
                     Assert.NotNull(stgRoleAssignments);
                     found = false;
                     foreach (var roleAssignment in stgRoleAssignments)
