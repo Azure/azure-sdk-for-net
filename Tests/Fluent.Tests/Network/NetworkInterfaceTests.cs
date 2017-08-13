@@ -263,14 +263,7 @@ namespace Fluent.Tests.Network
                 Assert.Equal(1, ipConfigs.Count);
 
                 INicIPConfiguration ipConfig2 = null;
-                foreach (var i in ipConfigs)
-                {
-                    if (i.Name.Equals(ipConfig.Name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        ipConfig2 = i;
-                        break;
-                    }
-                }
+                ipConfig2 = ipConfigs.FirstOrDefault(i => i.Name.Equals(ipConfig.Name, StringComparison.OrdinalIgnoreCase));
                 Assert.NotNull(ipConfig2);
                 Assert.True(ipConfig.Name.Equals(ipConfig2.Name, StringComparison.OrdinalIgnoreCase));
 
