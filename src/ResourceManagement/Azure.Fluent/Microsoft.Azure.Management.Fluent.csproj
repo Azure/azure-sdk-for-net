@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Fluent</PackageId>
@@ -82,6 +82,7 @@
     <ProjectReference Include="..\Network\Microsoft.Azure.Management.Network.Fluent.csproj" />
     <ProjectReference Include="..\RedisCache\Microsoft.Azure.Management.Redis.Fluent.csproj" />
     <ProjectReference Include="..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent.csproj" />
+    <ProjectReference Include="..\Search\Microsoft.Azure.Management.Search.Fluent.csproj" />
     <ProjectReference Include="..\ServiceBus\Microsoft.Azure.Management.ServiceBus.Fluent.csproj" />
     <ProjectReference Include="..\Sql\Microsoft.Azure.Management.Sql.Fluent.csproj" />
     <ProjectReference Include="..\Storage\Microsoft.Azure.Management.Storage.Fluent.csproj" />

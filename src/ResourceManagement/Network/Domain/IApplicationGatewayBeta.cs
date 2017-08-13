@@ -19,6 +19,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets disabled SSL protocols.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewaySslProtocol> DisabledSslProtocols { get; }
+        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewaySslProtocol> DisabledSslProtocols { get; }
     }
 }

@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a load balancer frontend.
+    /// An client-side representation of a load balancer frontend.
     /// </summary>
     public interface ILoadBalancerFrontend  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.Redis.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.Search.Fluent;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.Management.Fluent
         private ICdnManager cdnManager;
         private IRedisManager redisManager;
         private IAppServiceManager appServiceManager;
+        private ISearchManager searchManager;
         private IServiceBusManager serviceBusManager;
         private IRegistryManager registryManager;
         private IDocumentDBManager documentDBManager;
@@ -313,6 +315,14 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public ISearchServices SearchServices
+        {
+            get
+            {
+                return searchManager.SearchServices;
+            }
+        }
+
         public IServiceBusNamespaces ServiceBusNamespaces
         {
             get
@@ -345,51 +355,11 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
         
-        public IActiveDirectoryUsers ActiveDirectoryUsers
+        public IAccessManagement AccessManagement
         {
             get
             {
-                return authenticated.ActiveDirectoryUsers;
-            }
-        }
-
-        public IActiveDirectoryGroups ActiveDirectoryGroups
-        {
-            get
-            {
-                return authenticated.ActiveDirectoryGroups;
-            }
-        }
-
-        public IActiveDirectoryApplications ActiveDirectoryApplications
-        {
-            get
-            {
-                return authenticated.ActiveDirectoryApplications;
-            }
-        }
-
-        public IServicePrincipals ServicePrincipals
-        {
-            get
-            {
-                return authenticated.ServicePrincipals;
-            }
-        }
-
-        public IRoleDefinitions RoleDefinitions
-        {
-            get
-            {
-                return authenticated.RoleDefinitions;
-            }
-        }
-
-        public IRoleAssignments RoleAssignments
-        {
-            get
-            {
-                return authenticated.RoleAssignments;
+                return authenticated;
             }
         }
 
@@ -411,6 +381,7 @@ namespace Microsoft.Azure.Management.Fluent
             redisManager = RedisManager.Authenticate(restClient, subscriptionId);
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
+            searchManager = SearchManager.Authenticate(restClient, subscriptionId);
             serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
             registryManager = RegistryManager.Authenticate(restClient, subscriptionId);
             documentDBManager = DocumentDBManager.Authenticate(restClient, subscriptionId);
@@ -458,25 +429,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         #region IAuthenticated and it's implementation
 
-        /// <summary>
-        /// Members of IAuthenticated that are in Beta
-        /// </summary>
-        public interface IAuthenticatedBeta : IBeta
-        {
-            IActiveDirectoryUsers ActiveDirectoryUsers { get; }
-
-            IActiveDirectoryGroups ActiveDirectoryGroups { get; }
-
-            IActiveDirectoryApplications ActiveDirectoryApplications { get; }
-
-            IServicePrincipals ServicePrincipals { get; }
-
-            IRoleDefinitions RoleDefinitions { get; }
-
-            IRoleAssignments RoleAssignments { get; }
-        }
-
-        public interface IAuthenticated : IAuthenticatedBeta
+        public interface IAuthenticated : IAccessManagement
         {
             string TenantId { get; }
 
@@ -638,87 +591,182 @@ namespace Microsoft.Azure.Management.Fluent
     /// </summary>
     public interface IAzureBeta : IBeta
     {
+        /// <summary>
+        /// Entry point to load balancer management.
+        /// </summary>
         ILoadBalancers LoadBalancers { get; }
 
-        IApplicationGateways ApplicationGateways { get; }
-
+        /// <summary>
+        /// Entry point to Azure Network Watcher management
+        /// </summary>
         INetworkWatchers NetworkWatchers { get; }
 
+        /// <summary>
+        /// Entry point to Azure Web App management.
+        /// </summary>
         IWebApps WebApps { get; }
 
+        /// <summary>
+        /// Entry point to Azure App Service management.
+        /// </summary>
         IAppServiceManager AppServices { get; }
 
+        /// <summary>
+        /// Entry point to Azure Search management.
+        /// </summary>
+        ISearchServices SearchServices { get; }
+
+        /// <summary>
+        /// Entry point to Azure Service Bus namespace management.
+        /// </summary>
         IServiceBusNamespaces ServiceBusNamespaces { get; }
 
+        /// <summary>
+        /// Entry point to Azure Container Services management.
+        /// </summary>
         IContainerServices ContainerServices { get; }
 
+        /// <summary>
+        /// Entry point to DocumentDB account management
+        /// </summary>
         IDocumentDBAccounts DocumentDBAccounts { get; }
 
+        /// <summary>
+        /// Entry point to Azure container registry management.
+        /// </summary>
         IRegistries ContainerRegistries { get; }
-
-        IActiveDirectoryUsers ActiveDirectoryUsers { get; }
-
-        IActiveDirectoryGroups ActiveDirectoryGroups { get; }
-
-        IActiveDirectoryApplications ActiveDirectoryApplications { get; }
-
-        IServicePrincipals ServicePrincipals { get; }
-
-        IRoleDefinitions RoleDefinitions { get; }
-
-        IRoleAssignments RoleAssignments { get; }
     }
 
     public interface IAzure : IAzureBeta
     {
         string SubscriptionId { get; }
 
+        /// <summary>
+        /// Entry point to authentication and authorization management in Azure
+        /// </summary>
+        IAccessManagement AccessManagement { get; }
+
+        /// <summary>
+        /// Entry point to application gateway management
+        /// </summary>
+        IApplicationGateways ApplicationGateways { get; }
+
+        /// <summary>
+        /// Returns the subscription the API is currently configured to work with.
+        /// </summary>
+        /// <returns></returns>
         ISubscription GetCurrentSubscription();
 
         ISubscriptions Subscriptions { get; }
 
+        /// <summary>
+        /// Entry point to resource group management.
+        /// </summary>
         IResourceGroups ResourceGroups { get; }
 
+        /// <summary>
+        /// Entry point to storage account management.
+        /// </summary>
         IStorageAccounts StorageAccounts { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine management.
+        /// </summary>
         IVirtualMachines VirtualMachines { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine scale set management.
+        /// </summary>
         IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
 
+        /// <summary>
+        /// Entry point to virtual network management.
+        /// </summary>
         INetworks Networks { get; }
 
+        /// <summary>
+        /// Entry point to network security group management.
+        /// </summary>
         INetworkSecurityGroups NetworkSecurityGroups { get; }
 
+        /// <summary>
+        /// Entry point to public IP address management.
+        /// </summary>
         IPublicIPAddresses PublicIPAddresses { get; }
 
+        /// <summary>
+        /// Entry point to network interface management
+        /// </summary>
         INetworkInterfaces NetworkInterfaces { get; }
 
+        /// <summary>
+        /// Entry point to Azure Resource Manager template deployment management.
+        /// </summary>
         IDeployments Deployments { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine image management.
+        /// </summary>
         IVirtualMachineImages VirtualMachineImages { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine extendion image management.
+        /// </summary>
         IVirtualMachineExtensionImages VirtualMachineExtensionImages { get; }
 
+        /// <summary>
+        /// Entry point to availability set management.
+        /// </summary>
         IAvailabilitySets AvailabilitySets { get; }
 
+        /// <summary>
+        /// Entry point to batch account management.
+        /// </summary>
         IBatchAccounts BatchAccounts { get; }
 
+        /// <summary>
+        /// Entry point to Azure Key Vault management.
+        /// </summary>
         IVaults Vaults { get; }
 
+        /// <summary>
+        /// Entry point to Azure Traffic Manager management.
+        /// </summary>
         ITrafficManagerProfiles TrafficManagerProfiles { get; }
 
+        /// <summary>
+        /// Entry point to DNS zone management.
+        /// </summary>
         IDnsZones DnsZones { get; }
 
+        /// <summary>
+        /// Entry point to Azure SQL server management.
+        /// </summary>
         ISqlServers SqlServers { get; }
 
+        /// <summary>
+        /// Entry point to Azure Redis cache management.
+        /// </summary>
         IRedisCaches RedisCaches { get; }
 
+        /// <summary>
+        /// Entry poing to content delivery network management.
+        /// </summary>
         ICdnProfiles CdnProfiles { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine custom image management.
+        /// </summary>
         IVirtualMachineCustomImages VirtualMachineCustomImages { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine managed disk management.
+        /// </summary>
         IDisks Disks { get; }
 
+        /// <summary>
+        /// Entry point to virtual machine managed disk snapshot management.
+        /// </summary>
         ISnapshots Snapshots { get; }
     }
 }

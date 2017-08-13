@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class ApplicationGatewayImpl 
     {
         /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.INetworkManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>.Manager
-        {
-            get
-            {
-                return this.Manager() as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
-            }
-        }
-
-        /// <summary>
         /// Begins the update of an existing backend on this application gateway.
         /// </summary>
         /// <param name="name">The name of the backend.</param>
@@ -250,11 +239,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets disabled SSL protocols.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewaySslProtocol> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBeta.DisabledSslProtocols
+        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewaySslProtocol> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBeta.DisabledSslProtocols
         {
             get
             {
-                return this.DisabledSslProtocols() as System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewaySslProtocol>;
+                return this.DisabledSslProtocols() as System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewaySslProtocol>;
             }
         }
 

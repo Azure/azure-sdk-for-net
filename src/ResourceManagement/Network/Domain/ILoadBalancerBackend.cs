@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of a load balancer backend address pool.
+    /// A client-side representation of a load balancer backend address pool.
     /// </summary>
     public interface ILoadBalancerBackend  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

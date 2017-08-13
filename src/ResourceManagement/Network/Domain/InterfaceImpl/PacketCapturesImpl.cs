@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByNameAsync(string name, CancellationToken cancellationToken)
         {
+ 
             await this.DeleteByNameAsync(name, cancellationToken);
         }
 
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="name">The name of the resource to delete.</param>
         void Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByName.DeleteByName(string name)
         {
+ 
             this.DeleteByName(name);
         }
 
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-       IPacketCapture ISupportsGettingByName<IPacketCapture>.GetByName(string name)
+        Microsoft.Azure.Management.Network.Fluent.IPacketCapture Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Network.Fluent.IPacketCapture>.GetByName(string name)
         {
             return this.GetByName(name) as Microsoft.Azure.Management.Network.Fluent.IPacketCapture;
         }
@@ -84,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Network.Fluent.IPacketCapture> ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Network.Fluent.IPacketCapture>.GetByNameAsync(string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Network.Fluent.IPacketCapture> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByNameAsync<Microsoft.Azure.Management.Network.Fluent.IPacketCapture>.GetByNameAsync(string name, CancellationToken cancellationToken)
         {
             return await this.GetByNameAsync(name, cancellationToken) as Microsoft.Azure.Management.Network.Fluent.IPacketCapture;
         }

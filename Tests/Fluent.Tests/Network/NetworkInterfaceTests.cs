@@ -46,6 +46,7 @@ namespace Fluent.Tests.Network
                         .WithPrimaryPrivateIPAddressDynamic()
                         .WithNewPrimaryPublicIPAddress(pipName)
                         .WithIPForwarding()
+                        .WithAcceleratedNetworking()
                         .Create();
 
                 // Verifications
@@ -61,10 +62,12 @@ namespace Fluent.Tests.Network
                 Assert.Equal(1, ipConfigs.Count);
                 var ipConfig2 = ipConfigs.First();
                 Assert.Equal(ipConfig.Name.ToLower(), ipConfig2.Name.ToLower());
+                Assert.True(nic.IsAcceleratedNetworkingEnabled);
 
                 var resource = manager.NetworkInterfaces.GetById(nic.Id);
                 resource = resource.Update()
                     .WithoutIPForwarding()
+                    .WithoutAcceleratedNetworking()
                     .WithSubnet("subnet2")
                     .UpdateIPConfiguration(resource.PrimaryIPConfiguration.Name) // Updating the primary IP configuration
                         .WithPrivateIPAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIPAddressDynamic()
@@ -76,7 +79,8 @@ namespace Fluent.Tests.Network
                 Assert.True(resource.Tags.ContainsKey("tag1"));
 
                 // Verifications
-                Assert.True(!resource.IsIPForwardingEnabled);
+                Assert.False(resource.IsIPForwardingEnabled);
+                Assert.False(resource.IsAcceleratedNetworkingEnabled);
                 var primaryIpConfig = resource.PrimaryIPConfiguration;
                 Assert.NotNull(primaryIpConfig);
                 Assert.True(primaryIpConfig.IsPrimary);
@@ -177,7 +181,8 @@ namespace Fluent.Tests.Network
                 info.Append("\n\t\t").Append(dnsServerIP);
             }
 
-            info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIPForwardingEnabled)
+            info.Append("\n\tIP forwarding enabled: ").Append(resource.IsIPForwardingEnabled)
+                    .Append("\n\tAccelerated networking enabled: ").Append(resource.IsAcceleratedNetworkingEnabled)
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
                     .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIP)
                     .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIPAllocationMethod)

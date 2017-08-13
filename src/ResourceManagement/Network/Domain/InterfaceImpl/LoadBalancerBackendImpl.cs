@@ -48,6 +48,70 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Adds the specified set of virtual machines, assuming they are from the same
+        /// availability set, to this backend address pool.
+        /// This will add references to the primary IP configurations of the primary network interfaces of
+        /// the provided set of virtual machines.
+        /// If the virtual machines are not in the same availability set, they will not be associated with this back end.
+        /// Only those virtual machines will be associated with the load balancer that already have an existing
+        /// network interface. Virtual machines without a network interface will be skipped.
+        /// </summary>
+        /// <param name="vms">Existing virtual machines.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerBackend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerBackend.Definition.IWithVirtualMachineBeta<LoadBalancer.Definition.IWithCreate>.WithExistingVirtualMachines(params IHasNetworkInterfaces[] vms)
+        {
+            return this.WithExistingVirtualMachines(vms) as LoadBalancerBackend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Adds the specified set of virtual machines, assuming they are from the same
+        /// availability set, to this backend address pool.
+        /// This will add references to the primary IP configurations of the primary network interfaces of
+        /// the provided set of virtual machines.
+        /// If the virtual machines are not in the same availability set, they will not be associated with this back end.
+        /// Only those virtual machines will be associated with the load balancer that already have an existing
+        /// network interface. Virtual machines without a network interface will be skipped.
+        /// </summary>
+        /// <param name="vms">Existing virtual machines.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerBackend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerBackend.Definition.IWithVirtualMachineBeta<LoadBalancer.Definition.IWithCreate>.WithExistingVirtualMachines(ICollection<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms)
+        {
+            return this.WithExistingVirtualMachines(vms) as LoadBalancerBackend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Adds the specified set of virtual machines, assuming they are from the same
+        /// availability set, to this back end address pool.
+        /// This will add references to the primary IP configurations of the primary network interfaces of
+        /// the provided set of virtual machines.
+        /// If the virtual machines are not in the same availability set, they will not be associated with this back end.
+        /// Only those virtual machines will be associated with the load balancer that already have an existing
+        /// network interface. Virtual machines without a network interface will be skipped.
+        /// </summary>
+        /// <param name="vms">Existing virtual machines.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerBackend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancerBackend.UpdateDefinition.IWithVirtualMachineBeta<LoadBalancer.Update.IUpdate>.WithExistingVirtualMachines(params IHasNetworkInterfaces[] vms)
+        {
+            return this.WithExistingVirtualMachines(vms) as LoadBalancerBackend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Adds the specified set of virtual machines, assuming they are from the same
+        /// availability set, to this backend address pool.
+        /// This will add references to the primary IP configurations of the primary network interfaces of
+        /// the provided set of virtual machines.
+        /// If the virtual machines are not in the same availability set, they will not be associated with this back end.
+        /// Only those virtual machines will be associated with the load balancer that already have an existing
+        /// network interface. Virtual machines without a network interface will be skipped.
+        /// </summary>
+        /// <param name="vms">Existing virtual machines.</param>
+        /// <return>The next stage of the definition.</return>
+        LoadBalancerBackend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancerBackend.UpdateDefinition.IWithVirtualMachineBeta<LoadBalancer.Update.IUpdate>.WithExistingVirtualMachines(ICollection<Microsoft.Azure.Management.Network.Fluent.IHasNetworkInterfaces> vms)
+        {
+            return this.WithExistingVirtualMachines(vms) as LoadBalancerBackend.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
         /// Gets the associated load balancing rules from this load balancer, indexed by their names.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules.LoadBalancingRules
@@ -68,9 +132,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithBackendOrProbe Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithBackendOrProbe>.Attach()
+        LoadBalancer.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithCreate>.Attach()
         {
-            return this.Attach() as LoadBalancer.Definition.IWithBackendOrProbe;
+            return this.Attach() as LoadBalancer.Definition.IWithCreate;
         }
     }
 }

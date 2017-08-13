@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for Network Watchers.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1dhdGNoZXJzSW1wbA==
+
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uTmV0d29ya1dhdGNoZXJzSW1wbA==
     internal partial class NetworkWatchersImpl  :
         GroupableResources<INetworkWatcher,
             NetworkWatcherImpl,
@@ -23,6 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkManager>,
         INetworkWatchers
     {
+        
         ///GENMHASH:3A03D39CB6798E01F6AE75EACB2C1BE6:E3EBF0BC1484E8FD120E4E5A1D237F6A
         internal  NetworkWatchersImpl(INetworkManager networkManager)
             : base(networkManager.Inner.NetworkWatchers, 
@@ -30,18 +32,21 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
 
+        
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public NetworkWatcherImpl Define(string name)
         {
             return WrapModel(name);
         }
 
+        
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:9501D4AC00C1A480FAA373B4EE254723
         protected override NetworkWatcherImpl WrapModel(string name)
         {
             return new NetworkWatcherImpl(name, new NetworkWatcherInner(), Manager);
         }
 
+        
         ///GENMHASH:92D118F36540A41689B877C0F901DCF1:236C90C989FEDAE7886278AFFE6FD7B0
         protected override INetworkWatcher WrapModel(NetworkWatcherInner inner)
         {

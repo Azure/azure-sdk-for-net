@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The Observable to refreshed resource.</return>
-        async Task<Microsoft.Azure.Management.Network.Fluent.ISecurityGroupView> IRefreshable<ISecurityGroupView>.RefreshAsync(CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Network.Fluent.ISecurityGroupView> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.ISecurityGroupView>.RefreshAsync(CancellationToken cancellationToken)
         {
             return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Network.Fluent.ISecurityGroupView;
         }
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the parent of this child object.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.INetworkWatcher IHasParent<Microsoft.Azure.Management.Network.Fluent.INetworkWatcher>.Parent
+        Microsoft.Azure.Management.Network.Fluent.INetworkWatcher Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasParent<Microsoft.Azure.Management.Network.Fluent.INetworkWatcher>.Parent
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets network interfaces on the specified VM.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Models.SecurityGroupNetworkInterface> ISecurityGroupView.NetworkInterfaces
+        System.Collections.Generic.IReadOnlyDictionary<string,Models.SecurityGroupNetworkInterface> Microsoft.Azure.Management.Network.Fluent.ISecurityGroupView.NetworkInterfaces
         {
             get
             {

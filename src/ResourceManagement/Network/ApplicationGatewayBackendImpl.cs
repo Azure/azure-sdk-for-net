@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// Implementation for ApplicationGatewayBackend.
     /// </summary>
+    
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uQXBwbGljYXRpb25HYXRld2F5QmFja2VuZEltcGw=
     internal partial class ApplicationGatewayBackendImpl :
         ChildResource<ApplicationGatewayBackendAddressPoolInner, ApplicationGatewayImpl, IApplicationGateway>,
@@ -20,6 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IUpdateDefinition<ApplicationGateway.Update.IUpdate>,
         ApplicationGatewayBackend.Update.IUpdate
     {
+        
         ///GENMHASH:57E12F644F2C3EB367E99CBE582AD951:C0847EA0CDA78F6D91EFD239C70F0FA7
         internal ApplicationGatewayBackendImpl(ApplicationGatewayBackendAddressPoolInner inner, ApplicationGatewayImpl parent) : base(inner, parent)
         {
@@ -27,13 +29,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Accessors
 
+        
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
         public override string Name()
         {
             return Inner.Name;
         }
 
-        ///GENMHASH:1FC649C97657147238976F3B54524F58:B74483DFB822D3E7D17AE4E2E8CAE6E0
+        
+        ///GENMHASH:660646CB1AAA13CCBA50483108FFFCBF:B74483DFB822D3E7D17AE4E2E8CAE6E0
         public IReadOnlyDictionary<string, string> BackendNicIPConfigurationNames()
         {
             // This assumes a NIC can only have one IP config associated with the backend of an app gateway,
@@ -51,6 +55,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return ipConfigNames;
         }
 
+        
         ///GENMHASH:BD4433E096C5BD5A3392F44B28BA9083:B81C8A45BECCD7571A580B4729B2CD0C
         public bool ContainsFqdn(string fqdn)
         {
@@ -67,7 +72,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return false;
         }
 
-        ///GENMHASH:DA671E788D7745DDD7A0AEE413BB02F2:436637A06A9B4E6B2B3F2BA7F6A702C2
+        
+        ///GENMHASH:9193794DEF17F74A12490023F8AF6168:436637A06A9B4E6B2B3F2BA7F6A702C2
         public bool ContainsIPAddress(string ipAddress)
         {
             if (ipAddress != null)
@@ -88,7 +94,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Parent;
         }
 
-        ///GENMHASH:B9D8E0EB1A218491349631635CDA92D3:5685D5C7D202D29D2E15856A5673C8E7
+        
+        ///GENMHASH:B9D8E0EB1A218491349631635CDA92D3:FACDE5B36FEA8EBE27DA67C1C581284E
         public IReadOnlyCollection<ApplicationGatewayBackendAddress> Addresses()
         {
             var addresses = new List<ApplicationGatewayBackendAddress>();
@@ -104,6 +111,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Helpers
 
+        
         ///GENMHASH:CA426728D89DF7B679F3082001CE7DB8:631561FDE1B5174113A31FA550BA7525
         private IList<ApplicationGatewayBackendAddress> EnsureAddresses()
         {
@@ -119,6 +127,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Withers
 
+        
         ///GENMHASH:DFE562EDA69B9B5779C74F1A7206D23B:524E74936C9A9591669EB81BA006DE87
         public ApplicationGatewayBackendImpl WithoutAddress(ApplicationGatewayBackendAddress address)
         {
@@ -126,7 +135,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:040FE6797829F09ECF75BDE559FBA5FC:C147FF55BA09CE955B0C5E32B1198058
+        
+        ///GENMHASH:944BF1730016EB109BA8A7D6EE074FD9:5D921AD08070E5CDAC4685DF69DE7C5A
         public ApplicationGatewayBackendImpl WithIPAddress(string ipAddress)
         {
             if (ipAddress == null)
@@ -156,6 +166,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
+        
         ///GENMHASH:BE71ABDD6202EC63298CCC3687E0D342:BFAC6742569FBE1AAA654B5BC52885A4
         public ApplicationGatewayBackendImpl WithFqdn(string fqdn)
         {
@@ -173,7 +184,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:1EEC75E693F98EC473E92A76B0687A98:C8F2C3635877B7B266960E3BBBF0BC73
+        
+        ///GENMHASH:6B55F5B12011B69BF6093386394EBE36:361E56BFBC466A31D98F6A02214458EB
         public ApplicationGatewayBackendImpl WithoutIPAddress(string ipAddress)
         {
             if (ipAddress == null)
@@ -200,6 +212,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
+        
         ///GENMHASH:237A061FC122426B3FAE4D0084C2C114:6E6DCF6440064F537DE973B900C3AB46
         public ApplicationGatewayBackendImpl WithoutFqdn(string fqdn)
         {
@@ -225,6 +238,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Actions
 
+        
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:321924EA2E0782F0638FD1917D19DF54
         public ApplicationGatewayImpl Attach()
         {

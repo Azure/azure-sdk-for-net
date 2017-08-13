@@ -12,9 +12,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.INicIPConfigurationBase,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.NetworkInterfaceIPConfigurationInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
-        Microsoft.Azure.Management.Network.Fluent.IHasPrivateIPAddress,
-        Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet
+        Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress
     {
     }
 }

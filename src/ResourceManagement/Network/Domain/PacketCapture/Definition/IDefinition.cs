@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.PacketCapture.Definition
         /// Required if no local file path is provided.
         /// </summary>
         /// <param name="storageId">The ID of the storage account to save the packet capture session.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PacketCapture.Definition.IWithCreateAndStoragePath WithStorageAccountId(string storageId);
     }
 

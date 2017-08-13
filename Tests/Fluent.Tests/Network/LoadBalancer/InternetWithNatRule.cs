@@ -20,18 +20,18 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
     public class InternetWithNatRule : TestTemplate<ILoadBalancer, ILoadBalancers, INetworkManager>
     {
         private IPublicIPAddresses pips;
-        private IVirtualMachines vms;
+        private IComputeManager computeManager;
         private IAvailabilitySets availabilitySets;
         private INetworks networks;
         private LoadBalancerHelper loadBalancerHelper;
 
         public InternetWithNatRule(
-                IVirtualMachines vms,
+                IComputeManager computeManager,
                 [CallerMemberName] string methodName = "testframework_failed")
             : base(methodName)
         {
             loadBalancerHelper = new LoadBalancerHelper(TestUtilities.GenerateName(methodName));
-            this.vms = vms;
+            this.computeManager = computeManager;
         }
 
         public override void Print(ILoadBalancer resource)
@@ -43,25 +43,38 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
         {
             pips = resources.Manager.PublicIPAddresses;
             networks = resources.Manager.Networks;
-            availabilitySets = vms.Manager.AvailabilitySets;
-            var existingVMs = loadBalancerHelper.EnsureVMs(this.networks, this.vms, this.availabilitySets, 2);
+            availabilitySets = computeManager.AvailabilitySets;
+            var existingVMs = loadBalancerHelper.EnsureVMs(networks, computeManager, 2);
             Assert.Equal(2, existingVMs.Count());
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
+            IPublicIPAddress pip = resources.Manager.PublicIPAddresses.GetByResourceGroup(
+                loadBalancerHelper.GroupName,
+                loadBalancerHelper.PipNames[0]);
 
             // Create a load balancer
             var lb = resources.Define(loadBalancerHelper.LoadBalancerName)
                         .WithRegion(loadBalancerHelper.Region)
                         .WithExistingResourceGroup(loadBalancerHelper.GroupName)
 
-                        // Frontends
-                        .DefinePublicFrontend("frontend1")
-                            .WithExistingPublicIPAddress(existingPips.ElementAt(0))
+                        // Load balancing rules
+                        .DefineLoadBalancingRule("rule1")
+                            .WithProtocol(TransportProtocol.Tcp)    // Required
+                            .FromExistingPublicIPAddress(pip)
+                            .FromFrontendPort(81)
+                            .ToBackend("backend1")
+                            .ToBackendPort(82)                    // Optionals
+                            .WithProbe("tcpProbe1")
+                            .WithIdleTimeoutInMinutes(10)
+                            .WithLoadDistribution(LoadDistribution.SourceIP)
                             .Attach()
 
-                        // Backends
-                        .DefineBackend("backend1")
+                        // Inbound NAT rules
+                        .DefineInboundNatRule("natrule1")
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromExistingPublicIPAddress(pip) // Implicitly uses the same frontend because the PIP is the same
+                            .FromFrontendPort(88)
                             .Attach()
 
                         // Probes
@@ -76,88 +89,78 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
                             .WithNumberOfProbes(4)
                             .Attach()
 
-                        // Load balancing rules
-                        .DefineLoadBalancingRule("rule1")
-                            .WithProtocol(TransportProtocol.Tcp)    // Required
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(81)
-                            .WithProbe("tcpProbe1")
-                            .WithBackend("backend1")
-                            .WithBackendPort(82)                    // Optionals
-                            .WithIdleTimeoutInMinutes(10)
-                            .WithLoadDistribution(LoadDistribution.SourceIP)
-                            .Attach()
-
-                        // Inbound NAT rules
-                        .DefineInboundNatRule("natrule1")
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend("frontend1")
-                            .WithFrontendPort(88)
-                            .Attach()
                         .Create();
+
+            string backendName = lb.Backends.Values.First().Name;
+            string frontendName = lb.Frontends.Values.First().Name;
 
             // Connect NICs explicitly
             nic1.Update()
-                .WithExistingLoadBalancerBackend(lb, "backend1")
+                .WithExistingLoadBalancerBackend(lb, backendName)
                 .WithExistingLoadBalancerInboundNatRule(lb, "natrule1")
                 .Apply();
             NetworkInterfaceHelper.PrintNic(nic1);
             Assert.True(nic1.PrimaryIPConfiguration.ListAssociatedLoadBalancerBackends().ElementAt(0)
-                            .Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
+                            .Name.Equals(backendName, StringComparison.OrdinalIgnoreCase));
             Assert.True(nic1.PrimaryIPConfiguration.ListAssociatedLoadBalancerInboundNatRules().ElementAt(0)
                             .Name.Equals("natrule1", StringComparison.OrdinalIgnoreCase));
 
             nic2.Update()
-                .WithExistingLoadBalancerBackend(lb, "backend1")
+                .WithExistingLoadBalancerBackend(lb, backendName)
                 .Apply();
             NetworkInterfaceHelper.PrintNic(nic2);
             Assert.True(nic2.PrimaryIPConfiguration.ListAssociatedLoadBalancerBackends().ElementAt(0)
-                            .Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
+                            .Name.Equals(backendName, StringComparison.OrdinalIgnoreCase));
 
             // Verify frontends
-            Assert.True(lb.Frontends.ContainsKey("frontend1"));
-            Assert.Equal(lb.Frontends.Count, 1);
+            Assert.Equal(1, lb.Frontends.Count);
+            Assert.Equal(1, lb.PublicFrontends.Count);
+            Assert.Equal(0, lb.PrivateFrontends.Count);
+            Assert.NotNull(lb.Frontends.ContainsKey(frontendName));
+            var frontend = lb.Frontends[frontendName];
+            Assert.True(frontend.IsPublic);
+            var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
+            Assert.True(pip.Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
 
-            existingPips.ElementAt(0).Refresh();
-            Assert.True(existingPips.ElementAt(0).GetAssignedLoadBalancerFrontend()
-                                    .Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
-            PublicIPAddressHelper.PrintPIP(existingPips.ElementAt(0).Refresh());
+            pip.Refresh();
+            Assert.True(pip.GetAssignedLoadBalancerFrontend().Name.Equals(frontendName, StringComparison.OrdinalIgnoreCase));
 
             // Verify backends
-            Assert.True(lb.Backends.ContainsKey("backend1"));
-            Assert.Equal(lb.Backends.Count, 1);
+            Assert.True(lb.Backends.ContainsKey(backendName));
+            Assert.Equal(1, lb.Backends.Count);
 
             // Verify probes
             Assert.True(lb.HttpProbes.ContainsKey("httpProbe1"));
+            Assert.Equal(1, lb.HttpProbes.Count);
             Assert.True(lb.TcpProbes.ContainsKey("tcpProbe1"));
-            Assert.False(lb.HttpProbes.ContainsKey("default"));
-            Assert.False(lb.TcpProbes.ContainsKey("default"));
+            Assert.Equal(1, lb.TcpProbes.Count);
 
             // Verify rules
+            Assert.Equal(1, lb.LoadBalancingRules.Count);
             Assert.True(lb.LoadBalancingRules.ContainsKey("rule1"));
-            Assert.False(lb.LoadBalancingRules.ContainsKey("default"));
-            Assert.Equal(lb.LoadBalancingRules.Values.Count(), 1);
             var rule = lb.LoadBalancingRules["rule1"];
-            Assert.True(rule.Backend.Name.Equals("backend1", StringComparison.OrdinalIgnoreCase));
-            Assert.True(rule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
+            Assert.True(rule.Backend.Name.Equals(backendName, StringComparison.OrdinalIgnoreCase));
+            Assert.True(rule.Frontend.Name.Equals(frontendName, StringComparison.OrdinalIgnoreCase));
             Assert.True(rule.Probe.Name.Equals("tcpProbe1", StringComparison.OrdinalIgnoreCase));
-            Assert.Equal(TransportProtocol.Tcp, rule.Protocol);
 
             // Verify inbound NAT rules
+            Assert.Equal(1, lb.InboundNatRules.Count);
             Assert.True(lb.InboundNatRules.ContainsKey("natrule1"));
-            Assert.Equal(lb.InboundNatRules.Count, 1);
             var inboundNatRule = lb.InboundNatRules["natrule1"];
-            Assert.True(inboundNatRule.Frontend.Name.Equals("frontend1", StringComparison.OrdinalIgnoreCase));
-            Assert.Equal(inboundNatRule.FrontendPort, 88);
-            Assert.Equal(inboundNatRule.BackendPort, 88);
+            Assert.True(inboundNatRule.Frontend.Name.Equals(frontendName, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(88, inboundNatRule.FrontendPort);
+            Assert.Equal(88, inboundNatRule.BackendPort);
 
             return lb;
         }
 
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
+            String backendName = resource.Backends.Values.First().Name;
+            String frontendName = resource.Frontends.Values.First().Name;
+
             var nics = new List<INetworkInterface>();
-            foreach (string nicId in resource.Backends["backend1"].BackendNicIPConfigurationNames.Keys)
+            foreach (string nicId in resource.Backends[backendName].BackendNicIPConfigurationNames.Keys)
             {
                 nics.Add(networks.Manager.NetworkInterfaces.GetById(nicId));
             }
@@ -179,25 +182,30 @@ namespace Fluent.Tests.Network.LoadBalancerHelpers
 
             // Update the load balancer
             var existingPips = loadBalancerHelper.EnsurePIPs(pips);
+            IPublicIPAddress pip = resource.Manager.PublicIPAddresses.GetByResourceGroup(
+                loadBalancerHelper.GroupName,
+                loadBalancerHelper.PipNames[1]);
             resource = resource.Update()
-                        .UpdateInternetFrontend("frontend1")
-                            .WithExistingPublicIPAddress(existingPips.ElementAt(1))
-                            .Parent()
-                        .WithoutFrontend("default")
-                        .WithoutBackend("default")
-                        .WithoutLoadBalancingRule("rule1")
-                        .WithoutInboundNatRule("natrule1")
-                        .WithTag("tag1", "value1")
-                        .WithTag("tag2", "value2")
-                        .Apply();
+                    .UpdatePublicFrontend(frontendName)
+                        .WithExistingPublicIPAddress(pip)
+                        .Parent()
+                    .WithoutLoadBalancingRule("rule1")
+                    .WithoutInboundNatRule("natrule1")
+                    .WithTag("tag1", "value1")
+                    .WithTag("tag2", "value2")
+                    .Apply();
+
             Assert.True(resource.Tags.ContainsKey("tag1"));
             Assert.Equal(0, resource.InboundNatRules.Count);
 
             // Verify frontends
-            var frontend = resource.Frontends["frontend1"];
+            Assert.Equal(1, resource.PublicFrontends.Count);
+            Assert.Equal(0, resource.PrivateFrontends.Count);
+            Assert.True(resource.Frontends.ContainsKey(frontendName));
+            var frontend = resource.Frontends[frontendName];
             Assert.True(frontend.IsPublic);
             var publicFrontend = (ILoadBalancerPublicFrontend)frontend;
-            Assert.True(existingPips.ElementAt(1).Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
+            Assert.True(pip.Id.Equals(publicFrontend.PublicIPAddressId, StringComparison.OrdinalIgnoreCase));
 
             return resource;
         }
