@@ -1526,7 +1526,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the Managed Service Identity specific Active Directory service principal ID assigned
         /// to the virtual machine.
         /// </summary>
-        string ManagedServiceIdentityPrincipalId
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.ManagedServiceIdentityPrincipalId
         {
             get
             {
@@ -1537,7 +1537,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets true if Managed Service Identity is enabled for the virtual machine.
         /// </summary>
-        bool IsManagedServiceIdentityEnabled
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.IsManagedServiceIdentityEnabled
         {
             get
             {
@@ -1549,7 +1549,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the Managed Service Identity specific Active Directory tenant ID assigned to the
         /// virtual machine.
         /// </summary>
-        string ManagedServiceIdentityTenantId
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.ManagedServiceIdentityTenantId
         {
             get
             {
@@ -2004,7 +2004,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <returns>the next stage of the update</returns>
         VirtualMachine.Update.IWithRoleAndScopeOrUpdate VirtualMachine.Update.IWithRoleAndScopeOrUpdate.WithRoleBasedAccessTo(string scope, BuiltInRole asRole)
         {
-            return rhis.WithRoleBasedAccessTo(scope, asRole) as VirtualMachine.Update.IWithRoleAndScopeOrUpdate;
+            return this.WithRoleBasedAccessTo(scope, asRole) as VirtualMachine.Update.IWithRoleAndScopeOrUpdate;
         }
 
         /// <summary>

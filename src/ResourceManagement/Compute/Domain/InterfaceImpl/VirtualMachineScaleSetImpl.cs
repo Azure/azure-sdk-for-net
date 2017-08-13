@@ -850,7 +850,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the Managed Service Identity specific Active Directory service principal ID assigned
         /// to the virtual machine scale set.
         /// </summary>
-        string ManagedServiceIdentityPrincipalId
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.ManagedServiceIdentityPrincipalId
         {
             get
             {
@@ -861,7 +861,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets true if Managed Service Identity is enabled for the virtual machine scale set.
         /// </summary>
-        bool IsManagedServiceIdentityEnabled
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.IsManagedServiceIdentityEnabled
         {
             get
             {
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the Managed Service Identity specific Active Directory tenant ID assigned to the
         /// virtual machine scale set.
         /// </summary>
-        string ManagedServiceIdentityTenantId
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.ManagedServiceIdentityTenantId
         {
             get
             {

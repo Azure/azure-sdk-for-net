@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -14,6 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private IStorageManager storageManager;
         private INetworkManager networkManager;
+        private IGraphRbacManager rbacManager;
 
         #region Fluent private collections
         private IVirtualMachines virtualMachines;
@@ -41,6 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
+            rbacManager = GraphRbacManager.Authenticate(restClient, ((AzureCredentials)(restClient.Credentials)).TenantId);
         }
 
         #endregion
@@ -99,7 +102,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     virtualMachines = new VirtualMachinesImpl(
                         this,
                         storageManager,
-                        networkManager);
+                        networkManager,
+                        rbacManager);
                 }
 
                 return virtualMachines;
@@ -157,7 +161,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(
                         this, 
                         storageManager,
-                        networkManager);
+                        networkManager,
+                        rbacManager);
                 }
                 return virtualMachineScaleSets;
             }

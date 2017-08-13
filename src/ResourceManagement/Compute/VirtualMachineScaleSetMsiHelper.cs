@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="rbacManager">The graph rbac manager.</param>
         ///GENMHASH:0BDA99FBDDE9E5E56C04FBD8624B1659:3E04D74F93A4BF712A2E5D50102895B8
-        internal  VirtualMachineScaleSetMsiHelper(GraphRbacManager rbacManager)
+        internal  VirtualMachineScaleSetMsiHelper(IGraphRbacManager rbacManager)
         {
             this.rbacManager = rbacManager;
             this.rolesToAssign = new Dictionary<string, Tuple<string, BuiltInRole>>();
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             // impl so that any breaking change in the contract cause a compile time error here. So do not
             // change the below 'updateExtension' or 'defineNewExtension' to use impls.
             //
-            String msiExtensionType = MsiExtensionType(scaleSetImpl.OsTypeIntern());
+            String msiExtensionType = MsiExtensionType(scaleSetImpl.OSTypeIntern());
             IVirtualMachineScaleSetExtension msiExtension = GetMSIExtension(scaleSetImpl.Extensions(), msiExtensionType);
             if (msiExtension != null)
             {

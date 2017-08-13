@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="rbacManager">The graph rbac manager.</param>
         ///GENMHASH:4B4A4AD2D9CD3095EFC5D25D8ADB59C4:0B494D62307BC80DFFADD0731B914984
-        internal  VirtualMachineMsiHelper(GraphRbacManager rbacManager)
+        internal  VirtualMachineMsiHelper(IGraphRbacManager rbacManager)
         {
             this.rbacManager = rbacManager;
             this.rolesToAssign = new Dictionary<string, Tuple<string, BuiltInRole>>();
