@@ -109,11 +109,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             IEnumerable<string> keysWithCurrentResourceGroupScopeForRoles = this.rolesToAssign
                 .Where(role => role.Value.Item1.Equals(CURRENT_RESOURCE_GROUP_SCOPE, System.StringComparison.OrdinalIgnoreCase))
-                .Select(role => role.Key);
+                .Select(role => role.Key)
+                .ToList();  // ToList() is required as we are going to modify the same source collection below
 
             IEnumerable<string> keysWithCurrentResourceGroupScopeForRoleDefinitions = this.roleDefinitionsToAssign
                 .Where(role => role.Value.Item1.Equals(CURRENT_RESOURCE_GROUP_SCOPE, System.StringComparison.OrdinalIgnoreCase))
-                .Select(role => role.Key);
+                .Select(role => role.Key)
+                .ToList();
 
             if (!keysWithCurrentResourceGroupScopeForRoles.Any()
                 && !keysWithCurrentResourceGroupScopeForRoleDefinitions.Any())
@@ -393,14 +395,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="obj">The object.</param>
         /// <return>The integer value.</return>
         ///GENMHASH:663112EB0F1DE517DFEE2A837DECC2B6:E55F34EE6CDFC6C04AA107D22EE30395
-        private int? ObjectToInteger(object obj)
+        private static int? ObjectToInteger(object obj)
         {
             int? result = null;
             if (obj != null)
             {
-                if (obj is int)
+                if (obj is Int16)
+                {
+                    result = (int)((Int16)obj);
+                }
+                else if (obj is Int32)
                 {
                     result = (int)obj;
+                }
+                else if (obj is Int64)
+                {
+                    result = (int)((Int64)obj);
                 }
                 else
                 {
