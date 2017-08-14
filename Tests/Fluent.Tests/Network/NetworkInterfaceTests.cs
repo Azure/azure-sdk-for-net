@@ -149,7 +149,7 @@ namespace Fluent.Tests.Network
                             .Parent()
                         .ApplyAsync(),
 
-                    // Update NIC3
+                    // Update NIC2
                     nics[2].Update()
                         .WithoutIPConfiguration("nicip2")
                         .DefineSecondaryIPConfiguration("nicip3")
