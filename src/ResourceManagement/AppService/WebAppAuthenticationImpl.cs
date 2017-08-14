@@ -109,7 +109,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             : base(inner)
         {
             this.parent = parent;
-            Inner.Location = parent.RegionName;
             Inner.TokenStoreEnabled = true;
         }
     }

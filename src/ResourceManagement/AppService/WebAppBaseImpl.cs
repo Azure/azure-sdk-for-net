@@ -329,7 +329,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             HostNameBindingInner inner = new HostNameBindingInner()
             {
                 SiteName = Name,
-                Location = RegionName,
                 AzureResourceType = AzureResourceType.Website,
                 AzureResourceName = Name,
                 HostNameType = HostNameType.Verified
@@ -529,7 +528,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 if (connectionStrings == null)
                 {
                     connectionStrings = new ConnectionStringDictionaryInner();
-                    connectionStrings.Location = RegionName;
                 }
                 if (connectionStrings.Properties == null)
                 {
@@ -553,7 +551,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 if (slotConfigs == null)
                 {
                     slotConfigs = new SlotConfigNamesResourceInner();
-                    slotConfigs.Location = RegionName;
                 }
                 if (slotConfigs.AppSettingNames == null)
                 {
@@ -635,7 +632,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 if (appSettings == null)
                 {
                     appSettings = new StringDictionaryInner();
-                    appSettings.Location = RegionName;
                 }
                 if (appSettings.Properties == null)
                 {
@@ -901,10 +897,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> DefineSourceControl()
         {
             return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(
-                new SiteSourceControlInner()
-                {
-                    Location = RegionName
-                }, this);
+                new SiteSourceControlInner(), this);
         }
 
         ///GENMHASH:1703877FCECC33D73EA04EEEF89045EF:A93CDCF3EC94A75CDDBFCAC39CD42834

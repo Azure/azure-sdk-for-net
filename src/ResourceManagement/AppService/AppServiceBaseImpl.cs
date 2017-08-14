@@ -96,7 +96,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             IdentifierInner identifierInner = new IdentifierInner()
             {
-                Location = "global",
                 IdentifierId = domainVerificationToken
             };
             await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner, cancellationToken);

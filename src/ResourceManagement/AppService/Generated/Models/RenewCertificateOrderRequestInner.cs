@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Class representing certificate renew request.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RenewCertificateOrderRequestInner : Rest.Azure.Resource
+    public partial class RenewCertificateOrderRequestInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RenewCertificateOrderRequestInner

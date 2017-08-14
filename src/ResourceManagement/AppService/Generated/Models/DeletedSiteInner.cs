@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// A deleted app.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DeletedSiteInner : Rest.Azure.Resource
+    public partial class DeletedSiteInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DeletedSiteInner class.

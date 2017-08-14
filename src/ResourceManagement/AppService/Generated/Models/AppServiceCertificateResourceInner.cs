@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// through Azure.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServiceCertificateResourceInner : Rest.Azure.Resource
+    public partial class AppServiceCertificateResourceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the
