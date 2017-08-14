@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="publicIPAddressId">The resource ID of a public IP address to search by.</param>
         /// <return>A public frontend associated with the provided public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBeta.FindFrontendByPublicIPAddress(string publicIPAddressId)
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.FindFrontendByPublicIPAddress(string publicIPAddressId)
         {
             return this.FindFrontendByPublicIPAddress(publicIPAddressId) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend;
         }
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="publicIPAddress">A public IP address to search by.</param>
         /// <return>A public frontend associated with the provided public IP address.</return>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBeta.FindFrontendByPublicIPAddress(IPublicIPAddress publicIPAddress)
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.FindFrontendByPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
             return this.FindFrontendByPublicIPAddress(publicIPAddress) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend;
         }
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets public (Internet-facing) frontends.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBeta.PublicFrontends
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.PublicFrontends
         {
             get
             {
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets private (internal) frontends.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPrivateFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBeta.PrivateFrontends
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPrivateFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.PrivateFrontends
         {
             get
             {
