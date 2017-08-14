@@ -592,20 +592,19 @@ namespace Fluent.Tests.Compute.VirtualMachine
             {
                 string vmss_name = TestUtilities.GenerateName("vmss");
                 string groupName = TestUtilities.GenerateName("javacsmrg");
-                var region = Region.USSouthCentral;
                 IAzure azure = null;
                 try
                 {
                     azure = TestHelper.CreateRollupClient();
                     IResourceGroup resourceGroup = azure.ResourceGroups
                         .Define(groupName)
-                        .WithRegion(region)
+                        .WithRegion(Location)
                         .Create();
 
                     INetwork network = azure
                             .Networks
                             .Define("vmssvnet")
-                            .WithRegion(region)
+                            .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithAddressSpace("10.0.0.0/28")
                             .WithSubnet("subnet1", "10.0.0.0/28")
@@ -698,20 +697,19 @@ namespace Fluent.Tests.Compute.VirtualMachine
                 string vmss_name = TestUtilities.GenerateName("vmss");
                 string groupName = TestUtilities.GenerateName("javacsmrg");
                 var storageAccountName = TestUtilities.GenerateName("ja");
-                var region = Region.USSouthCentral;
                 IAzure azure = null;
                 try
                 {
                     azure = TestHelper.CreateRollupClient();
                     IResourceGroup resourceGroup = azure.ResourceGroups
                         .Define(groupName)
-                        .WithRegion(region)
+                        .WithRegion(Location)
                         .Create();
 
                     INetwork network = azure
                             .Networks
                             .Define("vmssvnet")
-                            .WithRegion(region)
+                            .WithRegion(Location)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithAddressSpace("10.0.0.0/28")
                             .WithSubnet("subnet1", "10.0.0.0/28")
@@ -727,7 +725,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
 
                     IStorageAccount storageAccount = azure.StorageAccounts
                         .Define(storageAccountName)
-                        .WithRegion(region)
+                        .WithRegion(Location)
                         .WithNewResourceGroup(groupName)
                         .Create();
 

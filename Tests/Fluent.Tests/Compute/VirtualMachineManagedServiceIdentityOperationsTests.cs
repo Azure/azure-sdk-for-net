@@ -18,7 +18,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute.VirtualMachine
 {
-    class ManagedServiceIdentityOperations
+    public class ManagedServiceIdentityOperations
     {
         [Fact]
         public void CanSetMSIOnNewOrExistingVMWithoutRoleAssignment()
@@ -175,6 +175,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
                 try
                 {
                     azure = TestHelper.CreateRollupClient();
+
                     IVirtualMachine virtualMachine = azure.VirtualMachines
                         .Define(vmName)
                         .WithRegion(region)
@@ -447,6 +448,13 @@ namespace Fluent.Tests.Compute.VirtualMachine
                         }
                     }
                     Assert.True(found, "Resource group should have a role assignment with virtual machine MSI principal");
+
+                    // Try adding the same role again, implementation should handle 'RoleAlreadyExists' error code and resume
+                    //
+                    virtualMachine.Update()
+                        .WithManagedServiceIdentity()
+                        .WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole.Contributor)
+                        .Apply();
                 }
                 finally
                 {
@@ -467,9 +475,17 @@ namespace Fluent.Tests.Compute.VirtualMachine
             int? result = null;
             if (obj != null)
             {
-                if (obj is int)
+                if (obj is Int16)
+                {
+                    result = (int)((Int16)obj);
+                }
+                else if (obj is Int32)
                 {
                     result = (int)obj;
+                }
+                else if (obj is Int64)
+                {
+                    result = (int)((Int64)obj);
                 }
                 else
                 {
