@@ -1,0 +1,549 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourcegroups/containergroupcrd-5725?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlZ3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"containergroupcrd-5725\": \"2017-08-14 09:06:40Z\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "x-ms-client-request-id": [
+          "6c53848a-e606-45f0-a303-28bf487d88fd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725\",\r\n  \"name\": \"containergroupcrd-5725\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"containergroupcrd-5725\": \"2017-08-14 09:06:40Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "254"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:06:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-request-id": [
+          "1f127495-cb6d-4cdb-b590-81b1b3abffa5"
+        ],
+        "x-ms-correlation-request-id": [
+          "1f127495-cb6d-4cdb-b590-81b1b3abffa5"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090643Z:1f127495-cb6d-4cdb-b590-81b1b3abffa5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlR3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvY29udGFpbmVyZ3JvdXAzNzE2P2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"test1\",\r\n        \"properties\": {\r\n          \"image\": \"nginx\",\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"osType\": \"Linux\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "447"
+        ],
+        "x-ms-client-request-id": [
+          "913dfc02-1f7e-4a1e-bc96-eabedb11677a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"test1\",\r\n        \"properties\": {\r\n          \"image\": \"nginx\",\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"osType\": \"Linux\"\r\n  },\r\n  \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n  \"name\": \"containergroup3716\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "500"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:06:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:de5ebc0c-c1f4-4104-b8ba-9fb61b08e018"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "a5bbb0a0-49fe-4ede-8f11-ad05db4880cf"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090648Z:a5bbb0a0-49fe-4ede-8f11-ad05db4880cf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlR3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvY29udGFpbmVyZ3JvdXAzNzE2P2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f737ff1a-f143-4e91-baa8-1a9ebc0119aa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"test1\",\r\n        \"properties\": {\r\n          \"image\": \"nginx\",\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [],\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"osType\": \"Linux\",\r\n    \"state\": \"Pending\"\r\n  },\r\n  \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n  \"name\": \"containergroup3716\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:07:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:cd84b12a-2861-4ec5-9f8d-a4879578dd85"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14951"
+        ],
+        "x-ms-correlation-request-id": [
+          "2db37ab1-31c6-4c3d-980a-66e3ceee3ac3"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090733Z:2db37ab1-31c6-4c3d-980a-66e3ceee3ac3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlR3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvY29udGFpbmVyZ3JvdXAzNzE2P2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "61712385-a9c6-4052-b87f-2b38f5dc643e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"test1\",\r\n        \"properties\": {\r\n          \"image\": \"nginx\",\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2017-08-14T09:07:52Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:51Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:51Z\",\r\n                \"message\": \"Pulling: pulling image \\\"nginx\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Pulled: Successfully pulled image \\\"nginx\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Created: Created container with id 4c717401a3ce5f3bcdee9472755e1b0537bb345057637520d5dda2eab04a282a\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Started: Started container with id 4c717401a3ce5f3bcdee9472755e1b0537bb345057637520d5dda2eab04a282a\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"osType\": \"Linux\",\r\n    \"state\": \"Running\"\r\n  },\r\n  \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n  \"name\": \"containergroup3716\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:08:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:dc988f06-52d8-4c4f-9d98-73cea977a84f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14950"
+        ],
+        "x-ms-correlation-request-id": [
+          "88aa8a57-5281-4ae6-b29a-0877266e1987"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090818Z:88aa8a57-5281-4ae6-b29a-0877266e1987"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlR3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvY29udGFpbmVyZ3JvdXAzNzE2P2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "44eb7c44-c095-4c60-a595-1e0a792fc793"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"test1\",\r\n        \"properties\": {\r\n          \"image\": \"nginx\",\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2017-08-14T09:07:52Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:51Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:51Z\",\r\n                \"message\": \"Pulling: pulling image \\\"nginx\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Pulled: Successfully pulled image \\\"nginx\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Created: Created container with id 4c717401a3ce5f3bcdee9472755e1b0537bb345057637520d5dda2eab04a282a\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Started: Started container with id 4c717401a3ce5f3bcdee9472755e1b0537bb345057637520d5dda2eab04a282a\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"osType\": \"Linux\",\r\n    \"state\": \"Running\"\r\n  },\r\n  \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n  \"name\": \"containergroup3716\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:08:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:74282068-1dea-4670-8082-4c7e076d3cdf"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14949"
+        ],
+        "x-ms-correlation-request-id": [
+          "5f968bcf-6295-497e-9c00-d6fcc655cdaa"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090819Z:5f968bcf-6295-497e-9c00-d6fcc655cdaa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlR3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHM/YXBpLXZlcnNpb249MjAxNy0wOC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "211d0bc3-9c72-427b-8410-be8f7d12f09b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"containers\": [\r\n          {\r\n            \"name\": \"test1\",\r\n            \"properties\": {\r\n              \"image\": \"nginx\",\r\n              \"ports\": [\r\n                {\r\n                  \"port\": 80\r\n                }\r\n              ],\r\n              \"environmentVariables\": [],\r\n              \"resources\": {\r\n                \"requests\": {\r\n                  \"memoryInGB\": 1.5,\r\n                  \"cpu\": 1.0\r\n                }\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"osType\": \"Linux\"\r\n      },\r\n      \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n      \"name\": \"containergroup3716\",\r\n      \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:08:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:8fd2a7eb-2c3a-4b8d-9ecb-7760db7e3e24"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14948"
+        ],
+        "x-ms-correlation-request-id": [
+          "62d8d43f-a153-4ced-9eb0-f8a13aa2947b"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090819Z:62d8d43f-a153-4ced-9eb0-f8a13aa2947b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/providers/Microsoft.ContainerInstance/containerGroups?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVySW5zdGFuY2UvY29udGFpbmVyR3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "12da7c0a-94f3-45ce-98da-3f9fcbf755e1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"containers\": [\r\n          {\r\n            \"name\": \"test1\",\r\n            \"properties\": {\r\n              \"image\": \"nginx\",\r\n              \"ports\": [\r\n                {\r\n                  \"port\": 80\r\n                }\r\n              ],\r\n              \"environmentVariables\": [],\r\n              \"resources\": {\r\n                \"requests\": {\r\n                  \"memoryInGB\": 1.5,\r\n                  \"cpu\": 1.0\r\n                }\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"osType\": \"Linux\"\r\n      },\r\n      \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n      \"name\": \"containergroup3716\",\r\n      \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:08:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:ab93da42-5833-4860-bfa5-44971c91ad5f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14947"
+        ],
+        "x-ms-correlation-request-id": [
+          "db832ad6-8056-4619-b65f-a06278af8531"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090819Z:db832ad6-8056-4619-b65f-a06278af8531"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlR3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJJbnN0YW5jZS9jb250YWluZXJHcm91cHMvY29udGFpbmVyZ3JvdXAzNzE2P2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "49e71e80-7787-40c3-a153-604fa938a88f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerInstance.ContainerInstanceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"containers\": [\r\n      {\r\n        \"name\": \"test1\",\r\n        \"properties\": {\r\n          \"image\": \"nginx\",\r\n          \"ports\": [\r\n            {\r\n              \"port\": 80\r\n            }\r\n          ],\r\n          \"environmentVariables\": [],\r\n          \"instanceView\": {\r\n            \"restartCount\": 0,\r\n            \"currentState\": {\r\n              \"state\": \"Running\",\r\n              \"startTime\": \"2017-08-14T09:07:52Z\",\r\n              \"detailStatus\": \"\"\r\n            },\r\n            \"events\": [\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:51Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:51Z\",\r\n                \"message\": \"Pulling: pulling image \\\"nginx\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Pulled: Successfully pulled image \\\"nginx\\\"\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Created: Created container with id 4c717401a3ce5f3bcdee9472755e1b0537bb345057637520d5dda2eab04a282a\",\r\n                \"type\": \"Normal\"\r\n              },\r\n              {\r\n                \"count\": 1,\r\n                \"firstTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"lastTimestamp\": \"2017-08-14T09:07:52Z\",\r\n                \"message\": \"Started: Started container with id 4c717401a3ce5f3bcdee9472755e1b0537bb345057637520d5dda2eab04a282a\",\r\n                \"type\": \"Normal\"\r\n              }\r\n            ]\r\n          },\r\n          \"resources\": {\r\n            \"requests\": {\r\n              \"memoryInGB\": 1.5,\r\n              \"cpu\": 1.0\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"osType\": \"Linux\",\r\n    \"state\": \"Running\"\r\n  },\r\n  \"id\": \"/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourceGroups/containergroupcrd-5725/providers/Microsoft.ContainerInstance/containerGroups/containergroup3716\",\r\n  \"name\": \"containergroup3716\",\r\n  \"type\": \"Microsoft.ContainerInstance/containerGroups\",\r\n  \"location\": \"westus\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:08:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:64dc4fd9-c334-4bbc-b6fd-54f0ff5ab5e7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "e86072a0-9a34-4d74-88ef-bebbdbfcf238"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090822Z:e86072a0-9a34-4d74-88ef-bebbdbfcf238"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/resourcegroups/containergroupcrd-5725?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDhkY2Q1OGItZTIyZC00M2U3LWE5N2YtMTVmYTI5ZDhjOGVhL3Jlc291cmNlZ3JvdXBzL2NvbnRhaW5lcmdyb3VwY3JkLTU3MjU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6661ab34-3426-4955-b8b8-7a7b05abd9b4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 14 Aug 2017 09:08:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DT05UQUlORVJHUk9VUENSRDoyRDU3MjUtV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-request-id": [
+          "db27dc19-bcb1-4ca6-9da7-8430f1d10842"
+        ],
+        "x-ms-correlation-request-id": [
+          "db27dc19-bcb1-4ca6-9da7-8430f1d10842"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170814T090825Z:db27dc19-bcb1-4ca6-9da7-8430f1d10842"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "containergroupcrd-5725"
+    ],
+    "ContainerGroupCreateGetDeleteTests": [
+      "containergroup3716"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea"
+  }
+}
