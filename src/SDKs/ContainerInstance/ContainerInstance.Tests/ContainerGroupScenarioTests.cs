@@ -11,16 +11,16 @@ namespace ContainerInstance.Tests
 	public class ContainerGroupScenarioTests
 	{ 
 		[Fact]
-		public void ContainerGroupCRUDTests()
+		public void ContainerGroupCreateGetDeleteTests()
 		{
 			using (TestContext context = new TestContext(this))
 			{
 				string containerInstanceLocation = "westus";
 
-				ResourceGroup resourceGroup = context.CreateResourceGroup("containergroupcrud-", containerInstanceLocation);
+				ResourceGroup resourceGroup = context.CreateResourceGroup("containergroupcrd-", containerInstanceLocation);
 				ContainerInstanceManagementClient containerClient = context.GetClient<ContainerInstanceManagementClient>();
 
-				string containerGroupName = TestContext.GenerateName("containergroup");
+				string containerGroupName = context.GenerateName("containergroup");
 				string containerOsType = "Linux";
 
 				string containerName = "test1";
@@ -29,7 +29,7 @@ namespace ContainerInstance.Tests
 				double containerCpu = 1;
 				double containerMemoryInGB = 1.5;
 
-				// Add a container via an update
+				// Add a containergroup with a container
 				ContainerGroup createdContainerGroup = containerClient.ContainerGroups.CreateOrUpdate(resourceGroup.Name, containerGroupName, new ContainerGroup
 				{
 					Location = resourceGroup.Location,
@@ -60,13 +60,13 @@ namespace ContainerInstance.Tests
 				Assert.Equal(containerOsType, createdContainerGroup.OsType);
 				Assert.Equal(1, createdContainerGroup.Containers.Count);
 
-				Container updatedContainer = createdContainerGroup.Containers.First();
-				Assert.Equal(containerName, updatedContainer.Name);
-				Assert.Equal(containerImage, updatedContainer.Image);
-				Assert.Equal(1, updatedContainer.Ports.Count);
-				Assert.Equal(containerPort, updatedContainer.Ports.First().Port);
-				Assert.Equal(containerCpu, updatedContainer.Resources.Requests.Cpu);
-				Assert.Equal(containerMemoryInGB, updatedContainer.Resources.Requests.MemoryInGB);
+				Container createdContainer = createdContainerGroup.Containers.First();
+				Assert.Equal(containerName, createdContainer.Name);
+				Assert.Equal(containerImage, createdContainer.Image);
+				Assert.Equal(1, createdContainer.Ports.Count);
+				Assert.Equal(containerPort, createdContainer.Ports.First().Port);
+				Assert.Equal(containerCpu, createdContainer.Resources.Requests.Cpu);
+				Assert.Equal(containerMemoryInGB, createdContainer.Resources.Requests.MemoryInGB);
 
 				// Wait till the container group is ready before proceeding
 				ContainerGroupUtilities.WaitTillProvisioningStateSucceeded(containerClient, resourceGroup.Name, containerGroupName);

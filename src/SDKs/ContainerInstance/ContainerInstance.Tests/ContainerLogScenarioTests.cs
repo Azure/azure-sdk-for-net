@@ -16,10 +16,10 @@ namespace ContainerInstance.Tests
 			{
 				string containerInstanceLocation = "westus";
 
-				ResourceGroup resourceGroup = context.CreateResourceGroup("containergroupcrud-", containerInstanceLocation);
+				ResourceGroup resourceGroup = context.CreateResourceGroup("containerlogget-", containerInstanceLocation);
 				ContainerInstanceManagementClient containerClient = context.GetClient<ContainerInstanceManagementClient>();
 
-				string containerGroupName = TestContext.GenerateName("containergroup");
+				string containerGroupName = context.GenerateName("containergroup");
 				string containerOsType = "Linux";
 				string containerName = "test1";
 				string containerImage = "nginx";

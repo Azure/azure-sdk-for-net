@@ -44,7 +44,7 @@ namespace ContainerInstance.Tests
 		{
 			ResourceManagementClient resourceClient = GetClient<ResourceManagementClient>();
 
-			string rgName = GenerateName();
+			string rgName = GenerateName(prefix);
 			ResourceGroup resourceGroup = resourceClient.ResourceGroups.CreateOrUpdate(rgName,
 				new ResourceGroup
 				{
@@ -57,10 +57,7 @@ namespace ContainerInstance.Tests
 			return resourceGroup;
 		}
 
-		public static string GenerateName(
-			string prefix = DefaultTestPrefix,
-			[System.Runtime.CompilerServices.CallerMemberName]
-			string methodName="GenerateName_failed")
+		public string GenerateName(string prefix = DefaultTestPrefix, [CallerMemberName] string methodName="GenerateName_failed")
 		{
 			try
 			{
