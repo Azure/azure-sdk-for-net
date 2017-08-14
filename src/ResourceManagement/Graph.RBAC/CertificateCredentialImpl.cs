@@ -128,9 +128,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         internal CertificateCredentialImpl(KeyCredential keyCredential)
-            : base(System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(keyCredential.CustomKeyIdentifier)), keyCredential)
+            : base(!String.IsNullOrEmpty(keyCredential.CustomKeyIdentifier) ? System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(keyCredential.CustomKeyIdentifier)) : keyCredential.KeyId, keyCredential)
         {
-            this.name = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(keyCredential.CustomKeyIdentifier));
+            if (!String.IsNullOrEmpty(keyCredential.CustomKeyIdentifier))
+            {
+                this.name = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(keyCredential.CustomKeyIdentifier));
+            }
+            else
+            {
+                this.name = keyCredential.KeyId;
+            }
         }
 
         internal CertificateCredentialImpl(string name, IHasCredential<T> parent)

@@ -57,18 +57,24 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             IEnumerable<KeyCredential> keyCredentials = await manager.Inner.ServicePrincipals.ListKeyCredentialsAsync(Id(), cancellationToken);
             this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
-            foreach (var cred in keyCredentials)
+            if (keyCredentials != null)
             {
-                ICertificateCredential cert = new CertificateCredentialImpl<IServicePrincipal>(cred);
-                this.cachedCertificateCredentials.Add(cert.Name, cert);
+                foreach (var cred in keyCredentials)
+                {
+                    ICertificateCredential cert = new CertificateCredentialImpl<IServicePrincipal>(cred);
+                    this.cachedCertificateCredentials.Add(cert.Name, cert);
+                }
             }
 
             IEnumerable<Models.PasswordCredential> passwordCredentials = await manager.Inner.ServicePrincipals.ListPasswordCredentialsAsync(Id(), cancellationToken);
             this.cachedPasswordCredentials = new Dictionary<string, IPasswordCredential>();
-            foreach (var cred in passwordCredentials)
+            if (passwordCredentials != null)
             {
-                IPasswordCredential cert = new PasswordCredentialImpl<IServicePrincipal>(cred);
-                this.cachedPasswordCredentials.Add(cert.Name, cert);
+                foreach (var cred in passwordCredentials)
+                {
+                    IPasswordCredential cert = new PasswordCredentialImpl<IServicePrincipal>(cred);
+                    this.cachedPasswordCredentials.Add(cert.Name, cert);
+                }
             }
 
             return this;
