@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             };
             AzureUSGovernment = new AzureEnvironment()
             {
-                AuthenticationEndpoint = "https://login-us.microsoftonline.com/",
-                ResourceManagerEndpoint = "https://management.core.usgovcloudapi.net/",
-                ManagementEnpoint = "https://management.core.usgovcloudapi.net/",
+                AuthenticationEndpoint = "https://login.microsoftonline.us/",
+                ResourceManagerEndpoint = "https://management.usgovcloudapi.net/",
+                ManagementEnpoint = "https://management.usgovcloudapi.net/",
                 GraphEndpoint = "https://graph.windows.net/",
                 StorageEndpointSuffix = ".core.usgovcloudapi.net"
             };
