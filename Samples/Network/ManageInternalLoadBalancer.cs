@@ -132,10 +132,6 @@ namespace ManageInternalLoadBalancer
                 var loadBalancer3 = azure.LoadBalancers.Define(loadBalancerName3)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
-                        .DefinePrivateFrontend(privateFrontEndName)
-                            .WithExistingSubnet(network, "Back-end")
-                            .WithPrivateIPAddressStatic("172.16.3.5")
-                            .Attach()
                         // Add one rule that uses above backend and probe
                         .DefineLoadBalancingRule(TcpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -169,6 +165,11 @@ namespace ManageInternalLoadBalancer
                             .FromFrontend(privateFrontEndName)
                             .FromFrontendPort(6003)
                             .ToBackendPort(23)
+                            .Attach()
+                        // Explicitly define the frontend
+                        .DefinePrivateFrontend(privateFrontEndName)
+                            .WithExistingSubnet(network, "Back-end")
+                            .WithPrivateIPAddressStatic("172.16.3.5")
                             .Attach()
                         // Add one probes - one per rule
                         .DefineHttpProbe("httpProbe")
@@ -331,10 +332,6 @@ namespace ManageInternalLoadBalancer
                 var loadBalancer4 = azure.LoadBalancers.Define(loadBalancerName4)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
-                        .DefinePrivateFrontend(privateFrontEndName)
-                            .WithExistingSubnet(network, "Back-end")
-                            .WithPrivateIPAddressStatic("172.16.3.15")
-                            .Attach()
 
                         // Add one rule that uses above backend and probe
                         .DefineLoadBalancingRule(TcpLoadBalancingRule)
@@ -371,6 +368,13 @@ namespace ManageInternalLoadBalancer
                             .FromFrontendPort(6003)
                             .ToBackendPort(23)
                             .Attach()
+
+                        // Explicitly define the frontend
+                        .DefinePrivateFrontend(privateFrontEndName)
+                            .WithExistingSubnet(network, "Back-end")
+                            .WithPrivateIPAddressStatic("172.16.3.15")
+                            .Attach()
+
                         // Add one probes - one per rule
                         .DefineHttpProbe("httpProbe")
                             .WithRequestPath("/")

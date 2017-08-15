@@ -649,9 +649,6 @@ namespace Fluent.Tests.Compute.VirtualMachine
             ILoadBalancer loadBalancer = azure.LoadBalancers.Define(loadBalancerName)
                 .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
-                .DefinePublicFrontend(frontendName)
-                    .WithExistingPublicIPAddress(publicIPAddress)
-                    .Attach()
                 // Add two rules that uses above backend and probe
                 .DefineLoadBalancingRule("httpRule")
                     .WithProtocol(TransportProtocol.Tcp)
@@ -679,6 +676,10 @@ namespace Fluent.Tests.Compute.VirtualMachine
                     .FromFrontend(frontendName)
                     .FromFrontendPortRange(6000, 6099)
                     .ToBackendPort(23)
+                    .Attach()
+                // Explicitly define the frontend
+                .DefinePublicFrontend(frontendName)
+                    .WithExistingPublicIPAddress(publicIPAddress)
                     .Attach()
                 // Add two probes one per rule
                 .DefineHttpProbe("httpProbe")
@@ -721,9 +722,6 @@ namespace Fluent.Tests.Compute.VirtualMachine
             ILoadBalancer loadBalancer = azure.LoadBalancers.Define(loadBalancerName)
                 .WithRegion(Location)
                 .WithExistingResourceGroup(resourceGroup)
-                .DefinePrivateFrontend(privateFrontEndName)
-                    .WithExistingSubnet(network, subnetName)
-                    .Attach()
                 // Add two rules that uses above backend and probe
                 .DefineLoadBalancingRule("httpRule")
                     .WithProtocol(TransportProtocol.Tcp)
@@ -752,6 +750,12 @@ namespace Fluent.Tests.Compute.VirtualMachine
                     .FromFrontendPortRange(9000, 9099)
                     .ToBackendPort(45)
                     .Attach()
+                
+                // Explicitly define the frontend
+                .DefinePrivateFrontend(privateFrontEndName)
+                    .WithExistingSubnet(network, subnetName)
+                    .Attach()
+
                 // Add two probes one per rule
                 .DefineHttpProbe("httpProbe")
                     .WithRequestPath("/")
@@ -802,9 +806,6 @@ namespace Fluent.Tests.Compute.VirtualMachine
             var loadBalancer = azure.LoadBalancers.Define(loadBalancerName)
                 .WithRegion(location)
                 .WithExistingResourceGroup(resourceGroup)
-                .DefinePublicFrontend(frontendName)
-                    .WithExistingPublicIPAddress(publicIPAddress)
-                    .Attach()
                 // Add two rules that uses above backend and probe
                 .DefineLoadBalancingRule("httpRule")
                     .WithProtocol(TransportProtocol.Tcp)
@@ -818,6 +819,9 @@ namespace Fluent.Tests.Compute.VirtualMachine
                     .FromFrontend(frontendName)
                     .FromFrontendPortRange(5000, 5099)
                     .ToBackendPort(22)
+                    .Attach()
+                .DefinePublicFrontend(frontendName)
+                    .WithExistingPublicIPAddress(publicIPAddress)
                     .Attach()
                 .DefineHttpProbe("httpProbe")
                     .WithRequestPath("/")

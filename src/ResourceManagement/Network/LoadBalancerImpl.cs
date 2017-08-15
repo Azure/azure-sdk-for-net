@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             LoadBalancerImpl,
             INetworkManager,
             LoadBalancer.Definition.IWithGroup,
-            LoadBalancer.Definition.IWithFrontend,
+            LoadBalancer.Definition.IWithLBRuleOrNat,
             LoadBalancer.Definition.IWithCreate,
             IUpdate>,
         ILoadBalancer,

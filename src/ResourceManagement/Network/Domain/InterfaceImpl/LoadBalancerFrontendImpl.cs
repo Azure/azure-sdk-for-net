@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="network">The virtual network the subnet exists in.</param>
         /// <param name="subnetName">The name of a subnet.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat> LoadBalancerPrivateFrontend.Definition.IWithSubnet<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>.WithExistingSubnet(INetwork network, string subnetName)
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerPrivateFrontend.Definition.IWithSubnet<LoadBalancer.Definition.IWithCreate>.WithExistingSubnet(INetwork network, string subnetName)
         {
-            return this.WithExistingSubnet(network, subnetName) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>;
+            return this.WithExistingSubnet(network, subnetName) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <return>
@@ -116,9 +116,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="publicIPAddress">An existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
         {
-            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>;
+            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="resourceId">The resource ID of an existing public IP address.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>>.WithExistingPublicIPAddress(string resourceId)
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithExistingPublicIPAddress(string resourceId)
         {
-            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>;
+            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrRuleNat Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>.Attach()
+        LoadBalancer.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithCreate>.Attach()
         {
-            return this.Attach() as LoadBalancer.Definition.IWithPublicFrontendOrRuleNat;
+            return this.Attach() as LoadBalancer.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -227,9 +227,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="creatable">A creatable definition for a new public IP.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat> HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
         {
-            return this.WithNewPublicIPAddress(creatable) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>;
+            return this.WithNewPublicIPAddress(creatable) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -237,9 +237,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat> HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>>.WithNewPublicIPAddress()
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithNewPublicIPAddress()
         {
-            return this.WithNewPublicIPAddress() as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>;
+            return this.WithNewPublicIPAddress() as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -322,9 +322,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>>.WithPrivateIPAddressDynamic()
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithPrivateIPAddressDynamic()
         {
-            return this.WithPrivateIPAddressDynamic() as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>;
+            return this.WithPrivateIPAddressDynamic() as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -332,9 +332,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ipAddress">A static IP address within the associated private IP range.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>>.WithPrivateIPAddressStatic(string ipAddress)
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPrivateIPAddress.Definition.IWithPrivateIPAddress<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithPrivateIPAddressStatic(string ipAddress)
         {
-            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>;
+            return this.WithPrivateIPAddressStatic(ipAddress) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -363,9 +363,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="leafDnsLabel">The leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat> HasPublicIPAddress.Definition.IWithNewPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>>.WithNewPublicIPAddress(string leafDnsLabel)
+        LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> HasPublicIPAddress.Definition.IWithNewPublicIPAddress<LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithNewPublicIPAddress(string leafDnsLabel)
         {
-            return this.WithNewPublicIPAddress(leafDnsLabel) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>;
+            return this.WithNewPublicIPAddress(leafDnsLabel) as LoadBalancerPublicFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -429,9 +429,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definition.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>.Attach()
+        LoadBalancer.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<LoadBalancer.Definition.IWithCreate>.Attach()
         {
-            return this.Attach() as LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat;
+            return this.Attach() as LoadBalancer.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -440,9 +440,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <param name="parentNetworkResourceId">The resource ID of the virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
+        LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>>.WithExistingSubnet(string parentNetworkResourceId, string subnetName)
         {
-            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>;
+            return this.WithExistingSubnet(parentNetworkResourceId, subnetName) as LoadBalancerPrivateFrontend.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>

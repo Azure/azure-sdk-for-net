@@ -110,9 +110,6 @@ namespace ManageVirtualMachineScaleSetWithUnmanagedDisks
                 var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
-                        .DefinePublicFrontend(frontendName)
-                            .WithExistingPublicIPAddress(publicIpAddress)
-                            .Attach()
                         // Add two rules that uses above backend and probe
                         .DefineLoadBalancingRule(httpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -141,6 +138,10 @@ namespace ManageVirtualMachineScaleSetWithUnmanagedDisks
                             .FromFrontend(frontendName)
                             .FromFrontendPortRange(6000, 6099)
                             .ToBackendPort(23)
+                            .Attach()
+                        // Explicitly define the frontend
+                        .DefinePublicFrontend(frontendName)
+                            .WithExistingPublicIPAddress(publicIpAddress)
                             .Attach()
                         // Add two probes one per rule
                         .DefineHttpProbe(httpProbe)
