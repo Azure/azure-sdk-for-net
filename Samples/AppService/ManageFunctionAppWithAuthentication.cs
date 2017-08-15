@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace ManageFunctionAppWithAuthentication
 {
@@ -93,13 +94,7 @@ namespace ManageFunctionAppWithAuthentication
                 Utilities.Print(app2);
 
 
-                string masterKey = app2.GetMasterKey();
-                var functionsHeader = new Dictionary<string, string>();
-                functionsHeader["x-functions-key"] = masterKey;
-                string response = Utilities.CheckAddress("http://" + app2Url + "/admin/functions/square/keys", functionsHeader);
-                Regex pattern = new Regex(@"""name"":""default"",""value"":""([\w=/]+)""");
-                Match matcher = pattern.Match(response);
-                string functionKey = matcher.Captures[0].Value;
+                string functionKey = app2.ListFunctionKeys("square").Values.First();
 
                 // warm up
                 Utilities.Log("Warming up " + app2Url + "/api/square...");
