@@ -6,7 +6,7 @@ using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.ContainerRegistry.Fluent;
-using Microsoft.Azure.Management.DocumentDB.Fluent;
+using Microsoft.Azure.Management.CosmosDB.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
@@ -229,9 +229,9 @@ namespace Fluent.Tests.Common
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
-        public static IDocumentDBManager CreateDocumentDB()
+        public static ICosmosDBManager CreateCosmosDB()
         {
-            return CreateMockedManager(c => DocumentDBManager
+            return CreateMockedManager(c => CosmosDBManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)

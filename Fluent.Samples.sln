@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Dns.Fluent", "src\ResourceManagement\Dns\Microsoft.Azure.Management.Dns.Fluent.csproj", "{C16ECAB7-6A21-4A9C-90DA-45508127635B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DocumentDB.Fluent", "src\ResourceManagement\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent.csproj", "{02B26DCE-4D45-4122-B44D-9EA9EAA4A97E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.CosmosDB.Fluent", "src\ResourceManagement\CosmosDB\Microsoft.Azure.Management.CosmosDB.Fluent.csproj", "{02B26DCE-4D45-4122-B44D-9EA9EAA4A97E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Graph.RBAC.Fluent", "src\ResourceManagement\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent.csproj", "{173AD141-C258-4EE6-B85E-90C87DE6A171}"
 EndProject

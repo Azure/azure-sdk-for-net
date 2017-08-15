@@ -22,7 +22,7 @@ using System.Linq;
 using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
 using ISubscription = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscription;
 using Microsoft.Azure.Management.ContainerRegistry.Fluent;
-using Microsoft.Azure.Management.DocumentDB.Fluent;
+using Microsoft.Azure.Management.CosmosDB.Fluent;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Fluent
         private ISearchManager searchManager;
         private IServiceBusManager serviceBusManager;
         private IRegistryManager registryManager;
-        private IDocumentDBManager documentDBManager;
+        private ICosmosDBManager cosmosDBManager;
 
         #endregion Service Managers
 
@@ -339,11 +339,11 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
-        public IDocumentDBAccounts DocumentDBAccounts
+        public ICosmosDBAccounts CosmosDBAccounts
         {
             get
             {
-                return documentDBManager.DocumentDBAccounts;
+                return cosmosDBManager.CosmosDBAccounts;
             }
         }
 
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Fluent
                 return registryManager.ContainerRegistries;
             }
         }
-        
+
         public IAccessManagement AccessManagement
         {
             get
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Fluent
             searchManager = SearchManager.Authenticate(restClient, subscriptionId);
             serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
             registryManager = RegistryManager.Authenticate(restClient, subscriptionId);
-            documentDBManager = DocumentDBManager.Authenticate(restClient, subscriptionId);
+            cosmosDBManager = CosmosDBManager.Authenticate(restClient, subscriptionId);
 
             SubscriptionId = subscriptionId;
             this.authenticated = authenticated;
@@ -627,9 +627,9 @@ namespace Microsoft.Azure.Management.Fluent
         IContainerServices ContainerServices { get; }
 
         /// <summary>
-        /// Entry point to DocumentDB account management
+        /// Entry point to CosmosDB account management
         /// </summary>
-        IDocumentDBAccounts DocumentDBAccounts { get; }
+        ICosmosDBAccounts CosmosDBAccounts { get; }
 
         /// <summary>
         /// Entry point to Azure container registry management.
