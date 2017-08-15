@@ -365,5 +365,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             await Manager.Inner.WebApps.ResetSlotConfigurationSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
             await RefreshAsync(cancellationToken);
         }
+
+        internal override async Task<MSDeployStatusInner> CreateMSDeploy(MSDeployInner msDeployInner, CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.WebApps.CreateMSDeployOperationSlotAsync(ResourceGroupName, parent.Name, Name(), msDeployInner, cancellationToken);
+        }
     }
 }

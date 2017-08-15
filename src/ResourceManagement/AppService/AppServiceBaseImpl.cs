@@ -396,5 +396,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             return await Manager.Inner.WebApps.GetAsync(ResourceGroupName, Name, cancellationToken);
         }
+
+        internal override async Task<MSDeployStatusInner> CreateMSDeploy(MSDeployInner msDeployInner, CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.WebApps.CreateMSDeployOperationAsync(ResourceGroupName, Name, msDeployInner, cancellationToken);
+        }
     }
 }

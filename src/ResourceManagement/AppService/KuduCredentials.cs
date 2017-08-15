@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 string jwt = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(token.Split(new char[] { '.' })[1]));
                 Regex regex = new Regex("\"exp\": *([0-9]+),");
                 Match match = regex.Match(jwt);
-                expire = long.Parse(match.Captures[0].Value);
+                expire = long.Parse(match.Groups[1].Value);
             }
             request.Headers.Add("Authorization", "Bearer " + token);
             return base.ProcessHttpRequestAsync(request, cancellationToken);

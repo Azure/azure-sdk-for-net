@@ -1319,5 +1319,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public abstract Task ResetSlotConfigurationsAsync(CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task<IWebAppSourceControl> GetSourceControlAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+
+        internal abstract Task<MSDeployStatusInner> CreateMSDeploy(MSDeployInner msDeployInner, CancellationToken cancellationToken);
+
+        public WebDeploymentImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT> Deploy()
+        {
+            return new WebDeploymentImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(this);
+        }
     }
 }

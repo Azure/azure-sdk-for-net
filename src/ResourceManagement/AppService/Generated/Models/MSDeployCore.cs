@@ -12,36 +12,27 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.AppService;
     using Microsoft.Azure.Management.AppService.Fluent;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// MSDeploy ARM PUT information
+    /// MSDeploy ARM PUT core information
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class MSDeployInner : ProxyOnlyResource
+    public partial class MSDeployCore
     {
         /// <summary>
-        /// Initializes a new instance of the MSDeployInner class.
+        /// Initializes a new instance of the MSDeployCore class.
         /// </summary>
-        public MSDeployInner()
+        public MSDeployCore()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MSDeployInner class.
+        /// Initializes a new instance of the MSDeployCore class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="addOnPackages">List of Add-On packages. Add-On
-        /// packages implicitly enable the Do Not Delete MSDeploy rule.</param>
         /// <param name="packageUri">Package URI</param>
         /// <param name="connectionString">SQL Connection String</param>
         /// <param name="dbType">Database Type</param>
@@ -55,10 +46,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// overwritten.</param>
         /// <param name="appOffline">Sets the AppOffline rule while the
         /// MSDeploy operation executes.</param>
-        public MSDeployInner(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<MSDeployCore> addOnPackages = default(IList<MSDeployCore>), string packageUri = default(string), string connectionString = default(string), string dbType = default(string), string setParametersXmlFileUri = default(string), IDictionary<string, string> setParameters = default(IDictionary<string, string>), bool? skipAppData = default(bool?), bool? appOffline = default(bool?))
-            : base(id, name, kind, type)
+        public MSDeployCore(string packageUri = default(string), string connectionString = default(string), string dbType = default(string), string setParametersXmlFileUri = default(string), IDictionary<string, string> setParameters = default(IDictionary<string, string>), bool? skipAppData = default(bool?), bool? appOffline = default(bool?))
         {
-            AddOnPackages = addOnPackages;
             PackageUri = packageUri;
             ConnectionString = connectionString;
             DbType = dbType;
@@ -75,42 +64,35 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of Add-On packages. Add-On packages implicitly
-        /// enable the Do Not Delete MSDeploy rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.addOnPackages")]
-        public IList<MSDeployCore> AddOnPackages { get; set; }
-
-        /// <summary>
         /// Gets or sets package URI
         /// </summary>
-        [JsonProperty(PropertyName = "properties.packageUri")]
+        [JsonProperty(PropertyName = "packageUri")]
         public string PackageUri { get; set; }
 
         /// <summary>
         /// Gets or sets SQL Connection String
         /// </summary>
-        [JsonProperty(PropertyName = "properties.connectionString")]
+        [JsonProperty(PropertyName = "connectionString")]
         public string ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets database Type
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dbType")]
+        [JsonProperty(PropertyName = "dbType")]
         public string DbType { get; set; }
 
         /// <summary>
         /// Gets or sets URI of MSDeploy Parameters file. Must not be set if
         /// SetParameters is used.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.setParametersXmlFileUri")]
+        [JsonProperty(PropertyName = "setParametersXmlFileUri")]
         public string SetParametersXmlFileUri { get; set; }
 
         /// <summary>
         /// Gets or sets mSDeploy Parameters. Must not be set if
         /// SetParametersXmlFileUri is used.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.setParameters")]
+        [JsonProperty(PropertyName = "setParameters")]
         public IDictionary<string, string> SetParameters { get; set; }
 
         /// <summary>
@@ -118,14 +100,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// AppData directory. If set to true, the existing AppData directory
         /// on the destination will not be deleted and overwritten.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.skipAppData")]
+        [JsonProperty(PropertyName = "skipAppData")]
         public bool? SkipAppData { get; set; }
 
         /// <summary>
         /// Gets or sets sets the AppOffline rule while the MSDeploy operation
         /// executes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.appOffline")]
+        [JsonProperty(PropertyName = "appOffline")]
         public bool? AppOffline { get; set; }
 
     }

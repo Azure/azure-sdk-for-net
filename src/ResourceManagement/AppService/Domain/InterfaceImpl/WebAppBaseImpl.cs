@@ -1001,6 +1001,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// First step specifying the parameters to make a web deployment (MS Deploy) to the web app.
+        /// </summary>
+        /// <return>A stage to create web deployment.</return>
+        Microsoft.Azure.Management.AppService.Fluent.WebDeployment.Definition.IWithPackageUri Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.Deploy()
+        {
+            return this.Deploy() as Microsoft.Azure.Management.AppService.Fluent.WebDeployment.Definition.IWithPackageUri;
+        }
+
+        /// <summary>
         /// Gets if the web app is always on.
         /// </summary>
         bool Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.AlwaysOn

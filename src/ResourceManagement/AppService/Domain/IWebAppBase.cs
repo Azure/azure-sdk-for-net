@@ -353,5 +353,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Gets the Linux app framework and version if this is a Linux web app.
         /// </summary>
         string LinuxFxVersion { get; }
+
+        /// <summary>
+        /// First step specifying the parameters to make a web deployment (MS Deploy) to the web app.
+        /// </summary>
+        /// <returns>the first stage to create web deployment</returns>
+        WebDeployment.Definition.IWithPackageUri Deploy();
     }
 }
