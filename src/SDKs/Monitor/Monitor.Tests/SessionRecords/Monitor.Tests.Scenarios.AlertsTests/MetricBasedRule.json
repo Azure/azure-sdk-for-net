@@ -1,19 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin?api-version=2016-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL1JhYzQ2UG9zdFN3YXBSRy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2FsZXJ0cnVsZXMvY2hpcmljdXRpbj9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\",\r\n      \"dataSource\": {\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"metricName\": \"Requests\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\"\r\n      }\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"key1\": \"val1\"\r\n  }\r\n}",
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/Rac46PostSwapRG?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL1JhYzQ2UG9zdFN3YXBSRz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "HEAD",
+      "RequestBody": "",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "957"
-        ],
         "x-ms-client-request-id": [
-          "0c2d4302-5b60-45b3-8a5c-26ccf61317e7"
+          "6ebc8a03-7727-4541-8637-89dcc255adea"
         ],
         "accept-language": [
           "en-US"
@@ -22,13 +16,73 @@
           "FxVersion/4.7.2053.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n  \"name\": \"chiricutin\",\r\n  \"type\": \"Microsoft.Insights/alertRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n    \"key1\": \"val1\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"dataSource\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n        \"resourceLocation\": null,\r\n        \"metricNamespace\": null,\r\n        \"metricName\": \"Requests\",\r\n        \"legacyResourceId\": null\r\n      },\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\"\r\n    },\r\n    \"action\": null,\r\n    \"lastUpdatedTime\": \"2017-08-08T00:13:26.5087912Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "",
       "ResponseHeaders": {
         "Content-Length": [
-          "1616"
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "x-ms-request-id": [
+          "b7591224-c5b1-4d3c-8412-6b7efdb2a172"
+        ],
+        "x-ms-correlation-request-id": [
+          "b7591224-c5b1-4d3c-8412-6b7efdb2a172"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170815T202700Z:b7591224-c5b1-4d3c-8412-6b7efdb2a172"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 Aug 2017 20:26:59 GMT"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin?api-version=2016-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL1JhYzQ2UG9zdFN3YXBSRy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2FsZXJ0cnVsZXMvY2hpcmljdXRpbj9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\",\r\n      \"dataSource\": {\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"metricName\": \"Requests\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\"\r\n      }\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"val1\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "956"
+        ],
+        "x-ms-client-request-id": [
+          "7680adb1-dcca-4e6c-a959-1307c018d283"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n  \"name\": \"chiricutin\",\r\n  \"type\": \"Microsoft.Insights/alertRules\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n    \"key1\": \"val1\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"dataSource\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n        \"resourceLocation\": null,\r\n        \"metricNamespace\": null,\r\n        \"metricName\": \"Requests\",\r\n        \"legacyResourceId\": null\r\n      },\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\"\r\n    },\r\n    \"action\": null,\r\n    \"lastUpdatedTime\": \"2017-08-15T20:27:03.4227789Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1615"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -43,22 +97,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ee46730e-5d1d-4344-9cad-c09b97309e58"
+          "c7e90aa0-352a-41e7-8994-cedd56eeb59f"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "760dcdc8-01f6-438f-b952-05d9a11a7d5d"
+          "ea52bae2-454b-4e2e-80cc-64445dab95c1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170808T001326Z:760dcdc8-01f6-438f-b952-05d9a11a7d5d"
+          "WESTUS:20170815T202703Z:ea52bae2-454b-4e2e-80cc-64445dab95c1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 08 Aug 2017 00:13:26 GMT"
+          "Tue, 15 Aug 2017 20:27:03 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -73,7 +127,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "21fb5287-2693-4e8a-aa1f-503cb3f27e8b"
+          "1c8ed884-3485-4867-965a-d4a9472520cd"
         ],
         "accept-language": [
           "en-US"
@@ -82,13 +136,13 @@
           "FxVersion/4.7.2053.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n  \"name\": \"chiricutin\",\r\n  \"type\": \"Microsoft.Insights/alertRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n    \"key1\": \"val1\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"dataSource\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n        \"resourceLocation\": null,\r\n        \"metricNamespace\": null,\r\n        \"metricName\": \"Requests\",\r\n        \"legacyResourceId\": null\r\n      },\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\"\r\n    },\r\n    \"action\": null,\r\n    \"lastUpdatedTime\": \"2017-08-08T00:13:26.5087912Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n  \"name\": \"chiricutin\",\r\n  \"type\": \"Microsoft.Insights/alertRules\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n    \"key1\": \"val1\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"dataSource\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n        \"resourceLocation\": null,\r\n        \"metricNamespace\": null,\r\n        \"metricName\": \"Requests\",\r\n        \"legacyResourceId\": null\r\n      },\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\"\r\n    },\r\n    \"action\": null,\r\n    \"lastUpdatedTime\": \"2017-08-15T20:27:03.4227789Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1616"
+          "1615"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -103,82 +157,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "0d0e7983-12d5-4d9b-b7ea-2762d90ab4c9"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
-        ],
-        "x-ms-correlation-request-id": [
-          "3c7317a0-83a8-42a9-9412-c616e4e9cb86"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20170808T001327Z:3c7317a0-83a8-42a9-9412-c616e4e9cb86"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 08 Aug 2017 00:13:27 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin?api-version=2016-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL1JhYzQ2UG9zdFN3YXBSRy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2FsZXJ0cnVsZXMvY2hpcmljdXRpbj9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "d28e8373-6901-4ecd-93d7-f17e383d36de"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2053.0",
-          "OSName/WindowsServer2012R2Standard",
-          "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n  \"name\": \"chiricutin\",\r\n  \"type\": \"Microsoft.Insights/alertRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n    \"key1\": \"val1\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"dataSource\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n        \"resourceLocation\": null,\r\n        \"metricNamespace\": null,\r\n        \"metricName\": \"Requests\",\r\n        \"legacyResourceId\": null\r\n      },\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\"\r\n    },\r\n    \"action\": null,\r\n    \"lastUpdatedTime\": \"2017-08-08T00:13:26.5087912Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1616"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "2bab44ff-4416-4e08-a32b-9502a3119d06"
+          "3a6504f0-7b10-4a30-913f-831a37c5bb4c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14982"
         ],
         "x-ms-correlation-request-id": [
-          "328e256c-9489-4233-9545-3f50d6ab9489"
+          "872c8c28-b919-445b-9476-424fc330a4ec"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170808T001327Z:328e256c-9489-4233-9545-3f50d6ab9489"
+          "WESTUS:20170815T202704Z:872c8c28-b919-445b-9476-424fc330a4ec"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 08 Aug 2017 00:13:27 GMT"
+          "Tue, 15 Aug 2017 20:27:03 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -193,7 +187,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "904c9825-f87c-4d93-b195-54c3e8ecc605"
+          "bf246373-bce0-4415-a9a3-120d4edbd067"
         ],
         "accept-language": [
           "en-US"
@@ -202,7 +196,67 @@
           "FxVersion/4.7.2053.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n  \"name\": \"chiricutin\",\r\n  \"type\": \"Microsoft.Insights/alertRules\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n    \"key1\": \"val1\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"chiricutin\",\r\n    \"description\": \"description\",\r\n    \"isEnabled\": true,\r\n    \"condition\": {\r\n      \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n      \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n      \"dataSource\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n        \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n        \"resourceLocation\": null,\r\n        \"metricNamespace\": null,\r\n        \"metricName\": \"Requests\",\r\n        \"legacyResourceId\": null\r\n      },\r\n      \"operator\": \"GreaterThan\",\r\n      \"threshold\": 2.0,\r\n      \"windowSize\": \"PT5M\",\r\n      \"timeAggregation\": \"Total\"\r\n    },\r\n    \"action\": null,\r\n    \"lastUpdatedTime\": \"2017-08-15T20:27:03.4227789Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"actions\": [\r\n      {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n        \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n        \"sendToServiceOwners\": true,\r\n        \"customEmails\": [\r\n          \"gu@ms.com\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1615"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "32a1e580-6c10-47be-aa27-6ce8b29bc3d6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "0e00496a-3b6d-46b3-88dc-de76fe618de8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170815T202704Z:0e00496a-3b6d-46b3-88dc-de76fe618de8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 Aug 2017 20:27:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourcegroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin?api-version=2016-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDdjMGIwOWQtOWY2OS00ZTZlLThkMDUtZjU5ZjY3Mjk5Y2IyL3Jlc291cmNlZ3JvdXBzL1JhYzQ2UG9zdFN3YXBSRy9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL2FsZXJ0cnVsZXMvY2hpcmljdXRpbj9hcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1b2ec719-8a7f-4a15-9e8c-23095ea39479"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'microsoft.insights/alertrules/chiricutin' under resource group 'Rac46PostSwapRG' was not found.\"\r\n  }\r\n}",
@@ -223,13 +277,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "465bd0f0-3754-4273-b30c-0536b0a4cdb2"
+          "23dcd28c-26b0-435c-a5c1-5d41db46513a"
         ],
         "x-ms-correlation-request-id": [
-          "465bd0f0-3754-4273-b30c-0536b0a4cdb2"
+          "23dcd28c-26b0-435c-a5c1-5d41db46513a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170808T001328Z:465bd0f0-3754-4273-b30c-0536b0a4cdb2"
+          "WESTUS:20170815T202705Z:23dcd28c-26b0-435c-a5c1-5d41db46513a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -238,7 +292,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 08 Aug 2017 00:13:28 GMT"
+          "Tue, 15 Aug 2017 20:27:05 GMT"
         ]
       },
       "StatusCode": 404
@@ -250,7 +304,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8e0f0803-4695-4d7a-bcb9-9fee0d47bab1"
+          "73118344-e2e9-4e53-8c6b-740c6eb58221"
         ],
         "accept-language": [
           "en-US"
@@ -259,13 +313,13 @@
           "FxVersion/4.7.2053.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n      \"name\": \"chiricutin\",\r\n      \"type\": \"Microsoft.Insights/alertRules\",\r\n      \"location\": \"West US\",\r\n      \"tags\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n        \"key1\": \"val1\"\r\n      },\r\n      \"properties\": {\r\n        \"name\": \"chiricutin\",\r\n        \"description\": \"description\",\r\n        \"isEnabled\": true,\r\n        \"condition\": {\r\n          \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n          \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n          \"dataSource\": {\r\n            \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n            \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n            \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n            \"resourceLocation\": null,\r\n            \"metricNamespace\": null,\r\n            \"metricName\": \"Requests\",\r\n            \"legacyResourceId\": null\r\n          },\r\n          \"operator\": \"GreaterThan\",\r\n          \"threshold\": 2.0,\r\n          \"windowSize\": \"PT5M\",\r\n          \"timeAggregation\": \"Total\"\r\n        },\r\n        \"action\": null,\r\n        \"lastUpdatedTime\": \"2017-08-08T00:13:26.5087912Z\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"actions\": [\r\n          {\r\n            \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n            \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n            \"sendToServiceOwners\": true,\r\n            \"customEmails\": [\r\n              \"gu@ms.com\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/microsoft.insights/alertrules/chiricutin\",\r\n      \"name\": \"chiricutin\",\r\n      \"type\": \"Microsoft.Insights/alertRules\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"$type\": \"Microsoft.WindowsAzure.Management.Common.Storage.CasePreservedDictionary, Microsoft.WindowsAzure.Management.Common.Storage\",\r\n        \"key1\": \"val1\"\r\n      },\r\n      \"properties\": {\r\n        \"name\": \"chiricutin\",\r\n        \"description\": \"description\",\r\n        \"isEnabled\": true,\r\n        \"condition\": {\r\n          \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n          \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition\",\r\n          \"dataSource\": {\r\n            \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n            \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource\",\r\n            \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n            \"resourceLocation\": null,\r\n            \"metricNamespace\": null,\r\n            \"metricName\": \"Requests\",\r\n            \"legacyResourceId\": null\r\n          },\r\n          \"operator\": \"GreaterThan\",\r\n          \"threshold\": 2.0,\r\n          \"windowSize\": \"PT5M\",\r\n          \"timeAggregation\": \"Total\"\r\n        },\r\n        \"action\": null,\r\n        \"lastUpdatedTime\": \"2017-08-15T20:27:03.4227789Z\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"actions\": [\r\n          {\r\n            \"$type\": \"Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction, Microsoft.WindowsAzure.Management.Mon.Client\",\r\n            \"odata.type\": \"Microsoft.Azure.Management.Insights.Models.RuleEmailAction\",\r\n            \"sendToServiceOwners\": true,\r\n            \"customEmails\": [\r\n              \"gu@ms.com\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1628"
+          "1627"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -280,22 +334,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9fed6d1e-2562-416e-9fb0-c72d9935d9dc"
+          "4f07dafc-7878-47af-af16-ed0fee8a6e02"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
+          "14981"
         ],
         "x-ms-correlation-request-id": [
-          "cc229c15-8268-4c62-b316-39c3b3e15d5c"
+          "8d2e2cab-77d0-429a-88f6-ae868d2d24d0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170808T001327Z:cc229c15-8268-4c62-b316-39c3b3e15d5c"
+          "WESTUS:20170815T202704Z:8d2e2cab-77d0-429a-88f6-ae868d2d24d0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 08 Aug 2017 00:13:27 GMT"
+          "Tue, 15 Aug 2017 20:27:03 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -316,7 +370,7 @@
           "932"
         ],
         "x-ms-client-request-id": [
-          "6653f03e-9fb9-492a-b483-24f2e008bbd8"
+          "0d671ba7-9f55-4a74-9430-b29f0874c01c"
         ],
         "accept-language": [
           "en-US"
@@ -325,7 +379,7 @@
           "FxVersion/4.7.2053.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"code\": \"BadRequest\",\r\n  \"message\": \"The location is invalid.\"\r\n}",
@@ -349,19 +403,19 @@
           "00000000-0000-0000-0000-000000000000"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "7f6a08ea-222d-4e93-8fcd-840aa1244626"
+          "c919a5d7-4a10-40e9-b2ac-cbe3d6aa69c4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170808T001327Z:7f6a08ea-222d-4e93-8fcd-840aa1244626"
+          "WESTUS:20170815T202704Z:c919a5d7-4a10-40e9-b2ac-cbe3d6aa69c4"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 08 Aug 2017 00:13:27 GMT"
+          "Tue, 15 Aug 2017 20:27:04 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -376,7 +430,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "608683a4-00f9-45ac-936e-ebe4bb52dc70"
+          "7e35a398-9e81-4034-980c-afa2f20d05bc"
         ],
         "accept-language": [
           "en-US"
@@ -385,7 +439,7 @@
           "FxVersion/4.7.2053.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.16.1.0"
+          "Microsoft.Azure.Management.Monitor.Management.MonitorManagementClient/0.17.0.0"
         ]
       },
       "ResponseBody": "",
@@ -403,22 +457,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "8946bfc9-fb30-4604-84e6-045ed8a20a49"
+          "296d19ea-88da-41e4-aeb9-874e40e876b0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "908cfe11-6298-4f23-85ce-4151775b425a"
+          "7a5a950e-b182-4b45-8e0d-ee5576b2070b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170808T001328Z:908cfe11-6298-4f23-85ce-4151775b425a"
+          "WESTUS:20170815T202705Z:7a5a950e-b182-4b45-8e0d-ee5576b2070b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 08 Aug 2017 00:13:28 GMT"
+          "Tue, 15 Aug 2017 20:27:04 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"

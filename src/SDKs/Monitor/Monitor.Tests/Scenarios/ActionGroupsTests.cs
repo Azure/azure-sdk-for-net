@@ -31,9 +31,10 @@ namespace Monitor.Tests.Scenarios
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                ActionGroupResource expectedParameters = GetCreateOrUpdateActionGroupParameter();
                 var insightsClient = GetMonitorManagementClient(context, handler);
+                this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: "Global");
 
+                ActionGroupResource expectedParameters = GetCreateOrUpdateActionGroupParameter();
                 ActionGroupResource result = insightsClient.ActionGroups.CreateOrUpdate(
                     resourceGroupName: ResourceGroupName, 
                     actionGroupName: ActionGroupName, 
