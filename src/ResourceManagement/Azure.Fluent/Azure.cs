@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
-        public ICosmosDBAccounts DocumentDBAccounts
+        public ICosmosDBAccounts CosmosDBAccounts
         {
             get
             {
