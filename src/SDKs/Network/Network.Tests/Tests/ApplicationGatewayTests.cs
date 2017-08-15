@@ -520,7 +520,7 @@ namespace Networks.Tests
             Assert.Equal(gw1.SslPolicy.MinProtocolVersion, gw2.SslPolicy.MinProtocolVersion);
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void ApplicationGatewayApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
