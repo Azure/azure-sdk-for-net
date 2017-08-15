@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.EventGrid/operations?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNy0wNi0xNS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4b3799f0-23d4-40a9-9ca0-5989fe397fea"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventGrid Resource Provider\",\r\n        \"operation\": \"Registers the EventGrid Resource Provider\",\r\n        \"description\": \"Registers the eventSubscription for the EventGrid resource provider and enables the creation of Event Grid subscriptions.\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Write EventSubscription\",\r\n        \"description\": \"Create or update a eventSubscription\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Read EventSubscription\",\r\n        \"description\": \"Read a eventSubscription\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Delete EventSubscription\",\r\n        \"description\": \"Delete a eventSubscription\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/getFullUrl/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Get full url\",\r\n        \"description\": \"Get full url for the event subscription\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Write Topic\",\r\n        \"description\": \"Create or update a topic\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Read Topic\",\r\n        \"description\": \"Read a topic\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Delete Topic\",\r\n        \"description\": \"Delete a topic\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/listKeys/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"List keys\",\r\n        \"description\": \"List keys for the topic\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/regenerateKey/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Regenerate key\",\r\n        \"description\": \"Regenerate key for the topic\"\r\n      },\r\n      \"origin\": 2,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Metrics\",\r\n        \"operation\": \"Read topic metric definitions\",\r\n        \"description\": \"Gets the available metrics for topics\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"PublishedEvents\",\r\n              \"displayName\": \"Count of events published to this topic\",\r\n              \"displayDescription\": \"Count of events published to this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"UnmatchedEvents\",\r\n              \"displayName\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"displayDescription\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/providers/Microsoft.Insights/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Read diagnostic setting\",\r\n        \"description\": \"Gets the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/providers/Microsoft.Insights/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Write diagnostic setting\",\r\n        \"description\": \"Creates or updates the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventSubscription Metrics\",\r\n        \"operation\": \"Read eventSubscription metric definitions\",\r\n        \"description\": \"Gets the available metrics for eventSubscriptions\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"MatchedEvents\",\r\n              \"displayName\": \"Count of events matching this event subscription\",\r\n              \"displayDescription\": \"Count of events matching this event subscription\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"DeliveredEvents\",\r\n              \"displayName\": \"Count of events delivered for this event subscription\",\r\n              \"displayDescription\": \"Count of events delivered for this event subscription\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"FailedDeliveryAttempts\",\r\n              \"displayName\": \"Count of failed delivery attempts for this event subscription\",\r\n              \"displayDescription\": \"Count of failed delivery attempts for this event subscription\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/providers/Microsoft.Insights/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventSubscription Diagnostics\",\r\n        \"operation\": \"Read diagnostic setting\",\r\n        \"description\": \"Gets the diagnostic setting for event subscriptions\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/providers/Microsoft.Insights/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventSubscription Diagnostics\",\r\n        \"operation\": \"Write diagnostic setting\",\r\n        \"description\": \"Creates or updates the diagnostic setting for event subscriptions\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/extensionTopics/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Metrics\",\r\n        \"operation\": \"Read topic metric definitions\",\r\n        \"description\": \"Gets the available metrics for topics\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"PublishedEvents\",\r\n              \"displayName\": \"Count of events published to this topic\",\r\n              \"displayDescription\": \"Count of events published to this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"UnmatchedEvents\",\r\n              \"displayName\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"displayDescription\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/extensionTopics/providers/Microsoft.Insights/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Read diagnostic setting\",\r\n        \"description\": \"Gets the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": null\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/extensionTopics/providers/Microsoft.Insights/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Write diagnostic setting\",\r\n        \"description\": \"Creates or updates the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": 1,\r\n      \"properties\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 17 Aug 2017 06:16:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "41aaf5e2-2c58-469f-950c-5369bd0fcd74"
+        ],
+        "x-ms-correlation-request-id": [
+          "41aaf5e2-2c58-469f-950c-5369bd0fcd74"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170817T061655Z:41aaf5e2-2c58-469f-950c-5369bd0fcd74"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea"
+  }
+}

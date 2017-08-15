@@ -17,6 +17,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\Management.DataLake.Store\Microsoft.Azure.Management.DataLake.Store.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DevTestLabs\Management.DevTestLabs\Microsoft.Azure.Management.DevTestLabs.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Dns\Management.Dns\Microsoft.Azure.Management.Dns.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)EventGrid\Management.EventGrid\Microsoft.Azure.Management.EventGrid.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)EventHub\Management.EventHub\Microsoft.Azure.Management.EventHub.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Graph.RBAC\Graph.RBAC\Microsoft.Azure.Graph.RBAC.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Insights\Microsoft.Azure.Insights\Microsoft.Azure.Insights.csproj" />
@@ -73,6 +74,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Analytics\**\*Tests.csproj" ProjectType="Test"/>		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DevTestLabs\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Dns\Management.Dns\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)EventGrid\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)EventHub\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Graph.RBAC\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Insights\**\*Tests.csproj" ProjectType="Test"/>

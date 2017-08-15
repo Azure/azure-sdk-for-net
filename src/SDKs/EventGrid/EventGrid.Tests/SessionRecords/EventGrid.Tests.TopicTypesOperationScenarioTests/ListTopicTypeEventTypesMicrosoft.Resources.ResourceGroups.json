@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LlJlc291cmNlcy5SZXNvdXJjZUdyb3Vwcy9ldmVudFR5cGVzP2FwaS12ZXJzaW9uPTIwMTctMDYtMTUtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8adc6c15-3767-45c6-ab13-52ae83a4433b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Resource Write Success\",\r\n        \"description\": \"Raised when a resource create or update operation succeeds.\",\r\n        \"schemaUrl\": \"TBD\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes/Microsoft.Resources.ResourceWriteSuccess\",\r\n      \"name\": \"Microsoft.Resources.ResourceWriteSuccess\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Resource Write Failure\",\r\n        \"description\": \"Raised when a resource create or update operation fails.\",\r\n        \"schemaUrl\": \"TBD\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes/Microsoft.Resources.ResourceWriteFailure\",\r\n      \"name\": \"Microsoft.Resources.ResourceWriteFailure\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Resource Write Cancel\",\r\n        \"description\": \"Raised when a resource create or update operation is cancelled.\",\r\n        \"schemaUrl\": \"TBD\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes/Microsoft.Resources.ResourceWriteCancel\",\r\n      \"name\": \"Microsoft.Resources.ResourceWriteCancel\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Resource Delete Success\",\r\n        \"description\": \"Raised when a resource deletion operation succeeds.\",\r\n        \"schemaUrl\": \"TBD\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes/Microsoft.Resources.ResourceDeleteSuccess\",\r\n      \"name\": \"Microsoft.Resources.ResourceDeleteSuccess\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Resource Delete Failure\",\r\n        \"description\": \"Raised when a resource deletion operation fails.\",\r\n        \"schemaUrl\": \"TBD\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes/Microsoft.Resources.ResourceDeleteFailure\",\r\n      \"name\": \"Microsoft.Resources.ResourceDeleteFailure\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Resource Delete Cancel\",\r\n        \"description\": \"Raised when a resource delete operation is cancelled.\",\r\n        \"schemaUrl\": \"TBD\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups/eventTypes/Microsoft.Resources.ResourceDeleteCancel\",\r\n      \"name\": \"Microsoft.Resources.ResourceDeleteCancel\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 17 Aug 2017 22:45:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "795f7e01-2790-4e88-9617-33417eb8e5ab"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "4466829f-0abd-42b9-aa6d-81b3c7fb7646"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170817T224546Z:4466829f-0abd-42b9-aa6d-81b3c7fb7646"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea"
+  }
+}
