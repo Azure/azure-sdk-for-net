@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// A set of metric values in a time range.
+    /// The result data of a query.
     /// </summary>
     public partial class Metric
     {
@@ -33,23 +33,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Initializes a new instance of the Metric class.
         /// </summary>
+        /// <param name="id">the metric Id.</param>
+        /// <param name="type">the resource type of the metric
+        /// resource.</param>
         /// <param name="name">the name and the display name of the metric,
         /// i.e. it is localizable string.</param>
         /// <param name="unit">the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
         /// 'Percent', 'MilliSeconds'</param>
-        /// <param name="data">Array of data points representing the metric
-        /// values.</param>
-        /// <param name="id">the id, resourceId, of the metric.</param>
-        /// <param name="type">the resource type of the metric
-        /// resource.</param>
-        public Metric(LocalizableString name, Unit unit, IList<MetricValue> data, string id = default(string), string type = default(string))
+        /// <param name="timeseries">the time series returned when a data query
+        /// is performed.</param>
+        public Metric(string id, string type, LocalizableString name, Unit unit, IList<TimeSeriesElement> timeseries)
         {
             Id = id;
             Type = type;
             Name = name;
             Unit = unit;
-            Data = data;
+            Timeseries = timeseries;
             CustomInit();
         }
 
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id, resourceId, of the metric.
+        /// Gets or sets the metric Id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -86,10 +86,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public Unit Unit { get; set; }
 
         /// <summary>
-        /// Gets or sets array of data points representing the metric values.
+        /// Gets or sets the time series returned when a data query is
+        /// performed.
         /// </summary>
-        [JsonProperty(PropertyName = "data")]
-        public IList<MetricValue> Data { get; set; }
+        [JsonProperty(PropertyName = "timeseries")]
+        public IList<TimeSeriesElement> Timeseries { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -99,27 +100,25 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Data == null)
+            if (Timeseries == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Data");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Timeseries");
             }
             if (Name != null)
             {
                 Name.Validate();
-            }
-            if (Data != null)
-            {
-                foreach (var element in Data)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

@@ -12,12 +12,14 @@ using Microsoft.Azure.Management.Monitor;
 using Microsoft.Azure.Management.Monitor.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Globalization;
 
 namespace Monitor.Tests.Scenarios
 {
     public class MetricsTests : TestBase
     {
-        private const string ResourceUri = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest";
+        private const string ResourceGroupName = "Rac46PostSwapRG";
+        private const string ResourceUri = "/subscriptions/{0}/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Web/sites/alertruleTest";
         private RecordedDelegatingHandler handler;
 
         public MetricsTests()
@@ -34,15 +36,14 @@ namespace Monitor.Tests.Scenarios
             {
                 var insightsClient = GetMonitorClient(context, handler);
 
-                var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<MetricDefinition>("name.value eq 'Requests'");
+                // var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<MetricDefinition>("name.value eq 'Requests'");
                 var actualMetricDefinitions = insightsClient.MetricDefinitions.ListAsync(
-                    resourceUri: ResourceUri,
-                    odataQuery: filterString,
+                    resourceUri: string.Format(provider: CultureInfo.InvariantCulture, format: ResourceUri, args: insightsClient.SubscriptionId),
                     cancellationToken: new CancellationToken()).Result;
 
                 if (!this.IsRecording)
                 {
-                    Check(actualMetricDefinitions.ToList<MetricDefinition>());
+                    Check(actualMetricDefinitions.ToList());
                 }
             }
         }
@@ -55,26 +56,43 @@ namespace Monitor.Tests.Scenarios
             {
                 var insightsClient = GetMonitorClient(context, handler);
 
-                var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<Metric>("(name.value eq 'Requests') and timeGrain eq duration'PT1M' and startTime eq 2017-08-01T06:00:00Z and endTime eq 2017-08-02T23:00:00Z");
+                // TODO: run one with a filter and other parameters
+                // var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<MetadataValue>("(name.value eq 'Requests') and timeGrain eq duration'PT1M' and startTime eq 2017-08-01T06:00:00Z and endTime eq 2017-08-02T23:00:00Z");
                 var actualMetrics = insightsClient.Metrics.ListAsync(
-                    resourceUri: ResourceUri,
-                    odataQuery: filterString,
+                    resourceUri: string.Format(provider: CultureInfo.InvariantCulture, format: ResourceUri, args: insightsClient.SubscriptionId),
+                    // odataQuery: filterString,
                     cancellationToken: CancellationToken.None).Result;
 
                 if (!this.IsRecording)
                 {
-                    Check(actualMetrics.ToList<Metric>());
+                    Check(actualMetrics);
+                }
+
+                // Get metadata only
+                // TODO: fails with BadRequest saying that at least one dimension should be set
+                actualMetrics = null;
+                Assert.Throws<ErrorResponseException>(
+                    () => actualMetrics = insightsClient.Metrics.List(
+                        resourceUri: string.Format(provider: CultureInfo.InvariantCulture, format: ResourceUri, args: insightsClient.SubscriptionId),
+                        resultType: ResultType.Metadata));
+
+                if (!this.IsRecording && actualMetrics != null)
+                {
+                    Check(actualMetrics);
                 }
             }
         }
 
-        private void Check(IList<Metric> act)
+        private void Check(Response act)
         {
             if (act != null)
             {
-                if (act.Count > 0)
+                Assert.NotNull(act.Timespan);
+                Assert.NotNull(act.Value);
+
+                if (act.Value.Count > 0)
                 {
-                    var metric = act[0];
+                    var metric = act.Value[0];
                     Assert.False(string.IsNullOrWhiteSpace(metric.Id));
                     Assert.NotNull(metric.Name);
                     Assert.False(string.IsNullOrWhiteSpace(metric.Type));
