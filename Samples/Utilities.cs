@@ -1702,7 +1702,13 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Active Directory Group: ").Append(group.Id)
                     .Append("\n\tName: ").Append(group.Name)
                     .Append("\n\tMail: ").Append(group.Mail)
-                    .Append("\n\tSecurity Enabled: ").Append(group.SecurityEnabled);
+                    .Append("\n\tSecurity Enabled: ").Append(group.SecurityEnabled)
+                    .Append("\n\tGroup members:");
+
+            foreach (var obj in group.ListMembers())
+            {
+                builder.Append("\n\t\tType: ").Append(obj.GetType().Name).Append("\tName: ").Append(obj.Name);
+            }
 
             Log(builder.ToString());
         }

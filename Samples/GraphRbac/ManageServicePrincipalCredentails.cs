@@ -35,18 +35,18 @@ namespace ManageServicePrincipalCredentials
             string password2 = "StrongP@ss!12";
             string certName1 = SdkContext.RandomResourceName("cert", 20);
             string raName = SdkContext.RandomGuid();
-            string applicationId = "";
+            string servicePrincipalId = "";
             try
             {
 
                 // ============================================================
                 // Create application
 
-                Utilities.Log("Creating an Active Directory application " + appName + "...");
+                Utilities.Log("Creating a service principal " + spName + "...");
 
-                IActiveDirectoryApplication application = authenticated.ActiveDirectoryApplications
+                IServicePrincipal servicePrincipal = authenticated.ServicePrincipals
                         .Define(appName)
-                        .WithSignOnUrl(appUrl)
+                        .WithNewApplication(appUrl)
                         .DefinePasswordCredential(passwordName1)
                             .WithPasswordValue(password1)
                             .Attach()
@@ -60,24 +60,11 @@ namespace ManageServicePrincipalCredentials
                             .Attach()
                         .Create();
 
-                Utilities.Log("Created Active Directory application " + appName + ".");
-                Utilities.Print(application);
-
-                applicationId = application.Id;
-
-                // ============================================================
-                // Create service principal
-
-                Utilities.Log("Creating an Active Directory service principal " + spName + "...");
-
-                IServicePrincipal servicePrincipal = authenticated.ServicePrincipals
-                        .Define(spName)
-                        .WithExistingApplication(application)
-                        .Create();
-
                 Utilities.Log("Created service principal " + spName + ".");
                 Utilities.Print(servicePrincipal);
 
+                servicePrincipalId = servicePrincipal.Id;
+                
                 // ============================================================
                 // Create role assignment
 
@@ -151,7 +138,7 @@ namespace ManageServicePrincipalCredentials
                 // Revoke access of the 1st password credential
                 Utilities.Log("Revoking access for password credential " + passwordName1 + "...");
 
-                application.Update()
+                servicePrincipal.Update()
                         .WithoutCredential(passwordName1)
                         .Apply();
 
@@ -215,7 +202,7 @@ namespace ManageServicePrincipalCredentials
                 try
                 {
                     Utilities.Log("Deleting application: " + appName);
-                    authenticated.ActiveDirectoryApplications.DeleteById(applicationId);
+                    authenticated.ServicePrincipals.DeleteById(servicePrincipalId);
                     Utilities.Log("Deleted application: " + appName);
                 }
                 catch (Exception e)
