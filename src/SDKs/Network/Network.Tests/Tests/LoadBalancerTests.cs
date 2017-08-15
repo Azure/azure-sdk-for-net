@@ -23,7 +23,7 @@ namespace Networks.Tests
 
     public class LoadBalancerTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -308,7 +308,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerApiTestWithDynamicIp()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -489,7 +489,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerApiTestWithStaticIp()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -673,7 +673,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerApiTestWithDistributionPolicy()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -864,7 +864,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void CreateEmptyLoadBalancer()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -918,7 +918,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void UpdateLoadBalancerRule()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1069,7 +1069,7 @@ namespace Networks.Tests
             }
         }
         
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerApiNicAssociationTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1308,7 +1308,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerNatPoolTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1436,7 +1436,7 @@ namespace Networks.Tests
              }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LoadBalancerOutboundNatRuleTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
