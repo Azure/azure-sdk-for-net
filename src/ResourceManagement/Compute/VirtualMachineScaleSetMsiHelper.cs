@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (msiExtension != null)
             {
                 Object currentTokenPortObj = msiExtension.PublicSettings["port"];
-                int? currentTokenPort = ObjectToInteger(currentTokenPortObj);
+                int? currentTokenPort = ComputeUtils.ObjectToInteger(currentTokenPortObj);
                 int? newPort;
                 if (this.tokenPort != null)
                 {
@@ -386,38 +386,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
                 throw cloudException;
             }
-        }
-
-        /// <summary>
-        /// Given an object holding a numeric in Integer or String format, convert that to
-        /// Integer.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <return>The integer value.</return>
-        ///GENMHASH:663112EB0F1DE517DFEE2A837DECC2B6:E55F34EE6CDFC6C04AA107D22EE30395
-        private static int? ObjectToInteger(object obj)
-        {
-            int? result = null;
-            if (obj != null)
-            {
-                if (obj is Int16)
-                {
-                    result = (int)((Int16)obj);
-                }
-                else if (obj is Int32)
-                {
-                    result = (int)obj;
-                }
-                else if (obj is Int64)
-                {
-                    result = (int)((Int64)obj);
-                }
-                else
-                {
-                    result = int.Parse((string)obj);
-                }
-            }
-            return result;
         }
 
         /// <summary>

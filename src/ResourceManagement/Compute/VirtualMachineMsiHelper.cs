@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:360C529D50EA598D26E2D035C1C0AFBE:2159D1C204127807EC19DE8A5CE77BD6
         private async Task<bool> UpdateMSIExtensionAsync(IVirtualMachine virtualMachine, IVirtualMachineExtension extension, string typeName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            int? currentTokenPort = ObjectToInteger(extension.PublicSettings["port"]);
+            int? currentTokenPort = Microsoft.Azure.Management.Compute.Fluent.ComputeUtils.ObjectToInteger(extension.PublicSettings["port"]);
             int? tokenPortToUse;
             if (this.tokenPort != null)
             {
@@ -342,38 +342,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.rolesToAssign = new Dictionary<string, Tuple<string, BuiltInRole>>();
             this.roleDefinitionsToAssign = new Dictionary<string, Tuple<string, string>>();
             Clear();
-        }
-
-        /// <summary>
-        /// Given an object holding a numeric in Integer or String format, convert that to
-        /// Integer.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <return>The integer value.</return>
-        ///GENMHASH:663112EB0F1DE517DFEE2A837DECC2B6:E55F34EE6CDFC6C04AA107D22EE30395
-        private static int? ObjectToInteger(object obj)
-        {
-            int? result = null;
-            if (obj != null)
-            {
-                if (obj is Int16)
-                {
-                    result = (int)((Int16)obj);
-                }
-                else if (obj is Int32)
-                {
-                    result = (int)obj;
-                }
-                else if (obj is Int64)
-                {
-                    result = (int)((Int64)obj);
-                }
-                else
-                {
-                    result = int.Parse((string)obj);
-                }
-            }
-            return result;
         }
 
         /// <summary>
