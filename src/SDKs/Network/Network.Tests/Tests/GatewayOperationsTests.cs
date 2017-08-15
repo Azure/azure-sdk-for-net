@@ -33,7 +33,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGateway 6 APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -166,7 +166,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-LocalNetworkGateway 5 APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LocalNettworkGatewayOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -256,7 +256,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionWithBgpTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -424,7 +424,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGatewayConnection with Ipsec Policies
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionWithIpsecPoliciesTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -659,7 +659,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGatewayConnection 5 APIs & Set-Remove default site
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -849,7 +849,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGatewayConnectionSharedKey 3 APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionSharedKeyOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1002,7 +1002,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGateway P2S APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayP2SOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1221,7 +1221,7 @@ namespace Networks.Tests
 
 
         // Tests Resource:-VirtualNetworkGateway ActiveActive Feature Test:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayActiveActiveFeatureTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1362,7 +1362,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayBgpRouteApiTest()
         {
             RecordedDelegatingHandler handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1558,7 +1558,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayGenerateVpnProfileTest()
         {
             var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};

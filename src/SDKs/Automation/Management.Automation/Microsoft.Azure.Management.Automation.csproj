@@ -3,7 +3,7 @@
   <PropertyGroup>
     <description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</description>
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
-    <VersionPrefix>2.0.3</VersionPrefix>
+    <VersionPrefix>2.0.4</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <tags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</tags>
@@ -14,14 +14,17 @@
 
   <ItemGroup>
     <PackageReference Include="Hyak.Common" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Azure.Common " Version="2.1.3" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
   </ItemGroup>
-
+  
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
+
+</Project>
+
+<!--
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
@@ -35,11 +38,9 @@
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.1" />
   </ItemGroup>
-</Project>
 
-<!--
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
