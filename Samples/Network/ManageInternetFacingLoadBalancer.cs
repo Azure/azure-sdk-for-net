@@ -148,10 +148,6 @@ namespace ManageInternetFacingLoadBalancer
                 var loadBalancer1 = azure.LoadBalancers.Define(loadBalancerName1)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
-                        .DefinePublicFrontend(frontendName)
-                            .WithExistingPublicIPAddress(publicIpAddress)
-                            .Attach()
-
                         // Add two rules that uses above backend and probe
                         .DefineLoadBalancingRule(HttpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -193,6 +189,11 @@ namespace ManageInternetFacingLoadBalancer
                             .FromFrontend(frontendName)
                             .FromFrontendPort(5003)
                             .ToBackendPort(23)
+                            .Attach()
+
+                        // Explicitly define the frontend
+                        .DefinePublicFrontend(frontendName)
+                            .WithExistingPublicIPAddress(publicIpAddress)
                             .Attach()
 
                         // Add two probes one per rule
@@ -382,9 +383,6 @@ namespace ManageInternetFacingLoadBalancer
                 var loadBalancer2 = azure.LoadBalancers.Define(loadBalancerName2)
                         .WithRegion(Region.USEast)
                         .WithExistingResourceGroup(rgName)
-                        .DefinePublicFrontend(frontendName)
-                            .WithExistingPublicIPAddress(publicIpAddress2)
-                            .Attach()
                         // Add two rules that uses above backend and probe
                         .DefineLoadBalancingRule(HttpLoadBalancingRule)
                             .WithProtocol(TransportProtocol.Tcp)
@@ -425,6 +423,10 @@ namespace ManageInternetFacingLoadBalancer
                             .FromFrontend(frontendName)
                             .FromFrontendPort(5003)
                             .ToBackendPort(23)
+                            .Attach()
+                        // Explicitly define the frontend
+                        .DefinePublicFrontend(frontendName)
+                            .WithExistingPublicIPAddress(publicIpAddress2)
                             .Attach()
                         // Add two probes one per rule
                         .DefineHttpProbe(HttpProbe)

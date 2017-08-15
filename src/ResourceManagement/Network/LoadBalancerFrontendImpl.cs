@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ChildResource<FrontendIPConfigurationInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancerFrontend,
         ILoadBalancerPrivateFrontend,
-        LoadBalancerPrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>,
+        LoadBalancerPrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithCreate>,
         LoadBalancerPrivateFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerPrivateFrontend.Update.IUpdate,
         ILoadBalancerPublicFrontend,
-        LoadBalancerPublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>,
+        LoadBalancerPublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithCreate>,
         LoadBalancerPublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancerPublicFrontend.Update.IUpdate
     {

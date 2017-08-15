@@ -80,28 +80,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Begins the update of an internal load balancer frontend.
-        /// </summary>
-        /// <param name="name">The name for the frontend.</param>
-        /// <return>The first stage of the new frontend definition.</return>
-        LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithInternalFrontend.DefinePrivateFrontend(string name)
-        {
-            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Begins the description of an update to an existing internal frontend.
-        /// </summary>
-        /// <param name="name">The name of an existing frontend from this load balancer.</param>
-        /// <return>The first stage of the frontend update.</return>
-        LoadBalancerPrivateFrontend.Update.IUpdate LoadBalancer.Update.IWithInternalFrontend.UpdatePrivateFrontend(string name)
-        {
-            return this.UpdatePrivateFrontend(name) as LoadBalancerPrivateFrontend.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Begins the definition of a new inbound NAT rule to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancerInboundNatRule.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the inbound NAT rule.</param>
         /// <return>The first stage of the new inbound NAT rule definition.</return>
@@ -142,13 +121,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Begins the definition of a new load public balancer frontend.
+        /// Begins an explicit definition of a new public (Internet-facing) load balancer frontend.
+        /// (Note that frontends can also be created implicitly as part of a load balancing rule,
+        /// inbound NAT rule or inbound NAT pool definition, by referencing an existing public IP address within those definitions.).
         /// </summary>
         /// <param name="name">The name for the frontend.</param>
-        /// <return>The first stage of the new frontend definition.</return>
-        LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat> LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name)
+        /// <return>The first stage of a new frontend definition.</return>
+        LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name)
         {
-            return this.DefinePublicFrontend(name) as LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPublicFrontendOrRuleNat>;
+            return this.DefinePublicFrontend(name) as LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -157,7 +138,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name for the frontend.</param>
         /// <return>The first stage of the new frontend definition.</return>
-        LoadBalancerPublicFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithInternetFrontend.DefinePublicFrontend(string name)
+        LoadBalancerPublicFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithPublicFrontend.DefinePublicFrontend(string name)
         {
             return this.DefinePublicFrontend(name) as LoadBalancerPublicFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
         }
@@ -167,7 +148,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of the frontend to update.</param>
         /// <return>The first stage of the frontend update.</return>
-        LoadBalancerPublicFrontend.Update.IUpdate LoadBalancer.Update.IWithInternetFrontend.UpdatePublicFrontend(string name)
+        LoadBalancerPublicFrontend.Update.IUpdate LoadBalancer.Update.IWithPublicFrontend.UpdatePublicFrontend(string name)
         {
             return this.UpdatePublicFrontend(name) as LoadBalancerPublicFrontend.Update.IUpdate;
         }
@@ -177,14 +158,41 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of an existing front end on this load balancer.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithInternetFrontend.WithoutFrontend(string name)
+        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithPublicFrontend.WithoutFrontend(string name)
         {
             return this.WithoutFrontend(name) as LoadBalancer.Update.IUpdate;
         }
 
-        LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat> LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name)
+        /// <summary>
+        /// Begins an explicit definition of a new private (internal) load balancer frontend.
+        /// (Note that private frontends can also be created implicitly as part of a load balancing rule,
+        /// inbound NAT rule or inbound NAT pool definition, by referencing an existing subnet within those definitions.).
+        /// </summary>
+        /// <param name="name">The name for the frontend.</param>
+        /// <return>The first stage of a new frontend definition.</return>
+        LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name)
         {
-            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPrivateFrontendOrRuleNat>;
+            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Begins the update of an internal load balancer frontend.
+        /// </summary>
+        /// <param name="name">The name for the frontend.</param>
+        /// <return>The first stage of the new frontend definition.</return>
+        LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithPrivateFrontend.DefinePrivateFrontend(string name)
+        {
+            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Begins the description of an update to an existing internal frontend.
+        /// </summary>
+        /// <param name="name">The name of an existing frontend from this load balancer.</param>
+        /// <return>The first stage of the frontend update.</return>
+        LoadBalancerPrivateFrontend.Update.IUpdate LoadBalancer.Update.IWithPrivateFrontend.UpdatePrivateFrontend(string name)
+        {
+            return this.UpdatePrivateFrontend(name) as LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
