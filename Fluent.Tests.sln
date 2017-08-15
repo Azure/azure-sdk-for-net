@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26507.0
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluent.Tests", "Tests\Fluent.Tests\Fluent.Tests.csproj", "{448C82C0-173D-4987-AF7B-FA2E35860909}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Storage.Fluent", "src\ResourceManagement\Storage\Microsoft.Azure.Management.Storage.Fluent.csproj", "{7E31864C-5BB0-4AEB-85E1-C5354898870D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "src\ResourceManagement\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent.csproj", "{62350028-496C-4668-A877-8B27274DD28C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search.Fluent", "src\ResourceManagement\Search\Microsoft.Azure.Management.Search.Fluent.csproj", "{7501A087-BACB-47B8-93C4-0951995D96D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +135,10 @@ Global
 		{62350028-496C-4668-A877-8B27274DD28C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62350028-496C-4668-A877-8B27274DD28C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62350028-496C-4668-A877-8B27274DD28C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7501A087-BACB-47B8-93C4-0951995D96D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7501A087-BACB-47B8-93C4-0951995D96D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7501A087-BACB-47B8-93C4-0951995D96D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7501A087-BACB-47B8-93C4-0951995D96D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,5 +162,6 @@ Global
 		{C3556FF2-C81B-4E93-ADC5-EB968F309D3C} = {6861600A-FFF3-49C3-8A91-7174F754EAED}
 		{7E31864C-5BB0-4AEB-85E1-C5354898870D} = {6861600A-FFF3-49C3-8A91-7174F754EAED}
 		{62350028-496C-4668-A877-8B27274DD28C} = {6861600A-FFF3-49C3-8A91-7174F754EAED}
+		{7501A087-BACB-47B8-93C4-0951995D96D6} = {6861600A-FFF3-49C3-8A91-7174F754EAED}
 	EndGlobalSection
 EndGlobal

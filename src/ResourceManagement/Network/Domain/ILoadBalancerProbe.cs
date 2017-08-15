@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// An immutable client-side representation of a load balancing probe.
+    /// A client-side representation of a load balancing probe.
     /// </summary>
     public interface ILoadBalancerProbe  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,

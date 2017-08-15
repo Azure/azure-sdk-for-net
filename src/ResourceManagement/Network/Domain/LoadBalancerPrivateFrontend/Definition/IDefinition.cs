@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// <summary>
     /// The stage of a private frontend definition allowing to specify a subnet from the selected network.
     /// </summary>
-    /// <typeparam name="ParentT">The next stage of the definition.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreate>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend of an internal load balancer.
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// <summary>
     /// The entirety of a private frontend definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<ParentT>,
@@ -46,12 +46,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.
     /// <summary>
     /// The final stage of a private frontend definition.
     /// At this stage, any remaining optional settings can be specified, or the frontend definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.IInDefinitionAlt<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
+        Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreate>>
     {
     }
 }

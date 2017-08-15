@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancerBackend.Definition;
@@ -31,38 +32,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Update;
     using Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.UpdateDefinition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     internal partial class LoadBalancerImpl 
     {
-        /// <summary>
-        /// Assigns the specified subnet from the selected network as teh default private frontend of this load balancer,
-        /// thereby making the load balancer internal.
-        /// Once the first private frontend is added, only private frontends can be added thereafter.
-        /// </summary>
-        /// <param name="network">An existing virtual network.</param>
-        /// <param name="subnetName">The name of an existing subnet on the specified network.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPrivateFrontendOrBackend LoadBalancer.Definition.IWithNetworkSubnet.WithFrontendSubnet(INetwork network, string subnetName)
-        {
-            return this.WithFrontendSubnet(network, subnetName) as LoadBalancer.Definition.IWithPrivateFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Assigns the specified subnet from the specified network to the default frontend of this load balancer.
-        /// </summary>
-        /// <param name="network">An existing virtual network.</param>
-        /// <param name="subnetName">The name of an existing subnet on the specified network.</param>
-        /// <return>The next stage of the update.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithNetworkSubnet.WithFrontendSubnet(INetwork network, string subnetName)
-        {
-            return this.WithFrontendSubnet(network, subnetName) as LoadBalancer.Update.IUpdate;
-        }
-
         /// <summary>
         /// Begins the definition of a new inbount NAT pool to add to the load balancer.
         /// The definition must be completed with a call to  LoadBalancerInboundNatPool.DefinitionStages.WithAttach.attach().
@@ -105,52 +80,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
-        /// and associates it with the resource.
-        /// The internal name for the public IP address will be derived from the DNS label.
-        /// </summary>
-        /// <param name="leafDnsLabel">The leaf domain label.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithNewPublicIPAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIPAddress(string leafDnsLabel)
-        {
-            return this.WithNewPublicIPAddress(leafDnsLabel) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
-        /// and associates it with the resource.
-        /// The internal name for the public IP address will be derived from the DNS label.
-        /// </summary>
-        /// <param name="leafDnsLabel">The leaf domain label.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddress<LoadBalancer.Update.IUpdate>.WithNewPublicIPAddress(string leafDnsLabel)
-        {
-            return this.WithNewPublicIPAddress(leafDnsLabel) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Begins the update of an internal load balancer frontend.
-        /// </summary>
-        /// <param name="name">The name for the frontend.</param>
-        /// <return>The first stage of the new frontend definition.</return>
-        LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithInternalFrontend.DefinePrivateFrontend(string name)
-        {
-            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Begins the description of an update to an existing internal frontend.
-        /// </summary>
-        /// <param name="name">The name of an existing frontend from this load balancer.</param>
-        /// <return>The first stage of the frontend update.</return>
-        LoadBalancerPrivateFrontend.Update.IUpdate LoadBalancer.Update.IWithInternalFrontend.UpdateInternalFrontend(string name)
-        {
-            return this.UpdateInternalFrontend(name) as LoadBalancerPrivateFrontend.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Begins the definition of a new inbound NAT rule to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancerInboundNatRule.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the inbound NAT rule.</param>
         /// <return>The first stage of the new inbound NAT rule definition.</return>
@@ -191,42 +121,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Adds the specified set of virtual machines, assuming they are from the same
-        /// availability set, to this load balancer's back end address pool.
-        /// This will create a new backend address pool for this load balancer and add references to
-        /// the primary IP configurations of the primary network interfaces of each of the provided set of
-        /// virtual machines.
-        /// If the virtual machines are not in the same availability set, the load balancer will still
-        /// be created, but the virtual machines will not associated with its back end.
-        /// Only those virtual machines will be associated with the load balancer that already have an existing
-        /// network interface. Virtual machines without a network interface will be skipped.
-        /// </summary>
-        /// <param name="vms">Existing virtual machines.</param>
-        /// <return>The next stage of the update.</return>
-        LoadBalancer.Definition.IWithBackendOrProbe LoadBalancer.Definition.IWithVirtualMachine<LoadBalancer.Definition.IWithBackendOrProbe>.WithExistingVirtualMachines(params IHasNetworkInterfaces[] vms)
-        {
-            return this.WithExistingVirtualMachines(vms) as LoadBalancer.Definition.IWithBackendOrProbe;
-        }
-
-        /// <summary>
-        /// Begins the definition of a new load public balancer frontend.
-        /// The definition must be completed with a call to  LoadBalancerPublicFrontend.DefinitionStages.WithAttach.attach().
+        /// Begins an explicit definition of a new public (Internet-facing) load balancer frontend.
+        /// (Note that frontends can also be created implicitly as part of a load balancing rule,
+        /// inbound NAT rule or inbound NAT pool definition, by referencing an existing public IP address within those definitions.).
         /// </summary>
         /// <param name="name">The name for the frontend.</param>
-        /// <return>The first stage of the new frontend definition.</return>
-        LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPublicFrontendOrBackend> LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name)
+        /// <return>The first stage of a new frontend definition.</return>
+        LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend(string name)
         {
-            return this.DefinePublicFrontend(name) as LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
-        }
-
-        /// <summary>
-        /// Begins the description of an update to an existing Internet-facing frontend.
-        /// </summary>
-        /// <param name="name">The name of the frontend to update.</param>
-        /// <return>The first stage of the frontend update.</return>
-        LoadBalancerPublicFrontend.Update.IUpdate LoadBalancer.Update.IWithInternetFrontend.UpdateInternetFrontend(string name)
-        {
-            return this.UpdateInternetFrontend(name) as LoadBalancerPublicFrontend.Update.IUpdate;
+            return this.DefinePublicFrontend(name) as LoadBalancerPublicFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -235,9 +138,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name for the frontend.</param>
         /// <return>The first stage of the new frontend definition.</return>
-        LoadBalancerPublicFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithInternetFrontend.DefinePublicFrontend(string name)
+        LoadBalancerPublicFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithPublicFrontend.DefinePublicFrontend(string name)
         {
             return this.DefinePublicFrontend(name) as LoadBalancerPublicFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Begins the description of an update to an existing Internet-facing frontend.
+        /// </summary>
+        /// <param name="name">The name of the frontend to update.</param>
+        /// <return>The first stage of the frontend update.</return>
+        LoadBalancerPublicFrontend.Update.IUpdate LoadBalancer.Update.IWithPublicFrontend.UpdatePublicFrontend(string name)
+        {
+            return this.UpdatePublicFrontend(name) as LoadBalancerPublicFrontend.Update.IUpdate;
         }
 
         /// <summary>
@@ -245,58 +158,61 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of an existing front end on this load balancer.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithInternetFrontend.WithoutFrontend(string name)
+        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithPublicFrontend.WithoutFrontend(string name)
         {
             return this.WithoutFrontend(name) as LoadBalancer.Update.IUpdate;
         }
 
-        LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPrivateFrontendOrBackend> LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name)
+        /// <summary>
+        /// Begins an explicit definition of a new private (internal) load balancer frontend.
+        /// (Note that private frontends can also be created implicitly as part of a load balancing rule,
+        /// inbound NAT rule or inbound NAT pool definition, by referencing an existing subnet within those definitions.).
+        /// </summary>
+        /// <param name="name">The name for the frontend.</param>
+        /// <return>The first stage of a new frontend definition.</return>
+        LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithPrivateFrontend.DefinePrivateFrontend(string name)
         {
-            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>;
+            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Begins the update of an internal load balancer frontend.
+        /// </summary>
+        /// <param name="name">The name for the frontend.</param>
+        /// <return>The first stage of the new frontend definition.</return>
+        LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithPrivateFrontend.DefinePrivateFrontend(string name)
+        {
+            return this.DefinePrivateFrontend(name) as LoadBalancerPrivateFrontend.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Begins the description of an update to an existing internal frontend.
+        /// </summary>
+        /// <param name="name">The name of an existing frontend from this load balancer.</param>
+        /// <return>The first stage of the frontend update.</return>
+        LoadBalancerPrivateFrontend.Update.IUpdate LoadBalancer.Update.IWithPrivateFrontend.UpdatePrivateFrontend(string name)
+        {
+            return this.UpdatePrivateFrontend(name) as LoadBalancerPrivateFrontend.Update.IUpdate;
         }
 
         /// <summary>
         /// Begins the definition of a new TCP probe to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the probe.</param>
         /// <return>The first stage of the new probe definition.</return>
-        LoadBalancerTcpProbe.Definition.IBlank<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancer.Definition.IWithProbe.DefineTcpProbe(string name)
+        LoadBalancerTcpProbe.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithProbe.DefineTcpProbe(string name)
         {
-            return this.DefineTcpProbe(name) as LoadBalancerTcpProbe.Definition.IBlank<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
-        }
-
-        /// <summary>
-        /// Adds an HTTP probe checking for an HTTP 200 response from the specified path at regular intervals, using port 80.
-        /// An automatically generated name is assigned to the probe.
-        /// </summary>
-        /// <param name="requestPath">The path for the probe to invoke.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithProbeOrLoadBalancingRule LoadBalancer.Definition.IWithProbe.WithHttpProbe(string requestPath)
-        {
-            return this.WithHttpProbe(requestPath) as LoadBalancer.Definition.IWithProbeOrLoadBalancingRule;
+            return this.DefineTcpProbe(name) as LoadBalancerTcpProbe.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancerHttpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the probe.</param>
         /// <return>The first stage of the new probe definition.</return>
-        LoadBalancerHttpProbe.Definition.IBlank<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancer.Definition.IWithProbe.DefineHttpProbe(string name)
+        LoadBalancerHttpProbe.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithProbe.DefineHttpProbe(string name)
         {
-            return this.DefineHttpProbe(name) as LoadBalancerHttpProbe.Definition.IBlank<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
-        }
-
-        /// <summary>
-        /// Adds a TCP probe checking the specified port.
-        /// The probe will be named using an automatically generated name.
-        /// </summary>
-        /// <param name="port">The port number for the probe to monitor.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithProbeOrLoadBalancingRule LoadBalancer.Definition.IWithProbe.WithTcpProbe(int port)
-        {
-            return this.WithTcpProbe(port) as LoadBalancer.Definition.IWithProbeOrLoadBalancingRule;
+            return this.DefineHttpProbe(name) as LoadBalancerHttpProbe.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -308,17 +224,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         LoadBalancerTcpProbe.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate> LoadBalancer.Update.IWithProbe.DefineTcpProbe(string name)
         {
             return this.DefineTcpProbe(name) as LoadBalancerTcpProbe.UpdateDefinition.IBlank<LoadBalancer.Update.IUpdate>;
-        }
-
-        /// <summary>
-        /// Adds an HTTP probe checking for an HTTP 200 response from the specified path at regular intervals, using port 80.
-        /// An automatically generated name is assigned to the probe.
-        /// </summary>
-        /// <param name="requestPath">The path for the probe to invoke.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithProbe.WithHttpProbe(string requestPath)
-        {
-            return this.WithHttpProbe(requestPath) as LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
@@ -363,50 +268,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Adds a TCP probe checking the specified port.
-        /// The probe will be named using an automatically generated name.
-        /// </summary>
-        /// <param name="port">The port number for the probe to monitor.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithProbe.WithTcpProbe(int port)
-        {
-            return this.WithTcpProbe(port) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Creates a load balancing rule between the specified front end and back end ports and protocol.
-        /// The new rule will be assigned an automatically generated name.
-        /// </summary>
-        /// <param name="frontendPort">The port number on the front end to accept incoming traffic on.</param>
-        /// <param name="protocol">The protocol to load balance.</param>
-        /// <param name="backendPort">The port number on the back end to send load balanced traffic to.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate LoadBalancer.Definition.IWithLoadBalancingRule.WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
-        {
-            return this.WithLoadBalancingRule(frontendPort, protocol, backendPort) as LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate;
-        }
-
-        /// <summary>
-        /// Creates a load balancing rule for the specified port and protocol and default frontend and backend associations.
-        /// The load balancing rule will created under the name "default". It will reference a backend, a frontend, and a load balancing probe all named "default".
-        /// </summary>
-        /// <param name="port">The port number on the front and back end for the network traffic to be load balanced on.</param>
-        /// <param name="protocol">The protocol to load balance.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate LoadBalancer.Definition.IWithLoadBalancingRule.WithLoadBalancingRule(int port, TransportProtocol protocol)
-        {
-            return this.WithLoadBalancingRule(port, protocol) as LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate;
-        }
-
-        /// <summary>
         /// Begins the definition of a new load balancing rule to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancingRule.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the load balancing rule.</param>
         /// <return>The first stage of the new load balancing rule definition.</return>
-        LoadBalancingRule.Definition.IBlank<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> LoadBalancer.Definition.IWithLoadBalancingRule.DefineLoadBalancingRule(string name)
+        LoadBalancingRule.Definition.IBlank<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate> LoadBalancer.Definition.IWithLoadBalancingRule.DefineLoadBalancingRule(string name)
         {
-            return this.DefineLoadBalancingRule(name) as LoadBalancingRule.Definition.IBlank<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>;
+            return this.DefineLoadBalancingRule(name) as LoadBalancingRule.Definition.IBlank<LoadBalancer.Definition.IWithLBRuleOrNatOrCreate>;
         }
 
         /// <summary>
@@ -420,33 +288,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Adds a load balancing rule between the specified front end and back end ports and protocol.
-        /// The new rule will be created under the name "default".
-        /// </summary>
-        /// <param name="frontendPort">The port number on the front end to accept incoming traffic on.</param>
-        /// <param name="protocol">The protocol to load balance.</param>
-        /// <param name="backendPort">The port number on the back end to send load balanced traffic to.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithLoadBalancingRule.WithLoadBalancingRule(int frontendPort, TransportProtocol protocol, int backendPort)
-        {
-            return this.WithLoadBalancingRule(frontendPort, protocol, backendPort) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Adds a load balancing rule for the specified port and protocol.
-        /// The new rule will be created under the name "default".
-        /// </summary>
-        /// <param name="port">The port number on the front and back end for the network traffic to be load balanced on.</param>
-        /// <param name="protocol">The protocol to load balance.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate LoadBalancer.Update.IWithLoadBalancingRule.WithLoadBalancingRule(int port, TransportProtocol protocol)
-        {
-            return this.WithLoadBalancingRule(port, protocol) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Begins the definition of a new load balancing rule to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
         /// </summary>
         /// <param name="name">The name of the load balancing rule.</param>
         /// <return>The first stage of the new load balancing rule definition.</return>
@@ -466,6 +308,26 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Searches for the public frontend that is associated with the provided public IP address, if one exists.
+        /// </summary>
+        /// <param name="publicIPAddressId">The resource ID of a public IP address to search by.</param>
+        /// <return>A public frontend associated with the provided public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.FindFrontendByPublicIPAddress(string publicIPAddressId)
+        {
+            return this.FindFrontendByPublicIPAddress(publicIPAddressId) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend;
+        }
+
+        /// <summary>
+        /// Searches for the public frontend that is associated with the provided public IP address, if one exists.
+        /// </summary>
+        /// <param name="publicIPAddress">A public IP address to search by.</param>
+        /// <return>A public frontend associated with the provided public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.FindFrontendByPublicIPAddress(IPublicIPAddress publicIPAddress)
+        {
+            return this.FindFrontendByPublicIPAddress(publicIPAddress) as Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend;
+        }
+
+        /// <summary>
         /// Gets inbound NAT pools, indexed by name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.InboundNatPools
@@ -473,6 +335,28 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.InboundNatPools() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool>;
+            }
+        }
+
+        /// <summary>
+        /// Gets public (Internet-facing) frontends.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.PublicFrontends
+        {
+            get
+            {
+                return this.PublicFrontends() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend>;
+            }
+        }
+
+        /// <summary>
+        /// Gets private (internal) frontends.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPrivateFrontend> Microsoft.Azure.Management.Network.Fluent.ILoadBalancer.PrivateFrontends
+        {
+            get
+            {
+                return this.PrivateFrontends() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPrivateFrontend>;
             }
         }
 
@@ -543,86 +427,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource and associates it with the resource.
-        /// The internal name and DNS label for the public IP address will be derived from the resource's name.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIPAddress()
-        {
-            return this.WithNewPublicIPAddress() as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Creates a new public IP address to associate with the resource.
-        /// </summary>
-        /// <param name="creatable">A creatable definition for a new public IP.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
-        {
-            return this.WithNewPublicIPAddress(creatable) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource and associates it with the resource.
-        /// The internal name and DNS label for the public IP address will be derived from the resource's name.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Update.IUpdate>.WithNewPublicIPAddress()
-        {
-            return this.WithNewPublicIPAddress() as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Creates a new public IP address to associate with the resource.
-        /// </summary>
-        /// <param name="creatable">A creatable definition for a new public IP.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithNewPublicIPAddressNoDnsLabel<LoadBalancer.Update.IUpdate>.WithNewPublicIPAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress> creatable)
-        {
-            return this.WithNewPublicIPAddress(creatable) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithExistingPublicIPAddress(string resourceId)
-        {
-            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="publicIPAddress">An existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Definition.IWithPublicFrontendOrBackend HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<LoadBalancer.Definition.IWithPublicFrontendOrBackend>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
-        {
-            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancer.Definition.IWithPublicFrontendOrBackend;
-        }
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="resourceId">The resource ID of an existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancer.Update.IUpdate>.WithExistingPublicIPAddress(string resourceId)
-        {
-            return this.WithExistingPublicIPAddress(resourceId) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Associates an existing public IP address with the resource.
-        /// </summary>
-        /// <param name="publicIPAddress">An existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        LoadBalancer.Update.IUpdate HasPublicIPAddress.UpdateDefinition.IWithExistingPublicIPAddress<LoadBalancer.Update.IUpdate>.WithExistingPublicIPAddress(IPublicIPAddress publicIPAddress)
-        {
-            return this.WithExistingPublicIPAddress(publicIPAddress) as LoadBalancer.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Gets the associated load balancing rules from this load balancer, indexed by their names.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule> Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules.LoadBalancingRules
@@ -638,9 +442,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name to assign to the backend.</param>
         /// <return>The next stage of the update.</return>
-        LoadBalancerBackend.Definition.IBlank<LoadBalancer.Definition.IWithBackendOrProbe> LoadBalancer.Definition.IWithBackend.DefineBackend(string name)
+        LoadBalancerBackend.Definition.IBlank<LoadBalancer.Definition.IWithCreate> LoadBalancer.Definition.IWithBackend.DefineBackend(string name)
         {
-            return this.DefineBackend(name) as LoadBalancerBackend.Definition.IBlank<LoadBalancer.Definition.IWithBackendOrProbe>;
+            return this.DefineBackend(name) as LoadBalancerBackend.Definition.IBlank<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>

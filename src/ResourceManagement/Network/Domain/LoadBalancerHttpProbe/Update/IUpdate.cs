@@ -61,6 +61,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update
     /// </summary>
     public interface IWithRequestPath 
     {
+        /// <summary>
+        /// Specifies the HTTP request path for the probe to monitor.
+        /// </summary>
+        /// <param name="requestPath">A request path.</param>
+        /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Update.IUpdate WithRequestPath(string requestPath);
     }
 }

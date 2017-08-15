@@ -43,8 +43,9 @@ namespace ManageServicePrincipal
          *  - Create a Service Principal for the application and assign a role
          *  - Export the Service Principal to an authentication file
          *  - Use the file to list subcription virtual machines
-         *  - Update the application 
-         *  - Delete the application and Service Principal.
+         *  - Update the application
+         *  - Update the service principal to revoke the password credential and the role
+         *  - Delete the Service Principal.
          */
         public static void RunSample(Azure.IAuthenticated authenticated)
         {
@@ -55,11 +56,12 @@ namespace ManageServicePrincipal
             try
             {
                 activeDirectoryApplication = CreateActiveDirectoryApplication(authenticated);
-                CreateServicePrincipalWithRoleForApplicationAndExportToFile(authenticated, activeDirectoryApplication, BuiltInRole.Contributor, subscriptionId, authFilePath);
+                IServicePrincipal servicePrincipal = CreateServicePrincipalWithRoleForApplicationAndExportToFile(authenticated, activeDirectoryApplication, BuiltInRole.Contributor, subscriptionId, authFilePath);
                 // Wait until Service Principal is ready
                 SdkContext.DelayProvider.Delay(15);
                 UseAuthFile(authFilePath);
                 UpdateApplication(authenticated, activeDirectoryApplication);
+                UpdateServicePrincipal(authenticated, servicePrincipal);
             }
             finally
             {
@@ -164,6 +166,16 @@ namespace ManageServicePrincipal
                         .Attach()
                     // add a reply url
                     .WithReplyUrl("http://localhost:8080")
+                    .Apply();
+        }
+
+        private static void UpdateServicePrincipal(Azure.IAuthenticated authenticated, IServicePrincipal servicePrincipal)
+        {
+            Utilities.Log("Updating Service Principal...");
+            servicePrincipal.Update()
+                    // add another password credentials
+                    .WithoutCredential("ServicePrincipalAzureSample")
+                    .WithoutRole(servicePrincipal.RoleAssignments.First())
                     .Apply();
         }
 

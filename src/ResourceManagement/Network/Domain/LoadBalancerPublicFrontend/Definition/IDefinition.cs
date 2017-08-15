@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPublicIPAddress<ParentT>  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreate>>
     {
     }
 
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The entirety of a public frontend definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<ParentT>,
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The final stage of a public frontend definition.
     /// At this stage, any remaining optional settings can be specified, or the frontend definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>
     {

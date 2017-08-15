@@ -9,11 +9,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.HasBackendPort.Definition
     public interface IWithBackendPort<ReturnT> 
     {
         /// <summary>
-        /// Specifies the backend port.
+        /// Specifies a backend port to send network traffic to.
         /// If not specified, the same backend port number is assumed as that used by the frontend.
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        ReturnT WithBackendPort(int port);
+        ReturnT ToBackendPort(int port);
     }
 }

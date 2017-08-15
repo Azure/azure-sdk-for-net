@@ -553,8 +553,7 @@ namespace Microsoft.Azure.Management.Fluent
                             .WithBaseUri(restClient.BaseUri)
                             .WithCredentials(restClient.Credentials).Build());
                     var subscription = resourceManager.Subscriptions.List()
-                        .FirstOrDefault(s =>
-                            StringComparer.OrdinalIgnoreCase.Equals(s.State, "Enabled") ||
+                        .FirstOrDefault(s =>                            StringComparer.OrdinalIgnoreCase.Equals(s.State, "Enabled") ||
                             StringComparer.OrdinalIgnoreCase.Equals(s.State, "Warned"));
 
                     return WithSubscription(subscription?.SubscriptionId);
@@ -564,9 +563,7 @@ namespace Microsoft.Azure.Management.Fluent
 
         #endregion IAuthenticated and it's implementation
 
-        #region IConfigurable and it's implementation
-
-        public interface IConfigurable : IAzureConfigurable<IConfigurable>
+        #region IConfigurable and it's implementation        public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
             IAuthenticated Authenticate(AzureCredentials azureCredentials);
         }
@@ -576,8 +573,7 @@ namespace Microsoft.Azure.Management.Fluent
             IConfigurable
         {
             IAuthenticated IConfigurable.Authenticate(AzureCredentials credentials)
-            {
-                var authenticated = new Authenticated(BuildRestClient(credentials), credentials.TenantId);
+            {                var authenticated = new Authenticated(BuildRestClient(credentials), credentials.TenantId);
                 authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
                 return authenticated;
             }
@@ -627,10 +623,10 @@ namespace Microsoft.Azure.Management.Fluent
         IContainerServices ContainerServices { get; }
 
         /// <summary>
-        /// Entry point to DocumentDB account management
+        /// Entry point to  CosmosDB account management
         /// </summary>
         ICosmosDBAccounts CosmosDBAccounts { get; }
-
+        
         /// <summary>
         /// Entry point to Azure container registry management.
         /// </summary>

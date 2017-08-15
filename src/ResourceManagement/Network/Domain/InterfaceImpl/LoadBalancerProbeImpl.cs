@@ -18,11 +18,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
     internal partial class LoadBalancerProbeImpl 
     {
-        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerHttpProbe.Definition.IWithRequestPath<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithRequestPath(string requestPath)
+        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerHttpProbe.Definition.IWithRequestPath<LoadBalancer.Definition.IWithCreate>.WithRequestPath(string requestPath)
         {
-            return this.WithRequestPath(requestPath) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithRequestPath(requestPath) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
+        /// <summary>
+        /// Specifies the HTTP request path for the probe to monitor.
+        /// </summary>
+        /// <param name="requestPath">A request path.</param>
+        /// <return>The next stage of the definition.</return>
         LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate> LoadBalancerHttpProbe.UpdateDefinition.IWithRequestPath<LoadBalancer.Update.IUpdate>.WithRequestPath(string requestPath)
         {
             return this.WithRequestPath(requestPath) as LoadBalancerHttpProbe.UpdateDefinition.IWithAttach<LoadBalancer.Update.IUpdate>;
@@ -105,9 +110,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerHttpProbe.Definition.IWithPort<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithPort(int port)
+        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerHttpProbe.Definition.IWithPort<LoadBalancer.Definition.IWithCreate>.WithPort(int port)
         {
-            return this.WithPort(port) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithPort(port) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -125,9 +130,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="port">A port number.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerTcpProbe.Definition.IWithPort<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithPort(int port)
+        LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerTcpProbe.Definition.IWithPort<LoadBalancer.Definition.IWithCreate>.WithPort(int port)
         {
-            return this.WithPort(port) as LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithPort(port) as LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -163,6 +168,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+        /// <summary>
+        /// Specifies the HTTP request path for the probe to monitor.
+        /// </summary>
+        /// <param name="requestPath">A request path.</param>
+        /// <return>The next stage of the definition.</return>
         LoadBalancerHttpProbe.Update.IUpdate LoadBalancerHttpProbe.Update.IWithRequestPath.WithRequestPath(string requestPath)
         {
             return this.WithRequestPath(requestPath) as LoadBalancerHttpProbe.Update.IUpdate;
@@ -183,9 +193,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">Number of probes.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerHttpProbe.Definition.IWithNumberOfProbes<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithNumberOfProbes(int probes)
+        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerHttpProbe.Definition.IWithNumberOfProbes<LoadBalancer.Definition.IWithCreate>.WithNumberOfProbes(int probes)
         {
-            return this.WithNumberOfProbes(probes) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithNumberOfProbes(probes) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -203,9 +213,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="probes">Number of probes.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerTcpProbe.Definition.IWithNumberOfProbes<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithNumberOfProbes(int probes)
+        LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerTcpProbe.Definition.IWithNumberOfProbes<LoadBalancer.Definition.IWithCreate>.WithNumberOfProbes(int probes)
         {
-            return this.WithNumberOfProbes(probes) as LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithNumberOfProbes(probes) as LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -221,9 +231,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        LoadBalancer.Definition.IWithProbeOrLoadBalancingRule Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.Attach()
+        LoadBalancer.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<LoadBalancer.Definition.IWithCreate>.Attach()
         {
-            return this.Attach() as LoadBalancer.Definition.IWithProbeOrLoadBalancingRule;
+            return this.Attach() as LoadBalancer.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -261,9 +271,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">Number of seconds.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerHttpProbe.Definition.IWithIntervalInSeconds<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithIntervalInSeconds(int seconds)
+        LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerHttpProbe.Definition.IWithIntervalInSeconds<LoadBalancer.Definition.IWithCreate>.WithIntervalInSeconds(int seconds)
         {
-            return this.WithIntervalInSeconds(seconds) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithIntervalInSeconds(seconds) as LoadBalancerHttpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -281,9 +291,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="seconds">Number of seconds.</param>
         /// <return>The next stage of the definition.</return>
-        LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> LoadBalancerTcpProbe.Definition.IWithIntervalInSeconds<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>.WithIntervalInSeconds(int seconds)
+        LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate> LoadBalancerTcpProbe.Definition.IWithIntervalInSeconds<LoadBalancer.Definition.IWithCreate>.WithIntervalInSeconds(int seconds)
         {
-            return this.WithIntervalInSeconds(seconds) as LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>;
+            return this.WithIntervalInSeconds(seconds) as LoadBalancerTcpProbe.Definition.IWithAttach<LoadBalancer.Definition.IWithCreate>;
         }
 
         /// <summary>

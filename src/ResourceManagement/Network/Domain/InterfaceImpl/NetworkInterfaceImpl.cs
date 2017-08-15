@@ -18,6 +18,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
     internal partial class NetworkInterfaceImpl 
     {
         /// <summary>
+        /// Disables accelerated networking.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithAcceleratedNetworkingBeta.WithoutAcceleratedNetworking()
+        {
+            return this.WithoutAcceleratedNetworking() as NetworkInterface.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Enables accelerated networking.
+        /// Note that additional steps need to be taken in the virtual machine itself for the virtual machine associated with this network interface to be able to
+        /// take advantage of accelerated networking. This feature might not be available in some regions, virtual machine sizes, or operating system versions.
+        /// It can be enabled only during the creation of a network interface, not during an update.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithAcceleratedNetworkingBeta.WithAcceleratedNetworking()
+        {
+            return this.WithAcceleratedNetworking() as NetworkInterface.Definition.IWithCreate;
+        }
+
+        /// <summary>
         /// Removes a DNS server associated with the network interface.
         /// </summary>
         /// <param name="ipAddress">The IP address of the DNS server.</param>
@@ -99,7 +120,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Enable IP forwarding in the network interface.
+        /// Enables IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithCreate.WithIPForwarding()
@@ -375,6 +396,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Gets true if accelerated networkin is enabled for this network interface.
+        /// </summary>
+        bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBaseBeta.IsAcceleratedNetworkingEnabled
+        {
+            get
+            {
+                return this.IsAcceleratedNetworkingEnabled();
+            }
+        }
+
+        /// <summary>
         /// Gets the private IP address allocated to this network interface's primary IP configuration.
         /// The private IP will be within the virtual network subnet of this network interface.
         /// </summary>
@@ -390,7 +422,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// Gets true if IP forwarding is enabled in this network interface.
         /// </summary>
         bool Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase.IsIPForwardingEnabled
         {
@@ -478,10 +510,30 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Associate a subnet with the network interface.
+        /// </summary>
+        /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the network interface update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryNetworkSubnet.WithSubnet(string name)
+        {
+            return this.WithSubnet(name) as NetworkInterface.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Associate a subnet with the network interface's primary IP configuration.
+        /// </summary>
+        /// <param name="name">The subnet name.</param>
+        /// <return>The next stage of the definition.</return>
+        NetworkInterface.Definition.IWithPrimaryPrivateIP NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet(string name)
+        {
+            return this.WithSubnet(name) as NetworkInterface.Definition.IWithPrimaryPrivateIP;
+        }
+
+        /// <summary>
         /// Starts update of an IP configuration.
         /// </summary>
         /// <param name="name">Name of the IP configuration.</param>
-        /// <return>The first stage of an IP configuration update.</return>
+        /// <return>The first stage of the update.</return>
         NicIPConfiguration.Update.IUpdate NetworkInterface.Update.IWithIPConfiguration.UpdateIPConfiguration(string name)
         {
             return this.UpdateIPConfiguration(name) as NicIPConfiguration.Update.IUpdate;
@@ -491,10 +543,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Starts definition of a secondary IP configuration.
         /// </summary>
         /// <param name="name">Name for the IP configuration.</param>
-        /// <return>The first stage of a secondary IP configuration definition.</return>
+        /// <return>The first stage of the update.</return>
         NicIPConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate> NetworkInterface.Update.IWithIPConfiguration.DefineSecondaryIPConfiguration(string name)
         {
             return this.DefineSecondaryIPConfiguration(name) as NicIPConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Removes the specified IP configuration.
+        /// </summary>
+        /// <param name="name">The name of an existing IP configuration.</param>
+        /// <return>The next stage of the update.</return>
+        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithIPConfiguration.WithoutIPConfiguration(string name)
+        {
+            return this.WithoutIPConfiguration(name) as NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
@@ -597,26 +659,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         NetworkInterface.Definition.IWithCreate NetworkInterface.Definition.IWithPrimaryPublicIPAddress.WithNewPrimaryPublicIPAddress(string leafDnsLabel)
         {
             return this.WithNewPrimaryPublicIPAddress(leafDnsLabel) as NetworkInterface.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Associate a subnet with the network interface.
-        /// </summary>
-        /// <param name="name">The subnet name.</param>
-        /// <return>The next stage of the network interface update.</return>
-        NetworkInterface.Update.IUpdate NetworkInterface.Update.IWithPrimaryNetworkSubnet.WithSubnet(string name)
-        {
-            return this.WithSubnet(name) as NetworkInterface.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Associate a subnet with the network interface's primary IP configuration.
-        /// </summary>
-        /// <param name="name">The subnet name.</param>
-        /// <return>The next stage of the definition.</return>
-        NetworkInterface.Definition.IWithPrimaryPrivateIP NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet(string name)
-        {
-            return this.WithSubnet(name) as NetworkInterface.Definition.IWithPrimaryPrivateIP;
         }
 
         /// <summary>

@@ -2,16 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Tests;
-using Azure.Tests.Common;
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Fluent.Tests.Network
@@ -40,10 +35,59 @@ namespace Fluent.Tests.Network
                 var loadBalancerDef = azure.LoadBalancers.Define(lbName)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
-                    .DefinePublicFrontend("frontend")
-                    .WithExistingPublicIPAddress(publicIPAddress)
+                    .DefineLoadBalancingRule("tcp6379")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPort(6379) // 'RedisPublic'
+                        .ToBackend("backend")
+                        .ToBackendPort(6379)
+                        .WithIdleTimeoutInMinutes(20)
+                        .WithProbe("redisprobe")
                         .Attach()
-                    .DefineBackend("backend")
+                    .DefineLoadBalancingRule("tcp6380")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPort(6380) // 'RedisSecure'
+                        .ToBackend("backend")
+                        .ToBackendPort(6380)
+                        .WithIdleTimeoutInMinutes(20)
+                        .WithProbe("redisprobe")
+                        .Attach()
+                    .DefineLoadBalancingRule("tcp10225")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPort(10225) // 'PublicHttpPort'
+                        .ToBackend("backend")
+                        .ToBackendPort(10225)
+                        .WithIdleTimeoutInMinutes(20)
+                        .WithProbe("probe10225")
+                        .Attach()
+                    .DefineInboundNatPool("pool330XX")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPortRange(33000, 33019)
+                        .ToBackendPort(3389)
+                        .Attach()
+                    .DefineInboundNatPool("pool160XX")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPortRange(16000, 16019)
+                        .ToBackendPort(10126)
+                        .Attach()
+                    .DefineInboundNatPool("pool130XX")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPortRange(13000, 13019)
+                        .ToBackendPort(10227)
+                        .Attach()
+                    .DefineInboundNatPool("pool150XX")
+                        .WithProtocol(TransportProtocol.Tcp)
+                        .FromFrontend("frontend")
+                        .FromFrontendPortRange(15000, 15019)
+                        .ToBackendPort(10221)
+                        .Attach()
+                    .DefinePublicFrontend("frontend")
+                        .WithExistingPublicIPAddress(publicIPAddress)
                         .Attach()
                     .DefineTcpProbe("probe10225")
                         .WithPort(10225)
@@ -55,52 +99,6 @@ namespace Fluent.Tests.Network
                         .WithPort(8500)
                         .WithIntervalInSeconds(5)
                         .WithNumberOfProbes(3)
-                        .Attach()
-                    .DefineLoadBalancingRule("tcp6379")
-                        .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend").WithFrontendPort(6379) // 'RedisPublic'
-                        .WithProbe("redisprobe")
-                        .WithBackend("backend").WithBackendPort(6379)
-                        .WithIdleTimeoutInMinutes(20)
-                        .Attach()
-                    .DefineLoadBalancingRule("tcp6380")
-                        .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend").WithFrontendPort(6380) // 'RedisSecure'
-                        .WithProbe("redisprobe")
-                        .WithBackend("backend").WithBackendPort(6380)
-                        .WithIdleTimeoutInMinutes(20)
-                        .Attach()
-                    .DefineLoadBalancingRule("tcp10225")
-                        .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend")
-                        .WithFrontendPort(10225) // 'PublicHttpPort'
-                        .WithProbe("probe10225")
-                        .WithBackend("backend").WithBackendPort(10225)
-                        .WithIdleTimeoutInMinutes(20)
-                        .Attach()
-                    .DefineInboundNatPool("pool330XX")
-                    .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend")
-                        .WithFrontendPortRange(33000, 33019)
-                        .WithBackendPort(3389)
-                        .Attach()
-                        .DefineInboundNatPool("pool160XX")
-                    .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend")
-                        .WithFrontendPortRange(16000, 16019)
-                        .WithBackendPort(10126)
-                        .Attach()
-                        .DefineInboundNatPool("pool130XX")
-                    .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend")
-                        .WithFrontendPortRange(13000, 13019)
-                        .WithBackendPort(10227)
-                        .Attach()
-                        .DefineInboundNatPool("pool150XX")
-                    .WithProtocol(TransportProtocol.Tcp)
-                        .WithFrontend("frontend")
-                        .WithFrontendPortRange(15000, 15019)
-                        .WithBackendPort(10221)
                         .Attach();
 
                 var ret = loadBalancerDef

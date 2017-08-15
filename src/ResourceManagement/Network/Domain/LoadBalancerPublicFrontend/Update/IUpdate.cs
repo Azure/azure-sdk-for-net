@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.U
     /// The stage of a public frontend update allowing to specify an existing public IP address.
     /// </summary>
     public interface IWithPublicIPAddress  :
-        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Update.IUpdate>
     {
     }
 }

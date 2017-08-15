@@ -124,13 +124,39 @@ namespace ManageVirtualMachineScaleSetAsync
                 var loadBalancer1 = await azure.LoadBalancers.Define(loadBalancerName1)
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
+                        // Add two rules that uses above backend and probe
+                        .DefineLoadBalancingRule(httpLoadBalancingRule)
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend(frontendName)
+                            .FromFrontendPort(80)
+                            .ToBackend(backendPoolName1)
+                            .WithProbe(httpProbe)
+                            .Attach()
+                        .DefineLoadBalancingRule(httpsLoadBalancingRule)
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend(frontendName)
+                            .FromFrontendPort(443)
+                            .ToBackend(backendPoolName2)
+                            .WithProbe(httpsProbe)
+                            .Attach()
+
+                        // Add nat pools to enable direct VM connectivity for
+                        //  SSH to port 22 and TELNET to port 23
+                        .DefineInboundNatPool(natPool50XXto22)
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend(frontendName)
+                            .FromFrontendPortRange(5000, 5099)
+                            .ToBackendPort(22)
+                            .Attach()
+                        .DefineInboundNatPool(natPool60XXto23)
+                            .WithProtocol(TransportProtocol.Tcp)
+                            .FromFrontend(frontendName)
+                            .FromFrontendPortRange(6000, 6099)
+                            .ToBackendPort(23)
+                            .Attach()
+                        // Explicitly define the frontend
                         .DefinePublicFrontend(frontendName)
                             .WithExistingPublicIPAddress(publicIPAddress)
-                            .Attach()
-                        // Add two backend one per rule
-                        .DefineBackend(backendPoolName1)
-                            .Attach()
-                        .DefineBackend(backendPoolName2)
                             .Attach()
                         // Add two probes one per rule
                         .DefineHttpProbe(httpProbe)
@@ -142,36 +168,6 @@ namespace ManageVirtualMachineScaleSetAsync
                             .WithPort(443)
                             .Attach()
 
-                        // Add two rules that uses above backend and probe
-                        .DefineLoadBalancingRule(httpLoadBalancingRule)
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend(frontendName)
-                            .WithFrontendPort(80)
-                            .WithProbe(httpProbe)
-                            .WithBackend(backendPoolName1)
-                            .Attach()
-                        .DefineLoadBalancingRule(httpsLoadBalancingRule)
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend(frontendName)
-                            .WithFrontendPort(443)
-                            .WithProbe(httpsProbe)
-                            .WithBackend(backendPoolName2)
-                            .Attach()
-
-                        // Add nat pools to enable direct VM connectivity for
-                        //  SSH to port 22 and TELNET to port 23
-                        .DefineInboundNatPool(natPool50XXto22)
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend(frontendName)
-                            .WithFrontendPortRange(5000, 5099)
-                            .WithBackendPort(22)
-                            .Attach()
-                        .DefineInboundNatPool(natPool60XXto23)
-                            .WithProtocol(TransportProtocol.Tcp)
-                            .WithFrontend(frontendName)
-                            .WithFrontendPortRange(6000, 6099)
-                            .WithBackendPort(23)
-                            .Attach()
                         .CreateAsync();
 
                 // Print load balancer details

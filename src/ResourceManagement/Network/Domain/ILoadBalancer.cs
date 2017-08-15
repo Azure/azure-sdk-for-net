@@ -44,13 +44,37 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerFrontend> Frontends { get; }
 
         /// <summary>
+        /// Gets public (Internet-facing) frontends.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend> PublicFrontends { get; }
+
+        /// <summary>
         /// Gets TCP probes of this load balancer, indexed by the name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerTcpProbe> TcpProbes { get; }
 
         /// <summary>
+        /// Gets private (internal) frontends.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPrivateFrontend> PrivateFrontends { get; }
+
+        /// <summary>
         /// Gets backends for this load balancer to load balance the incoming traffic among, indexed by name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> Backends { get; }
+
+        /// <summary>
+        /// Searches for the public frontend that is associated with the provided public IP address, if one exists.
+        /// </summary>
+        /// <param name="publicIPAddress">A public IP address to search by.</param>
+        /// <return>A public frontend associated with the provided public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend FindFrontendByPublicIPAddress(IPublicIPAddress publicIPAddress);
+
+        /// <summary>
+        /// Searches for the public frontend that is associated with the provided public IP address, if one exists.
+        /// </summary>
+        /// <param name="publicIPAddressId">The resource ID of a public IP address to search by.</param>
+        /// <return>A public frontend associated with the provided public IP address.</return>
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerPublicFrontend FindFrontendByPublicIPAddress(string publicIPAddressId);
     }
 }

@@ -11,18 +11,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public interface INetworkInterfaceBase  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.NetworkInterfaceInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.NetworkInterfaceInner>,
+        Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBaseBeta
     {
-        /// <summary>
-        /// Gets applied DNS servers.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> AppliedDnsServers { get; }
-
-        /// <summary>
-        /// Gets the MAC Address of the network interface.
-        /// </summary>
-        string MacAddress { get; }
-
         /// <summary>
         /// Gets the resource ID of the associated virtual machine, or null if none.
         /// </summary>
@@ -48,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string InternalFqdn { get; }
 
         /// <summary>
-        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// Gets true if IP forwarding is enabled in this network interface.
         /// </summary>
         bool IsIPForwardingEnabled { get; }
 
@@ -57,6 +48,25 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// primary IP configuration.
         /// </summary>
         Models.IPAllocationMethod PrimaryPrivateIPAllocationMethod { get; }
+
+        /// <summary>
+        /// Gets the private IP address allocated to this network interface's primary IP configuration.
+        /// The private IP will be within the virtual network subnet of this network interface.
+        /// </summary>
+        /// <summary>
+        /// Gets the private IP addresses.
+        /// </summary>
+        string PrimaryPrivateIP { get; }
+
+        /// <summary>
+        /// Gets applied DNS servers.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> AppliedDnsServers { get; }
+
+        /// <summary>
+        /// Gets the MAC Address of the network interface.
+        /// </summary>
+        string MacAddress { get; }
 
         /// <summary>
         /// Gets IP addresses of this network interface's DNS servers.
@@ -69,15 +79,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <return>The network security group associated with this network interface.</return>
         Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup GetNetworkSecurityGroup();
-
-        /// <summary>
-        /// Gets the private IP address allocated to this network interface's primary IP configuration.
-        /// The private IP will be within the virtual network subnet of this network interface.
-        /// </summary>
-        /// <summary>
-        /// Gets the private IP addresses.
-        /// </summary>
-        string PrimaryPrivateIP { get; }
 
         /// <summary>
         /// Gets the network security group resource id associated with this network interface.

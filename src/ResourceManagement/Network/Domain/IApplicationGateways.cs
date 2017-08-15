@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Stops the specified application gateways.
         /// </summary>
         /// <param name="ids">Application gateway resource ids.</param>
-        void Stop(IList<string> ids);
+        void Stop(ICollection<string> ids);
 
         /// <summary>
         /// Starts the specified application gateways.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Starts the specified application gateways.
         /// </summary>
         /// <param name="ids">Application gateway resource ids.</param>
-        void Start(IList<string> ids);
+        void Start(ICollection<string> ids);
 
         /// <summary>
         /// Stops the specified application gateways in parallel asynchronously.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ids">Application gateway resource id.</param>
         /// <return>An emitter of the resource ID for each successfully stopped application gateway.</return>
-        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
+        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(ICollection<string> ids, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Starts the specified application gateways in parallel asynchronously.
@@ -75,6 +75,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="ids">Application gateway resource id.</param>
         /// <return>An emitter of the resource ID for each successfully started application gateway.</return>
-        Task<System.Collections.Generic.IEnumerable<string>> StartAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
+        Task<System.Collections.Generic.IEnumerable<string>> StartAsync(ICollection<string> ids, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

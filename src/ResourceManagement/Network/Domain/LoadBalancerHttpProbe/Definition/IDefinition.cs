@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Defini
     /// <summary>
     /// The entirety of a probe definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<ParentT>,
@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Defini
     /// <summary>
     /// The final stage of the probe definition.
     /// At this stage, any remaining optional settings can be specified, or the probe definition
-    /// can be attached to the parent load balancer definition using  WithAttach.attach().
+    /// can be attached to the parent load balancer definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithPort<ParentT>,
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Defini
     /// <summary>
     /// The stage of the probe definition allowing to specify the HTTP request path for the probe to monitor.
     /// </summary>
-    /// <typeparam name="ParentT">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithRequestPath<ParentT> 
     {
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Definition.IWithAttach<ParentT> WithRequestPath(string requestPath);
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Defini
     /// <summary>
     /// The stage of the HTTP probe definition allowing to specify the probe interval.
     /// </summary>
-    /// <typeparam name="ParentT">The parent resource type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithIntervalInSeconds<ParentT> 
     {
         /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Defini
     /// <summary>
     /// The stage of the probe definition allowing to specify the port to monitor.
     /// </summary>
-    /// <typeparam name="ParentT">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPort<ParentT> 
     {
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerHttpProbe.Defini
     /// <summary>
     /// The stage of the HTTP probe definition allowing to specify the number of unsuccessful probes before failure is determined.
     /// </summary>
-    /// <typeparam name="ParentT">The parent type.</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithNumberOfProbes<ParentT> 
     {
         /// <summary>
