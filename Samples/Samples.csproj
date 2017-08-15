@@ -56,6 +56,7 @@
     <Folder Include="AppService\" />
     <Folder Include="Batch\" />
     <Folder Include="Cdn\" />
+    <Folder Include="Compute\" />
     <Folder Include="Dns\" />
     <Folder Include="DocumentDB\" />
     <Folder Include="GraphRbac\" />
