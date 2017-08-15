@@ -14,30 +14,27 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Error reponse indicates ServiceBus service is not able to process the
-    /// incoming request. The reason is provided in the error message.
-    /// </summary>
-    public partial class ErrorResponse
+    public partial class PremiumMessagingRegionsProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the PremiumMessagingRegionsProperties
+        /// class.
         /// </summary>
-        public ErrorResponse()
+        public PremiumMessagingRegionsProperties()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the PremiumMessagingRegionsProperties
+        /// class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponse(string code = default(string), string message = default(string))
+        /// <param name="code">Region code</param>
+        /// <param name="fullName">Full name of the region</param>
+        public PremiumMessagingRegionsProperties(string code = default(string), string fullName = default(string))
         {
             Code = code;
-            Message = message;
+            FullName = fullName;
             CustomInit();
         }
 
@@ -47,16 +44,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code.
+        /// Gets region code
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
+        /// Gets full name of the region
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "fullName")]
+        public string FullName { get; private set; }
 
     }
 }

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// PremiumMessagingRegionsOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<ServiceBusManagementClient>, IOperations
+    internal partial class PremiumMessagingRegionsOperations : IServiceOperations<ServiceBusManagementClient>, IPremiumMessagingRegionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the PremiumMessagingRegionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(ServiceBusManagementClient client)
+        internal PremiumMessagingRegionsOperations(ServiceBusManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         public ServiceBusManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available ServiceBus REST API operations.
+        /// Gets the available premium messaging regions for servicebus
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -74,11 +74,15 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PremiumMessagingRegions>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -92,7 +96,8 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.ServiceBus/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/premiumMessagingRegions").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -186,7 +191,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IPage<PremiumMessagingRegions>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -199,7 +204,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PremiumMessagingRegions>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,7 +224,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Lists all of the available ServiceBus REST API operations.
+        /// Gets the available premium messaging regions for servicebus
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -245,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PremiumMessagingRegions>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -354,7 +359,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IPage<PremiumMessagingRegions>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -367,7 +372,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PremiumMessagingRegions>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

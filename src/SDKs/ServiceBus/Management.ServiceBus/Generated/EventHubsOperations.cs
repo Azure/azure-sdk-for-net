@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// EventHubsOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<ServiceBusManagementClient>, IOperations
+    internal partial class EventHubsOperations : IServiceOperations<ServiceBusManagementClient>, IEventHubsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the EventHubsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(ServiceBusManagementClient client)
+        internal EventHubsOperations(ServiceBusManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,14 @@ namespace Microsoft.Azure.Management.ServiceBus
         public ServiceBusManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available ServiceBus REST API operations.
+        /// Gets all the Event Hubs in a service bus Namespace.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,11 +80,45 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Eventhub>>> ListByNamespaceWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -87,12 +127,17 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByNamespace", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.ServiceBus/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/eventhubs").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{namespaceName}", System.Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -186,7 +231,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IPage<Eventhub>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -199,7 +244,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Eventhub>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,7 +264,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Lists all of the available ServiceBus REST API operations.
+        /// Gets all the Event Hubs in a service bus Namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -245,7 +290,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Eventhub>>> ListByNamespaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -260,7 +305,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByNamespaceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -354,7 +399,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse<IPage<Eventhub>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -367,7 +412,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Eventhub>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -17,40 +17,46 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for RegionsOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class RegionsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available Regions for a given sku
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Operation> List(this IOperations operations)
+            /// <param name='sku'>
+            /// The sku type.
+            /// </param>
+            public static IPage<PremiumMessagingRegions> ListBySku(this IRegionsOperations operations, string sku)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListBySkuAsync(sku).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available Regions for a given sku
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sku'>
+            /// The sku type.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PremiumMessagingRegions>> ListBySkuAsync(this IRegionsOperations operations, string sku, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySkuWithHttpMessagesAsync(sku, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available Regions for a given sku
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,13 +64,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
+            public static IPage<PremiumMessagingRegions> ListBySkuNext(this IRegionsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListBySkuNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available Regions for a given sku
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,9 +81,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PremiumMessagingRegions>> ListBySkuNextAsync(this IRegionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySkuNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

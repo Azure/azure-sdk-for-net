@@ -17,40 +17,52 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for EventHubsOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class EventHubsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets all the Event Hubs in a service bus Namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Operation> List(this IOperations operations)
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            public static IPage<Eventhub> ListByNamespace(this IEventHubsOperations operations, string resourceGroupName, string namespaceName)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets all the Event Hubs in a service bus Namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Eventhub>> ListByNamespaceAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets all the Event Hubs in a service bus Namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,13 +70,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
+            public static IPage<Eventhub> ListByNamespaceNext(this IEventHubsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets all the Event Hubs in a service bus Namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,9 +87,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Eventhub>> ListByNamespaceNextAsync(this IEventHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

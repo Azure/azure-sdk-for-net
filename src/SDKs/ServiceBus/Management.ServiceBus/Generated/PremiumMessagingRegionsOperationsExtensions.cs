@@ -17,23 +17,23 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for PremiumMessagingRegionsOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class PremiumMessagingRegionsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available premium messaging regions for servicebus
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Operation> List(this IOperations operations)
+            public static IPage<PremiumMessagingRegions> List(this IPremiumMessagingRegionsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available premium messaging regions for servicebus
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PremiumMessagingRegions>> ListAsync(this IPremiumMessagingRegionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available premium messaging regions for servicebus
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
+            public static IPage<PremiumMessagingRegions> ListNext(this IPremiumMessagingRegionsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available ServiceBus REST API operations.
+            /// Gets the available premium messaging regions for servicebus
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PremiumMessagingRegions>> ListNextAsync(this IPremiumMessagingRegionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
