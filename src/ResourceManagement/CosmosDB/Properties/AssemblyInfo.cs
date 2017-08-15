@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure DocumentDB Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure DocumentDB management APIs.")]
+[assembly: AssemblyTitle("Microsoft Azure CosmosDB Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure CosmosDB management APIs.")]
 
 [assembly: AssemblyVersion("1.0.0.60")]
 [assembly: AssemblyFileVersion("1.1.3.0")]
