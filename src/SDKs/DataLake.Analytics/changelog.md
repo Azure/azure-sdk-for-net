@@ -1,21 +1,41 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 ### Changes in 3.1.0-preview
-- Create an explicit set of parameters for job submission. NOTE: Only
-U-SQL is supported in this change, no hive jobs are supported at
-present.
-  - For jobs submission, change JobInformation to CreateJobParameters
-    - For the properties use the right object (e.g. USqlJobProperties to CreateUSqlJobProperties)
-  - For building jobs, change JobInformation to BuildJobParameters
-    - For the properties use the right object (e.g. USqlJobProperties to CreateUSqlJobProperties)
-	- Note that the following fields are not part of BuildJobParameters
-	  - degreeOfParallelism
-	  - priority
-	  - related
-- Create a "Basic" jobInformation that is returned for LIST calls
-- Setup inheritance for GET jobs
-- Create an inheritance structure for GET and LIST ADLA
-accounts.
-- This also follows the Basic<Object> -> Object inheritance pattern.
+
+**Breaking changes**
+
+- Revised the inheritance structure for objects dealing with job creation, building, and retrieving.
+    - NOTE: Only U-SQL is supported in this change; therefore, Hive is not supported.
+    - When submitting jobs, change JobInformation objects to CreateJobParameters.
+        - When setting the properties for the CreateJobParameters object, be sure to change the USqlJobProperties object to a CreateUSqlJobProperties object.
+    - When building jobs, change JobInformation objects to BuildJobParameters objects.
+        - When setting the properties for the BuildJobParameters object, be sure to change the USqlJobProperties object to a CreateUSqlJobProperties object.
+        - NOTE: The following fields are not a part of the BuildJobParameters object:
+            - degreeOfParallelism
+            - priority
+            - related
+    - When getting a list of jobs, the object type that is returned is JobInformationBasic and not JobInformation (more information on the difference is below in the Notes section)
+- When getting a list of accounts, the object type that is returned is DataLakeAnalyticsAccountBasic and not DataLakeAnalyticsAccount (more information on the difference is below in the Notes section)
+
+**Notes**
+	  
+- When getting a list of jobs, the job information for each job now includes a strict subset of the job information that is returned when getting a single job
+    - The following fields are included in the job information when getting a single job but are not included in the job information when getting a list of jobs:
+        - errorMessage
+        - stateAuditRecords
+        - properties
+            - runtimeVersion
+            - script
+            - type  
+- When getting a list of accounts, the account information for each account now includes a strict subset of the account information that is returned when getting a single account 
+    - There are two ways to get a list of accounts: List and ListByResource methods
+    - The following fields are included in the account information when getting a list of accounts, which is less than the account information retrieved for a single account:
+        - provisioningState
+        - state
+        - creationTime
+        - lastModifiedTime
+        - endpoint
+- When retrieving account information, an account id field called "accountId" is now included.
+    - accountId's description: The unique identifier associated with this Data Lake Analytics account.
 
 ### Changes in 3.0.1
 - Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.

@@ -232,6 +232,21 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerKeysOperations ServerKeys { get; private set; }
 
         /// <summary>
+        /// Gets the ISyncAgentsOperations.
+        /// </summary>
+        public virtual ISyncAgentsOperations SyncAgents { get; private set; }
+
+        /// <summary>
+        /// Gets the ISyncGroupsOperations.
+        /// </summary>
+        public virtual ISyncGroupsOperations SyncGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISyncMembersOperations.
+        /// </summary>
+        public virtual ISyncMembersOperations SyncMembers { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
@@ -469,6 +484,9 @@ namespace Microsoft.Azure.Management.Sql
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
             ServerKeys = new ServerKeysOperations(this);
+            SyncAgents = new SyncAgentsOperations(this);
+            SyncGroups = new SyncGroupsOperations(this);
+            SyncMembers = new SyncMembersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
