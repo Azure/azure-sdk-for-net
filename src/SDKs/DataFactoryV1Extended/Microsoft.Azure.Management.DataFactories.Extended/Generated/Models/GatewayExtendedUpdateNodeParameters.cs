@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Parameters to to update gateway node.
+    /// </summary>
     public partial class GatewayExtendedUpdateNodeParameters
     {
         /// <summary>
@@ -49,14 +52,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Gets or sets name of the gateway node to be updated.
         /// </summary>
-        [JsonProperty(PropertyName = "NodeName")]
+        [JsonProperty(PropertyName = "nodeName")]
         public string NodeName { get; set; }
 
         /// <summary>
         /// Gets or sets limit concurrent jobs that can be executed on this
         /// node.
         /// </summary>
-        [JsonProperty(PropertyName = "LimitConcurrentJobs")]
+        [JsonProperty(PropertyName = "limitConcurrentJobs")]
         public int? LimitConcurrentJobs { get; set; }
 
         /// <summary>

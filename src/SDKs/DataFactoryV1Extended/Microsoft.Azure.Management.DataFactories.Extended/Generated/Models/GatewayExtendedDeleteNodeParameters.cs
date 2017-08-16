@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Parameters to to delete gateway node.
+    /// </summary>
     public partial class GatewayExtendedDeleteNodeParameters
     {
         /// <summary>
@@ -46,7 +49,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Gets or sets name of the gateway node to be deleted.
         /// </summary>
-        [JsonProperty(PropertyName = "NodeName")]
+        [JsonProperty(PropertyName = "nodeName")]
         public string NodeName { get; set; }
 
         /// <summary>

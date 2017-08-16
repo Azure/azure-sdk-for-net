@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.DataFactories;
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// request. Other properties are only applicable in service response,
         /// and they will be ignored in the PUT/PATCH request.</param>
         /// <param name="id">Resource id of the data factory gateway.</param>
-        public GatewayExtended(string name, GatewayExtendedProperties properties, string id = default(string))
+        public GatewayExtended(string name = default(string), GatewayExtendedProperties properties = default(GatewayExtendedProperties), string id = default(string))
         {
             Name = name;
             Properties = properties;
@@ -74,19 +73,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
             if (Properties != null)
             {
                 Properties.Validate();
