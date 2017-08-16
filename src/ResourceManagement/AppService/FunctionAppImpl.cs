@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// The implementation for FunctionApp.
@@ -36,6 +37,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable;
         private IStorageAccount storageAccountToSet;
         private IStorageAccount currentStorageAccount;
+        private KuduCredentials kuduCredentials;
 
         public IStorageAccount StorageAccount()
         {
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             : base(name, innerObject, configObject, manager)
         {
             Inner.Kind = "functionapp";
+            kuduCredentials = new KuduCredentials(this);
         }
 
         public FunctionAppImpl WithNewStorageAccount(string name, Storage.Fluent.Models.SkuName sku)
@@ -303,6 +306,381 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
             return null;
+        }
+
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> ListFunctionKeys(string functionName)
+        {
+            return Extensions.Synchronize(() => ListFunctionKeysAsync(functionName));
+        }
+
+        /// <summary>
+        /// This method is used to retrieve the function keys for a function. This is part of the KUDU APIs.
+        /// </summary>
+        /// <param name="functionName">the name of the function</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns>the keys of the function</returns>
+        public async Task<System.Collections.Generic.IReadOnlyDictionary<string, string>> ListFunctionKeysAsync(string functionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                var tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("functionName", functionName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = string.Format("http://{0}", DefaultHostName().Replace("http://", "").Replace("https://", ""));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "admin/functions/{name}/keys").ToString();
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(functionName));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Manager.Inner.GenerateClientRequestId != null && Manager.Inner.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Manager.Inner.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Manager.Inner.AcceptLanguage);
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            cancellationToken.ThrowIfCancellationRequested();
+            await kuduCredentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await ((WebSiteManagementClient)Manager.Inner).HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Manager.Inner.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var result = Rest.Serialization.SafeJsonConvert.DeserializeObject<FunctionKeyListResult>(_responseContent, Manager.Inner.DeserializationSettings);
+                    var ret = new Dictionary<string, string>();
+                    foreach (var pair in result.keys)
+                    {
+                        ret.Add(pair.Name, pair.Value);
+                    }
+                    return new ReadOnlyDictionary<string, string>(ret);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            return null;
+        }
+
+        public NameValuePair AddFunctionKey(string functionName, string keyName, string keyValue = null)
+        {
+            return Extensions.Synchronize(() => AddFunctionKeyAsync(functionName, keyName, keyValue));
+        }
+
+        /// <summary>
+        /// This method is used to add a function key to the function. This is part of the KUDU APIs.
+        /// </summary>
+        /// <param name="functionName">the name of the function</param>
+        /// <param name="keyName">the name of the key to add</param>
+        /// <param name="key">the name value pair of the key, containing the key value</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns>the added key</returns>
+        public async Task<NameValuePair> AddFunctionKeyAsync(string functionName, string keyName, string keyValue = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                var tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("functionName", functionName);
+                tracingParameters.Add("keyName", keyName);
+                tracingParameters.Add("key", keyValue);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = string.Format("http://{0}", DefaultHostName().Replace("http://", "").Replace("https://", ""));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "admin/functions/{name}/keys/{keyName}").ToString();
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(functionName));
+            _url = _url.Replace("{keyName}", System.Uri.EscapeDataString(keyName));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            if (keyValue != null)
+            {
+                _httpRequest.Method = new HttpMethod("PUT");
+            }
+            else
+            {
+                _httpRequest.Method = new HttpMethod("POST");
+            }
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Manager.Inner.GenerateClientRequestId != null && Manager.Inner.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Manager.Inner.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Manager.Inner.AcceptLanguage);
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if (keyValue != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(new NameValuePair
+                {
+                    Name = keyName,
+                    Value = keyValue
+                }, Manager.Inner.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            cancellationToken.ThrowIfCancellationRequested();
+            await kuduCredentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await ((WebSiteManagementClient)Manager.Inner).HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Manager.Inner.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200 || (int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    return Rest.Serialization.SafeJsonConvert.DeserializeObject<NameValuePair>(_responseContent, Manager.Inner.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            return null;
+        }
+
+        public void RemoveFunctionKey(string functionName, string keyName)
+        {
+            Extensions.Synchronize(() => RemoveFunctionKeyAsync(functionName, keyName));
+        }
+
+        /// <summary>
+        /// This method is used to remove a function key from the function. This is part of the KUDU APIs.
+        /// </summary>
+        /// <param name="functionName">the name of the function</param>
+        /// <param name="keyName">the name of the key to remove</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        public async Task RemoveFunctionKeyAsync(string functionName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                var tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("functionName", functionName);
+                tracingParameters.Add("keyName", keyName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = string.Format("http://{0}", DefaultHostName().Replace("http://", "").Replace("https://", ""));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "admin/functions/{name}/keys/{keyName}").ToString();
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(functionName));
+            _url = _url.Replace("{keyName}", System.Uri.EscapeDataString(keyName));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Manager.Inner.GenerateClientRequestId != null && Manager.Inner.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Manager.Inner.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Manager.Inner.AcceptLanguage);
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = null;
+            // Set Credentials
+            cancellationToken.ThrowIfCancellationRequested();
+            await kuduCredentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await ((WebSiteManagementClient)Manager.Inner).HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Manager.Inner.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
         }
 
         public void SyncTriggers()

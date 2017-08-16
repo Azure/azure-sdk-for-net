@@ -96,7 +96,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             IdentifierInner identifierInner = new IdentifierInner()
             {
-                Location = "global",
                 IdentifierId = domainVerificationToken
             };
             await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierAsync(ResourceGroupName, Name, certificateOrderName, identifierInner, cancellationToken);
@@ -396,6 +395,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         protected async override Task<SiteInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Manager.Inner.WebApps.GetAsync(ResourceGroupName, Name, cancellationToken);
+        }
+
+        internal override async Task<MSDeployStatusInner> CreateMSDeploy(MSDeployInner msDeployInner, CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.WebApps.CreateMSDeployOperationAsync(ResourceGroupName, Name, msDeployInner, cancellationToken);
         }
     }
 }

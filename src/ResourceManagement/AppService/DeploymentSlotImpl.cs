@@ -124,8 +124,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             IdentifierInner identifierInner = new IdentifierInner()
             {
-                IdentifierId = domainVerificationToken,
-                Location = "global"
+                IdentifierId = domainVerificationToken
             };
 
             await Manager.Inner.WebApps.CreateOrUpdateDomainOwnershipIdentifierSlotAsync(ResourceGroupName, parent.Name, Name(), identifierInner, certificateOrderName, cancellationToken);
@@ -365,6 +364,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             await Manager.Inner.WebApps.ResetSlotConfigurationSlotAsync(ResourceGroupName, parent.Name, Name(), cancellationToken);
             await RefreshAsync(cancellationToken);
+        }
+
+        internal override async Task<MSDeployStatusInner> CreateMSDeploy(MSDeployInner msDeployInner, CancellationToken cancellationToken)
+        {
+            return await Manager.Inner.WebApps.CreateMSDeployOperationSlotAsync(ResourceGroupName, parent.Name, Name(), msDeployInner, cancellationToken);
         }
     }
 }

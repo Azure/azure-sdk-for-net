@@ -170,7 +170,7 @@ namespace Samples.Tests
                ManageFunctionAppSourceControl.Program.RunSample);
         }
 
-        [Fact(Skip = "Need to call function app api to get function key")]
+        [Fact]
         [Trait("Samples", "AppService")]
         public void ManageFunctionAppWithAuthenticationTest()
         {

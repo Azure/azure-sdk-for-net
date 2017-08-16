@@ -53,7 +53,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 return await parent.Manager.Inner.UpdateSourceControlAsync("Github", new SourceControlInner
                 {
-                    Location = Parent().RegionName,
                     Token = githubAccessToken
                 });
             }

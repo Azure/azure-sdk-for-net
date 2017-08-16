@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace ManageFunctionAppWithAuthentication
 {
@@ -16,11 +17,15 @@ namespace ManageFunctionAppWithAuthentication
     {
         /**
          * Azure App Service basic sample for managing function apps.
-         *  - Create 4 function apps under the same new app service plan:
-         *    - Deploy to 1 using FTP
-         *    - Deploy to 2 using local Git repository
-         *    - Deploy to 3 using a publicly available Git repository
-         *    - Deploy to 4 using a GitHub repository with continuous integration
+         *  - Create 3 function apps under the same new app service plan and with the same storage account
+         *    - Deploy 1 & 2 via Git a function that calculates the square of a number
+         *    - Deploy 3 via Web Deploy
+         *    - Enable app level authentication for the 1st function app
+         *    - Verify the 1st function app can be accessed with the admin key
+         *    - Enable function level authentication for the 2nd function app
+         *    - Verify the 2nd function app can be accessed with the function key
+         *    - Enable function level authentication for the 3rd function app
+         *    - Verify the 3rd function app can be accessed with the function key
          */
 
 
@@ -30,8 +35,10 @@ namespace ManageFunctionAppWithAuthentication
             string suffix         = ".azurewebsites.net";
             string app1Name       = SdkContext.RandomResourceName("webapp1-", 20);
             string app2Name       = SdkContext.RandomResourceName("webapp2-", 20);
+            string app3Name       = SdkContext.RandomResourceName("webapp3-", 20);
             string app1Url        = app1Name + suffix;
             string app2Url        = app2Name + suffix;
+            string app3Url        = app3Name + suffix;
             string rgName         = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try {
@@ -67,6 +74,20 @@ namespace ManageFunctionAppWithAuthentication
                 Utilities.Print(app2);
 
                 //============================================================
+                // Create a third function app with function level auth
+
+                Utilities.Log("Creating another function app " + app3Name + " in resource group " + rgName + " with function level auth...");
+                IFunctionApp app3 = azure.AppServices.FunctionApps.Define(app3Name)
+                        .WithExistingAppServicePlan(plan)
+                        .WithExistingResourceGroup(rgName)
+                        .WithExistingStorageAccount(app1.StorageAccount)
+                        .WithLocalGitSourceControl()
+                        .Create();
+
+                Utilities.Log("Created function app " + app3.Name);
+                Utilities.Print(app3);
+
+                //============================================================
                 // Deploy to app 1 through Git
 
                 Utilities.Log("Deploying a local function app to " + app1Name + " through Git...");
@@ -93,13 +114,7 @@ namespace ManageFunctionAppWithAuthentication
                 Utilities.Print(app2);
 
 
-                string masterKey = app2.GetMasterKey();
-                var functionsHeader = new Dictionary<string, string>();
-                functionsHeader["x-functions-key"] = masterKey;
-                string response = Utilities.CheckAddress("http://" + app2Url + "/admin/functions/square/keys", functionsHeader);
-                Regex pattern = new Regex(@"""name"":""default"",""value"":""([\w=/]+)""");
-                Match matcher = pattern.Match(response);
-                string functionKey = matcher.Captures[0].Value;
+                string functionKey = app2.ListFunctionKeys("square").Values.First();
 
                 // warm up
                 Utilities.Log("Warming up " + app2Url + "/api/square...");
@@ -107,6 +122,35 @@ namespace ManageFunctionAppWithAuthentication
                 SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app2Url + "/api/square...");
                 Utilities.Log("Square of 725 is " + Utilities.PostAddress("http://" + app2Url + "/api/square?code=" + functionKey, "725"));
+            
+                Utilities.Log("Adding a new key to function app " + app2.Name + "...");
+
+                var newKey = app2.AddFunctionKey("square", "newkey", null);
+
+                Utilities.Log("CURLing " + app2Url + "/api/square...");
+                Utilities.Log("Square of 825 is " + Utilities.PostAddress("http://" + app2Url + "/api/square?code=" + newKey.Value, "825"));
+
+                //============================================================
+                // Deploy to app 3 through web deploy
+
+                Utilities.Log("Deploying a local function app to " + app3Name + " throuh web deploy...");
+
+                app3.Deploy()
+                    .WithPackageUri("https://github.com/Azure/azure-sdk-for-net/raw/Fluent/Samples/Asset/square-function-app-function-auth.zip")
+                    .WithExistingDeploymentsDeleted(false)
+                    .Execute();
+
+                Utilities.Log("Deployment to function app " + app3.Name + " completed");
+
+                Utilities.Log("Adding a new key to function app " + app3.Name + "...");
+                app3.AddFunctionKey("square", "newkey", "mysecretkey");
+
+                // warm up
+                Utilities.Log("Warming up " + app3Url + "/api/square...");
+                Utilities.PostAddress("http://" + app3Url + "/api/square", "925");
+                SdkContext.DelayProvider.Delay(5000);
+                Utilities.Log("CURLing " + app3Url + "/api/square...");
+                Utilities.Log("Square of 925 is " + Utilities.PostAddress("http://" + app3Url + "/api/square?code=mysecretkey", "925"));
             }
             finally
             {

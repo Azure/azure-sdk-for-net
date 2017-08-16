@@ -23,11 +23,12 @@ namespace ManageWebAppSourceControl
         /**
          * Azure App Service basic sample for managing web apps.
          * Note: you need to have the Git command line available on your PATH. The sample makes a direct call to 'git'.
-         *  - Create 4 web apps under the same new app service plan:
+         *  - Create 5 web apps under the same new app service plan:
          *    - Deploy to 1 using FTP
          *    - Deploy to 2 using local Git repository
          *    - Deploy to 3 using a publicly available Git repository
          *    - Deploy to 4 using a GitHub repository with continuous integration
+         *    - Deploy to 5 using Web Deploy
          */
         public static void RunSample(IAzure azure)
         {
@@ -35,10 +36,12 @@ namespace ManageWebAppSourceControl
             string app2Name = SdkContext.RandomResourceName("webapp2-", 20);
             string app3Name = SdkContext.RandomResourceName("webapp3-", 20);
             string app4Name = SdkContext.RandomResourceName("webapp4-", 20);
+            string app5Name = SdkContext.RandomResourceName("webapp5-", 20);
             string app1Url = app1Name + Suffix;
             string app2Url = app2Name + Suffix;
             string app3Url = app3Name + Suffix;
             string app4Url = app4Name + Suffix;
+            string app5Url = app5Name + Suffix;
             string rgName = SdkContext.RandomResourceName("rg1NEMV_", 24);
 
             try
@@ -163,6 +166,40 @@ namespace ManageWebAppSourceControl
                 SdkContext.DelayProvider.Delay(5000);
                 Utilities.Log("CURLing " + app4Url + "...");
                 Utilities.Log(Utilities.CheckAddress("http://" + app4Url));
+
+                //============================================================
+                // Create a 5th web app with web deploy
+
+                Utilities.Log("Creating another web app " + app5Name + "...");
+
+                IWebApp app5 = azure.WebApps.Define(app5Name)
+                    .WithExistingWindowsPlan(plan)
+                    .WithExistingResourceGroup(rgName)
+                    .WithNetFrameworkVersion(NetFrameworkVersion.V4_6)
+                    .Create();
+
+                Utilities.Log("Created web app " + app5.Name);
+                Utilities.Print(app5);
+
+                //============================================================
+                // Deploy to the 5th web app through web deploy
+
+                Utilities.Log("Deploying a bakery website to " + app5Name + " through web deploy...");
+
+                app5.Deploy()
+                    .WithPackageUri("https://github.com/Azure/azure-sdk-for-net/raw/Fluent/Tests/Fluent.Tests/Assets/bakery-webapp.zip")
+                    .WithExistingDeploymentsDeleted(true)
+                    .Execute();
+
+                Utilities.Log("Deployment to web app " + app5Name + " completed.");
+                Utilities.Print(app5);
+
+                // warm up
+                Utilities.Log("Warming up " + app5Url + "...");
+                Utilities.CheckAddress("http://" + app5Url);
+                SdkContext.DelayProvider.Delay(5000);
+                Utilities.Log("CURLing " + app5Url + "...");
+                Utilities.Log(Utilities.CheckAddress("http://" + app5Url));
             }
             catch (FileNotFoundException)
             {
