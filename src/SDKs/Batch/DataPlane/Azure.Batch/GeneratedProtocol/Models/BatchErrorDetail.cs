@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// error response.</param>
         public BatchErrorDetail(string key = default(string), string value = default(string))
         {
-            Key = key;
-            Value = value;
+            this.Key = key;
+            this.Value = value;
         }
 
         /// <summary>

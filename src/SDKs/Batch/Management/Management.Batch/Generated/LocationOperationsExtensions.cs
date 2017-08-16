@@ -57,6 +57,46 @@ namespace Microsoft.Azure.Management.Batch
                 }
             }
 
+            /// <summary>
+            /// Checks whether the Batch account name is available in the specified region.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='locationName'>
+            /// The desired region for the name check.
+            /// </param>
+            /// <param name='name'>
+            /// The name to check for availability
+            /// </param>
+            public static CheckNameAvailabilityResult CheckNameAvailability(this ILocationOperations operations, string locationName, string name)
+            {
+                return operations.CheckNameAvailabilityAsync(locationName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether the Batch account name is available in the specified region.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='locationName'>
+            /// The desired region for the name check.
+            /// </param>
+            /// <param name='name'>
+            /// The name to check for availability
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this ILocationOperations operations, string locationName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(locationName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
 

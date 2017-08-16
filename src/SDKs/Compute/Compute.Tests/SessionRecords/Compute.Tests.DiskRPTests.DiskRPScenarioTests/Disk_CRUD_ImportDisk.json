@@ -3335,7 +3335,7 @@
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/15.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2017-06-08T01:37:40.5367215-07:00\",\r\n  \"endTime\": \"2017-06-08T01:37:41.9430289-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-hfcxwsnkrxxf.blob.core.windows.net/wzqqfhjqr2z0/abcd?sv=2016-05-31&sr=b&si=b1e8cd91-a41b-46b8-940d-548c5fe132ee&sig=REVCcF0twU91Er1Syw%2BGywN4mpXtJILYPpCpw0o1pM4%3D\"\r\n    }\r\n  },\r\n  \"name\": \"1a15d8b9-7198-4879-b824-10b9e84b94b2\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2017-06-08T01:37:40.5367215-07:00\",\r\n  \"endTime\": \"2017-06-08T01:37:41.9430289-07:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-hfcxwsnkrxxf.blob.core.windows.net/\"\r\n    }\r\n  },\r\n  \"name\": \"1a15d8b9-7198-4879-b824-10b9e84b94b2\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"

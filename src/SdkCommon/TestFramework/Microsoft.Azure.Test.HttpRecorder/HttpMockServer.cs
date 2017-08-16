@@ -134,7 +134,17 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 // Will throw KeyNotFoundException if the request is not recorded
                 lock (records)
                 {
-                    var result = records[Matcher.GetMatchingKey(request)].Dequeue().GetResponse();
+                    var key = Matcher.GetMatchingKey(request);
+
+                    var queue = records[key];
+                    if (!queue.Any())
+                    {
+                        throw new InvalidOperationException(string.Format(
+                            "Queue empty for request {0}",
+                            Utilities.DecodeBase64AsUri(key)));
+                    }
+
+                    var result = queue.Dequeue().GetResponse();
                     result.RequestMessage = request;
                     return Task.FromResult(result);
                 }

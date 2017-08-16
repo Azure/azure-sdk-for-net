@@ -198,8 +198,32 @@
 
     <Message Text="Built Nugets @(SdkNuGetPackages)"/>
   </Target>
-
+  
   <Target Name="PublishingNuget">
+	<Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
+    <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
+	<PropertyGroup>
+      <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
+	  <TaskDebugOutput Condition=" '$(TaskDebugOutput)' == '' ">false</TaskDebugOutput>
+	  <SkipNugetPublishing Condition=" '$(SkipNugetPublishing)' == '' ">false</SkipNugetPublishing>
+	  <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">false</SkipSymbolPublishing>
+    </PropertyGroup>
+	
+	<MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
+	<PublishSDKNuget 
+		NugetPackageName="$(NugetPackageName)" 
+		PackageOutputPath="$(PackageOutputPath)" 
+		PublishNugetToPath="$(PublishNugetToDir)" 
+		NugetExePath="$(NuGetCommand)"
+		UserId="$(UserId)"
+		SkipNugetPublishing="$(SkipNugetPublishing)"
+		SkipSymbolPublishing="$(SkipSymbolPublishing)"
+		TaskDebugOutput="$(TaskDebugOutput)"
+		ApiKey="$(ApiKey)"
+		/>
+  </Target>
+
+  <Target Name="PublishingNuget_Original">
     <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
     <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
@@ -285,6 +309,14 @@
 
     <Message Text="msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute" />
     <Message Text="----- will Build Compute nuget package and run compute test" />
+	
+	<!--
+	<Message Text="msbuild build.proj /t:PublishNuget /p:NugetPackageName={Nuget package name} /p:PackageOutputPath={Package output path} /p:PublishNugetToPath={Nuget publish path}" />
+	
+	<Message Text="NugetPackageName Name Of Package from .csproj under ProjectId xml tag"/>
+	/p:PackageOutputPath=<Defaulted to build output if not provided> /p:PublishNugetToPath=<Defaulted to https://www.nuget.org if not provided, or provide local path /p:Scope=SDKs\Compute" />
+    <Message Text=" will Build Compute nuget package and run compute test" />
+	-->
   </Target>
 
   <!--Do not delete-->

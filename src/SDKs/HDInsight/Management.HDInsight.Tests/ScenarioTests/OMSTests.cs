@@ -22,6 +22,9 @@ namespace Management.HDInsight.Tests
 
     public class OMSTests
     {
+        private const string WorkspaceId = "";
+        private const string PrimaryKey = "";
+
         [Fact]
         public void TestOMSOnRunningCluster()
         {
@@ -37,8 +40,8 @@ namespace Management.HDInsight.Tests
             {
                 ClusterMonitoringRequest request = new ClusterMonitoringRequest
                 {
-                    WorkspaceId = "",
-                    PrimaryKey = ""
+                    WorkspaceId = WorkspaceId,
+                    PrimaryKey = PrimaryKey
                 };
                 client.Extension.EnableMonitoring(rgName, clusterName, request);
                 ClusterMonitoringResponse monitoringStatus = client.Extension.GetMonitoringStatus(rgName, clusterName);

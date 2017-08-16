@@ -19,6 +19,8 @@ namespace Management.HDInsight.Tests
     using Microsoft.HDInsight;
     using Microsoft.HDInsight.Models;
     using Microsoft.Rest.Azure;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
     using Xunit;
 
     public class HttpTests
@@ -33,7 +35,7 @@ namespace Management.HDInsight.Tests
 
             HDInsightManagementTestUtilities.CreateClusterInNewResourceGroupAndRunTest(suiteName, testName,clusterName, createParams, (client, rgName) =>
             {
-                HttpConnectivitySettings httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationName.Gateway);
+                IDictionary<string, string> httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationKey.Gateway);
                 ValidateHttpSettings(httpSettings, createParams.UserName, createParams.Password);
 
                 CloudException ex = Assert.Throws<CloudException>(() => client.Configurations.DisableHttp(rgName, clusterName));
@@ -41,7 +43,7 @@ namespace Management.HDInsight.Tests
 
                 string newPassword = "NewPassword1!";
                 client.Configurations.EnableHttp(rgName, clusterName, "admin", newPassword);
-                httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationName.Gateway);
+                httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationKey.Gateway);
                 ValidateHttpSettings(httpSettings, createParams.UserName, newPassword);
             });
         }
@@ -56,7 +58,7 @@ namespace Management.HDInsight.Tests
 
             HDInsightManagementTestUtilities.CreateClusterInNewResourceGroupAndRunTest(suiteName, testName, clusterName, createParams, (client, rgName) =>
             {
-                var httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationName.Gateway);
+                var httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationKey.Gateway);
                 ValidateHttpSettings(httpSettings, createParams.UserName, createParams.Password);
 
                 CloudException ex = Assert.Throws<CloudException>(() => client.Configurations.UpdateHTTPSettings(rgName, clusterName,
@@ -71,17 +73,18 @@ namespace Management.HDInsight.Tests
                         Username = "admin",
                         Password = newPassword
                     });
-                httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationName.Gateway);
+                httpSettings = client.Configurations.Get(rgName, clusterName, ConfigurationKey.Gateway);
                 ValidateHttpSettings(httpSettings, createParams.UserName, newPassword);
             });
         }
 
-        private void ValidateHttpSettings(HttpConnectivitySettings httpSettings, string expectedUsername, string expectedPassword)
+        private void ValidateHttpSettings(IDictionary<string, string> httpSettings, string expectedUsername, string expectedPassword)
         {
             Assert.NotNull(httpSettings);
-            Assert.True(httpSettings.EnabledCredential);
-            Assert.Equal(expectedUsername, httpSettings.Username);
-            Assert.Equal(expectedPassword, httpSettings.Password);
+            HttpConnectivitySettings settings = JsonConvert.DeserializeObject<HttpConnectivitySettings>(JsonConvert.SerializeObject(httpSettings));
+            Assert.True(settings.EnabledCredential);
+            Assert.Equal(expectedUsername, settings.Username);
+            Assert.Equal(expectedPassword, settings.Password);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// enabled on the virtual machine.</param>
         public WindowsConfiguration(bool? enableAutomaticUpdates = default(bool?))
         {
-            EnableAutomaticUpdates = enableAutomaticUpdates;
+            this.EnableAutomaticUpdates = enableAutomaticUpdates;
         }
 
         /// <summary>

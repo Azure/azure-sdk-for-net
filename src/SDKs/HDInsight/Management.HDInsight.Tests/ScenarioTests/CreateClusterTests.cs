@@ -106,7 +106,15 @@ namespace Management.HDInsight.Tests
             RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateKafkaClusterWithManagedDisks",
                 "hdisdk-kafka", parameters);
         }
-        
+
+        [Fact]
+        public void TestCreateWithDataLakeStorage()
+        {
+            ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl();
+
+            RunCreateClusterTestInNewResourceGroup(GetType().FullName, "TestCreateWithDataLakeStorage", "hdisdk-adl", parameters);
+        }
+
         private static void RunCreateClusterTestInNewResourceGroup(string suiteName, string testName, string clusterName,
             ClusterCreateParameters createParams)
         {

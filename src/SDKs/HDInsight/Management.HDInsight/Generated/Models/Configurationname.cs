@@ -20,9 +20,43 @@ namespace Microsoft.HDInsight.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ConfigurationName
     {
+        [EnumMember(Value = "core-site")]
+        CoreSite,
+        [EnumMember(Value = "hive-site")]
+        HiveSite,
+        [EnumMember(Value = "hive-env")]
+        HiveEnv,
+        [EnumMember(Value = "oozie-site")]
+        OozieSite,
+        [EnumMember(Value = "oozie-env")]
+        OozieEnv,
+        [EnumMember(Value = "webhcat-site")]
+        WebhcatSite,
+        [EnumMember(Value = "hbase-env")]
+        HbaseEnv,
+        [EnumMember(Value = "hbase-site")]
+        HbaseSite,
+        [EnumMember(Value = "storm-site")]
+        StormSite,
+        [EnumMember(Value = "yarn-site")]
+        YarnSite,
+        [EnumMember(Value = "mapred-site")]
+        MapredSite,
+        [EnumMember(Value = "tez-site")]
+        TezSite,
+        [EnumMember(Value = "hdfs-site")]
+        HdfsSite,
         [EnumMember(Value = "gateway")]
         Gateway,
-        [EnumMember(Value = "core-site")]
-        CoreSite
+        [EnumMember(Value = "clusterIdentity")]
+        ClusterIdentity,
+        [EnumMember(Value = "spark-defaults")]
+        SparkDefaults,
+        [EnumMember(Value = "spark-thrift-sparkconf")]
+        SparkThriftSparkconf,
+        [EnumMember(Value = "spark2-defaults")]
+        Spark2Defaults,
+        [EnumMember(Value = "spark2-thrift-sparkconf")]
+        Spark2ThriftSparkconf
     }
 }

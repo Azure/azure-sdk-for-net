@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the pool resize error.</param>
         public ResizeError(string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> values = default(System.Collections.Generic.IList<NameValuePair>))
         {
-            Code = code;
-            Message = message;
-            Values = values;
+            this.Code = code;
+            this.Message = message;
+            this.Values = values;
         }
 
         /// <summary>

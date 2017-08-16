@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// unsuccessful.</param>
         public AutoScaleRun(System.DateTime timestamp, string results = default(string), AutoScaleRunError error = default(AutoScaleRunError))
         {
-            Timestamp = timestamp;
-            Results = results;
-            Error = error;
+            this.Timestamp = timestamp;
+            this.Results = results;
+            this.Error = error;
         }
 
         /// <summary>

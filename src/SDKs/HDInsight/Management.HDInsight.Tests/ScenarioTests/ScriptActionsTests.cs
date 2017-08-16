@@ -54,7 +54,7 @@ namespace Management.HDInsight.Tests
                 client.Clusters.ExecuteScriptActions(rgName, clusterName, scriptActionParams, true);
 
                 //List script actions and validate script is persisted.
-                IPage<RuntimeScriptActionDetail> scriptActionsList = client.ScriptActions.List(rgName, clusterName);
+                IPage<RuntimeScriptActionDetail> scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
                 Assert.Equal(1, scriptActionsList.Count());
                 RuntimeScriptActionDetail scriptAction = scriptActionsList.First();
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
@@ -65,7 +65,7 @@ namespace Management.HDInsight.Tests
                 client.ScriptActions.Delete(rgName, clusterName, scriptName);
 
                 //List script actions and validate script is deleted.
-                scriptActionsList = client.ScriptActions.List(rgName, clusterName);
+                scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
                 Assert.Equal(0, scriptActionsList.Count());
 
                 //List script action history and validate script appears there.
@@ -79,7 +79,7 @@ namespace Management.HDInsight.Tests
                 Assert.Equal("Succeeded", scriptAction.Status);
 
                 //Get the script action by ID and validate it's the same action.
-                scriptAction = client.ScriptExecutionHistory.Get(rgName, clusterName, listHistoryResponse.First().ScriptExecutionId.Value.ToString());
+                scriptAction = client.ScriptActions.GetExecutionDetail(rgName, clusterName, listHistoryResponse.First().ScriptExecutionId.Value.ToString());
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);
 
                 //Execute script actions, but don't persist on success.
@@ -106,7 +106,7 @@ namespace Management.HDInsight.Tests
                 CloudException ex = Assert.Throws<CloudException>(() => client.Clusters.ExecuteScriptActions(rgName, clusterName, failingScriptActionParams, true));
 
                 //List script action list and validate the promoted script is the only one there.
-                scriptActionsList = client.ScriptActions.List(rgName, clusterName);
+                scriptActionsList = client.ScriptActions.ListPersistedScripts(rgName, clusterName);
                 Assert.Equal(1, scriptActionsList.Count());
                 Assert.Equal(1, scriptAction.ExecutionSummary.Count);
                 Assert.Equal(scriptActionParams[0].Name, scriptAction.Name);

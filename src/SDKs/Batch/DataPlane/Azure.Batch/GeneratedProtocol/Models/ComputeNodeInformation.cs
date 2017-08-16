@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the task on the compute node.</param>
         public ComputeNodeInformation(string affinityId = default(string), string nodeUrl = default(string), string poolId = default(string), string nodeId = default(string), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string))
         {
-            AffinityId = affinityId;
-            NodeUrl = nodeUrl;
-            PoolId = poolId;
-            NodeId = nodeId;
-            TaskRootDirectory = taskRootDirectory;
-            TaskRootDirectoryUrl = taskRootDirectoryUrl;
+            this.AffinityId = affinityId;
+            this.NodeUrl = nodeUrl;
+            this.PoolId = poolId;
+            this.NodeId = nodeId;
+            this.TaskRootDirectory = taskRootDirectory;
+            this.TaskRootDirectoryUrl = taskRootDirectoryUrl;
         }
 
         /// <summary>

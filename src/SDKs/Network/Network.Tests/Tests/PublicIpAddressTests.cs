@@ -20,7 +20,7 @@ namespace Networks.Tests
 
     public class PublicIpAddressTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void PublicIpAddressApiTest()
         {
             var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -86,7 +86,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void PublicIpAddressApiTestWithIdletTimeoutAndReverseFqdn()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -164,7 +164,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void PublicIpAddressApiTestIPv6()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

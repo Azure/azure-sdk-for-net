@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// of compute nodes in the pool.</param>
         public PoolEvaluateAutoScaleParameter(string autoScaleFormula)
         {
-            AutoScaleFormula = autoScaleFormula;
+            this.AutoScaleFormula = autoScaleFormula;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (AutoScaleFormula == null)
+            if (this.AutoScaleFormula == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AutoScaleFormula");
             }

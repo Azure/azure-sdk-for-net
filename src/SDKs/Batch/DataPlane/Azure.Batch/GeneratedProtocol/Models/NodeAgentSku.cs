@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Linux) compatible with the node agent SKU.</param>
         public NodeAgentSku(string id = default(string), System.Collections.Generic.IList<ImageReference> verifiedImageReferences = default(System.Collections.Generic.IList<ImageReference>), OSType? osType = default(OSType?))
         {
-            Id = id;
-            VerifiedImageReferences = verifiedImageReferences;
-            OsType = osType;
+            this.Id = id;
+            this.VerifiedImageReferences = verifiedImageReferences;
+            this.OsType = osType;
         }
 
         /// <summary>

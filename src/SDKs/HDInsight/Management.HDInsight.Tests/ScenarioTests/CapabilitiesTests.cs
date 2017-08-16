@@ -16,11 +16,8 @@
 namespace Management.HDInsight.Tests
 {
     using Xunit;
-    using Microsoft.Azure.Management.HDInsight.Models;
     using Microsoft.HDInsight.Models;
-    using System.Collections.Generic;
     using Microsoft.HDInsight;
-    using Microsoft.Rest.Azure;
     using System.Net;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -38,7 +35,13 @@ namespace Management.HDInsight.Tests
                 var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(context, handler);
 
                 CapabilitiesResult capabilities = client.Location.GetCapabilities(HDInsightManagementTestUtilities.DefaultLocation);
-                //VALIDATE
+                Assert.NotNull(capabilities);
+                Assert.NotNull(capabilities.Features);
+                Assert.NotNull(capabilities.Quota);
+                Assert.NotNull(capabilities.Regions);
+                Assert.NotNull(capabilities.Versions);
+                Assert.NotNull(capabilities.VmSizeFilters);
+                Assert.NotNull(capabilities.VmSizes);
             }
         }
     }

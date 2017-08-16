@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// from the pool during this interval, in GiB.</param>
         public PoolUsageMetrics(string poolId, System.DateTime startTime, System.DateTime endTime, string vmSize, double totalCoreHours, double dataIngressGiB, double dataEgressGiB)
         {
-            PoolId = poolId;
-            StartTime = startTime;
-            EndTime = endTime;
-            VmSize = vmSize;
-            TotalCoreHours = totalCoreHours;
-            DataIngressGiB = dataIngressGiB;
-            DataEgressGiB = dataEgressGiB;
+            this.PoolId = poolId;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.VmSize = vmSize;
+            this.TotalCoreHours = totalCoreHours;
+            this.DataIngressGiB = dataIngressGiB;
+            this.DataEgressGiB = dataEgressGiB;
         }
 
         /// <summary>
@@ -121,11 +121,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PoolId == null)
+            if (this.PoolId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolId");
             }
-            if (VmSize == null)
+            if (this.VmSize == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmSize");
             }

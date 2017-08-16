@@ -20,52 +20,6 @@ namespace Microsoft.HDInsight
     public static partial class ScriptExecutionHistoryOperationsExtensions
     {
             /// <summary>
-            /// Gets the script execution detail for the given script execution ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster.
-            /// </param>
-            /// <param name='scriptExecutionId'>
-            /// The script execution Id
-            /// </param>
-            public static RuntimeScriptActionDetail Get(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, string scriptExecutionId)
-            {
-                return operations.GetAsync(resourceGroupName, clusterName, scriptExecutionId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the script execution detail for the given script execution ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster.
-            /// </param>
-            /// <param name='scriptExecutionId'>
-            /// The script execution Id
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RuntimeScriptActionDetail> GetAsync(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, string scriptExecutionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, scriptExecutionId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Lists all scripts' execution history for the specified cluster.
             /// </summary>
             /// <param name='operations'>

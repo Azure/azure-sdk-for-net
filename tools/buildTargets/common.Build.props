@@ -13,7 +13,7 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <NoWarn>1591;1701;1573</NoWarn>
+    <NoWarn>1591;1701;1573;CS1591</NoWarn>
   </PropertyGroup>
 
 
@@ -48,11 +48,3 @@
     </Otherwise>
   </Choose>
 </Project>
-
-<!--
-    <PostBuildEvent>      
-    </PostBuildEvent>
-    <PreBuildEvent>
-      <CallTarget Targets="PrintStuff"/>
-    </PreBuildEvent>
-    -->

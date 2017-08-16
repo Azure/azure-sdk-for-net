@@ -15,41 +15,40 @@
 
 namespace Management.HDInsight.Tests
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Newtonsoft.Json;
     using Microsoft.HDInsight.Models;
     using Microsoft.HDInsight;
+    using System;
 
     public static class ClusterCreateParametersHelpers
     {
-        private const string ADLDefaultStorageAccountName = "";
-        private const string DefaultContainer = "";
+        // Secret values to update while recording tests. Do NOT commit any changes to these values.
         private const string StorageAccountName = "";
         private const string StorageAccountKey = "";
-        private const string SshKey = "";
-        private const string SshUser = "";
-        private const string SshPassword = "";
-        private const string HttpUser = "";
-        private const string HttpPassword = "";
-        private const string VirtualNetworkId = "";
-        private const string SubnetName = "";
-        private const string DomainUserName = "";
-        private const string DomainUserPassword = "";
-        private const string OrganizationalUnitDN = "";
-        private static readonly List<string> ClusterUsersGroupDNs = new List<string> { "" };
-        private static readonly List<string> LdapsUrls = new List<string> { "" };
-        private static readonly string[] DomainNameParts = new string[2] { "", "" };
+        private const string ApplicationId = "";
+        private const string AadTenantId = "";
+        private const string CertificatePassword = "";
+        private const string ResourceUri = "";
+        private const string CertificateFile = @"";
+        private const string AdlDefaultStorageAccountName = "";
 
-        public static ClusterCreateParameters GetCustomCreateParametersIaas()
+        // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
+        private const string DefaultContainer = "default";
+        private const string SshUser = "sshuser";
+        private const string SshPassword = "Password1!";
+        private const string HttpUser = "admin";
+        private const string HttpPassword = "Password1!";
+        private const string AdlStorageRootPath = "/clusters/hdi";
+
+        public static ClusterCreateParameters GetCustomCreateParametersIaas(bool adlStorage = false)
         {
-            var clusterparams = new ClusterCreateParameters
+            ClusterCreateParameters clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
                 ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
-                DefaultStorageInfo = GetDefaultAzureStorageInfo(DefaultContainer),
+                DefaultStorageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(DefaultContainer),
                 UserName = HttpUser,
                 Password = HttpPassword,
                 Location = "East US",
@@ -58,6 +57,17 @@ namespace Management.HDInsight.Tests
                 Version = "3.5"
             };
             return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersForAdl()
+        {
+            ClusterCreateParameters createParams = GetCustomCreateParametersIaas(true);
+
+            Guid appId = string.IsNullOrEmpty(ApplicationId) ? Guid.NewGuid() : new Guid(ApplicationId);
+            Guid tenantId = string.IsNullOrEmpty(AadTenantId) ? Guid.NewGuid(): new Guid(AadTenantId);
+            byte[] certContents = string.IsNullOrEmpty(CertificateFile) ? new byte[1] : System.IO.File.ReadAllBytes(CertificateFile);
+            createParams.Principal = new ServicePrincipal(appId, tenantId, certContents, CertificatePassword);
+            return createParams;
         }
 
         /// <summary>
@@ -83,9 +93,40 @@ namespace Management.HDInsight.Tests
             }
         }
 
-        public static ClusterCreateParametersExtended GetIaasClusterSpec(string containerName)
+        private static StorageInfo GetDefaultDataLakeStorageInfo()
         {
-            AzureStorageInfo storageInfo = GetDefaultAzureStorageInfo(containerName) as AzureStorageInfo;
+            string storageAccountName = !HDInsightManagementTestUtilities.IsRecordMode() ? AdlDefaultStorageAccountName : "tmp.azuredatalakestore.net";
+
+            return new AzureDataLakeStoreInfo(storageAccountName, AdlStorageRootPath);
+        }
+
+        private static Dictionary<string, string> GetCoreConfigsForStorageInfo(StorageInfo storageInfo)
+        {
+            if (storageInfo is AzureDataLakeStoreInfo adlStore)
+            {
+                return new Dictionary<string, string>
+                {
+                    { Constants.DataLakeConfigurations.ApplicationIdKey, ApplicationId },
+                    { Constants.DataLakeConfigurations.TenantIdKey, AadTenantId },
+                    { Constants.DataLakeConfigurations.CertificateKey, Convert.ToBase64String(System.IO.File.ReadAllBytes(CertificateFile)) },
+                    { Constants.DataLakeConfigurations.CertificatePasswordKey, CertificatePassword },
+                    { Constants.DataLakeConfigurations.ResourceUriKey, ResourceUri }
+                };
+            }
+            if (storageInfo is AzureStorageInfo wasbStorage)
+            {
+                return new Dictionary<string, string>
+                {
+                    { Constants.StorageConfigurations.DefaultFsKey, string.Format("wasb://{0}@{1}", wasbStorage.StorageContainer, wasbStorage.StorageAccountName.ToLowerInvariant())},
+                    { string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, wasbStorage.StorageAccountName.ToLowerInvariant()), wasbStorage.StorageAccountKey}
+                };
+            }
+            return null;
+        }
+
+        public static ClusterCreateParametersExtended GetIaasClusterSpec(string containerName, bool adlStorage = false)
+        {
+            StorageInfo storageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(containerName);
             var cluster = new ClusterCreateParametersExtended
             {
                 Location = "East US",
@@ -100,19 +141,14 @@ namespace Management.HDInsight.Tests
                         ComponentVersion = new Dictionary<string, string>(),
                         Configurations = new Dictionary<string, Dictionary<string, string>>()
                         {
-                            {"core-site", new Dictionary<string, string>
-                            {
-                                { Constants.StorageConfigurations.DefaultFsKey, string.Format("wasb://{0}@{1}", storageInfo.StorageContainer, storageInfo.StorageAccountName.ToLowerInvariant())},
-                                { string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, storageInfo.StorageAccountName.ToLowerInvariant()), storageInfo.StorageAccountKey}
+                            { "core-site", GetCoreConfigsForStorageInfo(storageInfo) },
+                            { "gateway", new Dictionary<string, string>
+                                {
+                                    { "restAuthCredential.isEnabled", "true" },
+                                    { "restAuthCredential.username", "admin"},
+                                    { "restAuthCredential.password", "Password1!"}
+                                }
                             }
-                            },
-                            {"gateway", new Dictionary<string, string>
-                            {
-                                {"restAuthCredential.isEnabled", "true" },
-                                { "restAuthCredential.username", "admin"},
-                                { "restAuthCredential.password", "Password1!"}
-                            }
-                        }
                         }
                     },
                     Tier = Tier.Standard,
@@ -176,94 +212,6 @@ namespace Management.HDInsight.Tests
             };
             
             return cluster;
-        }
-
-        private static ClusterCreateParameters GetDefaultFsCreateParametersIaas(StorageInfo defaultStorageInfo)
-        {
-            var clusterparams = new ClusterCreateParameters
-            {
-                ClusterSizeInNodes = 3,
-                ClusterType = "Hadoop",
-                WorkerNodeSize = "Large",
-                DefaultStorageInfo = defaultStorageInfo,
-                UserName = HttpUser,
-                Password = HttpPassword,
-                Location = "East US",
-                SshUserName = SshUser,
-                SshPassword = SshPassword,
-                Version = "3.5"
-            };
-
-            return clusterparams;
-        }
-
-        public static ClusterCreateParameters GetDataLakeDefaultFsCreateParametersIaas()
-        {
-            var storageInfo = GetDefaultAzureDataLakeStoreInfo();
-            return GetDefaultFsCreateParametersIaas(storageInfo);
-        }
-
-        public static ClusterCreateParameters GetAzureBlobDefaultFsCreateParametersIaas(bool specifyDefaultContainer = true)
-        {
-            var storageInfo = GetDefaultAzureStorageInfo(DefaultContainer, specifyDefaultContainer);
-            return GetDefaultFsCreateParametersIaas(storageInfo);
-        }
-
-        public static ClusterCreateParameters GetAdJoinedCreateParametersIaas()
-        {
-            var clusterparams = GetCustomCreateParametersIaas();
-            clusterparams.Version = "3.5";
-            clusterparams.Location = "East US 2";
-            clusterparams.VirtualNetworkId = VirtualNetworkId;
-            clusterparams.SubnetName = SubnetName;
-            clusterparams.SecurityProfile = new SecurityProfile
-            {
-                DirectoryType = DirectoryType.ActiveDirectory,
-                Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
-                DomainUserPassword = DomainUserPassword,
-                DomainUsername = DomainUserName,
-                LdapsUrls = LdapsUrls,
-                OrganizationalUnitDN = OrganizationalUnitDN,
-                ClusterUsersGroupDNs = ClusterUsersGroupDNs
-            };
-            return clusterparams;
-        }
-
-        public static ClusterCreateParameters GetCustomCreateParametersKafkaIaas()
-        {
-            var clusterparams = GetCustomCreateParametersIaas();
-            clusterparams.Version = "3.5";
-            clusterparams.ClusterType = "Kafka";
-            clusterparams.Location = "Central US";
-            return clusterparams;
-        }
-
-
-        public static ClusterCreateParametersExtended AddConfigurations(ClusterCreateParametersExtended cluster, string configurationKey, Dictionary<string, string> configs)
-        {
-            string configurations = cluster.Properties.ClusterDefinition.Configurations.ToString();
-            var config = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<String, string>>>(configurations);
-            config.Add(configurationKey, configs);
-
-            var serializedConfig = JsonConvert.SerializeObject(config);
-            cluster.Properties.ClusterDefinition.Configurations = serializedConfig;
-
-            return cluster;
-        }
-
-
-        /// <summary>
-        /// Returns appropriate AzureDataLakeStoreInfo based on test-mode.
-        /// </summary>
-        /// <returns></returns>
-        private static StorageInfo GetDefaultAzureDataLakeStoreInfo()
-        {
-            bool recordMode = HDInsightManagementTestUtilities.IsRecordMode();
-            string ADLClusterRootPath = "/Clusters/SDK";
-
-            return recordMode
-               ? new AzureDataLakeStoreInfo(ADLDefaultStorageAccountName, ADLClusterRootPath)
-               : new AzureDataLakeStoreInfo("tmp.azuredatalakestore.net", ADLClusterRootPath);
         }
     }
 }

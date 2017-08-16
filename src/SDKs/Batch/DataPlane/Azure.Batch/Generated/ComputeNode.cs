@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> AffinityIdProperty;
             public readonly PropertyAccessor<DateTime?> AllocationTimeProperty;
             public readonly PropertyAccessor<IReadOnlyList<CertificateReference>> CertificateReferencesProperty;
+            public readonly PropertyAccessor<ComputeNodeEndpointConfiguration> EndpointConfigurationProperty;
             public readonly PropertyAccessor<IReadOnlyList<ComputeNodeError>> ErrorsProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<string> IPAddressProperty;
@@ -56,6 +57,10 @@ namespace Microsoft.Azure.Batch
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor(
                     CertificateReference.ConvertFromProtocolCollectionReadOnly(protocolObject.CertificateReferences),
                     "CertificateReferences",
+                    BindingAccess.Read);
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new ComputeNodeEndpointConfiguration(o).Freeze()),
+                    "EndpointConfiguration",
                     BindingAccess.Read);
                 this.ErrorsProperty = this.CreatePropertyAccessor(
                     ComputeNodeError.ConvertFromProtocolCollectionReadOnly(protocolObject.Errors),
@@ -191,6 +196,14 @@ namespace Microsoft.Azure.Batch
         public IReadOnlyList<CertificateReference> CertificateReferences
         {
             get { return this.propertyContainer.CertificateReferencesProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets the endpoint configuration for the compute node.
+        /// </summary>
+        public ComputeNodeEndpointConfiguration EndpointConfiguration
+        {
+            get { return this.propertyContainer.EndpointConfigurationProperty.Value; }
         }
 
         /// <summary>

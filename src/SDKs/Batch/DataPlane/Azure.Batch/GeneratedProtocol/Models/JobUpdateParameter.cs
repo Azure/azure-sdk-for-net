@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state.</param>
         public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
-            Priority = priority;
-            Constraints = constraints;
-            PoolInfo = poolInfo;
-            Metadata = metadata;
-            OnAllTasksComplete = onAllTasksComplete;
+            this.Priority = priority;
+            this.Constraints = constraints;
+            this.PoolInfo = poolInfo;
+            this.Metadata = metadata;
+            this.OnAllTasksComplete = onAllTasksComplete;
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PoolInfo == null)
+            if (this.PoolInfo == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolInfo");
             }

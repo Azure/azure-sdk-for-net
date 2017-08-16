@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Rest.Azure
 {
-    public static class AzureClientExtensions
+    public static partial class AzureClientExtensions
     {
         /// <summary>
         /// Gets operation result for long running operations.
@@ -356,6 +356,8 @@ namespace Microsoft.Rest.Azure
             }
             return true;
         }
+   
+      /*
 
         /// <summary>
         /// Updates PollingState from GET operations.
@@ -395,11 +397,15 @@ namespace Microsoft.Rest.Azure
                 pollingState.Status = AzureAsyncOperation.SuccessStatus;
             }
 
-            pollingState.Error = new CloudError()
+            if(pollingState?.Error == null)
             {
-                Code = pollingState.Status,
-                Message = string.Format(Resources.LongRunningOperationFailed, pollingState.Status)
-            };
+                pollingState.Error = new CloudError()
+                {
+                    Code = pollingState.Status,
+                    Message = string.Format(Resources.LongRunningOperationFailed, pollingState.Status)
+                };
+            }
+            
             pollingState.Response = responseWithResource.Response;
             pollingState.Request = responseWithResource.Request;
             pollingState.Resource = responseWithResource.Body.ToObject<TBody>(JsonSerializer
@@ -469,6 +475,8 @@ namespace Microsoft.Rest.Azure
             {
                 throw new CloudException("The response from long running operation does not have a valid status code.");
             }
+
+            return;
         }
 
         /// <summary>
@@ -516,6 +524,8 @@ namespace Microsoft.Rest.Azure
             }
             catch { };
         }
+        
+        */
 
         /// <summary>
         /// Gets a resource from the specified URL.

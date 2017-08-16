@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node.</param>
         public JobPreparationAndReleaseTaskExecutionInformation(string poolId = default(string), string nodeId = default(string), string nodeUrl = default(string), JobPreparationTaskExecutionInformation jobPreparationTaskExecutionInfo = default(JobPreparationTaskExecutionInformation), JobReleaseTaskExecutionInformation jobReleaseTaskExecutionInfo = default(JobReleaseTaskExecutionInformation))
         {
-            PoolId = poolId;
-            NodeId = nodeId;
-            NodeUrl = nodeUrl;
-            JobPreparationTaskExecutionInfo = jobPreparationTaskExecutionInfo;
-            JobReleaseTaskExecutionInfo = jobReleaseTaskExecutionInfo;
+            this.PoolId = poolId;
+            this.NodeId = nodeId;
+            this.NodeUrl = nodeUrl;
+            this.JobPreparationTaskExecutionInfo = jobPreparationTaskExecutionInfo;
+            this.JobReleaseTaskExecutionInfo = jobReleaseTaskExecutionInfo;
         }
 
         /// <summary>

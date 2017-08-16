@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// format.</param>
         public ResourceFile(string blobSource, string filePath, string fileMode = default(string))
         {
-            BlobSource = blobSource;
-            FilePath = filePath;
-            FileMode = fileMode;
+            this.BlobSource = blobSource;
+            this.FilePath = filePath;
+            this.FileMode = fileMode;
         }
 
         /// <summary>
@@ -79,11 +79,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (BlobSource == null)
+            if (this.BlobSource == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "BlobSource");
             }
-            if (FilePath == null)
+            if (this.FilePath == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FilePath");
             }

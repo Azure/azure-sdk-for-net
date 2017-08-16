@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should have access to the private data of the certificate.</param>
         public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), System.Collections.Generic.IList<CertificateVisibility> visibility = default(System.Collections.Generic.IList<CertificateVisibility>))
         {
-            Thumbprint = thumbprint;
-            ThumbprintAlgorithm = thumbprintAlgorithm;
-            StoreLocation = storeLocation;
-            StoreName = storeName;
-            Visibility = visibility;
+            this.Thumbprint = thumbprint;
+            this.ThumbprintAlgorithm = thumbprintAlgorithm;
+            this.StoreLocation = storeLocation;
+            this.StoreName = storeName;
+            this.Visibility = visibility;
         }
 
         /// <summary>
@@ -106,11 +106,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Thumbprint == null)
+            if (this.Thumbprint == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Thumbprint");
             }
-            if (ThumbprintAlgorithm == null)
+            if (this.ThumbprintAlgorithm == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
             }

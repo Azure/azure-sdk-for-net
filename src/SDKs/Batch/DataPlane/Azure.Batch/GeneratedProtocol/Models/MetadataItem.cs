@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The value of the metadata item.</param>
         public MetadataItem(string name, string value)
         {
-            Name = name;
-            Value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         /// <summary>
@@ -55,11 +55,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (this.Name == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
-            if (Value == null)
+            if (this.Value == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Value");
             }

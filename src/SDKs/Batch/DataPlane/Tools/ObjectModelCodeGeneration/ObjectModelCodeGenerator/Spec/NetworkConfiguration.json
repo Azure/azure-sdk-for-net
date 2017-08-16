@@ -13,6 +13,17 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "PoolEndpointConfiguration",
+            "Name": "EndpointConfiguration",
+            "SummaryComment": "The configuration for endpoints on compute nodes in the Batch pool.",
+            "RemarksComment": "This property can only be specified for pools created with a <see cref=\"CloudPool.VirtualMachineConfiguration\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         }
       ]
     }

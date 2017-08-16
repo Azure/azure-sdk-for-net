@@ -1,26 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using Microsoft.Rest.ClientRuntime.Azure.Test.Fakes;
-using Microsoft.Azure.Management.Redis;
-using Microsoft.Azure.Management.Redis.Models;
-using Xunit;
-using Microsoft.Azure;
-using Microsoft.Rest.Azure;
-
 namespace Microsoft.Rest.ClientRuntime.Azure.Test
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using Microsoft.Rest.ClientRuntime.Azure.Test.Fakes;
+    using Microsoft.Azure.Management.Redis;
+    using Microsoft.Azure.Management.Redis.Models;
+    using Xunit;
+    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
+    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
+
     public class LongRunningOperationsTest
     {
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateWithAsyncHeader()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithTwoTries());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -36,11 +40,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 handler.Requests[2].RequestUri.ToString());
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateWithoutHeaderInResponses()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithoutHeaderInResponses());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithoutHeaderInResponses());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -58,11 +65,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 handler.Requests[3].RequestUri.ToString());
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestAsyncOperationWithNoPayload()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockAsyncOperaionWithNoBody());
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNoBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var error = Assert.Throws<CloudException>(() => 
@@ -70,11 +80,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("The response from long running operation does not contain a body.", error.Message);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestAsyncOperationWithEmptyPayload()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockAsyncOperaionWithEmptyBody());
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithEmptyBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var error = Assert.Throws<CloudException>(() =>
@@ -82,33 +95,42 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("The response from long running operation does not contain a body.", error.Message);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestAsyncOperationWithBadPayload()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockAsyncOperaionWithBadPayload());
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithBadPayload());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var resource = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.Equal("100", resource.Id);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestAsyncOperationWithMissingProvisioningState()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockAsyncOperaionWithMissingProvisioningState());
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithMissingProvisioningState());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var resource = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.Equal("100", resource.Id);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestAsyncOperationWithNonSuccessStatusAndInvalidResponseContent()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockAsyncOperaionWithNonSuccessStatusAndInvalidResponseContent());
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNonSuccessStatusAndInvalidResponseContent());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var error = Assert.Throws<CloudException>(() =>
@@ -117,22 +139,28 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Null(error.Body);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPutOperationWithoutProvisioningState()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPutOperaionWithoutProvisioningStateInResponse());
+            var handler = new PlaybackTestHandler(LROResponse.MockPutOperaionWithoutProvisioningStateInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var resource = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.Equal("100", resource.Id);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPutOperationWithNonResource()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPutOperaionWitNonResource());
+            var handler = new PlaybackTestHandler(LROResponse.MockPutOperaionWitNonResource());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             Sku sku = fakeClient.RedisOperations.CreateOrUpdateNonResource("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -140,11 +168,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(3, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPutOperationWithSubResource()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPutOperaionWitSubResource());
+            var handler = new PlaybackTestHandler(LROResponse.MockPutOperaionWitSubResource());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var resource = fakeClient.RedisOperations.CreateOrUpdateSubResource("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -152,44 +183,56 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(3, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPutOperationWithImmediateSuccess()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPutOperaionWithImmediateSuccess());
+            var handler = new PlaybackTestHandler(LROResponse.MockPutOperaionWithImmediateSuccess());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.Equal(1, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteOperationWithImmediateSuccessAndOkStatus()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockOperaionWithImmediateSuccessOKStatus());
+            var handler = new PlaybackTestHandler(LROResponse.MockOperaionWithImmediateSuccessOKStatus());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
             Assert.Equal(1, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteOperationWithImmediateSuccessAndNoContentStatus()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockOperaionWithImmediateSuccessNoContentStatus());
+            var handler = new PlaybackTestHandler(LROResponse.MockOperaionWithImmediateSuccessNoContentStatus());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
             Assert.Equal(1, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPostOperationWithImmediateSuccessAndOkStatus()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPostOperaionWithImmediateSuccessOKStatus());
+            var handler = new PlaybackTestHandler(LROResponse.MockPostOperaionWithImmediateSuccessOKStatus());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var sku = fakeClient.RedisOperations.Post("rg", "redis", "1234");
@@ -197,22 +240,28 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Family", sku.Family);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPostOperationWithImmediateSuccessAndNoContentStatus()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockOperaionWithImmediateSuccessNoContentStatus());
+            var handler = new PlaybackTestHandler(LROResponse.MockOperaionWithImmediateSuccessNoContentStatus());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Post("rg", "redis", "1234");
             Assert.Equal(1, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPostOperationWithBody()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPostOperaionWithBody());
+            var handler = new PlaybackTestHandler(LROResponse.MockPostOperaionWithBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Post("rg", "redis", "1234");
@@ -224,11 +273,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("http://custom/status", handler.Requests[1].RequestUri.ToString());
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteOperationWithNonRetryableErrorInResponse()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteOperaionWithNoRetryableErrorInResponse());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteOperaionWithNoRetryableErrorInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var error = Assert.Throws<CloudException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
@@ -244,7 +296,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         public void TestDeleteOperationWithoutHeaderInResponse()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteOperaionWithoutHeaderInResponse());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteOperaionWithoutHeaderInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
@@ -261,7 +313,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         public void TestDeleteOperationWithoutLocationHeaderInResponse()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteOperaionWithoutLocationHeaderInResponse());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteOperaionWithoutLocationHeaderInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
@@ -278,7 +330,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         public void TestCreateOrUpdateWithLocationHeaderWith202()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithLocationHeaderAnd202());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithLocationHeaderAnd202());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -296,11 +348,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 handler.Requests[3].RequestUri.ToString());
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateWithAsyncHeaderWith202()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithAsyncHeaderAnd202());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithAsyncHeaderAnd202());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -315,11 +370,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis", handler.Requests[2].RequestUri.ToString());
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateWithWith202AndResource()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithWith202AndResource());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithWith202AndResource());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var resource = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -336,11 +394,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Succeeded", resource.ProvisioningState);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestPostWithResponse()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockPostWithResourceSku());
+            var handler = new PlaybackTestHandler(LROResponse.MockPostWithResourceSku());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var resource = fakeClient.RedisOperations.Post("rg", "redis", "1234");
@@ -355,11 +416,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Family", resource.Family);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateNoAsyncHeader()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithNoAsyncHeader());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithNoAsyncHeader());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -377,11 +441,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 handler.Requests[2].RequestUri.ToString());
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateFailedStatus()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithFailedStatus());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithFailedStatus());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             try
@@ -397,11 +464,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateErrorHandling()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithImmediateServerError());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithImmediateServerError());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             try
@@ -415,11 +485,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateNoErrorBody()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithNoErrorBody());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithNoErrorBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             try
@@ -433,11 +506,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestCreateOrUpdateWithRetryAfter()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockCreateOrUpdateWithRetryAfterTwoTries());
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             var now = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
@@ -445,11 +521,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteWithAsyncHeader()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteWithAsyncHeaderTwoTries());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithAsyncHeaderTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
@@ -463,11 +542,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(2, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteWithLocationHeader()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteWithLocationHeaderTwoTries());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithLocationHeaderTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
@@ -481,11 +563,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(2, handler.Requests.Count);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteWithLocationHeaderErrorHandling()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteWithLocationHeaderError());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithLocationHeaderError());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
 
@@ -500,11 +585,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteWithLocationHeaderErrorHandlingSecondTime()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteWithLocationHeaderErrorInSecondCall());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithLocationHeaderErrorInSecondCall());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
 
@@ -512,11 +600,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Long running operation failed with status 'InternalServerError'.", ex.Message);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void TestDeleteWithRetryAfter()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(MockDeleteWithRetryAfterTwoTries());
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             var now = DateTime.Now;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");
@@ -524,917 +615,81 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
         }
 
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithTwoTries()
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROAsynOperationFailureWith200()
         {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROAsyncOperationFailedWith200());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            try
             {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            }
+            catch(Exception ex)
             {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
+                Assert.Contains("DeploymentDocument", ex.Message);
+            }
         }
 
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithoutHeaderInResponses()
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROWithLocationHeaderFailureWith200()
         {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROLocationHeaderFailedWith200());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            try
             {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            }
+            catch (Exception ex)
             {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""InProgress"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+                // If the message changes in the response, this assert will also have to be updated.
+                Assert.Contains("DeploymentDocument", ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROPUTWithCanceledState()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROPUTWithCanceledStateResponse());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            try
             {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response3;
-
-            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            }
+            catch (Exception ex)
             {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response4;
+                Assert.Contains("preempted", ex.Message);
+            }
         }
 
-        private IEnumerable<HttpResponseMessage> MockAsyncOperaionWithNoBody()
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROWithNonStandardTerminalStatus()
         {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("")
-            };
-
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockAsyncOperaionWithEmptyBody()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{}")
-            };
-
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockAsyncOperaionWithBadPayload()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response2.Headers.Add("Location", "http://custom/status2");
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { \"provisioningState\" : \"Succeeded\" }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockAsyncOperaionWithMissingProvisioningState()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response2.Headers.Add("Location", "http://custom/status2");
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockAsyncOperaionWithNonSuccessStatusAndInvalidResponseContent()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.BadRequest)
-            {
-                Content = new StringContent("<")
-            };
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPutOperaionWithoutProvisioningStateInResponse()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
-            {
-                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPutOperaionWitNonResource()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""name"": ""foo""
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPutOperaionWitSubResource()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("{ \"properties\": { \"provisioningState\": \"InProgress\"}, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""id"": ""100""
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPutOperaionWithImmediateSuccess()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { \"provisioningState\": \"Succeeded\"}, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockOperaionWithImmediateSuccessOKStatus()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("")
-            };
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPostOperaionWithImmediateSuccessOKStatus()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{\"Capacity\":1,\"Family\":\"Family\"}")
-            };
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockOperaionWithImmediateSuccessNoContentStatus()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("")
-            };
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPostOperaionWithBody()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { \"provisioningState\": \"Succeeded\"}, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteOperaionWithNoRetryableErrorInResponse()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.BadRequest)
-            {
-                Content = new StringContent("")
-            };
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteOperaionWithoutHeaderInResponse()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""InProgress"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteOperaionWithoutLocationHeaderInResponse()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.NoContent)
-            {
-                Content = new StringContent("")
-            };
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithLocationHeaderAnd202()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response2.Headers.Add("Location", "http://custom/locationstatus");
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response3.Headers.Add("Location", "https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis");
-
-            yield return response3;
-
-            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response4;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithAsyncHeaderAnd202()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithWith202AndResource()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockPostWithResourceSku()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""Capacity"": ""1"",
-                    ""Family"": ""Family""
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithNoAsyncHeader()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Anything other than Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithFailedStatus()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Anything other than Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Failed"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithImmediateServerError()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.InternalServerError)
-            {
-                Content = new StringContent(@"
-                {
-                    ""error"": {
-                        ""code"": ""BadArgument"",
-                        ""message"": ""The provided database ‘foo’ has an invalid username."",
-                        ""target"": ""query"",
-                        ""details"": [
-                        {
-                            ""code"": ""301"",
-                            ""target"": ""$search"",
-                            ""message"": ""$search query option not supported""
-                        }
-                        ]
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithNoErrorBody()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.InternalServerError)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithRetryAfterTwoTries()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-            response1.Headers.Add("Retry-After", "2");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteWithAsyncHeaderTwoTries()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteWithLocationHeaderTwoTries()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"")
-            };
-
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteWithLocationHeaderError()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.InternalServerError)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-
-            yield return response1;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteWithLocationHeaderErrorInSecondCall()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.InternalServerError)
-            {
-                Content = new StringContent(@"")
-            };
-
-            yield return response2;
-        }
-
-        private IEnumerable<HttpResponseMessage> MockDeleteWithRetryAfterTwoTries()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-            response1.Headers.Add("Retry-After", "3");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"")
-            };
-
-            yield return response2;
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROLocHdrNonStandardTerminalStatus());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+
+            var foo = fakeClient.RedisOperations.PostWithHttpMessagesAsync("rg", "redis", "1234").ConfigureAwait(false).GetAwaiter().GetResult();            
+            Assert.Equal<string>("OK", foo.Response.StatusCode.ToString());
         }
     }
 }

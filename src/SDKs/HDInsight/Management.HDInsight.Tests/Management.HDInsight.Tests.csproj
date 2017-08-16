@@ -69,4 +69,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.4.0" />
+  </ItemGroup>
+
 </Project>

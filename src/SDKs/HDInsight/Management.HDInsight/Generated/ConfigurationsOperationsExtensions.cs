@@ -11,6 +11,8 @@ namespace Microsoft.HDInsight
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -75,10 +77,9 @@ namespace Microsoft.HDInsight
             /// The name of the cluster.
             /// </param>
             /// <param name='configurationName'>
-            /// The constant for configuration type of gateway. Possible values include:
-            /// 'gateway', 'core-site'
+            /// The constant for configuration type of gateway.
             /// </param>
-            public static HttpConnectivitySettings Get(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, ConfigurationName configurationName)
+            public static IDictionary<string, string> Get(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName)
             {
                 return operations.GetAsync(resourceGroupName, clusterName, configurationName).GetAwaiter().GetResult();
             }
@@ -96,13 +97,12 @@ namespace Microsoft.HDInsight
             /// The name of the cluster.
             /// </param>
             /// <param name='configurationName'>
-            /// The constant for configuration type of gateway. Possible values include:
-            /// 'gateway', 'core-site'
+            /// The constant for configuration type of gateway.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HttpConnectivitySettings> GetAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, ConfigurationName configurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IDictionary<string, string>> GetAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, null, cancellationToken).ConfigureAwait(false))
                 {

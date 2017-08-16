@@ -4,7 +4,7 @@
     <PackageId>Microsoft.Azure.Management.Relay</PackageId>
     <Description>Provides developers with libraries to create and manage Namespaces, WCFRelay, HybridConnection  and manage Authorization Rules. Note: This client library is for Relay under Azure Resource Manager.</Description>
     <AssemblyName>Microsoft.Azure.Management.Relay</AssemblyName>
-    <VersionPrefix>0.0.1-preview</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Relay management;Relay;Relay management</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>

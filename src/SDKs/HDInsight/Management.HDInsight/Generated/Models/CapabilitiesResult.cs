@@ -33,17 +33,17 @@ namespace Microsoft.HDInsight.Models
         /// <param name="versions">The version capability.</param>
         /// <param name="regions">The virtual machine size compatibilty
         /// features.</param>
-        /// <param name="vmsizes">The virtual machine sizes.</param>
-        /// <param name="vmsizeFilters">The virtual machine size compatibilty
+        /// <param name="vmSizes">The virtual machine sizes.</param>
+        /// <param name="vmSizeFilters">The virtual machine size compatibilty
         /// filters.</param>
         /// <param name="features">The capabilty features.</param>
         /// <param name="quota">The quota capability.</param>
-        public CapabilitiesResult(IDictionary<string, VersionsCapability> versions = default(IDictionary<string, VersionsCapability>), IDictionary<string, RegionsCapability> regions = default(IDictionary<string, RegionsCapability>), IDictionary<string, VmSizesCapability> vmsizes = default(IDictionary<string, VmSizesCapability>), IList<VmSizeCompatibilityFilter> vmsizeFilters = default(IList<VmSizeCompatibilityFilter>), IList<string> features = default(IList<string>), QuotaCapability quota = default(QuotaCapability))
+        public CapabilitiesResult(IDictionary<string, VersionsCapability> versions = default(IDictionary<string, VersionsCapability>), IDictionary<string, RegionsCapability> regions = default(IDictionary<string, RegionsCapability>), IDictionary<string, VmSizesCapability> vmSizes = default(IDictionary<string, VmSizesCapability>), IList<VmSizeCompatibilityFilter> vmSizeFilters = default(IList<VmSizeCompatibilityFilter>), IList<string> features = default(IList<string>), QuotaCapability quota = default(QuotaCapability))
         {
             Versions = versions;
             Regions = regions;
-            Vmsizes = vmsizes;
-            VmsizeFilters = vmsizeFilters;
+            VmSizes = vmSizes;
+            VmSizeFilters = vmSizeFilters;
             Features = features;
             Quota = quota;
             CustomInit();
@@ -69,14 +69,14 @@ namespace Microsoft.HDInsight.Models
         /// <summary>
         /// Gets or sets the virtual machine sizes.
         /// </summary>
-        [JsonProperty(PropertyName = "vmsizes")]
-        public IDictionary<string, VmSizesCapability> Vmsizes { get; set; }
+        [JsonProperty(PropertyName = "vmSizes")]
+        public IDictionary<string, VmSizesCapability> VmSizes { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine size compatibilty filters.
         /// </summary>
-        [JsonProperty(PropertyName = "vmsize_filters")]
-        public IList<VmSizeCompatibilityFilter> VmsizeFilters { get; set; }
+        [JsonProperty(PropertyName = "vmSize_filters")]
+        public IList<VmSizeCompatibilityFilter> VmSizeFilters { get; set; }
 
         /// <summary>
         /// Gets or sets the capabilty features.

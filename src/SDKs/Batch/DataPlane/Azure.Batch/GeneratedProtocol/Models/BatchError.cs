@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// additional details about the error.</param>
         public BatchError(string code = default(string), ErrorMessage message = default(ErrorMessage), System.Collections.Generic.IList<BatchErrorDetail> values = default(System.Collections.Generic.IList<BatchErrorDetail>))
         {
-            Code = code;
-            Message = message;
-            Values = values;
+            this.Code = code;
+            this.Message = message;
+            this.Values = values;
         }
 
         /// <summary>

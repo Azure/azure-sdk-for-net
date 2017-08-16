@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
-                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.Equals("ResourceNotFound", StringComparison.OrdinalIgnoreCase))
+                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.ToLowerInvariant().Contains("resourcenotfound"))
                         {
                             var _toReturn = new AzureOperationResponse<bool>();
                             _toReturn.Request = _httpRequest;
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
-                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.Equals("ResourceNotFound", StringComparison.OrdinalIgnoreCase))
+                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.ToLowerInvariant().Contains("resourcenotfound"))
                         {
                             var _toReturn = new AzureOperationResponse<bool>();
                             _toReturn.Request = _httpRequest;
@@ -597,7 +597,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
-                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.Equals("ResourceNotFound", StringComparison.OrdinalIgnoreCase))
+                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.ToLowerInvariant().Contains("resourcenotfound"))
                         {
                             var _toReturn = new AzureOperationResponse<bool>();
                             _toReturn.Request = _httpRequest;
@@ -793,7 +793,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
-                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.Equals("ResourceNotFound", StringComparison.OrdinalIgnoreCase))
+                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.ToLowerInvariant().Contains("resourcenotfound"))
                         {
                             var _toReturn = new AzureOperationResponse<bool>();
                             _toReturn.Request = _httpRequest;

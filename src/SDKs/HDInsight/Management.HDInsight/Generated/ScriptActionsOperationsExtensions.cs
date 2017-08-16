@@ -74,9 +74,9 @@ namespace Microsoft.HDInsight
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static IPage<RuntimeScriptActionDetail> List(this IScriptActionsOperations operations, string resourceGroupName, string clusterName)
+            public static IPage<RuntimeScriptActionDetail> ListPersistedScripts(this IScriptActionsOperations operations, string resourceGroupName, string clusterName)
             {
-                return operations.ListAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.ListPersistedScriptsAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -94,9 +94,55 @@ namespace Microsoft.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RuntimeScriptActionDetail>> ListAsync(this IScriptActionsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RuntimeScriptActionDetail>> ListPersistedScriptsAsync(this IScriptActionsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPersistedScriptsWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the script execution detail for the given script execution ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='scriptExecutionId'>
+            /// The script execution Id
+            /// </param>
+            public static RuntimeScriptActionDetail GetExecutionDetail(this IScriptActionsOperations operations, string resourceGroupName, string clusterName, string scriptExecutionId)
+            {
+                return operations.GetExecutionDetailAsync(resourceGroupName, clusterName, scriptExecutionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the script execution detail for the given script execution ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='scriptExecutionId'>
+            /// The script execution Id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RuntimeScriptActionDetail> GetExecutionDetailAsync(this IScriptActionsOperations operations, string resourceGroupName, string clusterName, string scriptExecutionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetExecutionDetailWithHttpMessagesAsync(resourceGroupName, clusterName, scriptExecutionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -111,9 +157,9 @@ namespace Microsoft.HDInsight
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RuntimeScriptActionDetail> ListNext(this IScriptActionsOperations operations, string nextPageLink)
+            public static IPage<RuntimeScriptActionDetail> ListPersistedScriptsNext(this IScriptActionsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListPersistedScriptsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,9 +174,9 @@ namespace Microsoft.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RuntimeScriptActionDetail>> ListNextAsync(this IScriptActionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RuntimeScriptActionDetail>> ListPersistedScriptsNextAsync(this IScriptActionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPersistedScriptsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

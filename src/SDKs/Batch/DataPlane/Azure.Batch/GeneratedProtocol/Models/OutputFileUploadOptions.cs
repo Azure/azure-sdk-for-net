@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// output file or set of files should be uploaded.</param>
         public OutputFileUploadOptions(OutputFileUploadCondition uploadCondition)
         {
-            UploadCondition = uploadCondition;
+            this.UploadCondition = uploadCondition;
         }
 
         /// <summary>

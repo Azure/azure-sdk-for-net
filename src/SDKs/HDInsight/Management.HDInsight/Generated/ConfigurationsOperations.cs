@@ -83,8 +83,7 @@ namespace Microsoft.HDInsight
         /// The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// The constant for configuration type of gateway. Possible values include:
-        /// 'gateway', 'core-site'
+        /// The constant for configuration type of gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -107,7 +106,7 @@ namespace Microsoft.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HttpConnectivitySettings>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, ConfigurationName configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IDictionary<string, string>>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -116,6 +115,10 @@ namespace Microsoft.HDInsight
             if (clusterName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
+            }
+            if (configurationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "configurationName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -141,7 +144,7 @@ namespace Microsoft.HDInsight
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/configurations/{configurationName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{configurationName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(configurationName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{configurationName}", System.Uri.EscapeDataString(configurationName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -241,7 +244,7 @@ namespace Microsoft.HDInsight
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<HttpConnectivitySettings>();
+            var _result = new AzureOperationResponse<IDictionary<string, string>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -254,7 +257,7 @@ namespace Microsoft.HDInsight
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HttpConnectivitySettings>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

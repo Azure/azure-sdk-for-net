@@ -46,12 +46,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// modified since the specified time.</param>
         public FileGetPropertiesFromTaskOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?))
         {
-            Timeout = timeout;
-            ClientRequestId = clientRequestId;
-            ReturnClientRequestId = returnClientRequestId;
-            OcpDate = ocpDate;
-            IfModifiedSince = ifModifiedSince;
-            IfUnmodifiedSince = ifUnmodifiedSince;
+            this.Timeout = timeout;
+            this.ClientRequestId = clientRequestId;
+            this.ReturnClientRequestId = returnClientRequestId;
+            this.OcpDate = ocpDate;
+            this.IfModifiedSince = ifModifiedSince;
+            this.IfUnmodifiedSince = ifUnmodifiedSince;
         }
 
         /// <summary>

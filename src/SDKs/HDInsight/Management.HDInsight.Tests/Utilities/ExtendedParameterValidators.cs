@@ -55,8 +55,7 @@ namespace Management.HDInsight.Tests.UnitTests
                 ValidateVnet(role.VirtualNetworkProfile, createParams);
 
                 Assert.NotNull(role.HardwareProfile);
-                ClusterNodeType nodeType;
-                Assert.True(Enum.TryParse(role.Name, true, out nodeType));
+                Assert.True(Enum.TryParse(role.Name, true, out ClusterNodeType nodeType));
                 Assert.Equal(CreateParametersConverter.GetNodeSize(createParams, nodeType), role.HardwareProfile.VmSize);
 
                 if (createParams.ScriptActions != null && createParams.ScriptActions.ContainsKey(nodeType))

@@ -56,8 +56,7 @@ namespace Microsoft.HDInsight
         /// The name of the cluster.
         /// </param>
         /// <param name='configurationName'>
-        /// The constant for configuration type of gateway. Possible values
-        /// include: 'gateway', 'core-site'
+        /// The constant for configuration type of gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,7 +73,7 @@ namespace Microsoft.HDInsight
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HttpConnectivitySettings>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, ConfigurationName configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IDictionary<string, string>>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Configures the HTTP settings on the specified cluster.
         /// </summary>
