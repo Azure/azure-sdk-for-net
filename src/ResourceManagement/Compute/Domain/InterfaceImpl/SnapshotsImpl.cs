@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="resourceGroupName">The resource group name.</param>
         /// <param name="snapName">The snapshot name.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.ISnapshots.RevokeAccessAsync(string resourceGroupName, string snapName, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.ISnapshotsBeta.RevokeAccessAsync(string resourceGroupName, string snapName, CancellationToken cancellationToken)
         {
 
             await this.RevokeAccessAsync(resourceGroupName, snapName, cancellationToken);
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="accessLevel">Access level.</param>
         /// <param name="accessDuration">Access duration.</param>
         /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the disk.</returna>
-        async Task<string> Microsoft.Azure.Management.Compute.Fluent.ISnapshots.GrantAccessAsync(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken)
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.ISnapshotsBeta.GrantAccessAsync(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken)
         {
             return await this.GrantAccessAsync(resourceGroupName, snapshotName, accessLevel, accessDuration, cancellationToken);
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="resourceGroupName">The resource group name.</param>
         /// <param name="snapName">The snapshot name.</param>
-        void Microsoft.Azure.Management.Compute.Fluent.ISnapshots.RevokeAccess(string resourceGroupName, string snapName)
+        void Microsoft.Azure.Management.Compute.Fluent.ISnapshotsBeta.RevokeAccess(string resourceGroupName, string snapName)
         {
 
             this.RevokeAccess(resourceGroupName, snapName);
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="accessLevel">Access level.</param>
         /// <param name="accessDuration">Access duration.</param>
         /// <return>The read-only SAS URI to the snapshot.</return>
-        string Microsoft.Azure.Management.Compute.Fluent.ISnapshots.GrantAccess(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration)
+        string Microsoft.Azure.Management.Compute.Fluent.ISnapshotsBeta.GrantAccess(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration)
         {
             return this.GrantAccess(resourceGroupName, snapshotName, accessLevel, accessDuration);
         }

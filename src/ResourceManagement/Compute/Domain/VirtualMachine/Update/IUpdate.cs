@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
     /// <summary>
     /// The template for an update operation, containing all the settings that can be modified.
@@ -23,7 +24,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithManagedDataDisk,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithSecondaryNetworkInterface,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithExtension,
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithBootDiagnostics
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithBootDiagnostics,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithManagedServiceIdentity
     {
         /// <summary>
         /// Specifies the encryption settings for the OS Disk.
@@ -305,5 +307,72 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         /// <param name="creatable">A creatable definition for a new network interface.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine update allowing to enable Managed Service Identity.
+    /// </summary>
+    public interface IWithManagedServiceIdentity :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithRoleAndScopeOrUpdate WithManagedServiceIdentity();
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="tokenPort">The port on the virtual machine where access token is available.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithRoleAndScopeOrUpdate WithManagedServiceIdentity(int tokenPort);
+    }
+
+    /// <summary>
+    /// The stage of the Managed Service Identity enabled virtual machine allowing to set role
+    /// assignment for a scope.
+    /// </summary>
+    public interface IWithRoleAndScopeOrUpdate :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate
+    {
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the given access role
+        /// definition with scope of access limited to the ARM resource identified by the resource id
+        /// specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="roleDefinitionId">Access role definition to assigned to the virtual machine.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithRoleAndScopeOrUpdate WithRoleDefinitionBasedAccessTo(string scope, string roleDefinitionId);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the given access role
+        /// with scope of access limited to the current resource group that the virtual machine
+        /// resides.
+        /// </summary>
+        /// <param name="asRole">Access role to assigned to the virtual machine.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithRoleAndScopeOrUpdate WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the given access role
+        /// with scope of access limited to the ARM resource identified by the resource ID specified
+        /// in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="asRole">Access role to assigned to the virtual machine.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithRoleAndScopeOrUpdate WithRoleBasedAccessTo(string scope, BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine requires the given access role
+        /// definition with scope of access limited to the current resource group that the virtual
+        /// machine resides.
+        /// </summary>
+        /// <param name="roleDefinitionId">Access role definition to assigned to the virtual machine.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithRoleAndScopeOrUpdate WithRoleDefinitionBasedAccessToCurrentResourceGroup(string roleDefinitionId);
     }
 }

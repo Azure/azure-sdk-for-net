@@ -22,6 +22,8 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent;
 
 namespace Fluent.Tests.Compute.VirtualMachine
 {
@@ -580,6 +582,237 @@ namespace Fluent.Tests.Compute.VirtualMachine
                 }
                 Assert.True(nicCount > 0);
                 CheckVMInstances(virtualMachineScaleSet);
+            }
+        }
+
+        [Fact]
+        public void CanEnableMSIWithoutRoleAssignment()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                string vmss_name = TestUtilities.GenerateName("vmss");
+                string groupName = TestUtilities.GenerateName("javacsmrg");
+                IAzure azure = null;
+                try
+                {
+                    azure = TestHelper.CreateRollupClient();
+                    IResourceGroup resourceGroup = azure.ResourceGroups
+                        .Define(groupName)
+                        .WithRegion(Location)
+                        .Create();
+
+                    INetwork network = azure
+                            .Networks
+                            .Define("vmssvnet")
+                            .WithRegion(Location)
+                            .WithExistingResourceGroup(resourceGroup)
+                            .WithAddressSpace("10.0.0.0/28")
+                            .WithSubnet("subnet1", "10.0.0.0/28")
+                            .Create();
+
+                    ILoadBalancer publicLoadBalancer = CreateInternetFacingLoadBalancer(azure, resourceGroup, "1");
+                    List<string> backends = new List<string>();
+                    foreach (string backend in publicLoadBalancer.Backends.Keys)
+                    {
+                        backends.Add(backend);
+                    }
+                    Assert.True(backends.Count() == 2);
+
+                    IVirtualMachineScaleSet virtualMachineScaleSet = azure.VirtualMachineScaleSets
+                        .Define(vmss_name)
+                        .WithRegion(Location)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
+                        .WithExistingPrimaryNetworkSubnet(network, "subnet1")
+                        .WithExistingPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
+                        .WithPrimaryInternetFacingLoadBalancerBackends(backends[0], backends[1])
+                        .WithoutPrimaryInternalLoadBalancer()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername("jvuser")
+                        .WithRootPassword("123OData!@#123")
+                        .WithManagedServiceIdentity()
+                        .Create();
+
+                    var authenticatedClient = TestHelper.CreateAuthenticatedClient();
+                    //
+                    IServicePrincipal servicePrincipal = authenticatedClient
+                            .ServicePrincipals
+                            .GetById(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId);
+
+                    Assert.NotNull(servicePrincipal);
+                    Assert.NotNull(servicePrincipal.Inner);
+
+                    // Ensure the MSI extension is set
+                    //
+                    var extensions = virtualMachineScaleSet.Extensions;
+                    bool extensionFound = false;
+                    foreach (var extension in extensions.Values)
+                    {
+                        if (extension.PublisherName.Equals("Microsoft.ManagedIdentity", StringComparison.OrdinalIgnoreCase)
+                                && extension.TypeName.Equals("ManagedIdentityExtensionForLinux", StringComparison.OrdinalIgnoreCase))
+                        {
+                            extensionFound = true;
+                            break;
+                        }
+                    }
+                    Assert.True(extensionFound);
+
+                    // Ensure no role assigned for resource group
+                    //
+                    var rgRoleAssignments = authenticatedClient.RoleAssignments.ListByScope(resourceGroup.Id);
+                    Assert.NotNull(rgRoleAssignments);
+                    bool found = false;
+                    foreach (var roleAssignment in rgRoleAssignments)
+                    {
+                        if (roleAssignment.PrincipalId != null && roleAssignment.PrincipalId.Equals(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId, StringComparison.OrdinalIgnoreCase))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    Assert.False(found, "Resource group should not have a role assignment with virtual machine scale set MSI principal");
+
+                }
+                finally
+                {
+                    try
+                    {
+                        if (azure != null)
+                        {
+                            azure.ResourceGroups.BeginDeleteByName(groupName);
+                        }
+                    }
+                    catch { }
+                }
+
+            }
+        }
+
+
+        [Fact]
+        public void CanEnableMSIWithMultipleRoleAssignment()
+        {
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                string vmss_name = TestUtilities.GenerateName("vmss");
+                string groupName = TestUtilities.GenerateName("javacsmrg");
+                var storageAccountName = TestUtilities.GenerateName("ja");
+                IAzure azure = null;
+                try
+                {
+                    azure = TestHelper.CreateRollupClient();
+                    IResourceGroup resourceGroup = azure.ResourceGroups
+                        .Define(groupName)
+                        .WithRegion(Location)
+                        .Create();
+
+                    INetwork network = azure
+                            .Networks
+                            .Define("vmssvnet")
+                            .WithRegion(Location)
+                            .WithExistingResourceGroup(resourceGroup)
+                            .WithAddressSpace("10.0.0.0/28")
+                            .WithSubnet("subnet1", "10.0.0.0/28")
+                            .Create();
+
+                    ILoadBalancer publicLoadBalancer = CreateInternetFacingLoadBalancer(azure, resourceGroup, "1");
+                    List<string> backends = new List<string>();
+                    foreach (string backend in publicLoadBalancer.Backends.Keys)
+                    {
+                        backends.Add(backend);
+                    }
+                    Assert.True(backends.Count() == 2);
+
+                    IStorageAccount storageAccount = azure.StorageAccounts
+                        .Define(storageAccountName)
+                        .WithRegion(Location)
+                        .WithNewResourceGroup(groupName)
+                        .Create();
+
+                    IVirtualMachineScaleSet virtualMachineScaleSet = azure.VirtualMachineScaleSets
+                        .Define(vmss_name)
+                        .WithRegion(Location)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
+                        .WithExistingPrimaryNetworkSubnet(network, "subnet1")
+                        .WithExistingPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
+                        .WithPrimaryInternetFacingLoadBalancerBackends(backends[0], backends[1])
+                        .WithoutPrimaryInternalLoadBalancer()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername("jvuser")
+                        .WithRootPassword("123OData!@#123")
+                        .WithManagedServiceIdentity()
+                        .WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole.Contributor)
+                        .WithRoleBasedAccessTo(storageAccount.Id, BuiltInRole.Contributor)
+                        .Create();
+
+                    var authenticatedClient = TestHelper.CreateAuthenticatedClient();
+                    //
+                    IServicePrincipal servicePrincipal = authenticatedClient
+                            .ServicePrincipals
+                            .GetById(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId);
+
+                    Assert.NotNull(servicePrincipal);
+                    Assert.NotNull(servicePrincipal.Inner);
+
+                    // Ensure the MSI extension is set
+                    //
+                    var extensions = virtualMachineScaleSet.Extensions;
+                    bool extensionFound = false;
+                    foreach (var extension in extensions.Values)
+                    {
+                        if (extension.PublisherName.Equals("Microsoft.ManagedIdentity", StringComparison.OrdinalIgnoreCase)
+                                && extension.TypeName.Equals("ManagedIdentityExtensionForLinux", StringComparison.OrdinalIgnoreCase))
+                        {
+                            extensionFound = true;
+                            break;
+                        }
+                    }
+                    Assert.True(extensionFound);
+
+                    // Ensure role assigned for resource group
+                    //
+                    var rgRoleAssignments = authenticatedClient.RoleAssignments.ListByScope(resourceGroup.Id);
+                    Assert.NotNull(rgRoleAssignments);
+                    bool found = false;
+                    foreach (var roleAssignment in rgRoleAssignments)
+                    {
+                        if (roleAssignment.PrincipalId != null && roleAssignment.PrincipalId.Equals(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId, StringComparison.OrdinalIgnoreCase))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    Assert.True(found, "Resource group should have a role assignment with virtual machine scale set MSI principal");
+
+                    // Ensure role assigned for storage account
+                    //
+                    var stgRoleAssignments = authenticatedClient.RoleAssignments.ListByScope(storageAccount.Id);
+                    Assert.NotNull(stgRoleAssignments);
+                    found = false;
+                    foreach (var roleAssignment in stgRoleAssignments)
+                    {
+                        if (roleAssignment.PrincipalId != null && roleAssignment.PrincipalId.Equals(virtualMachineScaleSet.ManagedServiceIdentityPrincipalId, StringComparison.OrdinalIgnoreCase))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    Assert.True(found, "Storage account should have a role assignment with virtual machine scale set MSI principal");
+
+                }
+                finally
+                {
+                    try
+                    {
+                        if (azure != null)
+                        {
+                            azure.ResourceGroups.BeginDeleteByName(groupName);
+                        }
+                    }
+                    catch { }
+                }
+
             }
         }
 

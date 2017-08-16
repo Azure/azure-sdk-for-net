@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     public interface IVirtualMachineScaleSet  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Compute.Fluent.IComputeManager,Models.VirtualMachineScaleSetInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>,
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta
     {
         /// <summary>
         /// Lists the network interface associated with a specific virtual machine instance in the scale set.

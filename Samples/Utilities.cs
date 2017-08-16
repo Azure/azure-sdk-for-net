@@ -644,6 +644,11 @@ namespace Microsoft.Azure.Management.Samples.Common
                 networkProfile.Append("\n\t\tId:").Append(networkInterfaceId);
             }
 
+            var msi = new StringBuilder().Append("\n\tMSI: ");
+            msi.Append("\n\t\tMSI enabled:").Append(virtualMachine.IsManagedServiceIdentityEnabled);
+            msi.Append("\n\t\tMSI Active Directory Service Principal Id:").Append(virtualMachine.ManagedServiceIdentityPrincipalId);
+            msi.Append("\n\t\tMSI Active Directory Tenant Id:").Append(virtualMachine.ManagedServiceIdentityTenantId);
+
             Utilities.Log(new StringBuilder().Append("Virtual Machine: ").Append(virtualMachine.Id)
                     .Append("Name: ").Append(virtualMachine.Name)
                     .Append("\n\tResource group: ").Append(virtualMachine.ResourceGroupName)
@@ -654,6 +659,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append(storageProfile)
                     .Append(osProfile)
                     .Append(networkProfile)
+                    .Append(msi)
                     .ToString());
         }
 

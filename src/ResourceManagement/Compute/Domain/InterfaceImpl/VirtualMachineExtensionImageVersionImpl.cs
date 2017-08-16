@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <return>Virtual machine extension image this version represents.</return>
-        Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion.GetImageAsync(CancellationToken cancellationToken)
+        Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersionBeta.GetImageAsync(CancellationToken cancellationToken)
         {
             return this.GetImageAsync(cancellationToken) as Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>;
         }

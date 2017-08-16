@@ -6,31 +6,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Rest;
 
     /// <summary>
-    /// An immutable client-side representation of an Azure virtual machine.
+    /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>
-    public interface IVirtualMachineBeta  :
+    public interface IVirtualMachineScaleSetBeta  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <summary>
-        /// Gets true if boot diagnostics is enabled for the virtual machine.
-        /// </summary>
-        bool IsBootDiagnosticsEnabled { get; }
-
-        /// <summary>
-        /// Gets the storage blob endpoint uri if boot diagnostics is enabled for the virtual machine.
-        /// </summary>
-        string BootDiagnosticsStorageUri { get; }
-
-        /// <summary>
         /// Gets the Managed Service Identity specific Active Directory service principal ID assigned
-        /// to the virtual machine.
+        /// to the virtual machine scale set.
         /// </summary>
         string ManagedServiceIdentityPrincipalId { get; }
 
@@ -41,17 +31,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <summary>
         /// Gets the Managed Service Identity specific Active Directory tenant ID assigned to the
-        /// virtual machine.
+        /// virtual machine scale set.
         /// </summary>
         string ManagedServiceIdentityTenantId { get; }
-
-        /// <summary>
-        /// Captures the virtual machine by copying virtual hard disks of the VM asynchronously.
-        /// </summary>
-        /// <param name="containerName">Destination container name to store the captured VHD.</param>
-        /// <param name="vhdPrefix">The prefix for the VHD holding captured image.</param>
-        /// <param name="overwriteVhd">Whether to overwrites destination VHD if it exists.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task<string> CaptureAsync(string containerName, string vhdPrefix, bool overwriteVhd, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -52,10 +52,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             };
         }
 
-        ///GENMHASH:467A5E1DBEFF6DFFFD3FD21A958498A3:FAFE8BE8CCB0532D78869AAF9E2F5DDF
-        public IReadOnlyList<DataDiskImage> DataDiskImages()
+        ///GENMHASH:467A5E1DBEFF6DFFFD3FD21A958498A3:AD62B7CD7788055CCE7DF3AC1125614D
+        public IReadOnlyDictionary<int, DataDiskImage> DataDiskImages()
         {
-            return Inner.DataDiskImages?.ToList();
+            if (Inner.DataDiskImages == null)
+            {
+                return new Dictionary<int, DataDiskImage>();
+            }
+            Dictionary<int, DataDiskImage> diskImages = new Dictionary<int, DataDiskImage>();
+            foreach (var diskImage in Inner.DataDiskImages)
+            {
+                if (diskImage.Lun.HasValue)
+                {
+                    diskImages.Add(diskImage.Lun.Value, diskImage);
+                }
+            }
+            return diskImages;
         }
 
         public ImageReference ImageReference()

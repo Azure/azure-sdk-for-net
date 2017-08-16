@@ -12,7 +12,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public interface IVirtualMachineExtensionImageVersion  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.VirtualMachineExtensionImageInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersionBeta
     {
         /// <summary>
         /// Gets the region in which virtual machine extension image version is available.
@@ -31,8 +32,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <return>Virtual machine extension image this version represents.</return>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage GetImage();
-
-        /// <return>Virtual machine extension image this version represents.</return>
-        Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> GetImageAsync(CancellationToken cancellationToken);
     }
 }

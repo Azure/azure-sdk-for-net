@@ -28,12 +28,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         bool IsManagedDiskEnabled { get; }
 
         /// <summary>
-        /// Redeploys the virtual machine asynchronously.
-        /// </summary>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RedeployAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets the virtual machine unique ID.
         /// </summary>
         string VMId { get; }
@@ -47,21 +41,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Shuts down the virtual machine and releases the compute resources.
         /// </summary>
         void Deallocate();
-
-        /// <summary>
-        /// Restarts the virtual machine asynchronously.
-        /// </summary>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Captures the virtual machine by copying virtual hard disks of the VM asynchronously.
-        /// </summary>
-        /// <param name="containerName">Destination container name to store the captured VHD.</param>
-        /// <param name="vhdPrefix">The prefix for the VHD holding captured image.</param>
-        /// <param name="overwriteVhd">Whether to overwrites destination VHD if it exists.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task<string> CaptureAsync(string containerName, string vhdPrefix, bool overwriteVhd, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Refreshes the virtual machine instance view to sync with Azure.
@@ -181,6 +160,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="overwriteVhd">Whether to overwrites destination VHD if it exists.</param>
         /// <return>The JSON template for creating more such virtual machines.</return>
         string Capture(string containerName, string vhdPrefix, bool overwriteVhd);
+
+        /// <summary>
+        /// Redeploys the virtual machine asynchronously.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task RedeployAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Restarts the virtual machine asynchronously.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the URI to the VHD file backing this virtual machine's operating system disk.

@@ -58,6 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent.csproj" />
     <ProjectReference Include="..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent.csproj" />
     <ProjectReference Include="..\Network\Microsoft.Azure.Management.Network.Fluent.csproj" />
     <ProjectReference Include="..\Storage\Microsoft.Azure.Management.Storage.Fluent.csproj" />

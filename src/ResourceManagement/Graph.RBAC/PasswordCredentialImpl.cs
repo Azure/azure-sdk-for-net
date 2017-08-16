@@ -108,9 +108,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         internal PasswordCredentialImpl(Models.PasswordCredential passwordCredential)
-                    : base(System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(passwordCredential.CustomKeyIdentifier)), passwordCredential)
+                    : base(!String.IsNullOrEmpty(passwordCredential.CustomKeyIdentifier) ? System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(passwordCredential.CustomKeyIdentifier)) : passwordCredential.KeyId, passwordCredential)
         {
-            name = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(passwordCredential.CustomKeyIdentifier));
+            if (!String.IsNullOrEmpty(passwordCredential.CustomKeyIdentifier))
+            {
+                name = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(passwordCredential.CustomKeyIdentifier));
+            }
+            else
+            {
+                this.name = passwordCredential.KeyId;
+            }
         }
 
         internal PasswordCredentialImpl(string name, IHasCredential<T> parent)

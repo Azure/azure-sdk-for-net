@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     using Models;
     using Network.Fluent;
     using ResourceManager.Fluent.Core;
@@ -27,17 +28,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     {
         private readonly IStorageManager storageManager;
         private readonly INetworkManager networkManager;
+        private readonly IGraphRbacManager rbacManager;
         private readonly VirtualMachineSizesImpl vmSizes;
 
         ///GENMHASH:CF74C66AC4A6B06C41B8E9D08F5D5F4B:DB478B04CDDECD11BE9F5F93E71FB984
         internal VirtualMachinesImpl(
             IComputeManager computeManager,
             IStorageManager storageManager,
-            INetworkManager networkManager) :
+            INetworkManager networkManager, 
+            IGraphRbacManager rbacManager) :
             base(computeManager.Inner.VirtualMachines, computeManager)
         {
             this.storageManager = storageManager;
             this.networkManager = networkManager;
+            this.rbacManager = rbacManager;
             this.vmSizes = new VirtualMachineSizesImpl(computeManager.Inner.VirtualMachineSizes);
         }
 
@@ -209,7 +213,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 inner,
                 base.Manager,
                 this.storageManager,
-                this.networkManager);
+                this.networkManager, 
+                this.rbacManager);
         }
 
         ///GENMHASH:7C70549803EBDDFC5C2F931D81D21F99:9ECCC2DACA9F6008FB5426B0426C7B1C
@@ -219,7 +224,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 virtualMachineInner,
                 base.Manager,
                 this.storageManager,
-                this.networkManager);
+                this.networkManager,
+                this.rbacManager);
         }
 
         ///GENMHASH:AB63F782DA5B8D22523A284DAD664D17:7C0A1D0C3FE28C45F35B565F4AFF751D

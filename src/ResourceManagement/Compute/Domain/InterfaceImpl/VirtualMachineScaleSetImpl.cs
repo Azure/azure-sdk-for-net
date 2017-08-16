@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Rest;
+    using System;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
     internal partial class VirtualMachineScaleSetImpl 
     {
@@ -845,6 +847,41 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets the Managed Service Identity specific Active Directory service principal ID assigned
+        /// to the virtual machine scale set.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.ManagedServiceIdentityPrincipalId
+        {
+            get
+            {
+                return this.ManagedServiceIdentityPrincipalId();
+            }
+        }
+
+        /// <summary>
+        /// Gets true if Managed Service Identity is enabled for the virtual machine scale set.
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.IsManagedServiceIdentityEnabled
+        {
+            get
+            {
+                return this.IsManagedServiceIdentityEnabled();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Managed Service Identity specific Active Directory tenant ID assigned to the
+        /// virtual machine scale set.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.ManagedServiceIdentityTenantId
+        {
+            get
+            {
+                return this.ManagedServiceIdentityTenantId();
+            }
+        }
+
+        /// <summary>
         /// Shuts down the virtual machines in the scale set and releases its compute resources.
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Deallocate()
@@ -1420,6 +1457,144 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged VirtualMachineScaleSet.Definition.IWithLinuxRootUsernameManaged.WithRootUsername(string rootUserName)
         {
             return this.WithRootUsername(rootUserName) as VirtualMachineScaleSet.Definition.IWithLinuxRootPasswordOrPublicKeyManaged;
+        }
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate VirtualMachineScaleSet.Definition.IWithManagedServiceIdentity.WithManagedServiceIdentity()
+        {
+            return this.WithManagedServiceIdentity() as VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate;
+        }
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <param name="tokenPort">the port on the virtual machine scale set instance where access token is available</param>
+        /// <returns>the next stage of the definition</returns>
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate VirtualMachineScaleSet.Definition.IWithManagedServiceIdentity.WithManagedServiceIdentity(int tokenPort)
+        {
+            return this.WithManagedServiceIdentity(tokenPort) as VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate;
+        }
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply VirtualMachineScaleSet.Update.IWithManagedServiceIdentity.WithManagedServiceIdentity()
+        {
+            return this.WithManagedServiceIdentity() as VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply;
+        }
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <param name="tokenPort">the port on the virtual machine scale set instance where access token is available</param>
+        /// <returns>the next stage of the update</returns>
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply VirtualMachineScaleSet.Update.IWithManagedServiceIdentity.WithManagedServiceIdentity(int tokenPort)
+        {
+            return this.WithManagedServiceIdentity(tokenPort) as VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        /// described in the given role definition with scope of access limited to the ARM resource identified by
+        /// the resource ID specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">scope of the access represented in ARM resource ID format</param>
+        /// <param name="roleDefinitionId">role definition to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the definition</returns>
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate.WithRoleDefinitionBasedAccessTo(string scope, string roleDefinitionId)
+        {
+            return this.WithRoleDefinitionBasedAccessTo(scope, roleDefinitionId) as VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the given access
+        /// role with scope of access limited to the current resource group that the virtual machine scale set resides.
+        /// 
+        /// </summary>
+        /// <param name="asRole">access role to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the definition</returns>
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate.WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole asRole)
+        {
+            return this.WithRoleBasedAccessToCurrentResourceGroup(asRole) as VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the given
+        ///  access role with scope of access limited to the ARM resource identified by the resource id
+        ///  specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">scope of the access represented in ARM resource ID format</param>
+        /// <param name="asRole">access role to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the definition</returns>
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate.WithRoleBasedAccessTo(string scope, BuiltInRole asRole)
+        {
+            return this.WithRoleBasedAccessTo(scope, asRole) as VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        ///  described in the given role definition with scope of access limited to the current resource group
+        ///  that the virtual machine scale set resides.
+        /// </summary>
+        /// <param name="roleDefinitionId">role definition to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the definition</returns>
+        VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate.WithRoleDefinitionBasedAccessToCurrentResourceGroup(string roleDefinitionId)
+        {
+            return this.WithRoleDefinitionBasedAccessToCurrentResourceGroup(roleDefinitionId) as VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        /// described in the given role definition with scope of access limited to the ARM resource identified by
+        /// the resource ID specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">scope of the access represented in ARM resource ID format</param>
+        /// <param name="roleDefinitionId">role definition to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the update</returns>
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply.WithRoleDefinitionBasedAccessTo(string scope, string roleDefinitionId)
+        {
+            return this.WithRoleDefinitionBasedAccessTo(scope, roleDefinitionId) as VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the given access
+        /// role with scope of access limited to the current resource group that the virtual machine scale set resides.
+        /// 
+        /// </summary>
+        /// <param name="asRole">access role to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the update</returns>
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply.WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole asRole)
+        {
+            return this.WithRoleBasedAccessToCurrentResourceGroup(asRole) as VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the given
+        ///  access role with scope of access limited to the ARM resource identified by the resource id
+        ///  specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">scope of the access represented in ARM resource ID format</param>
+        /// <param name="asRole">access role to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the update</returns>
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply.WithRoleBasedAccessTo(string scope, BuiltInRole asRole)
+        {
+            return this.WithRoleBasedAccessTo(scope, asRole) as VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply;
+        }
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        ///  described in the given role definition with scope of access limited to the current resource group
+        ///  that the virtual machine scale set resides.
+        /// </summary>
+        /// <param name="roleDefinitionId">role definition to assigned to the virtual machine scale set</param>
+        /// <returns>the next stage of the update</returns>
+        VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply.WithRoleDefinitionBasedAccessToCurrentResourceGroup(string roleDefinitionId)
+        {
+            return this.WithRoleDefinitionBasedAccessToCurrentResourceGroup(roleDefinitionId) as VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply;
         }
     }
 

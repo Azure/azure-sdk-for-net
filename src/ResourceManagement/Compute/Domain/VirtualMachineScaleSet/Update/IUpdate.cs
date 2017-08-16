@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify extensions.
@@ -195,7 +196,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithExtension,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend,
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithManagedServiceIdentity
     {
     }
 
@@ -319,4 +321,72 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames);
     }
+
+    /// <summary>
+    /// The stage of the virtual machine scale set update allowing to enable Managed Service Identity.
+    /// </summary>
+    public interface IWithManagedServiceIdentity :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply WithManagedServiceIdentity();
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <param name="tokenPort">The port on the virtual machine scale set instance where access token is available.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply WithManagedServiceIdentity(int tokenPort);
+    }
+
+    /// <summary>
+    /// The stage of the Managed Service Identity enabled virtual machine allowing to set role
+    /// assignment for a scope.
+    /// </summary>
+    public interface IWithRoleAndScopeOrApply :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply
+    {
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        /// described in the given role definition with scope of access limited to the ARM resource identified by
+        /// the resource ID specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="roleDefinitionId">Role definition to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply WithRoleDefinitionBasedAccessTo(string scope, string roleDefinitionId);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires
+        /// the given access role with scope of access limited to the current resource group that
+        /// the virtual machine scale set resides.
+        /// </summary>
+        /// <param name="asRole">Access role to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires
+        /// the given access role with scope of access limited to the ARM resource identified by
+        /// the resource ID specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="asRole">Access role to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply WithRoleBasedAccessTo(string scope, BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        /// described in the given role definition with scope of access limited to the current resource group
+        /// that the virtual machine scale set resides.
+        /// </summary>
+        /// <param name="roleDefinitionId">Role definition to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithRoleAndScopeOrApply WithRoleDefinitionBasedAccessToCurrentResourceGroup(string roleDefinitionId);
+    }
+
 }

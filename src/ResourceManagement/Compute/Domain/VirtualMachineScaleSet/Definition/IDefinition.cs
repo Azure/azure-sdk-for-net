@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
     using Microsoft.Azure.Management.Network.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
     /// <summary>
     /// The stage of the Linux virtual machine scale set definition allowing to specify SSH root user name.
@@ -842,6 +843,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithStorageAccount,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCustomData,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithExtension,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedServiceIdentity,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate>
     {
     }
@@ -871,5 +873,71 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Defin
         /// <param name="accountType">The storage account type.</param>
         /// <return>The stage representing creatable VM definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithManagedCreate WithOSDiskStorageAccountType(StorageAccountTypes accountType);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine scale set definition allowing to enable Managed Service Identity.
+    /// </summary>
+    public interface IWithManagedServiceIdentity :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate WithManagedServiceIdentity();
+
+        /// <summary>
+        /// Specifies that Managed Service Identity needs to be enabled in the virtual machine scale set.
+        /// </summary>
+        /// <param name="tokenPort">The port on the virtual machine scale set instance where access token is available.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate WithManagedServiceIdentity(int tokenPort);
+    }
+
+    /// <summary>
+    /// The stage of the Managed Service Identity enabled virtual machine scale set allowing to set role
+    /// assignment for a scope.
+    /// </summary>
+    public interface IWithRoleAndScopeOrCreate :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithCreate
+    {
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        /// described in the given role definition with scope of access limited to the ARM resource identified by
+        /// the resource ID specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="roleDefinitionId">Role definition to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate WithRoleDefinitionBasedAccessTo(string scope, string roleDefinitionId);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the given access
+        /// role with scope of access limited to the current resource group that the virtual machine scale set resides.
+        /// </summary>
+        /// <param name="asRole">Access role to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate WithRoleBasedAccessToCurrentResourceGroup(BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the given
+        /// access role with scope of access limited to the ARM resource identified by the resource id
+        /// specified in the scope parameter.
+        /// </summary>
+        /// <param name="scope">Scope of the access represented in ARM resource ID format.</param>
+        /// <param name="asRole">Access role to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate WithRoleBasedAccessTo(string scope, BuiltInRole asRole);
+
+        /// <summary>
+        /// Specifies that applications running on the virtual machine scale set instance requires the access
+        /// described in the given role definition with scope of access limited to the current resource group
+        /// that the virtual machine scale set resides.
+        /// </summary>
+        /// <param name="roleDefinitionId">Role definition to assigned to the virtual machine scale set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IWithRoleAndScopeOrCreate WithRoleDefinitionBasedAccessToCurrentResourceGroup(string roleDefinitionId);
     }
 }
