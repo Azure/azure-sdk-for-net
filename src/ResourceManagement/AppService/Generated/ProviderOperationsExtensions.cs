@@ -31,20 +31,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static object GetAvailableStacks(this IProviderOperations operations)
-            {
-                return operations.GetAvailableStacksAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get available application frameworks and their versions
-            /// </summary>
-            /// <remarks>
-            /// Get available application frameworks and their versions
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -76,20 +62,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get available application frameworks and their versions
-            /// </summary>
-            /// <remarks>
-            /// Get available application frameworks and their versions
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object GetAvailableStacksOnPrem(this IProviderOperations operations)
-            {
-                return operations.GetAvailableStacksOnPremAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>

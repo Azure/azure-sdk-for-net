@@ -44,31 +44,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
-            public static IList<RecommendationInner> List(this IRecommendationsOperations operations, bool? featured = default(bool?), string filter = default(string))
-            {
-                return operations.ListAsync(featured, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all recommendations for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// List all recommendations for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='featured'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical
-            /// recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which
-            /// returns all recommendations.
-            /// </param>
-            /// <param name='filter'>
-            /// Filter is specified by using OData syntax. Example: $filter=channels eq
-            /// 'Api' or channel eq 'Notification' and startTime eq '2014-01-01T00:00:00Z'
-            /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
-            /// duration'[PT1H|PT1M|P1D]
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -89,54 +64,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void ResetAllFilters(this IRecommendationsOperations operations)
-            {
-                operations.ResetAllFiltersAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reset all recommendation opt-out settings for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Reset all recommendation opt-out settings for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ResetAllFiltersAsync(this IRecommendationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResetAllFiltersWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
-            /// </summary>
-            /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='siteName'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='filter'>
-            /// Filter is specified by using OData syntax. Example: $filter=channels eq
-            /// 'Api' or channel eq 'Notification' and startTime eq '2014-01-01T00:00:00Z'
-            /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
-            /// duration'[PT1H|PT1M|P1D]
-            /// </param>
-            public static IList<RecommendationInner> ListHistoryForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string))
-            {
-                return operations.ListHistoryForWebAppAsync(resourceGroupName, siteName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -198,36 +131,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// OData syntax. Example: $filter=channels eq 'Api' or channel eq
             /// 'Notification'
             /// </param>
-            public static IList<RecommendationInner> ListRecommendedRulesForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? featured = default(bool?), string filter = default(string))
-            {
-                return operations.ListRecommendedRulesForWebAppAsync(resourceGroupName, siteName, featured, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all recommendations for an app.
-            /// </summary>
-            /// <remarks>
-            /// Get all recommendations for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='siteName'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='featured'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical
-            /// recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which
-            /// returns all recommendations.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only channels specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=channels eq 'Api' or channel eq
-            /// 'Notification'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -237,26 +140,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Disable all recommendations for an app.
-            /// </summary>
-            /// <remarks>
-            /// Disable all recommendations for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='siteName'>
-            /// Name of the app.
-            /// </param>
-            public static void DisableAllForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName)
-            {
-                operations.DisableAllForWebAppAsync(resourceGroupName, siteName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -297,59 +180,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='siteName'>
             /// Name of the app.
             /// </param>
-            public static void ResetAllFiltersForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName)
-            {
-                operations.ResetAllFiltersForWebAppAsync(resourceGroupName, siteName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reset all recommendation opt-out settings for an app.
-            /// </summary>
-            /// <remarks>
-            /// Reset all recommendation opt-out settings for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='siteName'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ResetAllFiltersForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResetAllFiltersForWebAppWithHttpMessagesAsync(resourceGroupName, siteName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get a recommendation rule for an app.
-            /// </summary>
-            /// <remarks>
-            /// Get a recommendation rule for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='siteName'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the recommendation.
-            /// </param>
-            /// <param name='updateSeen'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of
-            /// the recommendation object.
-            /// </param>
-            public static RecommendationRuleInner GetRuleDetailsByWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?))
-            {
-                return operations.GetRuleDetailsByWebAppAsync(resourceGroupName, siteName, name, updateSeen).GetAwaiter().GetResult();
             }
 
             /// <summary>

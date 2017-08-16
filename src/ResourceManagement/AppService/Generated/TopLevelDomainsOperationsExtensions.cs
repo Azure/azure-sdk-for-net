@@ -31,20 +31,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<TopLevelDomainInner> List(this ITopLevelDomainsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all top-level domains supported for registration.
-            /// </summary>
-            /// <remarks>
-            /// Get all top-level domains supported for registration.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -54,23 +40,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get details of a top-level domain.
-            /// </summary>
-            /// <remarks>
-            /// Get details of a top-level domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the top-level domain.
-            /// </param>
-            public static TopLevelDomainInner Get(this ITopLevelDomainsOperations operations, string name)
-            {
-                return operations.GetAsync(name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,28 +82,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='agreementOption'>
             /// Domain agreement options.
             /// </param>
-            public static IPage<TldLegalAgreement> ListAgreements(this ITopLevelDomainsOperations operations, string name, TopLevelDomainAgreementOptionInner agreementOption)
-            {
-                return operations.ListAgreementsAsync(name, agreementOption).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
-            /// </summary>
-            /// <remarks>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the top-level domain.
-            /// </param>
-            /// <param name='agreementOption'>
-            /// Domain agreement options.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -158,23 +105,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TopLevelDomainInner> ListNext(this ITopLevelDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all top-level domains supported for registration.
-            /// </summary>
-            /// <remarks>
-            /// Get all top-level domains supported for registration.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -184,25 +114,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
-            /// </summary>
-            /// <remarks>
-            /// Gets all legal agreements that user needs to accept before purchasing a
-            /// domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TldLegalAgreement> ListAgreementsNext(this ITopLevelDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListAgreementsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

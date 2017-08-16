@@ -34,23 +34,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='identifier'>
             /// Name of the domain.
             /// </param>
-            public static DomainAvailablilityCheckResultInner CheckAvailability(this IDomainsOperations operations, NameIdentifierInner identifier)
-            {
-                return operations.CheckAvailabilityAsync(identifier).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check if a domain is available for registration.
-            /// </summary>
-            /// <remarks>
-            /// Check if a domain is available for registration.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='identifier'>
-            /// Name of the domain.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -71,20 +54,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<DomainInner> List(this IDomainsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all domains in a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all domains in a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -94,20 +63,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Generate a single sign-on request for the domain management portal.
-            /// </summary>
-            /// <remarks>
-            /// Generate a single sign-on request for the domain management portal.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static DomainControlCenterSsoRequestInner GetControlCenterSsoRequest(this IDomainsOperations operations)
-            {
-                return operations.GetControlCenterSsoRequestAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,23 +97,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='parameters'>
             /// Search parameters for domain name recommendations.
             /// </param>
-            public static IPage<NameIdentifierInner> ListRecommendations(this IDomainsOperations operations, DomainRecommendationSearchParametersInner parameters)
-            {
-                return operations.ListRecommendationsAsync(parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get domain name recommendations based on keywords.
-            /// </summary>
-            /// <remarks>
-            /// Get domain name recommendations based on keywords.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// Search parameters for domain name recommendations.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -168,23 +106,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all domains in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all domains in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            public static IPage<DomainInner> ListByResourceGroup(this IDomainsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -225,26 +146,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='domainName'>
             /// Name of the domain.
             /// </param>
-            public static DomainInner Get(this IDomainsOperations operations, string resourceGroupName, string domainName)
-            {
-                return operations.GetAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a domain.
-            /// </summary>
-            /// <remarks>
-            /// Get a domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of the domain.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -254,29 +155,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates a domain.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates a domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of the domain.
-            /// </param>
-            /// <param name='domain'>
-            /// Domain registration information.
-            /// </param>
-            public static DomainInner CreateOrUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainInner domain)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, domainName, domain).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -328,57 +206,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24
             /// hours.
             /// </param>
-            public static void Delete(this IDomainsOperations operations, string resourceGroupName, string domainName, bool? forceHardDeleteDomain = default(bool?))
-            {
-                operations.DeleteAsync(resourceGroupName, domainName, forceHardDeleteDomain).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete a domain.
-            /// </summary>
-            /// <remarks>
-            /// Delete a domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of the domain.
-            /// </param>
-            /// <param name='forceHardDeleteDomain'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to delete the domain immediately. The
-            /// default is &lt;code&gt;false&lt;/code&gt; which deletes the domain after 24
-            /// hours.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, bool? forceHardDeleteDomain = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, domainName, forceHardDeleteDomain, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists domain ownership identifiers.
-            /// </summary>
-            /// <remarks>
-            /// Lists domain ownership identifiers.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of domain.
-            /// </param>
-            public static IPage<DomainOwnershipIdentifierInner> ListOwnershipIdentifiers(this IDomainsOperations operations, string resourceGroupName, string domainName)
-            {
-                return operations.ListOwnershipIdentifiersAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -405,29 +238,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get ownership identifier for domain
-            /// </summary>
-            /// <remarks>
-            /// Get ownership identifier for domain
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of domain.
-            /// </param>
-            /// <param name='name'>
-            /// Name of identifier.
-            /// </param>
-            public static DomainOwnershipIdentifierInner GetOwnershipIdentifier(this IDomainsOperations operations, string resourceGroupName, string domainName, string name)
-            {
-                return operations.GetOwnershipIdentifierAsync(resourceGroupName, domainName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -482,34 +292,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='domainOwnershipIdentifier'>
             /// A JSON representation of the domain ownership properties.
             /// </param>
-            public static DomainOwnershipIdentifierInner CreateOrUpdateOwnershipIdentifier(this IDomainsOperations operations, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierInner domainOwnershipIdentifier)
-            {
-                return operations.CreateOrUpdateOwnershipIdentifierAsync(resourceGroupName, domainName, name, domainOwnershipIdentifier).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
-            /// </summary>
-            /// <remarks>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of domain.
-            /// </param>
-            /// <param name='name'>
-            /// Name of identifier.
-            /// </param>
-            /// <param name='domainOwnershipIdentifier'>
-            /// A JSON representation of the domain ownership properties.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -539,63 +321,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of identifier.
             /// </param>
-            public static void DeleteOwnershipIdentifier(this IDomainsOperations operations, string resourceGroupName, string domainName, string name)
-            {
-                operations.DeleteOwnershipIdentifierAsync(resourceGroupName, domainName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete ownership identifier for domain
-            /// </summary>
-            /// <remarks>
-            /// Delete ownership identifier for domain
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of domain.
-            /// </param>
-            /// <param name='name'>
-            /// Name of identifier.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteOwnershipIdentifierAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteOwnershipIdentifierWithHttpMessagesAsync(resourceGroupName, domainName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
-            /// </summary>
-            /// <remarks>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of domain.
-            /// </param>
-            /// <param name='name'>
-            /// Name of identifier.
-            /// </param>
-            /// <param name='domainOwnershipIdentifier'>
-            /// A JSON representation of the domain ownership properties.
-            /// </param>
-            public static DomainOwnershipIdentifierInner UpdateOwnershipIdentifier(this IDomainsOperations operations, string resourceGroupName, string domainName, string name, DomainOwnershipIdentifierInner domainOwnershipIdentifier)
-            {
-                return operations.UpdateOwnershipIdentifierAsync(resourceGroupName, domainName, name, domainOwnershipIdentifier).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -650,29 +381,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='domain'>
             /// Domain registration information.
             /// </param>
-            public static DomainInner BeginCreateOrUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainInner domain)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, domainName, domain).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a domain.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates a domain.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='domainName'>
-            /// Name of the domain.
-            /// </param>
-            /// <param name='domain'>
-            /// Domain registration information.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -682,23 +390,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all domains in a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all domains in a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DomainInner> ListNext(this IDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -736,23 +427,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NameIdentifierInner> ListRecommendationsNext(this IDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListRecommendationsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get domain name recommendations based on keywords.
-            /// </summary>
-            /// <remarks>
-            /// Get domain name recommendations based on keywords.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -776,23 +450,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DomainInner> ListByResourceGroupNext(this IDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all domains in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all domains in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -802,23 +459,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists domain ownership identifiers.
-            /// </summary>
-            /// <remarks>
-            /// Lists domain ownership identifiers.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DomainOwnershipIdentifierInner> ListOwnershipIdentifiersNext(this IDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListOwnershipIdentifiersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

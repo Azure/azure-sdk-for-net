@@ -33,20 +33,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<AppServiceEnvironment> List(this IAppServiceEnvironmentsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all App Service Environments for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service Environments for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -56,23 +42,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all App Service Environments in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service Environments in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            public static IPage<AppServiceEnvironment> ListByResourceGroup(this IAppServiceEnvironmentsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,26 +82,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static AppServiceEnvironmentResourceInner Get(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the properties of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get the properties of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -142,29 +91,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Create or update an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='hostingEnvironmentEnvelope'>
-            /// Configuration details of the App Service Environment.
-            /// </param>
-            public static AppServiceEnvironmentResourceInner CreateOrUpdate(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, AppServiceEnvironmentResourceInner hostingEnvironmentEnvelope)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, hostingEnvironmentEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -216,59 +142,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Service Environment contains resources. The default is
             /// &lt;code&gt;false&lt;/code&gt;.
             /// </param>
-            public static void Delete(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? forceDelete = default(bool?))
-            {
-                operations.DeleteAsync(resourceGroupName, name, forceDelete).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Delete an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='forceDelete'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App
-            /// Service Environment contains resources. The default is
-            /// &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? forceDelete = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, forceDelete, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get the used, available, and total worker capacity an App Service
-            /// Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get the used, available, and total worker capacity an App Service
-            /// Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<StampCapacity> ListCapacities(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListCapacitiesAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -314,26 +193,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static AddressResponseInner ListVips(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListVipsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get IP addresses assigned to an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get IP addresses assigned to an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -343,26 +202,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get diagnostic information for an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get diagnostic information for an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IList<HostingEnvironmentDiagnosticsInner> ListDiagnostics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListDiagnosticsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -409,29 +248,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='diagnosticsName'>
             /// Name of the diagnostics item.
             /// </param>
-            public static HostingEnvironmentDiagnosticsInner GetDiagnosticsItem(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string diagnosticsName)
-            {
-                return operations.GetDiagnosticsItemAsync(resourceGroupName, name, diagnosticsName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a diagnostics item for an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get a diagnostics item for an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='diagnosticsName'>
-            /// Name of the diagnostics item.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -441,26 +257,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get global metric definitions of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get global metric definitions of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static MetricDefinitionInner ListMetricDefinitions(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMetricDefinitionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -514,36 +310,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static IPage<ResourceMetric> ListMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMetricsAsync(resourceGroupName, name, details, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get global metrics of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get global metrics of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='details'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
-            /// default is &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -570,26 +336,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static IPage<WorkerPoolResourceInner> ListMultiRolePools(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMultiRolePoolsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all multi-role pools.
-            /// </summary>
-            /// <remarks>
-            /// Get all multi-role pools.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -599,26 +345,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get properties of a multi-role pool.
-            /// </summary>
-            /// <remarks>
-            /// Get properties of a multi-role pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static WorkerPoolResourceInner GetMultiRolePool(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetMultiRolePoolAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -665,29 +391,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='multiRolePoolEnvelope'>
             /// Properties of the multi-role pool.
             /// </param>
-            public static WorkerPoolResourceInner CreateOrUpdateMultiRolePool(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, WorkerPoolResourceInner multiRolePoolEnvelope)
-            {
-                return operations.CreateOrUpdateMultiRolePoolAsync(resourceGroupName, name, multiRolePoolEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a multi-role pool.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a multi-role pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='multiRolePoolEnvelope'>
-            /// Properties of the multi-role pool.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -697,31 +400,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a specific instance of a multi-role pool of an
-            /// App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a specific instance of a multi-role pool of an
-            /// App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='instance'>
-            /// Name of the instance in the multi-role pool.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMultiRolePoolInstanceMetricDefinitions(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string instance)
-            {
-                return operations.ListMultiRolePoolInstanceMetricDefinitionsAsync(resourceGroupName, name, instance).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -779,35 +457,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
             /// default is &lt;code&gt;false&lt;/code&gt;.
             /// </param>
-            public static IPage<ResourceMetric> ListMultiRolePoolInstanceMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string instance, bool? details = default(bool?))
-            {
-                return operations.ListMultiRolePoolInstanceMetricsAsync(resourceGroupName, name, instance, details).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a specific instance of a multi-role pool of an App Service
-            /// Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a specific instance of a multi-role pool of an App Service
-            /// Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='instance'>
-            /// Name of the instance in the multi-role pool.
-            /// </param>
-            /// <param name='details'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
-            /// default is &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -817,26 +466,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a multi-role pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a multi-role pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMultiRoleMetricDefinitions(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMultiRoleMetricDefinitionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -899,45 +528,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static IPage<ResourceMetric> ListMultiRoleMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMultiRoleMetricsAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a multi-role pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a multi-role pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of the metrics query.
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of the metrics query.
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of the metrics query.
-            /// </param>
-            /// <param name='details'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
-            /// default is &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -947,26 +537,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get available SKUs for scaling a multi-role pool.
-            /// </summary>
-            /// <remarks>
-            /// Get available SKUs for scaling a multi-role pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<SkuInfo> ListMultiRolePoolSkus(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMultiRolePoolSkusAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1010,26 +580,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static IPage<Usage> ListMultiRoleUsages(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMultiRoleUsagesAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get usage metrics for a multi-role pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get usage metrics for a multi-role pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1039,26 +589,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List all currently running operations on the App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// List all currently running operations on the App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IList<OperationInner> ListOperations(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListOperationsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1102,52 +632,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static void Reboot(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                operations.RebootAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reboot all machines in an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Reboot all machines in an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RebootAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RebootWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Resume an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Resume an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<SiteInner> Resume(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ResumeAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1174,26 +664,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all App Service plans in an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service plans in an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<AppServicePlanInner> ListAppServicePlans(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListAppServicePlansAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1240,29 +710,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='propertiesToInclude'>
             /// Comma separated list of app properties to include.
             /// </param>
-            public static IPage<SiteInner> ListWebApps(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string propertiesToInclude = default(string))
-            {
-                return operations.ListWebAppsAsync(resourceGroupName, name, propertiesToInclude).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all apps in an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps in an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='propertiesToInclude'>
-            /// Comma separated list of app properties to include.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1272,26 +719,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Suspend an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Suspend an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<SiteInner> Suspend(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.SuspendAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1341,32 +768,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static IPage<CsmUsageQuota> ListUsages(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string filter = default(string))
-            {
-                return operations.ListUsagesAsync(resourceGroupName, name, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get global usage metrics of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get global usage metrics of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1393,26 +794,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static IPage<WorkerPoolResourceInner> ListWorkerPools(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListWorkerPoolsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all worker pools of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get all worker pools of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1422,29 +803,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get properties of a worker pool.
-            /// </summary>
-            /// <remarks>
-            /// Get properties of a worker pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            public static WorkerPoolResourceInner GetWorkerPool(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName)
-            {
-                return operations.GetWorkerPoolAsync(resourceGroupName, name, workerPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1497,32 +855,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='workerPoolEnvelope'>
             /// Properties of the worker pool.
             /// </param>
-            public static WorkerPoolResourceInner CreateOrUpdateWorkerPool(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, WorkerPoolResourceInner workerPoolEnvelope)
-            {
-                return operations.CreateOrUpdateWorkerPoolAsync(resourceGroupName, name, workerPoolName, workerPoolEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a worker pool.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a worker pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            /// <param name='workerPoolEnvelope'>
-            /// Properties of the worker pool.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1532,34 +864,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a specific instance of a worker pool of an App
-            /// Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a specific instance of a worker pool of an App
-            /// Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            /// <param name='instance'>
-            /// Name of the instance in the worker pool.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListWorkerPoolInstanceMetricDefinitions(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, string instance)
-            {
-                return operations.ListWorkerPoolInstanceMetricDefinitionsAsync(resourceGroupName, name, workerPoolName, instance).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1629,44 +933,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static IPage<ResourceMetric> ListWorkerPoolInstanceMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, string instance, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListWorkerPoolInstanceMetricsAsync(resourceGroupName, name, workerPoolName, instance, details, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a specific instance of a worker pool of an App Service
-            /// Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a specific instance of a worker pool of an App Service
-            /// Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            /// <param name='instance'>
-            /// Name of the instance in the worker pool.
-            /// </param>
-            /// <param name='details'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
-            /// default is &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1676,29 +942,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a worker pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a worker pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListWebWorkerMetricDefinitions(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName)
-            {
-                return operations.ListWebWorkerMetricDefinitionsAsync(resourceGroupName, name, workerPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1760,41 +1003,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static IPage<ResourceMetric> ListWebWorkerMetrics(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListWebWorkerMetricsAsync(resourceGroupName, name, workerPoolName, details, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a worker pool of a AppServiceEnvironment (App Service
-            /// Environment).
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a worker pool of a AppServiceEnvironment (App Service
-            /// Environment).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of worker pool
-            /// </param>
-            /// <param name='details'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
-            /// default is &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1804,29 +1012,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get available SKUs for scaling a worker pool.
-            /// </summary>
-            /// <remarks>
-            /// Get available SKUs for scaling a worker pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            public static IPage<SkuInfo> ListWorkerPoolSkus(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName)
-            {
-                return operations.ListWorkerPoolSkusAsync(resourceGroupName, name, workerPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1876,29 +1061,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='workerPoolName'>
             /// Name of the worker pool.
             /// </param>
-            public static IPage<Usage> ListWebWorkerUsages(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName)
-            {
-                return operations.ListWebWorkerUsagesAsync(resourceGroupName, name, workerPoolName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get usage metrics for a worker pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get usage metrics for a worker pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1908,29 +1070,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Create or update an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='hostingEnvironmentEnvelope'>
-            /// Configuration details of the App Service Environment.
-            /// </param>
-            public static AppServiceEnvironmentResourceInner BeginCreateOrUpdate(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, AppServiceEnvironmentResourceInner hostingEnvironmentEnvelope)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, name, hostingEnvironmentEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1982,60 +1121,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Service Environment contains resources. The default is
             /// &lt;code&gt;false&lt;/code&gt;.
             /// </param>
-            public static void BeginDelete(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? forceDelete = default(bool?))
-            {
-                operations.BeginDeleteAsync(resourceGroupName, name, forceDelete).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Delete an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='forceDelete'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to force the deletion even if the App
-            /// Service Environment contains resources. The default is
-            /// &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, bool? forceDelete = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, forceDelete, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Create or update a multi-role pool.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a multi-role pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='multiRolePoolEnvelope'>
-            /// Properties of the multi-role pool.
-            /// </param>
-            public static WorkerPoolResourceInner BeginCreateOrUpdateMultiRolePool(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, WorkerPoolResourceInner multiRolePoolEnvelope)
-            {
-                return operations.BeginCreateOrUpdateMultiRolePoolAsync(resourceGroupName, name, multiRolePoolEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2082,26 +1173,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service Environment.
             /// </param>
-            public static IPage<SiteInner> BeginResume(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.BeginResumeAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resume an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Resume an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2111,26 +1182,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Suspend an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Suspend an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            public static IPage<SiteInner> BeginSuspend(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.BeginSuspendAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2180,32 +1231,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='workerPoolEnvelope'>
             /// Properties of the worker pool.
             /// </param>
-            public static WorkerPoolResourceInner BeginCreateOrUpdateWorkerPool(this IAppServiceEnvironmentsOperations operations, string resourceGroupName, string name, string workerPoolName, WorkerPoolResourceInner workerPoolEnvelope)
-            {
-                return operations.BeginCreateOrUpdateWorkerPoolAsync(resourceGroupName, name, workerPoolName, workerPoolEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a worker pool.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a worker pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service Environment.
-            /// </param>
-            /// <param name='workerPoolName'>
-            /// Name of the worker pool.
-            /// </param>
-            /// <param name='workerPoolEnvelope'>
-            /// Properties of the worker pool.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2229,23 +1254,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<AppServiceEnvironment> ListNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all App Service Environments for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service Environments for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2255,23 +1263,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all App Service Environments in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service Environments in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AppServiceEnvironment> ListByResourceGroupNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2311,25 +1302,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<StampCapacity> ListCapacitiesNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListCapacitiesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the used, available, and total worker capacity an App Service
-            /// Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get the used, available, and total worker capacity an App Service
-            /// Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2339,23 +1311,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get global metrics of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get global metrics of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetricsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2393,23 +1348,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<WorkerPoolResourceInner> ListMultiRolePoolsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRolePoolsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all multi-role pools.
-            /// </summary>
-            /// <remarks>
-            /// Get all multi-role pools.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2419,25 +1357,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a specific instance of a multi-role pool of an
-            /// App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a specific instance of a multi-role pool of an
-            /// App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMultiRolePoolInstanceMetricDefinitionsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRolePoolInstanceMetricDefinitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2479,25 +1398,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListMultiRolePoolInstanceMetricsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRolePoolInstanceMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a specific instance of a multi-role pool of an App Service
-            /// Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a specific instance of a multi-role pool of an App Service
-            /// Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2507,23 +1407,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a multi-role pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a multi-role pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMultiRoleMetricDefinitionsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRoleMetricDefinitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2561,23 +1444,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListMultiRoleMetricsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRoleMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a multi-role pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a multi-role pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2587,23 +1453,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get available SKUs for scaling a multi-role pool.
-            /// </summary>
-            /// <remarks>
-            /// Get available SKUs for scaling a multi-role pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SkuInfo> ListMultiRolePoolSkusNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRolePoolSkusNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2641,23 +1490,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Usage> ListMultiRoleUsagesNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListMultiRoleUsagesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get usage metrics for a multi-role pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get usage metrics for a multi-role pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2667,23 +1499,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Resume an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Resume an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInner> ResumeNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ResumeNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2721,23 +1536,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<AppServicePlanInner> ListAppServicePlansNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListAppServicePlansNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all App Service plans in an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service plans in an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2747,23 +1545,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all apps in an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps in an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInner> ListWebAppsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWebAppsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2801,23 +1582,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInner> SuspendNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.SuspendNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Suspend an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Suspend an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2827,23 +1591,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get global usage metrics of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get global usage metrics of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CsmUsageQuota> ListUsagesNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListUsagesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2881,23 +1628,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<WorkerPoolResourceInner> ListWorkerPoolsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWorkerPoolsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all worker pools of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get all worker pools of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2907,25 +1637,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a specific instance of a worker pool of an App
-            /// Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a specific instance of a worker pool of an App
-            /// Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListWorkerPoolInstanceMetricDefinitionsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWorkerPoolInstanceMetricDefinitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2967,25 +1678,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListWorkerPoolInstanceMetricsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWorkerPoolInstanceMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a specific instance of a worker pool of an App Service
-            /// Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a specific instance of a worker pool of an App Service
-            /// Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2995,23 +1687,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metric definitions for a worker pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get metric definitions for a worker pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListWebWorkerMetricDefinitionsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWebWorkerMetricDefinitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3051,25 +1726,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListWebWorkerMetricsNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWebWorkerMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for a worker pool of a AppServiceEnvironment (App Service
-            /// Environment).
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for a worker pool of a AppServiceEnvironment (App Service
-            /// Environment).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3079,23 +1735,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get available SKUs for scaling a worker pool.
-            /// </summary>
-            /// <remarks>
-            /// Get available SKUs for scaling a worker pool.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SkuInfo> ListWorkerPoolSkusNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWorkerPoolSkusNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3133,23 +1772,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Usage> ListWebWorkerUsagesNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListWebWorkerUsagesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get usage metrics for a worker pool of an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Get usage metrics for a worker pool of an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3173,23 +1795,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInner> BeginResumeNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.BeginResumeNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resume an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Resume an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3199,23 +1804,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Suspend an App Service Environment.
-            /// </summary>
-            /// <remarks>
-            /// Suspend an App Service Environment.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInner> BeginSuspendNext(this IAppServiceEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.BeginSuspendNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

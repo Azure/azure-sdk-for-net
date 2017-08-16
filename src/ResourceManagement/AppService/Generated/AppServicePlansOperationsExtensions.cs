@@ -39,26 +39,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// subset of the properties.
             /// Retrieval of all properties may increase the API latency.
             /// </param>
-            public static IPage<AppServicePlanInner> List(this IAppServicePlansOperations operations, bool? detailed = default(bool?))
-            {
-                return operations.ListAsync(detailed).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all App Service plans for a subcription.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service plans for a subcription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='detailed'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan
-            /// properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a
-            /// subset of the properties.
-            /// Retrieval of all properties may increase the API latency.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -82,23 +62,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
-            public static IPage<AppServicePlanInner> ListByResourceGroup(this IAppServicePlansOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all App Service plans in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service plans in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -108,26 +71,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Get an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            public static AppServicePlanInner Get(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -174,29 +117,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='appServicePlan'>
             /// Details of the App Service plan.
             /// </param>
-            public static AppServicePlanInner CreateOrUpdate(this IAppServicePlansOperations operations, string resourceGroupName, string name, AppServicePlanInner appServicePlan)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, appServicePlan).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an App Service Plan.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates an App Service Plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='appServicePlan'>
-            /// Details of the App Service plan.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -206,26 +126,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Delete an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            public static void Delete(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -266,26 +166,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service plan.
             /// </param>
-            public static IList<CapabilityInner> ListCapabilities(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListCapabilitiesAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all capabilities of an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// List all capabilities of an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -295,32 +175,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Retrieve a Hybrid Connection in use in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Retrieve a Hybrid Connection in use in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// Name of the Service Bus namespace.
-            /// </param>
-            /// <param name='relayName'>
-            /// Name of the Service Bus relay.
-            /// </param>
-            public static HybridConnectionInner GetHybridConnection(this IAppServicePlansOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                return operations.GetHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -376,64 +230,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='relayName'>
             /// Name of the Service Bus relay.
             /// </param>
-            public static void DeleteHybridConnection(this IAppServicePlansOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                operations.DeleteHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete a Hybrid Connection in use in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Delete a Hybrid Connection in use in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// Name of the Service Bus namespace.
-            /// </param>
-            /// <param name='relayName'>
-            /// Name of the Service Bus relay.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteHybridConnectionAsync(this IAppServicePlansOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteHybridConnectionWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get the send key name and value of a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Get the send key name and value of a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The name of the Service Bus namespace.
-            /// </param>
-            /// <param name='relayName'>
-            /// The name of the Service Bus relay.
-            /// </param>
-            public static HybridConnectionKeyInner ListHybridConnectionKeys(this IAppServicePlansOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                return operations.ListHybridConnectionKeysAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -489,32 +291,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='relayName'>
             /// Name of the Hybrid Connection relay.
             /// </param>
-            public static IPage<string> ListWebAppsByHybridConnection(this IAppServicePlansOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                return operations.ListWebAppsByHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all apps that use a Hybrid Connection in an App Service Plan.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps that use a Hybrid Connection in an App Service Plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// Name of the Hybrid Connection namespace.
-            /// </param>
-            /// <param name='relayName'>
-            /// Name of the Hybrid Connection relay.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -524,28 +300,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the maximum number of Hybrid Connections allowed in an App Service
-            /// plan.
-            /// </summary>
-            /// <remarks>
-            /// Get the maximum number of Hybrid Connections allowed in an App Service
-            /// plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            public static HybridConnectionLimitsInner GetHybridConnectionPlanLimit(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetHybridConnectionPlanLimitAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -591,26 +345,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service plan.
             /// </param>
-            public static IPage<HybridConnectionInner> ListHybridConnections(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListHybridConnectionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieve all Hybrid Connections in use in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Retrieve all Hybrid Connections in use in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -639,28 +373,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service plan.
             /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefintions(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMetricDefintionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics that can be queried for an App Service plan, and their
-            /// definitions.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics that can be queried for an App Service plan, and their
-            /// definitions.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -670,36 +382,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get metrics for an App Serice plan.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for an App Serice plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='details'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to include instance details. The
-            /// default is &lt;code&gt;false&lt;/code&gt;.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetrics(this IAppServicePlansOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMetricsAsync(resourceGroupName, name, details, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -759,71 +441,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions
             /// the apps
             /// </param>
-            public static void RestartWebApps(this IAppServicePlansOperations operations, string resourceGroupName, string name, bool? softRestart = default(bool?))
-            {
-                operations.RestartWebAppsAsync(resourceGroupName, name, softRestart).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restart all apps in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Restart all apps in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='softRestart'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; to performa a soft restart, applies
-            /// the configuration settings and restarts the apps if necessary. The default
-            /// is &lt;code&gt;false&lt;/code&gt;, which always restarts and reprovisions
-            /// the apps
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RestartWebAppsAsync(this IAppServicePlansOperations operations, string resourceGroupName, string name, bool? softRestart = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RestartWebAppsWithHttpMessagesAsync(resourceGroupName, name, softRestart, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get all apps associated with an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps associated with an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='skipToken'>
-            /// Skip to a web app in the list of webapps associated with app service plan.
-            /// If specified, the resulting list will contain web apps starting from
-            /// (including) the skipToken. Otherwise, the resulting list contains web apps
-            /// from the start of the list
-            /// </param>
-            /// <param name='filter'>
-            /// Supported filter: $filter=state eq running. Returns only web apps that are
-            /// currently running
-            /// </param>
-            /// <param name='top'>
-            /// List page size. If specified, results are paged.
-            /// </param>
-            public static IPage<SiteInner> ListWebApps(this IAppServicePlansOperations operations, string resourceGroupName, string name, string skipToken = default(string), string filter = default(string), string top = default(string))
-            {
-                return operations.ListWebAppsAsync(resourceGroupName, name, skipToken, filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -880,26 +503,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the App Service plan.
             /// </param>
-            public static IList<VnetInfoInner> ListVnets(this IAppServicePlansOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListVnetsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all Virtual Networks associated with an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Get all Virtual Networks associated with an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -929,29 +532,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='vnetName'>
             /// Name of the Virtual Network.
             /// </param>
-            public static VnetInfoInner GetVnetFromServerFarm(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName)
-            {
-                return operations.GetVnetFromServerFarmAsync(resourceGroupName, name, vnetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a Virtual Network associated with an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Get a Virtual Network associated with an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -961,32 +541,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a Virtual Network gateway.
-            /// </summary>
-            /// <remarks>
-            /// Get a Virtual Network gateway.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Only the 'primary' gateway is supported.
-            /// </param>
-            public static VnetGatewayInner GetVnetGateway(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName)
-            {
-                return operations.GetVnetGatewayAsync(resourceGroupName, name, vnetName, gatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1045,35 +599,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// Definition of the gateway.
             /// </param>
-            public static VnetGatewayInner UpdateVnetGateway(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayInner connectionEnvelope)
-            {
-                return operations.UpdateVnetGatewayAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update a Virtual Network gateway.
-            /// </summary>
-            /// <remarks>
-            /// Update a Virtual Network gateway.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Only the 'primary' gateway is supported.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Definition of the gateway.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1105,31 +630,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='vnetName'>
             /// Name of the Virtual Network.
             /// </param>
-            public static IList<VnetRouteInner> ListRoutesForVnet(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName)
-            {
-                return operations.ListRoutesForVnetAsync(resourceGroupName, name, vnetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all routes that are associated with a Virtual Network in an App Service
-            /// plan.
-            /// </summary>
-            /// <remarks>
-            /// Get all routes that are associated with a Virtual Network in an App Service
-            /// plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1139,32 +639,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a Virtual Network route in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Get a Virtual Network route in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the Virtual Network route.
-            /// </param>
-            public static IList<VnetRouteInner> GetRouteForVnet(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, string routeName)
-            {
-                return operations.GetRouteForVnetAsync(resourceGroupName, name, vnetName, routeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1223,35 +697,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='route'>
             /// Definition of the Virtual Network route.
             /// </param>
-            public static VnetRouteInner CreateOrUpdateVnetRoute(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRouteInner route)
-            {
-                return operations.CreateOrUpdateVnetRouteAsync(resourceGroupName, name, vnetName, routeName, route).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a Virtual Network route in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a Virtual Network route in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the Virtual Network route.
-            /// </param>
-            /// <param name='route'>
-            /// Definition of the Virtual Network route.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1261,32 +706,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a Virtual Network route in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Delete a Virtual Network route in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the Virtual Network route.
-            /// </param>
-            public static void DeleteVnetRoute(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, string routeName)
-            {
-                operations.DeleteVnetRouteAsync(resourceGroupName, name, vnetName, routeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1342,35 +761,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='route'>
             /// Definition of the Virtual Network route.
             /// </param>
-            public static VnetRouteInner UpdateVnetRoute(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRouteInner route)
-            {
-                return operations.UpdateVnetRouteAsync(resourceGroupName, name, vnetName, routeName, route).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a Virtual Network route in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a Virtual Network route in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the Virtual Network route.
-            /// </param>
-            /// <param name='route'>
-            /// Definition of the Virtual Network route.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1380,29 +770,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Reboot a worker machine in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Reboot a worker machine in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='workerName'>
-            /// Name of worker machine, which typically starts with RD.
-            /// </param>
-            public static void RebootWorker(this IAppServicePlansOperations operations, string resourceGroupName, string name, string workerName)
-            {
-                operations.RebootWorkerAsync(resourceGroupName, name, workerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1449,29 +816,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='appServicePlan'>
             /// Details of the App Service plan.
             /// </param>
-            public static AppServicePlanInner BeginCreateOrUpdate(this IAppServicePlansOperations operations, string resourceGroupName, string name, AppServicePlanInner appServicePlan)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, name, appServicePlan).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an App Service Plan.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates an App Service Plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the App Service plan.
-            /// </param>
-            /// <param name='appServicePlan'>
-            /// Details of the App Service plan.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1481,23 +825,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all App Service plans for a subcription.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service plans for a subcription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AppServicePlanInner> ListNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1535,23 +862,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<AppServicePlanInner> ListByResourceGroupNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all App Service plans in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all App Service plans in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1575,23 +885,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<string> ListWebAppsByHybridConnectionNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListWebAppsByHybridConnectionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all apps that use a Hybrid Connection in an App Service Plan.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps that use a Hybrid Connection in an App Service Plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1601,23 +894,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Retrieve all Hybrid Connections in use in an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Retrieve all Hybrid Connections in use in an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<HybridConnectionInner> ListHybridConnectionsNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListHybridConnectionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1657,25 +933,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefintionsNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricDefintionsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics that can be queried for an App Service plan, and their
-            /// definitions.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics that can be queried for an App Service plan, and their
-            /// definitions.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1699,23 +956,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListMetricsNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get metrics for an App Serice plan.
-            /// </summary>
-            /// <remarks>
-            /// Get metrics for an App Serice plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1725,23 +965,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all apps associated with an App Service plan.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps associated with an App Service plan.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInner> ListWebAppsNext(this IAppServicePlansOperations operations, string nextPageLink)
-            {
-                return operations.ListWebAppsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

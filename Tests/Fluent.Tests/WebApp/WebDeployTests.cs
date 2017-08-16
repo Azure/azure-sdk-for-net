@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class WebAppsWebDeploy
+    public class WebDeploy
     {
         [Fact]
         public void CanDeployBakeryWebApp()

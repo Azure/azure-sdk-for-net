@@ -33,20 +33,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<AppServiceCertificateOrderInner> List(this IAppServiceCertificateOrdersOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all certificate orders in a subscription.
-            /// </summary>
-            /// <remarks>
-            /// List all certificate orders in a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -56,23 +42,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Validate information for a certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Validate information for a certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appServiceCertificateOrder'>
-            /// Information for a certificate order.
-            /// </param>
-            public static void ValidatePurchaseInformation(this IAppServiceCertificateOrdersOperations operations, AppServiceCertificateOrderInner appServiceCertificateOrder)
-            {
-                operations.ValidatePurchaseInformationAsync(appServiceCertificateOrder).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,23 +76,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
-            public static IPage<AppServiceCertificateOrderInner> ListByResourceGroup(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get certificate orders in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get certificate orders in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -133,26 +85,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Get a certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order..
-            /// </param>
-            public static AppServiceCertificateOrderInner Get(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName)
-            {
-                return operations.GetAsync(resourceGroupName, certificateOrderName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,29 +131,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='certificateDistinguishedName'>
             /// Distinguished name to to use for the certificate order.
             /// </param>
-            public static AppServiceCertificateOrderInner CreateOrUpdate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderInner certificateDistinguishedName)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, certificateOrderName, certificateDistinguishedName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a certificate purchase order.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a certificate purchase order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -231,26 +140,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete an existing certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Delete an existing certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            public static void Delete(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName)
-            {
-                operations.DeleteAsync(resourceGroupName, certificateOrderName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -291,26 +180,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='certificateOrderName'>
             /// Name of the certificate order.
             /// </param>
-            public static IPage<AppServiceCertificateResourceInner> ListCertificates(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName)
-            {
-                return operations.ListCertificatesAsync(resourceGroupName, certificateOrderName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all certificates associated with a certificate order.
-            /// </summary>
-            /// <remarks>
-            /// List all certificates associated with a certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -320,29 +189,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the certificate associated with a certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Get the certificate associated with a certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            public static AppServiceCertificateResourceInner GetCertificate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name)
-            {
-                return operations.GetCertificateAsync(resourceGroupName, certificateOrderName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -395,32 +241,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='keyVaultCertificate'>
             /// Key vault certificate resource Id.
             /// </param>
-            public static AppServiceCertificateResourceInner CreateOrUpdateCertificate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceInner keyVaultCertificate)
-            {
-                return operations.CreateOrUpdateCertificateAsync(resourceGroupName, certificateOrderName, name, keyVaultCertificate).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a certificate and associates with key vault secret.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates a certificate and associates with key vault secret.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            /// <param name='keyVaultCertificate'>
-            /// Key vault certificate resource Id.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -430,29 +250,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete the certificate associated with a certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Delete the certificate associated with a certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            public static void DeleteCertificate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name)
-            {
-                operations.DeleteCertificateAsync(resourceGroupName, certificateOrderName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -499,58 +296,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='reissueCertificateOrderRequest'>
             /// Parameters for the reissue.
             /// </param>
-            public static void Reissue(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequestInner reissueCertificateOrderRequest)
-            {
-                operations.ReissueAsync(resourceGroupName, certificateOrderName, reissueCertificateOrderRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reissue an existing certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Reissue an existing certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='reissueCertificateOrderRequest'>
-            /// Parameters for the reissue.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ReissueAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderRequestInner reissueCertificateOrderRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ReissueWithHttpMessagesAsync(resourceGroupName, certificateOrderName, reissueCertificateOrderRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Renew an existing certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Renew an existing certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='renewCertificateOrderRequest'>
-            /// Renew parameters
-            /// </param>
-            public static void Renew(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, RenewCertificateOrderRequestInner renewCertificateOrderRequest)
-            {
-                operations.RenewAsync(resourceGroupName, certificateOrderName, renewCertificateOrderRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -594,55 +345,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='certificateOrderName'>
             /// Name of the certificate order.
             /// </param>
-            public static void ResendEmail(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName)
-            {
-                operations.ResendEmailAsync(resourceGroupName, certificateOrderName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resend certificate email.
-            /// </summary>
-            /// <remarks>
-            /// Resend certificate email.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ResendEmailAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResendEmailWithHttpMessagesAsync(resourceGroupName, certificateOrderName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Verify domain ownership for this certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Verify domain ownership for this certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='nameIdentifier'>
-            /// Email address
-            /// </param>
-            public static void ResendRequestEmails(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, NameIdentifierInner nameIdentifier)
-            {
-                operations.ResendRequestEmailsAsync(resourceGroupName, certificateOrderName, nameIdentifier).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -689,29 +397,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='siteSealRequest'>
             /// Site seal request.
             /// </param>
-            public static SiteSealInner RetrieveSiteSeal(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, SiteSealRequestInner siteSealRequest)
-            {
-                return operations.RetrieveSiteSealAsync(resourceGroupName, certificateOrderName, siteSealRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Verify domain ownership for this certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Verify domain ownership for this certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='siteSealRequest'>
-            /// Site seal request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -738,52 +423,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='certificateOrderName'>
             /// Name of the certificate order.
             /// </param>
-            public static void VerifyDomainOwnership(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName)
-            {
-                operations.VerifyDomainOwnershipAsync(resourceGroupName, certificateOrderName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Verify domain ownership for this certificate order.
-            /// </summary>
-            /// <remarks>
-            /// Verify domain ownership for this certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task VerifyDomainOwnershipAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.VerifyDomainOwnershipWithHttpMessagesAsync(resourceGroupName, certificateOrderName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieve the list of certificate actions.
-            /// </summary>
-            /// <remarks>
-            /// Retrieve the list of certificate actions.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate order.
-            /// </param>
-            public static IList<CertificateOrderActionInner> RetrieveCertificateActions(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string name)
-            {
-                return operations.RetrieveCertificateActionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -827,26 +472,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the certificate order.
             /// </param>
-            public static IList<CertificateEmailInner> RetrieveCertificateEmailHistory(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string name)
-            {
-                return operations.RetrieveCertificateEmailHistoryAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieve email history.
-            /// </summary>
-            /// <remarks>
-            /// Retrieve email history.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate order.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -856,29 +481,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update a certificate purchase order.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a certificate purchase order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
-            /// </param>
-            public static AppServiceCertificateOrderInner BeginCreateOrUpdate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderInner certificateDistinguishedName)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, certificateOrderName, certificateDistinguishedName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -931,32 +533,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='keyVaultCertificate'>
             /// Key vault certificate resource Id.
             /// </param>
-            public static AppServiceCertificateResourceInner BeginCreateOrUpdateCertificate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateResourceInner keyVaultCertificate)
-            {
-                return operations.BeginCreateOrUpdateCertificateAsync(resourceGroupName, certificateOrderName, name, keyVaultCertificate).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a certificate and associates with key vault secret.
-            /// </summary>
-            /// <remarks>
-            /// Creates or updates a certificate and associates with key vault secret.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='certificateOrderName'>
-            /// Name of the certificate order.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            /// <param name='keyVaultCertificate'>
-            /// Key vault certificate resource Id.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -966,23 +542,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List all certificate orders in a subscription.
-            /// </summary>
-            /// <remarks>
-            /// List all certificate orders in a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AppServiceCertificateOrderInner> ListNext(this IAppServiceCertificateOrdersOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1020,23 +579,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<AppServiceCertificateOrderInner> ListByResourceGroupNext(this IAppServiceCertificateOrdersOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get certificate orders in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get certificate orders in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1046,23 +588,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List all certificates associated with a certificate order.
-            /// </summary>
-            /// <remarks>
-            /// List all certificates associated with a certificate order.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AppServiceCertificateResourceInner> ListCertificatesNext(this IAppServiceCertificateOrdersOperations operations, string nextPageLink)
-            {
-                return operations.ListCertificatesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

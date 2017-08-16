@@ -20,19 +20,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             this.functionApp = functionApp;
         }
 
-        public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (token == null || expire < DateTime.Now.Ticks)
             {
-                token = functionApp.Manager.Inner.WebApps
-                    .GetFunctionsAdminToken(functionApp.ResourceGroupName, functionApp.Name);
+                token = await functionApp.Manager.Inner.WebApps
+                    .GetFunctionsAdminTokenAsync(functionApp.ResourceGroupName, functionApp.Name, cancellationToken);
                 string jwt = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(token.Split(new char[] { '.' })[1]));
                 Regex regex = new Regex("\"exp\": *([0-9]+),");
                 Match match = regex.Match(jwt);
                 expire = long.Parse(match.Groups[1].Value);
             }
             request.Headers.Add("Authorization", "Bearer " + token);
-            return base.ProcessHttpRequestAsync(request, cancellationToken);
+            await base.ProcessHttpRequestAsync(request, cancellationToken);
         }
     }
 }

@@ -34,20 +34,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<SiteInner> List(this IWebAppsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all apps for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -57,28 +43,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all web, mobile, and API apps in the specified resource group.
-            /// </summary>
-            /// <remarks>
-            /// Gets all web, mobile, and API apps in the specified resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='includeSlots'>
-            /// Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in
-            /// results. The default is false, which only gives you the production slot of
-            /// all apps.
-            /// </param>
-            public static IPage<SiteInner> ListByResourceGroup(this IWebAppsOperations operations, string resourceGroupName, bool? includeSlots = default(bool?))
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName, includeSlots).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -124,26 +88,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static SiteInner Get(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the details of a web, mobile, or API app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the details of a web, mobile, or API app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -153,47 +97,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Unique name of the app to create or update. To create or update a
-            /// deployment slot, use the {slot} parameter.
-            /// </param>
-            /// <param name='siteEnvelope'>
-            /// A JSON representation of the app properties. See example.
-            /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name
-            /// </param>
-            public static SiteInner CreateOrUpdate(this IWebAppsOperations operations, string resourceGroupName, string name, SiteInner siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -269,66 +172,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='skipDnsRegistration'>
             /// If true, DNS registration is skipped
             /// </param>
-            public static void Delete(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?))
-            {
-                operations.DeleteAsync(resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app to delete.
-            /// </param>
-            /// <param name='deleteMetrics'>
-            /// If true, web app metrics are also deleted
-            /// </param>
-            /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
-            /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true, DNS registration is skipped
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Analyze a custom hostname.
-            /// </summary>
-            /// <remarks>
-            /// Analyze a custom hostname.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='hostName'>
-            /// Custom hostname
-            /// </param>
-            public static CustomHostnameAnalysisResultInner AnalyzeCustomHostname(this IWebAppsOperations operations, string resourceGroupName, string name, string hostName = default(string))
-            {
-                return operations.AnalyzeCustomHostnameAsync(resourceGroupName, name, hostName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -380,61 +229,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slotSwapEntity'>
             /// JSON object that contains the target slot name. See example.
             /// </param>
-            public static void ApplySlotConfigToProduction(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity)
-            {
-                operations.ApplySlotConfigToProductionAsync(resourceGroupName, name, slotSwapEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
-            /// </summary>
-            /// <remarks>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ApplySlotConfigToProductionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ApplySlotConfigToProductionWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates a backup of an app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a backup of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// Backup configuration. You can use the JSON response from the POST action as
-            /// input here.
-            /// </param>
-            public static BackupItemInner Backup(this IWebAppsOperations operations, string resourceGroupName, string name, BackupRequestInner request)
-            {
-                return operations.BackupAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -482,26 +282,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<BackupItemInner> ListBackups(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListBackupsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets existing backups of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets existing backups of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -511,32 +291,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </summary>
-            /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// A RestoreRequest object that includes Azure storage URL and blog name for
-            /// discovery of backup.
-            /// </param>
-            public static RestoreRequestInner DiscoverRestore(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequestInner request)
-            {
-                return operations.DiscoverRestoreAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -589,29 +343,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='backupId'>
             /// ID of the backup.
             /// </param>
-            public static BackupItemInner GetBackupStatus(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId)
-            {
-                return operations.GetBackupStatusAsync(resourceGroupName, name, backupId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a backup of an app by its ID.
-            /// </summary>
-            /// <remarks>
-            /// Gets a backup of an app by its ID.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -641,67 +372,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='backupId'>
             /// ID of the backup.
             /// </param>
-            public static void DeleteBackup(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId)
-            {
-                operations.DeleteBackupAsync(resourceGroupName, name, backupId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a backup of an app by its ID.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a backup of an app by its ID.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteBackupAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteBackupWithHttpMessagesAsync(resourceGroupName, name, backupId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
-            /// </summary>
-            /// <remarks>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='backupId'>
-            /// Id of backup
-            /// </param>
-            /// <param name='request'>
-            /// Information on backup request
-            /// </param>
-            public static BackupItemInner ListBackupStatusSecrets(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, BackupRequestInner request)
-            {
-                return operations.ListBackupStatusSecretsAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -765,34 +441,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='request'>
             /// Information on restore request
             /// </param>
-            public static RestoreResponseInner Restore(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequestInner request)
-            {
-                return operations.RestoreAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
-            /// <param name='request'>
-            /// Information on restore request
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -802,26 +450,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List the configurations of an app
-            /// </summary>
-            /// <remarks>
-            /// List the configurations of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static IPage<SiteConfigResourceInner> ListConfigurations(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListConfigurationsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -868,29 +496,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='appSettings'>
             /// Application settings of the app.
             /// </param>
-            public static StringDictionaryInner UpdateApplicationSettings(this IWebAppsOperations operations, string resourceGroupName, string name, StringDictionaryInner appSettings)
-            {
-                return operations.UpdateApplicationSettingsAsync(resourceGroupName, name, appSettings).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Replaces the application settings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Replaces the application settings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='appSettings'>
-            /// Application settings of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -900,26 +505,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the application settings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the application settings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static StringDictionaryInner ListApplicationSettings(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListApplicationSettingsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -968,31 +553,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='siteAuthSettings'>
             /// Auth settings associated with web app
             /// </param>
-            public static SiteAuthSettingsInner UpdateAuthSettings(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsInner siteAuthSettings)
-            {
-                return operations.UpdateAuthSettingsAsync(resourceGroupName, name, siteAuthSettings).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='siteAuthSettings'>
-            /// Auth settings associated with web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1002,26 +562,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Authentication/Authorization settings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Authentication/Authorization settings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static SiteAuthSettingsInner GetAuthSettings(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAuthSettingsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1068,29 +608,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='request'>
             /// Edited backup configuration.
             /// </param>
-            public static BackupRequestInner UpdateBackupConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name, BackupRequestInner request)
-            {
-                return operations.UpdateBackupConfigurationAsync(resourceGroupName, name, request).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the backup configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the backup configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// Edited backup configuration.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1117,52 +634,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static void DeleteBackupConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteBackupConfigurationAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the backup configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes the backup configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteBackupConfigurationAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the backup configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the backup configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static BackupRequestInner GetBackupConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetBackupConfigurationAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1209,29 +686,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionStrings'>
             /// Connection strings of the app or deployment slot. See example.
             /// </param>
-            public static ConnectionStringDictionaryInner UpdateConnectionStrings(this IWebAppsOperations operations, string resourceGroupName, string name, ConnectionStringDictionaryInner connectionStrings)
-            {
-                return operations.UpdateConnectionStringsAsync(resourceGroupName, name, connectionStrings).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Replaces the connection strings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Replaces the connection strings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionStrings'>
-            /// Connection strings of the app or deployment slot. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1241,26 +695,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the connection strings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the connection strings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static ConnectionStringDictionaryInner ListConnectionStrings(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListConnectionStringsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1304,26 +738,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static SiteLogsConfigInner GetDiagnosticLogsConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetDiagnosticLogsConfigurationAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the logging configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the logging configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1333,30 +747,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates the logging configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the logging configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteLogsConfig'>
-            /// A SiteLogsConfig JSON object that contains the logging configuration to
-            /// change in the "properties" property.
-            /// </param>
-            public static SiteLogsConfigInner UpdateDiagnosticLogsConfig(this IWebAppsOperations operations, string resourceGroupName, string name, SiteLogsConfigInner siteLogsConfig)
-            {
-                return operations.UpdateDiagnosticLogsConfigAsync(resourceGroupName, name, siteLogsConfig).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1407,29 +797,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='metadata'>
             /// Edited metadata of the app or deployment slot. See example.
             /// </param>
-            public static StringDictionaryInner UpdateMetadata(this IWebAppsOperations operations, string resourceGroupName, string name, StringDictionaryInner metadata)
-            {
-                return operations.UpdateMetadataAsync(resourceGroupName, name, metadata).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Replaces the metadata of an app.
-            /// </summary>
-            /// <remarks>
-            /// Replaces the metadata of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='metadata'>
-            /// Edited metadata of the app or deployment slot. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1456,26 +823,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static StringDictionaryInner ListMetadata(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMetadataAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the metadata of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the metadata of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1485,26 +832,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static UserInner ListPublishingCredentials(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListPublishingCredentialsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1551,29 +878,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='pushSettings'>
             /// Push settings associated with web app
             /// </param>
-            public static PushSettingsInner UpdateSitePushSettings(this IWebAppsOperations operations, string resourceGroupName, string name, PushSettingsInner pushSettings)
-            {
-                return operations.UpdateSitePushSettingsAsync(resourceGroupName, name, pushSettings).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the Push settings associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the Push settings associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='pushSettings'>
-            /// Push settings associated with web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1600,26 +904,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static PushSettingsInner ListSitePushSettings(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListSitePushSettingsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the Push settings associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Push settings associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1629,28 +913,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the names of app settings and connection strings that stick to the
-            /// slot (not swapped).
-            /// </summary>
-            /// <remarks>
-            /// Gets the names of app settings and connection strings that stick to the
-            /// slot (not swapped).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static SlotConfigNamesResourceInner ListSlotConfigurationNames(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListSlotConfigurationNamesAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1701,31 +963,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slotConfigNames'>
             /// Names of application settings and connection strings. See example.
             /// </param>
-            public static SlotConfigNamesResourceInner UpdateSlotConfigurationNames(this IWebAppsOperations operations, string resourceGroupName, string name, SlotConfigNamesResourceInner slotConfigNames)
-            {
-                return operations.UpdateSlotConfigurationNamesAsync(resourceGroupName, name, slotConfigNames).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the names of application settings and connection string that remain
-            /// with the slot during swap operation.
-            /// </summary>
-            /// <remarks>
-            /// Updates the names of application settings and connection string that remain
-            /// with the slot during swap operation.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotConfigNames'>
-            /// Names of application settings and connection strings. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1754,28 +991,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static SiteConfigResourceInner GetConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetConfigurationAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
-            /// </summary>
-            /// <remarks>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1785,29 +1000,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates the configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteConfig'>
-            /// JSON representation of a SiteConfig object. See example.
-            /// </param>
-            public static SiteConfigResourceInner CreateOrUpdateConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name, SiteConfigResourceInner siteConfig)
-            {
-                return operations.CreateOrUpdateConfigurationAsync(resourceGroupName, name, siteConfig).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1857,29 +1049,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='siteConfig'>
             /// JSON representation of a SiteConfig object. See example.
             /// </param>
-            public static SiteConfigResourceInner UpdateConfiguration(this IWebAppsOperations operations, string resourceGroupName, string name, SiteConfigResourceInner siteConfig)
-            {
-                return operations.UpdateConfigurationAsync(resourceGroupName, name, siteConfig).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteConfig'>
-            /// JSON representation of a SiteConfig object. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1908,28 +1077,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IList<SiteConfigurationSnapshotInfoInner> ListConfigurationSnapshotInfo(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListConfigurationSnapshotInfoAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1939,29 +1086,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
-            /// </summary>
-            /// <remarks>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='snapshotId'>
-            /// The ID of the snapshot to read.
-            /// </param>
-            public static SiteConfigResourceInner GetConfigurationSnapshot(this IWebAppsOperations operations, string resourceGroupName, string name, string snapshotId)
-            {
-                return operations.GetConfigurationSnapshotAsync(resourceGroupName, name, snapshotId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2011,57 +1135,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='snapshotId'>
             /// The ID of the snapshot to read.
             /// </param>
-            public static void RecoverSiteConfigurationSnapshot(this IWebAppsOperations operations, string resourceGroupName, string name, string snapshotId)
-            {
-                operations.RecoverSiteConfigurationSnapshotAsync(resourceGroupName, name, snapshotId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reverts the configuration of an app to a previous snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Reverts the configuration of an app to a previous snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='snapshotId'>
-            /// The ID of the snapshot to read.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RecoverSiteConfigurationSnapshotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string snapshotId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RecoverSiteConfigurationSnapshotWithHttpMessagesAsync(resourceGroupName, name, snapshotId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static IPage<DeploymentInner> ListDeployments(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListDeploymentsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2090,31 +1169,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            public static DeploymentInner GetDeployment(this IWebAppsOperations operations, string resourceGroupName, string name, string id)
-            {
-                return operations.GetDeploymentAsync(resourceGroupName, name, id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2171,34 +1225,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='deployment'>
             /// Deployment details.
             /// </param>
-            public static DeploymentInner CreateDeployment(this IWebAppsOperations operations, string resourceGroupName, string name, string id, DeploymentInner deployment)
-            {
-                return operations.CreateDeploymentAsync(resourceGroupName, name, id, deployment).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// ID of an existing deployment.
-            /// </param>
-            /// <param name='deployment'>
-            /// Deployment details.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2208,31 +1234,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            public static void DeleteDeployment(this IWebAppsOperations operations, string resourceGroupName, string name, string id)
-            {
-                operations.DeleteDeploymentAsync(resourceGroupName, name, id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2278,26 +1279,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<IdentifierInner> ListDomainOwnershipIdentifiers(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListDomainOwnershipIdentifiersAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2307,29 +1288,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get domain ownership identifier for web app.
-            /// </summary>
-            /// <remarks>
-            /// Get domain ownership identifier for web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            public static IdentifierInner GetDomainOwnershipIdentifier(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName)
-            {
-                return operations.GetDomainOwnershipIdentifierAsync(resourceGroupName, name, domainOwnershipIdentifierName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2384,34 +1342,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='domainOwnershipIdentifier'>
             /// A JSON representation of the domain ownership properties.
             /// </param>
-            public static IdentifierInner CreateOrUpdateDomainOwnershipIdentifier(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierInner domainOwnershipIdentifier)
-            {
-                return operations.CreateOrUpdateDomainOwnershipIdentifierAsync(resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </summary>
-            /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            /// <param name='domainOwnershipIdentifier'>
-            /// A JSON representation of the domain ownership properties.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2421,29 +1351,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a domain ownership identifier for a web app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a domain ownership identifier for a web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            public static void DeleteDomainOwnershipIdentifier(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName)
-            {
-                operations.DeleteDomainOwnershipIdentifierAsync(resourceGroupName, name, domainOwnershipIdentifierName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2495,34 +1402,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='domainOwnershipIdentifier'>
             /// A JSON representation of the domain ownership properties.
             /// </param>
-            public static IdentifierInner UpdateDomainOwnershipIdentifier(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierInner domainOwnershipIdentifier)
-            {
-                return operations.UpdateDomainOwnershipIdentifierAsync(resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </summary>
-            /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            /// <param name='domainOwnershipIdentifier'>
-            /// A JSON representation of the domain ownership properties.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2532,26 +1411,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            public static MSDeployStatusInner GetMSDeployStatus(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetMSDeployStatusAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2598,29 +1457,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='mSDeploy'>
             /// Details of MSDeploy operation
             /// </param>
-            public static MSDeployStatusInner CreateMSDeployOperation(this IWebAppsOperations operations, string resourceGroupName, string name, MSDeployInner mSDeploy)
-            {
-                return operations.CreateMSDeployOperationAsync(resourceGroupName, name, mSDeploy).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2630,26 +1466,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            public static MSDeployLogInner GetMSDeployLog(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetMSDeployLogAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2693,26 +1509,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static string GetFunctionsAdminToken(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetFunctionsAdminTokenAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Fetch a short lived token that can be exchanged for a master key.
-            /// </summary>
-            /// <remarks>
-            /// Fetch a short lived token that can be exchanged for a master key.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2739,26 +1535,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<HostNameBindingInner> ListHostNameBindings(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListHostNameBindingsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2768,31 +1544,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='hostName'>
-            /// Hostname in the hostname binding.
-            /// </param>
-            public static HostNameBindingInner GetHostNameBinding(this IWebAppsOperations operations, string resourceGroupName, string name, string hostName)
-            {
-                return operations.GetHostNameBindingAsync(resourceGroupName, name, hostName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2848,33 +1599,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Binding details. This is the JSON representation of a HostNameBinding
             /// object.
             /// </param>
-            public static HostNameBindingInner CreateOrUpdateHostNameBinding(this IWebAppsOperations operations, string resourceGroupName, string name, string hostName, HostNameBindingInner hostNameBinding)
-            {
-                return operations.CreateOrUpdateHostNameBindingAsync(resourceGroupName, name, hostName, hostNameBinding).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='hostName'>
-            /// Hostname in the hostname binding.
-            /// </param>
-            /// <param name='hostNameBinding'>
-            /// Binding details. This is the JSON representation of a HostNameBinding
-            /// object.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -2904,61 +1628,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='hostName'>
             /// Hostname in the hostname binding.
             /// </param>
-            public static void DeleteHostNameBinding(this IWebAppsOperations operations, string resourceGroupName, string name, string hostName)
-            {
-                operations.DeleteHostNameBindingAsync(resourceGroupName, name, hostName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='hostName'>
-            /// Hostname in the hostname binding.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteHostNameBindingAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteHostNameBindingWithHttpMessagesAsync(resourceGroupName, name, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
-            /// </summary>
-            /// <remarks>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            public static HybridConnectionInner GetHybridConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                return operations.GetHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3017,35 +1692,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// The details of the hybrid connection
             /// </param>
-            public static HybridConnectionInner CreateOrUpdateHybridConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionInner connectionEnvelope)
-            {
-                return operations.CreateOrUpdateHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the hybrid connection
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3078,67 +1724,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='relayName'>
             /// The relay name for this hybrid connection
             /// </param>
-            public static void DeleteHybridConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                operations.DeleteHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Removes a Hybrid Connection from this site.
-            /// </summary>
-            /// <remarks>
-            /// Removes a Hybrid Connection from this site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteHybridConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteHybridConnectionWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the hybrid connection
-            /// </param>
-            public static HybridConnectionInner UpdateHybridConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionInner connectionEnvelope)
-            {
-                return operations.UpdateHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName, connectionEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3197,32 +1788,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='relayName'>
             /// The relay name for this hybrid connection
             /// </param>
-            public static HybridConnectionKeyInner ListHybridConnectionKeys(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                return operations.ListHybridConnectionKeysAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3232,26 +1797,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
-            /// </summary>
-            /// <remarks>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            public static HybridConnectionInner ListHybridConnections(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListHybridConnectionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3297,28 +1842,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static RelayServiceConnectionEntityInner ListRelayServiceConnections(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListRelayServiceConnectionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3328,29 +1851,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a hybrid connection configuration by its name.
-            /// </summary>
-            /// <remarks>
-            /// Gets a hybrid connection configuration by its name.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection.
-            /// </param>
-            public static RelayServiceConnectionEntityInner GetRelayServiceConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName)
-            {
-                return operations.GetRelayServiceConnectionAsync(resourceGroupName, name, entityName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3405,34 +1905,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// Details of the hybrid connection configuration.
             /// </param>
-            public static RelayServiceConnectionEntityInner CreateOrUpdateRelayServiceConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityInner connectionEnvelope)
-            {
-                return operations.CreateOrUpdateRelayServiceConnectionAsync(resourceGroupName, name, entityName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection configuration.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Details of the hybrid connection configuration.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3442,29 +1914,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a relay service connection by its name.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a relay service connection by its name.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection configuration.
-            /// </param>
-            public static void DeleteRelayServiceConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName)
-            {
-                operations.DeleteRelayServiceConnectionAsync(resourceGroupName, name, entityName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3516,34 +1965,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// Details of the hybrid connection configuration.
             /// </param>
-            public static RelayServiceConnectionEntityInner UpdateRelayServiceConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityInner connectionEnvelope)
-            {
-                return operations.UpdateRelayServiceConnectionAsync(resourceGroupName, name, entityName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection configuration.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Details of the hybrid connection configuration.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3553,26 +1974,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all scale-out instances of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets all scale-out instances of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiers(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListInstanceIdentifiersAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3622,32 +2023,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// The ID of a specific scaled-out instance. This is the value of the name
             /// property in the JSON response from "GET api/sites/{siteName}/instances"
             /// </param>
-            public static IPage<DeploymentInner> ListInstanceDeployments(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId)
-            {
-                return operations.ListInstanceDeploymentsAsync(resourceGroupName, name, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='instanceId'>
-            /// The ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3657,35 +2032,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
-            public static DeploymentInner GetInstanceDeployment(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string instanceId)
-            {
-                return operations.GetInstanceDeploymentAsync(resourceGroupName, name, id, instanceId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3750,38 +2096,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='deployment'>
             /// Deployment details.
             /// </param>
-            public static DeploymentInner CreateInstanceDeployment(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string instanceId, DeploymentInner deployment)
-            {
-                return operations.CreateInstanceDeploymentAsync(resourceGroupName, name, id, instanceId, deployment).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// ID of an existing deployment.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
-            /// <param name='deployment'>
-            /// Deployment details.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3791,35 +2105,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
-            public static void DeleteInstanceDeployment(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string instanceId)
-            {
-                operations.DeleteInstanceDeploymentAsync(resourceGroupName, name, id, instanceId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3872,29 +2157,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='instanceId'>
             /// Id of web app instance
             /// </param>
-            public static MSDeployStatusInner GetInstanceMsDeployStatus(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId)
-            {
-                return operations.GetInstanceMsDeployStatusAsync(resourceGroupName, name, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -3904,32 +2166,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
-            public static MSDeployStatusInner CreateInstanceMSDeployOperation(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId, MSDeployInner mSDeploy)
-            {
-                return operations.CreateInstanceMSDeployOperationAsync(resourceGroupName, name, instanceId, mSDeploy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3982,29 +2218,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='instanceId'>
             /// Id of web app instance
             /// </param>
-            public static MSDeployLogInner GetInstanceMSDeployLog(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId)
-            {
-                return operations.GetInstanceMSDeployLogAsync(resourceGroupName, name, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4014,28 +2227,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
-            /// </summary>
-            /// <remarks>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static SiteCloneabilityInner IsCloneable(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.IsCloneableAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4081,26 +2272,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitions(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMetricDefinitionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4110,36 +2281,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='details'>
-            /// Specify "true" to include metric details in the response. It is "false" by
-            /// default.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only metrics specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetrics(this IWebAppsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMetricsAsync(resourceGroupName, name, details, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4199,32 +2340,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='migrationOptions'>
             /// Migration migrationOptions
             /// </param>
-            public static StorageMigrationResponseInner MigrateStorage(this IWebAppsOperations operations, string subscriptionName, string resourceGroupName, string name, StorageMigrationOptionsInner migrationOptions)
-            {
-                return operations.MigrateStorageAsync(subscriptionName, resourceGroupName, name, migrationOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restores a web app.
-            /// </summary>
-            /// <remarks>
-            /// Restores a web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionName'>
-            /// Azure subscription
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='migrationOptions'>
-            /// Migration migrationOptions
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4234,29 +2349,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
-            /// </summary>
-            /// <remarks>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='migrationRequestEnvelope'>
-            /// MySql migration options
-            /// </param>
-            public static OperationInner MigrateMySql(this IWebAppsOperations operations, string resourceGroupName, string name, MigrateMySqlRequestInner migrationRequestEnvelope)
-            {
-                return operations.MigrateMySqlAsync(resourceGroupName, name, migrationRequestEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4305,28 +2397,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static MigrateMySqlStatusInner GetMigrateMySqlStatus(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetMigrateMySqlStatusAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
-            /// </summary>
-            /// <remarks>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4336,31 +2406,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
-            /// </param>
-            public static NetworkFeaturesInner ListNetworkFeatures(this IWebAppsOperations operations, string resourceGroupName, string name, string view)
-            {
-                return operations.ListNetworkFeaturesAsync(resourceGroupName, name, view).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4418,35 +2463,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='sasUrl'>
             /// The Blob URL to store capture file.
             /// </param>
-            public static string StartWebSiteNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
-            {
-                return operations.StartWebSiteNetworkTraceAsync(resourceGroupName, name, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Start capturing network packets for the site.
-            /// </summary>
-            /// <remarks>
-            /// Start capturing network packets for the site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='durationInSeconds'>
-            /// The duration to keep capturing in seconds.
-            /// </param>
-            /// <param name='maxFrameLength'>
-            /// The maximum frame length in bytes (Optional).
-            /// </param>
-            /// <param name='sasUrl'>
-            /// The Blob URL to store capture file.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4456,26 +2472,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Stop ongoing capturing network packets for the site.
-            /// </summary>
-            /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            public static string StopWebSiteNetworkTrace(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.StopWebSiteNetworkTraceAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4521,60 +2517,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static void GenerateNewSitePublishingPassword(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.GenerateNewSitePublishingPasswordAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task GenerateNewSitePublishingPasswordAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.GenerateNewSitePublishingPasswordWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets perfmon counters for web app.
-            /// </summary>
-            /// <remarks>
-            /// Gets perfmon counters for web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
-            /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
-            /// duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<PerfMonResponse> ListPerfMonCounters(this IWebAppsOperations operations, string resourceGroupName, string name, string filter = default(string))
-            {
-                return operations.ListPerfMonCountersAsync(resourceGroupName, name, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4624,26 +2572,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static SitePhpErrorLogFlagInner GetSitePhpErrorLogFlag(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetSitePhpErrorLogFlagAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets web app's event logs.
-            /// </summary>
-            /// <remarks>
-            /// Gets web app's event logs.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4670,26 +2598,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static PremierAddOnInner ListPremierAddOns(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListPremierAddOnsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the premier add-ons of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the premier add-ons of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4699,29 +2607,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a named add-on of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets a named add-on of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// Add-on name.
-            /// </param>
-            public static PremierAddOnInner GetPremierAddOn(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName)
-            {
-                return operations.GetPremierAddOnAsync(resourceGroupName, name, premierAddOnName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4774,32 +2659,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='premierAddOn'>
             /// A JSON representation of the edited premier add-on.
             /// </param>
-            public static PremierAddOnInner AddPremierAddOn(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnInner premierAddOn)
-            {
-                return operations.AddPremierAddOnAsync(resourceGroupName, name, premierAddOnName, premierAddOn).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a named add-on of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates a named add-on of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// Add-on name.
-            /// </param>
-            /// <param name='premierAddOn'>
-            /// A JSON representation of the edited premier add-on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4809,29 +2668,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a premier add-on from an app.
-            /// </summary>
-            /// <remarks>
-            /// Delete a premier add-on from an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// Add-on name.
-            /// </param>
-            public static void DeletePremierAddOn(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName)
-            {
-                operations.DeletePremierAddOnAsync(resourceGroupName, name, premierAddOnName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4875,26 +2711,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<PublicCertificateInner> ListPublicCertificates(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListPublicCertificatesAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get public certificates for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -4904,31 +2720,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='publicCertificateName'>
-            /// Public CertificateName
-            /// </param>
-            public static PublicCertificateInner GetPublicCertificate(this IWebAppsOperations operations, string resourceGroupName, string name, string publicCertificateName)
-            {
-                return operations.GetPublicCertificateAsync(resourceGroupName, name, publicCertificateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4984,33 +2775,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Public certificate details. This is the JSON representation of a
             /// PublicCertificate object.
             /// </param>
-            public static PublicCertificateInner CreateOrUpdatePublicCertificate(this IWebAppsOperations operations, string resourceGroupName, string name, string publicCertificateName, PublicCertificateInner publicCertificate)
-            {
-                return operations.CreateOrUpdatePublicCertificateAsync(resourceGroupName, name, publicCertificateName, publicCertificate).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='publicCertificateName'>
-            /// Public certificate name.
-            /// </param>
-            /// <param name='publicCertificate'>
-            /// Public certificate details. This is the JSON representation of a
-            /// PublicCertificate object.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -5040,59 +2804,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='publicCertificateName'>
             /// Public Certificate Name.
             /// </param>
-            public static void DeletePublicCertificate(this IWebAppsOperations operations, string resourceGroupName, string name, string publicCertificateName)
-            {
-                operations.DeletePublicCertificateAsync(resourceGroupName, name, publicCertificateName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='publicCertificateName'>
-            /// Public Certificate Name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeletePublicCertificateAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string publicCertificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeletePublicCertificateWithHttpMessagesAsync(resourceGroupName, name, publicCertificateName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='publishingProfileOptions'>
-            /// Specifies publishingProfileOptions for publishing profile. For example, use
-            /// {"format": "FileZilla3"} to get a FileZilla publishing profile.
-            /// </param>
-            public static Stream ListPublishingProfileXmlWithSecrets(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptionsInner publishingProfileOptions)
-            {
-                return operations.ListPublishingProfileXmlWithSecretsAsync(resourceGroupName, name, publishingProfileOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5143,30 +2860,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Snapshot data used for web app recovery. Snapshot information can be
             /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
             /// </param>
-            public static RecoverResponseInner Recover(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequestInner recoveryEntity)
-            {
-                return operations.RecoverAsync(resourceGroupName, name, recoveryEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Recovers a deleted web app.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a deleted web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -5176,28 +2869,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
-            /// </summary>
-            /// <remarks>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static void ResetProductionSlotConfig(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.ResetProductionSlotConfigAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5248,60 +2919,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Specify true to block until the app is restarted. By default, it is set to
             /// false, and the API responds immediately (asynchronous).
             /// </param>
-            public static void Restart(this IWebAppsOperations operations, string resourceGroupName, string name, bool? softRestart = default(bool?), bool? synchronous = default(bool?))
-            {
-                operations.RestartAsync(resourceGroupName, name, softRestart, synchronous).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restarts an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Restarts an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='softRestart'>
-            /// Specify true to apply the configuration settings and restarts the app only
-            /// if necessary. By default, the API always restarts and reprovisions the app.
-            /// </param>
-            /// <param name='synchronous'>
-            /// Specify true to block until the app is restarted. By default, it is set to
-            /// false, and the API responds immediately (asynchronous).
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RestartAsync(this IWebAppsOperations operations, string resourceGroupName, string name, bool? softRestart = default(bool?), bool? synchronous = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RestartWithHttpMessagesAsync(resourceGroupName, name, softRestart, synchronous, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an app's deployment slots.
-            /// </summary>
-            /// <remarks>
-            /// Gets an app's deployment slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static IPage<SiteInner> ListSlots(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListSlotsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5349,30 +2972,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. By default, this API returns the production
             /// slot.
             /// </param>
-            public static SiteInner GetSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the details of a web, mobile, or API app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the details of a web, mobile, or API app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. By default, this API returns the production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -5382,51 +2981,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Unique name of the app to create or update. To create or update a
-            /// deployment slot, use the {slot} parameter.
-            /// </param>
-            /// <param name='siteEnvelope'>
-            /// A JSON representation of the app properties. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot to create or update. By default, this API
-            /// attempts to create or modify the production slot.
-            /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name
-            /// </param>
-            public static SiteInner CreateOrUpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteInner siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
-            {
-                return operations.CreateOrUpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5510,74 +3064,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='skipDnsRegistration'>
             /// If true, DNS registration is skipped
             /// </param>
-            public static void DeleteSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?))
-            {
-                operations.DeleteSlotAsync(resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app to delete.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot to delete. By default, the API deletes the
-            /// production slot.
-            /// </param>
-            /// <param name='deleteMetrics'>
-            /// If true, web app metrics are also deleted
-            /// </param>
-            /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
-            /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true, DNS registration is skipped
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?), bool? skipDnsRegistration = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteSlotWithHttpMessagesAsync(resourceGroupName, name, slot, deleteMetrics, deleteEmptyServerFarm, skipDnsRegistration, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Analyze a custom hostname.
-            /// </summary>
-            /// <remarks>
-            /// Analyze a custom hostname.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='hostName'>
-            /// Custom hostname
-            /// </param>
-            public static CustomHostnameAnalysisResultInner AnalyzeCustomHostnameSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string hostName = default(string))
-            {
-                return operations.AnalyzeCustomHostnameSlotAsync(resourceGroupName, name, slot, hostName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5637,69 +3129,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the source slot. If a slot is not specified, the production slot is
             /// used as the source slot.
             /// </param>
-            public static void ApplySlotConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, string slot)
-            {
-                operations.ApplySlotConfigurationSlotAsync(resourceGroupName, name, slotSwapEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
-            /// </summary>
-            /// <remarks>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ApplySlotConfigurationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ApplySlotConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates a backup of an app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a backup of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// Backup configuration. You can use the JSON response from the POST action as
-            /// input here.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// create a backup for the production slot.
-            /// </param>
-            public static BackupItemInner BackupSlot(this IWebAppsOperations operations, string resourceGroupName, string name, BackupRequestInner request, string slot)
-            {
-                return operations.BackupSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5755,30 +3190,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// backups of the production slot.
             /// </param>
-            public static IPage<BackupItemInner> ListBackupsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListBackupsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets existing backups of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets existing backups of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// backups of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -5788,36 +3199,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </summary>
-            /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// A RestoreRequest object that includes Azure storage URL and blog name for
-            /// discovery of backup.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// perform discovery for the production slot.
-            /// </param>
-            public static RestoreRequestInner DiscoverRestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, RestoreRequestInner request, string slot)
-            {
-                return operations.DiscoverRestoreSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5878,33 +3259,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get a
             /// backup of the production slot.
             /// </param>
-            public static BackupItemInner GetBackupStatusSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, string slot)
-            {
-                return operations.GetBackupStatusSlotAsync(resourceGroupName, name, backupId, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a backup of an app by its ID.
-            /// </summary>
-            /// <remarks>
-            /// Gets a backup of an app by its ID.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get a
-            /// backup of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -5938,75 +3292,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete a backup of the production slot.
             /// </param>
-            public static void DeleteBackupSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, string slot)
-            {
-                operations.DeleteBackupSlotAsync(resourceGroupName, name, backupId, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a backup of an app by its ID.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a backup of an app by its ID.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete a backup of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteBackupSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteBackupSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
-            /// </summary>
-            /// <remarks>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='backupId'>
-            /// Id of backup
-            /// </param>
-            /// <param name='request'>
-            /// Information on backup request
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static BackupItemInner ListBackupStatusSecretsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, BackupRequestInner request, string slot)
-            {
-                return operations.ListBackupStatusSecretsSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6078,38 +3369,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// restore a backup of the production slot.
             /// </param>
-            public static RestoreResponseInner RestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequestInner request, string slot)
-            {
-                return operations.RestoreSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
-            /// <param name='request'>
-            /// Information on restore request
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6119,30 +3378,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List the configurations of an app
-            /// </summary>
-            /// <remarks>
-            /// List the configurations of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// return configuration for the production slot.
-            /// </param>
-            public static IPage<SiteConfigResourceInner> ListConfigurationsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListConfigurationsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6197,33 +3432,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the application settings for the production slot.
             /// </param>
-            public static StringDictionaryInner UpdateApplicationSettingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, StringDictionaryInner appSettings, string slot)
-            {
-                return operations.UpdateApplicationSettingsSlotAsync(resourceGroupName, name, appSettings, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Replaces the application settings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Replaces the application settings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='appSettings'>
-            /// Application settings of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the application settings for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6233,30 +3441,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the application settings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the application settings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the application settings for the production slot.
-            /// </param>
-            public static StringDictionaryInner ListApplicationSettingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListApplicationSettingsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6313,35 +3497,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteAuthSettingsInner UpdateAuthSettingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsInner siteAuthSettings, string slot)
-            {
-                return operations.UpdateAuthSettingsSlotAsync(resourceGroupName, name, siteAuthSettings, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='siteAuthSettings'>
-            /// Auth settings associated with web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6351,30 +3506,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Authentication/Authorization settings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Authentication/Authorization settings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the settings for the production slot.
-            /// </param>
-            public static SiteAuthSettingsInner GetAuthSettingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetAuthSettingsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6429,33 +3560,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the backup configuration for the production slot.
             /// </param>
-            public static BackupRequestInner UpdateBackupConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, BackupRequestInner request, string slot)
-            {
-                return operations.UpdateBackupConfigurationSlotAsync(resourceGroupName, name, request, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the backup configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the backup configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='request'>
-            /// Edited backup configuration.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the backup configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6486,60 +3590,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the backup configuration for the production slot.
             /// </param>
-            public static void DeleteBackupConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.DeleteBackupConfigurationSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the backup configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes the backup configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the backup configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteBackupConfigurationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the backup configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the backup configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the backup configuration for the production slot.
-            /// </param>
-            public static BackupRequestInner GetBackupConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetBackupConfigurationSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6594,33 +3650,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the connection settings for the production slot.
             /// </param>
-            public static ConnectionStringDictionaryInner UpdateConnectionStringsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, ConnectionStringDictionaryInner connectionStrings, string slot)
-            {
-                return operations.UpdateConnectionStringsSlotAsync(resourceGroupName, name, connectionStrings, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Replaces the connection strings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Replaces the connection strings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='connectionStrings'>
-            /// Connection strings of the app or deployment slot. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the connection settings for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6630,30 +3659,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the connection strings of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the connection strings of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the connection settings for the production slot.
-            /// </param>
-            public static ConnectionStringDictionaryInner ListConnectionStringsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListConnectionStringsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6705,30 +3710,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// the logging configuration for the production slot.
             /// </param>
-            public static SiteLogsConfigInner GetDiagnosticLogsConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetDiagnosticLogsConfigurationSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the logging configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the logging configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the logging configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6738,34 +3719,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates the logging configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the logging configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteLogsConfig'>
-            /// A SiteLogsConfig JSON object that contains the logging configuration to
-            /// change in the "properties" property.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the logging configuration for the production slot.
-            /// </param>
-            public static SiteLogsConfigInner UpdateDiagnosticLogsConfigSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteLogsConfigInner siteLogsConfig, string slot)
-            {
-                return operations.UpdateDiagnosticLogsConfigSlotAsync(resourceGroupName, name, siteLogsConfig, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6824,33 +3777,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the metadata for the production slot.
             /// </param>
-            public static StringDictionaryInner UpdateMetadataSlot(this IWebAppsOperations operations, string resourceGroupName, string name, StringDictionaryInner metadata, string slot)
-            {
-                return operations.UpdateMetadataSlotAsync(resourceGroupName, name, metadata, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Replaces the metadata of an app.
-            /// </summary>
-            /// <remarks>
-            /// Replaces the metadata of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='metadata'>
-            /// Edited metadata of the app or deployment slot. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the metadata for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6881,30 +3807,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// the metadata for the production slot.
             /// </param>
-            public static StringDictionaryInner ListMetadataSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListMetadataSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the metadata of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the metadata of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the metadata for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -6914,30 +3816,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the publishing credentials for the production slot.
-            /// </param>
-            public static UserInner ListPublishingCredentialsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListPublishingCredentialsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6992,33 +3870,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static PushSettingsInner UpdateSitePushSettingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, PushSettingsInner pushSettings, string slot)
-            {
-                return operations.UpdateSitePushSettingsSlotAsync(resourceGroupName, name, pushSettings, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the Push settings associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the Push settings associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='pushSettings'>
-            /// Push settings associated with web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7028,30 +3879,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Push settings associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Push settings associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static PushSettingsInner ListSitePushSettingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListSitePushSettingsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7105,32 +3932,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// return configuration for the production slot.
             /// </param>
-            public static SiteConfigResourceInner GetConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetConfigurationSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
-            /// </summary>
-            /// <remarks>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// return configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7140,33 +3941,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates the configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteConfig'>
-            /// JSON representation of a SiteConfig object. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update configuration for the production slot.
-            /// </param>
-            public static SiteConfigResourceInner CreateOrUpdateConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteConfigResourceInner siteConfig, string slot)
-            {
-                return operations.CreateOrUpdateConfigurationSlotAsync(resourceGroupName, name, siteConfig, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7224,33 +3998,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update configuration for the production slot.
             /// </param>
-            public static SiteConfigResourceInner UpdateConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteConfigResourceInner siteConfig, string slot)
-            {
-                return operations.UpdateConfigurationSlotAsync(resourceGroupName, name, siteConfig, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteConfig'>
-            /// JSON representation of a SiteConfig object. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7283,32 +4030,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// return configuration for the production slot.
             /// </param>
-            public static IList<SiteConfigurationSnapshotInfoInner> ListConfigurationSnapshotInfoSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListConfigurationSnapshotInfoSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// return configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7318,33 +4039,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
-            /// </summary>
-            /// <remarks>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='snapshotId'>
-            /// The ID of the snapshot to read.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// return configuration for the production slot.
-            /// </param>
-            public static SiteConfigResourceInner GetConfigurationSnapshotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string snapshotId, string slot)
-            {
-                return operations.GetConfigurationSnapshotSlotAsync(resourceGroupName, name, snapshotId, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7402,65 +4096,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// return configuration for the production slot.
             /// </param>
-            public static void RecoverSiteConfigurationSnapshotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string snapshotId, string slot)
-            {
-                operations.RecoverSiteConfigurationSnapshotSlotAsync(resourceGroupName, name, snapshotId, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reverts the configuration of an app to a previous snapshot.
-            /// </summary>
-            /// <remarks>
-            /// Reverts the configuration of an app to a previous snapshot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='snapshotId'>
-            /// The ID of the snapshot to read.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// return configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RecoverSiteConfigurationSnapshotSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string snapshotId, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RecoverSiteConfigurationSnapshotSlotWithHttpMessagesAsync(resourceGroupName, name, snapshotId, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API returns
-            /// deployments for the production slot.
-            /// </param>
-            public static IPage<DeploymentInner> ListDeploymentsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListDeploymentsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7493,35 +4134,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API gets a
-            /// deployment for the production slot.
-            /// </param>
-            public static DeploymentInner GetDeploymentSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot)
-            {
-                return operations.GetDeploymentSlotAsync(resourceGroupName, name, id, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7586,38 +4198,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='deployment'>
             /// Deployment details.
             /// </param>
-            public static DeploymentInner CreateDeploymentSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot, DeploymentInner deployment)
-            {
-                return operations.CreateDeploymentSlotAsync(resourceGroupName, name, id, slot, deployment).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// ID of an existing deployment.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API creates a
-            /// deployment for the production slot.
-            /// </param>
-            /// <param name='deployment'>
-            /// Deployment details.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7627,35 +4207,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
-            /// </param>
-            public static void DeleteDeploymentSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot)
-            {
-                operations.DeleteDeploymentSlotAsync(resourceGroupName, name, id, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7709,30 +4260,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the binding for the production slot.
             /// </param>
-            public static IPage<IdentifierInner> ListDomainOwnershipIdentifiersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListDomainOwnershipIdentifiersSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7742,33 +4269,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get domain ownership identifier for web app.
-            /// </summary>
-            /// <remarks>
-            /// Get domain ownership identifier for web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
-            public static IdentifierInner GetDomainOwnershipIdentifierSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName, string slot)
-            {
-                return operations.GetDomainOwnershipIdentifierSlotAsync(resourceGroupName, name, domainOwnershipIdentifierName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7831,38 +4331,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the binding for the production slot.
             /// </param>
-            public static IdentifierInner CreateOrUpdateDomainOwnershipIdentifierSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierInner domainOwnershipIdentifier, string slot)
-            {
-                return operations.CreateOrUpdateDomainOwnershipIdentifierSlotAsync(resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </summary>
-            /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            /// <param name='domainOwnershipIdentifier'>
-            /// A JSON representation of the domain ownership properties.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7872,33 +4340,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a domain ownership identifier for a web app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a domain ownership identifier for a web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
-            public static void DeleteDomainOwnershipIdentifierSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName, string slot)
-            {
-                operations.DeleteDomainOwnershipIdentifierSlotAsync(resourceGroupName, name, domainOwnershipIdentifierName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -7958,38 +4399,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the binding for the production slot.
             /// </param>
-            public static IdentifierInner UpdateDomainOwnershipIdentifierSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierInner domainOwnershipIdentifier, string slot)
-            {
-                return operations.UpdateDomainOwnershipIdentifierSlotAsync(resourceGroupName, name, domainOwnershipIdentifierName, domainOwnershipIdentifier, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </summary>
-            /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='domainOwnershipIdentifierName'>
-            /// Name of domain ownership identifier.
-            /// </param>
-            /// <param name='domainOwnershipIdentifier'>
-            /// A JSON representation of the domain ownership properties.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -7999,30 +4408,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static MSDeployStatusInner GetMSDeployStatusSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetMSDeployStatusSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8077,33 +4462,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='mSDeploy'>
             /// Details of MSDeploy operation
             /// </param>
-            public static MSDeployStatusInner CreateMSDeployOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, MSDeployInner mSDeploy)
-            {
-                return operations.CreateMSDeployOperationSlotAsync(resourceGroupName, name, slot, mSDeploy).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8113,30 +4471,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static MSDeployLogInner GetMSDeployLogSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetMSDeployLogSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8188,30 +4522,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static string GetFunctionsAdminTokenSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetFunctionsAdminTokenSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Fetch a short lived token that can be exchanged for a master key.
-            /// </summary>
-            /// <remarks>
-            /// Fetch a short lived token that can be exchanged for a master key.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8242,30 +4552,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API gets
             /// hostname bindings for the production slot.
             /// </param>
-            public static IPage<HostNameBindingInner> ListHostNameBindingsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListHostNameBindingsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API gets
-            /// hostname bindings for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8275,35 +4561,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API the named
-            /// binding for the production slot.
-            /// </param>
-            /// <param name='hostName'>
-            /// Hostname in the hostname binding.
-            /// </param>
-            public static HostNameBindingInner GetHostNameBindingSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string hostName)
-            {
-                return operations.GetHostNameBindingSlotAsync(resourceGroupName, name, slot, hostName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8367,37 +4624,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// create a binding for the production slot.
             /// </param>
-            public static HostNameBindingInner CreateOrUpdateHostNameBindingSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string hostName, HostNameBindingInner hostNameBinding, string slot)
-            {
-                return operations.CreateOrUpdateHostNameBindingSlotAsync(resourceGroupName, name, hostName, hostNameBinding, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='hostName'>
-            /// Hostname in the hostname binding.
-            /// </param>
-            /// <param name='hostNameBinding'>
-            /// Binding details. This is the JSON representation of a HostNameBinding
-            /// object.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// create a binding for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8431,68 +4657,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='hostName'>
             /// Hostname in the hostname binding.
             /// </param>
-            public static void DeleteHostNameBindingSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string hostName)
-            {
-                operations.DeleteHostNameBindingSlotAsync(resourceGroupName, name, slot, hostName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
-            /// <param name='hostName'>
-            /// Hostname in the hostname binding.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteHostNameBindingSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteHostNameBindingSlotWithHttpMessagesAsync(resourceGroupName, name, slot, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
-            /// </summary>
-            /// <remarks>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static HybridConnectionInner GetHybridConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, string slot)
-            {
-                return operations.GetHybridConnectionSlotAsync(resourceGroupName, name, namespaceName, relayName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8557,38 +4727,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slot'>
             /// The name of the slot for the web app.
             /// </param>
-            public static HybridConnectionInner CreateOrUpdateHybridConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionInner connectionEnvelope, string slot)
-            {
-                return operations.CreateOrUpdateHybridConnectionSlotAsync(resourceGroupName, name, namespaceName, relayName, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the hybrid connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8624,73 +4762,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slot'>
             /// The name of the slot for the web app.
             /// </param>
-            public static void DeleteHybridConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, string slot)
-            {
-                operations.DeleteHybridConnectionSlotAsync(resourceGroupName, name, namespaceName, relayName, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Removes a Hybrid Connection from this site.
-            /// </summary>
-            /// <remarks>
-            /// Removes a Hybrid Connection from this site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteHybridConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteHybridConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the hybrid connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static HybridConnectionInner UpdateHybridConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionInner connectionEnvelope, string slot)
-            {
-                return operations.UpdateHybridConnectionSlotAsync(resourceGroupName, name, namespaceName, relayName, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8755,35 +4832,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slot'>
             /// The name of the slot for the web app.
             /// </param>
-            public static HybridConnectionKeyInner ListHybridConnectionKeysSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, string slot)
-            {
-                return operations.ListHybridConnectionKeysSlotAsync(resourceGroupName, name, namespaceName, relayName, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8793,29 +4841,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
-            /// </summary>
-            /// <remarks>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static HybridConnectionInner ListHybridConnectionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListHybridConnectionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8868,32 +4893,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// hybrid connections for the production slot.
             /// </param>
-            public static RelayServiceConnectionEntityInner ListRelayServiceConnectionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListRelayServiceConnectionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// hybrid connections for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -8903,33 +4902,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a hybrid connection configuration by its name.
-            /// </summary>
-            /// <remarks>
-            /// Gets a hybrid connection configuration by its name.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get a
-            /// hybrid connection for the production slot.
-            /// </param>
-            public static RelayServiceConnectionEntityInner GetRelayServiceConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName, string slot)
-            {
-                return operations.GetRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -8992,38 +4964,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// create or update a hybrid connection for the production slot.
             /// </param>
-            public static RelayServiceConnectionEntityInner CreateOrUpdateRelayServiceConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityInner connectionEnvelope, string slot)
-            {
-                return operations.CreateOrUpdateRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection configuration.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Details of the hybrid connection configuration.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// create or update a hybrid connection for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9033,33 +4973,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a relay service connection by its name.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a relay service connection by its name.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection configuration.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete a hybrid connection for the production slot.
-            /// </param>
-            public static void DeleteRelayServiceConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName, string slot)
-            {
-                operations.DeleteRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9119,38 +5032,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// create or update a hybrid connection for the production slot.
             /// </param>
-            public static RelayServiceConnectionEntityInner UpdateRelayServiceConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityInner connectionEnvelope, string slot)
-            {
-                return operations.UpdateRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='entityName'>
-            /// Name of the hybrid connection configuration.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Details of the hybrid connection configuration.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// create or update a hybrid connection for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9160,30 +5041,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all scale-out instances of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets all scale-out instances of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API gets the
-            /// production slot instances.
-            /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListInstanceIdentifiersSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9241,36 +5098,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// The ID of a specific scaled-out instance. This is the value of the name
             /// property in the JSON response from "GET api/sites/{siteName}/instances"
             /// </param>
-            public static IPage<DeploymentInner> ListInstanceDeploymentsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string instanceId)
-            {
-                return operations.ListInstanceDeploymentsSlotAsync(resourceGroupName, name, slot, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API returns
-            /// deployments for the production slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// The ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9280,39 +5107,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Get a deployment by its ID for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API gets a
-            /// deployment for the production slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
-            public static DeploymentInner GetInstanceDeploymentSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot, string instanceId)
-            {
-                return operations.GetInstanceDeploymentSlotAsync(resourceGroupName, name, id, slot, instanceId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9385,42 +5179,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='deployment'>
             /// Deployment details.
             /// </param>
-            public static DeploymentInner CreateInstanceDeploymentSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot, string instanceId, DeploymentInner deployment)
-            {
-                return operations.CreateInstanceDeploymentSlotAsync(resourceGroupName, name, id, slot, instanceId, deployment).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Create a deployment for an app, a specific deployment slot, and/or a
-            /// specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// ID of an existing deployment.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API creates a
-            /// deployment for the production slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
-            /// <param name='deployment'>
-            /// Deployment details.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9430,39 +5188,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </summary>
-            /// <remarks>
-            /// Delete a deployment by its ID for an app, a specific deployment slot,
-            /// and/or a specific scaled-out instance.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='id'>
-            /// Deployment ID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances"
-            /// </param>
-            public static void DeleteInstanceDeploymentSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string id, string slot, string instanceId)
-            {
-                operations.DeleteInstanceDeploymentSlotAsync(resourceGroupName, name, id, slot, instanceId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9523,33 +5248,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='instanceId'>
             /// Id of web app instance
             /// </param>
-            public static MSDeployStatusInner GetInstanceMsDeployStatusSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string instanceId)
-            {
-                return operations.GetInstanceMsDeployStatusSlotAsync(resourceGroupName, name, slot, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9559,36 +5257,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
-            public static MSDeployStatusInner CreateInstanceMSDeployOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string instanceId, MSDeployInner mSDeploy)
-            {
-                return operations.CreateInstanceMSDeployOperationSlotAsync(resourceGroupName, name, slot, instanceId, mSDeploy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9649,33 +5317,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='instanceId'>
             /// Id of web app instance
             /// </param>
-            public static MSDeployLogInner GetInstanceMSDeployLogSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string instanceId)
-            {
-                return operations.GetInstanceMSDeployLogSlotAsync(resourceGroupName, name, slot, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy Log web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9685,32 +5326,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
-            /// </summary>
-            /// <remarks>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. By default, this API returns information on
-            /// the production slot.
-            /// </param>
-            public static SiteCloneabilityInner IsCloneableSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.IsCloneableSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9764,30 +5379,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// metric definitions of the production slot.
             /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListMetricDefinitionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// metric definitions of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9797,40 +5388,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// metrics of the production slot.
-            /// </param>
-            /// <param name='details'>
-            /// Specify "true" to include metric details in the response. It is "false" by
-            /// default.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only metrics specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetricsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMetricsSlotAsync(resourceGroupName, name, slot, details, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9893,31 +5450,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slot'>
             /// Name of the deployment slot
             /// </param>
-            public static MigrateMySqlStatusInner GetMigrateMySqlStatusSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetMigrateMySqlStatusSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
-            /// </summary>
-            /// <remarks>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -9927,35 +5459,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// network features for the production slot.
-            /// </param>
-            public static NetworkFeaturesInner ListNetworkFeaturesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string view, string slot)
-            {
-                return operations.ListNetworkFeaturesSlotAsync(resourceGroupName, name, view, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10020,38 +5523,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='sasUrl'>
             /// The Blob URL to store capture file.
             /// </param>
-            public static string StartWebSiteNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string))
-            {
-                return operations.StartWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot, durationInSeconds, maxFrameLength, sasUrl).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Start capturing network packets for the site.
-            /// </summary>
-            /// <remarks>
-            /// Start capturing network packets for the site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            /// <param name='durationInSeconds'>
-            /// The duration to keep capturing in seconds.
-            /// </param>
-            /// <param name='maxFrameLength'>
-            /// The maximum frame length in bytes (Optional).
-            /// </param>
-            /// <param name='sasUrl'>
-            /// The Blob URL to store capture file.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10061,29 +5532,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Stop ongoing capturing network packets for the site.
-            /// </summary>
-            /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            public static string StopWebSiteNetworkTraceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.StopWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10136,68 +5584,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API generate a
             /// new publishing password for the production slot.
             /// </param>
-            public static void GenerateNewSitePublishingPasswordSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.GenerateNewSitePublishingPasswordSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API generate a
-            /// new publishing password for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task GenerateNewSitePublishingPasswordSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.GenerateNewSitePublishingPasswordSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets perfmon counters for web app.
-            /// </summary>
-            /// <remarks>
-            /// Gets perfmon counters for web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
-            /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
-            /// duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<PerfMonResponse> ListPerfMonCountersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string filter = default(string))
-            {
-                return operations.ListPerfMonCountersSlotAsync(resourceGroupName, name, slot, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10255,30 +5647,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SitePhpErrorLogFlagInner GetSitePhpErrorLogFlagSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetSitePhpErrorLogFlagSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets web app's event logs.
-            /// </summary>
-            /// <remarks>
-            /// Gets web app's event logs.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10309,30 +5677,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// the premier add-ons for the production slot.
             /// </param>
-            public static PremierAddOnInner ListPremierAddOnsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListPremierAddOnsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the premier add-ons of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the premier add-ons of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the premier add-ons for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10342,33 +5686,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a named add-on of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets a named add-on of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// Add-on name.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the named add-on for the production slot.
-            /// </param>
-            public static PremierAddOnInner GetPremierAddOnSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot)
-            {
-                return operations.GetPremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10429,36 +5746,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the named add-on for the production slot.
             /// </param>
-            public static PremierAddOnInner AddPremierAddOnSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnInner premierAddOn, string slot)
-            {
-                return operations.AddPremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a named add-on of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates a named add-on of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// Add-on name.
-            /// </param>
-            /// <param name='premierAddOn'>
-            /// A JSON representation of the edited premier add-on.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the named add-on for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10468,33 +5755,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a premier add-on from an app.
-            /// </summary>
-            /// <remarks>
-            /// Delete a premier add-on from an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='premierAddOnName'>
-            /// Add-on name.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the named add-on for the production slot.
-            /// </param>
-            public static void DeletePremierAddOnSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot)
-            {
-                operations.DeletePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10546,30 +5806,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API gets
             /// hostname bindings for the production slot.
             /// </param>
-            public static IPage<PublicCertificateInner> ListPublicCertificatesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListPublicCertificatesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get public certificates for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API gets
-            /// hostname bindings for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10579,35 +5815,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API the named
-            /// binding for the production slot.
-            /// </param>
-            /// <param name='publicCertificateName'>
-            /// Public CertificateName
-            /// </param>
-            public static PublicCertificateInner GetPublicCertificateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string publicCertificateName)
-            {
-                return operations.GetPublicCertificateSlotAsync(resourceGroupName, name, slot, publicCertificateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10671,37 +5878,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// create a binding for the production slot.
             /// </param>
-            public static PublicCertificateInner CreateOrUpdatePublicCertificateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string publicCertificateName, PublicCertificateInner publicCertificate, string slot)
-            {
-                return operations.CreateOrUpdatePublicCertificateSlotAsync(resourceGroupName, name, publicCertificateName, publicCertificate, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='publicCertificateName'>
-            /// Public certificate name.
-            /// </param>
-            /// <param name='publicCertificate'>
-            /// Public certificate details. This is the JSON representation of a
-            /// PublicCertificate object.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// create a binding for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10735,67 +5911,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='publicCertificateName'>
             /// Public Certificate Name.
             /// </param>
-            public static void DeletePublicCertificateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string publicCertificateName)
-            {
-                operations.DeletePublicCertificateSlotAsync(resourceGroupName, name, slot, publicCertificateName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a hostname binding for an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a hostname binding for an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the binding for the production slot.
-            /// </param>
-            /// <param name='publicCertificateName'>
-            /// Public Certificate Name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeletePublicCertificateSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string publicCertificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeletePublicCertificateSlotWithHttpMessagesAsync(resourceGroupName, name, slot, publicCertificateName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='publishingProfileOptions'>
-            /// Specifies publishingProfileOptions for publishing profile. For example, use
-            /// {"format": "FileZilla3"} to get a FileZilla publishing profile.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the publishing profile for the production slot.
-            /// </param>
-            public static Stream ListPublishingProfileXmlWithSecretsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptionsInner publishingProfileOptions, string slot)
-            {
-                return operations.ListPublishingProfileXmlWithSecretsSlotAsync(resourceGroupName, name, publishingProfileOptions, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -10854,34 +5975,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static RecoverResponseInner RecoverSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequestInner recoveryEntity, string slot)
-            {
-                return operations.RecoverSlotAsync(resourceGroupName, name, recoveryEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Recovers a deleted web app.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a deleted web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -10914,70 +6007,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API resets
             /// configuration settings for the production slot.
             /// </param>
-            public static void ResetSlotConfigurationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.ResetSlotConfigurationSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
-            /// </summary>
-            /// <remarks>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API resets
-            /// configuration settings for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ResetSlotConfigurationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResetSlotConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Restarts an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Restarts an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restart the production slot.
-            /// </param>
-            /// <param name='softRestart'>
-            /// Specify true to apply the configuration settings and restarts the app only
-            /// if necessary. By default, the API always restarts and reprovisions the app.
-            /// </param>
-            /// <param name='synchronous'>
-            /// Specify true to block until the app is restarted. By default, it is set to
-            /// false, and the API responds immediately (asynchronous).
-            /// </param>
-            public static void RestartSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? softRestart = default(bool?), bool? synchronous = default(bool?))
-            {
-                operations.RestartSlotAsync(resourceGroupName, name, slot, softRestart, synchronous).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11037,33 +6072,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the source slot. If a slot is not specified, the production slot is
             /// used as the source slot.
             /// </param>
-            public static IPage<SlotDifference> ListSlotDifferencesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, string slot)
-            {
-                return operations.ListSlotDifferencesSlotAsync(resourceGroupName, name, slotSwapEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </summary>
-            /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -11073,33 +6081,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Swaps two deployment slots of an app.
-            /// </summary>
-            /// <remarks>
-            /// Swaps two deployment slots of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
-            public static void SwapSlotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, string slot)
-            {
-                operations.SwapSlotSlotAsync(resourceGroupName, name, slotSwapEntity, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11150,29 +6131,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slot'>
             /// Website Slot
             /// </param>
-            public static IPage<Snapshot> ListSnapshotsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListSnapshotsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns all Snapshots to the user.
-            /// </summary>
-            /// <remarks>
-            /// Returns all Snapshots to the user.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Website Name
-            /// </param>
-            /// <param name='slot'>
-            /// Website Slot
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -11182,30 +6140,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the source control configuration for the production slot.
-            /// </param>
-            public static SiteSourceControlInner GetSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.GetSourceControlSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11260,33 +6194,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the source control configuration for the production slot.
             /// </param>
-            public static SiteSourceControlInner CreateOrUpdateSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteSourceControlInner siteSourceControl, string slot)
-            {
-                return operations.CreateOrUpdateSourceControlSlotAsync(resourceGroupName, name, siteSourceControl, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteSourceControl'>
-            /// JSON representation of a SiteSourceControl object. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the source control configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -11296,30 +6203,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the source control configuration for the production slot.
-            /// </param>
-            public static void DeleteSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.DeleteSourceControlSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11368,60 +6251,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will start
             /// the production slot.
             /// </param>
-            public static void StartSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.StartSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Starts an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Starts an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will start
-            /// the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task StartSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StartSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Stops an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Stops an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will stop
-            /// the production slot.
-            /// </param>
-            public static void StopSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.StopSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11470,30 +6305,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static void SyncRepositorySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.SyncRepositorySlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Sync web app repository.
-            /// </summary>
-            /// <remarks>
-            /// Sync web app repository.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -11521,68 +6332,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// restore a backup of the production slot.
             /// </param>
-            public static void SyncFunctionTriggersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                operations.SyncFunctionTriggersSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Syncs function trigger metadata to the scale controller
-            /// </summary>
-            /// <remarks>
-            /// Syncs function trigger metadata to the scale controller
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task SyncFunctionTriggersSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SyncFunctionTriggersSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// quota information of the production slot.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only information specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<CsmUsageQuota> ListUsagesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string filter = default(string))
-            {
-                return operations.ListUsagesSlotAsync(resourceGroupName, name, slot, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11642,30 +6397,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// virtual network connections for the production slot.
             /// </param>
-            public static IList<VnetInfoInner> ListVnetConnectionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListVnetConnectionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
-            /// </summary>
-            /// <remarks>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// virtual network connections for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -11675,35 +6406,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
-            /// </summary>
-            /// <remarks>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the virtual network.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the named virtual network for the production slot.
-            /// </param>
-            public static VnetInfoInner GetVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot)
-            {
-                return operations.GetVnetConnectionSlotAsync(resourceGroupName, name, vnetName, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11768,38 +6470,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will add
             /// or update connections for the production slot.
             /// </param>
-            public static VnetInfoInner CreateOrUpdateVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoInner connectionEnvelope, string slot)
-            {
-                return operations.CreateOrUpdateVnetConnectionSlotAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of an existing Virtual Network.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -11835,73 +6505,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the connection for the production slot.
             /// </param>
-            public static void DeleteVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot)
-            {
-                operations.DeleteVnetConnectionSlotAsync(resourceGroupName, name, vnetName, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the virtual network.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// delete the connection for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteVnetConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of an existing Virtual Network.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update connections for the production slot.
-            /// </param>
-            public static VnetInfoInner UpdateVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoInner connectionEnvelope, string slot)
-            {
-                return operations.UpdateVnetConnectionSlotAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -11967,36 +6576,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will get a
             /// gateway for the production slot's Virtual Network.
             /// </param>
-            public static VnetGatewayInner GetVnetConnectionGatewaySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, string slot)
-            {
-                return operations.GetVnetConnectionGatewaySlotAsync(resourceGroupName, name, vnetName, gatewayName, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an app's Virtual Network gateway.
-            /// </summary>
-            /// <remarks>
-            /// Gets an app's Virtual Network gateway.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Currently, the only supported string is "primary".
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get a
-            /// gateway for the production slot's Virtual Network.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12006,39 +6585,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Currently, the only supported string is "primary".
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update a gateway for the production slot's Virtual Network.
-            /// </param>
-            public static VnetGatewayInner CreateOrUpdateVnetConnectionGatewaySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayInner connectionEnvelope, string slot)
-            {
-                return operations.CreateOrUpdateVnetConnectionGatewaySlotAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12108,39 +6654,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will add
             /// or update a gateway for the production slot's Virtual Network.
             /// </param>
-            public static VnetGatewayInner UpdateVnetConnectionGatewaySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayInner connectionEnvelope, string slot)
-            {
-                return operations.UpdateVnetConnectionGatewaySlotAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Currently, the only supported string is "primary".
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will add
-            /// or update a gateway for the production slot's Virtual Network.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12150,29 +6663,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </summary>
-            /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
-            public static IPage<SlotDifference> ListSlotDifferencesFromProduction(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity)
-            {
-                return operations.ListSlotDifferencesFromProductionAsync(resourceGroupName, name, slotSwapEntity).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12222,55 +6712,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='slotSwapEntity'>
             /// JSON object that contains the target slot name. See example.
             /// </param>
-            public static void SwapSlotWithProduction(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity)
-            {
-                operations.SwapSlotWithProductionAsync(resourceGroupName, name, slotSwapEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Swaps two deployment slots of an app.
-            /// </summary>
-            /// <remarks>
-            /// Swaps two deployment slots of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task SwapSlotWithProductionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SwapSlotWithProductionWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Returns all Snapshots to the user.
-            /// </summary>
-            /// <remarks>
-            /// Returns all Snapshots to the user.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Website Name
-            /// </param>
-            public static IPage<Snapshot> ListSnapshots(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListSnapshotsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12297,26 +6744,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static SiteSourceControlInner GetSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetSourceControlAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12363,29 +6790,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='siteSourceControl'>
             /// JSON representation of a SiteSourceControl object. See example.
             /// </param>
-            public static SiteSourceControlInner CreateOrUpdateSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name, SiteSourceControlInner siteSourceControl)
-            {
-                return operations.CreateOrUpdateSourceControlAsync(resourceGroupName, name, siteSourceControl).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteSourceControl'>
-            /// JSON representation of a SiteSourceControl object. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12395,26 +6799,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Deletes the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static void DeleteSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteSourceControlAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12455,52 +6839,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static void Start(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.StartAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Starts an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Starts an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task StartAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StartWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Stops an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Stops an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static void Stop(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.StopAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12541,26 +6885,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static void SyncRepository(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.SyncRepositoryAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Sync web app repository.
-            /// </summary>
-            /// <remarks>
-            /// Sync web app repository.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12584,60 +6908,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static void SyncFunctionTriggers(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                operations.SyncFunctionTriggersAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Syncs function trigger metadata to the scale controller
-            /// </summary>
-            /// <remarks>
-            /// Syncs function trigger metadata to the scale controller
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task SyncFunctionTriggersAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SyncFunctionTriggersWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only information specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z'
-            /// and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<CsmUsageQuota> ListUsages(this IWebAppsOperations operations, string resourceGroupName, string name, string filter = default(string))
-            {
-                return operations.ListUsagesAsync(resourceGroupName, name, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12689,26 +6965,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IList<VnetInfoInner> ListVnetConnections(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListVnetConnectionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
-            /// </summary>
-            /// <remarks>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12718,31 +6974,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
-            /// </summary>
-            /// <remarks>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the virtual network.
-            /// </param>
-            public static VnetInfoInner GetVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName)
-            {
-                return operations.GetVnetConnectionAsync(resourceGroupName, name, vnetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12799,34 +7030,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static VnetInfoInner CreateOrUpdateVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoInner connectionEnvelope)
-            {
-                return operations.CreateOrUpdateVnetConnectionAsync(resourceGroupName, name, vnetName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of an existing Virtual Network.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12836,31 +7039,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
-            /// </summary>
-            /// <remarks>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the virtual network.
-            /// </param>
-            public static void DeleteVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName)
-            {
-                operations.DeleteVnetConnectionAsync(resourceGroupName, name, vnetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -12914,34 +7092,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static VnetInfoInner UpdateVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoInner connectionEnvelope)
-            {
-                return operations.UpdateVnetConnectionAsync(resourceGroupName, name, vnetName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of an existing Virtual Network.
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// Properties of the Virtual Network connection. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -12951,32 +7101,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an app's Virtual Network gateway.
-            /// </summary>
-            /// <remarks>
-            /// Gets an app's Virtual Network gateway.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Currently, the only supported string is "primary".
-            /// </param>
-            public static VnetGatewayInner GetVnetConnectionGateway(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName)
-            {
-                return operations.GetVnetConnectionGatewayAsync(resourceGroupName, name, vnetName, gatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13035,35 +7159,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='connectionEnvelope'>
             /// The properties to update this gateway with.
             /// </param>
-            public static VnetGatewayInner CreateOrUpdateVnetConnectionGateway(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayInner connectionEnvelope)
-            {
-                return operations.CreateOrUpdateVnetConnectionGatewayAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Currently, the only supported string is "primary".
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13073,35 +7168,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </summary>
-            /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of the Virtual Network.
-            /// </param>
-            /// <param name='gatewayName'>
-            /// Name of the gateway. Currently, the only supported string is "primary".
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            public static VnetGatewayInner UpdateVnetConnectionGateway(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayInner connectionEnvelope)
-            {
-                return operations.UpdateVnetConnectionGatewayAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13175,47 +7241,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='ttlInSeconds'>
             /// Time to live in seconds for web app's default domain name
             /// </param>
-            public static SiteInner BeginCreateOrUpdate(this IWebAppsOperations operations, string resourceGroupName, string name, SiteInner siteEnvelope, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, name, siteEnvelope, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Unique name of the app to create or update. To create or update a
-            /// deployment slot, use the {slot} parameter.
-            /// </param>
-            /// <param name='siteEnvelope'>
-            /// A JSON representation of the app properties. See example.
-            /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13225,34 +7250,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
-            /// <param name='request'>
-            /// Information on restore request
-            /// </param>
-            public static RestoreResponseInner BeginRestore(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequestInner request)
-            {
-                return operations.BeginRestoreAsync(resourceGroupName, name, backupId, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13304,26 +7301,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static UserInner BeginListPublishingCredentials(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.BeginListPublishingCredentialsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13353,29 +7330,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='mSDeploy'>
             /// Details of MSDeploy operation
             /// </param>
-            public static MSDeployStatusInner BeginCreateMSDeployOperation(this IWebAppsOperations operations, string resourceGroupName, string name, MSDeployInner mSDeploy)
-            {
-                return operations.BeginCreateMSDeployOperationAsync(resourceGroupName, name, mSDeploy).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13385,32 +7339,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
-            public static MSDeployStatusInner BeginCreateInstanceMSDeployOperation(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId, MSDeployInner mSDeploy)
-            {
-                return operations.BeginCreateInstanceMSDeployOperationAsync(resourceGroupName, name, instanceId, mSDeploy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13466,32 +7394,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='migrationOptions'>
             /// Migration migrationOptions
             /// </param>
-            public static StorageMigrationResponseInner BeginMigrateStorage(this IWebAppsOperations operations, string subscriptionName, string resourceGroupName, string name, StorageMigrationOptionsInner migrationOptions)
-            {
-                return operations.BeginMigrateStorageAsync(subscriptionName, resourceGroupName, name, migrationOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restores a web app.
-            /// </summary>
-            /// <remarks>
-            /// Restores a web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionName'>
-            /// Azure subscription
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='migrationOptions'>
-            /// Migration migrationOptions
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13501,29 +7403,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
-            /// </summary>
-            /// <remarks>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='migrationRequestEnvelope'>
-            /// MySql migration options
-            /// </param>
-            public static OperationInner BeginMigrateMySql(this IWebAppsOperations operations, string resourceGroupName, string name, MigrateMySqlRequestInner migrationRequestEnvelope)
-            {
-                return operations.BeginMigrateMySqlAsync(resourceGroupName, name, migrationRequestEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13574,30 +7453,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Snapshot data used for web app recovery. Snapshot information can be
             /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
             /// </param>
-            public static RecoverResponseInner BeginRecover(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequestInner recoveryEntity)
-            {
-                return operations.BeginRecoverAsync(resourceGroupName, name, recoveryEntity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Recovers a deleted web app.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a deleted web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13607,51 +7462,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </summary>
-            /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Unique name of the app to create or update. To create or update a
-            /// deployment slot, use the {slot} parameter.
-            /// </param>
-            /// <param name='siteEnvelope'>
-            /// A JSON representation of the app properties. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot to create or update. By default, this API
-            /// attempts to create or modify the production slot.
-            /// </param>
-            /// <param name='skipDnsRegistration'>
-            /// If true web app hostname is not registered with DNS on creation. This
-            /// parameter is
-            /// only used for app creation
-            /// </param>
-            /// <param name='skipCustomDomainVerification'>
-            /// If true, custom (non *.azurewebsites.net) domains associated with web app
-            /// are not verified.
-            /// </param>
-            /// <param name='forceDnsRegistration'>
-            /// If true, web app hostname is force registered with DNS
-            /// </param>
-            /// <param name='ttlInSeconds'>
-            /// Time to live in seconds for web app's default domain name
-            /// </param>
-            public static SiteInner BeginCreateOrUpdateSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteInner siteEnvelope, string slot, bool? skipDnsRegistration = default(bool?), bool? skipCustomDomainVerification = default(bool?), bool? forceDnsRegistration = default(bool?), string ttlInSeconds = default(string))
-            {
-                return operations.BeginCreateOrUpdateSlotAsync(resourceGroupName, name, siteEnvelope, slot, skipDnsRegistration, skipCustomDomainVerification, forceDnsRegistration, ttlInSeconds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13732,38 +7542,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// restore a backup of the production slot.
             /// </param>
-            public static RestoreResponseInner BeginRestoreSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequestInner request, string slot)
-            {
-                return operations.BeginRestoreSlotAsync(resourceGroupName, name, backupId, request, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='backupId'>
-            /// ID of the backup.
-            /// </param>
-            /// <param name='request'>
-            /// Information on restore request
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13773,30 +7551,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// the publishing credentials for the production slot.
-            /// </param>
-            public static UserInner BeginListPublishingCredentialsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.BeginListPublishingCredentialsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13851,33 +7605,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='mSDeploy'>
             /// Details of MSDeploy operation
             /// </param>
-            public static MSDeployStatusInner BeginCreateMSDeployOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, MSDeployInner mSDeploy)
-            {
-                return operations.BeginCreateMSDeployOperationSlotAsync(resourceGroupName, name, slot, mSDeploy).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -13887,36 +7614,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </summary>
-            /// <remarks>
-            /// Invoke the MSDeploy web app extension as pass-through API
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// Id of web app instance
-            /// </param>
-            /// <param name='mSDeploy'>
-            /// Details of MSDeploy operation
-            /// </param>
-            public static MSDeployStatusInner BeginCreateInstanceMSDeployOperationSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string instanceId, MSDeployInner mSDeploy)
-            {
-                return operations.BeginCreateInstanceMSDeployOperationSlotAsync(resourceGroupName, name, slot, instanceId, mSDeploy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13978,34 +7675,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static RecoverResponseInner BeginRecoverSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SnapshotRecoveryRequestInner recoveryEntity, string slot)
-            {
-                return operations.BeginRecoverSlotAsync(resourceGroupName, name, recoveryEntity, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Recovers a deleted web app.
-            /// </summary>
-            /// <remarks>
-            /// Recovers a deleted web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='recoveryEntity'>
-            /// Snapshot data used for web app recovery. Snapshot information can be
-            /// obtained by calling GetDeletedSites or GetSiteSnapshots API.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14015,33 +7684,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Swaps two deployment slots of an app.
-            /// </summary>
-            /// <remarks>
-            /// Swaps two deployment slots of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. If a slot is not specified, the production slot is
-            /// used as the source slot.
-            /// </param>
-            public static void BeginSwapSlotSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity, string slot)
-            {
-                operations.BeginSwapSlotSlotAsync(resourceGroupName, name, slotSwapEntity, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14096,33 +7738,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// update the source control configuration for the production slot.
             /// </param>
-            public static SiteSourceControlInner BeginCreateOrUpdateSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteSourceControlInner siteSourceControl, string slot)
-            {
-                return operations.BeginCreateOrUpdateSourceControlSlotAsync(resourceGroupName, name, siteSourceControl, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteSourceControl'>
-            /// JSON representation of a SiteSourceControl object. See example.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// update the source control configuration for the production slot.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14132,29 +7747,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Swaps two deployment slots of an app.
-            /// </summary>
-            /// <remarks>
-            /// Swaps two deployment slots of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// JSON object that contains the target slot name. See example.
-            /// </param>
-            public static void BeginSwapSlotWithProduction(this IWebAppsOperations operations, string resourceGroupName, string name, CsmSlotEntityInner slotSwapEntity)
-            {
-                operations.BeginSwapSlotWithProductionAsync(resourceGroupName, name, slotSwapEntity).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14201,29 +7793,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='siteSourceControl'>
             /// JSON representation of a SiteSourceControl object. See example.
             /// </param>
-            public static SiteSourceControlInner BeginCreateOrUpdateSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name, SiteSourceControlInner siteSourceControl)
-            {
-                return operations.BeginCreateOrUpdateSourceControlAsync(resourceGroupName, name, siteSourceControl).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the source control configuration of an app.
-            /// </summary>
-            /// <remarks>
-            /// Updates the source control configuration of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='siteSourceControl'>
-            /// JSON representation of a SiteSourceControl object. See example.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14233,23 +7802,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all apps for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all apps for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInner> ListNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14287,23 +7839,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInner> ListByResourceGroupNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all web, mobile, and API apps in the specified resource group.
-            /// </summary>
-            /// <remarks>
-            /// Gets all web, mobile, and API apps in the specified resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14327,23 +7862,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<BackupItemInner> ListBackupsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListBackupsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets existing backups of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets existing backups of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14353,23 +7871,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List the configurations of an app
-            /// </summary>
-            /// <remarks>
-            /// List the configurations of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteConfigResourceInner> ListConfigurationsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListConfigurationsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14409,25 +7910,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DeploymentInner> ListDeploymentsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListDeploymentsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14437,23 +7919,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IdentifierInner> ListDomainOwnershipIdentifiersNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListDomainOwnershipIdentifiersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14491,23 +7956,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<HostNameBindingInner> ListHostNameBindingsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListHostNameBindingsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14517,23 +7965,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all scale-out instances of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets all scale-out instances of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListInstanceIdentifiersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14573,25 +8004,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DeploymentInner> ListInstanceDeploymentsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListInstanceDeploymentsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14601,23 +8013,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitionsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricDefinitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14655,23 +8050,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListMetricsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14681,23 +8059,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets perfmon counters for web app.
-            /// </summary>
-            /// <remarks>
-            /// Gets perfmon counters for web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PerfMonResponse> ListPerfMonCountersNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListPerfMonCountersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14735,23 +8096,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PublicCertificateInner> ListPublicCertificatesNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListPublicCertificatesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get public certificates for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14761,23 +8105,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an app's deployment slots.
-            /// </summary>
-            /// <remarks>
-            /// Gets an app's deployment slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInner> ListSlotsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListSlotsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14815,23 +8142,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<BackupItemInner> ListBackupsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListBackupsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets existing backups of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets existing backups of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14841,23 +8151,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List the configurations of an app
-            /// </summary>
-            /// <remarks>
-            /// List the configurations of an app
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteConfigResourceInner> ListConfigurationsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListConfigurationsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14897,25 +8190,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DeploymentInner> ListDeploymentsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListDeploymentsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -14925,23 +8199,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </summary>
-            /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IdentifierInner> ListDomainOwnershipIdentifiersSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListDomainOwnershipIdentifiersSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -14979,23 +8236,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<HostNameBindingInner> ListHostNameBindingsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListHostNameBindingsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15005,23 +8245,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all scale-out instances of an app.
-            /// </summary>
-            /// <remarks>
-            /// Gets all scale-out instances of an app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListInstanceIdentifiersSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -15061,25 +8284,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DeploymentInner> ListInstanceDeploymentsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListInstanceDeploymentsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </summary>
-            /// <remarks>
-            /// List deployments for an app, or a deployment slot, or for an instance of a
-            /// scaled-out app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15089,23 +8293,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitionsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricDefinitionsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -15143,23 +8330,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetric> ListMetricsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15169,23 +8339,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets perfmon counters for web app.
-            /// </summary>
-            /// <remarks>
-            /// Gets perfmon counters for web app.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PerfMonResponse> ListPerfMonCountersSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListPerfMonCountersSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -15223,23 +8376,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PublicCertificateInner> ListPublicCertificatesSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListPublicCertificatesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get public certificates for an app or a deployment slot.
-            /// </summary>
-            /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15263,23 +8399,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SlotDifference> ListSlotDifferencesSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListSlotDifferencesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </summary>
-            /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15289,23 +8408,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns all Snapshots to the user.
-            /// </summary>
-            /// <remarks>
-            /// Returns all Snapshots to the user.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Snapshot> ListSnapshotsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListSnapshotsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -15345,25 +8447,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<CsmUsageQuota> ListUsagesSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListUsagesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15373,23 +8456,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </summary>
-            /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SlotDifference> ListSlotDifferencesFromProductionNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListSlotDifferencesFromProductionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -15427,23 +8493,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Snapshot> ListSnapshotsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListSnapshotsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns all Snapshots to the user.
-            /// </summary>
-            /// <remarks>
-            /// Returns all Snapshots to the user.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -15453,25 +8502,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CsmUsageQuota> ListUsagesNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListUsagesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
