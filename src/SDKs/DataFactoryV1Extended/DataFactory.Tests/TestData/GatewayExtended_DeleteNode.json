@@ -5,17 +5,17 @@
     "dataFactoryName": "exampleFactoryName",
     "gatewayName": "DemoDMG",
     "parameters": {
-      "NodeName": "DemoDMG"
+      "nodeName": "DemoDMG"
     },
     "api-version": "2015-10-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 16 Aug 2017 05:12:29 GMT",
-        "x-ms-request-id": "0ad22536-564f-4c65-8b93-f6034b6f94d2",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-correlation-request-id": "d3548a25-2c75-470a-97f9-d89e75ef208a"
+        "Date": "Wed, 16 Aug 2017 09:09:42 GMT",
+        "x-ms-request-id": "86468e95-8363-4b24-924b-112a16bca0d8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1190",
+        "x-ms-correlation-request-id": "fdaa591c-6e41-471e-ac46-09c40255cdb4"
       },
       "body": null
     }

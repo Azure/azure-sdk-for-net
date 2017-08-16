@@ -5,18 +5,18 @@
     "dataFactoryName": "exampleFactoryName",
     "gatewayName": "DemoDMG",
     "parameters": {
-      "NodeName": "DemoDMG",
-      "LimitConcurrentJobs": 5
+      "nodeName": "DemoDMG",
+      "limitConcurrentJobs": 5
     },
     "api-version": "2015-10-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 16 Aug 2017 05:12:19 GMT",
-        "x-ms-request-id": "261b3a8b-3b82-4102-8eca-604d8293409b",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-correlation-request-id": "ebb224b3-bea6-4836-8ed9-267704dee18c"
+        "Date": "Wed, 16 Aug 2017 09:09:29 GMT",
+        "x-ms-request-id": "ec718f07-6f18-4b06-8885-021ed771a41c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1191",
+        "x-ms-correlation-request-id": "413bcda3-3bc0-48a1-90da-a23f4d1c5619"
       },
       "body": null
     }

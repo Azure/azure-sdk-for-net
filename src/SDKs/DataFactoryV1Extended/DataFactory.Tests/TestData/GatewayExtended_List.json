@@ -8,10 +8,10 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 16 Aug 2017 05:12:18 GMT",
-        "x-ms-request-id": "bb442cd3-b681-4cde-aaa4-92ea7cc281ff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14586",
-        "x-ms-correlation-request-id": "635dd34c-3b2f-4d56-a465-417b1d99b8e7"
+        "Date": "Wed, 16 Aug 2017 09:09:28 GMT",
+        "x-ms-request-id": "f7d97c44-64a2-4157-b45c-38fd3eca21f4",
+        "x-ms-ratelimit-remaining-subscription-reads": "14679",
+        "x-ms-correlation-request-id": "a8bf82e9-115c-49a5-9073-627d99741d4c"
       },
       "body": {
         "value": [
@@ -34,7 +34,7 @@
               "version": "2.12.6414.2",
               "createTime": "2017-08-15T07:04:34.0487349Z",
               "registerTime": "2017-08-15T07:10:44.8183772Z",
-              "lastConnectTime": "2017-08-16T05:11:50.5431997Z",
+              "lastConnectTime": "2017-08-16T09:09:03.2849828Z",
               "lastUpgradeResult": "",
               "multiNodeSupportEnabled": true,
               "nodes": [
@@ -55,12 +55,12 @@
                   "version": "2.12.6414.2",
                   "createTime": "2017-08-15T07:10:44.8183772Z",
                   "registerTime": "2017-08-15T07:10:44.8183772Z",
-                  "lastConnectTime": "2017-08-16T05:11:50.5431997Z",
+                  "lastConnectTime": "2017-08-16T09:09:03.2849828Z",
                   "lastUpgradeResult": "None",
                   "maxConcurrentJobs": "56",
-                  "availableMemory": "11328MB",
-                  "cpuUtilization": "10%",
-                  "network": "15KB/121KB",
+                  "availableMemory": "11232MB",
+                  "cpuUtilization": "12%",
+                  "network": "21KB/43KB",
                   "limitConcurrentJobs": "28",
                   "runningConcurrentJobs": "0"
                 },
@@ -79,15 +79,15 @@
                   },
                   "versionStatus": "UpToDate",
                   "version": "2.12.6414.2",
-                  "createTime": "2017-08-16T05:09:13.3217597Z",
-                  "registerTime": "2017-08-16T05:09:13.3373884Z",
-                  "lastConnectTime": "2017-08-16T05:12:14.0037562Z",
+                  "createTime": "2017-08-16T09:08:29.738681Z",
+                  "registerTime": "2017-08-16T09:08:29.738681Z",
+                  "lastConnectTime": "2017-08-16T09:09:15.9951726Z",
                   "lastUpgradeResult": "None",
                   "maxConcurrentJobs": "30",
-                  "availableMemory": "11153MB",
-                  "cpuUtilization": "7%",
-                  "network": "2KB/7KB",
-                  "limitConcurrentJobs": "15",
+                  "availableMemory": "0MB",
+                  "cpuUtilization": "0%",
+                  "network": "0KB/0KB",
+                  "limitConcurrentJobs": "0",
                   "runningConcurrentJobs": "0"
                 }
               ],
