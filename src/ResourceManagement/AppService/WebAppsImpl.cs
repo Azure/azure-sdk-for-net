@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Inner.ListByResourceGroupNextAsync,
                 async (inner, cancellation) => await PopulateModelAsync(inner, cancellation),
                 loadAllPages, cancellationToken);
-            return PagedCollection<IWebApp, SiteInner>.CreateFromEnumerable(collection.Where(w => w.Inner.Kind == "app"));
+            return PagedCollection<IWebApp, SiteInner>.CreateFromEnumerable(collection.Where(w => w.Inner.Kind.Split(new char[] { ',' }).Contains("app")));
         }
 
         public override async Task<IPagedCollection<IWebApp>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Inner.ListNextAsync,
                 async (inner, cancellation) => await PopulateModelAsync(inner, cancellation),
                 loadAllPages, cancellationToken);
-            return PagedCollection<IWebApp, SiteInner>.CreateFromEnumerable(collection.Where(w => w.Inner.Kind == "app"));
+            return PagedCollection<IWebApp, SiteInner>.CreateFromEnumerable(collection.Where(w => w.Inner.Kind.Split(new char[] { ',' }).Contains("app")));
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:586E2B084878E8767487234B852D8D20
@@ -98,7 +98,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:33344D035CDCB989D0A891ED92F04788
         protected override WebAppImpl WrapModel(string name)
         {
-            return new WebAppImpl(name, new SiteInner(), null, Manager);
+            return new WebAppImpl(name, new SiteInner
+            {
+                Kind = "app"
+            }, null, Manager);
         }
 
         ///GENMHASH:64609469010BC4A501B1C3197AE4F243:546B78C6345DE4CB959015B4F5C52E0D

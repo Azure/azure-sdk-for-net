@@ -126,6 +126,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             if (Fluent.OperatingSystem.Linux.Equals(operatingSystem))
             {
                 Inner.Reserved = true;
+                Inner.Kind = "linux";
+            }
+            else
+            {
+                Inner.Kind = "app";
             }
             return this;
         }
@@ -133,7 +138,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:F644770BE853EE30024DEE4BE9D96441:049C263D531DF9C62F1DF917EA2491D1
         public OperatingSystem OperatingSystem()
         {
-            if (Inner.Reserved != null && (bool) Inner.Reserved)
+            if (Inner.Kind.ToLower().Contains("linux"))
             {
                 return Fluent.OperatingSystem.Linux;
             }

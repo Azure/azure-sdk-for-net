@@ -14,7 +14,7 @@ namespace Fluent.Tests.WebApp
 {
     public class LinuxWebApps
     {
-        [Fact(Skip = "Pending ICM 39157077 & https://github.com/Azure-App-Service/kudu/issues/30")]
+        [Fact]
         public void CanCRUDLinuxWebApp()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
