@@ -51,7 +51,7 @@ namespace KeyVault.TestFramework
                 var myClient = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
                 keyName = "sdktestkey";
                 var attributes = new KeyAttributes();
-                var createdKey = myClient.CreateKeyAsync(vaultAddress, keyName, JsonWebKeyType.Rsa, null, 2048,
+                var createdKey = myClient.CreateKeyAsync(vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
                     JsonWebKeyOperation.AllOperations, attributes).GetAwaiter().GetResult();
                 keyIdentifier = new KeyIdentifier(createdKey.Key.Kid);
                 keyName = keyIdentifier.Name;

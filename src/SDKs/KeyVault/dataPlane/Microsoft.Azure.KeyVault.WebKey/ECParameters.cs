@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,16 +38,16 @@ namespace Microsoft.Azure.KeyVault.WebKey
         {
             switch ( Curve )
             {
-                case JsonWebKeyECName.P256:
+                case JsonWebKeyCurveName.P256:
                     return ToNistCurveEcdsa( includePrivateParameters ? BCRYPT_ECDSA_PRIVATE_P256_MAGIC : BCRYPT_ECDSA_PUBLIC_P256_MAGIC, 32, includePrivateParameters );
 
-                case JsonWebKeyECName.P384:
+                case JsonWebKeyCurveName.P384:
                     return ToNistCurveEcdsa( includePrivateParameters ? BCRYPT_ECDSA_PRIVATE_P384_MAGIC : BCRYPT_ECDSA_PUBLIC_P384_MAGIC, 48, includePrivateParameters );
 
-                case JsonWebKeyECName.P521:
+                case JsonWebKeyCurveName.P521:
                     return ToNistCurveEcdsa( includePrivateParameters ? BCRYPT_ECDSA_PRIVATE_P521_MAGIC : BCRYPT_ECDSA_PUBLIC_P521_MAGIC, 66, includePrivateParameters );
 
-                case JsonWebKeyECName.SECP256K1:
+                case JsonWebKeyCurveName.SECP256K1:
                     return ToGenericCurveEcdsa( includePrivateParameters ? BCRYPT_ECDSA_PRIVATE_GENERIC_MAGIC : BCRYPT_ECDSA_PUBLIC_GENERIC_MAGIC, Secp256k1, includePrivateParameters );
 
                 default:
@@ -146,34 +150,34 @@ namespace Microsoft.Azure.KeyVault.WebKey
                     case BCRYPT_ECDSA_PUBLIC_P256_MAGIC:
                         ThrowIfPrivateParametersNeeded( includePrivateParameters, BCRYPT_ECDSA_PRIVATE_P256_MAGIC, dwMagic );
                         ReadNistBlob( reader, 32, result, false );
-                        result.Curve = JsonWebKeyECName.P256;
+                        result.Curve = JsonWebKeyCurveName.P256;
                         break;
 
                     case BCRYPT_ECDSA_PRIVATE_P256_MAGIC:
                         ReadNistBlob( reader, 32, result, true );
-                        result.Curve = JsonWebKeyECName.P256;
+                        result.Curve = JsonWebKeyCurveName.P256;
                         break;
 
                     case BCRYPT_ECDSA_PUBLIC_P384_MAGIC:
                         ThrowIfPrivateParametersNeeded( includePrivateParameters, BCRYPT_ECDSA_PRIVATE_P384_MAGIC, dwMagic );
                         ReadNistBlob( reader, 48, result, false );
-                        result.Curve = JsonWebKeyECName.P384;
+                        result.Curve = JsonWebKeyCurveName.P384;
                         break;
 
                     case BCRYPT_ECDSA_PRIVATE_P384_MAGIC:
                         ReadNistBlob( reader, 48, result, true );
-                        result.Curve = JsonWebKeyECName.P384;
+                        result.Curve = JsonWebKeyCurveName.P384;
                         break;
 
                     case BCRYPT_ECDSA_PUBLIC_P521_MAGIC:
                         ThrowIfPrivateParametersNeeded( includePrivateParameters, BCRYPT_ECDSA_PRIVATE_P521_MAGIC, dwMagic );
                         ReadNistBlob( reader, 66, result, false );
-                        result.Curve = JsonWebKeyECName.P521;
+                        result.Curve = JsonWebKeyCurveName.P521;
                         break;
 
                     case BCRYPT_ECDSA_PRIVATE_P521_MAGIC:
                         ReadNistBlob( reader, 66, result, true );
-                        result.Curve = JsonWebKeyECName.P521;
+                        result.Curve = JsonWebKeyCurveName.P521;
                         break;
 
                     case BCRYPT_ECDSA_PUBLIC_GENERIC_MAGIC:
@@ -228,7 +232,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( !curve.Equals( Secp256k1 ) )
                 throw new NotSupportedException( $"Unsupported curve: {curve}" );
 
-            dest.Curve = JsonWebKeyECName.SECP256K1;
+            dest.Curve = JsonWebKeyCurveName.SECP256K1;
 
             var cbFieldLength = curve.Prime.Length;
             dest.X = ValidateSize( reader.ReadBytes( cbFieldLength ), expectedSize, nameof( dest.X ) );

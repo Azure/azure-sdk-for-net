@@ -35,21 +35,21 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="kty">The type of key to create. For valid values, see
         /// JsonWebKeyType. Possible values include: 'EC', 'EC-HSM', 'RSA',
         /// 'RSA-HSM', 'oct'</param>
-        /// <param name="curve">Elliptic curve name. For valid values, see
-        /// JsonWebKeyECName. Possible values include: 'P-256', 'P-384',
-        /// 'P-521', 'SECP256K1'</param>
         /// <param name="keySize">The key size in bytes. For example, 1024 or
         /// 2048.</param>
         /// <param name="tags">Application specific metadata in the form of
         /// key-value pairs.</param>
-        public KeyCreateParameters(string kty, string curve = default(string), int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="curve">Elliptic curve name. For valid values, see
+        /// JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
+        /// 'P-521', 'SECP256K1'</param>
+        public KeyCreateParameters(string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string curve = default(string))
         {
             Kty = kty;
-            Curve = curve;
             KeySize = keySize;
             KeyOps = keyOps;
             KeyAttributes = keyAttributes;
             Tags = tags;
+            Curve = curve;
             CustomInit();
         }
 
@@ -65,14 +65,6 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
         public string Kty { get; set; }
-
-        /// <summary>
-        /// Gets or sets elliptic curve name. For valid values, see
-        /// JsonWebKeyECName. Possible values include: 'P-256', 'P-384',
-        /// 'P-521', 'SECP256K1'
-        /// </summary>
-        [JsonProperty(PropertyName = "crv")]
-        public string Curve { get; set; }
 
         /// <summary>
         /// Gets or sets the key size in bytes. For example, 1024 or 2048.
@@ -96,6 +88,14 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets elliptic curve name. For valid values, see
+        /// JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
+        /// 'P-521', 'SECP256K1'
+        /// </summary>
+        [JsonProperty(PropertyName = "crv")]
+        public string Curve { get; set; }
 
         /// <summary>
         /// Validate the object.

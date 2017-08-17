@@ -87,10 +87,6 @@ namespace Microsoft.Azure.KeyVault
         /// The type of key to create. For valid values, see JsonWebKeyType.
         /// Possible values include: 'EC', 'EC-HSM', 'RSA', 'RSA-HSM', 'oct'
         /// </param>
-        /// <param name='curve'>
-        /// Elliptic curve name. For valid values, see JsonWebKeyECName.
-        /// Possible values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'
-        /// </param>
         /// <param name='keySize'>
         /// The key size in bytes. For example, 1024 or 2048.
         /// </param>
@@ -101,13 +97,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='tags'>
         /// Application specific metadata in the form of key-value pairs.
         /// </param>
+        /// <param name='curve'>
+        /// Elliptic curve name. For valid values, see JsonWebKeyCurveName.
+        /// Possible values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string kty, string curve = default(string), int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string curve = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Imports an externally created key, stores it, and returns key

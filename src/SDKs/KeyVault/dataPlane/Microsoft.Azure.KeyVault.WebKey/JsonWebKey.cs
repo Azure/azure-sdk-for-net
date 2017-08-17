@@ -68,12 +68,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
         [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_KeyOps, Required = Required.Default )]
         public IList<string> KeyOps { get; set; }
 
-        /// <summary>
-        /// The curve for Elliptic Curve Cryptography (ECC) algorithms
-        /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Crv, Required = Required.Default )]
-        public string ECCurve { get; set; }
-
         #region RSA Public Key Parameters
 
         /// <summary>
@@ -132,6 +126,12 @@ namespace Microsoft.Azure.KeyVault.WebKey
         #endregion
 
         #region EC Public Key Parameters
+
+        /// <summary>
+        /// The curve for Elliptic Curve Cryptography (ECC) algorithms
+        /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Crv, Required = Required.Default)]
+        public string CurveName { get; set; }
 
         /// <summary>
         /// X coordinate for the Elliptic Curve point.
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         {
             Kty = JsonWebKeyType.EllipticCurve;
 
-            ECCurve = ecParameters.Curve;
+            CurveName = ecParameters.Curve;
             D = ecParameters.D;
             X = ecParameters.X;
             Y = ecParameters.Y;
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( !AreEqual( KeyOps, other.KeyOps ) )
                 return false;
 
-            if ( !string.Equals( ECCurve, other.ECCurve ) )
+            if ( !string.Equals( CurveName, other.CurveName ) )
                 return false;
 
             if ( !AreEqual( K, other.K ) )
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( X == null || Y == null )
                 return false;
 
-            var requiredSize = GetRequiredSize( ECCurve );
+            var requiredSize = GetRequiredSize( CurveName );
             if ( requiredSize < 0 )
                 return false;
 
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
                 return false;
 
             // Validates the curve.
-            var requiredSize = GetRequiredSize( ECCurve );
+            var requiredSize = GetRequiredSize( CurveName );
             if ( requiredSize < 0 )
                 return false;
 
@@ -528,14 +528,14 @@ namespace Microsoft.Azure.KeyVault.WebKey
         {
             switch ( curve )
             {
-                case JsonWebKeyECName.P256:
-                case JsonWebKeyECName.SECP256K1:
+                case JsonWebKeyCurveName.P256:
+                case JsonWebKeyCurveName.SECP256K1:
                     return 32;
 
-                case JsonWebKeyECName.P384:
+                case JsonWebKeyCurveName.P384:
                     return 48;
 
-                case JsonWebKeyECName.P521:
+                case JsonWebKeyCurveName.P521:
                     return 66;
 
                 default:
@@ -683,15 +683,15 @@ namespace Microsoft.Azure.KeyVault.WebKey
             VerifyNonZero( nameof( X ), X );
             VerifyNonZero( nameof( Y ), Y );
 
-            var requiredSize = GetRequiredSize( ECCurve );
+            var requiredSize = GetRequiredSize( CurveName );
             if ( requiredSize < 0 )
             {
-                var curveDesc = ECCurve == null ? "null" : $"\"{ECCurve}\"";
+                var curveDesc = CurveName == null ? "null" : $"\"{CurveName}\"";
                 throw new ArgumentException( $"Invalid curve type: {curveDesc}" );
             }
 
             var result = new ECParameters();
-            result.Curve = ECCurve;
+            result.Curve = CurveName;
             result.X = ForceLength( nameof( X ), X, requiredSize );
             result.Y = ForceLength( nameof( Y ), Y, requiredSize );
 

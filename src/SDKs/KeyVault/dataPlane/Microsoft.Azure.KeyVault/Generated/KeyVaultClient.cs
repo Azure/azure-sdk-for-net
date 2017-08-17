@@ -211,10 +211,6 @@ namespace Microsoft.Azure.KeyVault
         /// The type of key to create. For valid values, see JsonWebKeyType. Possible
         /// values include: 'EC', 'EC-HSM', 'RSA', 'RSA-HSM', 'oct'
         /// </param>
-        /// <param name='curve'>
-        /// Elliptic curve name. For valid values, see JsonWebKeyECName. Possible
-        /// values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'
-        /// </param>
         /// <param name='keySize'>
         /// The key size in bytes. For example, 1024 or 2048.
         /// </param>
@@ -224,6 +220,10 @@ namespace Microsoft.Azure.KeyVault
         /// </param>
         /// <param name='tags'>
         /// Application specific metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='curve'>
+        /// Elliptic curve name. For valid values, see JsonWebKeyCurveName. Possible
+        /// values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string kty, string curve = default(string), int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyBundle>> CreateKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string curve = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -279,14 +279,14 @@ namespace Microsoft.Azure.KeyVault
                 }
             }
             KeyCreateParameters parameters = new KeyCreateParameters();
-            if (kty != null || curve != null || keySize != null || keyOps != null || keyAttributes != null || tags != null)
+            if (kty != null || keySize != null || keyOps != null || keyAttributes != null || tags != null || curve != null)
             {
                 parameters.Kty = kty;
-                parameters.Curve = curve;
                 parameters.KeySize = keySize;
                 parameters.KeyOps = keyOps;
                 parameters.KeyAttributes = keyAttributes;
                 parameters.Tags = tags;
+                parameters.Curve = curve;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

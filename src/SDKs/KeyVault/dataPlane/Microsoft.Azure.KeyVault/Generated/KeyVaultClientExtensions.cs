@@ -46,10 +46,6 @@ namespace Microsoft.Azure.KeyVault
             /// The type of key to create. For valid values, see JsonWebKeyType. Possible
             /// values include: 'EC', 'EC-HSM', 'RSA', 'RSA-HSM', 'oct'
             /// </param>
-            /// <param name='curve'>
-            /// Elliptic curve name. For valid values, see JsonWebKeyECName. Possible
-            /// values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'
-            /// </param>
             /// <param name='keySize'>
             /// The key size in bytes. For example, 1024 or 2048.
             /// </param>
@@ -63,9 +59,9 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<KeyBundle> CreateKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, string kty, string curve = default(string), int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<KeyBundle> CreateKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, kty, curve, keySize, keyOps, keyAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, kty, keySize, keyOps, keyAttributes, tags, null, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

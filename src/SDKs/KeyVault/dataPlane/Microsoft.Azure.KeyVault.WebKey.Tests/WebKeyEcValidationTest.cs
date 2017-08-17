@@ -1,8 +1,6 @@
-﻿//
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
-// 
 
 using System;
 using System.Security.Cryptography;
@@ -25,10 +23,10 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             if ( !IsCngSupported() )
                 return;
 
-            DoHardCodedKeyTests( P256TestKey, JsonWebKeyECName.P256, 256, 32 );
-            DoHardCodedKeyTests( P384TestKey, JsonWebKeyECName.P384, 384, 48 );
-            DoHardCodedKeyTests( P521TestKey, JsonWebKeyECName.P521, 521, 64 );
-            DoHardCodedKeyTests( Secp256k1TestKey, JsonWebKeyECName.SECP256K1, 256, 32 );
+            DoHardCodedKeyTests( P256TestKey, JsonWebKeyCurveName.P256, 256, 32 );
+            DoHardCodedKeyTests( P384TestKey, JsonWebKeyCurveName.P384, 384, 48 );
+            DoHardCodedKeyTests( P521TestKey, JsonWebKeyCurveName.P521, 521, 64 );
+            DoHardCodedKeyTests( Secp256k1TestKey, JsonWebKeyCurveName.SECP256K1, 256, 32 );
         }
 
         private static void DoHardCodedKeyTests( string json, string curve, int keySize, int digestSize )
@@ -43,10 +41,10 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             if ( !IsCngSupported() )
                 return;
 
-            DoRamdomKeyTest( JsonWebKeyECName.P256, 256, 32 );
-            DoRamdomKeyTest( JsonWebKeyECName.P384, 384, 48 );
-            DoRamdomKeyTest( JsonWebKeyECName.P521, 521, 64 );
-            DoRamdomKeyTest( JsonWebKeyECName.SECP256K1, 256, 32 );
+            DoRamdomKeyTest( JsonWebKeyCurveName.P256, 256, 32 );
+            DoRamdomKeyTest( JsonWebKeyCurveName.P384, 384, 48 );
+            DoRamdomKeyTest( JsonWebKeyCurveName.P521, 521, 64 );
+            DoRamdomKeyTest( JsonWebKeyCurveName.SECP256K1, 256, 32 );
         }
 
         private static void DoRamdomKeyTest( string curve, int keySize, int digestSize )
@@ -73,19 +71,19 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             CngAlgorithm algo;
             switch ( curve )
             {
-                case JsonWebKeyECName.P256:
+                case JsonWebKeyCurveName.P256:
                     algo = CngAlgorithm.ECDsaP256;
                     break;
 
-                case JsonWebKeyECName.P384:
+                case JsonWebKeyCurveName.P384:
                     algo = CngAlgorithm.ECDsaP384;
                     break;
 
-                case JsonWebKeyECName.P521:
+                case JsonWebKeyCurveName.P521:
                     algo = CngAlgorithm.ECDsaP521;
                     break;
 
-                case JsonWebKeyECName.SECP256K1:
+                case JsonWebKeyCurveName.SECP256K1:
                     algo = new CngAlgorithm( "ECDSA" );
                     break;
 
@@ -99,7 +97,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
                 KeyUsage = CngKeyUsages.Signing,
             };
 
-            if ( curve == JsonWebKeyECName.SECP256K1 )
+            if ( curve == JsonWebKeyCurveName.SECP256K1 )
                 kcp.Parameters.Add( new CngProperty( "ECCCurveName", Encoding.Unicode.GetBytes( "secP256k1\0" ), CngPropertyOptions.None ) );
 
             return new ECDsaCng( CngKey.Create( algo, null, kcp ) );
@@ -120,9 +118,9 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             Assert.True( jwk.Equals( jwk2 ) );
 
             // Equals must consider curve.
-            jwk2.ECCurve = null;
+            jwk2.CurveName = null;
             Assert.False( jwk.Equals( jwk2 ) );
-            jwk2.ECCurve = jwk.ECCurve;
+            jwk2.CurveName = jwk.CurveName;
 
             // Equals must consider X.
             jwk2.X = null;
@@ -246,7 +244,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             var keySizeInBytes = ( keySize + 7 ) / 8;
             Assert.Equal( JsonWebKeyType.EllipticCurve, jwk.Kty );
-            Assert.Equal( curve, jwk.ECCurve );
+            Assert.Equal( curve, jwk.CurveName );
             Assert.Equal( keySizeInBytes, jwk.X.Length );
             Assert.Equal( keySizeInBytes, jwk.Y.Length );
             if ( expectPrivateKey )
@@ -263,7 +261,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             try
             {
-                var key = CreateRandomKey( JsonWebKeyECName.P256 );
+                var key = CreateRandomKey( JsonWebKeyCurveName.P256 );
                 key.Dispose();
                 return true;
             }
