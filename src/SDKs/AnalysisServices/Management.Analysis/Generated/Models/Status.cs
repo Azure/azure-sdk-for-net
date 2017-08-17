@@ -13,12 +13,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using Microsoft.Azure.Management.Analysis;
 
     /// <summary>
-    /// Defines values for SkuTier.
+    /// Defines values for Status.
     /// </summary>
-    public static class SkuTier
+    public static class Status
     {
-        public const string Development = "Development";
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
+        public const string Live = "Live";
     }
 }
