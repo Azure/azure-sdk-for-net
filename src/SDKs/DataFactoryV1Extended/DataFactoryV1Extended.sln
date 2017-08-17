@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{91BBB164-1F70-4FAC-8653-0EDEE53977B3}") = "Microsoft.Azure.Management.DataFactories.Extended", "Microsoft.Azure.Management.DataFactories.Extended\Microsoft.Azure.Management.DataFactories.Extended.csproj", "{5EA4CCDC-BF05-4D64-8CCC-EEC59BC4E919}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DataFactories.Extended", "Microsoft.Azure.Management.DataFactories.Extended\Microsoft.Azure.Management.DataFactories.Extended.csproj", "{5EA4CCDC-BF05-4D64-8CCC-EEC59BC4E919}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataFactory.Tests", "DataFactory.Tests\DataFactory.Tests.csproj", "{6A33D0B8-5CAC-4F28-AF44-4589E5E3560C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{5EA4CCDC-BF05-4D64-8CCC-EEC59BC4E919}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EA4CCDC-BF05-4D64-8CCC-EEC59BC4E919}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EA4CCDC-BF05-4D64-8CCC-EEC59BC4E919}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A33D0B8-5CAC-4F28-AF44-4589E5E3560C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A33D0B8-5CAC-4F28-AF44-4589E5E3560C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A33D0B8-5CAC-4F28-AF44-4589E5E3560C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A33D0B8-5CAC-4F28-AF44-4589E5E3560C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45EF4D74-F37D-4EE7-A746-97E0791F3F91}
 	EndGlobalSection
 EndGlobal
