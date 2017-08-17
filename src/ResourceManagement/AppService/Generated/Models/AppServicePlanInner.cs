@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the AppServicePlanInner class.
         /// </summary>
+        /// <param name="kind">The kind of the site</param>
         /// <param name="appServicePlanName">Name for the App Service
         /// plan.</param>
         /// <param name="workerTierName">Target worker tier assigned to the App
@@ -66,9 +67,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <param name="provisioningState">Provisioning state of the App
         /// Service Environment. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
-        public AppServicePlanInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string appServicePlanName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), string resourceGroup = default(string), bool? reserved = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
+        public AppServicePlanInner(string kind = default(string), string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string appServicePlanName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), string resourceGroup = default(string), bool? reserved = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
             : base(location, id, name, type, tags)
         {
+            Kind = kind;
             AppServicePlanName = appServicePlanName;
             WorkerTierName = workerTierName;
             Status = status;
@@ -92,6 +94,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the kind of the app service plan.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
 
         /// <summary>
         /// Gets or sets name for the App Service plan.

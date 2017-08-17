@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public virtual FluentImplT WithExistingAppServicePlan(IAppServicePlan appServicePlan)
         {
             Inner.ServerFarmId = appServicePlan.Id;
-            Inner.Reserved = appServicePlan.Inner.Reserved;
+            WithOperatingSystem(appServicePlan.OperatingSystem);
             if (newGroup != null && IsInCreateMode)
             {
                 ((IndexableRefreshableWrapper<IResourceGroup, ResourceGroupInner>)newGroup).Inner.Location = appServicePlan.RegionName;
@@ -269,13 +269,23 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return WithNewAppServicePlan(NewDefaultAppServicePlan().WithOperatingSystem(operatingSystem).WithPricingTier(pricingTier));
         }
 
+        private FluentImplT WithOperatingSystem(OperatingSystem os)
+        {
+            if (os == Microsoft.Azure.Management.AppService.Fluent.OperatingSystem.Linux)
+            {
+                Inner.Reserved = true;
+                Inner.Kind = Inner.Kind + ",linux";
+            }
+            return (FluentImplT)this;
+        }
+
         public FluentImplT WithNewAppServicePlan(ICreatable<Microsoft.Azure.Management.AppService.Fluent.IAppServicePlan> appServicePlanCreatable)
         {
             AddCreatableDependency(appServicePlanCreatable as IResourceCreator<IHasId>);
             string id = ResourceUtils.ConstructResourceId(this.Manager.SubscriptionId,
             ResourceGroupName, "Microsoft.Web", "serverFarms", appServicePlanCreatable.Name, "");
             Inner.ServerFarmId = id;
-            Inner.Reserved = ((AppServicePlanImpl)appServicePlanCreatable).Inner.Reserved;
+            WithOperatingSystem(((AppServicePlanImpl)appServicePlanCreatable).OperatingSystem());
             return (FluentImplT)this;
         }
 
@@ -285,7 +295,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             AppServicePlanImpl appServicePlan = (AppServicePlanImpl) (this.Manager.AppServicePlans
             .Define(planName))
             .WithRegion(RegionName);
-            appServicePlan.WithOperatingSystem(OperatingSystem());
             if (newGroup != null && IsInCreateMode) {
                 appServicePlan = appServicePlan.WithNewResourceGroup(newGroup) as AppServicePlanImpl;
             } else {

@@ -95,7 +95,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:E49716A6377D1B0BC4969F4A89093ED9
         protected override FunctionAppImpl WrapModel(string name)
         {
-            return new FunctionAppImpl(name, new SiteInner(), null, Manager);
+            return new FunctionAppImpl(name, new SiteInner
+            {
+                Kind = "functionapp"
+            }, null, Manager);
         }
 
         ///GENMHASH:64609469010BC4A501B1C3197AE4F243:BEC51BB7FA5CB1F04F04C62A207332AE

@@ -73,7 +73,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         internal  FunctionAppImpl(string name, SiteInner innerObject, SiteConfigResourceInner configObject, IAppServiceManager manager)
             : base(name, innerObject, configObject, manager)
         {
-            Inner.Kind = "functionapp";
             kuduCredentials = new KuduCredentials(this);
         }
 
