@@ -8,6 +8,6 @@
     <PackageTags>Microsoft Azure DataFactory management;DataFactory;DataFactory management;REST HTTP client;azureofficial;windowsazureofficial;</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.5</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 </Project>
