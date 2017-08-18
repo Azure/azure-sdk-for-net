@@ -2,10 +2,10 @@
   "parameters": {
     "subscriptionId": "12345678-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
-    "dataFactoryName": "exampleFactoryName",
-    "gatewayName": "DemoDMG",
+    "dataFactoryName": "ADFexampleResourceGroupFactory2016",
+    "gatewayName": "exampleResourceGroupDMG",
     "parameters": {
-      "nodeName": "DemoDMG",
+      "nodeName": "exampleResourceGroupDMG",
       "limitConcurrentJobs": 5
     },
     "api-version": "2015-10-01"
@@ -13,10 +13,10 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 16 Aug 2017 09:09:29 GMT",
-        "x-ms-request-id": "ec718f07-6f18-4b06-8885-021ed771a41c",
-        "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-correlation-request-id": "413bcda3-3bc0-48a1-90da-a23f4d1c5619"
+        "Date": "Fri, 18 Aug 2017 06:57:51 GMT",
+        "x-ms-request-id": "6c85d476-e437-468d-9a53-6bb86e78323c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-correlation-request-id": "64930f38-2892-4d9e-93fa-aa6b739e161b"
       },
       "body": null
     }

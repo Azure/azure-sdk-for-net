@@ -2,24 +2,24 @@
   "parameters": {
     "subscriptionId": "12345678-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
-    "dataFactoryName": "exampleFactoryName",
+    "dataFactoryName": "ADFexampleResourceGroupFactory2016",
     "api-version": "2015-10-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 16 Aug 2017 09:09:28 GMT",
-        "x-ms-request-id": "f7d97c44-64a2-4157-b45c-38fd3eca21f4",
-        "x-ms-ratelimit-remaining-subscription-reads": "14679",
-        "x-ms-correlation-request-id": "a8bf82e9-115c-49a5-9073-627d99741d4c"
+        "Date": "Fri, 18 Aug 2017 06:57:49 GMT",
+        "x-ms-request-id": "beec10de-9e80-4adf-8dd0-56d02210dd35",
+        "x-ms-ratelimit-remaining-subscription-reads": "14681",
+        "x-ms-correlation-request-id": "0304a831-de6e-4b6c-be56-a424cf972fab"
       },
       "body": {
         "value": [
           {
-            "name": "DemoDMG",
+            "name": "exampleResourceGroupDMG",
             "properties": {
               "description": "",
-              "hostServiceUri": "https://cn-biazhang-w10.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
+              "hostServiceUri": "https://cn-abcdealias-w10.fareast.abcde.com:8050/HostServiceRemote.svc/",
               "dataFactoryName": "adfexampleResourceGroupfactory2016",
               "status": "Online",
               "capabilities": {
@@ -34,15 +34,15 @@
               "version": "2.12.6414.2",
               "createTime": "2017-08-15T07:04:34.0487349Z",
               "registerTime": "2017-08-15T07:10:44.8183772Z",
-              "lastConnectTime": "2017-08-16T09:09:03.2849828Z",
+              "lastConnectTime": "2017-08-18T06:57:31.4347243Z",
               "lastUpgradeResult": "",
               "multiNodeSupportEnabled": true,
               "nodes": [
                 {
-                  "nodeName": "CN-BIAZHANG-W10",
-                  "machineName": "CN-BIAZHANG-W10",
+                  "nodeName": "CN-abcdealias-W10",
+                  "machineName": "CN-abcdealias-W10",
                   "isActiveDispatcher": true,
-                  "hostServiceUri": "https://cn-biazhang-w10.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
+                  "hostServiceUri": "https://cn-abcdealias-w10.fareast.abcde.com:8050/HostServiceRemote.svc/",
                   "status": "Online",
                   "capabilities": {
                     "serviceBusConnected": "True",
@@ -55,20 +55,20 @@
                   "version": "2.12.6414.2",
                   "createTime": "2017-08-15T07:10:44.8183772Z",
                   "registerTime": "2017-08-15T07:10:44.8183772Z",
-                  "lastConnectTime": "2017-08-16T09:09:03.2849828Z",
+                  "lastConnectTime": "2017-08-18T06:57:31.4347243Z",
                   "lastUpgradeResult": "None",
                   "maxConcurrentJobs": "56",
-                  "availableMemory": "11232MB",
-                  "cpuUtilization": "12%",
-                  "network": "21KB/43KB",
+                  "availableMemory": "9438MB",
+                  "cpuUtilization": "15%",
+                  "network": "13KB/88KB",
                   "limitConcurrentJobs": "28",
                   "runningConcurrentJobs": "0"
                 },
                 {
-                  "nodeName": "DemoDMG",
-                  "machineName": "BIAZHANG2016C",
+                  "nodeName": "exampleResourceGroupDMG",
+                  "machineName": "abcdealias2016C",
                   "isActiveDispatcher": false,
-                  "hostServiceUri": "https://biazhang2016c.redmond.corp.microsoft.com:8050/HostServiceRemote.svc/",
+                  "hostServiceUri": "https://abcdealias2016c.redmond.abcde.com:8050/HostServiceRemote.svc/",
                   "status": "Online",
                   "capabilities": {
                     "serviceBusConnected": "True",
@@ -79,15 +79,15 @@
                   },
                   "versionStatus": "UpToDate",
                   "version": "2.12.6414.2",
-                  "createTime": "2017-08-16T09:08:29.738681Z",
-                  "registerTime": "2017-08-16T09:08:29.738681Z",
-                  "lastConnectTime": "2017-08-16T09:09:15.9951726Z",
+                  "createTime": "2017-08-18T06:05:58.1635243Z",
+                  "registerTime": "2017-08-18T06:05:58.1635243Z",
+                  "lastConnectTime": "2017-08-18T06:57:47.1825068Z",
                   "lastUpgradeResult": "None",
                   "maxConcurrentJobs": "30",
-                  "availableMemory": "0MB",
-                  "cpuUtilization": "0%",
+                  "availableMemory": "11415MB",
+                  "cpuUtilization": "2%",
                   "network": "0KB/0KB",
-                  "limitConcurrentJobs": "0",
+                  "limitConcurrentJobs": "5",
                   "runningConcurrentJobs": "0"
                 }
               ],
@@ -99,7 +99,7 @@
               ],
               "scheduledUpgradeTime": "08:08:08"
             },
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourcegroups/exampleResourceGroup/providers/Microsoft.DataFactory/datafactories/exampleFactoryName/gateways/DemoDMG"
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourcegroups/exampleResourceGroup/providers/Microsoft.DataFactory/datafactories/ADFexampleResourceGroupFactory2016/gateways/exampleResourceGroupDMG"
           }
         ]
       }

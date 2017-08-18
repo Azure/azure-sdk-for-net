@@ -297,84 +297,15 @@ namespace DataFactory.Tests.Utils
 
         public static void ApplyTemporaryWorkaroundsForServiceDefects(List<Example> examples, IDataFactoryManagementExtendedClient client)
         {
-            const string nameProperty = "loggingStorageAccountName";
-            const string keyProperty = "loggingStorageAccountKey";
-            const string keyValue = "\"**********\"";
-            const string badTimestampProperty = "timeStamp";
-            const string goodTimestampProperty = "timestamp";
-            const string lastUpdateProperty = "lastUpdate";
-            // Transform captured examples from actual to expected, for issues where service defects are known and expected to be fixed soon
-            // Pass 1:
-            // A. For Factories_* examples both responses/200/body/properties and responses/200/body/value[0]/properties paths,
-            //    if there's a loggingStorageAccountName but not loggingStorageAccountKey, add "loggingStorageAccountKey": "**********"
-            // B. For PipelineRuns_ListWithQueryByFactory.json, rename timeStamp to timestamp in responses/200/body/value[0]/pipelineRuns[0], and append "Z" to responses/200/body/value[0]
-            // C. Save Factories_ListByResourceGroup responses (after A)
-            // D. Save PipelineRuns_ListWithQueryByFactory responses (after B)
-            // Pass 2:
-            // E. Set Factories_List responses to saved ones from Factories_ListByResourceGroup
-            // F. For Factories_Update, from responses/200/body strip eTag, tenantId, clientPrincipalName, jobManagerScaleUnitIdentifier, resourceGroupName
-            //    and from responses/200/body/properties strip dataFactoryId
-            // G. For PipelineRuns_ListByFactory and PipelineRuns_ListByPipeline:
-            //    Set responses to saved one from PipelineRuns_ListWithQueryByFactory, then set responses/200/body/value to responses/200/body/value[0]/pipelineRuns
-            // H. For PipelineRuns_Get:
-            //    Set responses to saved one from PipelineRuns_ListWithQueryByFactory, then set responses/200/body to responses/200/body/value[0]/pipelineruns[0]
-
-            Dictionary<string, Example.Response> factories_ListByResourceGroupResponses = null;
-
             foreach (Example example in examples)
             {
-                // Pass 1
-                if (example.Name.StartsWith("Factories_") && example.Responses != null && example.Responses.ContainsKey("200") && example.Responses["200"].Body != null)
+                if (example.Name == "GatewayExtended_Update" || example.Name == "GatewayExtended_Get")
                 {
-                    // Pass 1, step A and C
                     object body = example.Responses["200"].Body;
                     string bodyJson = SafeJsonConvert.SerializeObject(body);
                     JObject bodyJObject = JObject.Parse(bodyJson);
-                    JObject propertiesJObject = null;
-                    if (bodyJObject["properties"] != null)
-                    {
-                        propertiesJObject = bodyJObject["properties"] as JObject;
-                    }
-                    else if (bodyJObject["value"] != null && bodyJObject["value"][0] != null && bodyJObject["value"][0]["properties"] != null)
-                    {
-                        propertiesJObject = bodyJObject["value"][0]["properties"] as JObject;
-                    }
-                    if (propertiesJObject != null && propertiesJObject[nameProperty] != null && propertiesJObject[keyProperty] == null)
-                    {
-                        propertiesJObject.Add(keyProperty, JValue.Parse(keyValue));
-                        string bodyJsonNew = bodyJObject.ToString(Formatting.None);
-                        example.Responses["200"].Body = SafeJsonConvert.DeserializeObject<object>(bodyJsonNew);
-                    }
-                    // Pass 1, step C
-                    if (example.Name == "Factories_ListByResourceGroup")
-                    {
-                        factories_ListByResourceGroupResponses = example.Responses;
-                    }
-                }
-            }
-
-            foreach (Example example in examples)
-            {
-                
-                // Pass 2
-                if (example.Name == "Factories_List")
-                {
-                    // Pass 2, step E
-                    example.Responses = Clone(factories_ListByResourceGroupResponses);
-                }
-                else if (example.Name == "Factories_Update")
-                {
-                    // Pass 2, step F
-                    object body = example.Responses["200"].Body;
-                    string bodyJson = SafeJsonConvert.SerializeObject(body);
-                    JObject bodyJObject = JObject.Parse(bodyJson);
-                    bodyJObject.Remove("eTag");
-                    bodyJObject.Remove("tenantId");
-                    bodyJObject.Remove("clientPrincipalName");
-                    bodyJObject.Remove("jobManagerScaleUnitIdentifier");
-                    bodyJObject.Remove("resourceGroupName");
-                    JObject propertiesJObject = bodyJObject["properties"] as JObject;
-                    propertiesJObject.Remove("dataFactoryId");
+                    JObject properties = bodyJObject["properties"] as JObject;
+                    properties.Remove("isCredentialSyncFailed");
                     string bodyJsonNew = bodyJObject.ToString(Formatting.None);
                     example.Responses["200"].Body = SafeJsonConvert.DeserializeObject<object>(bodyJsonNew);
                 }

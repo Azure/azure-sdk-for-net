@@ -3,6 +3,7 @@
 // license information.
 
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace DataFactory.Tests.Utils
 {
@@ -21,6 +22,8 @@ namespace DataFactory.Tests.Utils
         public const string ExampleStorageAccountName = "examplestorageaccount";
         public const string ExampleStorageAccountKey = "<storage key>";
         public const string ExampleBlobContainerName = "examplecontainer";
+        public const string ExampleCorpDomain = "abcde.com";
+        public const string ExampleAlias = "abcdealias";
 
         [JsonProperty(PropertyName = "environment")]
         public string Environment { get; set; } // "prod", "test"
@@ -44,6 +47,11 @@ namespace DataFactory.Tests.Utils
         public string StorageAccountKey { get; set; }
         [JsonProperty(PropertyName = "blobContainerName")]
         public string BlobContainerName { get; set; }
+        [JsonProperty(PropertyName = "corpDomain")]
+        public string CorpDomainName { get; set; }
+        [JsonProperty(PropertyName = "alias")]
+        public string AliasName { get; set; }
+
 
         public string ReplaceSecretsWithExampleStrings(string jsonActual)
         {
@@ -61,6 +69,8 @@ namespace DataFactory.Tests.Utils
             ret = ReplaceOne(ret, StorageAccountName, ExampleStorageAccountName);
             ret = ReplaceOne(ret, StorageAccountKey, ExampleStorageAccountKey);
             ret = ReplaceOne(ret, BlobContainerName, ExampleBlobContainerName);
+            ret = ReplaceOne(ret, CorpDomainName, ExampleCorpDomain);
+            ret = ReplaceOne(ret, AliasName, ExampleAlias);
             return ret;
         }
 
@@ -69,7 +79,7 @@ namespace DataFactory.Tests.Utils
             string ret = jsonIn;
             if (actual != null && !actual.Equals(example))
             {
-                ret = jsonIn.Replace(actual, example);
+                ret = Regex.Replace(jsonIn, Regex.Escape(actual), example.Replace("$", "$$"), RegexOptions.IgnoreCase);
             }
             return ret;
         }
