@@ -24,6 +24,52 @@ namespace Microsoft.Azure.Management.DataFactories
     public static partial class GatewaysExtendedOperationsExtensions
     {
             /// <summary>
+            /// Get a data factory gateway.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the data factory.
+            /// </param>
+            /// <param name='dataFactoryName'>
+            /// A unique data factory instance name.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// Name of the data factory gateway.
+            /// </param>
+            public static GatewayExtended Get(this IGatewaysExtendedOperations operations, string resourceGroupName, string dataFactoryName, string gatewayName)
+            {
+                return operations.GetAsync(resourceGroupName, dataFactoryName, gatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a data factory gateway.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the data factory.
+            /// </param>
+            /// <param name='dataFactoryName'>
+            /// A unique data factory instance name.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// Name of the data factory gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewayExtended> GetAsync(this IGatewaysExtendedOperations operations, string resourceGroupName, string dataFactoryName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Update a data factory gateway.
             /// </summary>
             /// <param name='operations'>

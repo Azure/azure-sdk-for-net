@@ -51,6 +51,7 @@ namespace DataFactory.Tests.Utils
                 // make sure ResourceGroup, DataFactory and Gateway exist before running the capture method
                 EnsureResourceGroupExists();
                 ServiceClientTracing.IsEnabled = true;
+                CaptureGatewayExtended_Get(); // 200
                 CaptureGatewayExtended_List(); // 200
                 CaptureGatewayExtended_Update(); // 200
                 CaptureGatewayExtended_ForceSyncCredential(); //200
@@ -96,6 +97,12 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "GatewayExtended_List";
             List<GatewayExtended> gateway = client.GatewaysExtended.List(secrets.ResourceGroupName, secrets.FactoryName).ToList();
+        }
+
+        private void CaptureGatewayExtended_Get()
+        {
+            interceptor.CurrentExampleName = "GatewayExtended_Get";
+            GatewayExtended gateway = client.GatewaysExtended.Get(secrets.ResourceGroupName, secrets.FactoryName, "DemoDMG");
         }
 
         private const string GatewayName = "DemoDMG";

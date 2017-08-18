@@ -1,0 +1,79 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "dataFactoryName": "exampleFactoryName",
+    "gatewayName": "DemoDMG",
+    "api-version": "2015-10-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Fri, 18 Aug 2017 02:27:36 GMT",
+        "x-ms-request-id": "8eb2152b-f20e-4902-88a4-ad19d0762d4e",
+        "x-ms-ratelimit-remaining-subscription-reads": "14571",
+        "x-ms-correlation-request-id": "0f8605ba-2132-4e21-93f9-24ce2610a0fb"
+      },
+      "body": {
+        "name": "DemoDMG",
+        "properties": {
+          "description": "",
+          "hostServiceUri": "https://cn-biazhang-w10.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
+          "dataFactoryName": "adfexampleResourceGroupfactory2016",
+          "status": "Online",
+          "capabilities": {
+            "serviceBusConnected": "True",
+            "httpsPortEnabled": "True",
+            "credentialInSync": "True",
+            "connectedToResourceManager": "True",
+            "nodeEnabled": "True"
+          },
+          "versionStatus": "UpToDate",
+          "provisioningState": "Succeeded",
+          "version": "2.12.6414.2",
+          "createTime": "2017-08-15T07:04:34.0487349Z",
+          "registerTime": "2017-08-15T07:10:44.8183772Z",
+          "lastConnectTime": "2017-08-18T02:27:25.0704332Z",
+          "lastUpgradeResult": "",
+          "multiNodeSupportEnabled": true,
+          "nodes": [
+            {
+              "nodeName": "CN-BIAZHANG-W10",
+              "machineName": "CN-BIAZHANG-W10",
+              "isActiveDispatcher": true,
+              "hostServiceUri": "https://cn-biazhang-w10.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
+              "status": "Online",
+              "capabilities": {
+                "serviceBusConnected": "True",
+                "httpsPortEnabled": "True",
+                "credentialInSync": "True",
+                "connectedToResourceManager": "True",
+                "nodeEnabled": "True"
+              },
+              "versionStatus": "UpToDate",
+              "version": "2.12.6414.2",
+              "createTime": "2017-08-15T07:10:44.8183772Z",
+              "registerTime": "2017-08-15T07:10:44.8183772Z",
+              "lastConnectTime": "2017-08-18T02:27:25.0704332Z",
+              "lastUpgradeResult": "None",
+              "maxConcurrentJobs": "56",
+              "availableMemory": "8940MB",
+              "cpuUtilization": "12%",
+              "network": "20KB/157KB",
+              "limitConcurrentJobs": "28",
+              "runningConcurrentJobs": "0"
+            }
+          ],
+          "nodeCommunicationChannelEncryptionMode": "NonEncryption",
+          "isOnPremCredentialEnabled": true,
+          "serviceUrls": [
+            "wu.frontend.clouddatahub.net",
+            "*.servicebus.windows.net"
+          ],
+          "scheduledUpgradeTime": "08:08:08"
+        },
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourcegroups/exampleResourceGroup/providers/Microsoft.DataFactory/datafactories/exampleFactoryName/gateways/DemoDMG"
+      }
+    }
+  }
+}

@@ -45,6 +45,16 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void GatewayExtended_Get()
+        {
+            RunTest("GatewayExtended_Get", (example, client, responseCode) =>
+            {
+                GatewayExtended resource = client.GatewaysExtended.Get(RGN(example), FN(example), GN(example));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
         public void GatewayExtended_Update()
         {
             RunTest("GatewayExtended_Update", (example, client, responseCode) =>
