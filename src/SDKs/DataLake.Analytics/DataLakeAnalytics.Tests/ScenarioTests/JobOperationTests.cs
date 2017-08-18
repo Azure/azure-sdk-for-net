@@ -174,6 +174,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(1, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].LineNumber);
                 Assert.Contains("E_CSC_USER_SYNTAXERROR", ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Message);
 
+                // TODO: re-enable this when the server side is fixed
                 // list the jobs both with a hand crafted query string and using the parameters
                 // listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, select:  "jobId" );
                 // Assert.NotNull(listJobResponse);
