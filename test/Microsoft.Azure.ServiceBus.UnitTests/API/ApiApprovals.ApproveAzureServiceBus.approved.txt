@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus
     
     public abstract class ClientEntity : Microsoft.Azure.ServiceBus.IClientEntity
     {
-        protected ClientEntity(string clientId, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
+        protected ClientEntity(string clientTypeName, string postfix, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
         public string ClientId { get; }
         public bool IsClosedOrClosing { get; }
         public abstract System.TimeSpan OperationTimeout { get; set; }
@@ -19,6 +19,7 @@ namespace Microsoft.Azure.ServiceBus
         protected static long GetNextId() { }
         protected abstract System.Threading.Tasks.Task OnClosingAsync();
         public abstract void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin);
+        protected virtual void ThrowIfClosed() { }
         public abstract void UnregisterPlugin(string serviceBusPluginName);
     }
     public sealed class CorrelationFilter : Microsoft.Azure.ServiceBus.Filter

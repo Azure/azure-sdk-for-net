@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy)
-            : base(ClientEntity.GenerateClientId(nameof(MessageSender), entityPath), retryPolicy ?? RetryPolicy.Default)
+            : base(nameof(MessageSender), entityPath, retryPolicy ?? RetryPolicy.Default)
         {
             MessagingEventSource.Log.MessageSenderCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
@@ -95,8 +95,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.Path = entityPath;
             this.EntityType = entityType;
             this.CbsTokenProvider = cbsTokenProvider;
-            this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
-            this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, this.CloseRequestResponseSession);
+            this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, CloseSession);
+            this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, CloseRequestResponseSession);
             this.clientLinkManager = new ActiveClientLinkManager(this.ClientId, this.CbsTokenProvider);
 
             MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
@@ -132,59 +132,6 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
-        /// <summary>Closes the connection.</summary>
-        protected override async Task OnClosingAsync()
-        {
-            this.clientLinkManager.Close();
-            await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
-            await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
-
-            if (this.ownsConnection)
-            {
-                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
-            }
-        }
-
-        async Task<Message> ProcessMessage(Message message)
-        {
-            var processedMessage = message;
-            foreach (var plugin in this.RegisteredPlugins)
-            {
-                try
-                {
-                    MessagingEventSource.Log.PluginCallStarted(plugin.Name, message.MessageId);
-                    processedMessage = await plugin.BeforeMessageSend(message).ConfigureAwait(false);
-                    MessagingEventSource.Log.PluginCallCompleted(plugin.Name, message.MessageId);
-                }
-                catch (Exception ex)
-                {
-                    MessagingEventSource.Log.PluginCallFailed(plugin.Name, message.MessageId, ex);
-                    if (!plugin.ShouldContinueOnException)
-                    {
-                        throw;
-                    }
-                }
-            }
-            return processedMessage;
-        }
-
-        async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
-        {
-            if (this.RegisteredPlugins.Count < 1)
-            {
-                return messageList;
-            }
-
-            var processedMessageList = new List<Message>();
-            foreach (var message in messageList)
-            {
-                var processedMessage = await this.ProcessMessage(message).ConfigureAwait(false);
-                processedMessageList.Add(processedMessage);
-            }
-
-            return processedMessageList;
-        }
-
         /// <summary>
         /// Sends a message to the entity as described by <see cref="Path"/>.
         /// </summary>
@@ -202,6 +149,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>An asynchronous operation</returns>
         public async Task SendAsync(IList<Message> messageList)
         {
+            this.ThrowIfClosed();
             int count = MessageSender.ValidateMessages(messageList);
             MessagingEventSource.Log.MessageSendStart(this.ClientId, count);
 
@@ -233,6 +181,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public async Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
+            this.ThrowIfClosed();
             if (message == null)
             {
                 throw Fx.Exception.ArgumentNull(nameof(message));
@@ -279,6 +228,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>An asynchronous operation</returns>
         public async Task CancelScheduledMessageAsync(long sequenceNumber)
         {
+            this.ThrowIfClosed();
             MessagingEventSource.Log.CancelScheduledMessageStart(this.ClientId, sequenceNumber);
 
             try
@@ -299,6 +249,43 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.CancelScheduledMessageStop(this.ClientId);
         }
 
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this sender.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
+        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        {
+            this.ThrowIfClosed();
+            if (serviceBusPlugin == null)
+            {
+                throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
+            }
+
+            if (this.RegisteredPlugins.Any(p => p.GetType() == serviceBusPlugin.GetType()))
+            {
+                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
+            }
+            this.RegisteredPlugins.Add(serviceBusPlugin);
+        }
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        public override void UnregisterPlugin(string serviceBusPluginName)
+        {
+            this.ThrowIfClosed();
+            if (serviceBusPluginName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
+            }
+            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
+            {
+                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
+                this.RegisteredPlugins.Remove(plugin);
+            }
+        }
+
         internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
         {
             RequestResponseAmqpLink requestResponseAmqpLink = null;
@@ -307,7 +294,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             if (!this.RequestResponseLinkManager.TryGetOpenedObject(out requestResponseAmqpLink))
             {
-                requestResponseAmqpLink = await this.RequestResponseLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false); 
+                requestResponseAmqpLink = await this.RequestResponseLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
             }
 
             AmqpMessage responseAmqpMessage = await Task.Factory.FromAsync(
@@ -317,6 +304,95 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             AmqpResponseMessage responseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
             return responseMessage;
+        }
+
+        /// <summary>Closes the connection.</summary>
+        protected override async Task OnClosingAsync()
+        {
+            this.clientLinkManager.Close();
+            await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
+            await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
+
+            if (this.ownsConnection)
+            {
+                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
+            }
+        }
+
+        static int ValidateMessages(IList<Message> messageList)
+        {
+            int count = 0;
+            if (messageList == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(messageList));
+            }
+
+            foreach (var message in messageList)
+            {
+                count++;
+                ValidateMessage(message);
+            }
+
+            return count;
+        }
+
+        static void ValidateMessage(Message message)
+        {
+            if (message.SystemProperties.IsLockTokenSet)
+            {
+                throw Fx.Exception.Argument(nameof(message), "Cannot send a message that was already received.");
+            }
+        }
+
+        static void CloseSession(SendingAmqpLink link)
+        {
+            // Note we close the session (which includes the link).
+            link.Session.SafeClose();
+        }
+
+        static void CloseRequestResponseSession(RequestResponseAmqpLink requestResponseAmqpLink)
+        {
+            requestResponseAmqpLink.Session.SafeClose();
+        }
+
+        async Task<Message> ProcessMessage(Message message)
+        {
+            var processedMessage = message;
+            foreach (var plugin in this.RegisteredPlugins)
+            {
+                try
+                {
+                    MessagingEventSource.Log.PluginCallStarted(plugin.Name, message.MessageId);
+                    processedMessage = await plugin.BeforeMessageSend(message).ConfigureAwait(false);
+                    MessagingEventSource.Log.PluginCallCompleted(plugin.Name, message.MessageId);
+                }
+                catch (Exception ex)
+                {
+                    MessagingEventSource.Log.PluginCallFailed(plugin.Name, message.MessageId, ex);
+                    if (!plugin.ShouldContinueOnException)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return processedMessage;
+        }
+
+        async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
+        {
+            if (this.RegisteredPlugins.Count < 1)
+            {
+                return messageList;
+            }
+
+            var processedMessageList = new List<Message>();
+            foreach (var message in messageList)
+            {
+                var processedMessage = await this.ProcessMessage(message).ConfigureAwait(false);
+                processedMessageList.Add(processedMessage);
+            }
+
+            return processedMessageList;
         }
 
         async Task OnSendAsync(IList<Message> messageList)
@@ -422,12 +498,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        ArraySegment<byte> GetNextDeliveryTag()
-        {
-            int deliveryId = Interlocked.Increment(ref this.deliveryCount);
-            return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));
-        }
-
         async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
             MessagingEventSource.Log.AmqpSendLinkCreateStart(this.ClientId, this.EntityType, this.Path);
@@ -496,75 +566,10 @@ namespace Microsoft.Azure.ServiceBus.Core
             return requestResponseAmqpLink;
         }
 
-        void CloseSession(SendingAmqpLink link)
+        ArraySegment<byte> GetNextDeliveryTag()
         {
-            // Note we close the session (which includes the link).
-            link.Session.SafeClose();
-        }
-
-        void CloseRequestResponseSession(RequestResponseAmqpLink requestResponseAmqpLink)
-        {
-            requestResponseAmqpLink.Session.SafeClose();
-        }
-
-        static int ValidateMessages(IList<Message> messageList)
-        {
-            int count = 0;
-            if (messageList == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(messageList));
-            }
-
-            foreach (var message in messageList)
-            {
-                count++;
-                ValidateMessage(message);
-            }
-
-            return count;
-        }
-
-        static void ValidateMessage(Message message)
-        {
-            if (message.SystemProperties.IsLockTokenSet)
-            {
-                throw Fx.Exception.Argument(nameof(message), "Cannot send a message that was already received.");
-            }
-        }
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this sender.
-        /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            if (serviceBusPlugin == null)
-            {
-                throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
-            }
-
-            if (this.RegisteredPlugins.Any(p => p.GetType() == serviceBusPlugin.GetType()))
-            {
-                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
-            }
-            this.RegisteredPlugins.Add(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            if (serviceBusPluginName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
-            }
-            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
-            {
-                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
-                this.RegisteredPlugins.Remove(plugin);
-            }
+            int deliveryId = Interlocked.Increment(ref this.deliveryCount);
+            return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));
         }
     }
 }

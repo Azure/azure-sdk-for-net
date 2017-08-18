@@ -16,14 +16,17 @@ namespace Microsoft.Azure.ServiceBus
     public abstract class ClientEntity : IClientEntity
     {
         static int nextId;
+        readonly string clientTypeName;
         readonly object syncLock;
 
         /// <summary></summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientTypeName"></param>
+        /// <param name="postfix"></param>
         /// <param name="retryPolicy"></param>
-        protected ClientEntity(string clientId, RetryPolicy retryPolicy)
+        protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {
-            this.ClientId = clientId;
+            this.clientTypeName = clientTypeName;
+            this.ClientId = GenerateClientId(clientTypeName, postfix);
             this.RetryPolicy = retryPolicy ?? throw new ArgumentNullException(nameof(retryPolicy));
             this.syncLock = new object();
         }
@@ -111,6 +114,17 @@ namespace Microsoft.Azure.ServiceBus
         protected static string GenerateClientId(string clientTypeName, string postfix = "")
         {
             return $"{clientTypeName}{GetNextId()}{postfix}";
+        }
+
+        /// <summary>
+        /// Throw an OperationCanceledException if the object is Closing.
+        /// </summary>
+        protected virtual void ThrowIfClosed()
+        {
+            if (this.IsClosedOrClosing)
+            {
+                throw new ObjectDisposedException($"{this.clientTypeName} with Id '{this.ClientId}' has already been closed. Please create a new {this.clientTypeName}.");
+            }
         }
         
         /// <summary>

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.ServiceBus
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null,
             int prefetchCount = DefaultPrefetchCount)
-            : this(ClientEntity.GenerateClientId(nameof(SessionClient), entityPath),
+            : this(nameof(SessionClient),
                   entityPath,
                   null,
                   receiveMode,
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         internal SessionClient(
-            string clientId,
+            string clientTypeName,
             string entityPath,
             MessagingEntityType? entityType,
             ReceiveMode receiveMode,
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy,
             IList<ServiceBusPlugin> registeredPlugins)
-            : base(clientId, retryPolicy ?? RetryPolicy.Default)
+            : base(clientTypeName, entityPath, retryPolicy ?? RetryPolicy.Default)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
@@ -163,16 +163,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
 
-        /// <summary></summary>
-        /// <returns>The asynchronous operation.</returns>
-        protected override async Task OnClosingAsync()
-        {
-            if (this.ownsConnection)
-            {
-                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
-            }
-        }
-
         /// <summary>
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
@@ -218,6 +208,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>A session object.</returns>
         public async Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
         {
+            this.ThrowIfClosed();
+
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStart(
                 this.ClientId,
                 this.EntityPath,
@@ -277,6 +269,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
+            this.ThrowIfClosed();
+
             if (serviceBusPlugin == null)
             {
                 throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
@@ -294,6 +288,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPluginName">The <see cref="ServiceBusPlugin.Name"/> of the plugin to be unregistered.</param>
         public override void UnregisterPlugin(string serviceBusPluginName)
         {
+            this.ThrowIfClosed();
+
             if (this.RegisteredPlugins == null)
             {
                 return;
@@ -306,6 +302,16 @@ namespace Microsoft.Azure.ServiceBus
             {
                 var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
                 this.RegisteredPlugins.Remove(plugin);
+            }
+        }
+
+        /// <summary></summary>
+        /// <returns>The asynchronous operation.</returns>
+        protected override async Task OnClosingAsync()
+        {
+            if (this.ownsConnection)
+            {
+                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }
         }
     }
