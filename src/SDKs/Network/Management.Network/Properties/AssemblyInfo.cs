@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Network Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Network management functions for managing the Microsoft Azure Network service.")]
 
-[assembly: AssemblyVersion("13.0.0.0")]
-[assembly: AssemblyFileVersion("13.0.0.0")]
+[assembly: AssemblyVersion("14.0.0.0")]
+[assembly: AssemblyFileVersion("14.0.0.0")]
 
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

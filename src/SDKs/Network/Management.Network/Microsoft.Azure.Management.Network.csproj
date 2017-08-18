@@ -4,7 +4,7 @@
     <PackageId>Microsoft.Azure.Management.Network</PackageId>
     <Description>Provides management capabilities for Network services.</Description>
     <AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-    <Version>13.0.0-preview</Version>
+    <Version>14.0.0-preview</Version>
     <PackageTags>Microsoft Azure Network management;Network;Network management;windowsazureofficial</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>

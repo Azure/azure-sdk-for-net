@@ -19,7 +19,7 @@ namespace Network.Tests.Tests
 
     public class PacketCaptureTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void PacketCaptureApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

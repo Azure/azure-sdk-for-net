@@ -21,7 +21,7 @@ namespace Networks.Tests
             HttpMockServer.RecordsDirectory = "SessionRecords";
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void CheckDnsAvailabilityTest()
         {
             var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};

@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="sku">The public IP address SKU.</param>
         /// <param name="publicIPAllocationMethod">The public IP allocation
         /// method. Possible values are: 'Static' and 'Dynamic'. Possible
         /// values include: 'Static', 'Dynamic'</param>
@@ -61,9 +62,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Failed'.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public PublicIPAddress(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public PublicIPAddress(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PublicIPAddressSku sku = default(PublicIPAddressSku), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
+            Sku = sku;
             PublicIPAllocationMethod = publicIPAllocationMethod;
             PublicIPAddressVersion = publicIPAddressVersion;
             IpConfiguration = ipConfiguration;
@@ -80,6 +82,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the public IP address SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public PublicIPAddressSku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the public IP allocation method. Possible values are:

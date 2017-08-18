@@ -21,7 +21,7 @@ namespace Network.Tests.Tests
 
     public class CheckConnectivityTests
     {
-        [Fact]
+        [Fact(Skip = "DisableTests")]
         public void CheckConnectivityVmToInternetTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

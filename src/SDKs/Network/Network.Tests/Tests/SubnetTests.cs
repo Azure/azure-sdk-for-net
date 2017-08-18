@@ -22,7 +22,7 @@ namespace Networks.Tests
 
     public class SubnetTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void SubnetApiTest()
         {
             var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -116,7 +116,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void SubnetResourceNavigationLinksTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
