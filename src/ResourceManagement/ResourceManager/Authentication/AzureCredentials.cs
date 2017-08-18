@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             var adSettings = new ActiveDirectoryServiceSettings
             {
                 AuthenticationEndpoint = new Uri(Environment.AuthenticationEndpoint),
-                TokenAudience = new Uri(Environment.ResourceManagerEndpoint),
+                TokenAudience = new Uri(Environment.ManagementEnpoint),
                 ValidateAuthority = true
             };
             string url = request.RequestUri.ToString();
