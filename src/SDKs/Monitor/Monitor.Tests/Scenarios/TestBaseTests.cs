@@ -27,8 +27,9 @@ namespace Monitor.Tests.Scenarios
         {
             // ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(new ServiceManagemenet.Common.Models.XunitTracingInterceptor(output));
             // HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(ignoreResourcesClient: true, providers: providers);
-            // Set the path to find the recorded session files
-            HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
+
+            // Set the path to find the recorded session files (only works in VS locally for .net452)
+            // HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
             this.IsRecording = false;
         }
 
