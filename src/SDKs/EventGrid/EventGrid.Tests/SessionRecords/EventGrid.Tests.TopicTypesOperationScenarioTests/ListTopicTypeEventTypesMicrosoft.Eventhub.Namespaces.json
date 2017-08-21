@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Eventhub.Namespaces/eventTypes?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LkV2ZW50aHViLk5hbWVzcGFjZXMvZXZlbnRUeXBlcz9hcGktdmVyc2lvbj0yMDE3LTA2LTE1LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1a575e18-ece7-446c-b72d-d90acfb152c5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Capture File Created\",\r\n        \"description\": \"Raised when a capture file is created.\",\r\n        \"schemaUrl\": \"tbd\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.EventHub.Namespaces/eventTypes/Microsoft.EventHub.CaptureFileCreated\",\r\n      \"name\": \"Microsoft.EventHub.CaptureFileCreated\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 17 Aug 2017 22:45:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "24821d42-a91c-4402-9533-bcdd2c3bf23d"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "9fe57aa5-a3c7-4a9a-85d2-c26a8f6fc20c"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170817T224549Z:9fe57aa5-a3c7-4a9a-85d2-c26a8f6fc20c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea"
+  }
+}

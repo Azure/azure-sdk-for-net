@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
+    <Description>Azure Event Grid Management SDK library</Description>
+    <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <PackageTags>Microsoft Azure Event Grid Management;Event Grid;</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

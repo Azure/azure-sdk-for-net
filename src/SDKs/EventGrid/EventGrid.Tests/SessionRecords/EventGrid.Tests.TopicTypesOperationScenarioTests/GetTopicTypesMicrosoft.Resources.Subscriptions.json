@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.Subscriptions?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LlJlc291cmNlcy5TdWJzY3JpcHRpb25zP2FwaS12ZXJzaW9uPTIwMTctMDYtMTUtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "467c3c02-a412-42d2-bacf-f9ce44547e04"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provider\": \"Microsoft.Resources\",\r\n    \"displayName\": \"Azure Subscriptions\",\r\n    \"description\": \"Resource management events under an Azure subscription\",\r\n    \"resourceRegionType\": \"GlobalResource\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.Subscriptions\",\r\n  \"name\": \"Microsoft.Resources.Subscriptions\",\r\n  \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 17 Aug 2017 06:33:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "76f1db8c-624f-4202-a00a-4fa4aeae7a78"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "3a6d97d4-90d2-40e6-ad08-df2b30cc7e5d"
+        ],
+        "x-ms-routing-request-id": [
+          "AUSTRALIASOUTHEAST:20170817T063303Z:3a6d97d4-90d2-40e6-ad08-df2b30cc7e5d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d8dcd58b-e22d-43e7-a97f-15fa29d8c8ea"
+  }
+}
