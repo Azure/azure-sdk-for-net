@@ -14,6 +14,7 @@ set featureSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-spec
 set subscriptionSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/559116780819474db8605387c4bc3de4a038533a/arm-resources/subscriptions/2016-06-01/swagger/subscriptions.json"
 set policySpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/559116780819474db8605387c4bc3de4a038533a/arm-resources/policy/2016-04-01/swagger/policy.json"
 set linkSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/559116780819474db8605387c4bc3de4a038533a/arm-resources/links/2016-09-01/swagger/links.json"
+set managedappSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/current/specification/resources/resource-manager/Microsoft.Solutions/2016-09-01-preview/managedapplications.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
@@ -26,5 +27,6 @@ call "%repoRoot%\tools\autorest.gen.cmd" %featureSpecFile% Microsoft.Azure.Manag
 call "%repoRoot%\tools\autorest.gen.cmd" %subscriptionSpecFile% Microsoft.Azure.Management.ResourceManager %autoRestVersion% %generateFolder% 
 call "%repoRoot%\tools\autorest.gen.cmd" %policySpecFile% Microsoft.Azure.Management.ResourceManager %autoRestVersion% %generateFolder% 
 call "%repoRoot%\tools\autorest.gen.cmd" %linkSpecFile% Microsoft.Azure.Management.ResourceManager %autoRestVersion% %generateFolder% 
+call "%repoRoot%\tools\autorest.gen.cmd" %managedappSpecFile% Microsoft.Azure.Management.ResourceManager %autoRestVersion% %generateFolder% 
 
 endlocal
