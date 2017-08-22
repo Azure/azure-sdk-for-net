@@ -5,7 +5,7 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Microsoft Azure key vault core")]
+[assembly: AssemblyTitle("Microsoft Azure Key Vault Core")]
 [assembly: AssemblyDescription("Microsoft Azure Key Vault Core Class Library")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
