@@ -4,10 +4,9 @@
 // 
 
 using System;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.KeyVault.WebKey
 {
@@ -15,7 +14,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
     /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
     /// </summary>
     [JsonObject]
-    public class JsonWebKey
+    public sealed class JsonWebKey
     {
         // DataContract property names
         internal const string Property_Kid = "kid";
@@ -130,7 +129,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// <summary>
         /// The curve for Elliptic Curve Cryptography (ECC) algorithms
         /// </summary>
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Crv, Required = Required.Default)]
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Crv, Required = Required.Default )]
         public string CurveName { get; set; }
 
         /// <summary>
@@ -177,6 +176,45 @@ namespace Microsoft.Azure.KeyVault.WebKey
         [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_T, Required = Required.Default )]
         [JsonConverter( typeof( Base64UrlJsonConverter ) )]
         public byte[] T { get; set; }
+
+        /// <summary>
+        /// Holds properties that are not part of current schema.
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> ExtensionData;
+
+        /// <summary>
+        /// Iterates over all JSON properties of this object, calling the specified visitor.
+        /// </summary>
+        /// All JSON properties are visited. This includes normal properties, properties that are not useful for the
+        /// key type, and properties that are not part of current schema (extension data).
+        /// Users must assume the properties are visited in random order.
+        /// <param name="visitor">A visitor that will be called for each property.</param>
+        public void VisitProperties( Action<string, object> visitor )
+        {
+            if ( visitor == null )
+                throw new ArgumentNullException( nameof( visitor ) );
+
+            visitor( Property_Crv, CurveName );
+            visitor( Property_D, D );
+            visitor( Property_DP, DP );
+            visitor( Property_DQ, DQ );
+            visitor( Property_E, E );
+            visitor( Property_K, K );
+            visitor( Property_KeyOps, KeyOps );
+            visitor( Property_Kid, Kid );
+            visitor( Property_Kty, Kty );
+            visitor( Property_N, N );
+            visitor( Property_P, P );
+            visitor( Property_Q, Q );
+            visitor( Property_T, T );
+            visitor( Property_X, X );
+            visitor( Property_Y, Y );
+
+            if ( ExtensionData != null )
+                foreach ( var entry in ExtensionData )
+                    visitor( entry.Key, entry.Value );
+        }
 
         /// <summary>
         /// Creates an instance of <see cref="JsonWebKey"/>
@@ -342,8 +380,13 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( a == b )
                 return true;
 
-            if ( ( a == null ) != ( b == null ) )
-                return false;
+            if ( a == null )
+                // b can't be null because otherwise we would return true above.
+                return b.Length == 0;
+
+            if ( b == null )
+                // Likewise, a can't be null.
+                return a.Length == 0;
 
             if ( a.Length != b.Length )
                 return false;
@@ -420,7 +463,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// Verifies whether this object has a private key
         /// </summary>
         /// <returns> True if the object has private key; false otherwise.</returns>
-        public virtual bool HasPrivateKey()
+        public bool HasPrivateKey()
         {
             switch ( Kty )
             {
@@ -442,139 +485,17 @@ namespace Microsoft.Azure.KeyVault.WebKey
 
         /// <summary>
         /// Determines if the WebKey object is valid according to the rules for
-        /// each of the possible WebKeyTypes. For more information, see WebKeyTypes.
+        /// each of value of JsonWebKeyType.
         /// </summary>
         /// <returns>true if the WebKey is valid</returns>
-        public virtual bool IsValid()
+        public bool IsValid()
         {
-            // MUST have kty
-            if ( string.IsNullOrEmpty( Kty ) )
-                return false;
+            var verifierOptions =
+                JsonWebKeyVerifier.Options.DenyIncompatibleOperations |
+                JsonWebKeyVerifier.Options.DenyExtraneousFields;
 
-            // Validate Key Operations
-            if ( KeyOps != null )
-                foreach ( var op in KeyOps )
-                    if ( !JsonWebKeyOperation.IsValidOperation( op ) )
-                        return false;
-
-            // Per-kty validation
-            switch ( Kty )
-            {
-                case JsonWebKeyType.Octet:
-                    return IsValidOctet();
-
-                case JsonWebKeyType.EllipticCurve:
-                    return IsValidEc();
-
-                case JsonWebKeyType.EllipticCurveHsm:
-                    return IsValidEcHsm();
-
-                case JsonWebKeyType.Rsa:
-                    return IsValidRsa();
-
-                case JsonWebKeyType.RsaHsm:
-                    return IsValidRsaHsm();
-
-                default:
-                    return false;
-            }
-        }
-
-        private bool IsValidOctet()
-        {
-            return K != null && K.Length > 0;
-        }
-
-        private bool IsValidEc()
-        {
-            // MUST have public key parameters
-            if ( X == null || Y == null )
-                return false;
-
-            var requiredSize = GetRequiredSize( CurveName );
-            if ( requiredSize < 0 )
-                return false;
-
-            if ( X.Length != requiredSize || Y.Length != requiredSize )
-                return false;
-
-            // If private key is present, size must be valid.
-            if ( D != null && D.Length != requiredSize )
-                return false;
-
-            return true;
-        }
-
-        private bool IsValidEcHsm()
-        {
-            // MUST NOT have private key
-            if ( D != null )
-                return false;
-
-            // Validates the curve.
-            var requiredSize = GetRequiredSize( CurveName );
-            if ( requiredSize < 0 )
-                return false;
-
-            // If hardware key is present, then it MUST NOT have public parameters.
-            if ( T != null )
-                return X == null && Y == null;
-
-            // If hardware key is not present, then it MUST have public parameters with correct size.
-            return X != null && Y != null && X.Length == requiredSize && Y.Length == requiredSize;
-        }
-
-        private static int GetRequiredSize( string curve )
-        {
-            switch ( curve )
-            {
-                case JsonWebKeyCurveName.P256:
-                case JsonWebKeyCurveName.SECP256K1:
-                    return 32;
-
-                case JsonWebKeyCurveName.P384:
-                    return 48;
-
-                case JsonWebKeyCurveName.P521:
-                    return 66;
-
-                default:
-                    return -1;
-            }
-        }
-
-        private bool IsValidRsa()
-        {
-            // MUST have public key parameters
-            if ( N == null || E == null )
-                return false;
-
-            // MAY have private key parameters, but only ALL or NONE
-            if ( D != null )
-                return DP != null && DQ != null && QI != null && P != null && Q != null;
-
-            return DP == null && DQ == null && QI == null && P == null && Q == null;
-        }
-
-        private bool IsValidRsaHsm()
-        {
-            // MUST NOT have private parameters
-            if ( D != null || DP != null || DQ != null || QI != null || P != null || Q != null )
-                return false;
-
-            // If hardware key is present, then it MUST NOT have public parameters.
-            if ( T != null )
-                return N == null && E == null;
-
-            // If hardware key is not present, then it MUST have public parameters (key was exported by hardware for public crypto operations).
-            return N != null && E != null;
-        }
-
-        [OnDeserialized]
-        internal void OnDeserialized( StreamingContext context )
-        {
-            if ( !IsValid() )
-                throw new JsonSerializationException( "JsonWebKey is not valid" );
+            string unused = null;
+            return JsonWebKeyVerifier.VerifyByKeyType( this, verifierOptions, ref unused );
         }
 
         /// <summary>
@@ -683,7 +604,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             VerifyNonZero( nameof( X ), X );
             VerifyNonZero( nameof( Y ), Y );
 
-            var requiredSize = GetRequiredSize( CurveName );
+            var requiredSize = JsonWebKeyCurveName.GetKeyParameterSize( CurveName );
             if ( requiredSize < 0 )
             {
                 var curveDesc = CurveName == null ? "null" : $"\"{CurveName}\"";
