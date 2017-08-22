@@ -12,33 +12,29 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Analysis;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An object that represents enumerating SKUs for new resources
+    /// Status of gateway is live
     /// </summary>
-    public partial class SkuEnumerationForNewResourceResult
+    public partial class GatewayListStatusLive
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SkuEnumerationForNewResourceResult class.
+        /// Initializes a new instance of the GatewayListStatusLive class.
         /// </summary>
-        public SkuEnumerationForNewResourceResult()
+        public GatewayListStatusLive()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SkuEnumerationForNewResourceResult class.
+        /// Initializes a new instance of the GatewayListStatusLive class.
         /// </summary>
-        /// <param name="value">The collection of available SKUs for new
-        /// resources</param>
-        public SkuEnumerationForNewResourceResult(IList<ResourceSku> value = default(IList<ResourceSku>))
+        /// <param name="status">Live message of list gateway. Possible values
+        /// include: 'Live'</param>
+        public GatewayListStatusLive(Status? status = default(Status?))
         {
-            Value = value;
+            Status = status;
             CustomInit();
         }
 
@@ -48,10 +44,11 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of available SKUs for new resources
+        /// Gets or sets live message of list gateway. Possible values include:
+        /// 'Live'
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ResourceSku> Value { get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public Status? Status { get; set; }
 
     }
 }
