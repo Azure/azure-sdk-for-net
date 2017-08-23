@@ -30,7 +30,7 @@ namespace Fluent.Tests.Storage
                         .StorageAccounts
                         .CheckNameAvailability(stgName);
                     Assert.NotNull(availabilityResult);
-                    Assert.True(availabilityResult.IsAvailalbe);
+                    Assert.True(availabilityResult.IsAvailable);
 
                     var storageAccount = storageManager.StorageAccounts.Define(stgName)
                         .WithRegion(Region.USEast2)
@@ -59,7 +59,7 @@ namespace Fluent.Tests.Storage
                         .CheckNameAvailability(stgName);
 
                     Assert.NotNull(availabilityResult);
-                    Assert.False(availabilityResult.IsAvailalbe);
+                    Assert.False(availabilityResult.IsAvailable);
                     Assert.NotNull(availabilityResult.Reason);
 
                     // Get
@@ -134,7 +134,7 @@ namespace Fluent.Tests.Storage
                         .StorageAccounts
                         .CheckNameAvailability(stgName);
                     Assert.NotNull(availabilityResult);
-                    Assert.True(availabilityResult.IsAvailalbe);
+                    Assert.True(availabilityResult.IsAvailable);
 
                     var storageAccount = storageManager.StorageAccounts.Define(stgName)
                         .WithRegion(Region.USEast2)
