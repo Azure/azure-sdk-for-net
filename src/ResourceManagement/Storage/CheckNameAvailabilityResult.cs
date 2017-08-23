@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         /// already been taken or invalid and cannot be used.
         /// </return>
         ///GENMHASH:ECE9AA3B22E6D72ED037B235766E650D:4F919944D8D2F904C2402C730D63DA07
-        public bool? IsAvailalbe
+        public bool? IsAvailable
         {
             get
             {
