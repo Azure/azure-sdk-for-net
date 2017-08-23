@@ -321,6 +321,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this client.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public Task CompleteAsync(string lockToken)
@@ -335,7 +336,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
         /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
-        /// Abandoning a message will increase the delivery count on the message.</remarks>
+        /// Abandoning a message will increase the delivery count on the message.
+        /// This operation can only be performed on messages that were received by this client.
+        /// </remarks>
+        /// This operation can only be performed on messages that were received by this client.
         /// <returns>The asynchronous operation.</returns>
         public Task AbandonAsync(string lockToken)
         {
@@ -351,7 +355,9 @@ namespace Microsoft.Azure.ServiceBus
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
         /// In order to receive a message from the deadletter sub-queue, you will need a new <see cref="IMessageReceiver"/> or <see cref="IQueueClient"/>, with the corresponding path. 
-        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// This operation can only be performed on messages that were received by this client.
+        /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public Task DeadLetterAsync(string lockToken)
         {
@@ -360,13 +366,13 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Receive messages continously from the entity. Registers a message handler and begins a new thread to receive messages.
+        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
         /// </summary>
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        /// <remarks>Enable prefetch to speeden up the receive rate. 
+        /// <remarks>Enable prefetch to speed up the receive rate. 
         /// Use <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
@@ -374,12 +380,12 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Receive messages continously from the entity. Registers a message handler and begins a new thread to receive messages.
+        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
         /// </summary>
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
-        /// <remarks>Enable prefetch to speeden up the receive rate.</remarks>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
             this.ThrowIfClosed();
@@ -387,7 +393,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Receive session messages continously from the queue. Registers a message handler and begins a new thread to receive session-messages.
+        /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
         /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the queue client.
         /// </summary>
         /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages. 
@@ -409,7 +415,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages. 
         /// <see cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
         /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
-        /// <remarks>  Enable prefetch to speeden up the receive rate. </remarks>
+        /// <remarks>  Enable prefetch to speed up the receive rate. </remarks>
         public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
             this.ThrowIfClosed();

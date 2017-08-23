@@ -48,16 +48,18 @@ namespace Microsoft.Azure.ServiceBus.Core
         ReceiveMode ReceiveMode { get; }
 
         /// <summary>
-        /// Receive messages continously from the entity. Registers a message handler and begins a new thread to receive messages.
+        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
         /// </summary>
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
-        /// <remarks>Enable prefetch to speeden up the receive rate. 
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
+        /// <remarks>Enable prefetch to speed up the receive rate. 
         /// Use <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
-        void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler);
+        void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler);
 
         /// <summary>
-        /// Receive messages continously from the entity. Registers a message handler and begins a new thread to receive messages.
+        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
         /// </summary>
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         Task CompleteAsync(string lockToken);
@@ -82,7 +85,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
         /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
-        /// Abandoning a message will increase the delivery count on the message.</remarks>
+        /// Abandoning a message will increase the delivery count on the message.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         Task AbandonAsync(string lockToken);
 
@@ -94,7 +99,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. 
-        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         Task DeadLetterAsync(string lockToken);
     }

@@ -373,6 +373,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public Task CompleteAsync(string lockToken)
@@ -386,6 +387,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
         /// <returns>The asynchronous operation.</returns>
@@ -421,7 +423,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
         /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
-        /// Abandoning a message will increase the delivery count on the message.</remarks>
+        /// Abandoning a message will increase the delivery count on the message.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public async Task AbandonAsync(string lockToken)
         {
@@ -455,6 +459,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
+        /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public async Task DeferAsync(string lockToken)
@@ -490,7 +495,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. 
-        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public async Task DeadLetterAsync(string lockToken)
         {
@@ -559,7 +566,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call 
         /// fetches the subsequent message in the entity.
-        /// Unliked a received messaged, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
+        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>The <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
@@ -574,7 +581,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call 
         /// fetches the subsequent message in the entity.
-        /// Unliked a received messaged, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
+        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>List of <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
@@ -624,7 +631,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Receive messages continously from the entity. Registers a message handler and begins a new thread to receive messages.
+        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
         /// </summary>
         /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
@@ -635,12 +642,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Receive messages continously from the entity. Registers a message handler and begins a new thread to receive messages.
+        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
         /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
         /// </summary>
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
-        /// <remarks>Enable prefetch to speeden up the receive rate.</remarks>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
             this.ThrowIfClosed();

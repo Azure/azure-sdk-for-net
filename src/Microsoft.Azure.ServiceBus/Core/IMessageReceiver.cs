@@ -97,6 +97,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// </remarks>
         /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// This operation can only be performed on messages that were received by this receiver.
         /// <returns>The asynchronous operation.</returns>
         Task CompleteAsync(IEnumerable<string> lockTokens);
 
@@ -108,6 +109,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
+        /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         Task DeferAsync(string lockToken);
@@ -131,7 +133,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call 
         /// fetches the subsequent message in the entity.
-        /// Unliked a received messaged, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
+        /// Unlike a received messaged, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>The <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
@@ -143,7 +145,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call 
         /// fetches the subsequent message in the entity.
-        /// Unliked a received messaged, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
+        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>List of <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
