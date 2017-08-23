@@ -677,7 +677,19 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
-        
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROWithNonStandardTerminalStatus()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROLocHdrNonStandardTerminalStatus());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
 
+            var foo = fakeClient.RedisOperations.PostWithHttpMessagesAsync("rg", "redis", "1234").ConfigureAwait(false).GetAwaiter().GetResult();            
+            Assert.Equal<string>("OK", foo.Response.StatusCode.ToString());
+        }
     }
 }

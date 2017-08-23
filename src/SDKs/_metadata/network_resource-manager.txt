@@ -1,0 +1,10 @@
+2017-08-16 20:20:56 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: Azure
+Branch:      current
+Commit:      64c905ae24bc3e8aeca5503f7d770a8081ea7a85
+
+2) AutoRest information
+Requested version: latest
+Latest version:    1.2.2

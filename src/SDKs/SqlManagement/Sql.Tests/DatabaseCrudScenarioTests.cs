@@ -7,9 +7,11 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using Xunit;
 
@@ -348,7 +350,19 @@ namespace Sql.Tests
 
                 // Update TDE config
                 config.Status = TransparentDataEncryptionStatus.Disabled;
-                config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
+
+                // Sometimes the config is still being updated from the previous PUT, so execute with retry
+
+                SqlManagementTestUtilities.ExecuteWithRetry(() =>
+                {
+                    config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
+                },
+                TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
+                (CloudException e) =>
+                {
+                    return e.Response.StatusCode == HttpStatusCode.Conflict;
+                });
+
                 Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
             }
         }

@@ -25,19 +25,11 @@ namespace Sql.Tests
 
         private readonly MockContext _mockContext;
 
-        private readonly RecordedDelegatingHandler _handler = new RecordedDelegatingHandler
-        {
-            StatusCodeToReturn = HttpStatusCode.OK,
-            IsPassThrough = true
-        };
-
         private bool disposedValue = false; // To detect redundant calls
 
         private readonly Dictionary<Type, IDisposable> _serviceClientCache = new Dictionary<Type, IDisposable>();
 
         private readonly List<ResourceGroup> _resourceGroups = new List<ResourceGroup>();
-
-        public RecordedDelegatingHandler Handler { get { return _handler; } }
 
         public TServiceClient GetClient<TServiceClient>() where TServiceClient :class, IDisposable
         {
@@ -51,7 +43,12 @@ namespace Sql.Tests
             return client;
         }
 
-        public ResourceGroup CreateResourceGroup(string location = SqlManagementTestUtilities.DefaultLocationId)
+        public ResourceGroup CreateResourceGroup()
+        {
+            return CreateResourceGroup(TestEnvironmentUtilities.DefaultLocation);
+        }
+
+        public ResourceGroup CreateResourceGroup(string location)
         {
             ResourceManagementClient resourceClient = GetClient<ResourceManagementClient>();
 
@@ -69,7 +66,12 @@ namespace Sql.Tests
             return resourceGroup;
         }
 
-        public Server CreateServer(ResourceGroup resourceGroup, string location = SqlManagementTestUtilities.DefaultLocationId)
+        public Server CreateServer(ResourceGroup resourceGroup)
+        {
+            return CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultLocation);
+        }
+
+        public Server CreateServer(ResourceGroup resourceGroup, string location)
         {
             SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
 

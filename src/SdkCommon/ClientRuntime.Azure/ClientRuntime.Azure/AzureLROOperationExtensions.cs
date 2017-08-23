@@ -17,6 +17,7 @@ namespace Microsoft.Rest.Azure
 
     public static partial class AzureClientExtensions
     {
+
         /// <summary>
         /// Updates PollingState from Location header.
         /// </summary>
@@ -43,6 +44,7 @@ namespace Microsoft.Rest.Azure
                 cancellationToken).ConfigureAwait(false);
 
             string responseContent = await responseWithResource.Response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            pollingState.Status = responseWithResource.Response.StatusCode.ToString();
             pollingState.Response = responseWithResource.Response;
             pollingState.Request = responseWithResource.Request;
             pollingState.Resource = responseWithResource.Body == null ? null : responseWithResource.Body.ToObject<TBody>(JsonSerializer
@@ -52,19 +54,16 @@ namespace Microsoft.Rest.Azure
 
             // We try to check if the response had status/error returned
             // the reason we deserialize it as AsyncOperation is simply because we are trying to reuse the AsyncOperation model for deserialization (which has Error, Code and Message model types)
-            // which is exacly how the response is returned
+            // which is how the response is returned
+            // Ideally the response body should be provided as a type TBody, but TBody is a type defined in the swagger and so we cannot provide that type in the constraint hence we end up using a generic
+            // JBody type
             try
             {
                 asyncOperation = responseWithResource.Body.ToObject<AzureAsyncOperation>(JsonSerializer.Create(client.DeserializationSettings));
-                if(asyncOperation?.Status == null)
-                {
-                    asyncOperation = null;
-                }
             }
             catch { }
 
             pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperation, responseWithResource, pollingState, responseContent, method);
-
         }
 
 
@@ -104,14 +103,17 @@ namespace Microsoft.Rest.Azure
             pollingState.ResourceHeaders = responseWithResource.Headers.ToObject<THeader>(JsonSerializer
                 .Create(client.DeserializationSettings));
 
-            // Check if Error/Status was returned in the response
+            // In 202 pattern on PUT ProvisioningState may not be present in 
+            // the response. In that case the assumption is the status is Succeeded.
+
+            // We try to check if the response had status/error returned
+            // the reason we deserialize it as AsyncOperation is simply because we are trying to reuse the AsyncOperation model for deserialization (which has Error, Code and Message model types)
+            // which is how the response is returned
+            // Ideally the response body should be provided as a type TBody, but TBody is a type defined in the swagger and so we cannot provide that type in the constraint hence we end up using a generic
+            // JBody type
             try
             {
                 asyncOperation = responseWithResource.Body.ToObject<AzureAsyncOperation>(JsonSerializer.Create(client.DeserializationSettings));
-                if (asyncOperation?.Status == null)
-                {
-                    asyncOperation = null;
-                }
             }
             catch { }
 
@@ -153,14 +155,19 @@ namespace Microsoft.Rest.Azure
             pollingState.Response = asyncOperationResponse.Response;
             pollingState.Request = asyncOperationResponse.Request;
             pollingState.Resource = null;
+            pollingState.Status = asyncOperationResponse.Body.Status;
 
-            pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperationResponse.Body, 
+            // In LRO with async operation header, we only update polling state if the status is one of the failed one
+            if (AzureAsyncOperation.FailedStatuses.Any(
+                        s => s.Equals(pollingState.Status, StringComparison.OrdinalIgnoreCase)))
+            {
+
+                pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperationResponse.Body,
                                                                     null, pollingState, responseContent, null);
-            
+            }
 
             //Try to de-serialize to the response model. (Not required for "PutOrPatch" 
             //which has the fallback of invoking generic "resource get".)
-            //string responseContent = await pollingState.Response.Content.ReadAsStringAsync();
             var responseHeaders = pollingState.Response.Headers.ToJson();
             try
             {
@@ -171,63 +178,77 @@ namespace Microsoft.Rest.Azure
             }
             catch { };
         }
-        
-            /// <summary>
-            /// The primary purpose for this function is to get status and if there is any error
-            /// Update error information to pollingState.Error and pollingState.Exception
-            /// 
-            /// We have on a very high level two cases
-            /// 1) Regardless what kind of LRO operation it is (AzureAsync, locaiton header) either we get error or we dont
-            /// 2) If we get error object, this function expects that information in the form of AzureAsyncOperation model type
-            /// 3) We get status and error information from AzureAsyncOperation modele and update PollingState accordingly.
-            /// 3) If AzureAsyncOperation is null, we assume there was no error retruned in the response
-            /// 4) And we get the status from provisioningState and update pollingState accordinly
-            /// </summary>
-            /// <typeparam name="TBody"></typeparam>
-            /// <typeparam name="THeader"></typeparam>
-            /// <param name="asyncOperation"></param>
-            /// <param name="azureResponse"></param>
-            /// <param name="pollState"></param>
-            /// <param name="responseContent"></param>
-            /// <param name="method"></param>
-            /// <returns></returns>
+
+        /// <summary>
+        /// The primary purpose for this function is to get status and if there is any error
+        /// Update error information to pollingState.Error and pollingState.Exception
+        /// 
+        /// We have on a very high level two cases
+        /// 1) Regardless what kind of LRO operation it is (AzureAsync, locaiton header) either we get error or we dont
+        /// 2) If we get error object, this function expects that information in the form of AzureAsyncOperation model type
+        /// 3) We get status and error information from AzureAsyncOperation modele and update PollingState accordingly.
+        /// 3) If AzureAsyncOperation is null, we assume there was no error retruned in the response
+        /// 4) And we get the status from provisioningState and update pollingState accordinly
+        /// </summary>
+        /// <typeparam name="TBody"></typeparam>
+        /// <typeparam name="THeader"></typeparam>
+        /// <param name="asyncOperation"></param>
+        /// <param name="azureResponse"></param>
+        /// <param name="pollState"></param>
+        /// <param name="responseContent"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
         private static PollingState<TBody, THeader> GetUpdatedPollingStatus<TBody, THeader>(
                         AzureAsyncOperation asyncOperation,
-                        AzureOperationResponse<JObject, JObject> azureResponse, 
-                        PollingState<TBody, THeader> pollState, 
+                        AzureOperationResponse<JObject, JObject> azureResponse,
+                        PollingState<TBody, THeader> pollState,
                         string responseContent,
                         HttpMethod method)
-            where TBody: class
-            where THeader: class
+            where TBody : class
+            where THeader : class
         {
             PollingState<TBody, THeader> pollingState = pollState;
             HttpStatusCode statusCode;
+
+            // We are only interested if we see the status as one of the failed states and we have a valid error body
+            if (AzureAsyncOperation.FailedStatuses.Any(
+                        s => s.Equals(pollingState.Status, StringComparison.OrdinalIgnoreCase)))
+            {
+                if (asyncOperation?.Error == null)
+                {
+                    // there is no error body, so asynOperation is of no use for us at this stage, we will continue analyzing the response and try to find provisioning state etc
+                    asyncOperation = null;
+                }
+            }
+            else
+            {
+                // also if the status is a non-standard terminal states (RP provided state e.g. TestFailed, TestSucceeded etc)
+                // we again assume this is a response that RP provided for their LRO will continue analyzing the response accordingly
+                asyncOperation = null;
+            }
+
 
             if (asyncOperation != null)
             {
                 pollingState.Status = asyncOperation.Status;
 
-                if (AzureAsyncOperation.FailedStatuses.Any(
-                        s => s.Equals(pollingState.Status, StringComparison.OrdinalIgnoreCase)))
+                string errorMessage = string.Format(
+                                        CultureInfo.InvariantCulture,
+                                        Resources.LROOperationFailedAdditionalInfo,
+                                            asyncOperation.Status, asyncOperation.Error?.Message);
+
+                pollingState.Error = new CloudError()
                 {
-                    string errorMessage = string.Format(
-                                            CultureInfo.InvariantCulture,
-                                            Resources.LROOperationFailedAdditionalInfo,
-                                                asyncOperation.Status, asyncOperation.Error?.Message);
+                    Code = asyncOperation.Error.Code,
+                    Message = asyncOperation.Error.Message
+                };
 
-                    pollingState.Error = new CloudError()
-                    {
-                        Code = asyncOperation.Error.Code,
-                        Message = asyncOperation.Error.Message
-                    };
-
-                    pollingState.CloudException = new CloudException(errorMessage)
-                    {
-                        Body = asyncOperation.Error,
-                        Request = new HttpRequestMessageWrapper(pollingState.Request, null),
-                        Response = new HttpResponseMessageWrapper(pollingState.Response, responseContent)
-                    };
-                }
+                pollingState.CloudException = new CloudException(errorMessage)
+                {
+                    Body = asyncOperation.Error,
+                    Request = new HttpRequestMessageWrapper(pollingState.Request, null),
+                    Response = new HttpResponseMessageWrapper(pollingState.Response, responseContent)
+                };
             }
             else if (azureResponse != null)
             {
@@ -243,7 +264,9 @@ namespace Microsoft.Rest.Azure
                          (statusCode == HttpStatusCode.NoContent && (method == HttpMethod.Delete || method == HttpMethod.Post)))
                 {
                     // We check if we got provisionState and we get the status from provisioning state
-                    // if not then we try to find if error was returned in the response
+
+                    // In 202 pattern on PUT ProvisioningState may not be present in 
+                    // the response. In that case the assumption is the status is Succeeded.
                     if (resource != null &&
                         resource["properties"] != null &&
                         resource["properties"]["provisioningState"] != null)
