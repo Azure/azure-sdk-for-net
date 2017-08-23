@@ -1474,7 +1474,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                                 .GetAwaiter()
                                 .GetResult();
                         }
-                        catch (KeyVaultErrorException ex)
+                        catch (KeyVaultErrorException)
                         {
                             Assert.False(false, "failed to re-enable disabled secret in soft-delete-enabled vault; cleanup will fail");
                         }

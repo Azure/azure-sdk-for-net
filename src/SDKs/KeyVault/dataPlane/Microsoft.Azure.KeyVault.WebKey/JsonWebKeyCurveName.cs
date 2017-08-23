@@ -20,5 +20,29 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// All curves for EC. Use clone to avoid FxCop violation
         /// </summary>
         public static string[] AllCurves => (string[]) _allCurves.Clone();
+
+        /// <summary>
+        /// Returns the required size, in bytes, of each key parameters (X, Y and D), or -1 if the curve is unsupported. 
+        /// </summary>
+        /// <param name="curve">The curve for which key parameter size is required.</param>
+        /// <returns></returns>
+        public static int GetKeyParameterSize( string curve )
+        {
+            switch ( curve )
+            {
+                case P256:
+                case SECP256K1:
+                    return 32;
+
+                case P384:
+                    return 48;
+
+                case P521:
+                    return 66;
+
+                default:
+                    return -1;
+            }
+        }
     }
 }
