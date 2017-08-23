@@ -42,6 +42,12 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// </summary>
         public string SasKeyName { get; set; }
 
+        /// <summary>
+        /// Get the transport type from the connection string.
+        /// <remarks>Amqp and AmqpWebSockets are available.</remarks>
+        /// </summary>
+        public TransportType TransportType { get; set; }
+
         internal FaultTolerantAmqpObject<AmqpConnection> ConnectionManager { get; set; }
 
         public Task CloseAsync()
@@ -54,6 +60,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             this.Endpoint = new Uri(builder.Endpoint);
             this.SasKeyName = builder.SasKeyName;
             this.SasKey = builder.SasKey;
+            this.TransportType = builder.TransportType;
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);
         }
 
@@ -66,22 +73,16 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
             string hostName = this.Endpoint.Host;
-            string networkHost = this.Endpoint.Host;
-            int port = this.Endpoint.Port;
 
             TimeoutHelper timeoutHelper = new TimeoutHelper(timeout);
             AmqpSettings amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
                 amqpVersion: AmqpVersion,
                 useSslStreamSecurity: true,
-                hasTokenProvider: true);
+                hasTokenProvider: true,
+                useWebSockets: TransportType == TransportType.AmqpWebSockets);
 
-            TransportSettings tpSettings = AmqpConnectionHelper.CreateTcpTransportSettings(
-                networkHost: networkHost,
-                hostName: hostName,
-                port: port,
-                useSslStreamSecurity: true);
-
-            AmqpTransportInitiator initiator = new AmqpTransportInitiator(amqpSettings, tpSettings);
+            TransportSettings transportSettings = CreateTransportSettings();
+            AmqpTransportInitiator initiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
             TransportBase transport = await initiator.ConnectTaskAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             string containerId = Guid.NewGuid().ToString();
@@ -99,6 +100,27 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             MessagingEventSource.Log.AmqpConnectionCreated(hostName, connection);
 
             return connection;
+        }
+
+        private TransportSettings CreateTransportSettings()
+        {
+            string hostName = this.Endpoint.Host;
+            string networkHost = this.Endpoint.Host;
+            int port = this.Endpoint.Port;
+
+            if (TransportType == TransportType.AmqpWebSockets)
+            {
+                return AmqpConnectionHelper.CreateWebSocketTransportSettings(
+                    networkHost: networkHost,
+                    hostName: hostName,
+                    port: port);
+            }
+
+            return AmqpConnectionHelper.CreateTcpTransportSettings(
+                networkHost: networkHost,
+                hostName: hostName,
+                port: port,
+                useSslStreamSecurity: true);
         }
     }
 }

@@ -24,9 +24,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Validate the connection string
             NamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString).ToString();
+            WebSocketsNamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString){TransportType = TransportType.AmqpWebSockets}.ToString();
         }
 
         internal static string NamespaceConnectionString { get; }
+
+        internal static string WebSocketsNamespaceConnectionString { get; }
 
         internal static string GetEntityConnectionString(string entityName)
         {

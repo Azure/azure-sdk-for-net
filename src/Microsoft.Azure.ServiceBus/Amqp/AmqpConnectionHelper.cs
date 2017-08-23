@@ -99,6 +99,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return tpSettings;
         }
 
+        public static TransportSettings CreateWebSocketTransportSettings(
+            string networkHost,
+            string hostName,
+            int port)
+        {
+            UriBuilder uriBuilder = new UriBuilder(WebSocketConstants.WebSocketSecureScheme, networkHost, port < 0 ? WebSocketConstants.WebSocketSecurePort : port, WebSocketConstants.WebSocketDefaultPath);
+            WebSocketTransportSettings tcpSettings = new WebSocketTransportSettings
+            {
+                Uri = uriBuilder.Uri,
+                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
+                SendBufferSize = AmqpConstants.TransportBufferSize
+            };
+
+            TransportSettings tpSettings = tcpSettings;
+            return tpSettings;
+        }
+
         public static AmqpConnectionSettings CreateAmqpConnectionSettings(uint maxFrameSize, string containerId, string hostName)
         {
             var connectionSettings = new AmqpConnectionSettings

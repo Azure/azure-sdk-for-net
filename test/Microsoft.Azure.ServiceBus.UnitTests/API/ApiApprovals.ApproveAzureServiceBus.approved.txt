@@ -247,10 +247,12 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder() { }
         public ServiceBusConnectionStringBuilder(string connectionString) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey) { }
+        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public string Endpoint { get; set; }
         public string EntityPath { get; set; }
         public string SasKey { get; set; }
         public string SasKeyName { get; set; }
+        public Microsoft.Azure.ServiceBus.TransportType TransportType { get; set; }
         public string GetEntityConnectionString() { }
         public string GetNamespaceConnectionString() { }
         public override string ToString() { }
@@ -346,6 +348,11 @@ namespace Microsoft.Azure.ServiceBus
         public System.Threading.Tasks.Task SendAsync(Microsoft.Azure.ServiceBus.Message message) { }
         public System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message> messageList) { }
         public override void UnregisterPlugin(string serviceBusPluginName) { }
+    }
+    public enum TransportType
+    {
+        Amqp = 0,
+        AmqpWebSockets = 1,
     }
     public sealed class TrueFilter : Microsoft.Azure.ServiceBus.SqlFilter
     {

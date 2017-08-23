@@ -94,5 +94,34 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(csBuilder.ConnectionStringProperties.ContainsKey("secretmessage"));
             Assert.Equal("h=llo", csBuilder.ConnectionStringProperties["secretmessage"]);
         }
+
+        [Fact]
+        void ConnectionStringBuilderShouldOutputTransportTypeIfWebSocket()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder
+            {
+                Endpoint = "amqps://contoso.servicebus.windows.net",
+                EntityPath = "myQ",
+                SasKeyName = "keyname",
+                SasKey = "key",
+                TransportType = TransportType.AmqpWebSockets
+            };
+
+            Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets;EntityPath=myQ", csBuilder.ToString());
+        }
+
+        [Fact]
+        void ConnectionStringBuilderShouldParseTransportTypeIfWebSocket()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets");
+            Assert.Equal(TransportType.AmqpWebSockets, csBuilder.TransportType);
+        }
+
+        [Fact]
+        void ConnectionStringBuilderShouldDefaultToAmqp()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
+            Assert.Equal(TransportType.Amqp, csBuilder.TransportType);
+        }
     }
 }
