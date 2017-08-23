@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- When xunit cannot detect tests, uncomment the following dependencies -->
-    <!-- <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170222-09" /> -->
     <ProjectReference Include="..\Management.ContainerInstance\Microsoft.Azure.Management.ContainerInstance.csproj" />
   </ItemGroup>
 
