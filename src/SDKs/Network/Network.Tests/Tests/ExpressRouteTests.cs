@@ -41,7 +41,7 @@ namespace Networks.Tests
         public const string Filter_Type = "Community";
 
         public const string Peering_Microsoft = "MicrosoftPeering";
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void BGPCommunityApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -60,7 +60,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void RouteFilterApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -114,7 +114,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void ExpressRouteMicrosoftPeeringApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -153,7 +153,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void ExpressRouteMicrosoftPeeringApiWithIpv6Test()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

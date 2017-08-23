@@ -159,6 +159,51 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
         }
 
+        static internal IEnumerable<HttpResponseMessage> MockLROLocHdrNonStandardTerminalStatus()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""location"": ""East US"",
+                      ""etag"": ""9d8d7ed9-7422-46be-82b3-94c5345f6099"",
+                      ""tags"": {},
+                      ""properties"": {
+                            ""clusterVersion"": ""0.0.1000.0"",
+                            ""osType"": ""Linux"",                            
+                            ""provisioningState"": ""InProgress"",
+                            ""clusterState"": ""Accepted"",
+                            ""createdDate"": ""2017-07-25T21:48:17.427"",
+                            ""quotaInfo"": 
+                                {
+                                    ""coresUsed"": ""200""
+                                },
+                            }
+                    }
+            ")
+            };
+            response1.Headers.Add("Location", "https://management.azure.com:090/subscriptions/56b5e0a9-b645-407d-99b0-c64f86013e3d/resourcegroups/sjrg8116/providers/Microsoft.StreamAnalytics/streamingjobs/sj3215/functions/function5403/OperationResults/f5dca005-e2ba-47d7-bf6e-4b3276e6bff9");
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                  ""status"": ""TestFailed"",
+                  ""error"":
+                    {
+                        ""code"": ""BadRequest"",
+                        ""message"": ""DeploymentDocument 'HiveConfigurationValidator' failed the validation.Error: 'Cannot connect to Hive metastore using user provided connection string'"",
+                        ""details"": null
+                    }
+                }
+            ")
+            };
+
+            yield return response2;
+
+        }
+
         #region Provisioning States
         static internal IEnumerable<HttpResponseMessage> MockAsyncOperaionWithMissingProvisioningState()
         {

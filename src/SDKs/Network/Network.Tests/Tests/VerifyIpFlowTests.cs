@@ -19,7 +19,7 @@ namespace Network.Tests.Tests
 
     public class VerifyIpFlowTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VerifyIpFlowApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
