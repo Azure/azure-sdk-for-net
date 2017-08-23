@@ -28,8 +28,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
-        /// <param name="virtualNetworkResourceId">A URL of vnet, subnet,
-        /// classicVnet or classicSubnet.</param>
+        /// <param name="virtualNetworkResourceId">Resource ID of a subnet, for
+        /// example:
+        /// /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}.</param>
         /// <param name="action">The action of virtual network rule. Possible
         /// values include: 'Allow'</param>
         /// <param name="state">Gets the state of virtual network rule.
@@ -43,7 +44,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
-        /// Gets or sets a URL of vnet, subnet, classicVnet or classicSubnet.
+        /// Gets or sets resource ID of a subnet, for example:
+        /// /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string VirtualNetworkResourceId { get; set; }

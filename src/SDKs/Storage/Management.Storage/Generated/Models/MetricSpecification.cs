@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="displayDescription">Display description of metric
         /// specification.</param>
         /// <param name="unit">Unit could be Bytes or Count.</param>
-        /// <param name="dimensions">Dimensions.</param>
+        /// <param name="dimensions">Dimensions of blobs, including blob type
+        /// and access tier.</param>
         /// <param name="aggregationType">Aggregation type could be
         /// Average.</param>
         /// <param name="fillGapWithZero">The property to decide fill gap with
@@ -82,7 +83,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Unit { get; set; }
 
         /// <summary>
-        /// Gets or sets dimensions.
+        /// Gets or sets dimensions of blobs, including blob type and access
+        /// tier.
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<Dimension> Dimensions { get; set; }

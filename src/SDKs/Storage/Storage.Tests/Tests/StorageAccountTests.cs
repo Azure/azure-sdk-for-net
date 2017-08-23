@@ -517,7 +517,7 @@ namespace Storage.Tests
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
-                
+
                 // Check valid name
                 string accountName = TestUtilities.GenerateName("sto");
                 var checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
@@ -532,7 +532,7 @@ namespace Storage.Tests
                 Assert.Equal(Reason.AccountNameInvalid, checkNameRequest.Reason);
                 Assert.Equal("CAPS is not a valid storage account name. Storage account name must be between 3 and 24 "
                     + "characters in length and use numbers and lower-case letters only.", checkNameRequest.Message);
-                
+
                 // Check name of account that already exists
                 accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
                 checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
@@ -1034,7 +1034,7 @@ namespace Storage.Tests
 
                 Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
                 Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
-                
+
                 Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
             }
         }
@@ -1454,7 +1454,7 @@ namespace Storage.Tests
                         exists1 = true;
                     }
                     if (operation.Current.ToString().Equals(op2.ToString()))
-                        {
+                    {
                         exists2 = true;
                     }
                 }
@@ -1485,7 +1485,7 @@ namespace Storage.Tests
 
                 var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
 
-                // Verify the vnet acl properties.
+                // Verify the vnet rule properties.
                 Assert.NotNull(account.NetworkRuleSet);
                 Assert.Equal(@"Logging, AzureServices", account.NetworkRuleSet.Bypass);
                 Assert.Equal(DefaultAction.Deny, account.NetworkRuleSet.DefaultAction);
@@ -1534,6 +1534,22 @@ namespace Storage.Tests
                 Assert.NotNull(account.NetworkRuleSet);
                 Assert.Equal(@"AzureServices", account.NetworkRuleSet.Bypass);
                 Assert.Equal(DefaultAction.Allow, account.NetworkRuleSet.DefaultAction);
+            }
+        }
+
+        [Fact]
+        public void StorageSKUListTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                var skulist = storageMgmtClient.SKUs.List();
+                Assert.NotNull(skulist);
+                Assert.Equal(@"storageAccounts", skulist.ElementAt(0).ResourceType);
             }
         }
     }
