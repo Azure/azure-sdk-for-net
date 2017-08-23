@@ -10,10 +10,11 @@ namespace Microsoft.Azure.KeyVault.WebKey
     /// </summary>
     public static class JsonWebKeyType
     {
-        public const string EllipticCurve = "EC";
-        public const string Rsa           = "RSA";
-        public const string RsaHsm        = "RSA-HSM";
-        public const string Octet         = "oct";
+        public const string EllipticCurve    = "EC";
+        public const string EllipticCurveHsm = "EC-HSM";
+        public const string Rsa              = "RSA";
+        public const string RsaHsm           = "RSA-HSM";
+        public const string Octet            = "oct";
 
         /// <summary>
         /// All types names. Use clone to avoid FxCop violation
@@ -23,6 +24,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
             get { return (string[])_allTypes.Clone(); }
         }
 
-        private static readonly string[] _allTypes = { EllipticCurve, Rsa, RsaHsm, Octet };
+        private static readonly string[] _allTypes = { EllipticCurve, EllipticCurveHsm, Rsa, RsaHsm, Octet };
     }
 }
