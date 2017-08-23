@@ -9,14 +9,16 @@ using Microsoft.Azure.Management.Monitor.Management;
 using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Diagnostics;
+using System.Globalization;
 
 namespace Monitor.Tests.Scenarios
 {
     public class AutoscaleTests : TestBase
     {
-        private const string ResourceUri = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/vmscalesetrg/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset";
         private const string ResourceGroup = "vmscalesetrg";
+        private const string ResourceUri = "/subscriptions/{0}/resourceGroups/" + ResourceGroup + "/providers/Microsoft.Compute/virtualMachineScaleSets/vmscaleset";
+        private const string Location = "eastus";
+        private const string SettingName = "setting1";
 
         private RecordedDelegatingHandler handler;
 
@@ -32,13 +34,20 @@ namespace Monitor.Tests.Scenarios
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                AutoscaleSettingResource body = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "Percentage CPU");
-
+                // NOTE: checking the existence of the resource group here is not that useful since the scale set must also exist
                 var insightsClient = GetMonitorManagementClient(context, handler);
+                this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroup, location: Location);
 
+                AutoscaleSettingResource body = CreateAutoscaleSetting(
+                    location: Location, 
+                    resourceUri: string.Format(
+                        provider: CultureInfo.InvariantCulture,
+                        format: ResourceUri,
+                        args: insightsClient.SubscriptionId),
+                    metricName: "Percentage CPU");
                 AutoscaleSettingResource actualResponse = insightsClient.AutoscaleSettings.CreateOrUpdate(
                     resourceGroupName: ResourceGroup, 
-                    autoscaleSettingName: "setting1", 
+                    autoscaleSettingName: SettingName, 
                     parameters: body);
 
                 if (!this.IsRecording)
@@ -49,7 +58,7 @@ namespace Monitor.Tests.Scenarios
                 // Retrieve the setting created above
                 AutoscaleSettingResource recoveredSetting = insightsClient.AutoscaleSettings.Get(
                     resourceGroupName: ResourceGroup,
-                    autoscaleSettingName: "setting1");
+                    autoscaleSettingName: SettingName);
 
                 if (!this.IsRecording)
                 {
@@ -80,7 +89,7 @@ namespace Monitor.Tests.Scenarios
                     typeof(ErrorResponseException), 
                     () => updatedSetting = insightsClient.AutoscaleSettings.Update(
                         resourceGroupName: ResourceGroup,
-                        autoscaleSettingName: "setting1",
+                        autoscaleSettingName: SettingName,
                         autoscaleSettingResource: pathResource));
 
                 if (!this.IsRecording && updatedSetting != null)
@@ -98,7 +107,7 @@ namespace Monitor.Tests.Scenarios
                 // Retrieve again the setting created above
                 AutoscaleSettingResource recoveredUpdatedSetting = insightsClient.AutoscaleSettings.Get(
                     resourceGroupName: ResourceGroup,
-                    autoscaleSettingName: "setting1");
+                    autoscaleSettingName: SettingName);
 
                 if (!this.IsRecording && updatedSetting != null)
                 {
@@ -115,40 +124,16 @@ namespace Monitor.Tests.Scenarios
                 // Remove the setting created above
                 insightsClient.AutoscaleSettings.Delete(
                     resourceGroupName: ResourceGroup,
-                    autoscaleSettingName: "setting1");
+                    autoscaleSettingName: SettingName);
 
                 // Retrieve again the setting created above (must fail)
                 Assert.Throws(
                     typeof(ErrorResponseException),
                     () => insightsClient.AutoscaleSettings.Get(
                         resourceGroupName: ResourceGroup,
-                        autoscaleSettingName: "setting1"));
+                        autoscaleSettingName: SettingName));
             }
         }
-
-        /*  write-host -fore green "Creating webhook"
-            $webhook1 = New-AzureRmAutoscaleWebhook -ServiceUri "http://myservice.com"
-
-          if (!$webhook1 -or $webhook1.ServiceUri -ne "http://myservice.com" -or $webhook1.properties.count -ne 0)
-          {  
-            write-host -fore red "The web hook is incorrect"
-          }
-
-            write-host -fore green "Creating notification"
-          $notification1 = New-AzureRmAutoscaleNotification -Cust gu@ms.com, ge @ns.net -SendEmailToSubscriptionAdministrator -SendEmailToSubscriptionCoAdministrators
-
-          if (!$notification1 -or $notification1.webhooks -or !$notification1.email -or !$notification1.email.customemails -or !$notification1.Email.SendToSubscriptionAdministrator -or !$notification1.Email.SendToSubscriptionCoAdministrators)
-            {
-                write - host - fore red "Notification is incorrect"
-          }
-
-          $notification1 = New-AzureRmAutoscaleNotification -Cust gu@ms.com, ge @ns.net -SendEmailToSubscriptionAdministrator -SendEmailToSubscriptionCoAdministrators -webhooks $webhook1
-
-          if (!$notification1 -or !$notification1.webhooks -or !$notification1.email -or !$notification1.email.customemails -or !$notification1.Email.SendToSubscriptionAdministrator -or !$notification1.Email.SendToSubscriptionCoAdministrators)
-            {
-                write - host - fore red "Notification is incorrect"
-          }
-        */
 
         private static AutoscaleSettingResource CreateAutoscaleSetting(string location, string resourceUri, string metricName)
         {
@@ -222,9 +207,9 @@ namespace Monitor.Tests.Scenarios
                 }
             };
 
-            AutoscaleSettingResource setting = new AutoscaleSettingResource(location: "West US", profiles: profiles, name: "setting1")
+            AutoscaleSettingResource setting = new AutoscaleSettingResource(location: Location, profiles: profiles, name: SettingName)
             {
-                AutoscaleSettingResourceName = "setting1",
+                AutoscaleSettingResourceName = SettingName,
                 TargetResourceUri = resourceUri,
                 Enabled = true,
                 Tags = null,

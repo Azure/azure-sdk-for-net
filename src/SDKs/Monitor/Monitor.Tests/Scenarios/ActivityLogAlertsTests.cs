@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Globalization;
 
 namespace Monitor.Tests.Scenarios
 {
@@ -19,6 +20,7 @@ namespace Monitor.Tests.Scenarios
     {
         private const string ResourceGroupName = "Default-ActivityLogAlerts";
         private const string ActivityLogRuleName = "andy0307rule";
+        private const string Location = "Global";
         private RecordedDelegatingHandler handler;
 
         public ActivityLogAlertsTests()
@@ -33,9 +35,10 @@ namespace Monitor.Tests.Scenarios
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                ActivityLogAlertResource bodyParameter = GetCreateOrUpdateActivityLogAlertParameter();
                 var insightsClient = GetMonitorManagementClient(context, handler);
+                this.VerifyExistenceOrCreateResourceGroup(resourceGroupName: ResourceGroupName, location: Location);
 
+                ActivityLogAlertResource bodyParameter = GetCreateOrUpdateActivityLogAlertParameter(insightsClient.SubscriptionId);
                 ActivityLogAlertResource result = insightsClient.ActivityLogAlerts.CreateOrUpdate(
                     resourceGroupName: ResourceGroupName, 
                     activityLogAlertName: ActivityLogRuleName, 
@@ -132,24 +135,14 @@ namespace Monitor.Tests.Scenarios
             }
         }
 
-        private static List<ActivityLogAlertResource> GetActionGroups()
-        {
-            return new List<ActivityLogAlertResource>
-            {
-                GetCreateOrUpdateActivityLogAlertParameter(),
-                GetCreateOrUpdateActivityLogAlertParameter(),
-                GetCreateOrUpdateActivityLogAlertParameter()
-            };
-        }
-
-
         private static ActivityLogAlertResource GetCreateOrUpdateActivityLogAlertParameter(
+            string subscriptionId,
             string name = ActivityLogRuleName)
         {
             // Name and id won't be serialized since they are readonly
             return new ActivityLogAlertResource(
                 name: name,
-                location: "Global",
+                location: Location,
                 tags: new Dictionary<string, string>(),
                 enabled: true,
                 description: null,
@@ -157,7 +150,10 @@ namespace Monitor.Tests.Scenarios
                     actionGroups: new List<ActivityLogAlertActionGroup>
                         {
                             new ActivityLogAlertActionGroup(
-                                actionGroupId: "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Default-ActivityLogAlerts/providers/microsoft.insights/actionGroups/andygroup-donotuse", 
+                                actionGroupId: string.Format(
+                                    provider: CultureInfo.InvariantCulture, 
+                                    format: "/subscriptions/{0}/resourceGroups/{1}/providers/microsoft.insights/actionGroups/andygroup-donotuse", 
+                                    args: new [] { subscriptionId, ResourceGroupName }), 
                                 webhookProperties: new Dictionary<string, string>())
                         }),
                 condition: new ActivityLogAlertAllOfCondition(
@@ -166,7 +162,7 @@ namespace Monitor.Tests.Scenarios
                             new ActivityLogAlertLeafCondition(field: "category", equals: "Administrative"),
                             new ActivityLogAlertLeafCondition(field: "resourceGroup", equals: "andy0307"),
                         }),
-                scopes: new List<string> { "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2" }
+                scopes: new List<string> { string.Format(CultureInfo.InvariantCulture, "/subscriptions/{0}", subscriptionId) }
             );
         }
     }

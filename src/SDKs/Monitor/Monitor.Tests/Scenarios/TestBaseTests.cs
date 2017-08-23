@@ -12,6 +12,8 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace Monitor.Tests.Scenarios
 {
@@ -19,12 +21,15 @@ namespace Monitor.Tests.Scenarios
     {
         protected bool IsRecording { get; set; }
 
+        protected ResourceManagementClient ResourceManagementClient { get; private set; }
+
         public TestBase()
         {
             // ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(new ServiceManagemenet.Common.Models.XunitTracingInterceptor(output));
             // HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(ignoreResourcesClient: true, providers: providers);
-            // Set the path to find the recorded session files
-            HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
+
+            // Set the path to find the recorded session files (only works in VS locally for .net452)
+            // HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
             this.IsRecording = false;
         }
 
@@ -37,7 +42,7 @@ namespace Monitor.Tests.Scenarios
 
             MonitorClient client;
             string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-            if (string.Equals(testMode, "record", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(testMode, "record", StringComparison.OrdinalIgnoreCase))
             {
                 this.IsRecording = true;
                 string subId = Environment.GetEnvironmentVariable("AZURE_TEST_SUBSCRIPTIONID");
@@ -47,11 +52,15 @@ namespace Monitor.Tests.Scenarios
                 client = context.GetServiceClient<MonitorClient>(
                     currentEnvironment: env,
                     handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
+
+                this.SetResourceManagementClient(env: env, context: context, handler: handler);
             }
             else
             {
                 client = context.GetServiceClient<MonitorClient>(
                     handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
+
+                this.SetResourceManagementClient(env: null, context: context, handler: handler);
             }
 
             return client;
@@ -66,7 +75,7 @@ namespace Monitor.Tests.Scenarios
 
             MonitorManagementClient client;
             string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-            if (string.Equals(testMode, "record", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(testMode, "record", StringComparison.OrdinalIgnoreCase))
             {
                 this.IsRecording = true;
                 string subId = Environment.GetEnvironmentVariable("AZURE_TEST_SUBSCRIPTIONID");
@@ -76,14 +85,61 @@ namespace Monitor.Tests.Scenarios
                 client = context.GetServiceClient<MonitorManagementClient>(
                     currentEnvironment: env,
                     handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
+
+                this.SetResourceManagementClient(env: env, context: context, handler: handler);
             }
             else
             {
                 client = context.GetServiceClient<MonitorManagementClient>(
                     handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
+
+                this.SetResourceManagementClient(env: null, context: context, handler: handler);
             }
 
             return client;
+        }
+
+        private void SetResourceManagementClient(TestEnvironment env, MockContext context, RecordedDelegatingHandler handler)
+        {
+            if (handler != null)
+            {
+                handler.IsPassThrough = true;
+            }
+
+            if (env != null)
+            {
+                this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>(
+                    currentEnvironment: env,
+                    handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
+            }
+            else
+            {
+                this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>(
+                    handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
+            }
+        }
+
+        protected bool VerifyExistenceOrCreateResourceGroup(string resourceGroupName, string location)
+        {
+            if (this.ResourceManagementClient == null)
+            {
+                throw new NullReferenceException("ResourceManagementClient not created.");
+            }
+
+            if (this.ResourceManagementClient.ResourceGroups.CheckExistence(resourceGroupName: resourceGroupName))
+            {
+                return true;
+            }
+
+            ResourceGroup resourceGroup = new ResourceGroup
+            {
+                Location = location,
+                Name = resourceGroupName
+            };
+
+            resourceGroup = this.ResourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName: resourceGroupName, parameters: resourceGroup);
+
+            return true;
         }
 
         protected static void AreEqual(IList<string> exp, IList<string> act)
