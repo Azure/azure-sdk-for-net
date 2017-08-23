@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     using System.Linq;
 
     /// <summary>
-    /// Basic information about a gateway.
+    /// Basic information about a gateway node.
     /// </summary>
     public partial class GatewayNode
     {
@@ -63,11 +63,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// side.</param>
         /// <param name="expiryTime">Expiry time of the data factory gateway is
         /// set by the service side and read-only on the client side.</param>
-        /// <param name="provisioningState">The provisioning state of the data
-        /// factory gateway. Possible values include: 'NotSpecified',
-        /// 'Succeeded', 'Failed', 'Canceled', 'PendingCreation',
-        /// 'PendingUpdate', 'PendingDeletion', 'PendingRecreation',
-        /// 'Disabled'</param>
         /// <param name="lastUpgradeResult">Result of last automatic
         /// upgrade.</param>
         /// <param name="lastStartUpgradeTime">Start time of last automatic
@@ -84,7 +79,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// node.</param>
         /// <param name="cpuUtilization">CPU Utilization on the node.</param>
         /// <param name="network">Network usage on the node.</param>
-        public GatewayNode(string nodeName = default(string), string description = default(string), string machineName = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), string hostServiceUri = default(string), bool? isActiveDispatcher = default(bool?), string version = default(string), string status = default(string), string versionStatus = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? registerTime = default(System.DateTime?), System.DateTime? lastConnectTime = default(System.DateTime?), System.DateTime? expiryTime = default(System.DateTime?), string provisioningState = default(string), string lastUpgradeResult = default(string), System.DateTime? lastStartUpgradeTime = default(System.DateTime?), System.DateTime? lastEndUpgradeTime = default(System.DateTime?), string maxConcurrentJobs = default(string), string limitConcurrentJobs = default(string), string runningConcurrentJobs = default(string), string availableMemory = default(string), string cpuUtilization = default(string), string network = default(string))
+        public GatewayNode(string nodeName = default(string), string description = default(string), string machineName = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), string hostServiceUri = default(string), bool? isActiveDispatcher = default(bool?), string version = default(string), string status = default(string), string versionStatus = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? registerTime = default(System.DateTime?), System.DateTime? lastConnectTime = default(System.DateTime?), System.DateTime? expiryTime = default(System.DateTime?), string lastUpgradeResult = default(string), System.DateTime? lastStartUpgradeTime = default(System.DateTime?), System.DateTime? lastEndUpgradeTime = default(System.DateTime?), string maxConcurrentJobs = default(string), string limitConcurrentJobs = default(string), string runningConcurrentJobs = default(string), string availableMemory = default(string), string cpuUtilization = default(string), string network = default(string))
         {
             NodeName = nodeName;
             Description = description;
@@ -99,7 +94,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             RegisterTime = registerTime;
             LastConnectTime = lastConnectTime;
             ExpiryTime = expiryTime;
-            ProvisioningState = provisioningState;
             LastUpgradeResult = lastUpgradeResult;
             LastStartUpgradeTime = lastStartUpgradeTime;
             LastEndUpgradeTime = lastEndUpgradeTime;
@@ -205,15 +199,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         [JsonProperty(PropertyName = "expiryTime")]
         public System.DateTime? ExpiryTime { get; private set; }
-
-        /// <summary>
-        /// Gets the provisioning state of the data factory gateway. Possible
-        /// values include: 'NotSpecified', 'Succeeded', 'Failed', 'Canceled',
-        /// 'PendingCreation', 'PendingUpdate', 'PendingDeletion',
-        /// 'PendingRecreation', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets result of last automatic upgrade.
