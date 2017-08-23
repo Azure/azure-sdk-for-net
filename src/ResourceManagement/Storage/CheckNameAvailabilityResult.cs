@@ -1,5 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
+
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
     using Microsoft.Azure.Management.Storage.Fluent.Models;
@@ -7,7 +10,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// <summary>
     /// The  com.microsoft.azure.management.storage.StorageAccounts.checkNameAvailability action result.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnN0b3JhZ2UuQ2hlY2tOYW1lQXZhaWxhYmlsaXR5UmVzdWx0
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnN0b3JhZ2UuQ2hlY2tOYW1lQXZhaWxhYmlsaXR5UmVzdWx0
     public class CheckNameAvailabilityResult
     {
         private readonly CheckNameAvailabilityResultInner inner;
@@ -20,6 +23,21 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         internal CheckNameAvailabilityResult(CheckNameAvailabilityResultInner inner)
         {
             this.inner = inner;
+        }
+
+        /// <return>
+        /// A boolean value that indicates whether the name is available for
+        /// you to use. If true, the name is available. If false, the name has
+        /// already been taken or invalid and cannot be used.
+        /// </return>
+        ///GENMHASH:ECE9AA3B22E6D72ED037B235766E650D:4F919944D8D2F904C2402C730D63DA07
+        [Obsolete("Please use IsAvailable instead")]
+        public bool? IsAvailalbe
+        {
+            get
+            {
+                return IsAvailable;
+            }
         }
 
         /// <return>
