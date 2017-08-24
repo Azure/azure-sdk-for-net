@@ -70,6 +70,21 @@ namespace ManageStorageAccount
                 Utilities.PrintStorageAccount(storageAccount2);
 
                 // ============================================================
+                // Update storage account by enabling encryption
+
+                Utilities.Log($"Enabling encryption for the storage account: {storageAccount2.Name}");
+
+                storageAccount2.Update()
+                        .WithEncryption()
+                        .Apply();
+
+                foreach (var encryptionStatus in storageAccount2.EncryptionStatuses)
+                {
+                    String status = encryptionStatus.Value.IsEnabled ? "Enabled" : "Not enabled";
+                    Utilities.Log($"Encryption status of the service {encryptionStatus.Key}:{status}");
+                }
+
+                // ============================================================
                 // List storage accounts
 
                 Utilities.Log("Listing storage accounts");
