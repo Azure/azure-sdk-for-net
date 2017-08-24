@@ -1,0 +1,430 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC9ldmVudFN1YnNjcmlwdGlvbnMvc2RrLUV2ZW50U3Vic2NyaXB0aW9uLTQ2MjE/YXBpLXZlcnNpb249MjAxNy0wNi0xNS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointUrl\": \"https://requestb.in/z5gv8oz5\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": false\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "446"
+        ],
+        "x-ms-client-request-id": [
+          "234273e0-b497-4d4b-9732-a057588ec8ed"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointBaseUrl\": \"https://requestb.in/z5gv8oz5\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621\",\r\n  \"name\": \"sdk-EventSubscription-4621\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "574"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:39:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/operationsStatus/AACBFACC-7D71-4786-B799-8B27513F8196?api-version=2017-06-15-preview"
+        ],
+        "x-ms-request-id": [
+          "f5abfeff-49a1-4767-b2b3-57c7664fb61e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-correlation-request-id": [
+          "81c86f40-e981-4229-84c7-cc12f8571108"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T233933Z:81c86f40-e981-4229-84c7-cc12f8571108"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/operationsStatus/AACBFACC-7D71-4786-B799-8B27513F8196?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL29wZXJhdGlvbnNTdGF0dXMvQUFDQkZBQ0MtN0Q3MS00Nzg2LUI3OTktOEIyNzUxM0Y4MTk2P2FwaS12ZXJzaW9uPTIwMTctMDYtMTUtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/operationsStatus/AACBFACC-7D71-4786-B799-8B27513F8196?api-version=2017-06-15-preview\",\r\n  \"name\": \"aacbfacc-7d71-4786-b799-8b27513f8196\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:40:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "01761fa5-6199-45fe-afc0-62771f3c07c8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14764"
+        ],
+        "x-ms-correlation-request-id": [
+          "a2945ba0-894f-4502-9853-b5e1ca5cec6b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T234003Z:a2945ba0-894f-4502-9853-b5e1ca5cec6b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC9ldmVudFN1YnNjcmlwdGlvbnMvc2RrLUV2ZW50U3Vic2NyaXB0aW9uLTQ2MjE/YXBpLXZlcnNpb249MjAxNy0wNi0xNS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointBaseUrl\": \"https://requestb.in/z5gv8oz5\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621\",\r\n  \"name\": \"sdk-EventSubscription-4621\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:40:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "852268e2-e90f-4039-b4bf-a9e27f511c0e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14763"
+        ],
+        "x-ms-correlation-request-id": [
+          "bde03238-b619-4390-9fc3-1caaf0cf7296"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T234003Z:bde03238-b619-4390-9fc3-1caaf0cf7296"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC9ldmVudFN1YnNjcmlwdGlvbnMvc2RrLUV2ZW50U3Vic2NyaXB0aW9uLTQ2MjE/YXBpLXZlcnNpb249MjAxNy0wNi0xNS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f14fcdd-5cb9-4725-935a-b61b90e450da"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointBaseUrl\": \"https://requestb.in/z5gv8oz5\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621\",\r\n  \"name\": \"sdk-EventSubscription-4621\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:40:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "6b229f3f-d977-4963-a274-074f7a3d9f69"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14761"
+        ],
+        "x-ms-correlation-request-id": [
+          "76b311df-1ab6-4dc1-8e5c-5b60b9846823"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T234008Z:76b311df-1ab6-4dc1-8e5c-5b60b9846823"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC9ldmVudFN1YnNjcmlwdGlvbnMvc2RrLUV2ZW50U3Vic2NyaXB0aW9uLTQ2MjE/YXBpLXZlcnNpb249MjAxNy0wNi0xNS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cd0bb434-c9f2-4f03-af31-6a4db66324ba"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointBaseUrl\": \"https://requestb.in/z5gv8oz5\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621\",\r\n  \"name\": \"sdk-EventSubscription-4621\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:40:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "c808d5dc-bee2-44e3-be4e-5060aafe5883"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14759"
+        ],
+        "x-ms-correlation-request-id": [
+          "511d76c0-9cb2-4862-bcda-d769e1d694ae"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T234008Z:511d76c0-9cb2-4862-bcda-d769e1d694ae"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucz9hcGktdmVyc2lvbj0yMDE3LTA2LTE1LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e2083dcb-2930-4ff6-a47c-fe87bc5b8d6b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"destination\": {\r\n          \"endpointType\": \"WebHook\",\r\n          \"properties\": {\r\n            \"endpointBaseUrl\": \"https://requestb.in/13xmshu1\"\r\n          }\r\n        },\r\n        \"filter\": {\r\n          \"subjectBeginsWith\": \"\",\r\n          \"subjectEndsWith\": \"\",\r\n          \"includedEventTypes\": [\r\n            \"All\"\r\n          ]\r\n        },\r\n        \"labels\": null\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/kalspythonEventSubscription2\",\r\n      \"name\": \"kalspythonEventSubscription2\",\r\n      \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"destination\": {\r\n          \"endpointType\": \"WebHook\",\r\n          \"properties\": {\r\n            \"endpointBaseUrl\": \"https://requestb.in/z5gv8oz5\"\r\n          }\r\n        },\r\n        \"filter\": {\r\n          \"subjectBeginsWith\": \"TestPrefix\",\r\n          \"subjectEndsWith\": \"TestSuffix\",\r\n          \"includedEventTypes\": [\r\n            \"All\"\r\n          ]\r\n        },\r\n        \"labels\": [\r\n          \"TestLabel1\",\r\n          \"TestLabel2\"\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621\",\r\n      \"name\": \"sdk-EventSubscription-4621\",\r\n      \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:40:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "eef3d73a-3953-4ea1-9359-515b02edb87f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14758"
+        ],
+        "x-ms-correlation-request-id": [
+          "4855ce0c-f39d-4317-8690-3c9c0655bbc1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T234008Z:4855ce0c-f39d-4317-8690-3c9c0655bbc1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-4621?api-version=2017-06-15-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC9ldmVudFN1YnNjcmlwdGlvbnMvc2RrLUV2ZW50U3Vic2NyaXB0aW9uLTQ2MjE/YXBpLXZlcnNpb249MjAxNy0wNi0xNS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "62e176a2-a406-4ac7-87d3-a11fb2bde7d2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 21 Aug 2017 23:40:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-request-id": [
+          "5ae70a68-bd40-406f-8bbe-7e9f0d5792d4"
+        ],
+        "x-ms-correlation-request-id": [
+          "5ae70a68-bd40-406f-8bbe-7e9f0d5792d4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170821T234009Z:5ae70a68-bd40-406f-8bbe-7e9f0d5792d4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete": [
+      "sdk-EventSubscription-4621"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "55f3dcd4-cac7-43b4-990b-a139d62a1eb2"
+  }
+}
