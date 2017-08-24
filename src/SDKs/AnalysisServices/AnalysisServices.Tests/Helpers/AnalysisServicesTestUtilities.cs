@@ -40,7 +40,7 @@ namespace AnalysisServices.Tests.Helpers
         public static string DefaultResourceGroup = "TestRG";
         public static string DefaultServerName = "azsdktest";
         public static string DefaultLocation = "West US";
-        public static string DefaultGatewayResourceId = "/subscriptions/ba59a556-5034-4bbb-80b4-4c37cf1083e9/resourceGroups/TestRG/providers/Microsoft.Web/connectionGateways/azsdktest";
+        public static string DefaultGatewayResourceId = Environment.GetEnvironmentVariable("AAS_DEFAULT_GATEWAY_RESOURCE_ID") ?? "";
 
         public static ResourceSku DefaultSku = new ResourceSku
         {
