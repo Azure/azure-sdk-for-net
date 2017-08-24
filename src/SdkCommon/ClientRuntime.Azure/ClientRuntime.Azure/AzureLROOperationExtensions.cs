@@ -17,7 +17,6 @@ namespace Microsoft.Rest.Azure
 
     public static partial class AzureClientExtensions
     {
-
         /// <summary>
         /// Updates PollingState from Location header.
         /// </summary>

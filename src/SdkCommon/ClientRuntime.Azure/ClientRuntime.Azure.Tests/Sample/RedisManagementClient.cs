@@ -761,6 +761,24 @@ namespace Microsoft.Azure.Management.Redis
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operations"></param>
+        /// <param name="resoruceGroupName"></param>
+        /// <param name="name"></param>
+        /// <param name="parameters"></param>
+        /// <param name="subscriptionId"></param>
+        /// <returns></returns>
+        public static RedisResource Patch(this IRedisOperations operations, string resoruceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IRedisOperations)s).PatchAsync(resoruceGroupName, name, parameters, subscriptionId);
+            }
+            ,operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
         /// Create a redis cache, or replace (overwrite/recreate, with
         /// potential downtime) an existing cache
         /// </summary>
@@ -841,6 +859,22 @@ namespace Microsoft.Azure.Management.Redis
         public static async Task<RedisResource> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             AzureOperationResponse<RedisResource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, subscriptionId, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operations"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <param name="name"></param>
+        /// <param name="parameters"></param>
+        /// <param name="subscriptionId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task<RedisResource> PatchAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            AzureOperationResponse<RedisResource> result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, name, parameters, subscriptionId, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
 
@@ -1065,6 +1099,9 @@ namespace Microsoft.Azure.Management.Redis
         
         Task<AzureOperationResponse<RedisResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
+        Task<AzureOperationResponse<RedisResource>> PatchWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId,
+                                                                                                CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Create a redis cache, or replace (overwrite/recreate, with
         /// potential downtime) an existing cache
@@ -1175,25 +1212,19 @@ namespace Microsoft.Azure.Management.Redis
         }
 
         /// <summary>
-        /// Create a redis cache, or replace (overwrite/recreate, with
-        /// potential downtime) an existing cache
+        /// 
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
-        /// <param name='name'>
-        /// Required.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
-        /// <param name='subscriptionId'>
-        /// Required.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RedisResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <param name="resourceGroupName"></param>
+        /// <param name="name"></param>
+        /// <param name="parameters"></param>
+        /// <param name="subscriptionId"></param>
+        /// <param name="httpMethod"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<AzureOperationResponse<RedisResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName,
+                                                                                                    string name, RedisCreateOrUpdateParameters parameters,
+                                                                                                    string subscriptionId, HttpMethod httpMethod,
+                                                                                                    CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (resourceGroupName == null)
@@ -1250,7 +1281,7 @@ namespace Microsoft.Azure.Management.Redis
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = HttpMethod.Put;
+            httpRequest.Method = httpMethod;
             httpRequest.RequestUri = new Uri(url);
 
             // Set Headers
@@ -1291,7 +1322,7 @@ namespace Microsoft.Azure.Management.Redis
                 }
                 ex.Request = new HttpRequestMessageWrapper(httpRequest, requestContent);
                 ex.Response = new HttpResponseMessageWrapper(httpResponse, responseContent);
-                    
+
                 if (shouldTrace)
                 {
                     ServiceClientTracing.Error(invocationId, ex);
@@ -1318,7 +1349,29 @@ namespace Microsoft.Azure.Management.Redis
             return result;
         }
 
-        public async Task<AzureOperationResponse<RedisResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<RedisResource>> PatchWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, string subscriptionId, 
+                                                                                                CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<RedisResource> response = await BeginCreateOrUpdateWithHttpMessagesAsync(
+                resourceGroupName,
+                name,
+                parameters,
+                subscriptionId,
+                new HttpMethod("PATCH"),
+                cancellationToken);
+
+            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK ||
+                         response.Response.StatusCode == HttpStatusCode.Created ||
+                         response.Response.StatusCode == HttpStatusCode.Accepted);
+
+            return await this.Client.GetPutOrPatchOperationResultAsync(response,
+                null,
+                cancellationToken);
+        }
+        public async Task<AzureOperationResponse<RedisResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, 
+                                                                                                     RedisCreateOrUpdateParameters parameters, string subscriptionId, 
+                                                                                                     CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send Request
             AzureOperationResponse<RedisResource> response = await BeginCreateOrUpdateWithHttpMessagesAsync(
@@ -1328,13 +1381,43 @@ namespace Microsoft.Azure.Management.Redis
                 subscriptionId,
                 cancellationToken);
 
-            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK || 
+            Debug.Assert(response.Response.StatusCode == HttpStatusCode.OK ||
                          response.Response.StatusCode == HttpStatusCode.Created ||
                          response.Response.StatusCode == HttpStatusCode.Accepted);
 
-            return await this.Client.GetPutOrPatchOperationResultAsync(response, 
+            return await this.Client.GetPutOrPatchOperationResultAsync(response,
                 null,
                 cancellationToken);
+        }
+
+
+            /// <summary>
+            /// Create a redis cache, or replace (overwrite/recreate, with
+            /// potential downtime) an existing cache
+            /// </summary>
+            /// <param name='resourceGroupName'>
+            /// Required.
+            /// </param>
+            /// <param name='name'>
+            /// Required.
+            /// </param>
+            /// <param name='parameters'>
+            /// Required.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Required.
+            /// </param>
+            /// <param name='httpMethod'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public async Task<AzureOperationResponse<RedisResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, 
+                                                                                                    string name, RedisCreateOrUpdateParameters parameters, 
+                                                                                                    string subscriptionId, 
+                                                                                                    CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            return await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, subscriptionId, HttpMethod.Put, cancellationToken);
         }
 
         /// <summary>

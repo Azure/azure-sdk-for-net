@@ -506,20 +506,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestCreateOrUpdateWithRetryAfter()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithRetryAfterTwoTries());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            var now = DateTime.Now;
-            fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-
-            Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
-        }
 
         /// <summary>
         /// Test
@@ -600,20 +586,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Long running operation failed with status 'InternalServerError'.", ex.Message);
         }
 
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestDeleteWithRetryAfter()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithRetryAfterTwoTries());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            var now = DateTime.Now;
-            fakeClient.RedisOperations.Delete("rg", "redis", "1234");
-            
-            Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
-        }
+
 
 
         /// <summary>
@@ -690,6 +663,99 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 
             var foo = fakeClient.RedisOperations.PostWithHttpMessagesAsync("rg", "redis", "1234").ConfigureAwait(false).GetAwaiter().GetResult();            
             Assert.Equal<string>("OK", foo.Response.StatusCode.ToString());
+        }
+    }
+
+    /// <summary>
+    /// Tests for Retry-After header
+    /// </summary>
+    public class LRO_RetryAfterTests
+    {
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestCreateOrUpdateWithRetryAfter()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithRetryAfterTwoTries());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            var now = DateTime.Now;
+            fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+
+            Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestDeleteWithRetryAfter()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithRetryAfterTwoTries());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            var now = DateTime.Now;
+            fakeClient.RedisOperations.Delete("rg", "redis", "1234");               
+
+            Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestPatchWithRetryAfter()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockPatchWithRetryAfterTwoTries());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);            
+            var now = DateTime.Now;
+            fakeClient.RedisOperations.Patch("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestCreateWithDifferentRetryAfter()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithDifferentRetryAfterValues());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            var before = DateTime.Now;
+            fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(7));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void TestCreateWithRetryAfterDefaultMin()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateWithRetryAfterDefaultMin());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            var before = DateTime.Now;
+            fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(1));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void TestCreateWithRetryAfterDefaultMax()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateWithRetryAfterDefaultMax());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            var before = DateTime.Now;
+            fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(40));
         }
     }
 }

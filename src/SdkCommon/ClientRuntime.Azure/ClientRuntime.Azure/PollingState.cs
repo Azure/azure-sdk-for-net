@@ -8,6 +8,7 @@ using System.Net.Http;
 using Microsoft.Rest.ClientRuntime.Azure.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace Microsoft.Rest.Azure
 {
@@ -18,6 +19,18 @@ namespace Microsoft.Rest.Azure
     /// <typeparam name="THeader">Type of resource header.</typeparam>
     internal class PollingState<TBody, THeader> where TBody : class where THeader : class
     {
+#if DEBUG
+        const int DEFAULT_MIN_DELAY_SECONDS = 1;
+        const int DEFAULT_MAX_DELAY_SECONDS = 40;
+#else
+        // Delay values are in seconds
+        const int DEFAULT_MIN_DELAY_SECONDS = 10;
+        const int DEFAULT_MAX_DELAY_SECONDS = 600;
+#endif
+
+        private int _retryAfterInSeconds;
+
+
         /// <summary>
         /// Initializes an instance of PollingState.
         /// </summary>
@@ -25,7 +38,7 @@ namespace Microsoft.Rest.Azure
         /// <param name="retryTimeout">Default timeout.</param>
         public PollingState(HttpOperationResponse<TBody, THeader> response, int? retryTimeout)
         {
-            _retryTimeout = retryTimeout;
+            RetryAfterInSeconds = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
             Response = response.Response;
             Request = response.Request;
             Resource = response.Body;
@@ -136,6 +149,11 @@ namespace Microsoft.Rest.Azure
                     {
                         LocationHeaderLink = _response.Headers.GetValues("Location").FirstOrDefault();
                     }
+                    
+                    if (_response.Headers.Contains("Retry-After"))
+                    {
+                        RetryAfterInSeconds = int.Parse(_response.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                 }
             }
         }
@@ -160,27 +178,77 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public THeader ResourceHeaders { get; set; }
 
-        private int? _retryTimeout;
+        //private int? _retryTimeout;
 
         /// <summary>
         /// Gets long running operation delay in milliseconds.
         /// </summary>
+        [Obsolete("DelayInMilliseconds property will be deprecated in future releases. You should start using DelayBetweenPolling")]
         public int DelayInMilliseconds
         {
             get
             {
-                if (_retryTimeout != null)
-                {
-                    return _retryTimeout.Value * 1000;
-                }
-                if (Response != null && Response.Headers.Contains("Retry-After"))
-                {
-                    return int.Parse(Response.Headers.GetValues("Retry-After").FirstOrDefault(),
-                        CultureInfo.InvariantCulture) * 1000;
-                }
-                return AzureAsyncOperation.DefaultDelay * 1000;
+                return RetryAfterInSeconds * 1000;
             }
         }
+
+        /// <summary>
+        /// Long running operation polling delay
+        /// </summary>
+        public TimeSpan DelayBetweenPolling
+        {
+            get
+            {
+                return TimeSpan.FromSeconds(RetryAfterInSeconds);
+            }
+        }
+
+        /// <summary>
+        /// Initially this is initialized with LongRunningOperationRetryTimeout value
+        /// Verify min/max allowed value according to ARM spec (especially minimum value for throttling at ARM level)
+        /// We want this to be int value and not int? because this value will always have a default non-zero/non-null value
+        /// </summary>
+        internal int RetryAfterInSeconds
+        {
+            get
+            {
+                return _retryAfterInSeconds;
+            }
+
+            set
+            {
+                _retryAfterInSeconds = ValidateRetryAfterValue(value);
+            }
+        }
+
+
+        private int ValidateRetryAfterValue(int? currentValue)
+        {
+            if (currentValue.HasValue)
+            {
+                if (currentValue < DEFAULT_MIN_DELAY_SECONDS)
+                    currentValue = DEFAULT_MIN_DELAY_SECONDS;
+                else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
+                    currentValue = DEFAULT_MAX_DELAY_SECONDS;
+            }
+            else
+            {
+                currentValue = AzureAsyncOperation.DefaultDelay;
+            }
+
+            return currentValue.Value;
+        }
+        
+        //internal int GetRetryAfterValueFromHeader(HttpResponseMessage responseMessage)
+        //{
+        //    int retryAfter = 0;
+        //    if (responseMessage != null && responseMessage.Headers.Contains("Retry-After"))
+        //    {
+        //        retryAfter = int.Parse(responseMessage.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+        //    }
+
+        //    return retryAfter;
+        //}
 
         /// <summary>
         /// Gets CloudException from current instance.  
