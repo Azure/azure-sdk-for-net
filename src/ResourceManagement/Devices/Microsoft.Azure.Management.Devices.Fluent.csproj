@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Devices.Fluent</PackageId>
-        <Version>1.2.0</Version>
+        <Version>1.2.0-beta</Version>
         <AssemblyName>Microsoft.Azure.Management.Devices.Fluent</AssemblyName>
         <RootNamespace>Microsoft.Azure.Management.Devices.Fluent</RootNamespace>
         <AssemblyTitle>Microsoft Azure Devices Management Library</AssemblyTitle>
