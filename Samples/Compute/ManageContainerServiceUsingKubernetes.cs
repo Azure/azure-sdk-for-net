@@ -51,7 +51,7 @@ namespace ManageContainerServiceUsingKubernetes
 
                     if (String.IsNullOrWhiteSpace(envSecondaryServicePrincipal) || !File.Exists(envSecondaryServicePrincipal))
                     {
-                        Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
+                        envSecondaryServicePrincipal = Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
                     }
 
                     servicePrincipalClientId = Utilities.GetSecondaryServicePrincipalClientID(envSecondaryServicePrincipal);
