@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.TrafficManager.Fluent</PackageId>
-    <Version>1.1.3</Version>
+    <Version>1.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.TrafficManager.Fluent</AssemblyName>
     <RootNamespace>Microsoft.Azure.Management.TrafficManager.Fluent</RootNamespace>
     <AssemblyTitle>Microsoft Azure Traffic Manager Management Library</AssemblyTitle>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.8" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.1.3" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.2.0" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
