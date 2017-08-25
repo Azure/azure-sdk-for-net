@@ -110,7 +110,7 @@ namespace Microsoft.Rest.Azure
 
                 if (!string.IsNullOrEmpty(pollingState.AzureAsyncOperationHeaderLink))
                 {
-                    await UpdateStateFromAzureAsyncOperationHeader(client, pollingState, customHeaders, cancellationToken);
+                    await UpdateStateFromAzureAsyncOperationHeader(client, pollingState, customHeaders, cancellationToken, initialRequestMethod);
                 }
                 else if (!string.IsNullOrEmpty(pollingState.LocationHeaderLink))
                 {
@@ -119,7 +119,7 @@ namespace Microsoft.Rest.Azure
                 else if (initialRequestMethod == HttpMethod.Put)
                 {
                     await UpdateStateFromGetResourceOperation(client, pollingState, getOperationUrl,
-                        customHeaders, cancellationToken);
+                        customHeaders, cancellationToken, initialRequestMethod);
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace Microsoft.Rest.Azure
                     (initialRequestMethod == HttpMethod.Put || initialRequestMethod == new HttpMethod("PATCH")))
                 {
                     await UpdateStateFromGetResourceOperation(client, pollingState, getOperationUrl, customHeaders,
-                        cancellationToken);
+                        cancellationToken, initialRequestMethod);
                 }
             }
 

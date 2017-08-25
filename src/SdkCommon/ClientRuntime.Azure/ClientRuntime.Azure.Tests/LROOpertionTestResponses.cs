@@ -447,8 +447,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
             yield return response2;
         }
-
-
+        
         static internal IEnumerable<HttpResponseMessage> MockPutOperaionWitNonResource()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
@@ -1226,6 +1225,167 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
 
             yield return response2;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockPutWebAppLRO()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                {
+                    ""id"":""/subscriptions/ffa52f27-be12-b1ea-c2c1b6cceb/resourceGroups/rgnemv_bef11205b7b0/providers/Microsoft.Web/sites/webapp1-35965806af0/sourcecontrols/web"",
+                    ""name"":""webapp1-35965806af0"",
+                    ""type"":""Microsoft.Web/sites/sourcecontrols"",
+                    ""location"":""West US 2"",
+                    ""tags"":{},
+                    ""properties"":
+	                    {
+	                    ""repoUrl"":""https://github.com/foo/azure-site-test"",
+	                    ""branch"":""master"",
+	                    ""isManualIntegration"":true,
+	                    ""deploymentRollbackEnabled"":false,
+	                    ""isMercurial"":false,
+	                    ""provisioningState"":""InProgress""
+	                    }
+                }")
+            };
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                {
+	                ""id"":""/subscriptions/ffa52f27-be12-4cad-b1ea/resourceGroups/rgnemv_bef11205b7b0/providers/Microsoft.Web/sites/webapp1-35965806af0/sourcecontrols/web"",
+	                ""name"":""webapp1-35965806af0"",
+	                ""type"":""Microsoft.Web/sites/sourcecontrols"",
+	                ""location"":""West US 2"",
+	                ""tags"":{},
+	                ""properties"":
+	                {
+		                ""repoUrl"":""https://github.com/foo/azure-site-test"",
+		                ""branch"":""master"",
+		                ""isManualIntegration"":true,
+		                ""deploymentRollbackEnabled"":false,
+		                ""isMercurial"":false,
+		                ""provisioningState"":""InProgress"",
+		                ""provisioningDetails"":""2017-08-25T05:49:50.0340330 https://webapp1-359658.azurewebsites.net/api/deployments/latest?deployer=GitHub&time=2017-08-25_05-49-23""
+	                }
+                }
+                ")
+            };
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+	                ""id"":""/subscriptions/ffa52f27-be12-4cad-b1ea-c2c241b6cceb/resourceGroups/rgnemv_bef11205b7b0/providers/Microsoft.Web/sites/webapp1-35965806af0"",
+	                ""name"":""webapp1-35965806af0"",
+	                ""type"":""Microsoft.Web/sites"",
+	                ""kind"":""app"",
+	                ""location"":""West US 2"",
+	                ""tags"":{},
+	                ""properties"":
+	                {
+		                ""name"":""webapp1-35965806af0"",
+		                ""state"":""Running"",
+		                ""hostNames"":[""webapp1-35965806af0.jsdkdemo-62e18289a.com"",
+		                ""webapp1-35965806af0.azurewebsites.net""],
+		                ""webSpace"":""rgnemv_bef11205b7b0-WestUS2webspace"",
+		                ""selfLink"":""https://waws.api.azurewebsites.windows.net/subscriptions/ffa52f27-b1ea-c2c241b6cceb/webspaces/rgnemv_bef11205b7b0-WestUS2webspace/sites/webapp1-35965806af0"",
+		                ""repositorySiteName"":""webapp1-35965806af0"",
+		                ""owner"":null,
+		                ""usageState"":""Normal"",
+		                ""enabled"":true,
+		                ""adminEnabled"":true,
+		                ""enabledHostNames"":[""webapp1-35965806af0.jsdkdemo-62e18289a.com"",
+		                ""webapp1-35965806af0.azurewebsites.net"",
+		                ""webapp1-35965806af0.scm.azurewebsites.net""],
+		                ""siteProperties"":{""metadata"":null,
+		                ""properties"":[],
+		                ""appSettings"":null},
+		                ""availabilityState"":""Normal"",
+		                ""sslCertificates"":null,
+		                ""csrs"":[],
+		                ""cers"":null,
+		                ""siteMode"":null,
+		                ""hostNameSslStates"":[
+			                {
+			                ""name"":""webapp1-35965806af0.azurewebsites.net"",
+			                ""sslState"":""Disabled"",
+			                ""ipBasedSslResult"":null,
+			                ""virtualIP"":null,
+			                ""thumbprint"":null,
+			                ""toUpdate"":null,
+			                ""toUpdateIpBasedSsl"":null,
+			                ""ipBasedSslState"":""NotConfigured"",
+			                ""hostType"":""Standard""
+			                },
+			                {
+			                ""name"":""webapp1-35965806af0.jsdkdemo-62e18289a.com"",
+			                ""sslState"":""SniEnabled"",
+			                ""ipBasedSslResult"":null,
+			                ""virtualIP"":null,
+			                ""thumbprint"":""40ECC6C60434CF"",
+			                ""toUpdate"":null,
+			                ""toUpdateIpBasedSsl"":null,
+			                ""ipBasedSslState"":""NotConfigured"",
+			                ""hostType"":""Standard""
+			                },
+			                {
+			                ""name"":""webapp.scm.azurewebsites.net"",
+			                ""sslState"":""Disabled"",
+			                ""ipBasedSslResult"":null,
+			                ""virtualIP"":null,
+			                ""thumbprint"":null,
+			                ""toUpdate"":null,
+			                ""toUpdateIpBasedSsl"":null,
+			                ""ipBasedSslState"":""NotConfigured"",
+			                ""hostType"":""Repository""
+			                }],
+		                ""computeMode"":null,
+		                ""serverFarm"":null,
+		                ""serverFarmId"":""/subscriptions/ffa52f27-b1ea-c2c241b6cceb/resourceGroups/rgnemv_bef11205b7b0/providers/Microsoft.Web/serverfarms/jplan1_73a739850"",
+		                ""reserved"":false,
+		                ""lastModifiedTimeUtc"":""2017-08-25T05:48:34.92"",
+		                ""storageRecoveryDefaultState"":""Running"",
+		                ""contentAvailabilityState"":""Normal"",
+		                ""runtimeAvailabilityState"":""Normal"",
+		                ""siteConfig"":null,
+		                ""deploymentId"":""webapp1-35965806af0"",
+		                ""trafficManagerHostNames"":null,
+		                ""sku"":""Basic"",
+		                ""scmSiteAlsoStopped"":false,
+		                ""targetSwapSlot"":null,
+		                ""hostingEnvironment"":null,
+		                ""hostingEnvironmentProfile"":null,
+		                ""clientAffinityEnabled"":true,
+		                ""clientCertEnabled"":false,
+		                ""hostNamesDisabled"":false,
+		                ""domainVerificationIdentifiers"":null,
+		                ""kind"":""app"",
+		                ""outboundIpAddresses"":""93.99.231.000,62.66.007.111,36.36.261.144,93.93.282.10"",
+		                ""possibleOutboundIpAddresses"":""93.99.231.000,62.66.007.111,36.36.261.144,93.93.282.10"",
+		                ""containerSize"":0,
+		                ""dailyMemoryTimeQuota"":0,
+		                ""suspendedTill"":null,
+		                ""siteDisabledReason"":0,
+		                ""functionExecutionUnitsCache"":null,
+		                ""maxNumberOfWorkers"":null,
+		                ""homeStamp"":""waws-wch237-003"",
+		                ""cloningInfo"":null,
+		                ""hostingEnvironmentId"":null,
+		                ""tags"":{},
+		                ""resourceGroup"":""rgnemv_bef11205b7b0"",
+		                ""defaultHostName"":""webapp1-35965806af0.azurewebsites.net"",
+		                ""slotSwapStatus"":null
+	                }
+               }
+               ")
+            };
+
+            yield return response3;
         }
     }
 

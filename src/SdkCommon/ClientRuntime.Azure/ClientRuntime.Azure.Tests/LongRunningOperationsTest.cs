@@ -16,6 +16,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
     using LROPatchResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationPatchTestResponses;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class LongRunningOperationsTest
     {
         /// <summary>
@@ -586,10 +589,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var ex = Assert.Throws<CloudException>(()=>fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'InternalServerError'.", ex.Message);
         }
-
-
-
-
+        
         /// <summary>
         /// Test
         /// </summary>
@@ -664,6 +664,23 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 
             var foo = fakeClient.RedisOperations.PostWithHttpMessagesAsync("rg", "redis", "1234").ConfigureAwait(false).GetAwaiter().GetResult();            
             Assert.Equal<string>("OK", foo.Response.StatusCode.ToString());
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestPutForWebAppLRO()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockPutWebAppLRO());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 2;
+            var webAppResponse = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+
+            Assert.Equal("webapp1-35965806af0", webAppResponse.Name);
+            Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
+            Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
         }
     }
 

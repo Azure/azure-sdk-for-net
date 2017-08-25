@@ -26,14 +26,14 @@ namespace Microsoft.Rest.Azure
         /// <param name="pollingState">Current polling state.</param>
         /// <param name="customHeaders">Headers that will be added to request</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <param name="method">Http method of the initial long running operation request</param>
+        /// <param name="initialRequestMethod">Http method of the initial long running operation request</param>
         /// <returns>Task.</returns>
         private static async Task UpdateStateFromLocationHeader<TBody, THeader>(
            IAzureClient client,
            PollingState<TBody, THeader> pollingState,
            Dictionary<string, List<string>> customHeaders,
            CancellationToken cancellationToken,
-           HttpMethod method) where TBody : class where THeader : class
+           HttpMethod initialRequestMethod) where TBody : class where THeader : class
         {
             AzureAsyncOperation asyncOperation = null;
 
@@ -62,7 +62,7 @@ namespace Microsoft.Rest.Azure
             }
             catch { }
 
-            pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperation, responseWithResource, pollingState, responseContent, method);
+            pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperation, responseWithResource, pollingState, responseContent, initialRequestMethod);
         }
 
 
@@ -82,7 +82,8 @@ namespace Microsoft.Rest.Azure
             PollingState<TBody, THeader> pollingState,
             Uri getOperationUri,
             Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken) where TBody : class where THeader : class
+            CancellationToken cancellationToken,
+            HttpMethod initialRequestMethod) where TBody : class where THeader : class
         {
             AzureAsyncOperation asyncOperation = null;
 
@@ -116,7 +117,7 @@ namespace Microsoft.Rest.Azure
             }
             catch { }
 
-            pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperation, responseWithResource, pollingState, responseContent, null);
+            pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperation, responseWithResource, pollingState, responseContent, initialRequestMethod);
         }
 
 
@@ -134,7 +135,8 @@ namespace Microsoft.Rest.Azure
             IAzureClient client,
             PollingState<TBody, THeader> pollingState,
             Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken) where TBody : class where THeader : class
+            CancellationToken cancellationToken,
+            HttpMethod initialRequestMethod) where TBody : class where THeader : class
         {
             string errMessage = string.Empty;
 
@@ -162,7 +164,7 @@ namespace Microsoft.Rest.Azure
             {
 
                 pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperationResponse.Body,
-                                                                    null, pollingState, responseContent, null);
+                                                                    null, pollingState, responseContent, initialRequestMethod);
             }
 
             //Try to de-serialize to the response model. (Not required for "PutOrPatch" 
@@ -195,14 +197,14 @@ namespace Microsoft.Rest.Azure
         /// <param name="azureResponse"></param>
         /// <param name="pollState"></param>
         /// <param name="responseContent"></param>
-        /// <param name="method"></param>
+        /// <param name="initialRequestMethod"></param>
         /// <returns></returns>
         private static PollingState<TBody, THeader> GetUpdatedPollingStatus<TBody, THeader>(
                         AzureAsyncOperation asyncOperation,
                         AzureOperationResponse<JObject, JObject> azureResponse,
                         PollingState<TBody, THeader> pollState,
                         string responseContent,
-                        HttpMethod method)
+                        HttpMethod initialRequestMethod)
             where TBody : class
             where THeader : class
         {
@@ -259,8 +261,8 @@ namespace Microsoft.Rest.Azure
                     pollingState.Status = AzureAsyncOperation.InProgressStatus;
                 }
                 else if (statusCode == HttpStatusCode.OK ||
-                         (statusCode == HttpStatusCode.Created && method == HttpMethod.Put) ||
-                         (statusCode == HttpStatusCode.NoContent && (method == HttpMethod.Delete || method == HttpMethod.Post)))
+                         (statusCode == HttpStatusCode.Created && initialRequestMethod == HttpMethod.Put) ||
+                         (statusCode == HttpStatusCode.NoContent && (initialRequestMethod == HttpMethod.Delete || initialRequestMethod == HttpMethod.Post)))
                 {
                     // We check if we got provisionState and we get the status from provisioning state
 
