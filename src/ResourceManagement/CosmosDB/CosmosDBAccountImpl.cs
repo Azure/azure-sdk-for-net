@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Fluent
                 if (maxDelayDueToMissingFailovers > currentDelayDueToMissingFailovers && 
                     (databaseAccount.Id == null
                     || databaseAccount.Id.Length == 0
-                    || createUpdateParametersInner.Location.Length >
+                    || createUpdateParametersInner.Locations.Count >
                         databaseAccount.Inner.FailoverPolicies.Count))
                 {
                     currentDelayDueToMissingFailovers += 5000;
