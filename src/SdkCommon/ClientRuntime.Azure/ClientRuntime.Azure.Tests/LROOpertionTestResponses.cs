@@ -287,10 +287,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
         }
 
         #endregion
-
-
-
-
+        
         static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithoutHeaderInResponses()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.OK)
@@ -1230,6 +1227,102 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
             yield return response2;
         }
+    }
 
+    static class LROOperationPatchTestResponses
+    {
+        static internal IEnumerable<HttpResponseMessage> MockPatchWithAzureAsyncOperationHeader()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                {
+                    ""id"": ""34adfa4f-cedf-4dc0-ba29-b6d1a69ab345"",             
+	                ""name"": ""test_account"",
+	                ""type"": ""test_type"",
+	                ""location"": ""test_location"",
+	                ""tags"": { 
+		                ""test_key"": ""test_value"" 
+	                },
+	                ""properties"": {
+		                ""provisioningState"": ""InProgress"",
+		                ""state"": ""InActive""
+		                }
+                }")
+            };
+            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"": ""Succeeded"",
+	                ""properties"": {
+		                ""provisioningState"": ""Succeeded"",
+		                ""state"": ""Active""
+                        }
+                }
+                ")
+            };
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""id"": ""34adfa4f-cedf-4dc0-ba29-b6d1a69ab345"",             
+	                ""name"": ""test_account"",
+	                ""type"": ""test_type"",
+	                ""location"": ""test_location"",
+	                ""tags"": { 
+		                ""test_key"": ""test_value""                    
+	                }
+                }
+                ")
+            };
+            yield return response3;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockPatchWithLocationHeader()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"
+                {
+                    ""id"": ""34adfa4f-cedf-4dc0-ba29-b6d1a69ab345"",             
+	                ""name"": ""test_account"",
+	                ""type"": ""test_type"",
+	                ""location"": ""test_location"",
+	                ""tags"": { 
+		                ""test_key"": ""test_value"" 
+	                },
+	                ""properties"": {
+		                ""provisioningState"": ""InProgress"",
+		                ""state"": ""InActive""
+		                }
+                }")
+            };
+            response1.Headers.Add("Location", "https://management.azure.com:090/subscriptions/947c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk1706/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"": ""Succeeded"",
+	                ""properties"": {
+		                ""provisioningState"": ""Succeeded"",
+		                ""state"": ""Active""
+                        }
+                }
+                ")
+            };
+
+            yield return response2;
+        }
     }
 }
