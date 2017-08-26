@@ -38,10 +38,10 @@ namespace Fluent.Tests
                             .Create();
 
                     Assert.Equal(databaseAccount.Name, dbName.ToLower());
-                    Assert.Equal(databaseAccount.Kind, DatabaseAccountKind.GlobalDocumentDB);
-                    Assert.Equal(databaseAccount.WritableReplications.Count, 1);
-                    Assert.Equal(databaseAccount.ReadableReplications.Count, 2);
-                    Assert.Equal(databaseAccount.DefaultConsistencyLevel, DefaultConsistencyLevel.Session);
+                    Assert.Equal(DatabaseAccountKind.GlobalDocumentDB, databaseAccount.Kind);
+                    Assert.Equal(1, databaseAccount.WritableReplications.Count);
+                    Assert.Equal(2, databaseAccount.ReadableReplications.Count);
+                    Assert.Equal(DefaultConsistencyLevel.Session, databaseAccount.DefaultConsistencyLevel);
 
                     databaseAccount = databaseAccount.Update()
                             .WithReadReplication(Region.AsiaSouthEast)
@@ -55,7 +55,7 @@ namespace Fluent.Tests
                             .WithTag("tag3", "value3")
                             .WithoutTag("tag1")
                             .Apply();
-                    Assert.Equal(databaseAccount.DefaultConsistencyLevel, DefaultConsistencyLevel.Eventual);
+                    Assert.Equal(DefaultConsistencyLevel.Eventual, databaseAccount.DefaultConsistencyLevel);
                     Assert.True(databaseAccount.Tags.ContainsKey("tag2"));
                     Assert.True(!databaseAccount.Tags.ContainsKey("tag1"));
                 }
