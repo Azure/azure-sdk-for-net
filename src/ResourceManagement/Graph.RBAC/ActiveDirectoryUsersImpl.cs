@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         IActiveDirectoryUser ISupportsGettingByName<IActiveDirectoryUser>.GetByName(string name)
         {
-            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
     }
 }
