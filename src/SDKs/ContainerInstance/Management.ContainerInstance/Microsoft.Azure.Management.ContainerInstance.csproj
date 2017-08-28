@@ -6,7 +6,6 @@
     <AssemblyName>Microsoft.Azure.Management.ContainerInstance</AssemblyName>
     <PackageId>Microsoft.Azure.Management.ContainerInstance</PackageId>
     <PackageTags>Microsoft Azure Container Instance Management;Container Instance;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
-    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

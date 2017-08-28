@@ -9,7 +9,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
