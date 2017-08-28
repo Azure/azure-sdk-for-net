@@ -12,6 +12,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CognitiveServices\Management.CognitiveServices\Microsoft.Azure.Management.CognitiveServices.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Compute\Management.Compute\Microsoft.Azure.Management.Compute.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ContainerRegistry\Management.ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ContainerInstance\Management.ContainerInstance\Microsoft.Azure.Management.ContainerInstance.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CustomerInsights\Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Analytics\Management.DataLake.Analytics\Microsoft.Azure.Management.DataLake.Analytics.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\Management.DataLake.Store\Microsoft.Azure.Management.DataLake.Store.csproj" />
@@ -69,6 +70,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CognitiveServices\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Compute\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ContainerRegistry\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ContainerInstance\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CustomerInsights\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Analytics\**\*Tests.csproj" ProjectType="Test"/>		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DevTestLabs\**\*Tests.csproj" ProjectType="Test"/>
