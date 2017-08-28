@@ -45,14 +45,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<CsmOperationDescription> ListOperations(this IProviderOperations operations)
-            {
-                return operations.ListOperationsAsync().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -82,17 +74,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CsmOperationDescription> ListOperationsNext(this IProviderOperations operations, string nextPageLink)
-            {
-                return operations.ListOperationsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
