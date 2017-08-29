@@ -84,10 +84,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the created account
+        /// Gets the id of the created account
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets type of cognitive service account.
@@ -102,10 +102,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the created account
+        /// Gets the name of the created account
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the status of the cognitive services account at the time the
@@ -144,10 +144,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets resource type
+        /// Gets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.
