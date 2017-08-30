@@ -1,10 +1,8 @@
-﻿using Microsoft.CognitiveServices.Language.TextAnalytics;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+﻿using Microsoft.CognitiveServices.Vision.Face;
 using System;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 
-namespace Microsoft.CognitiveServices.Language.Tests
+namespace FaceSDK.Tests
 {
     public abstract class BaseTests
     {
@@ -15,14 +13,15 @@ namespace Microsoft.CognitiveServices.Language.Tests
         static BaseTests()
         {
             // Retrieve the configuration information.
-
+            SubscriptionKey = "51c0ba46b87840578cca7f045b34b5b7";
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
             Region = "WestUS";
         }
 
-        protected ITextAnalyticsAPI GetClient(DelegatingHandler handler)
+        protected IFaceAPI GetClient(DelegatingHandler handler)
         {
-            ITextAnalyticsAPI client;
-            client = new TextAnalyticsAPI(handlers: handler);
+            IFaceAPI client;
+            client = new FaceAPI(handlers: handler);
             client.AzureRegion1 = Region;
             client.SubscriptionKey = SubscriptionKey;
 
