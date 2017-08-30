@@ -1107,5 +1107,129 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             yield return response2;
         }
 
+        static internal IEnumerable<HttpResponseMessage> MockPatchWithRetryAfterTwoTries()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "3");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response2;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithDifferentRetryAfterValues()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""location"": ""North US"",
+                    ""tags"": {
+                        ""key1"": ""value 1"",
+                        ""key2"": ""value 2""
+                        },
+    
+                    ""properties"": { 
+                        ""provisioningState"": ""InProgerss"",
+                        ""comment"": ""Resource defined structure""
+                    }
+                }")
+            };
+            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
+            response1.Headers.Add("Retry-After", "2");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"" : ""InProgerss"", 
+                    ""properties"": { 
+                        ""provisioningState"": ""InProgerss"",
+                        ""comment"": ""Resource getting created""
+                    }
+                }")
+            };            
+            response2.Headers.Add("Retry-After", "5");
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"" : ""Succeeded"", 
+                    ""properties"": {
+                        ""id"": ""100"",
+                        ""name"": ""foo""
+                    }
+                }")
+            };
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"" : ""Succeeded"", 
+                    ""properties"": {
+                        ""id"": ""100"",
+                        ""name"": ""foo""
+                    }
+                }")
+            };
+
+            yield return response4;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockCreateWithRetryAfterDefaultMin()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "0");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response2;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockCreateWithRetryAfterDefaultMax()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "50");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response2;
+        }
+
     }
 }

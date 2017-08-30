@@ -82,7 +82,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
                 Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
-
+                                
                 // Create WCF Relay  - 
                 var wcfRelayName = TestUtilities.GenerateName(RelayManagementHelper.WcfPrefix);
                 var createdWCFRelayResponse = RelayManagementClient.WCFRelays.CreateOrUpdate(resourceGroup, namespaceName, wcfRelayName, new WcfRelay()

@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.Network
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
         /// <summary>
+        /// Gets the IAvailableEndpointServicesOperations.
+        /// </summary>
+        IAvailableEndpointServicesOperations AvailableEndpointServices { get; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }

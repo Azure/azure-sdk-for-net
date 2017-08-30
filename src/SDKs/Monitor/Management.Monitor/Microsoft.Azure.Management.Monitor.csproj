@@ -2,9 +2,8 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft Azure Monitor Library</Description>
-    <VersionPrefix>0.16.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-
+    <Version>0.16.1-preview</Version>
     <PackageId>Microsoft.Azure.Management.Monitor</PackageId>
     <PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs</PackageTags>
   </PropertyGroup>

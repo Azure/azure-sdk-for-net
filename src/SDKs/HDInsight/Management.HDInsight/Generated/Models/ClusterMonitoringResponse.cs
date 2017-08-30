@@ -30,9 +30,12 @@ namespace Microsoft.HDInsight.Models
         /// </summary>
         /// <param name="clusterMonitoringEnabled">The status of the Operations
         /// Management Suite (OMS) on the HDInsight cluster.</param>
-        public ClusterMonitoringResponse(string clusterMonitoringEnabled = default(string))
+        /// <param name="workspaceId">The workspace ID of the Operations
+        /// Management Suite (OMS) on the HDInsight cluster.</param>
+        public ClusterMonitoringResponse(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = default(string))
         {
             ClusterMonitoringEnabled = clusterMonitoringEnabled;
+            WorkspaceId = workspaceId;
             CustomInit();
         }
 
@@ -46,7 +49,14 @@ namespace Microsoft.HDInsight.Models
         /// the HDInsight cluster.
         /// </summary>
         [JsonProperty(PropertyName = "ClusterMonitoringEnabled")]
-        public string ClusterMonitoringEnabled { get; set; }
+        public bool? ClusterMonitoringEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the workspace ID of the Operations Management Suite
+        /// (OMS) on the HDInsight cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "WorkspaceId")]
+        public string WorkspaceId { get; set; }
 
     }
 }
