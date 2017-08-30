@@ -5,7 +5,6 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Collections.Generic;
 using System.Net;
 using Xunit;
 
@@ -17,11 +16,9 @@ namespace Sql.Tests
         public void TestListOperations()
         {
             string suiteName = this.GetType().FullName;
-            using (MockContext context = MockContext.Start(suiteName, "TestListOperations"))
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-                var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
+                var sqlClient = context.GetClient<SqlManagementClient>();
 
                 OperationListResult result = sqlClient.Operations.List();
 

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// disk.</param>
         public OSDisk(System.Collections.Generic.IList<string> imageUris, CachingType? caching = default(CachingType?))
         {
-            ImageUris = imageUris;
-            Caching = caching;
+            this.ImageUris = imageUris;
+            this.Caching = caching;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ImageUris == null)
+            if (this.ImageUris == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ImageUris");
             }

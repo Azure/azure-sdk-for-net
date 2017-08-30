@@ -1,22 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest.ClientRuntime.Azure.Properties;
-using Microsoft.Rest.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 namespace Microsoft.Rest.Azure
 {
-    public static class AzureClientExtensions
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Rest.ClientRuntime.Azure.Properties;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    public static partial class AzureClientExtensions
     {
         /// <summary>
         /// Gets operation result for long running operations.
@@ -106,7 +106,7 @@ namespace Microsoft.Rest.Azure
             while (!AzureAsyncOperation.TerminalStatuses.Any(s => s.Equals(pollingState.Status,
                 StringComparison.OrdinalIgnoreCase)))
             {
-                await Task.Delay(pollingState.DelayInMilliseconds, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(pollingState.DelayBetweenPolling, cancellationToken).ConfigureAwait(false);
 
                 if (!string.IsNullOrEmpty(pollingState.AzureAsyncOperationHeaderLink))
                 {
@@ -349,13 +349,15 @@ namespace Microsoft.Rest.Azure
             var statusCode = initialResponse.Response.StatusCode;
             var method = initialResponse.Request.Method;
             if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted ||
-                (statusCode == HttpStatusCode.Created && method == HttpMethod.Put) ||
+                (statusCode == HttpStatusCode.Created && (method == HttpMethod.Put)) ||
                 (statusCode == HttpStatusCode.NoContent && (method == HttpMethod.Delete || method == HttpMethod.Post)))
             {
                 return false;
             }
             return true;
         }
+   
+      /*
 
         /// <summary>
         /// Updates PollingState from GET operations.
@@ -395,11 +397,15 @@ namespace Microsoft.Rest.Azure
                 pollingState.Status = AzureAsyncOperation.SuccessStatus;
             }
 
-            pollingState.Error = new CloudError()
+            if(pollingState?.Error == null)
             {
-                Code = pollingState.Status,
-                Message = string.Format(Resources.LongRunningOperationFailed, pollingState.Status)
-            };
+                pollingState.Error = new CloudError()
+                {
+                    Code = pollingState.Status,
+                    Message = string.Format(Resources.LongRunningOperationFailed, pollingState.Status)
+                };
+            }
+            
             pollingState.Response = responseWithResource.Response;
             pollingState.Request = responseWithResource.Request;
             pollingState.Resource = responseWithResource.Body.ToObject<TBody>(JsonSerializer
@@ -469,6 +475,8 @@ namespace Microsoft.Rest.Azure
             {
                 throw new CloudException("The response from long running operation does not have a valid status code.");
             }
+
+            return;
         }
 
         /// <summary>
@@ -516,6 +524,8 @@ namespace Microsoft.Rest.Azure
             }
             catch { };
         }
+        
+        */
 
         /// <summary>
         /// Gets a resource from the specified URL.

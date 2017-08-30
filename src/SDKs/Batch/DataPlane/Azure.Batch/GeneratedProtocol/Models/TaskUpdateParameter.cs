@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         public TaskUpdateParameter(TaskConstraints constraints = default(TaskConstraints))
         {
-            Constraints = constraints;
+            this.Constraints = constraints;
         }
 
         /// <summary>

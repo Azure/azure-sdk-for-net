@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Azure.Batch</PackageId>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <VersionPrefix>7.0.1</VersionPrefix>
+    <VersionPrefix>7.1.0</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
@@ -14,7 +14,7 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/Batch/DataPlane/changelog.md</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">

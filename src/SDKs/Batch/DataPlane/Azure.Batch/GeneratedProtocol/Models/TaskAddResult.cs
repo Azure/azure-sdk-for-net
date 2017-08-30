@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the task.</param>
         public TaskAddResult(TaskAddStatus status, string taskId, string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), string location = default(string), BatchError error = default(BatchError))
         {
-            Status = status;
-            TaskId = taskId;
-            ETag = eTag;
-            LastModified = lastModified;
-            Location = location;
-            Error = error;
+            this.Status = status;
+            this.TaskId = taskId;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.Location = location;
+            this.Error = error;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TaskId == null)
+            if (this.TaskId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TaskId");
             }

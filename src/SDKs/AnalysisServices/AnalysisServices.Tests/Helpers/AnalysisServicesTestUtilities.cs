@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -39,10 +40,12 @@ namespace AnalysisServices.Tests.Helpers
         public static string DefaultResourceGroup = "TestRG";
         public static string DefaultServerName = "azsdktest";
         public static string DefaultLocation = "West US";
+        public static string DefaultGatewayResourceId = Environment.GetEnvironmentVariable("AAS_DEFAULT_GATEWAY_RESOURCE_ID") ?? "";
+
         public static ResourceSku DefaultSku = new ResourceSku
         {
-            Name = SkuName.S1.ToString(),
-            Tier = SkuTier.Standard.ToString()
+            Name = "S1",
+            Tier = "Standard"
         };
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
@@ -57,11 +60,14 @@ namespace AnalysisServices.Tests.Helpers
             "aztest1@stabletest.ccsctp.net"
         };
 
-        public static string DefaultBakcupStorageAccount = "FT_Permanent_Group_A/stabletestbackupsa";
+        public static IList<string> GatewayAdministrators = new List<string>()
+        {
+            "asengsys@microsoft.com"
+        };
 
-        public static string DefaultBackupBlobContainer = "backups";
+        public static string DefaultBackupBlobContainerUri = Environment.GetEnvironmentVariable("AAS_DEFAULT_BACKUP_BLOB_CONTAINER_URI") ?? "https://aassdk1.blob.core.windows.net/azsdktest?dummykey1";
 
-        public static BackupConfiguration DefaultBackupConfiguration = new BackupConfiguration("FT_Permanent_Group_A/stabletestbackupsa", "backups", Environment.GetEnvironmentVariable("AAS_DEFAULT_BACKUP_STORAGE_ACCESS_KEY"));
+        public static string UpdatedBackupBlobContainerUri = Environment.GetEnvironmentVariable("AAS_SECOND_BACKUP_BLOB_CONTAINER_URI") ?? "https://aassdk1.blob.core.windows.net/azsdktest2?dummykey2";
 
         public static string GetDefaultCreatedResponse(string provisioningState, string state)
         {
@@ -81,13 +87,10 @@ namespace AnalysisServices.Tests.Helpers
                                 'asAdministrators':{{
                                 'members':{8}
                                 }},
-                                'backupConfiguration':{{
-                                'storageAccount':'{9}',
-                                'blobContainer':'{10}'
-                                }}
+                                'backupBlobContainerUri':'{9}'
                             }}
                             }}";
-            
+
             var tags = JsonConvert.SerializeObject(DefaultTags, new KeyValuePairConverter());
             var admins = JsonConvert.SerializeObject(DefaultAdministrators);
             return string.Format(
@@ -101,8 +104,7 @@ namespace AnalysisServices.Tests.Helpers
                 provisioningState,
                 state,
                 admins,
-                DefaultBakcupStorageAccount,
-                DefaultBackupBlobContainer);
+                DefaultBackupBlobContainerUri);
         }
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -120,10 +122,25 @@ namespace AnalysisServices.Tests.Helpers
                 Tags = DefaultTags,
                 Sku = DefaultSku,
                 AsAdministrators = new ServerAdministrators(DefaultAdministrators),
-                BackupConfiguration = DefaultBackupConfiguration
+                BackupBlobContainerUri = DefaultBackupBlobContainerUri
             };
 
             return defaultServer;
+        }
+
+        public static AnalysisServicesServer GetAnalysisServicesResourceWithGateway()
+        {
+            AnalysisServicesServer serverWithGateway = new AnalysisServicesServer
+            {
+                Location = DefaultLocation,
+                Tags = DefaultTags,
+                Sku = DefaultSku,
+                AsAdministrators = new ServerAdministrators(GatewayAdministrators),
+                BackupBlobContainerUri = DefaultBackupBlobContainerUri,
+                GatewayDetails = new GatewayDetails(DefaultGatewayResourceId)
+            };
+
+            return serverWithGateway;
         }
 
         /// <summary>
@@ -163,7 +180,7 @@ namespace AnalysisServices.Tests.Helpers
 #endif
             return Handler;
         }
-        
+
         public static void WaitIfNotInPlaybackMode()
         {
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") != null &&

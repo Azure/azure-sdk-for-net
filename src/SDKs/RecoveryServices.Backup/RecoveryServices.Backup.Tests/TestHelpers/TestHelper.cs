@@ -6,20 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Management.RecoveryServices.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using HttpStatusCode = System.Net.HttpStatusCode;
+using Sku = Microsoft.Azure.Management.RecoveryServices.Models.Sku;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public class TestHelper : IDisposable
     {
         public string ResourceGroup = "SwaggerTestRg";
-        public string VaultName = "SDKTestRsVault";
-        public string Location = "westus";
+        public string VaultName = "NetSDKTestRsVault";
+        public string Location = "westcentralus";
         public string FabricName = "Azure";
 
         public RecoveryServicesClient VaultClient { get; private set; }
@@ -175,6 +176,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             Assert.NotNull(jobResponse.JobId);
 
             return jobResponse.JobId;
+        }
+
+        public IPage<JobResource> ListBackupJobs()
+        {
+           return BackupClient.BackupJobs.List(VaultName, ResourceGroup);
         }
 
         public void WaitForJobCompletion(string jobId)

@@ -1462,5 +1462,79 @@ namespace Storage.Tests
                 Assert.True(exists2);
             }
         }
+
+        [Fact]
+        public void StorageAccountVnetACLTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with Vnet
+                string accountName = TestUtilities.GenerateName("sto");
+
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.NetworkAcls = new StorageNetworkAcls { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.90" } } };
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                // Verify the vnet acl properties.
+                Assert.NotNull(account.NetworkAcls);
+                Assert.Equal(@"Logging, AzureServices", account.NetworkAcls.Bypass);
+                Assert.Equal(DefaultAction.Deny, account.NetworkAcls.DefaultAction);
+                Assert.Empty(account.NetworkAcls.VirtualNetworkRules);
+                Assert.NotNull(account.NetworkAcls.IpRules);
+                Assert.NotEmpty(account.NetworkAcls.IpRules);
+                Assert.Equal("23.45.67.90", account.NetworkAcls.IpRules[0].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
+
+                // Update Vnet
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    NetworkAcls = new StorageNetworkAcls
+                    {
+                        Bypass = @"Logging, Metrics",
+                        IpRules = new List<IPRule> {
+                            new IPRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow },
+                            new IPRule { IPAddressOrRange = "23.45.67.92" }
+                        },
+                        DefaultAction = DefaultAction.Deny
+                    }
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.NetworkAcls);
+                Assert.Equal(@"Logging, Metrics", account.NetworkAcls.Bypass);
+                Assert.Equal(DefaultAction.Deny, account.NetworkAcls.DefaultAction);
+                Assert.Empty(account.NetworkAcls.VirtualNetworkRules);
+                Assert.NotNull(account.NetworkAcls.IpRules);
+                Assert.NotEmpty(account.NetworkAcls.IpRules);
+                Assert.Equal("23.45.67.91", account.NetworkAcls.IpRules[0].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
+                Assert.Equal("23.45.67.92", account.NetworkAcls.IpRules[1].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[1].Action);
+
+                // Delete vnet.
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    NetworkAcls = new StorageNetworkAcls { }
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.NetworkAcls);
+                Assert.Equal(@"AzureServices", account.NetworkAcls.Bypass);
+                Assert.Equal(DefaultAction.Allow, account.NetworkAcls.DefaultAction);
+            }
+        }
     }
 }

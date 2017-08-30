@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on the virtual machines in the pool.</param>
         public CloudServiceConfiguration(string osFamily, string targetOSVersion = default(string), string currentOSVersion = default(string))
         {
-            OsFamily = osFamily;
-            TargetOSVersion = targetOSVersion;
-            CurrentOSVersion = currentOSVersion;
+            this.OsFamily = osFamily;
+            this.TargetOSVersion = targetOSVersion;
+            this.CurrentOSVersion = currentOSVersion;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (OsFamily == null)
+            if (this.OsFamily == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "OsFamily");
             }

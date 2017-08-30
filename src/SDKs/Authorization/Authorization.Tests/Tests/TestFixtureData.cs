@@ -4,6 +4,7 @@
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
+using Microsoft.Azure.Graph.RBAC;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Test;
 using System;
@@ -14,20 +15,23 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest;
+using System.Threading;
+using Microsoft.Azure.Graph.RBAC.Models;
+using Microsoft.Rest.Azure.OData;
 
 namespace Authorization.Tests
 {
-    public class TestExecutionContext : TestBase, IDisposable
+	public class TestExecutionContext : GraphTestBase, IDisposable
     {
-        private List<Guid> createdUsers;
+        private List<User> createdUsers;
 
-        private List<string> createdGroups;
+        private List<ADGroup> createdGroups;
 
         private bool disposed = false;
 
-        private GraphManagementClient GraphClient { get; set; }
+		private GraphRbacManagementClient GraphClient { get; set; }
         
-        public IReadOnlyCollection<Guid> Users
+        public IReadOnlyCollection<User> Users
         {
             get 
             {
@@ -35,7 +39,7 @@ namespace Authorization.Tests
             }
         }
 
-        public IReadOnlyCollection<string> Groups
+        public IReadOnlyCollection<ADGroup> Groups
         {
             get
             {
@@ -46,21 +50,20 @@ namespace Authorization.Tests
         public TestExecutionContext()
         {
             HttpMockServer.RecordsDirectory = "SessionRecords";
-            this.createdUsers = new List<Guid>();
-            this.createdGroups = new List<string>();
+            this.createdUsers = new List<User>();
+            this.createdGroups = new List<ADGroup>();
 
             if(HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record )
             {
-                this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment()));
-                this.CleanupTestData();
+                this.CleanupTestData(MockContext.Start(this.GetType().FullName));
             }
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
             {                
-                this.GraphClient = (new GraphManagementClient(TestEnvironmentFactory.GetTestEnvironment(), HttpMockServer.CreateInstance()));
+                this.GraphClient = (GetGraphClient(context));
 
-                this.CreateGroups(10);
-                this.CreateUsers(10);
+                this.CreateGroups(context, 10);
+                this.CreateUsers(context, 10);
 
                 TestUtilities.Wait(1000*10);
             }
@@ -76,7 +79,7 @@ namespace Authorization.Tests
             return context.GetServiceClient<AuthorizationManagementClient>();
         }
 
-        public void Dispose()
+		public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -106,54 +109,53 @@ namespace Authorization.Tests
         {
         }
 
-        private void CreateUsers(int number)
+        private void CreateUsers(MockContext context, int number)
         {
             for (int i = 0; i < number; i++)
             {
-                var objectId = this.GraphClient.CreateUser("testUser" + i);
-                this.createdUsers.Add(objectId);
+                User user = CreateUser(context,"testUser" + i + Guid.NewGuid());
+                this.createdUsers.Add(user);
             }
         }
 
-        private void CreateGroups(int number)
+        private void CreateGroups(MockContext context, int number)
         {
             for (int i = 0; i < number; i++)
             {
-                var objectId = this.GraphClient.CreateGroup("testGroup" + i);
-                this.createdGroups.Add(objectId);
+				ADGroup group = CreateGroup(context, "testGroup" + i + Guid.NewGuid());
+                this.createdGroups.Add(group);
             }
         }
 
-        internal void AddMemberToGroup(string groupId, string memberObjectId)
+        internal void AddMemberToGroup(MockContext context, ADGroup groupId, User user)
         {
-            this.GraphClient.AddMemberToGroup(groupId, memberObjectId);
+            AddMember(context, groupId, user);
         }
 
-        private void CleanupTestData()
+        private void CleanupTestData(MockContext context)
         {
             foreach (var user in this.createdUsers)
             {
-                this.GraphClient.DeleteUser(user);
+                DeleteUser(context, user.ObjectId);
             }
 
             createdUsers.Clear();
 
             foreach (var group in this.createdGroups)
             {
-                this.GraphClient.DeleteGroup(group);
+                DeleteGroup(context,group.ObjectId);
             }
 
             createdGroups.Clear();
+			foreach (var user in this.GraphClient.Users.List(new ODataQuery<User>(f => f.DisplayName.Contains("testUser"))))
+			{
+				DeleteUser(context, user.ObjectId);
+			}
 
-            foreach(var user in this.GraphClient.ListUsers("testUser"))
-            {
-                this.GraphClient.DeleteUser(user);
-            }
-            
-            foreach (var group in this.GraphClient.ListGroups("testGroup"))
-            {
-                this.GraphClient.DeleteGroup(group);
-            }
+			foreach (var group in this.GraphClient.Groups.List(new ODataQuery<ADGroup>(f => f.DisplayName.Contains("testGroup"))))
+			{
+				DeleteGroup(context, group.ObjectId);
+			}
 
             var env = TestEnvironmentFactory.GetTestEnvironment();
             var cred = env.TokenInfo[TokenAudience.Management];
@@ -162,7 +164,10 @@ namespace Authorization.Tests
                 cred);
             foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
-                authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+                if (assignment.Id.Contains(BasicTests.ResourceGroup))
+                {
+                    authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+                }
             }
         }
     }

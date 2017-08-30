@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the certificate deletion error.</param>
         public DeleteCertificateError(string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> values = default(System.Collections.Generic.IList<NameValuePair>))
         {
-            Code = code;
-            Message = message;
-            Values = values;
+            this.Code = code;
+            this.Message = message;
+            this.Values = values;
         }
 
         /// <summary>

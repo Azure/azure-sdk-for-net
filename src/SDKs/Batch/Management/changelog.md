@@ -1,5 +1,12 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 5.1.0
+#### REST API version
+- This version targets REST API version 2017-05-01.
+
+#### Features
+- Added a new `CheckNameAvailability` API which allows you to check if an account name is available on a particular region.
+
 ### Changes in 5.0.0
 #### REST API version
 - This version targets REST API version 2017-05-01.

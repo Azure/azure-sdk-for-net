@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute nodes.</param>
         public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
         {
-            NodeFillType = nodeFillType;
+            this.NodeFillType = nodeFillType;
         }
 
         /// <summary>

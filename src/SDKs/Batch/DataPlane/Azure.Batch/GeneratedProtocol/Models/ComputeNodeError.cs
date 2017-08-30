@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// related to the compute node error.</param>
         public ComputeNodeError(string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> errorDetails = default(System.Collections.Generic.IList<NameValuePair>))
         {
-            Code = code;
-            Message = message;
-            ErrorDetails = errorDetails;
+            this.Code = code;
+            this.Message = message;
+            this.ErrorDetails = errorDetails;
         }
 
         /// <summary>

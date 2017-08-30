@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Network.Tests.Helpers
 {
+    using Networks.Tests.Helpers;
+
     public static class DeploymentUpdate
     {
         public static void CreateVm(
@@ -33,7 +35,7 @@ namespace Network.Tests.Helpers
                 @"'virtualNetworkName': { 'value': '" + resourceGroupName + "-vnet'}," +
                 @"'networkInterfaceName': { 'value': '" + networkInterfaceName + "'}," +
                 @"'networkSecurityGroupName': { 'value': '" + networkSecurityGroupName + "'}," +
-                @"'adminPassword': { 'value': 'netanalytics-32!'}," +
+                @"'adminPassword': { 'value': '" + NetworkManagementTestUtilities.GetRandomPassword() + "'}," +
                 @"'storageAccountType': { 'value': 'Premium_LRS'}," +
                 @"'diagnosticsStorageAccountName': { 'value': '" + diagnosticsStorageAccountName + "'}," +
                 @"'diagnosticsStorageAccountId': { 'value': 'Microsoft.Storage/storageAccounts/" + diagnosticsStorageAccountName + "'}," +
@@ -48,6 +50,17 @@ namespace Network.Tests.Helpers
             {
                 Template = JObject.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "TestData", "DeploymentTemplate.json"))),
                 Parameters = JObject.Parse(deploymentParams),
+                Mode = DeploymentMode.Incremental
+            };
+
+            var deployment = resourcesClient.Deployments.CreateOrUpdate(resourceGroupName, deploymentName, new Deployment(deploymentProperties));
+        }
+
+        public static void CreateVmss(ResourceManagementClient resourcesClient, string resourceGroupName, string deploymentName)
+        {
+            var deploymentProperties = new DeploymentProperties
+            {
+                Template = JObject.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "TestData", "VmssDeploymentTemplate.json"))),
                 Mode = DeploymentMode.Incremental
             };
 

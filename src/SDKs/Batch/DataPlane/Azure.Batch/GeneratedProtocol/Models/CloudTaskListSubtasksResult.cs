@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The list of subtasks.</param>
         public CloudTaskListSubtasksResult(System.Collections.Generic.IList<SubtaskInformation> value = default(System.Collections.Generic.IList<SubtaskInformation>))
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>

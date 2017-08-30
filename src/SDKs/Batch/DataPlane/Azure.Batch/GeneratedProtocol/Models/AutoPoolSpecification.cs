@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.</param>
         public AutoPoolSpecification(PoolLifetimeOption poolLifetimeOption, string autoPoolIdPrefix = default(string), bool? keepAlive = default(bool?), PoolSpecification pool = default(PoolSpecification))
         {
-            AutoPoolIdPrefix = autoPoolIdPrefix;
-            PoolLifetimeOption = poolLifetimeOption;
-            KeepAlive = keepAlive;
-            Pool = pool;
+            this.AutoPoolIdPrefix = autoPoolIdPrefix;
+            this.PoolLifetimeOption = poolLifetimeOption;
+            this.KeepAlive = keepAlive;
+            this.Pool = pool;
         }
 
         /// <summary>

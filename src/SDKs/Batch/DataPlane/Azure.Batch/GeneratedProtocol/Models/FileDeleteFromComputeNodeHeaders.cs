@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// request was made, and the region that account resides in.</param>
         public FileDeleteFromComputeNodeHeaders(string clientRequestId = default(string), string requestId = default(string))
         {
-            ClientRequestId = clientRequestId;
-            RequestId = requestId;
+            this.ClientRequestId = clientRequestId;
+            this.RequestId = requestId;
         }
 
         /// <summary>

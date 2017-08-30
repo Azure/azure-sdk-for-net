@@ -8,13 +8,13 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role definition permissions.
@@ -24,25 +24,36 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the Permission class.
         /// </summary>
-        public Permission() { }
+        public Permission()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Permission class.
         /// </summary>
+        /// <param name="actions">Allowed actions.</param>
+        /// <param name="notActions">Denied actions.</param>
         public Permission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
         {
             Actions = actions;
             NotActions = notActions;
+            CustomInit();
         }
 
         /// <summary>
-        /// Role definition allowed actions.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets allowed actions.
         /// </summary>
         [JsonProperty(PropertyName = "actions")]
         public IList<string> Actions { get; set; }
 
         /// <summary>
-        /// Role definition denied actions.
+        /// Gets or sets denied actions.
         /// </summary>
         [JsonProperty(PropertyName = "notActions")]
         public IList<string> NotActions { get; set; }

@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The value of the environment variable.</param>
         public EnvironmentSetting(string name, string value = default(string))
         {
-            Name = name;
-            Value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (this.Name == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }

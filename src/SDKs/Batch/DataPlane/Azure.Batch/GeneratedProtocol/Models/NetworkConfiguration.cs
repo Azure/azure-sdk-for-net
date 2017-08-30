@@ -27,9 +27,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// network subnet which the compute nodes of the pool will join. This
         /// is of the form
         /// /subscriptions/{subscription}/resourceGroups/{group}/providers/{provider}/virtualNetworks/{network}/subnets/{subnet}.</param>
-        public NetworkConfiguration(string subnetId = default(string))
+        /// <param name="endpointConfiguration">The configuration for endpoints
+        /// on compute nodes in the Batch pool.</param>
+        public NetworkConfiguration(string subnetId = default(string), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration))
         {
-            SubnetId = subnetId;
+            this.SubnetId = subnetId;
+            this.EndpointConfiguration = endpointConfiguration;
         }
 
         /// <summary>
@@ -59,5 +62,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "subnetId")]
         public string SubnetId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the configuration for endpoints on compute nodes in
+        /// the Batch pool.
+        /// </summary>
+        /// <remarks>
+        /// Pool endpoint configuration is only supported on pools with the
+        /// virtualMachineConfiguration property.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endpointConfiguration")]
+        public PoolEndpointConfiguration EndpointConfiguration { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.EndpointConfiguration != null)
+            {
+                this.EndpointConfiguration.Validate();
+            }
+        }
     }
 }
