@@ -23,7 +23,6 @@ namespace Microsoft.CognitiveServices.Language.Tests
         {
             ITextAnalyticsAPI client;
             client = new TextAnalyticsAPI(handlers: handler);
-            client.AzureRegion1 = Region;
             client.SubscriptionKey = SubscriptionKey;
 
             return client;

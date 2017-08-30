@@ -23,11 +23,6 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the InternalError class.
         /// </summary>
-        /// <param name="code">Possible values include:
-        /// 'invalidParameterValue', 'invalidRequestBodyFormat',
-        /// 'missingRequiredHeader', 'invalidRequestContent',
-        /// 'missingRequiredParameter', 'serviceUnderLoad',
-        /// 'serverError'</param>
         public InternalError(string code = default(string), string message = default(string), InternalError innerError = default(InternalError))
         {
             Code = code;
@@ -42,10 +37,6 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'invalidParameterValue',
-        /// 'invalidRequestBodyFormat', 'missingRequiredHeader',
-        /// 'invalidRequestContent', 'missingRequiredParameter',
-        /// 'serviceUnderLoad', 'serverError'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }

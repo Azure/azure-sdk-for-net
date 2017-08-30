@@ -16,7 +16,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
     /// <summary>
     /// The Text Analytics API is a suite of text analytics web services built
-    /// with Azure Machine Learning.
+    /// with best-in-class Microsoft machine learning algorithms.
     /// The API can be used to analyze unstructured text for tasks such as
     /// sentiment analysis, key phrase extraction and language detection.
     /// No training data is needed to use this API; just bring your text data.
@@ -24,7 +24,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
     /// deliver best in class predictions.
     ///
     /// Further documentation can be found in
-    /// https://azure.microsoft.com/en-us/documentation/articles/machine-learning-apps-text-analytics/
+    /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview
     /// </summary>
     public partial interface ITextAnalyticsAPI : System.IDisposable
     {
@@ -43,11 +43,9 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Supported Azure regions for Face Detection endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
+        /// Supported Azure regions for Cognitive Services endpoints
         /// </summary>
-        string AzureRegion1 { get; set; }
+        string AzureRegion { get; }
 
         /// <summary>
         /// Subscription key in header

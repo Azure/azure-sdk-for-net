@@ -19,7 +19,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
     /// <summary>
     /// The Text Analytics API is a suite of text analytics web services built
-    /// with Azure Machine Learning.
+    /// with best-in-class Microsoft machine learning algorithms.
     /// The API can be used to analyze unstructured text for tasks such as
     /// sentiment analysis, key phrase extraction and language detection.
     /// No training data is needed to use this API; just bring your text data.
@@ -27,7 +27,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
     /// deliver best in class predictions.
     ///
     /// Further documentation can be found in
-    /// https://azure.microsoft.com/en-us/documentation/articles/machine-learning-apps-text-analytics/
+    /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview
     /// </summary>
     public partial class TextAnalyticsAPI : ServiceClient<TextAnalyticsAPI>, ITextAnalyticsAPI
     {
@@ -47,11 +47,9 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Supported Azure regions for Face Detection endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
+        /// Supported Azure regions for Cognitive Services endpoints
         /// </summary>
-        public string AzureRegion1 { get; set; }
+        public string AzureRegion { get; private set; }
 
         /// <summary>
         /// Subscription key in header
@@ -93,6 +91,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         private void Initialize()
         {
             BaseUri = "https://{azureRegion}.api.cognitive.microsoft.com/text/analytics";
+            AzureRegion = "westus";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -157,10 +156,6 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<KeyPhraseBatchResultV2>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInputV2 input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.AzureRegion1");
-            }
             if (SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionKey");
@@ -183,7 +178,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/keyPhrases";
-            _url = _url.Replace("{azureRegion}", AzureRegion1);
+            _url = _url.Replace("{azureRegion}", AzureRegion);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -328,10 +323,6 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<LanguageBatchResultV2>> DetectLanguageWithHttpMessagesAsync(BatchInputV2 input, int? numberOfLanguagesToDetect = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.AzureRegion1");
-            }
             if (SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionKey");
@@ -355,7 +346,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/languages";
-            _url = _url.Replace("{azureRegion}", AzureRegion1);
+            _url = _url.Replace("{azureRegion}", AzureRegion);
             List<string> _queryParameters = new List<string>();
             if (numberOfLanguagesToDetect != null)
             {
@@ -511,10 +502,6 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// </return>
         public async Task<HttpOperationResponse<SentimentBatchResultV2>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInputV2 input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.AzureRegion1");
-            }
             if (SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionKey");
@@ -537,7 +524,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/sentiment";
-            _url = _url.Replace("{azureRegion}", AzureRegion1);
+            _url = _url.Replace("{azureRegion}", AzureRegion);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

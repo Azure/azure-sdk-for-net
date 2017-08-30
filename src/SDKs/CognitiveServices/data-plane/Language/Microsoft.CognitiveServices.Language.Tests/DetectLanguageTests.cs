@@ -15,8 +15,6 @@ namespace Microsoft.CognitiveServices.Language.Tests
         [Fact]
         public void DetectLanguage()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
