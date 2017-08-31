@@ -7,7 +7,8 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>    
+    <RootNamespace>Language.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

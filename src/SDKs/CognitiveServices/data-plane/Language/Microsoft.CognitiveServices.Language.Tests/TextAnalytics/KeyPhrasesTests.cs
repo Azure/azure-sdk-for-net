@@ -1,24 +1,23 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
+﻿using Language.Tests;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.CognitiveServices.Language.TextAnalytics;
 using Microsoft.CognitiveServices.Language.TextAnalytics.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
-namespace Microsoft.CognitiveServices.Language.Tests
+namespace Language.TextAnalytics.Tests
 {
-    public class SentimentTests : BaseTests
+    public class KeyPhrasesTests : BaseTests
     {
         [Fact]
-        public void Sentiment()
+        public void KeyPhrases()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "Sentiment");
+                HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrases");
                 ITextAnalyticsAPI client = GetClient(HttpMockServer.CreateInstance());
-                SentimentBatchResultV2 result = client.Sentiment(
+                KeyPhraseBatchResultV2 result = client.KeyPhrases(
                     new MultiLanguageBatchInputV2(
                         new List<MultiLanguageInputV2>()
                         {
@@ -30,7 +29,7 @@ namespace Microsoft.CognitiveServices.Language.Tests
                             }
                         }));
 
-                Assert.True(result.Documents[0].Score > 0);
+                Assert.Equal("team mates", result.Documents[0].KeyPhrases[0]);
             }
         }
     }

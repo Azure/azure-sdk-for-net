@@ -1,14 +1,12 @@
-using Microsoft.CognitiveServices.Language.TextAnalytics;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.CognitiveServices.Language.TextAnalytics.Models;
-using System.Net;
+using Language.Tests;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.CognitiveServices.Language.TextAnalytics;
+using Microsoft.CognitiveServices.Language.TextAnalytics.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Collections.Generic;
+using Xunit;
 
-namespace Microsoft.CognitiveServices.Language.Tests
+namespace Language.TextAnalytics.Tests
 {
     public class DetectLanguageTests : BaseTests
     {
@@ -28,7 +26,7 @@ namespace Microsoft.CognitiveServices.Language.Tests
 
                 Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
                 Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
-
+                Assert.True(result.Documents[0].DetectedLanguages[0].Score > 0.7);
                 context.Stop();
             }
         }

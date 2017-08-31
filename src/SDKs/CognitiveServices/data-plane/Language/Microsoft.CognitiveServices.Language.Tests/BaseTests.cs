@@ -1,10 +1,7 @@
 ﻿using Microsoft.CognitiveServices.Language.TextAnalytics;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 
-namespace Microsoft.CognitiveServices.Language.Tests
+namespace Language.Tests
 {
     public abstract class BaseTests
     {
