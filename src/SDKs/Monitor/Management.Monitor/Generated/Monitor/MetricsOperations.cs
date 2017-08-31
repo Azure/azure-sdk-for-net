@@ -52,13 +52,31 @@ namespace Microsoft.Azure.Management.Monitor
         public MonitorClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the metric values for a resource.
+        /// **Lists the metric values for a resource**.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='timespan'>
+        /// The timespan of the query. It is a string with the following format
+        /// 'startDateTime_ISO/endDateTime_ISO'.
+        /// </param>
+        /// <param name='interval'>
+        /// The interval (i.e. timegrain) of the query.
+        /// </param>
+        /// <param name='metric'>
+        /// The name of the metric to retrieve.
+        /// </param>
+        /// <param name='aggregation'>
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// </param>
+        /// <param name='resultType'>
+        /// Reduces the set of data collected. The syntax allowed depends on the
+        /// operation. See the operation's description for details. Possible values
+        /// include: 'Data', 'Metadata'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,13 +99,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<Metric>>> ListWithHttpMessagesAsync(string resourceUri, ODataQuery<Metric> odataQuery = default(ODataQuery<Metric>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Response>> ListWithHttpMessagesAsync(string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metric = default(string), string aggregation = default(string), ResultType? resultType = default(ResultType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceUri");
             }
-            string apiVersion = "2016-09-01";
+            string apiVersion = "2017-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -97,6 +115,11 @@ namespace Microsoft.Azure.Management.Monitor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("timespan", timespan);
+                tracingParameters.Add("interval", interval);
+                tracingParameters.Add("metric", metric);
+                tracingParameters.Add("aggregation", aggregation);
+                tracingParameters.Add("resultType", resultType);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -113,6 +136,26 @@ namespace Microsoft.Azure.Management.Monitor
                 {
                     _queryParameters.Add(_odataFilter);
                 }
+            }
+            if (timespan != null)
+            {
+                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(timespan)));
+            }
+            if (interval != null)
+            {
+                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(interval, Client.SerializationSettings).Trim('"'))));
+            }
+            if (metric != null)
+            {
+                _queryParameters.Add(string.Format("metric={0}", System.Uri.EscapeDataString(metric)));
+            }
+            if (aggregation != null)
+            {
+                _queryParameters.Add(string.Format("aggregation={0}", System.Uri.EscapeDataString(aggregation)));
+            }
+            if (resultType != null)
+            {
+                _queryParameters.Add(string.Format("resultType={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(resultType, Client.SerializationSettings).Trim('"'))));
             }
             if (apiVersion != null)
             {
@@ -206,7 +249,7 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<Metric>>();
+            var _result = new AzureOperationResponse<Response>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -219,7 +262,7 @@ namespace Microsoft.Azure.Management.Monitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Metric>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Response>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
