@@ -25,18 +25,7 @@ namespace Microsoft.Azure.Management.Monitor
     public partial interface IMetricsOperations
     {
         /// <summary>
-        /// **Lists the metric values for a resource**.&lt;br&gt;The
-        /// **$filter** is used to reduce the set of metric data
-        /// returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B
-        /// and C.&lt;br&gt;- Return all time series of C where A = a1 and B =
-        /// b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’
-        /// and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq
-        /// ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is
-        /// invalid because the logical or operator cannot separate two
-        /// different metadata names.&lt;br&gt;- Return all time series where A
-        /// = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’
-        /// and C eq ‘c1’**&lt;br&gt;- Return all time series where A =
-        /// a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**.
+        /// **Lists the metric values for a resource**.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
