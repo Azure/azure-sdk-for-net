@@ -13,17 +13,11 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Azure.Management.Storage;
 
     /// <summary>
-    /// Defines values for Permissions.
+    /// Defines values for ReasonCode.
     /// </summary>
-    public static class Permissions
+    public static class ReasonCode
     {
-        public const string R = "r";
-        public const string D = "d";
-        public const string W = "w";
-        public const string L = "l";
-        public const string A = "a";
-        public const string C = "c";
-        public const string U = "u";
-        public const string P = "p";
+        public const string QuotaId = "QuotaId";
+        public const string NotAvailableForSubscription = "NotAvailableForSubscription";
     }
 }
