@@ -4,7 +4,14 @@ Write-Host ""
 Write-Host "1) azure-rest-api-specs repository information"
 Write-Host "GitHub user:" $Args[0]
 Write-Host "Branch:     " $Args[1]
-Write-Host "Commit:     " (Invoke-RestMethod "https://api.github.com/repos/$($Args[0])/azure-rest-api-specs/branches/$($Args[1])").commit.sha
+Try
+{
+    Write-Host "Commit:     " (Invoke-RestMethod "https://api.github.com/repos/$($Args[0])/azure-rest-api-specs/branches/$($Args[1])").commit.sha
+}
+Catch
+{
+    # if the above REST call fails, a commit ID was passed, so we already got the information we need
+}
 
 Write-Host ""
 Write-Host "2) AutoRest information"
