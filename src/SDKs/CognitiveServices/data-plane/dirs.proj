@@ -4,7 +4,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Language\Microsoft.CognitiveServices.Language\Microsoft.CognitiveServices.Language.csproj" />
 	</ItemGroup>
 	<ItemGroup Label="TestSDKProject">
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Vision\Microsoft.CognitiveServices.Vision.Tests\Microsoft.CognitiveServices.Vision.Tests.csproj" />
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Language\Microsoft.CognitiveServices.Language.Tests\Microsoft.CognitiveServices.Language.Tests.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Vision\Microsoft.CognitiveServices.Vision.Tests\Microsoft.CognitiveServices.Vision.Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Language\Microsoft.CognitiveServices.Language.Tests\Microsoft.CognitiveServices.Language.Tests.csproj" ProjectType="Test"/>
 	</ItemGroup>
 </Project>
