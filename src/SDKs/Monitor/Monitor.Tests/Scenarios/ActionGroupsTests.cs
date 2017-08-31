@@ -83,16 +83,17 @@ namespace Monitor.Tests.Scenarios
                 }
 
                 // TODO: it responds 'already enabled' (Conflict: 409)
-                Assert.Throws<ErrorResponseException>(
-                    () =>
-                    {
-                        insightsClient.ActionGroups.EnableReceiver(
-                            resourceGroupName: ResourceGroupName,
+                AzureOperationResponse response = insightsClient.ActionGroups.EnableReceiverWithHttpMessagesAsync(
+                    resourceGroupName: ResourceGroupName,
                             actionGroupName: ActionGroupName,
-                            receiverName: "emailreceiver");
-                    });
+                            receiverName: "emailreceiver").Result;
 
-                AzureOperationResponse response = insightsClient.ActionGroups.DeleteWithHttpMessagesAsync(
+                if (!this.IsRecording)
+                {
+                    Assert.Equal(HttpStatusCode.Conflict, response.Response.StatusCode);
+                }
+
+                response = insightsClient.ActionGroups.DeleteWithHttpMessagesAsync(
                     resourceGroupName: ResourceGroupName,
                     actionGroupName: ActionGroupName).Result;
 
