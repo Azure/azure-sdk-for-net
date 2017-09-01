@@ -46,18 +46,19 @@ set rp="%1"
 if not "%2" == "" (set version="%2")         else (set version="latest")
 if not "%3" == "" (set specsRepoUser="%3")   else (set specsRepoUser="Azure")
 if not "%4" == "" (set specsRepoBranch="%4") else (set specsRepoBranch="current")
+if not "%5" == "" (set sdksFolder="%5") else (set sdksFolder=%~dp0..\src\SDKS)
 set configFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/%rp%/readme.md"
 
 :: installation
-if "%5" == "" (call npm i -g autorest)
+if "%6" == "" (call npm i -g autorest)
 
 :: code generation
 @echo on
-call autorest %configFile% --csharp --csharp-sdks-folder=%~dp0\..\src\SDKs --version=%version%
+call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version%
 @echo off
 
 :: metadata
-mkdir %~dp0\..\src\SDKs\_metadata
+if not exist "%~dp0\..\src\SDKs\_metadata" mkdir %~dp0\..\src\SDKs\_metadata
 call powershell %~dp0\generateMetadata.ps1 %specsRepoUser% %specsRepoBranch% %version% %configFile% > %~dp0\..\src\SDKs\_metadata\%rp:/=_%.txt
 
 endlocal
