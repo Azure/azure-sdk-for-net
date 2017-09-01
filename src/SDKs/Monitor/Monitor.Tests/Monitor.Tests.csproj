@@ -7,7 +7,7 @@
 		<VersionPrefix>1.0.0-preview</VersionPrefix>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,7 +27,7 @@
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
 		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
 	</ItemGroup>
-
+  
 	<ItemGroup>
 		<Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
 	</ItemGroup>
