@@ -7,6 +7,20 @@
     <Version>3.4.0</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+    <ReleaseNotes>
+      <![CDATA[
+        1) Added ability to honor Retry-After during LRO operation
+        2) Added support for LRO PATCH operation that returns 201 for polling
+        3) Multiple bug fixes for LRO operations
+      ]]>
+    </ReleaseNotes>
+    <PackageReleaseNotes>
+      <![CDATA[
+        1) Added ability to honor Retry-After during LRO operation
+        2) Added support for LRO PATCH operation that returns 201 for polling
+        3) Multiple bug fixes for LRO operations
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
