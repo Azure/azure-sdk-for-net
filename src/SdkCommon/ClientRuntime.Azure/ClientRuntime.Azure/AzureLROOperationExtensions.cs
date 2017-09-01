@@ -162,7 +162,7 @@ namespace Microsoft.Rest.Azure
             if (AzureAsyncOperation.FailedStatuses.Any(
                         s => s.Equals(pollingState.Status, StringComparison.OrdinalIgnoreCase)))
             {
-
+                //As this is for AsyncOperation header, we pass AzureOperationResponse as null
                 pollingState = GetUpdatedPollingStatus<TBody, THeader>(asyncOperationResponse.Body,
                                                                     null, pollingState, responseContent, initialRequestMethod);
             }
@@ -217,8 +217,17 @@ namespace Microsoft.Rest.Azure
             {
                 if (asyncOperation?.Error == null)
                 {
-                    // there is no error body, so asynOperation is of no use for us at this stage, we will continue analyzing the response and try to find provisioning state etc
-                    asyncOperation = null;
+                    // we need this check until service teams starts implementing v2.2 Azure REST API guidlines, when error will be mandatory on Failed/Canceled status
+                    // in Az async operation, it's not madatory currently to send error body on failed/cancelled status
+                    if(string.IsNullOrEmpty(pollingState.AzureAsyncOperationHeaderLink))
+                    {
+                        asyncOperation = null;
+                    }
+                    //else
+                    //{
+                    //    // there is no error body, so asynOperation is of no use for us at this stage, we will continue analyzing the response and try to find provisioning state etc
+                    //    asyncOperation = null;
+                    //}
                 }
             }
             else
@@ -231,22 +240,36 @@ namespace Microsoft.Rest.Azure
 
             if (asyncOperation != null)
             {
+                string errorMessage = string.Empty;
+                string errorCode = string.Empty;
+
                 pollingState.Status = asyncOperation.Status;
 
-                string errorMessage = string.Format(
+                if(asyncOperation?.Error == null)
+                {
+                    errorMessage = string.Format(
+                                        CultureInfo.InvariantCulture,
+                                        Resources.LongRunningOperationFailed,
+                                            asyncOperation.Status);
+                }
+                else
+                {
+                    errorMessage = string.Format(
                                         CultureInfo.InvariantCulture,
                                         Resources.LROOperationFailedAdditionalInfo,
                                             asyncOperation.Status, asyncOperation.Error?.Message);
+                    errorCode = asyncOperation.Error.Code;
+                }
 
                 pollingState.Error = new CloudError()
                 {
-                    Code = asyncOperation.Error.Code,
-                    Message = asyncOperation.Error.Message
+                    Code = errorCode,
+                    Message = errorMessage
                 };
 
                 pollingState.CloudException = new CloudException(errorMessage)
                 {
-                    Body = asyncOperation.Error,
+                    Body = asyncOperation?.Error,
                     Request = new HttpRequestMessageWrapper(pollingState.Request, null),
                     Response = new HttpResponseMessageWrapper(pollingState.Response, responseContent)
                 };

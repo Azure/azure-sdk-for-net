@@ -1485,4 +1485,60 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             yield return response2;
         }
     }
+
+    static class LROOperationFailedTestResponses
+    {
+        static internal IEnumerable<HttpResponseMessage> MockLROAsyncOperationFailedOnlyStatus()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""location"": ""East US"",
+                      ""etag"": ""9d8d7ed9-7422-46be-82b3-94c5345f6099"",
+                      ""tags"": {},
+                      ""properties"": {
+                            ""clusterVersion"": ""0.0.1000.0"",
+                            ""osType"": ""Linux"",                            
+                            ""provisioningState"": ""InProgress"",
+                            ""clusterState"": ""Accepted"",
+                            ""createdDate"": ""2017-07-25T21:48:17.427"",
+                            ""quotaInfo"": 
+                                {
+                                    ""coresUsed"": ""200""
+                                },
+                            }
+                    }
+            ")
+            };
+            //response1.Headers.Add("Azure-AsyncOperation", "https://management.azure.com:090/subscriptions/434c10bb-83d3-6b318c6c7305/resourceGroups/hdisdk1706/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview");
+            response1.Headers.Add("Location", "https://management.azure.com:090/subscriptions/947c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk1706/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                  ""https://mdsbrketwprodsn1prod.blob.core.windows.net/cmakexe/abbd1dc4-44eb-4a66-9d90-156f7e5191a7/vpnclientconfiguration.zip?sv=2015-04-05&sr=b&sig=Ec6g2tlP0xktQSipQCTO55mnNjwOxTsge4Ot3sjX8Z8%3D&st=2017-08-28T21%3A25%3A34Z&se=2017-08-28T22%3A25%3A34Z&sp=r&fileExtension=.zip""
+                }
+            ")
+            };
+
+            yield return response2;
+
+
+            //var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            //{
+            //    Content = new StringContent(@"
+            //    {
+            //      ""status"": ""Failed""
+            //    }
+            //")
+            //};
+
+            //yield return response2;
+
+        }
+    }
 }

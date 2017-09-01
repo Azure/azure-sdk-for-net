@@ -15,6 +15,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using Microsoft.Rest.Azure;
     using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
     using LROPatchResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationPatchTestResponses;
+    using LROFailedResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationFailedTestResponses;
 
     /// <summary>
     /// 
@@ -824,6 +825,29 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
             Assert.Equal("https://management.azure.com:90/subscriptions/947c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk1706/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview",
                 handler.Requests[1].RequestUri.ToString());
+        }
+    }
+
+    /// <summary>
+    /// LOR Failed test scenrios
+    /// </summary>
+    public class LRO_FailedTests
+    {
+        [Fact(Skip = "Potential scenario that will have to be supported")]
+        public void TestLROAsynOperationFailureWith200()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROFailedResponses.MockLROAsyncOperationFailedOnlyStatus());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            try
+            {
+                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            }
+            catch (Exception ex)
+            {
+                Assert.Contains("Long running operation failed with status", ex.Message);
+            }
         }
     }
 }

@@ -357,8 +357,8 @@ namespace Microsoft.Rest.Azure
             return true;
         }
 
+        
         /*
-
           /// <summary>
           /// Updates PollingState from GET operations.
           /// </summary>
