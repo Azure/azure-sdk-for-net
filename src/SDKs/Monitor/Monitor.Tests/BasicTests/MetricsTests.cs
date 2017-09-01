@@ -19,6 +19,7 @@ namespace Monitor.Tests.BasicTests
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
         
         [Fact]
+        [Trait("Category", "Mock")]
         public void GetMetricDefinitionsTest()
         {
             IList<MetricDefinition> expectedMetricDefinitionCollection = GetMetricDefinitionCollection(ResourceUri);
@@ -37,6 +38,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void GetMetricsTest()
         {
             IList<Metric> expectedMetricCollection = GetMetricCollection(ResourceUri);
@@ -93,7 +95,7 @@ namespace Monitor.Tests.BasicTests
         {
             if (exp != null)
             {
-                AreEqual(exp.Name, act.Name);
+                Utilities.AreEqual(exp.Name, act.Name);
                 Assert.Equal(exp.Unit, act.Unit);
 
                 if (exp.Data != null)
@@ -136,7 +138,7 @@ namespace Monitor.Tests.BasicTests
         {
             if (exp != null)
             {
-                AreEqual(exp.Name, act.Name);
+                Utilities.AreEqual(exp.Name, act.Name);
                 Assert.Equal(exp.ResourceId, act.ResourceId);
                 Assert.Equal(exp.Unit, act.Unit);
                 Assert.Equal(exp.PrimaryAggregationType, act.PrimaryAggregationType);
