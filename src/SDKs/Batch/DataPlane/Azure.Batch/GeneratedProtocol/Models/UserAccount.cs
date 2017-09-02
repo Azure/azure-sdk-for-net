@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// configuration for the user account.</param>
         public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration))
         {
-            Name = name;
-            Password = password;
-            ElevationLevel = elevationLevel;
-            LinuxUserConfiguration = linuxUserConfiguration;
+            this.Name = name;
+            this.Password = password;
+            this.ElevationLevel = elevationLevel;
+            this.LinuxUserConfiguration = linuxUserConfiguration;
         }
 
         /// <summary>
@@ -81,11 +81,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (this.Name == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
-            if (Password == null)
+            if (this.Password == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Password");
             }

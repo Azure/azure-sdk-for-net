@@ -318,12 +318,12 @@ END;", dbName, tableName, tvfName, viewName, procName);
 
         internal Guid RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
         { 
-            var createOrBuildParams = new JobInformation
+            var createOrBuildParams = new CreateJobParameters
             {
                 Name = TestUtilities.GenerateName("testjob1"),
                 Type = JobType.USql,
                 DegreeOfParallelism = 2,
-                Properties = new USqlJobProperties
+                Properties = new CreateUSqlJobProperties
                 {
                     // Type = JobType.USql,
                     Script = scriptToRun

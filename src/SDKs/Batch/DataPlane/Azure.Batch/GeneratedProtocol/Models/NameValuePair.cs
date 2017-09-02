@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The value in the name-value pair.</param>
         public NameValuePair(string name = default(string), string value = default(string))
         {
-            Name = name;
-            Value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         /// <summary>

@@ -68,27 +68,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the pool as metadata.</param>
         public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<string> applicationLicenses = default(System.Collections.Generic.IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
-            Id = id;
-            DisplayName = displayName;
-            VmSize = vmSize;
-            CloudServiceConfiguration = cloudServiceConfiguration;
-            VirtualMachineConfiguration = virtualMachineConfiguration;
-            ResizeTimeout = resizeTimeout;
-            TargetDedicatedNodes = targetDedicatedNodes;
-            TargetLowPriorityNodes = targetLowPriorityNodes;
-            EnableAutoScale = enableAutoScale;
-            AutoScaleFormula = autoScaleFormula;
-            AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
-            EnableInterNodeCommunication = enableInterNodeCommunication;
-            NetworkConfiguration = networkConfiguration;
-            StartTask = startTask;
-            CertificateReferences = certificateReferences;
-            ApplicationPackageReferences = applicationPackageReferences;
-            ApplicationLicenses = applicationLicenses;
-            MaxTasksPerNode = maxTasksPerNode;
-            TaskSchedulingPolicy = taskSchedulingPolicy;
-            UserAccounts = userAccounts;
-            Metadata = metadata;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.VmSize = vmSize;
+            this.CloudServiceConfiguration = cloudServiceConfiguration;
+            this.VirtualMachineConfiguration = virtualMachineConfiguration;
+            this.ResizeTimeout = resizeTimeout;
+            this.TargetDedicatedNodes = targetDedicatedNodes;
+            this.TargetLowPriorityNodes = targetLowPriorityNodes;
+            this.EnableAutoScale = enableAutoScale;
+            this.AutoScaleFormula = autoScaleFormula;
+            this.AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
+            this.EnableInterNodeCommunication = enableInterNodeCommunication;
+            this.NetworkConfiguration = networkConfiguration;
+            this.StartTask = startTask;
+            this.CertificateReferences = certificateReferences;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.ApplicationLicenses = applicationLicenses;
+            this.MaxTasksPerNode = maxTasksPerNode;
+            this.TaskSchedulingPolicy = taskSchedulingPolicy;
+            this.UserAccounts = userAccounts;
+            this.Metadata = metadata;
         }
 
         /// <summary>
@@ -294,10 +294,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of application packages to be installed on
         /// each compute node in the pool.
         /// </summary>
-        /// <remarks>
-        /// This property is currently not supported on pools created using the
-        /// virtualMachineConfiguration (IaaS) property.
-        /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
@@ -357,11 +353,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (this.Id == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
-            if (VmSize == null)
+            if (this.VmSize == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmSize");
             }
@@ -372,6 +368,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.VirtualMachineConfiguration != null)
             {
                 this.VirtualMachineConfiguration.Validate();
+            }
+            if (this.NetworkConfiguration != null)
+            {
+                this.NetworkConfiguration.Validate();
             }
             if (this.StartTask != null)
             {

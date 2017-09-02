@@ -17,6 +17,7 @@ namespace Monitor.Tests.BasicTests
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void CreateOrUpdateSettingTest()
         {
             AutoscaleSettingResource expResponse = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage");
@@ -33,10 +34,50 @@ namespace Monitor.Tests.BasicTests
             insightsClient = GetMonitorManagementClient(handler);
 
             var actualResponse = insightsClient.AutoscaleSettings.CreateOrUpdate(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", parameters: expResponse);
-            AreEqual(expResponse, actualResponse);
+            Utilities.AreEqual(expResponse, actualResponse);
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
+        public void UpdateSettingTest()
+        {
+            AutoscaleSettingResource resource = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage");
+            resource.Tags = new Dictionary<string, string>
+            {
+                { "key2", "val2" }
+            };
+            resource.Enabled = false;
+
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + resource.Name + "\",\"id\":\"" + resource.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            AutoscaleSettingResourcePatch pathResource = new AutoscaleSettingResourcePatch(
+                name: resource.Name,
+                tags: new Dictionary<string, string>
+                {
+                    { "key2", "val2" }
+                },
+                notifications: resource.Notifications,
+                enabled: false,
+                profiles: resource.Profiles,
+                targetResourceUri: resource.TargetResourceUri
+            );
+
+            var actualResponse = monitorManagementClient.AutoscaleSettings.Update(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", autoscaleSettingResource: pathResource);
+            Utilities.AreEqual(resource, actualResponse);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
         public void Autoscale_GetSetting()
         {
             var expResponse = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty);
@@ -53,7 +94,7 @@ namespace Monitor.Tests.BasicTests
             insightsClient = GetMonitorManagementClient(handler);
 
             AutoscaleSettingResource actualResponse = insightsClient.AutoscaleSettings.Get(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1");
-            AreEqual(expResponse, actualResponse);
+            Utilities.AreEqual(expResponse, actualResponse);
         }
 
         private static AutoscaleSettingResource CreateAutoscaleSetting(string location, string resourceUri, string metricName)
@@ -137,134 +178,6 @@ namespace Monitor.Tests.BasicTests
             };
 
             return setting;
-        }
-
-        private static void AreEqual(AutoscaleSettingResource exp, AutoscaleSettingResource act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.Enabled, act.Enabled);
-                Assert.Equal(exp.Name, act.Name);
-                Assert.Equal(exp.TargetResourceUri, act.TargetResourceUri);
-
-                for (int i = 0; i < exp.Profiles.Count; i++)
-                {
-                    var expectedProfile = exp.Profiles[i];
-                    var actualProfile = act.Profiles[i];
-                    AreEqual(expectedProfile, actualProfile);
-                }
-            }
-        }
-
-        private static void AreEqual(AutoscaleProfile exp, AutoscaleProfile act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.Name, act.Name);
-                AreEqual(exp.Capacity, act.Capacity);
-                AreEqual(exp.FixedDate, act.FixedDate);
-                AreEqual(exp.Recurrence, act.Recurrence);
-                for (int i = 0; i < exp.Rules.Count; i++)
-                {
-                    AreEqual(exp.Rules[i], act.Rules[i]);
-                }
-            }
-        }
-
-        private static void AreEqual(TimeWindow exp, TimeWindow act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.End.ToUniversalTime(), act.End.ToUniversalTime());
-                Assert.Equal(exp.Start.ToUniversalTime(), act.Start.ToUniversalTime());
-                Assert.Equal(exp.TimeZone, act.TimeZone);
-            }
-        }
-
-        private static void AreEqual(ScaleCapacity exp, ScaleCapacity act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.DefaultProperty, act.DefaultProperty);
-                Assert.Equal(exp.Maximum, act.Maximum);
-                Assert.Equal(exp.Minimum, act.Minimum);
-            }
-        }
-
-        private static void AreEqual(Recurrence exp, Recurrence act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.Frequency, act.Frequency);
-                AreEqual(exp.Schedule, act.Schedule);
-            }
-        }
-
-        private static void AreEqual(RecurrentSchedule exp, RecurrentSchedule act)
-        {
-            if (exp != null)
-            {
-                AreEqual(exp.Days, act.Days);
-                AreEqual(exp.Hours, act.Hours);
-                AreEqual(exp.Minutes, act.Minutes);
-                Assert.Equal(exp.TimeZone, act.TimeZone);
-            }
-        }
-
-        private static bool AreEqual(IList<int?> exp, IList<int?> act)
-        {
-            if (exp != null)
-            {
-                if (act == null || exp.Count != act.Count)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    if (exp[i] != act[i])
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            return act == null;
-        }
-
-        private static void AreEqual(ScaleRule exp, ScaleRule act)
-        {
-            if (exp != null)
-            {
-                AreEqual(exp.MetricTrigger, act.MetricTrigger);
-                AreEqual(exp.ScaleAction, act.ScaleAction);
-            }
-        }
-
-        private static void AreEqual(MetricTrigger exp, MetricTrigger act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.MetricName, act.MetricName);
-                Assert.Equal(exp.MetricResourceUri, act.MetricResourceUri);
-                Assert.Equal(exp.Statistic, act.Statistic);
-                Assert.Equal(exp.Threshold, act.Threshold);
-                Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
-                Assert.Equal(exp.TimeGrain, act.TimeGrain);
-                Assert.Equal(exp.TimeWindow, act.TimeWindow);
-            }
-        }
-
-        private static void AreEqual(ScaleAction exp, ScaleAction act)
-        {
-            if (exp != null)
-            {
-                Assert.Equal(exp.Cooldown, act.Cooldown);
-                Assert.Equal(exp.Direction, act.Direction);
-                Assert.Equal(exp.Value, act.Value);
-            }
         }
     }
 }

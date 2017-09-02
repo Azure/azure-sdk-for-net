@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// settings on the virtual machine.</param>
         public VirtualMachineConfiguration(string nodeAgentSKUId, ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
-            ImageReference = imageReference;
-            OsDisk = osDisk;
-            NodeAgentSKUId = nodeAgentSKUId;
-            WindowsConfiguration = windowsConfiguration;
+            this.ImageReference = imageReference;
+            this.OsDisk = osDisk;
+            this.NodeAgentSKUId = nodeAgentSKUId;
+            this.WindowsConfiguration = windowsConfiguration;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (NodeAgentSKUId == null)
+            if (this.NodeAgentSKUId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NodeAgentSKUId");
             }

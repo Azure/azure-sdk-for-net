@@ -65,7 +65,7 @@ namespace Sql.Tests
                 }
 
                 // Verify Policy is disabled to begin with
-                DataMaskingPolicy policy = sqlClient.Databases.GetDataMaskingPolicy(resourceGroup.Name, server.Name, dbName);
+                DataMaskingPolicy policy = sqlClient.DataMaskingPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(DataMaskingState.Disabled, policy.DataMaskingState);
 
                 // Create a Number data masking rule (enables the data masking policy)
@@ -92,15 +92,15 @@ namespace Sql.Tests
                 };
 
                 // Not creating datamasking rule names because name is ignored when creating the rules anyway
-                sqlClient.Databases.CreateOrUpdateDataMaskingRule(resourceGroup.Name, server.Name, dbName, "name", numberRule);
-                sqlClient.Databases.CreateOrUpdateDataMaskingRule(resourceGroup.Name, server.Name, dbName, "name2", textRule);
+                sqlClient.DataMaskingRules.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, "name", numberRule);
+                sqlClient.DataMaskingRules.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, "name2", textRule);
 
                 // Verify Policy is now enabled
-                policy = sqlClient.Databases.GetDataMaskingPolicy(resourceGroup.Name, server.Name, dbName);
+                policy = sqlClient.DataMaskingPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(DataMaskingState.Enabled, policy.DataMaskingState);
 
                 // List data masking rules
-                IEnumerable<DataMaskingRule> rules = sqlClient.Databases.ListDataMaskingRules(resourceGroup.Name, server.Name, dbName);
+                IEnumerable<DataMaskingRule> rules = sqlClient.DataMaskingRules.ListByDatabase(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(2, rules.Count());
 
                 // Verify number rule
@@ -122,28 +122,28 @@ namespace Sql.Tests
 
                 // Delete one rule through PUT
                 numberRule.RuleState = DataMaskingRuleState.Disabled;
-                sqlClient.Databases.CreateOrUpdateDataMaskingRule(resourceGroup.Name, server.Name, dbName, "name", numberRule);
+                sqlClient.DataMaskingRules.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, "name", numberRule);
 
                 // List data masking rules
-                rules = sqlClient.Databases.ListDataMaskingRules(resourceGroup.Name, server.Name, dbName);
+                rules = sqlClient.DataMaskingRules.ListByDatabase(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(1, rules.Count());
                 
                 // Verify Policy now enabled
-                policy = sqlClient.Databases.GetDataMaskingPolicy(resourceGroup.Name, server.Name, dbName);
+                policy = sqlClient.DataMaskingPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(DataMaskingState.Enabled, policy.DataMaskingState);
 
                 // Disable data masking policy (this deletes data masking rules)
-                sqlClient.Databases.CreateOrUpdateDataMaskingPolicy(resourceGroup.Name, server.Name, dbName, new DataMaskingPolicy()
+                sqlClient.DataMaskingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new DataMaskingPolicy()
                 {
                     DataMaskingState = DataMaskingState.Disabled
                 });
 
                 // Verify policy is disabled
-                policy = sqlClient.Databases.GetDataMaskingPolicy(resourceGroup.Name, server.Name, dbName);
+                policy = sqlClient.DataMaskingPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(DataMaskingState.Disabled, policy.DataMaskingState);
 
                 // Verify no rules are returned
-                rules = sqlClient.Databases.ListDataMaskingRules(resourceGroup.Name, server.Name, dbName);
+                rules = sqlClient.DataMaskingRules.ListByDatabase(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(0, rules.Count());
             };
         }

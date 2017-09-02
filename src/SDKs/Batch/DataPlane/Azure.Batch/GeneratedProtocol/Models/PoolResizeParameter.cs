@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// decreasing.</param>
         public PoolResizeParameter(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
-            TargetDedicatedNodes = targetDedicatedNodes;
-            TargetLowPriorityNodes = targetLowPriorityNodes;
-            ResizeTimeout = resizeTimeout;
-            NodeDeallocationOption = nodeDeallocationOption;
+            this.TargetDedicatedNodes = targetDedicatedNodes;
+            this.TargetLowPriorityNodes = targetLowPriorityNodes;
+            this.ResizeTimeout = resizeTimeout;
+            this.NodeDeallocationOption = nodeDeallocationOption;
         }
 
         /// <summary>

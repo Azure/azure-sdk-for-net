@@ -45,14 +45,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// reboots.</param>
         public JobPreparationTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
         {
-            Id = id;
-            CommandLine = commandLine;
-            ResourceFiles = resourceFiles;
-            EnvironmentSettings = environmentSettings;
-            Constraints = constraints;
-            WaitForSuccess = waitForSuccess;
-            UserIdentity = userIdentity;
-            RerunOnNodeRebootAfterSuccess = rerunOnNodeRebootAfterSuccess;
+            this.Id = id;
+            this.CommandLine = commandLine;
+            this.ResourceFiles = resourceFiles;
+            this.EnvironmentSettings = environmentSettings;
+            this.Constraints = constraints;
+            this.WaitForSuccess = waitForSuccess;
+            this.UserIdentity = userIdentity;
+            this.RerunOnNodeRebootAfterSuccess = rerunOnNodeRebootAfterSuccess;
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CommandLine == null)
+            if (this.CommandLine == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }

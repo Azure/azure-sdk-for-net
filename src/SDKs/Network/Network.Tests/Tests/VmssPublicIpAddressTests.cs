@@ -38,7 +38,7 @@ namespace Networks.Tests
             return name;
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VmssPublicIpAddressApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

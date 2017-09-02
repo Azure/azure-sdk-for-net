@@ -44,11 +44,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the request applied.</param>
         public TaskTerminateHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), string dataServiceId = default(string))
         {
-            ClientRequestId = clientRequestId;
-            RequestId = requestId;
-            ETag = eTag;
-            LastModified = lastModified;
-            DataServiceId = dataServiceId;
+            this.ClientRequestId = clientRequestId;
+            this.RequestId = requestId;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.DataServiceId = dataServiceId;
         }
 
         /// <summary>

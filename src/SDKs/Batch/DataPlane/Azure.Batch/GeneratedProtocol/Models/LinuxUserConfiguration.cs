@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// account.</param>
         public LinuxUserConfiguration(int? uid = default(int?), int? gid = default(int?), string sshPrivateKey = default(string))
         {
-            Uid = uid;
-            Gid = gid;
-            SshPrivateKey = sshPrivateKey;
+            this.Uid = uid;
+            this.Gid = gid;
+            this.SshPrivateKey = sshPrivateKey;
         }
 
         /// <summary>

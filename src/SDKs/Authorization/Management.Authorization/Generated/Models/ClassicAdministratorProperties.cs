@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Classic Administrator properties.
@@ -25,26 +23,38 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// Initializes a new instance of the ClassicAdministratorProperties
         /// class.
         /// </summary>
-        public ClassicAdministratorProperties() { }
+        public ClassicAdministratorProperties()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ClassicAdministratorProperties
         /// class.
         /// </summary>
+        /// <param name="emailAddress">The email address of the
+        /// administrator.</param>
+        /// <param name="role">The role of the administrator.</param>
         public ClassicAdministratorProperties(string emailAddress = default(string), string role = default(string))
         {
             EmailAddress = emailAddress;
             Role = role;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets the email address
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the email address of the administrator.
         /// </summary>
         [JsonProperty(PropertyName = "emailAddress")]
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the role
+        /// Gets or sets the role of the administrator.
         /// </summary>
         [JsonProperty(PropertyName = "role")]
         public string Role { get; set; }

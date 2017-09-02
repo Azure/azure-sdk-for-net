@@ -16,7 +16,7 @@ namespace Network.Tests.Tests
 
     public class NetworkWatcherTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void NetworkWatcherApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

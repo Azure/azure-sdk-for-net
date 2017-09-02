@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role assignment create parameters.
@@ -25,16 +23,26 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// Initializes a new instance of the RoleAssignmentCreateParameters
         /// class.
         /// </summary>
-        public RoleAssignmentCreateParameters() { }
+        public RoleAssignmentCreateParameters()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentCreateParameters
         /// class.
         /// </summary>
+        /// <param name="properties">Role assignment properties.</param>
         public RoleAssignmentCreateParameters(RoleAssignmentProperties properties = default(RoleAssignmentProperties))
         {
             Properties = properties;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets role assignment properties.

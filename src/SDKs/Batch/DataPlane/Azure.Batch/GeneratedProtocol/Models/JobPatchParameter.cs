@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the job as metadata.</param>
         public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
-            Priority = priority;
-            OnAllTasksComplete = onAllTasksComplete;
-            Constraints = constraints;
-            PoolInfo = poolInfo;
-            Metadata = metadata;
+            this.Priority = priority;
+            this.OnAllTasksComplete = onAllTasksComplete;
+            this.Constraints = constraints;
+            this.PoolInfo = poolInfo;
+            this.Metadata = metadata;
         }
 
         /// <summary>

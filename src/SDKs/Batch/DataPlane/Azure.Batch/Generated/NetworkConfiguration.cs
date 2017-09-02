@@ -24,15 +24,21 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<PoolEndpointConfiguration> EndpointConfigurationProperty;
             public readonly PropertyAccessor<string> SubnetIdProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>("EndpointConfiguration", BindingAccess.Read | BindingAccess.Write);
                 this.SubnetIdProperty = this.CreatePropertyAccessor<string>("SubnetId", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.NetworkConfiguration protocolObject) : base(BindingState.Bound)
             {
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
+                    "EndpointConfiguration",
+                    BindingAccess.Read);
                 this.SubnetIdProperty = this.CreatePropertyAccessor(
                     protocolObject.SubnetId,
                     "SubnetId",
@@ -60,6 +66,18 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region NetworkConfiguration
+
+        /// <summary>
+        /// Gets or sets the configuration for endpoints on compute nodes in the Batch pool.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified for pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>.
+        /// </remarks>
+        public PoolEndpointConfiguration EndpointConfiguration
+        {
+            get { return this.propertyContainer.EndpointConfigurationProperty.Value; }
+            set { this.propertyContainer.EndpointConfigurationProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets the ARM resource identifier of the virtual network subnet which the compute nodes of the pool will 
@@ -102,6 +120,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.NetworkConfiguration result = new Models.NetworkConfiguration()
             {
+                EndpointConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.EndpointConfiguration, (o) => o.GetTransportObject()),
                 SubnetId = this.SubnetId,
             };
 
