@@ -7,6 +7,16 @@
     <VersionPrefix>2.3.9</VersionPrefix>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+    <ReleaseNotes>
+      <![CDATA[
+        1) Fixed polymorphic deserialization bug when Descriminator type is provided for nested types that are multi level deep inheritance chain
+      ]]>
+    </ReleaseNotes>
+    <PackageReleaseNotes>
+      <![CDATA[
+        1) Fixed polymorphic deserialization bug when Descriminator type is provided for nested types that are multi level deep inheritance chain
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
