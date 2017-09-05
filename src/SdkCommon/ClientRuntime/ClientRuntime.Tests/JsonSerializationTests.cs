@@ -516,7 +516,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests
 
             // deserialize and check
             var animals = JsonConvert.DeserializeObject<Animal[]>(animalsWithAdditionalProperties, deserializeSettings);
-            // throw new Exception(animals[0].AdditionalProperties["favoriteDogfood"] + " asd");
 
             Assert.Equal("cats", animals[0].AdditionalProperties["favoriteDogfood"]);
             Assert.Equal(false, animals[1].AdditionalProperties["likesSquirrels"]);
