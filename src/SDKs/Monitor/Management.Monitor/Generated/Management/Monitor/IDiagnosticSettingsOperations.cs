@@ -20,16 +20,18 @@ namespace Microsoft.Azure.Management.Monitor.Management
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServiceDiagnosticSettingsOperations operations.
+    /// DiagnosticSettingsOperations operations.
     /// </summary>
-    public partial interface IServiceDiagnosticSettingsOperations
+    public partial interface IDiagnosticSettingsOperations
     {
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
-        /// **WARNING**: This method will be deprecated in future releases.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,11 +48,9 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> GetWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticSettingsResource>> GetWithHttpMessagesAsync(string resourceUri, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update new diagnostic settings for the specified
-        /// resource. **WARNING**: This method will be deprecated in future
-        /// releases.
+        /// Creates or updates diagnostic settings for the specified resource.
         /// </summary>
         /// <param name='resourceUri'>
         /// The identifier of the resource.
@@ -58,32 +58,8 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates an existing ServiceDiagnosticSettingsResource. To update
-        /// other fields use the CreateOrUpdate method. **WARNING**: This
-        /// method will be deprecated in future releases.
-        /// </summary>
-        /// <param name='resourceUri'>
-        /// The identifier of the resource.
-        /// </param>
-        /// <param name='serviceDiagnosticSettingsResource'>
-        /// Parameters supplied to the operation.
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -100,6 +76,51 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResourcePatch serviceDiagnosticSettingsResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticSettingsResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceUri, DiagnosticSettingsResource parameters, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes existing diagnostic settings for the specified resource.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the diagnostic setting.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceUri, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the active diagnostic settings list for the specified
+        /// resource.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DiagnosticSettingsResourceCollection>> ListWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
