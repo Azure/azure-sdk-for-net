@@ -1,11 +1,11 @@
 
 # Azure Management Libraries for .NET #
 
-This README is based on the released stable version (1.1). If you are looking for other releases, see [More Information](#more-information)
+This README is based on the released stable version (1.2). If you are looking for other releases, see [More Information](#more-information)
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
-## Feature Availability and Road Map as of Version 1.1 ##
+## Feature Availability and Road Map as of Version 1.2 ##
 
 <table>
   <tr>
@@ -18,13 +18,13 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
     <td>Compute</td>
     <td>Virtual machines and VM extensions<br>Virtual machine scale sets<br>Managed disks</td>
     <td valign="top">Azure container service and registry</td>
-    <td valign="top"></td>
+    <td valign="top">More Azure container registry features</td>
   </tr>
   <tr>
     <td>Storage</td>
     <td>Storage accounts</td>
-    <td></td>
     <td>Encryption</td>
+    <td></td>
   </tr>
   <tr>
     <td>SQL Database</td>
@@ -35,18 +35,18 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
   <tr>
     <td>Networking</td>
     <td>Virtual networks<br>Network interfaces<br>IP addresses<br>Routing table<br>Network security groups<br>Application gateways<br>DNS<br>Traffic managers</td>
-    <td valign="top">Load balancers</td>
-    <td valign="top">VPN<br>Network watchers<br>More application gateway features</td>
+    <td valign="top">Load balancers<br>Network watchers</td>
+    <td valign="top">VPN<br>More application gateway features</td>
   </tr>
   <tr>
     <td>More services</td>
     <td>Resource Manager<br>Key Vault<br>Redis<br>CDN<br>Batch</td>
-    <td valign="top">Web apps<br>Function Apps<br>Service bus<br>Graph RBAC<br>DocumentDB</td>
-    <td valign="top">Monitor<br>Scheduler<br>Functions management<br>Search<br>More Graph RBAC features</td>
+    <td valign="top">Web apps<br>Function Apps<br>Service bus<br>Graph RBAC<br>Cosmos DB<br>Search</td>
+    <td valign="top">Monitor<br>Azure container instances<br>Data Lake</td>
   </tr>
   <tr>
     <td>Fundamentals</td>
-    <td>Authentication - core<br>Async methods</td>
+    <td>Authentication - core<br>Async methods<br>Managed Service Identity</td>
     <td></td>
     <td valign="top"></td>
   </tr>
@@ -243,7 +243,8 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
 <li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-create-virtual-machine-using-specialized-disk-from-VHD">Create virtual machine by importing a specialized operating system disk VHD</a></li>
 <li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-create-virtual-machine-using-specialized-disk-from-snapshot">Create virtual machine using specialized VHD from snapshot</a></li>
 <li><a href="https://github.com/Azure-Samples/managed-disk-dotnet-convert-existing-virtual-machines-to-use-managed-disks">Convert virtual machines to use managed disks</a></li>
-<li><a href="https://github.com/azure-samples/compute-dotnet-manage-virtual-machine-with-unmanaged-disks">Manage virtual machine with unmanaged disks</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-with-unmanaged-disks">Manage virtual machine with unmanaged disks</a></li>
+<li><a href="https://github.com/Azure-Samples/aad-dotnet-manage-resources-from-vm-with-msi">Manage Azure resources from a virtual machine with managed service identity (MSI)</a></li></ul></td>
 </ul>
 </td>
   </tr>
@@ -267,7 +268,7 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
     <td>Active Directory</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/aad-dotnet-manage-service-principals">Manage service principals using Java</a></li>
-<li><a href="https://github.com/Azure-Samples/aad-dotnet-browse-graph-and-manage-roles">Browse graph (users, groups and members) and managing roles</a></li>
+<li><a href="https://github.com/Azure-Samples/aad-dotnet-manage-users-groups-and-roles">Manage users and groups and manage their roles</a></li>
 <li><a href="https://github.com/Azure-Samples/aad-dotnet-manage-passwords">Manage passwords</li>
 </ul></td>
   </tr>
@@ -300,6 +301,8 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-ip-address">Manage IP address</a></li>
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-internet-facing-load-balancers">Manage Internet facing load balancers</a></li>
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-internal-load-balancers">Manage internal load balancers</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-use-new-watcher">Use net watcher</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-create-simple-internet-facing-load-balancer">Create simple Internet facing load balancer</a></li>
 </ul>
 </td>
   </tr>
@@ -432,6 +435,12 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
 <li><a href="https://github.com/Azure-Samples/batch-dotnet-manage-batch-accounts">Manage batch accounts</a></li>
 </ul></td>
   </tr>
+  <tr>
+    <td>Search</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/search-dotnet-manage-search-service">Manage Azure search</a></li>
+</ul></td>
+  </tr>  
 </table>
 
 
@@ -439,9 +448,9 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
 
 # Download #
 
-**1.1** release builds are available on NuGet:
+**1.2** release builds are available on NuGet:
 
-|Azure Management Library                     | Package name                                        | Stable (1.1 release) |
+|Azure Management Library                     | Package name                                        | Stable (1.2 release) |
 |---------------------------------------------|-----------------------------------------------------|------------------------|
 |Azure Management Client (wrapper package)    | `Microsoft.Azure.Management.Fluent`                 | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/) |
 |App Service (Web Apps and Functions)         | `Microsoft.Azure.Management.AppService.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/) |
@@ -449,13 +458,14 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
 |CDN                                          | `Microsoft.Azure.Management.Cdn.Fluent`             | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Cdn.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Cdn.Fluent/) |
 |Virtual Machines, Virtual Machine Scale Sets, Azure Container Services| `Microsoft.Azure.Management.Compute.Fluent`         | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Compute.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute.Fluent/) |
 |Container Registry                           | `Microsoft.Azure.Management.ContainerRegistry.Fluent`| [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ContainerRegistry.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ContainerRegistry.Fluent/) |
+|Cosmos DB                                    | `Microsoft.Azure.Management.CosmosDB.Fluent`        | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.CosmosDB.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.CosmosDB.Fluent/) |
 |DNS                                          | `Microsoft.Azure.Management.Dns.Fluent`             | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Dns.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Dns.Fluent/) |
-|Document DB                                  | `Microsoft.Azure.Management.DocumentDB.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.DocumentDB.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.DocumentDB.Fluent/) |
 |Graph RBAC                                   | `Microsoft.Azure.Management.Graph.RBAC.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Graph.RBAC.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Graph.RBAC.Fluent/) |
 |Key Vault                                    | `Microsoft.Azure.Management.KeyVault.Fluent`        | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.KeyVault.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.KeyVault.Fluent/) |
 |Networking                                   | `Microsoft.Azure.Management.Network.Fluent`         | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Network.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Network.Fluent/) |
 |Redis Cache                                  | `Microsoft.Azure.Management.Redis.Fluent`           | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Redis.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Redis.Fluent/) |
 |Resource Manager                             | `Microsoft.Azure.Management.ResourceManager.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ResourceManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ResourceManager.Fluent/) |
+|Search                                       | `Microsoft.Azure.Management.Search.Fluent`          | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Search.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Search.Fluent/) |
 |Service Bus                                  | `Microsoft.Azure.Management.ServiceBus.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ServiceBus.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ServiceBus.Fluent/) |
 |SQL Database                                 | `Microsoft.Azure.Management.Sql.Fluent`             | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Sql.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Sql.Fluent/) |
 |Storage                                      | `Microsoft.Azure.Management.Storage.Fluent`         | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Storage.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage.Fluent/) |
@@ -470,7 +480,7 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
 
 # Help
 
-If you are migrating your code to 1.1, you can use these notes for [preparing your code for 1.1 from 1.0](./notes/prepare-for-1.1.md).
+If you are migrating your code to 1.2, you can use these notes for [preparing your code for 1.2 from 1.1](./notes/prepare-for-1.2.md).
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
@@ -494,6 +504,7 @@ If you would like to become an active contributor to this project please follow 
 
 | Version           | SHA1                                                                                      | Remarks                                               |
 |-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| 1.1               | [1.1](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.1)                | Tagged release for 1.1 version of Azure management libraries |
 | 1.0               | [1.0](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-stable)           | Tagged release for 1.0 version of Azure management libraries |
 | 1.0.0-beta5       | [1.0.0-beta5](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta5)           | Tagged release for 1.0.0-beta5 version of Azure management libraries |
 | 1.0.0-beta4       | [1.0.0-beta4](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta4)           | Tagged release for 1.0.0-beta4 version of Azure management libraries |
