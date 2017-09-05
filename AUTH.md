@@ -1,11 +1,11 @@
 # Authentication in Azure Management Libraries for .NET
 
 To use the APIs in the Azure Management Libraries for .NET, as the first step you need to 
-create an authenticated client. There are several possible approaches to authentication. This document illustrates a couple of the simpler ones.
+create an authenticated client. There are several possible approaches to authentication. This document illustrates a couple of the simpler ones
 
 ## Using an authentication file
 
-> :warning: Note, file-based authentication is an experimental feature that may or may not be available in later releases. The file format it relies on is subject to change as well.
+> ​:warning: Note, file-based authentication is an experimental feature that may or may not be available in later releases. The file format it relies on is subject to change as well.
 
 To create an authenticated Azure client:
 
@@ -25,14 +25,14 @@ If you don't have Azure CLI installed, you can also do this in the [cloud shell]
 
 Similarly to the [file-based approach](#using-an-authentication-file), this method requires a [service principal registration](#creating-a-service-principal-in-azure), but instead of storing the credentials in a local file, the required inputs can be supplied directly via an instance of the `AzureCredentials` class:
 
-```
+```csharp
 var creds = new AzureCredentialsFactory().FromServicePrincipal(client, key, tenant, AzureEnvironment.AzureGlobalCloud);
 var azure = Azure.Authenticate(creds).WithSubscription(subscriptionId);
 ```
 
 or
 
-```
+```csharp
 var creds = new AzureCredentialsFactory().FromServicePrincipal(client, pfxCertificatePath, password, tenant, AzureEnvironment.AzureGlobalCloud);
 var azure = Azure.Authenticate(creds).WithSubscription(subscriptionId);
 ```
@@ -108,4 +108,3 @@ If you are using the default Azure public cloud, you can leave all the URL field
 The `clientId` and `tenantId` are from your service principal registration. If your service principal uses key authentication, `clientSecret` is the password credential added to the service principal. If your service principal uses certificate authentication, `clientCertificate` is the path to your pfx certificate. You also need to provide the `clientCertificatePassword` for the PFX certificate.
 
 This approach enables unattended authentication for your application (i.e. no interactive user login, no token management needed).  The `subscription` represents the subscription ID you want to use as the default subscription. The remaining URIs and URLs represent the end points for the needed Azure services, defaulted to Azure public cloud.
-
