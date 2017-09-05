@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             {
                 AuthenticationEndpoint = "https://login.microsoftonline.de/",
                 ResourceManagerEndpoint = "https://management.microsoftazure.de/",
-                ManagementEnpoint = "https://portal.microsoftazure.de/",
+                ManagementEnpoint = "https://management.microsoftazure.de/",
                 GraphEndpoint = "https://graph.cloudapi.de/",
                 StorageEndpointSuffix = ".core.cloudapi.de"
             };
