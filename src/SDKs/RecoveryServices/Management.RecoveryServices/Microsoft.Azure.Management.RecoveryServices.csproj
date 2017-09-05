@@ -11,6 +11,9 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.10" />
+  </ItemGroup>
 </Project>
   <!--
   <ItemGroup>
