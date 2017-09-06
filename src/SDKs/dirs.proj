@@ -53,10 +53,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)\Authorization.Tests\Microsoft.Rest.ClientRuntime.Azure.csproj" />
 		-->
 
-		<!-- Azure Stack Admin -->
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\FabricAdmin\Fabric.Admin\Microsoft.AzureStack.Management.Fabric.Admin.csproj" /> 
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\InfrastructureInsights.Admin\InfrastructureInsights.Admin\Microsoft.AzureStack.InfrastructureInsights.Admin.csproj" /> 
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\CommerceAdmin\Commerce.Admin\Microsoft.AzureStack.Commerce.Admin.csproj" /> 
 	</ItemGroup>
 
   
@@ -107,11 +103,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)StreamAnalytics\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\**\*Tests.csproj" ProjectType="Test"/>		
-
-		<!-- Azure Stack Admin -->
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\FabricAdmin\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\InfrastructureInsightsAdmin\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\CommerceAdmin\**\*Tests.csproj" ProjectType="Test"/>
 
 	</ItemGroup>
   

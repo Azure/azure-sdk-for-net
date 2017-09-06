@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure Stack InfrastructureInsights Admin Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Stack InfrastructureInsights Admin Resources.")]
+
+[assembly: AssemblyTitle("Microsoft Azure Stack Fabric Admin Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Stack Fabric Admin Resources.")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
