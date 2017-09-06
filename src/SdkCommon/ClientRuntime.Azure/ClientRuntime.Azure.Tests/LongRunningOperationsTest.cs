@@ -697,6 +697,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         [Fact]
         public void TestCreateOrUpdateWithRetryAfter()
         {
+            //Remove the workaround to add foo as the recording mode once HTtpRecorder is optimized and test hook put in place in CR Azure
+            System.Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "foo");
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
@@ -712,6 +714,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         [Fact]
         public void TestDeleteWithRetryAfter()
         {
+            //Remove the workaround to add foo as the recording mode once HTtpRecorder is optimized and test hook put in place in CR Azure
+            System.Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "foo");
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
@@ -727,6 +731,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         [Fact]
         public void TestPatchWithRetryAfter()
         {
+            //Remove the workaround to add foo as the recording mode once HTtpRecorder is optimized and test hook put in place in CR Azure
+            System.Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "foo");
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockPatchWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);            
@@ -741,6 +747,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         [Fact]
         public void TestCreateWithDifferentRetryAfter()
         {
+            //Remove the workaround to add foo as the recording mode once HTtpRecorder is optimized and test hook put in place in CR Azure
+            System.Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "foo");
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithDifferentRetryAfterValues());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
@@ -769,6 +777,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         [Fact]
         public void TestCreateWithRetryAfterDefaultMax()
         {
+            System.Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "foo");
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateWithRetryAfterDefaultMax());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
