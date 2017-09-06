@@ -1541,6 +1541,7 @@ namespace RecoveryServices.SiteRecovery.Tests
                 client.ReplicationFabrics.MigrateToAad("38de67c62c2b231fb647b060df06a8a69da7e305c44db6646693b7470d709c87");
             }
         }
+
         [Fact]
         public void ListEventByQuery()
         {
