@@ -79,7 +79,7 @@ namespace Microsoft.Rest.Azure
                     if (resource != null && resource["properties"] != null &&
                         resource["properties"]["provisioningState"] != null)
                     {
-                        Status = (string) resource["properties"]["provisioningState"];
+                        Status = (string)resource["properties"]["provisioningState"];
                     }
                     else
                     {
@@ -149,7 +149,7 @@ namespace Microsoft.Rest.Azure
                     {
                         LocationHeaderLink = _response.Headers.GetValues("Location").FirstOrDefault();
                     }
-                    
+
                     if (_response.Headers.Contains("Retry-After"))
                     {
                         RetryAfterInSeconds = int.Parse(_response.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
@@ -230,6 +230,12 @@ namespace Microsoft.Rest.Azure
                     currentValue = DEFAULT_MIN_DELAY_SECONDS;
                 else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
                     currentValue = DEFAULT_MAX_DELAY_SECONDS;
+#if DEBUG
+                if(IsTestModeEnabled)
+                {
+                    currentValue = TESTMODEDELAYSECONDS;
+                }
+#endif
             }
             else
             {
@@ -238,17 +244,35 @@ namespace Microsoft.Rest.Azure
 
             return currentValue.Value;
         }
-        
-        //internal int GetRetryAfterValueFromHeader(HttpResponseMessage responseMessage)
-        //{
-        //    int retryAfter = 0;
-        //    if (responseMessage != null && responseMessage.Headers.Contains("Retry-After"))
-        //    {
-        //        retryAfter = int.Parse(responseMessage.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
-        //    }
 
-        //    return retryAfter;
-        //}
+#if DEBUG
+        // This test hook is put in place to get around an issue of really long recorded tests
+        // Once HttpRecorder is optimized this workaround can be removed
+        // Currently long recorded tests have Retry-After and every single Retry-After affects the perf of test during playback
+        const int TESTMODEDELAYSECONDS = 1;
+        private bool _isTestModeEnabled;
+        private bool IsTestModeEnabled
+        {
+            get
+            {
+                string testMode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+                if (string.IsNullOrEmpty(testMode))
+                {
+                    _isTestModeEnabled = true;
+                }
+                else if (testMode.Equals("playback", StringComparison.OrdinalIgnoreCase))
+                {
+                    _isTestModeEnabled = true;
+                }
+                else
+                {
+                    _isTestModeEnabled = false;
+                }
+
+                return _isTestModeEnabled;
+            }
+        }
+#endif
 
         /// <summary>
         /// Gets CloudException from current instance.  
