@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
     <Description>Microsoft Azure Management Cognitive Services Library</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
     <PackageTags>Microsoft Azure Cognitive Services management;Cognitive Services;Cognitive Services management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>

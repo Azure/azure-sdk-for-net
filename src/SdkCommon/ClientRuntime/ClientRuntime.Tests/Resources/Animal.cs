@@ -9,6 +9,9 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
     [JsonObject("animal")]
     public class Animal
     {
+        [JsonProperty("bestFriend")]
+        public Animal BestFriend { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
     }

@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/microsoft.insights/metricDefinitions?$filter=name.value%20eq%20'Requests'&api-version=2016-03-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzA3YzBiMDlkLTlmNjktNGU2ZS04ZDA1LWY1OWY2NzI5OWNiMi9yZXNvdXJjZUdyb3Vwcy9SYWM0NlBvc3RTd2FwUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvYWxlcnRydWxlVGVzdC9wcm92aWRlcnMvbWljcm9zb2Z0Lmluc2lnaHRzL21ldHJpY0RlZmluaXRpb25zPyRmaWx0ZXI9bmFtZS52YWx1ZSUyMGVxJTIwJ1JlcXVlc3RzJyZhcGktdmVyc2lvbj0yMDE2LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d0120469-8716-402c-8fd6-f5a58962b66e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2053.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.MonitorClient/0.16.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/microsoft.insights/metricdefinitions\",\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"Requests\",\r\n        \"localizedValue\": \"Requests\"\r\n      },\r\n      \"category\": \"AllMetrics\",\r\n      \"startTime\": \"0001-01-01T00:00:00Z\",\r\n      \"endTime\": \"0001-01-01T00:00:00Z\",\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Total\",\r\n      \"resourceUri\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n      \"resourceId\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"P30D\",\r\n          \"location\": null,\r\n          \"blobLocation\": null\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P30D\",\r\n          \"location\": null,\r\n          \"blobLocation\": null\r\n        }\r\n      ],\r\n      \"properties\": null,\r\n      \"dimensions\": null,\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/microsoft.insights/metricdefinitions/Requests\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1078"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+            "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3ff82740-1dcf-45d2-9404-7a20a2c23124"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "8eb745c8-79ad-45cb-9ee2-345e62148dd0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170802T162104Z:8eb745c8-79ad-45cb-9ee2-345e62148dd0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 02 Aug 2017 16:21:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "07c0b09d-9f69-4e6e-8d05-f59f67299cb2"
+  }
+}

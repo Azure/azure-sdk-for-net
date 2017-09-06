@@ -25,8 +25,26 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         public void PolymorphicSerializeWorks()
         {
             Zoo zoo = new Zoo() { Id = 1 };
-            zoo.Animals.Add(new Dog() { Name = "Fido", LikesDogfood = true });
-            zoo.Animals.Add(new Cat() { Name = "Felix", LikesMice = false, Dislikes = new Dog() { Name = "Angry", LikesDogfood = true } });
+            zoo.Animals.Add(new Dog() {
+                Name = "Fido",
+                LikesDogfood = true
+            });
+            zoo.Animals.Add(new Cat() {
+                Name = "Felix",
+                LikesMice = false,
+                Dislikes = new Dog() {
+                    Name = "Angry",
+                    LikesDogfood = true
+                },
+                BestFriend = new Animal() {
+                    Name = "Rudy the Rabbit",
+                    BestFriend = new Cat()
+                    {
+                        Name = "Jango",
+                        LikesMice = true
+                    }
+                }
+            });
             var serializeSettings = new JsonSerializerSettings();
             serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
@@ -41,6 +59,8 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(zoo.Animals[0].GetType(), zoo2.Animals[0].GetType());
             Assert.Equal(zoo.Animals[1].GetType(), zoo2.Animals[1].GetType());
             Assert.Equal(((Cat)zoo.Animals[1]).Dislikes.GetType(), ((Cat)zoo2.Animals[1]).Dislikes.GetType());
+            Assert.Equal(zoo.Animals[1].BestFriend.GetType(), zoo2.Animals[1].BestFriend.GetType());
+            Assert.Equal(zoo.Animals[1].BestFriend.BestFriend.GetType(), zoo2.Animals[1].BestFriend.BestFriend.GetType());
             Assert.Contains("dType", serializedJson);
         }
 
