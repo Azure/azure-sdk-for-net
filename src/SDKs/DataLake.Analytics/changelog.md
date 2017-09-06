@@ -1,4 +1,10 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
+### Changes in 3.1.2-preview
+
+**Notes**
+
+- The JobInnerError object is now recursively defined in order to capture additional error information returned by the service
+
 ### Changes in 3.1.1-preview
 
 **Notes**
