@@ -8,6 +8,125 @@ netcore11='netcoreapp1.1'
 ubuntu1404="ubuntu.14.04-x64"
 nugetOrgSource="https://api.nuget.org/v3/index.json"
 localNugetFeed="./tools/LocalNugetFeed"
+sdkdir=$rootdir/src/SDKs
+
+restoreBuildCR() {
+    echo "Restore ClientRuntime for $ubuntu1404"
+    dotnet restore src/SdkCommon/ClientRuntime.sln -r $ubuntu1404
+
+    echo "Build ClientRuntime for $net14"
+    #dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj
+    dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd14
+    dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd14
+    dotnet build src/SdkCommon/ClientRuntime.Azure.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd14
+
+    echo "Running ClientRuntime Tests $netcore11"
+    #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
+    dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
+    dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
+
+}
+
+restoreBuildRepo() {
+    #printf "$sdkdir\n"
+    for folder in $sdkdir/*
+    do
+        item=`basename $folder`
+        if [ -d $sdkdir/$item ]; then
+            printf "$sdkdir/$item\n"
+            if [ -f $sdkdir/$item/*.sln ]; then
+                slnFile=($sdkdir/$item/*.sln)
+                skipRestore=$( skip_Rps $slnFile )
+                if [ "$skipRestore" == false ]; then
+                    printf "Restoring :::::: $slnFile for $ubuntu1404\n"
+                    dotnet restore $slnFile -r $ubuntu1404
+                fi
+                if [ -d $sdkdir/$item/*.Tests ]; then
+                    testProj=($sdkdir/$item/*.Tests/*.csproj)
+                    skipTest=$( skip_Rps $testProj )
+                    printf "$skipRp\n"
+                    if [ "$skipTest" == "false" ]; then
+                        printf "Test ------ $testProj for framework $netcore11\n"
+                        dotnet build $testProj -f $netcore11
+                        dotnet test $testProj -f $netcore11
+                    fi
+                fi
+            fi
+        fi
+    done
+}
+
+restoreBuildCog() {
+    cogMgmtDir=($sdkdir/CognitiveServices/management)
+    cogDataDir=($sdkdir/CognitiveServices/dataPlane)
+
+    if [ -f $cogMgmtDir/*.sln ]; then
+        cogMgmtSlnFile=($cogMgmtDir/*.sln)
+        printf "Restoring :::::: $cogMgmtSlnFile for $ubuntu1404\n"
+        dotnet restore $cogMgmtSlnFile -r $ubuntu1404
+    fi
+
+    if [ -d $cogMgmtDir/*.Tests ]; then
+        cogMgmtTestProj=($cogMgmtDir/*.Tests/*.csproj)
+        printf "Test ------ $cogMgmtTestProj for framework $netcore11\n"
+        dotnet test $cogMgmtTestProj -f $netcore11
+    fi
+
+
+    for cogDir in $cogDataDir/*
+    do
+        #printf "cogDir ==== $cogDir\n"
+        cogDirName=`basename $cogDir`
+        if [ -f $cogDir/*.sln ]; then
+            cogDataProjSlnFile=($cogDir/*.sln)
+            printf "Restoring :::::: $cogDataProjSlnFile for $ubuntu1404\n"
+            dotnet restore $cogDataProjSlnFile -r $ubuntu1404
+        fi
+        if [ -d $cogDir/*.Tests ]; then
+            cogDataTestProj=($cogDir/*.Tests/*.csproj)
+            printf "Test ------ $cogDataTestProj for framework $netcore11\n"
+            dotnet test $cogDataTestProj -f $netcore11
+        fi
+    done
+}
+
+restoreBuildKV() {
+    KVMgmtDir=($sdkdir/KeyVault/Management/*.sln)
+    if [ -f $KVMgmtDir ]; then
+        dotnet restore $KVMgmtDir -r ubuntu1404
+    fi
+
+    kvDataPSln=($sdkdir/KeyVault/dataPlane/*.sln)
+    if [ -f $kvDataPSln ]; then
+        dotnet restore $kvDataPSln -r ubuntu1404
+    fi
+    KVDataPlaneDir=$sdkdir/KeyVault/dataPlane
+    for kvDir in $KVDataPlaneDir/*
+    do
+        kvItem=`basename $kvDir`
+        if [ -d $kvDir ] && [ "$kvItem" != "Microsoft.Azure.KeyVault.Samples" ]
+        then
+            if [[ "$kvItem" =~ "Tests" ]]; then
+                kvTestProj=($kvDir/*.csproj)
+                kvTProj=$( skip_Rps $kvSdkProj )
+                    if [ "$kvTProj" == "false" ]; then
+                        printf "KV TestProject ... $kvTestProj\n"
+                        dotnet restore $kvTestProj -r $ubuntu1404
+                        dotnet test $kvTestProj -f $netcore11
+                    fi
+            else
+                if [ -f $kvDir/*.csproj ]; then
+                    kvSdkProj=($kvDir/*.csproj)
+                    kvProj=$( skip_Rps $kvSdkProj )
+                    if [ "$kvProj" == "false" ]; then
+                        dotnet restore $kvSdkProj -r $ubuntu1404
+                        dotnet build $kvSdkProj -f $netstd14
+                    fi
+                fi
+            fi
+        fi
+    done
+}
 
 skip_Rps() {
     retVal=false
@@ -20,89 +139,11 @@ skip_Rps() {
     echo $retVal
 }
 
-echo "Restore ClientRuntime for $ubuntu1404"
-dotnet restore src/SdkCommon/ClientRuntime.sln -r $ubuntu1404
+restoreBuildCR
+restoreBuildRepo
+restoreBuildCog
+restoreBuildKV
 
-echo "Build ClientRuntime for $net14"
-#dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj
-dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd14
-dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd14
-dotnet build src/SdkCommon/ClientRuntime.Azure.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd14
-
-#echo "Build ClientRuntime Tests for $netcore11"
-#dotnet build src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
-#dotnet build src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
-#dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
-
-echo "Running ClientRuntime Tests $netcore11"
-#dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
-dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
-dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
-
-KVMgmtDir=($sdkdir/KeyVault/Management/*.sln)
-if [ -f $KVMgmtDir ]; then
-    dotnet restore $KVMgmtDir -r ubuntu1404
-fi
-
-sdkdir=$rootdir/src/SDKs
-
-#printf "$sdkdir\n"
-for folder in $sdkdir/*
-do
-    item=`basename $folder`
-    if [ -d $sdkdir/$item ]; then
-        #printf "$sdkdir/$item\n"
-        if [ -f $sdkdir/$item/*.sln ]; then
-            slnFile=($sdkdir/$item/*.sln)
-            skipRestore=$( skip_Rps $slnFile )
-            if [ "$skipRestore" == false ]; then
-                printf "Restoring :::::: $slnFile for $ubuntu1404\n"
-                dotnet restore $slnFile -r $ubuntu1404
-            fi
-            if [ -d $sdkdir/$item/*.Tests ]; then
-                testProj=($sdkdir/$item/*.Tests/*.csproj)
-                skipTest=$( skip_Rps $testProj )
-                #printf "$skipRp\n"
-                if [ "$skipTest" == "false" ]; then
-                    printf "Test ------ $testProj for framework $netcore11\n"
-                    #dotnet build $testProj -f $netcore11
-                    dotnet test $testProj -f $netcore11
-                fi
-            fi
-        fi
-    fi
-done
-
-kvDataPSln=($sdkdir/KeyVault/dataPlane/*.sln)
-if [ -f $kvDataPSln ]; then
-    dotnet restore $kvDataPSln -r ubuntu1404
-fi
-KVDataPlaneDir=$sdkdir/KeyVault/dataPlane
-for kvDir in $KVDataPlaneDir/*
-do
-    kvItem=`basename $kvDir`
-    if [ -d $kvDir ] && [ "$kvItem" != "Microsoft.Azure.KeyVault.Samples" ]
-    then
-        if [[ "$kvItem" =~ "Tests" ]]; then
-            kvTestProj=($kvDir/*.csproj)
-            kvTProj=$( skip_Rps $kvSdkProj )
-                if [ "$kvTProj" == "false" ]; then
-                    printf "KV TestProject ... $kvTestProj\n"
-                    dotnet restore $kvTestProj -r $ubuntu1404
-                    dotnet test $kvTestProj -f $netcore11
-                fi
-        else
-            if [ -f $kvDir/*.csproj ]; then
-                kvSdkProj=($kvDir/*.csproj)
-                kvProj=$( skip_Rps $kvSdkProj )
-                if [ "$kvProj" == "false" ]; then
-                    dotnet restore $kvSdkProj -r $ubuntu1404
-                    dotnet build $kvSdkProj -f $netstd14
-                fi
-            fi
-        fi
-    fi
-done
 
 : '
 #echo "base: "$base
@@ -137,4 +178,13 @@ else
                 #if [[ $("$testProj" =~ "Authorization")  || $( "$testProj" =~ "Gallery" ) || $("$testProj" =~ "Automation") || $( "$testProj" =~ "InTune" ) || $( "$testProj" =~ "DataLake.Store" ) ]]; then
                 #if [[ ("$testProj" =~ "Authorization")  || ( "$testProj" =~ "Gallery" ) || ("$testProj" =~ "Automation") || ( "$testProj" =~ "Intune" ) || ( "$testProj" =~ "DataLake.Store" ) 
                 #|| ( "$testProj" =~ "Monitor" ) || ( "$testProj" =~ "RedisCache" ) ]]; then
+				
+				if [[ "$cogItem" =~ "Tests" ]]; then
+			print "cogItem --- $cogItem\n"
+			cogDataTestProj=($cogItem/*.csproj)
+			printf "Cog TestProjects ... $cogDataTestProj\n"
+			#dotnet restore $cogDataTestProj -r $ubuntu1404
+			#dotnet test $cogDataTestProj -f $netcore11
+		fi
+
 '
