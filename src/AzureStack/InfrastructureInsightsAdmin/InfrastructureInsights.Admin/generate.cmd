@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\..\tools\generate.cmd azsadmin/resource-manager/InfrastructureInsights latest Azure current %CD%
+call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/InfrastructureInsights latest Azure current %CD%

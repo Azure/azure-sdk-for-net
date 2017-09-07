@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\..\tools\generate.cmd azsadmin/resource-manager/fabric latest Azure current %CD%
+call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/fabric latest Azure current %CD%

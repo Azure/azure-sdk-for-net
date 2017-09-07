@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCommon", "..\SDKCommon\TestCommon\TestCommon.csproj", "{EAE2AE14-948D-4613-A4E8-14C50D8D0472}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A13F014-3E55-4ECA-98BA-55216B70A8D4}"
-	ProjectSection(SolutionItems) = preProject
-		..\SDKCommon\Resources\local.testsettings = ..\SDKCommon\Resources\local.testsettings
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce.Tests", "Commerce.Admin.Tests\Commerce.Tests.csproj", "{1B24BC4A-6E4D-4FEB-B5D5-C9684C60A308}"
 EndProject
