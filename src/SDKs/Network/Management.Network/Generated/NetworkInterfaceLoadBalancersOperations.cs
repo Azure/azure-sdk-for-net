@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get all load balancers in a network interface
+        /// List all load balancers in a network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Get all load balancers in a network interface
+        /// List all load balancers in a network interface.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
