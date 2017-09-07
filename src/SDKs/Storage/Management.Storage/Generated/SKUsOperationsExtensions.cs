@@ -19,24 +19,24 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for UsageOperations.
+    /// Extension methods for SKUsOperations.
     /// </summary>
-    public static partial class UsageOperationsExtensions
+    public static partial class SKUsOperationsExtensions
     {
             /// <summary>
-            /// Gets the current usage count and the limit for the resources under the
+            /// Lists the available SKUs supported by Microsoft.Storage for given
             /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Usage> List(this IUsageOperations operations)
+            public static IEnumerable<Sku> List(this ISKUsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the current usage count and the limit for the resources under the
+            /// Lists the available SKUs supported by Microsoft.Storage for given
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Usage>> ListAsync(this IUsageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Sku>> ListAsync(this ISKUsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

@@ -19,12 +19,13 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// SKUsOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface ISKUsOperations
     {
         /// <summary>
-        /// Lists all of the available Storage Rest API operations.
+        /// Lists the available SKUs supported by Microsoft.Storage for given
+        /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,6 +42,6 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Sku>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

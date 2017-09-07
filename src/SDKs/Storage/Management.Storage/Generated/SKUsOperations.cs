@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// UsageOperations operations.
+    /// SKUsOperations operations.
     /// </summary>
-    internal partial class UsageOperations : IServiceOperations<StorageManagementClient>, IUsageOperations
+    internal partial class SKUsOperations : IServiceOperations<StorageManagementClient>, ISKUsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the UsageOperations class.
+        /// Initializes a new instance of the SKUsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal UsageOperations(StorageManagementClient client)
+        internal SKUsOperations(StorageManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Storage
         public StorageManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the current usage count and the limit for the resources under the
+        /// Lists the available SKUs supported by Microsoft.Storage for given
         /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<Usage>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Sku>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Storage
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage/usages").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<Usage>>();
+            var _result = new AzureOperationResponse<IEnumerable<Sku>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Storage
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Usage>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Sku>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
