@@ -552,9 +552,8 @@ namespace CognitiveServices.Tests
                 var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
 
-                cognitiveServicesMgmtClient.Location = "westus";
-
                 var skus = cognitiveServicesMgmtClient.CheckSkuAvailability.List(
+                    location: "westus",
                     skus: new List<string>() { SkuName.S0 },
                     kind: Kind.Face,
                     type: $"{c_resourceNamespace}/{c_resourceType}");

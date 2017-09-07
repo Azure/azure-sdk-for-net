@@ -21,67 +21,17 @@ using Sql.Tests.Utilities;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Rest.Azure;
+using System.Threading;
 using System.Net.Http;
 
 namespace Sql.Tests
 {
     public class SqlManagementTestUtilities
     {
-        public const string DefaultLocationId = "japaneast";
-
-        public const string DefaultLocation =  "Japan East";
-
-        public const string DefaultSecondaryLocationId = "centralus";
-
-        public const string DefaultSecondaryLocation = "Central US";
-
-        public const string DefaultStagePrimaryLocation = "North Europe";
-
-        public const string DefaultStageSecondaryLocation = "SouthEast Asia";
-
-        public const string DefaultEuapPrimaryLocation = "East US 2 EUAP";
-
-        public const string DefaultEuapPrimaryLocationId = "eastus2euap";
-
         public const string DefaultLogin = "dummylogin";
-
         public const string DefaultPassword = "Un53cuRE!";
-
-        public static KeyVaultClient GetKeyVaultClient()
-        {
-            DelegatingHandler mockServer = HttpMockServer.CreateInstance();
-            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), handlers: mockServer);
-        }
-
-        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-
-            var context = new AuthenticationContext(authority);
-            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
-            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
-            var clientCredential = new ClientCredential(authClientId, authSecret);
-            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
-
-            return result.AccessToken;
-        }
-
-        public static string TryGetEnvironmentOrAppSetting(string settingName, string defaultValue = null)
-        {
-            var value = Environment.GetEnvironmentVariable(settingName);
-
-            // We don't use IsNullOrEmpty because an empty setting overrides what's on AppSettings.
-            if (value == null)
-            {
-                var config = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile("appsettings.json").Build();
-                value = config.GetSection("AppSettings:" + settingName).Value;
-            }
-
-            return value ?? defaultValue;
-        }
-
+        
         public const string TestPrefix = "sqlcrudtest-";
 
         public static string GenerateName(
@@ -363,7 +313,7 @@ namespace Sql.Tests
             return Task.WhenAll(createDbTasks);
         }
 
-        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string testPrefix = TestPrefix, string location = DefaultLocationId)
+        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string location, string testPrefix = TestPrefix)
         {
             string version12 = "12.0";
             string serverName = GenerateName(testPrefix);
@@ -397,7 +347,7 @@ namespace Sql.Tests
 
             var sqlClient = context.GetClient<SqlManagementClient>();
             var keyVaultManagementClient = context.GetClient<KeyVaultManagementClient>();
-            var keyVaultClient = SqlManagementTestUtilities.GetKeyVaultClient();
+            var keyVaultClient = TestEnvironmentUtilities.GetKeyVaultClient();
 
             // Prepare vault permissions for the server
             var serverPermissions = new Permissions()
@@ -438,6 +388,24 @@ namespace Sql.Tests
         {
             string vaultName = keyBundle.KeyIdentifier.VaultWithoutScheme.Split('.').First();
             return $"{vaultName}_{keyBundle.KeyIdentifier.Name}_{keyBundle.KeyIdentifier.Version}";
+        }
+
+        public static void ExecuteWithRetry(System.Action action, TimeSpan timeout, TimeSpan retryDelay, Func<CloudException, bool> acceptedErrorFunction)
+        {
+            DateTime timeoutTime = DateTime.Now.Add(timeout);
+            bool passed = false;
+            while (DateTime.Now < timeoutTime && !passed)
+            {
+                try
+                {
+                    action();
+                    passed = true;
+                }
+                catch (CloudException e) when (acceptedErrorFunction(e))
+                {
+                    TestUtilities.Wait(retryDelay);
+                }
+            }
         }
     }
 }

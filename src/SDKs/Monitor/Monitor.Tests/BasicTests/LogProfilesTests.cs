@@ -19,6 +19,7 @@ namespace Monitor.Tests.BasicTests
         private static string DefaultName = "default";
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_CreateOrUpdateTest()
         {
             LogProfileResource expResponse = CreateLogProfile();
@@ -41,6 +42,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_DeleteTest()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -55,6 +57,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_GetTest()
         {
             var expResponse = CreateLogProfile();
@@ -74,6 +77,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void LogProfiles_ListTest()
         {
             var logProfile = CreateLogProfile();
@@ -98,6 +102,36 @@ namespace Monitor.Tests.BasicTests
             Assert.Equal(expResponse.Count, actualResponse.Count);
             AreEqual(expResponse[0], actualResponse[0]);
         }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void LogProfiles_UpdateTest()
+        {
+            LogProfileResource resource = CreateLogProfile();
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            LogProfileResourcePatch patchResource = new LogProfileResourcePatch(
+                locations: resource.Locations,
+                categories: resource.Categories,
+                retentionPolicy: resource.RetentionPolicy,
+                tags: resource.Tags,
+                serviceBusRuleId: resource.ServiceBusRuleId,
+                storageAccountId: resource.StorageAccountId
+                );
+
+            LogProfileResource actualResponse = monitorManagementClient.LogProfiles.Update(logProfileName: DefaultName, logProfilesResource: patchResource);
+            AreEqual(resource, actualResponse);
+        }
+
 
         private static LogProfileResource CreateLogProfile()
         {

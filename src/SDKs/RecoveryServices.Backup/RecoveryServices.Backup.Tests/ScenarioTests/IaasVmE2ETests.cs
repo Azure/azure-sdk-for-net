@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
@@ -40,8 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             using(var testHelper = new TestHelper())
             {
                 testHelper.Initialize(context);
-
-                var containerUniqueName = BackupDefinition.TestCrud.VmDefinition.ContainerUniqueName;
+                
                 var containerName = BackupDefinition.TestCrud.VmDefinition.ContainerName;
                 var itemName = BackupDefinition.TestCrud.VmDefinition.ItemName;
                 var policyName = BackupDefinition.TestCrud.PolicyName;
@@ -54,10 +54,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                 // 2. List protected items
                 var items = testHelper.ListProtectedItems();
                 Assert.NotNull(items);
-                Assert.True(items.Any(item => itemName.Contains(item.Name.ToLower())));
+                Assert.True(items.Any(item => itemName.ToLower().Contains(item.Name.ToLower())));
 
                 // 3. Trigger backup
                 var backupJobId = testHelper.Backup(containerName, itemName);
+
+                IPage<JobResource> backupJobs = testHelper.ListBackupJobs();
+                Assert.True(backupJobs.Any(backupJob => backupJob.Name == backupJobId));
+
                 testHelper.WaitForJobCompletion(backupJobId);
 
                 // 4. List recovery points
@@ -69,10 +73,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                 Assert.NotNull(iaasVmRecoveryPoint);
 
                 // 5. Trigger restore
-                var backedupItem = items.First(item => item.Name.Equals(containerUniqueName));
+                var backedupItem = items.First(item => item.Name.ToLower().Equals(itemName.ToLower()));
                 var recoveryPoint = recoveryPoints.First();
                 var sourceResourceId = ((AzureIaaSVMProtectedItem)backedupItem.Properties).VirtualMachineId;
                 var restoreJobId = testHelper.Restore(containerName, itemName, recoveryPoint.Name, sourceResourceId, storageAccountId);
+
+                backupJobs = testHelper.ListBackupJobs();
+                Assert.True(backupJobs.Any(backupJob => backupJob.Name == restoreJobId));
+
                 testHelper.WaitForJobCompletion(restoreJobId);
 
                 // 6. Disable protection
