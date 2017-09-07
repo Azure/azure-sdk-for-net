@@ -760,7 +760,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(1));
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(0));
         }
 
         /// <summary>
