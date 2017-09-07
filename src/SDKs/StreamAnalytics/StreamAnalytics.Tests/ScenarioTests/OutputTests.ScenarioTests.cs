@@ -747,5 +747,219 @@ namespace StreamAnalytics.Tests
                 Assert.Equal(0, getJobResponse.Outputs.Count());
             }
         }
+
+        [Fact]
+        public async Task OutputOperationsTest_PowerBI()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string resourceGroupName = TestUtilities.GenerateName("sjrg");
+                string jobName = TestUtilities.GenerateName("sj");
+                string outputName = TestUtilities.GenerateName("output");
+
+                var resourceManagementClient = this.GetResourceManagementClient(context);
+                var streamAnalyticsManagementClient = this.GetStreamAnalyticsManagementClient(context);
+
+                string expectedOutputType = TestHelper.GetFullRestOnlyResourceType(TestHelper.OutputsResourceType);
+                string expectedOutputResourceId = TestHelper.GetRestOnlyResourceId(streamAnalyticsManagementClient.SubscriptionId, resourceGroupName, jobName, TestHelper.OutputsResourceType, outputName);
+
+                resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = TestHelper.DefaultLocation });
+
+                PowerBIOutputDataSource powerBI = new PowerBIOutputDataSource()
+                {
+                    RefreshToken = "someRefreshToken==",
+                    TokenUserPrincipalName = "bobsmith@contoso.com",
+                    TokenUserDisplayName = "Bob Smith",
+                    Dataset = "someDataset",
+                    Table = "someTable",
+                    GroupId = "ac40305e-3e8d-43ac-8161-c33799f43e95",
+                    GroupName = "MyPowerBIGroup"
+                };
+                Output output = new Output()
+                {
+                    Datasource = powerBI
+                };
+
+                // PUT job
+                streamAnalyticsManagementClient.StreamingJobs.CreateOrReplace(TestHelper.GetDefaultStreamingJob(), resourceGroupName, jobName);
+
+                // PUT output
+                var putResponse = await streamAnalyticsManagementClient.Outputs.CreateOrReplaceWithHttpMessagesAsync(output, resourceGroupName, jobName, outputName);
+                powerBI.RefreshToken = null; // Null out because secrets are not returned in responses
+                ValidationHelper.ValidateOutput(output, putResponse.Body, false);
+                Assert.Equal(expectedOutputResourceId, putResponse.Body.Id);
+                Assert.Equal(outputName, putResponse.Body.Name);
+                Assert.Equal(expectedOutputType, putResponse.Body.Type);
+
+                // Verify GET request returns expected output
+                var getResponse = await streamAnalyticsManagementClient.Outputs.GetWithHttpMessagesAsync(resourceGroupName, jobName, outputName);
+                ValidationHelper.ValidateOutput(putResponse.Body, getResponse.Body, true);
+                // ETag should be the same
+                Assert.Equal(putResponse.Headers.ETag, getResponse.Headers.ETag);
+
+                // Test Output
+                var testResult = streamAnalyticsManagementClient.Outputs.Test(resourceGroupName, jobName, outputName);
+                Assert.Equal("TestFailed", testResult.Status);
+                Assert.NotNull(testResult.Error);
+                Assert.True(testResult.Error.Message.Contains("either expired or is invalid"));
+
+                // PATCH output
+                var outputPatch = new Output()
+                {
+                    Datasource = new PowerBIOutputDataSource()
+                    {
+                        Dataset = "differentDataset"
+                    }
+                };
+                ((PowerBIOutputDataSource)putResponse.Body.Datasource).Dataset = ((PowerBIOutputDataSource)outputPatch.Datasource).Dataset;
+                var patchResponse = await streamAnalyticsManagementClient.Outputs.UpdateWithHttpMessagesAsync(outputPatch, resourceGroupName, jobName, outputName);
+                ValidationHelper.ValidateOutput(putResponse.Body, patchResponse.Body, true);
+                // ETag should be different after a PATCH operation
+                Assert.NotEqual(putResponse.Headers.ETag, patchResponse.Headers.ETag);
+
+                // Run another GET output to verify that it returns the newly updated properties as well
+                getResponse = await streamAnalyticsManagementClient.Outputs.GetWithHttpMessagesAsync(resourceGroupName, jobName, outputName);
+                ValidationHelper.ValidateOutput(putResponse.Body, getResponse.Body, true);
+                // ETag should be different after a PATCH operation
+                Assert.NotEqual(putResponse.Headers.ETag, getResponse.Headers.ETag);
+                Assert.Equal(patchResponse.Headers.ETag, getResponse.Headers.ETag);
+
+                // List output and verify that the output shows up in the list
+                var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
+                Assert.Equal(1, listResult.Count());
+                ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
+                Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
+
+                // Get job with output expanded and verify that the output shows up
+                var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
+                Assert.Equal(1, getJobResponse.Outputs.Count());
+                ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
+                Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
+
+                // Delete output
+                streamAnalyticsManagementClient.Outputs.Delete(resourceGroupName, jobName, outputName);
+
+                // Verify that list operation returns an empty list after deleting the output
+                listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
+                Assert.Equal(0, listResult.Count());
+
+                // Get job with output expanded and verify that there are no outputs after deleting the output
+                getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
+                Assert.Equal(0, getJobResponse.Outputs.Count());
+            }
+        }
+
+        [Fact]
+        public async Task OutputOperationsTest_AzureDataLakeStore()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string resourceGroupName = TestUtilities.GenerateName("sjrg");
+                string jobName = TestUtilities.GenerateName("sj");
+                string outputName = TestUtilities.GenerateName("output");
+
+                var resourceManagementClient = this.GetResourceManagementClient(context);
+                var streamAnalyticsManagementClient = this.GetStreamAnalyticsManagementClient(context);
+
+                string expectedOutputType = TestHelper.GetFullRestOnlyResourceType(TestHelper.OutputsResourceType);
+                string expectedOutputResourceId = TestHelper.GetRestOnlyResourceId(streamAnalyticsManagementClient.SubscriptionId, resourceGroupName, jobName, TestHelper.OutputsResourceType, outputName);
+
+                resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = TestHelper.DefaultLocation });
+
+                AzureDataLakeStoreOutputDataSource azureDataLakeStore = new AzureDataLakeStoreOutputDataSource()
+                {
+                    RefreshToken = "someRefreshToken==",
+                    TokenUserPrincipalName = "bobsmith@contoso.com",
+                    TokenUserDisplayName = "Bob Smith",
+                    AccountName = "someaccount",
+                    TenantId = "cea4e98b-c798-49e7-8c40-4a2b3beb47dd",
+                    FilePathPrefix = "{date}/{time}",
+                    DateFormat = "yyyy/MM/dd",
+                    TimeFormat = "HH"
+                };
+                Output output = new Output()
+                {
+                    Serialization = new CsvSerialization()
+                    {
+                        FieldDelimiter = ",",
+                        Encoding = Encoding.UTF8
+                    },
+                    Datasource = azureDataLakeStore
+                };
+
+                // PUT job
+                streamAnalyticsManagementClient.StreamingJobs.CreateOrReplace(TestHelper.GetDefaultStreamingJob(), resourceGroupName, jobName);
+
+                // PUT output
+                var putResponse = await streamAnalyticsManagementClient.Outputs.CreateOrReplaceWithHttpMessagesAsync(output, resourceGroupName, jobName, outputName);
+                azureDataLakeStore.RefreshToken = null; // Null out because secrets are not returned in responses
+                ValidationHelper.ValidateOutput(output, putResponse.Body, false);
+                Assert.Equal(expectedOutputResourceId, putResponse.Body.Id);
+                Assert.Equal(outputName, putResponse.Body.Name);
+                Assert.Equal(expectedOutputType, putResponse.Body.Type);
+
+                // Verify GET request returns expected output
+                var getResponse = await streamAnalyticsManagementClient.Outputs.GetWithHttpMessagesAsync(resourceGroupName, jobName, outputName);
+                ValidationHelper.ValidateOutput(putResponse.Body, getResponse.Body, true);
+                // ETag should be the same
+                Assert.Equal(putResponse.Headers.ETag, getResponse.Headers.ETag);
+
+                // Test Output
+                var testResult = streamAnalyticsManagementClient.Outputs.Test(resourceGroupName, jobName, outputName);
+                Assert.Equal("TestFailed", testResult.Status);
+                Assert.NotNull(testResult.Error);
+                Assert.True(testResult.Error.Message.Contains("either expired or is invalid"));
+
+                // PATCH output
+                var outputPatch = new Output()
+                {
+                    Serialization = new CsvSerialization()
+                    {
+                        FieldDelimiter = "|",
+                        Encoding = Encoding.UTF8
+                    },
+                    Datasource = new AzureDataLakeStoreOutputDataSource()
+                    {
+                        AccountName = "differentaccount"
+                    }
+                };
+                ((CsvSerialization)putResponse.Body.Serialization).FieldDelimiter = ((CsvSerialization)outputPatch.Serialization).FieldDelimiter;
+                ((AzureDataLakeStoreOutputDataSource)putResponse.Body.Datasource).AccountName = ((AzureDataLakeStoreOutputDataSource)outputPatch.Datasource).AccountName;
+                var patchResponse = await streamAnalyticsManagementClient.Outputs.UpdateWithHttpMessagesAsync(outputPatch, resourceGroupName, jobName, outputName);
+                ValidationHelper.ValidateOutput(putResponse.Body, patchResponse.Body, true);
+                // ETag should be different after a PATCH operation
+                Assert.NotEqual(putResponse.Headers.ETag, patchResponse.Headers.ETag);
+
+                // Run another GET output to verify that it returns the newly updated properties as well
+                getResponse = await streamAnalyticsManagementClient.Outputs.GetWithHttpMessagesAsync(resourceGroupName, jobName, outputName);
+                ValidationHelper.ValidateOutput(putResponse.Body, getResponse.Body, true);
+                // ETag should be different after a PATCH operation
+                Assert.NotEqual(putResponse.Headers.ETag, getResponse.Headers.ETag);
+                Assert.Equal(patchResponse.Headers.ETag, getResponse.Headers.ETag);
+
+                // List output and verify that the output shows up in the list
+                var listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
+                Assert.Equal(1, listResult.Count());
+                ValidationHelper.ValidateOutput(putResponse.Body, listResult.Single(), true);
+                Assert.Equal(getResponse.Headers.ETag, listResult.Single().Etag);
+
+                // Get job with output expanded and verify that the output shows up
+                var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
+                Assert.Equal(1, getJobResponse.Outputs.Count());
+                ValidationHelper.ValidateOutput(putResponse.Body, getJobResponse.Outputs.Single(), true);
+                Assert.Equal(getResponse.Headers.ETag, getJobResponse.Outputs.Single().Etag);
+
+                // Delete output
+                streamAnalyticsManagementClient.Outputs.Delete(resourceGroupName, jobName, outputName);
+
+                // Verify that list operation returns an empty list after deleting the output
+                listResult = streamAnalyticsManagementClient.Outputs.ListByStreamingJob(resourceGroupName, jobName);
+                Assert.Equal(0, listResult.Count());
+
+                // Get job with output expanded and verify that there are no outputs after deleting the output
+                getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "outputs");
+                Assert.Equal(0, getJobResponse.Outputs.Count());
+            }
+        }
     }
 }
