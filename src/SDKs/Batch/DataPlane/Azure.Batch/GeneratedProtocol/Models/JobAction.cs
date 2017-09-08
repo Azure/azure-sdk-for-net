@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobAction.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum JobAction
     {
-        [System.Runtime.Serialization.EnumMember(Value = "none")]
+        [EnumMember(Value = "none")]
         None,
-        [System.Runtime.Serialization.EnumMember(Value = "disable")]
+        [EnumMember(Value = "disable")]
         Disable,
-        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
+        [EnumMember(Value = "terminate")]
         Terminate
+    }
+    internal static class JobActionEnumExtension
+    {
+        internal static string ToSerializedValue(this JobAction? value)  =>
+            value == null ? null : ((JobAction)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this JobAction value)
+        {
+            switch( value )
+            {
+                case JobAction.None:
+                    return "none";
+                case JobAction.Disable:
+                    return "disable";
+                case JobAction.Terminate:
+                    return "terminate";
+            }
+            return null;
+        }
+
+        internal static JobAction? ParseJobAction(this string value)
+        {
+            switch( value )
+            {
+                case "none":
+                    return JobAction.None;
+                case "disable":
+                    return JobAction.Disable;
+                case "terminate":
+                    return JobAction.Terminate;
+            }
+            return null;
+        }
     }
 }

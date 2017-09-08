@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ErrorMessage class.
         /// </summary>
-        public ErrorMessage() { }
+        public ErrorMessage()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ErrorMessage class.
@@ -27,20 +34,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The text of the message.</param>
         public ErrorMessage(string lang = default(string), string value = default(string))
         {
-            this.Lang = lang;
-            this.Value = value;
+            Lang = lang;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the language code of the error message
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lang")]
+        [JsonProperty(PropertyName = "lang")]
         public string Lang { get; set; }
 
         /// <summary>
         /// Gets or sets the text of the message.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

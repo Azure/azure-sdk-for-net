@@ -8,15 +8,23 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System.Linq;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Models;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// CertificateOperations operations.
     /// </summary>
-    internal partial class CertificateOperations : Microsoft.Rest.IServiceOperations<BatchServiceClient>, ICertificateOperations
+    internal partial class CertificateOperations : IServiceOperations<BatchServiceClient>, ICertificateOperations
     {
         /// <summary>
         /// Initializes a new instance of the CertificateOperations class.
@@ -33,7 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new System.ArgumentNullException("client");
             }
-            this.Client = client;
+            Client = client;
         }
 
         /// <summary>
@@ -59,7 +67,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
@@ -68,19 +76,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<CertificateAddHeaders>> AddWithHttpMessagesAsync(CertificateAddParameter certificate, CertificateAddOptions certificateAddOptions = default(CertificateAddOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationHeaderResponse<CertificateAddHeaders>> AddWithHttpMessagesAsync(CertificateAddParameter certificate, CertificateAddOptions certificateAddOptions = default(CertificateAddOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (certificate == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "certificate");
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificate");
             }
             if (certificate != null)
             {
                 certificate.Validate();
             }
-            if (this.Client.ApiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
             if (certificateAddOptions != null)
@@ -103,53 +111,53 @@ namespace Microsoft.Azure.Batch.Protocol
                 ocpDate = certificateAddOptions.OcpDate;
             }
             // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("certificate", certificate);
                 tracingParameters.Add("timeout", timeout);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "certificates").ToString();
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (this.Client.ApiVersion != null)
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (timeout != null)
             {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(timeout, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (this.Client.AcceptLanguage != null)
+            if (Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
             if (clientRequestId != null)
             {
@@ -157,7 +165,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -165,7 +173,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("return-client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (ocpDate != null)
             {
@@ -173,7 +181,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("ocp-date");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(ocpDate, new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
 
 
@@ -193,28 +201,28 @@ namespace Microsoft.Azure.Batch.Protocol
             string _requestContent = null;
             if(certificate != null)
             {
-                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(certificate, this.Client.SerializationSettings);
-                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _requestContent = SafeJsonConvert.SerializeObject(certificate, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; odata=minimalmetadata; charset=utf-8");
             }
             // Set Credentials
-            if (this.Client.Credentials != null)
+            if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 201)
@@ -223,21 +231,21 @@ namespace Microsoft.Azure.Batch.Protocol
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -247,7 +255,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<CertificateAddHeaders>();
+            var _result = new AzureOperationHeaderResponse<CertificateAddHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -256,20 +264,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateAddHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateAddHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
-            catch (Newtonsoft.Json.JsonException ex)
+            catch (JsonException ex)
             {
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new Microsoft.Rest.SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -290,10 +298,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
@@ -302,11 +310,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Certificate>,CertificateListHeaders>> ListWithHttpMessagesAsync(CertificateListOptions certificateListOptions = default(CertificateListOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>> ListWithHttpMessagesAsync(CertificateListOptions certificateListOptions = default(CertificateListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.Client.ApiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string filter = default(string);
             if (certificateListOptions != null)
@@ -344,12 +352,12 @@ namespace Microsoft.Azure.Batch.Protocol
                 ocpDate = certificateListOptions.OcpDate;
             }
             // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("maxResults", maxResults);
@@ -358,15 +366,15 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "certificates").ToString();
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (this.Client.ApiVersion != null)
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (filter != null)
             {
@@ -378,33 +386,33 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             if (maxResults != null)
             {
-                _queryParameters.Add(string.Format("maxresults={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(maxResults, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("maxresults={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxResults, Client.SerializationSettings).Trim('"'))));
             }
             if (timeout != null)
             {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(timeout, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (this.Client.AcceptLanguage != null)
+            if (Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
             if (clientRequestId != null)
             {
@@ -412,7 +420,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -420,7 +428,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("return-client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (ocpDate != null)
             {
@@ -428,7 +436,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("ocp-date");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(ocpDate, new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
 
 
@@ -447,23 +455,23 @@ namespace Microsoft.Azure.Batch.Protocol
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Client.Credentials != null)
+            if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -472,21 +480,21 @@ namespace Microsoft.Azure.Batch.Protocol
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -496,7 +504,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Certificate>,CertificateListHeaders>();
+            var _result = new AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -509,34 +517,34 @@ namespace Microsoft.Azure.Batch.Protocol
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Certificate>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<Certificate>>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateListHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateListHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
-            catch (Newtonsoft.Json.JsonException ex)
+            catch (JsonException ex)
             {
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new Microsoft.Rest.SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -571,7 +579,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
@@ -580,19 +588,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<CertificateCancelDeletionHeaders>> CancelDeletionWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateCancelDeletionOptions certificateCancelDeletionOptions = default(CertificateCancelDeletionOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationHeaderResponse<CertificateCancelDeletionHeaders>> CancelDeletionWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateCancelDeletionOptions certificateCancelDeletionOptions = default(CertificateCancelDeletionOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (thumbprintAlgorithm == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "thumbprintAlgorithm");
+                throw new ValidationException(ValidationRules.CannotBeNull, "thumbprintAlgorithm");
             }
             if (thumbprint == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "thumbprint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "thumbprint");
             }
-            if (this.Client.ApiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
             if (certificateCancelDeletionOptions != null)
@@ -615,12 +623,12 @@ namespace Microsoft.Azure.Batch.Protocol
                 ocpDate = certificateCancelDeletionOptions.OcpDate;
             }
             // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("thumbprintAlgorithm", thumbprintAlgorithm);
                 tracingParameters.Add("thumbprint", thumbprint);
                 tracingParameters.Add("timeout", timeout);
@@ -628,43 +636,43 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "CancelDeletion", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CancelDeletion", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})/canceldelete").ToString();
             _url = _url.Replace("{thumbprintAlgorithm}", System.Uri.EscapeDataString(thumbprintAlgorithm));
             _url = _url.Replace("{thumbprint}", System.Uri.EscapeDataString(thumbprint));
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (this.Client.ApiVersion != null)
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (timeout != null)
             {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(timeout, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (this.Client.AcceptLanguage != null)
+            if (Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
             if (clientRequestId != null)
             {
@@ -672,7 +680,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -680,7 +688,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("return-client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (ocpDate != null)
             {
@@ -688,7 +696,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("ocp-date");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(ocpDate, new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
 
 
@@ -707,23 +715,23 @@ namespace Microsoft.Azure.Batch.Protocol
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Client.Credentials != null)
+            if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 204)
@@ -732,21 +740,21 @@ namespace Microsoft.Azure.Batch.Protocol
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -756,7 +764,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<CertificateCancelDeletionHeaders>();
+            var _result = new AzureOperationHeaderResponse<CertificateCancelDeletionHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -765,20 +773,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateCancelDeletionHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateCancelDeletionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
-            catch (Newtonsoft.Json.JsonException ex)
+            catch (JsonException ex)
             {
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new Microsoft.Rest.SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -816,7 +824,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
@@ -825,19 +833,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<CertificateDeleteHeaders>> DeleteWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateDeleteOptions certificateDeleteOptions = default(CertificateDeleteOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationHeaderResponse<CertificateDeleteHeaders>> DeleteWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateDeleteOptions certificateDeleteOptions = default(CertificateDeleteOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (thumbprintAlgorithm == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "thumbprintAlgorithm");
+                throw new ValidationException(ValidationRules.CannotBeNull, "thumbprintAlgorithm");
             }
             if (thumbprint == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "thumbprint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "thumbprint");
             }
-            if (this.Client.ApiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             int? timeout = default(int?);
             if (certificateDeleteOptions != null)
@@ -860,12 +868,12 @@ namespace Microsoft.Azure.Batch.Protocol
                 ocpDate = certificateDeleteOptions.OcpDate;
             }
             // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("thumbprintAlgorithm", thumbprintAlgorithm);
                 tracingParameters.Add("thumbprint", thumbprint);
                 tracingParameters.Add("timeout", timeout);
@@ -873,43 +881,43 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})").ToString();
             _url = _url.Replace("{thumbprintAlgorithm}", System.Uri.EscapeDataString(thumbprintAlgorithm));
             _url = _url.Replace("{thumbprint}", System.Uri.EscapeDataString(thumbprint));
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (this.Client.ApiVersion != null)
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (timeout != null)
             {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(timeout, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (this.Client.AcceptLanguage != null)
+            if (Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
             if (clientRequestId != null)
             {
@@ -917,7 +925,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -925,7 +933,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("return-client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (ocpDate != null)
             {
@@ -933,7 +941,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("ocp-date");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(ocpDate, new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
 
 
@@ -952,23 +960,23 @@ namespace Microsoft.Azure.Batch.Protocol
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Client.Credentials != null)
+            if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 202)
@@ -977,21 +985,21 @@ namespace Microsoft.Azure.Batch.Protocol
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1001,7 +1009,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationHeaderResponse<CertificateDeleteHeaders>();
+            var _result = new AzureOperationHeaderResponse<CertificateDeleteHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -1010,20 +1018,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateDeleteHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateDeleteHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
-            catch (Newtonsoft.Json.JsonException ex)
+            catch (JsonException ex)
             {
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new Microsoft.Rest.SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1049,10 +1057,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
@@ -1061,19 +1069,19 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Certificate,CertificateGetHeaders>> GetWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateGetOptions certificateGetOptions = default(CertificateGetOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<Certificate,CertificateGetHeaders>> GetWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateGetOptions certificateGetOptions = default(CertificateGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (thumbprintAlgorithm == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "thumbprintAlgorithm");
+                throw new ValidationException(ValidationRules.CannotBeNull, "thumbprintAlgorithm");
             }
             if (thumbprint == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "thumbprint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "thumbprint");
             }
-            if (this.Client.ApiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string select = default(string);
             if (certificateGetOptions != null)
@@ -1101,12 +1109,12 @@ namespace Microsoft.Azure.Batch.Protocol
                 ocpDate = certificateGetOptions.OcpDate;
             }
             // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("thumbprintAlgorithm", thumbprintAlgorithm);
                 tracingParameters.Add("thumbprint", thumbprint);
                 tracingParameters.Add("select", select);
@@ -1115,17 +1123,17 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "certificates(thumbprintAlgorithm={thumbprintAlgorithm},thumbprint={thumbprint})").ToString();
             _url = _url.Replace("{thumbprintAlgorithm}", System.Uri.EscapeDataString(thumbprintAlgorithm));
             _url = _url.Replace("{thumbprint}", System.Uri.EscapeDataString(thumbprint));
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (this.Client.ApiVersion != null)
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (select != null)
             {
@@ -1133,29 +1141,29 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             if (timeout != null)
             {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(timeout, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (this.Client.AcceptLanguage != null)
+            if (Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
             if (clientRequestId != null)
             {
@@ -1163,7 +1171,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1171,7 +1179,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("return-client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (ocpDate != null)
             {
@@ -1179,7 +1187,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("ocp-date");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(ocpDate, new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
 
 
@@ -1198,23 +1206,23 @@ namespace Microsoft.Azure.Batch.Protocol
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Client.Credentials != null)
+            if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1223,21 +1231,21 @@ namespace Microsoft.Azure.Batch.Protocol
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1247,7 +1255,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Certificate,CertificateGetHeaders>();
+            var _result = new AzureOperationResponse<Certificate,CertificateGetHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -1260,34 +1268,34 @@ namespace Microsoft.Azure.Batch.Protocol
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Certificate>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Certificate>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateGetHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateGetHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
-            catch (Newtonsoft.Json.JsonException ex)
+            catch (JsonException ex)
             {
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new Microsoft.Rest.SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1311,10 +1319,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="BatchErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
@@ -1323,11 +1331,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Certificate>,CertificateListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             System.Guid? clientRequestId = default(System.Guid?);
             if (certificateListNextOptions != null)
@@ -1345,44 +1353,44 @@ namespace Microsoft.Azure.Batch.Protocol
                 ocpDate = certificateListNextOptions.OcpDate;
             }
             // Tracing
-            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
             _url = _url.Replace("{nextLink}", nextPageLink);
-            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
+            List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
             }
-            if (this.Client.AcceptLanguage != null)
+            if (Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
             if (clientRequestId != null)
             {
@@ -1390,7 +1398,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(clientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (returnClientRequestId != null)
             {
@@ -1398,7 +1406,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("return-client-request-id");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
             }
             if (ocpDate != null)
             {
@@ -1406,7 +1414,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     _httpRequest.Headers.Remove("ocp-date");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(ocpDate, new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()).Trim('"'));
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
             }
 
 
@@ -1425,23 +1433,23 @@ namespace Microsoft.Azure.Batch.Protocol
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Client.Credentials != null)
+            if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1450,21 +1458,21 @@ namespace Microsoft.Azure.Batch.Protocol
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1474,7 +1482,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<Certificate>,CertificateListHeaders>();
+            var _result = new AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -1487,34 +1495,34 @@ namespace Microsoft.Azure.Batch.Protocol
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Certificate>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<Certificate>>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateListHeaders>(Newtonsoft.Json.JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CertificateListHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
-            catch (Newtonsoft.Json.JsonException ex)
+            catch (JsonException ex)
             {
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new Microsoft.Rest.SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
-                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }

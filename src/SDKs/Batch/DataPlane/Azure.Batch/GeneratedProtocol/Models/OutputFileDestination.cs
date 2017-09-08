@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the OutputFileDestination class.
         /// </summary>
-        public OutputFileDestination() { }
+        public OutputFileDestination()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OutputFileDestination class.
@@ -27,27 +34,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// files are uploaded.</param>
         public OutputFileDestination(OutputFileBlobContainerDestination container = default(OutputFileBlobContainerDestination))
         {
-            this.Container = container;
+            Container = container;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a location in Azure blob storage to which files are
         /// uploaded.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "container")]
+        [JsonProperty(PropertyName = "container")]
         public OutputFileBlobContainerDestination Container { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Container != null)
+            if (Container != null)
             {
-                this.Container.Validate();
+                Container.Validate();
             }
         }
     }

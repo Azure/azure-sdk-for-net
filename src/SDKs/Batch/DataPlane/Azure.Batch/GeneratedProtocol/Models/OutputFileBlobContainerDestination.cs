@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// OutputFileBlobContainerDestination class.
         /// </summary>
-        public OutputFileBlobContainerDestination() { }
+        public OutputFileBlobContainerDestination()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -32,9 +40,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Azure Storage container.</param>
         public OutputFileBlobContainerDestination(string containerUrl, string path = default(string))
         {
-            this.Path = path;
-            this.ContainerUrl = containerUrl;
+            Path = path;
+            ContainerUrl = containerUrl;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the destination blob or virtual directory within the
@@ -50,7 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the root of the container with a blob name matching their file
         /// name.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "path")]
+        [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
@@ -61,20 +75,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The URL must include a Shared Access Signature (SAS) granting write
         /// permissions to the container.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "containerUrl")]
+        [JsonProperty(PropertyName = "containerUrl")]
         public string ContainerUrl { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.ContainerUrl == null)
+            if (ContainerUrl == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ContainerUrl");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContainerUrl");
             }
         }
     }

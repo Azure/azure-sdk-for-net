@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for PoolState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum PoolState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "active")]
+        [EnumMember(Value = "active")]
         Active,
-        [System.Runtime.Serialization.EnumMember(Value = "deleting")]
+        [EnumMember(Value = "deleting")]
         Deleting,
-        [System.Runtime.Serialization.EnumMember(Value = "upgrading")]
+        [EnumMember(Value = "upgrading")]
         Upgrading
+    }
+    internal static class PoolStateEnumExtension
+    {
+        internal static string ToSerializedValue(this PoolState? value)  =>
+            value == null ? null : ((PoolState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this PoolState value)
+        {
+            switch( value )
+            {
+                case PoolState.Active:
+                    return "active";
+                case PoolState.Deleting:
+                    return "deleting";
+                case PoolState.Upgrading:
+                    return "upgrading";
+            }
+            return null;
+        }
+
+        internal static PoolState? ParsePoolState(this string value)
+        {
+            switch( value )
+            {
+                case "active":
+                    return PoolState.Active;
+                case "deleting":
+                    return PoolState.Deleting;
+                case "upgrading":
+                    return PoolState.Upgrading;
+            }
+            return null;
+        }
     }
 }

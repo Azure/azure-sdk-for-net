@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the FileListFromTaskNextOptions
         /// class.
         /// </summary>
-        public FileListFromTaskNextOptions() { }
+        public FileListFromTaskNextOptions()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the FileListFromTaskNextOptions
@@ -35,24 +44,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// it explicitly if you are calling the REST API directly.</param>
         public FileListFromTaskNextOptions(System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
-            this.ClientRequestId = clientRequestId;
-            this.ReturnClientRequestId = returnClientRequestId;
-            this.OcpDate = ocpDate;
+            ClientRequestId = clientRequestId;
+            ReturnClientRequestId = returnClientRequestId;
+            OcpDate = ocpDate;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the caller-generated request identity, in the form of
         /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the client-request-id
         /// in the response.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
@@ -60,8 +75,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// typically set this to the current system clock time; set it
         /// explicitly if you are calling the REST API directly.
         /// </summary>
-        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
+        [JsonProperty(PropertyName = "")]
         public System.DateTime? OcpDate { get; set; }
 
     }

@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobScheduleExecutionInformation
         /// class.
         /// </summary>
-        public JobScheduleExecutionInformation() { }
+        public JobScheduleExecutionInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobScheduleExecutionInformation
@@ -33,10 +40,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="endTime">The time at which the schedule ended.</param>
         public JobScheduleExecutionInformation(System.DateTime? nextRunTime = default(System.DateTime?), RecentJob recentJob = default(RecentJob), System.DateTime? endTime = default(System.DateTime?))
         {
-            this.NextRunTime = nextRunTime;
-            this.RecentJob = recentJob;
-            this.EndTime = endTime;
+            NextRunTime = nextRunTime;
+            RecentJob = recentJob;
+            EndTime = endTime;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the next time at which a job will be created under
@@ -48,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// disabled, no job will be created at nextRunTime unless the job is
         /// enabled before then.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nextRunTime")]
+        [JsonProperty(PropertyName = "nextRunTime")]
         public System.DateTime? NextRunTime { get; set; }
 
         /// <summary>
@@ -59,7 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is present only if the at least one job has run under
         /// the schedule.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "recentJob")]
+        [JsonProperty(PropertyName = "recentJob")]
         public RecentJob RecentJob { get; set; }
 
         /// <summary>
@@ -69,7 +82,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the job schedule is in the completed
         /// state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
     }

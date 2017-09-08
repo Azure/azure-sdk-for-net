@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SubtaskState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum SubtaskState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "preparing")]
+        [EnumMember(Value = "preparing")]
         Preparing,
-        [System.Runtime.Serialization.EnumMember(Value = "running")]
+        [EnumMember(Value = "running")]
         Running,
-        [System.Runtime.Serialization.EnumMember(Value = "completed")]
+        [EnumMember(Value = "completed")]
         Completed
+    }
+    internal static class SubtaskStateEnumExtension
+    {
+        internal static string ToSerializedValue(this SubtaskState? value)  =>
+            value == null ? null : ((SubtaskState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this SubtaskState value)
+        {
+            switch( value )
+            {
+                case SubtaskState.Preparing:
+                    return "preparing";
+                case SubtaskState.Running:
+                    return "running";
+                case SubtaskState.Completed:
+                    return "completed";
+            }
+            return null;
+        }
+
+        internal static SubtaskState? ParseSubtaskState(this string value)
+        {
+            switch( value )
+            {
+                case "preparing":
+                    return SubtaskState.Preparing;
+                case "running":
+                    return SubtaskState.Running;
+                case "completed":
+                    return SubtaskState.Completed;
+            }
+            return null;
+        }
     }
 }
