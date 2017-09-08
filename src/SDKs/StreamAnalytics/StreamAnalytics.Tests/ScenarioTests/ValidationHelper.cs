@@ -549,6 +549,26 @@ namespace StreamAnalytics.Tests
 
                     ValidateServiceBusTopicOutputDataSource(expectedServiceBusTopicOutputDataSource, actualServiceBusTopicOutputDataSource, validateReadOnlyProperties);
                 }
+                else if (actual is PowerBIOutputDataSource)
+                {
+                    Assert.IsType<PowerBIOutputDataSource>(expected);
+                    Assert.IsType<PowerBIOutputDataSource>(actual);
+
+                    var expectedPowerBIOutputDataSource = expected as PowerBIOutputDataSource;
+                    var actualPowerBIOutputDataSource = actual as PowerBIOutputDataSource;
+
+                    ValidatePowerBIOutputDataSource(expectedPowerBIOutputDataSource, actualPowerBIOutputDataSource, validateReadOnlyProperties);
+                }
+                else if (actual is AzureDataLakeStoreOutputDataSource)
+                {
+                    Assert.IsType<AzureDataLakeStoreOutputDataSource>(expected);
+                    Assert.IsType<AzureDataLakeStoreOutputDataSource>(actual);
+
+                    var expectedAzureDataLakeStoreOutputDataSource = expected as AzureDataLakeStoreOutputDataSource;
+                    var actualAzureDataLakeStoreOutputDataSource = actual as AzureDataLakeStoreOutputDataSource;
+
+                    ValidateAzureDataLakeStoreOutputDataSource(expectedAzureDataLakeStoreOutputDataSource, actualAzureDataLakeStoreOutputDataSource, validateReadOnlyProperties);
+                }
                 else
                 {
                     throw new Exception("Output data source could not be cast to BlobStreamInputDataSource, EventHubStreamInputDataSource, or IoTHubStreamInputDataSource");
@@ -717,6 +737,50 @@ namespace StreamAnalytics.Tests
                 Assert.Equal(expected.SharedAccessPolicyKey, actual.SharedAccessPolicyKey);
                 Assert.Equal(expected.TopicName, actual.TopicName);
                 ValidateStringList(expected.PropertyColumns, actual.PropertyColumns);
+            }
+            else
+            {
+                Assert.Null(expected);
+                Assert.Null(actual);
+            }
+        }
+
+        private static void ValidatePowerBIOutputDataSource(PowerBIOutputDataSource expected, PowerBIOutputDataSource actual, bool validateReadOnlyProperties)
+        {
+            if (actual != null)
+            {
+                Assert.NotNull(expected);
+                Assert.NotNull(actual);
+
+                Assert.Equal(expected.RefreshToken, actual.RefreshToken);
+                Assert.Equal(expected.TokenUserPrincipalName, actual.TokenUserPrincipalName);
+                Assert.Equal(expected.TokenUserDisplayName, actual.TokenUserDisplayName);
+                Assert.Equal(expected.Dataset, actual.Dataset);
+                Assert.Equal(expected.Table, actual.Table);
+                Assert.Equal(expected.GroupId, actual.GroupId);
+                Assert.Equal(expected.GroupName, actual.GroupName);
+            }
+            else
+            {
+                Assert.Null(expected);
+                Assert.Null(actual);
+            }
+        }
+        private static void ValidateAzureDataLakeStoreOutputDataSource(AzureDataLakeStoreOutputDataSource expected, AzureDataLakeStoreOutputDataSource actual, bool validateReadOnlyProperties)
+        {
+            if (actual != null)
+            {
+                Assert.NotNull(expected);
+                Assert.NotNull(actual);
+
+                Assert.Equal(expected.RefreshToken, actual.RefreshToken);
+                Assert.Equal(expected.TokenUserPrincipalName, actual.TokenUserPrincipalName);
+                Assert.Equal(expected.TokenUserDisplayName, actual.TokenUserDisplayName);
+                Assert.Equal(expected.AccountName, actual.AccountName);
+                Assert.Equal(expected.TenantId, actual.TenantId);
+                Assert.Equal(expected.FilePathPrefix, actual.FilePathPrefix);
+                Assert.Equal(expected.DateFormat, actual.DateFormat);
+                Assert.Equal(expected.TimeFormat, actual.TimeFormat);
             }
             else
             {

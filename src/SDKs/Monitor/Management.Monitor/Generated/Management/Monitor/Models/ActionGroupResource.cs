@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// This will be used in SMS messages.</param>
         /// <param name="enabled">Indicates whether this action group is
         /// enabled. If an action group is not enabled, then none of its
-        /// receviers will receive communications.</param>
+        /// receivers will receive communications.</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
 
         /// <summary>
         /// Gets or sets indicates whether this action group is enabled. If an
-        /// action group is not enabled, then none of its receviers will
+        /// action group is not enabled, then none of its receivers will
         /// receive communications.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]

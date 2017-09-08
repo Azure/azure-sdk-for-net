@@ -3,13 +3,13 @@
 
 **Notes**
 
-- The JobInnerError object is now recursively defined in order to capture additional error information returned by the service
+- The JobInnerError object is now recursively defined in order to capture additional error information returned by the service.
 
 ### Changes in 3.1.1-preview
 
 **Notes**
 
-- In version 3.1.0-preview, we made the fields "statistics" and "debugData" of the USqlJobProperties object read-only.  This caused some unforeseen conflicts, so we are reverting this.
+- Reverted the fields "statistics" and "debugData" of the USqlJobProperties object to be read-only.
 
 ### Changes in 3.1.0-preview
 
