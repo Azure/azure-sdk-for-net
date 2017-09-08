@@ -21,7 +21,7 @@ namespace Language.TextAnalytics.Tests
                     new BatchInputV2(
                         new List<InputV2>()
                         {
-                        new InputV2("id","I love my team mates")
+                            new InputV2("id","I love my team mates")
                         }));
 
                 Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
