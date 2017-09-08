@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.Network
     public static partial class NetworkManagementClientExtensions
     {
             /// <summary>
-            /// Checks whether a domain name in the cloudapp.net zone is available for use.
+            /// Checks whether a domain name in the cloudapp.azure.com zone is available
+            /// for use.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,13 +35,14 @@ namespace Microsoft.Azure.Management.Network
             /// The domain name to be verified. It must conform to the following regular
             /// expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
             /// </param>
-            public static DnsNameAvailabilityResult CheckDnsNameAvailability(this INetworkManagementClient operations, string location, string domainNameLabel = default(string))
+            public static DnsNameAvailabilityResult CheckDnsNameAvailability(this INetworkManagementClient operations, string location, string domainNameLabel)
             {
                 return operations.CheckDnsNameAvailabilityAsync(location, domainNameLabel).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Checks whether a domain name in the cloudapp.net zone is available for use.
+            /// Checks whether a domain name in the cloudapp.azure.com zone is available
+            /// for use.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(this INetworkManagementClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync(this INetworkManagementClient operations, string location, string domainNameLabel, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckDnsNameAvailabilityWithHttpMessagesAsync(location, domainNameLabel, null, cancellationToken).ConfigureAwait(false))
                 {

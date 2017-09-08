@@ -4,10 +4,13 @@
     <PackageId>Microsoft.Azure.Management.Network</PackageId>
     <Description>Provides management capabilities for Network services.</Description>
     <AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-    <Version>14.0.0-preview</Version>
+    <Version>14.1.0-preview</Version>
     <PackageTags>Microsoft Azure Network management;Network;Network management;windowsazureofficial</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>  
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Customizations\" />
+  </ItemGroup>  
 </Project>
