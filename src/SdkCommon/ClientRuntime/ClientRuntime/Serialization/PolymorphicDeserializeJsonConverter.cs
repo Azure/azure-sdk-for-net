@@ -2,8 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Rest.Serialization
 {
@@ -36,13 +41,30 @@ namespace Microsoft.Rest.Serialization
         }
 
         /// <summary>
-        /// Returns true if the object being deserialized is the base type. False otherwise.
+        /// Returns true if the object being deserialized is assignable to the base type. False otherwise.
         /// </summary>
         /// <param name="objectType">The type of the object to check.</param>
-        /// <returns>True if the object being deserialized is the base type. False otherwise.</returns>
+        /// <returns>True if the object being deserialized is assignable to the base type. False otherwise.</returns>
         public override bool CanConvert(Type objectType)
         {
-            return typeof (T) == objectType;
+            return typeof(T).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+        }
+
+        /// <summary>
+        /// Case insensitive (and reduced version) of JToken.SelectToken which unfortunately does not offer
+        /// such functionality and has made all potential extension points `internal`.
+        /// </summary>
+        private JToken SelectTokenCaseInsensitive(JObject obj, string path)
+        {
+            JToken result = obj;
+            foreach (var pathComponent in path.Split('.'))
+            {
+                result = (result as JObject)?
+                    .Properties()
+                    .FirstOrDefault(p => string.Equals(p.Name, pathComponent, StringComparison.OrdinalIgnoreCase))?
+                    .Value;
+            }
+            return result;
         }
 
         /// <summary>
@@ -63,13 +85,49 @@ namespace Microsoft.Rest.Serialization
             }
 
             JObject item = JObject.Load(reader);
-            string typeDiscriminator = (string) item[Discriminator];
-            Type derivedType = GetDerivedType(typeof (T), typeDiscriminator);
-            if (derivedType != null)
+            string typeDiscriminator = (string)item[Discriminator];
+            Type resultType = GetDerivedType(objectType, typeDiscriminator) ?? objectType;
+
+            // create instance of correct type
+            var contract = (JsonObjectContract)serializer.ContractResolver.ResolveContract(resultType);
+            var result = contract.DefaultCreator();
+
+            // parse properties
+            var queriedKeys = new HashSet<string> { Discriminator };
+            var additionalPropertiesTargets = new List<JsonProperty>();
+            foreach (var expectedProperty in contract.Properties)
             {
-                return item.ToObject(derivedType, serializer);
+                if (!expectedProperty.Ignored)
+                {
+                    queriedKeys.Add(expectedProperty.PropertyName);
+                    var property = SelectTokenCaseInsensitive(item, expectedProperty.PropertyName);
+                    if (property != null)
+                    {
+                        var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
+                        expectedProperty.ValueProvider.SetValue(result, propertyValue);
+                    }
+                }
+                if (expectedProperty.IsJsonExtensionData())
+                {
+                    additionalPropertiesTargets.Add(expectedProperty);
+                }
             }
-            return item.ToObject(objectType);
+
+            // populate additional properties
+            var dict = new Dictionary<string, object>();
+            foreach (var property in item.Properties())
+            {
+                if (!queriedKeys.Contains(property.Name))
+                {
+                    dict[property.Name] = property.Value.ToObject<object>();
+                }
+            }
+            foreach (var additionalPropertiesTarget in additionalPropertiesTargets)
+            {
+                additionalPropertiesTarget.ValueProvider.SetValue(result, dict);
+            }
+
+            return result;
         }
 
         /// <summary>

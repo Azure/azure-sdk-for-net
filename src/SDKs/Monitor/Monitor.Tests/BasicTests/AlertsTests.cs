@@ -16,6 +16,30 @@ namespace Monitor.Tests.BasicTests
     public class AlertsTests : TestBase
     {
         [Fact]
+        [Trait("Category", "Mock")]
+        public void CreateOrUpdateRuleTest()
+        {
+            AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            var result = insightsClient.AlertRules.CreateOrUpdate(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters);
+
+            Utilities.AreEqual(expectedParameters, result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
         public void GetIncidentTest()
         {
             var expectedIncident = GetIncidents().First();
@@ -34,41 +58,11 @@ namespace Monitor.Tests.BasicTests
                 ruleName: "r1",
                 incidentName: "i1");
 
-            AreEqual(expectedIncident, actualIncident);
-        }
-
-        private static List<Incident> GetIncidents()
-        {
-            return new List<Incident>
-            {
-                new Incident(
-                    activatedTime: DateTime.UtcNow,
-                    isActive: false,
-                    name: "i1",
-                    resolvedTime: DateTime.UtcNow,
-                    ruleName: "r1"
-                )
-            };
-        }
-
-        private static void AreEqual(Incident exp, Incident act)
-        {
-            if (exp != null)
-            {
-                Assert.True(exp.ActivatedTime.HasValue);
-                Assert.True(act.ActivatedTime.HasValue);
-                Assert.Equal(exp.ActivatedTime.Value.ToUniversalTime(), act.ActivatedTime.Value.ToUniversalTime());
-                Assert.Equal(exp.IsActive, act.IsActive);
-                Assert.Equal(exp.Name, act.Name);
-
-                Assert.True(exp.ResolvedTime.HasValue);
-                Assert.True(act.ResolvedTime.HasValue);
-                Assert.Equal(exp.ResolvedTime.Value.ToUniversalTime(), act.ResolvedTime.Value.ToUniversalTime());
-                Assert.Equal(exp.RuleName, act.RuleName);
-            }
+            Utilities.AreEqual(expectedIncident, actualIncident);
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListIncidentsTest()
         {
             var expectedIncidentsResponse = new List<Incident>
@@ -94,54 +88,11 @@ namespace Monitor.Tests.BasicTests
                 resourceGroupName: "rg1",
                 ruleName: "r1");
 
-            AreEqual(expectedIncidentsResponse, actualIncidents.ToList());
-        }
-
-        private void AreEqual(IList<Incident> exp, IList<Incident> act)
-        {
-            if (exp != null)
-            {
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    AreEqual(exp[i], act[i]);
-                }
-            }
-        }
-
-        private static void AreEqual(List<Incident> exp, IList<Incident> act)
-        {
-            if (exp != null)
-            {
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    AreEqual(exp[i], act[i]);
-                }
-            }
+            Utilities.AreEqual(expectedIncidentsResponse, actualIncidents.ToList());
         }
 
         [Fact]
-        public void CreateOrUpdateRuleTest()
-        {
-            AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
-
-            var handler = new RecordedDelegatingHandler();
-            var insightsClient = GetMonitorManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
-            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
-            insightsClient = GetMonitorManagementClient(handler);
-
-            var result = insightsClient.AlertRules.CreateOrUpdate(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters);
-
-            AreEqual(expectedParameters, result);
-        }
-
-        [Fact]
+        [Trait("Category", "Mock")]
         public void ListRulesTest()
         {
             var expResponse = GetRuleResourceCollection();
@@ -159,72 +110,61 @@ namespace Monitor.Tests.BasicTests
             insightsClient = GetMonitorManagementClient(handler);
 
             var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1");
-            AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
+            Utilities.AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
         }
 
-        private void AreEqual(AlertRuleResource exp, AlertRuleResource act)
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void UpdateRulesTest()
         {
-            if (exp != null)
+            AlertRuleResource resource = GetRuleResourceCollection().FirstOrDefault();
+            resource.IsEnabled = false;
+            resource.Tags = new Dictionary<string, string>()
             {
-                Assert.Equal(exp.Location, act.Location);
-                AreEqual(exp.Tags, act.Tags);
-                Assert.Equal(exp.Name, act.Name);
-                Assert.Equal(exp.Description, act.Description);
-                Assert.Equal(exp.IsEnabled,act.IsEnabled);
-                AreEqual(exp.Condition, act.Condition);
-                AreEqual(exp.Actions, act.Actions);
-                //Assert.Equal(exp.LastUpdatedTime, act.LastUpdatedTime);
-            }
+                {"key2", "val2"}
+            };
+
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + resource.Name + "\",\"id\":\"" + resource.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            AlertRuleResourcePatch pathResource = new AlertRuleResourcePatch(
+                name: resource.Name,
+                isEnabled: false,
+                tags: new Dictionary<string, string>()
+                {
+                    {"key2", "val2"}
+                },
+                actions: resource.Actions,
+                condition: resource.Condition,
+                description: resource.Description,
+                lastUpdatedTime: resource.LastUpdatedTime
+            );
+
+            var actualResponse = monitorManagementClient.AlertRules.Update(resourceGroupName: " rg1", ruleName: resource.Name, alertRulesResource: pathResource);
+            Utilities.AreEqual(resource, actualResponse);
         }
 
-        private void AreEqual(RuleCondition exp, RuleCondition act)
+        private static List<Incident> GetIncidents()
         {
-            if (exp is LocationThresholdRuleCondition)
+            return new List<Incident>
             {
-                var expRuleCondition = exp as LocationThresholdRuleCondition;
-                var actRuleCondition = act as LocationThresholdRuleCondition;
-
-                AreEqual(expRuleCondition.DataSource, actRuleCondition.DataSource);
-                Assert.Equal(expRuleCondition.FailedLocationCount, actRuleCondition.FailedLocationCount);
-                Assert.Equal(expRuleCondition.WindowSize, actRuleCondition.WindowSize);
-            }
-        }
-
-        private void AreEqual(RuleDataSource exp, RuleDataSource act)
-        {
-            if (exp is RuleMetricDataSource)
-            {
-                var expMetricDataSource = exp as RuleMetricDataSource;
-                var actMetricDataSource = act as RuleMetricDataSource;
-
-                Assert.Equal(expMetricDataSource.MetricName, actMetricDataSource.MetricName);
-                Assert.Equal(expMetricDataSource.ResourceUri, actMetricDataSource.ResourceUri);
-            }
-        }
-
-        private void AreEqual(IList<RuleAction> exp, IList<RuleAction> act)
-        {
-            Assert.NotNull(exp);
-            Assert.NotNull(act);
-
-            Assert.Equal(exp.Count, act.Count);
-
-            for (int i = 0; i < exp.Count; i++)
-            {
-                AreEqual(exp[i], act[i]);
-            }
-        }
-
-        private void AreEqual(RuleAction exp, RuleAction act)
-        {
-            if (exp is RuleEmailAction)
-            {
-                var expEmailRuleAction = exp as RuleEmailAction;
-                var actEmailRuleAction = act as RuleEmailAction;
-
-                AreEqual(expEmailRuleAction.CustomEmails, actEmailRuleAction.CustomEmails);
-                Assert.Equal(expEmailRuleAction.SendToServiceOwners, actEmailRuleAction.SendToServiceOwners);
-            }
+                new Incident(
+                    activatedTime: DateTime.UtcNow,
+                    isActive: false,
+                    name: "i1",
+                    resolvedTime: DateTime.UtcNow,
+                    ruleName: "r1"
+                )
+            };
         }
 
         private AlertRuleResource GetCreateOrUpdateRuleParameter()
@@ -308,19 +248,6 @@ namespace Monitor.Tests.BasicTests
                     }
                 )
             };
-        }
-
-        private void AreEqual(IList<AlertRuleResource> exp, IList<AlertRuleResource> act)
-        {
-            if (exp != null)
-            {
-                Assert.True(exp.Count == act.Count);
-
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    AreEqual(exp[i], act[i]);
-                }
-            }
         }
     }
 }
