@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// unique across all receivers within an action group.</param>
         /// <param name="emailAddress">The email address of this
         /// receiver.</param>
-        /// <param name="status">Possible values include: 'NotSpecified',
-        /// 'Enabled', 'Disabled'</param>
+        /// <param name="status">The receiver status of the e-mail. Possible
+        /// values include: 'NotSpecified', 'Enabled', 'Disabled'</param>
         public EmailReceiver(string name, string emailAddress, ReceiverStatus? status = default(ReceiverStatus?))
         {
             Name = name;
@@ -65,7 +65,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// Gets possible values include: 'NotSpecified', 'Enabled', 'Disabled'
+        /// Gets the receiver status of the e-mail. Possible values include:
+        /// 'NotSpecified', 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public ReceiverStatus? Status { get; private set; }

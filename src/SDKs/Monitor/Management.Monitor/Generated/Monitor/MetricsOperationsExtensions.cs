@@ -14,8 +14,6 @@ namespace Microsoft.Azure.Management.Monitor
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Azure.OData;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -25,7 +23,7 @@ namespace Microsoft.Azure.Management.Monitor
     public static partial class MetricsOperationsExtensions
     {
             /// <summary>
-            /// Lists the metric values for a resource.
+            /// **Lists the metric values for a resource**.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,13 +34,31 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IEnumerable<Metric> List(this IMetricsOperations operations, string resourceUri, ODataQuery<Metric> odataQuery = default(ODataQuery<Metric>))
+            /// <param name='timespan'>
+            /// The timespan of the query. It is a string with the following format
+            /// 'startDateTime_ISO/endDateTime_ISO'.
+            /// </param>
+            /// <param name='interval'>
+            /// The interval (i.e. timegrain) of the query.
+            /// </param>
+            /// <param name='metric'>
+            /// The name of the metric to retrieve.
+            /// </param>
+            /// <param name='aggregation'>
+            /// The list of aggregation types (comma separated) to retrieve.
+            /// </param>
+            /// <param name='resultType'>
+            /// Reduces the set of data collected. The syntax allowed depends on the
+            /// operation. See the operation's description for details. Possible values
+            /// include: 'Data', 'Metadata'
+            /// </param>
+            public static Response List(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metric = default(string), string aggregation = default(string), ResultType? resultType = default(ResultType?))
             {
-                return ((IMetricsOperations)operations).ListAsync(resourceUri, odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceUri, odataQuery, timespan, interval, metric, aggregation, resultType).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the metric values for a resource.
+            /// **Lists the metric values for a resource**.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,13 +68,31 @@ namespace Microsoft.Azure.Management.Monitor
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='timespan'>
+            /// The timespan of the query. It is a string with the following format
+            /// 'startDateTime_ISO/endDateTime_ISO'.
+            /// </param>
+            /// <param name='interval'>
+            /// The interval (i.e. timegrain) of the query.
+            /// </param>
+            /// <param name='metric'>
+            /// The name of the metric to retrieve.
+            /// </param>
+            /// <param name='aggregation'>
+            /// The list of aggregation types (comma separated) to retrieve.
+            /// </param>
+            /// <param name='resultType'>
+            /// Reduces the set of data collected. The syntax allowed depends on the
+            /// operation. See the operation's description for details. Possible values
+            /// include: 'Data', 'Metadata'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Metric>> ListAsync(this IMetricsOperations operations, string resourceUri, ODataQuery<Metric> odataQuery = default(ODataQuery<Metric>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Response> ListAsync(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metric = default(string), string aggregation = default(string), ResultType? resultType = default(ResultType?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, odataQuery, timespan, interval, metric, aggregation, resultType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
