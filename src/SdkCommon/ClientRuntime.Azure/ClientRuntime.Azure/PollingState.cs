@@ -20,15 +20,18 @@ namespace Microsoft.Rest.Azure
     internal class PollingState<TBody, THeader> where TBody : class where THeader : class
     {
 #if DEBUG
-        const int DEFAULT_MIN_DELAY_SECONDS = 1;
+        const int TEST_MIN_DELAY_SECONDS = 0;
+        const int DEFAULT_MIN_DELAY_SECONDS = 0;
         const int DEFAULT_MAX_DELAY_SECONDS = 40;
 #else
         // Delay values are in seconds
+        const int TEST_MIN_DELAY_SECONDS = 0;
         const int DEFAULT_MIN_DELAY_SECONDS = 10;
         const int DEFAULT_MAX_DELAY_SECONDS = 600;
 #endif
 
         private int _retryAfterInSeconds;
+        private int _clientLongRunningOperationRetryTimeout;
 
 
         /// <summary>
@@ -38,6 +41,10 @@ namespace Microsoft.Rest.Azure
         /// <param name="retryTimeout">Default timeout.</param>
         public PollingState(HttpOperationResponse<TBody, THeader> response, int? retryTimeout)
         {
+            // Due to test/playback scenario, we prioritze retryTimeout set by Client (client.LongRunningOperationRetryTimeout property)
+            // So LROTimeoutsetbyClient needs to be set first before we set the generic RetryAfterInSeconds value
+
+            LROTimeoutSetByClient = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
             RetryAfterInSeconds = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
             Response = response.Response;
             Request = response.Request;
@@ -178,7 +185,21 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public THeader ResourceHeaders { get; set; }
 
-        //private int? _retryTimeout;
+        /// <summary>
+        /// This timeout is set by client during client construction
+        /// This is useful to detect if we are running in test/playback mode
+        /// </summary>
+        private int LROTimeoutSetByClient
+        {
+            get
+            {
+                return _clientLongRunningOperationRetryTimeout;
+            }
+            set
+            {
+                _clientLongRunningOperationRetryTimeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets long running operation delay in milliseconds.
@@ -226,10 +247,15 @@ namespace Microsoft.Rest.Azure
         {
             if (currentValue.HasValue)
             {
-                if (currentValue < DEFAULT_MIN_DELAY_SECONDS)
+                if (currentValue <= TEST_MIN_DELAY_SECONDS)
+                    currentValue = TEST_MIN_DELAY_SECONDS;
+                else if (currentValue < DEFAULT_MIN_DELAY_SECONDS)
                     currentValue = DEFAULT_MIN_DELAY_SECONDS;
                 else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
                     currentValue = DEFAULT_MAX_DELAY_SECONDS;
+
+                if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)
+                    currentValue = TEST_MIN_DELAY_SECONDS;
             }
             else
             {
