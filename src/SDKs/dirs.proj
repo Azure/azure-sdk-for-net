@@ -52,7 +52,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Sql.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)\Authorization.Tests\Microsoft.Rest.ClientRuntime.Azure.csproj" />
 		-->
-
 	</ItemGroup>
 
   
@@ -103,7 +102,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)StreamAnalytics\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\**\*Tests.csproj" ProjectType="Test"/>		
-
 	</ItemGroup>
   
   <!--
