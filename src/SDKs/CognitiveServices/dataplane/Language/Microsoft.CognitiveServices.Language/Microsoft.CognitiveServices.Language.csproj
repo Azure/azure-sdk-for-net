@@ -8,7 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.CognitiveServices.Language</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Text Analytics API;Text Analytics;REST HTTP client;netcore451511</PackageTags>
-    <PackageReleaseNotes>For detailed release notes, see: </PackageReleaseNotes>
+    <PackageReleaseNotes>This is a preview release of the Cognitive Services Language SDK. Included with this release is support for Text Analytics API.</PackageReleaseNotes>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
@@ -16,15 +16,9 @@
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <!-- Portable is defined for legacy reasons, if updating AutoRest removes it from BatchErrorException we can remove it here -->
-    <DefineConstants>$(DefineConstants);netstandard14;</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Web" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-    <DefineConstants>$(DefineConstants);FullNetFx</DefineConstants>
   </ItemGroup>
 </Project>
