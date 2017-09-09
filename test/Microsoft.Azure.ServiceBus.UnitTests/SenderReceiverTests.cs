@@ -97,6 +97,23 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [DisplayTestMethodName]
+        async Task ReceiveShouldThrowForServerTimeoutZero(string queueName)
+        {
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+
+            try
+            {
+                await this.ReceiveShouldThrowForServerTimeoutZero(receiver);
+            }
+            finally
+            {
+                await receiver.CloseAsync().ConfigureAwait(false);
+            }
+        }
+
         [Fact]
         [DisplayTestMethodName]
         async Task ReceiverShouldUseTheLatestPrefetchCount()

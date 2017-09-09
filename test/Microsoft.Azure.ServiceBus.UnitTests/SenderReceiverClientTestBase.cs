@@ -178,6 +178,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(timer.Elapsed.TotalSeconds < 40);
         }
 
+        internal async Task ReceiveShouldThrowForServerTimeoutZero(IMessageReceiver messageReceiver)
+        {
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => messageReceiver.ReceiveAsync(TimeSpan.Zero));
+        }
+        
         internal async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
         {
             var startTime = DateTime.UtcNow;

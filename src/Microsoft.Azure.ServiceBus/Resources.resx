@@ -210,4 +210,7 @@
   <data name="SessionFilterMissing" xml:space="preserve">
     <value>Session filter is missing on the link. </value>
   </data>
+  <data name="TimeoutMustBePositiveNonZero" xml:space="preserve">
+    <value>Argument {0} must be a positive non-zero timeout value. The provided value was {1}.</value>
+  </data>
 </root>
