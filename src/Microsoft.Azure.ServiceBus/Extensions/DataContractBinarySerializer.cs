@@ -10,8 +10,8 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
 
     /// <summary>
     /// This class describes a serializer class used to serialize and deserialize an Object.
-    /// This class is almost identical to DataContractSerializer; only difference is that 
-    /// ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer 
+    /// This class is almost identical to DataContractSerializer; only difference is that
+    /// ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer
     /// instead of text.
     /// </summary>
     sealed class DataContractBinarySerializer : XmlObjectSerializer
@@ -21,7 +21,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// Initializes a new DataContractBinarySerializer instance
         /// </summary>
-        /// <param name="type"></param>
         public DataContractBinarySerializer(Type type)
         {
             this.dataContractSerializer = new DataContractSerializer(type);
@@ -30,9 +29,8 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// Converts from stream to the corresponding object
         /// </summary>
-        /// <param name="stream"></param>
         /// <returns>Object corresponding to the stream</returns>
-        // <remarks>Override the default (Text) and use Binary Xml Reader instead</remarks>
+        /// <remarks>Override the default (Text) and use Binary Xml Reader instead</remarks>
         public override object ReadObject(Stream stream)
         {
             return this.ReadObject(XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max));
@@ -41,8 +39,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// Serializes the object into the stream
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="graph"></param>
         /// <remarks>Override the default (Text) and use Binary Xml Reader instead</remarks>
         public override void WriteObject(Stream stream, object graph)
         {
@@ -59,8 +55,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// Serializes the object into the stream using the XmlDictionaryWriter
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="graph"></param>
         public override void WriteObject(XmlDictionaryWriter writer, object graph)
         {
             if (writer == null)
@@ -74,8 +68,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// This method simply delegates to the DataContractSerializer implementation
         /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
         public override bool IsStartObject(XmlDictionaryReader reader)
         {
             return this.dataContractSerializer.IsStartObject(reader);
@@ -84,9 +76,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// This method simply delegates to the DataContractSerializer implementation
         /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="verifyObjectName"></param>
-        /// <returns></returns>
         public override object ReadObject(XmlDictionaryReader reader, bool verifyObjectName)
         {
             return this.dataContractSerializer.ReadObject(reader, verifyObjectName);
@@ -95,7 +84,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// This method simply delegates to the DataContractSerializer implementation
         /// </summary>
-        /// <param name="writer"></param>
         public override void WriteEndObject(XmlDictionaryWriter writer)
         {
             this.dataContractSerializer.WriteEndObject(writer);
@@ -104,8 +92,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// This method simply delegates to the DataContractSerializer implementation
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="graph"></param>
         public override void WriteObjectContent(XmlDictionaryWriter writer, object graph)
         {
             this.dataContractSerializer.WriteObjectContent(writer, graph);
@@ -114,8 +100,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// This method simply delegates to the DataContractSerializer implementation
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="graph"></param>
         public override void WriteStartObject(XmlDictionaryWriter writer, object graph)
         {
             this.dataContractSerializer.WriteStartObject(writer, graph);
@@ -125,7 +109,6 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     /// <summary>
     /// Returns a static <see cref="DataContractBinarySerializer"/> instance of type T
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public static class DataContractBinarySerializer<T>
     {
         /// <summary>

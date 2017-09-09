@@ -127,7 +127,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             TestUtility.Log("Sleeping 10 seconds...");
             await Task.Delay(TimeSpan.FromSeconds(10));
 
-            
+
             await messageReceiver.RenewLockAsync(message);
             TestUtility.Log($"After First Renewal: {message.SystemProperties.LockedUntilUtc}");
             Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             int count = 0;
             messageReceiver.RegisterMessageHandler(
-                async (message, token) => 
+                async (message, token) =>
                 {
                     TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
                     Interlocked.Increment(ref count);

@@ -141,12 +141,12 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. 
-        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Expired messages cannot be received. 
-        /// TimeToLive is the maximum lifetime that a message can be received, but its value cannot exceed the entity specified value on the destination queue or subscription. 
-        /// If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the 
+        /// Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus.
+        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Expired messages cannot be received.
+        /// TimeToLive is the maximum lifetime that a message can be received, but its value cannot exceed the entity specified value on the destination queue or subscription.
+        /// If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the
         /// entity’s DefaultMessageTimeToLive value.
-        /// </summary> 
+        /// </summary>
         /// <value>The message’s time to live value.</value>
         /// <remarks>If the TTL set on a message by the sender exceeds the destination's TTL, then the message's TTL will be overwritten by the later one.</remarks>
         public TimeSpan TimeToLive
@@ -182,18 +182,18 @@ namespace Microsoft.Azure.ServiceBus
         public string To { get; set; }
 
         /// <summary>Gets or sets the type of the content.</summary>
-        /// <value>The type of the content of the message body. This is a 
-        /// content type identifier utilized by the sender and receiver for application specific logic.</value> 
+        /// <value>The type of the content of the message body. This is a
+        /// content type identifier utilized by the sender and receiver for application specific logic.</value>
         public string ContentType { get; set; }
 
         /// <summary>Gets or sets the address of the queue to reply to.</summary>
         /// <value>The reply to queue address.</value>
         public string ReplyTo { get; set; }
 
-        /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This 
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary> 
-        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending. 
-        /// It is utilized to delay messages sending to a specific time in the future.</value> 
+        /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This
+        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
+        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending.
+        /// It is utilized to delay messages sending to a specific time in the future.</value>
         /// <remarks> Message enquing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
         /// depends on the queue's workload and its state.</remarks>
         public DateTime ScheduledEnqueueTimeUtc { get; set; }
@@ -213,8 +213,8 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <remarks>
         /// Only following value types are supported:
-        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal, 
-        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[], 
+        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
+        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
         /// and IList / IDictionary of supported types
         /// </remarks>
         public IDictionary<string, object> UserProperties { get; internal set; }
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.ServiceBus
 
             /// <summary>Gets or sets the enqueued sequence number of the message.</summary>
             /// <value>The enqueued sequence number of the message.</value>
-            /// <remarks>In scenarios of Topic-Subscription or ForwardTo, the message is initially enqueued on a different entity as compared to the 
+            /// <remarks>In scenarios of Topic-Subscription or ForwardTo, the message is initially enqueued on a different entity as compared to the
             /// entity from where the message is received. This returns the sequence number of the message in the initial entity.</remarks>
             public long EnqueuedSequenceNumber
             {

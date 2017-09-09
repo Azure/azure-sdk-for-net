@@ -351,7 +351,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         // Unused - 31;32;33
-        
+
         [NonEvent]
         public void AmqpSendLinkCreateStart(string clientId, MessagingEntityType? entityType, string entityPath)
         {
@@ -711,7 +711,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(67, clientId, currentSemaphoreCount); 
+                this.WriteEvent(67, clientId, currentSemaphoreCount);
             }
         }
 
@@ -1011,7 +1011,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(89, clientId, entityPath, sessionId); 
+                this.WriteEvent(89, clientId, entityPath, sessionId);
             }
         }
 
@@ -1050,7 +1050,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString()); 
+                this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString());
             }
         }
 
@@ -1095,7 +1095,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(95, pluginName, messageId); 
+                this.WriteEvent(95, pluginName, messageId);
             }
         }
 
@@ -1104,7 +1104,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(96, pluginName, messageId); 
+                this.WriteEvent(96, pluginName, messageId);
             }
         }
 
@@ -1120,7 +1120,7 @@ namespace Microsoft.Azure.ServiceBus
         [Event(97, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
         void PluginCallFailed(string pluginName, string messageId, string exception)
         {
-            this.WriteEvent(97, pluginName, messageId, exception); 
+            this.WriteEvent(97, pluginName, messageId, exception);
         }
 
         [NonEvent]
@@ -1173,7 +1173,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                WriteEvent(101, oldClientId, newClientId); 
+                WriteEvent(101, oldClientId, newClientId);
             }
         }
 

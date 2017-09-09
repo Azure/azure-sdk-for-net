@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         [Fact]
         [DisplayTestMethodName]
-        async Task Registering_plugin_multiple_times_should_throw()
+        Task Registering_plugin_multiple_times_should_throw()
         {
             var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
             var firstPlugin = new FirstSendPlugin();
@@ -23,19 +23,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             messageReceiver.RegisterPlugin(firstPlugin);
             Assert.Throws<ArgumentException>(() => messageReceiver.RegisterPlugin(secondPlugin));
-            await messageReceiver.CloseAsync();
+            return messageReceiver.CloseAsync();
         }
 
         [Fact]
         [DisplayTestMethodName]
-        async Task Unregistering_plugin_should_complete_with_plugin_set()
+        Task Unregistering_plugin_should_complete_with_plugin_set()
         {
             var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
             var firstPlugin = new FirstSendPlugin();
 
             messageReceiver.RegisterPlugin(firstPlugin);
             messageReceiver.UnregisterPlugin(firstPlugin.Name);
-            await messageReceiver.CloseAsync();
+            return messageReceiver.CloseAsync();
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 var plugin = new ExceptionPlugin();
-                
+
                 messageSender.RegisterPlugin(plugin);
 
                 var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"));

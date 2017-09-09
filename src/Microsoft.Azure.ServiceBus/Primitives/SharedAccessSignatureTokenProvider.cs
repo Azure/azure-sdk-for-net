@@ -43,12 +43,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
         }
 
-        /// <summary></summary>
-        /// <param name="keyName"></param>
-        /// <param name="sharedAccessKey"></param>
-        /// <param name="customKeyEncoder"></param>
-        /// <param name="tokenTimeToLive"></param>
-        /// <param name="tokenScope"></param>
         protected SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, Func<string, byte[]> customKeyEncoder, TimeSpan tokenTimeToLive, TokenScope tokenScope)
             : base(tokenScope)
         {
@@ -83,11 +77,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 TokenProvider.MessagingTokenProviderKeyEncoder(sharedAccessKey);
         }
 
-        /// <summary></summary>
-        /// <param name="appliesTo"></param>
-        /// <param name="action"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
         protected override Task<SecurityToken> OnGetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {
             string tokenString = this.BuildSignature(appliesTo);
@@ -95,9 +84,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             return Task.FromResult<SecurityToken>(securityToken);
         }
 
-        /// <summary></summary>
-        /// <param name="targetUri"></param>
-        /// <returns></returns>
         protected virtual string BuildSignature(string targetUri)
         {
             return string.IsNullOrWhiteSpace(this.sharedAccessSignature)

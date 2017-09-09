@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus
     ///     ReceiveMode.PeekLock,
     ///     RetryExponential);
     /// </code>
-    /// 
+    ///
     /// Register a message handler which will be invoked every time a message is received.
     /// <code>
     /// subscriptionClient.RegisterMessageHandler(
@@ -100,11 +100,11 @@ namespace Microsoft.Azure.ServiceBus
         /// Receive session messages continously from the subscription. Registers a message handler and begins a new thread to receive session-messages.
         /// This handler(<see cref="Func{T1,T2,T3,TResult}"/>) is awaited on every time a new message is received by the subscription client.
         /// </summary>
-        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages. 
+        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages.
         /// <see cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
         /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        /// <remarks>  Enable prefetch to speeden up the receive rate. 
+        /// <remarks>  Enable prefetch to speeden up the receive rate.
         /// Use <see cref="RegisterSessionHandler(Func{IMessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
         void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler);
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Receive session messages continously from the subscription. Registers a message handler and begins a new thread to receive session-messages.
         /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
         /// </summary>
-        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages. 
+        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages.
         /// <see cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
         /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
         /// <remarks>  Enable prefetch to speeden up the receive rate. </remarks>

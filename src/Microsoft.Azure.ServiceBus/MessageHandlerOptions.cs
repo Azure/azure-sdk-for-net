@@ -75,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;        
+        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;
 
         internal TimeSpan ReceiveTimeOut { get; }
 

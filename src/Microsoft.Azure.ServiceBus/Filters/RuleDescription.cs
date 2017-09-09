@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets the name of the default rule on the subscription.
         /// </summary>
         /// <remarks>
-        /// Whenever a new subscription is created, a default rule is always added. 
+        /// Whenever a new subscription is created, a default rule is always added.
         /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
         /// </remarks>
         public const string DefaultRuleName = "$Default";

@@ -20,12 +20,12 @@ namespace Microsoft.Azure.ServiceBus
         readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
         readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
 
-        public SessionReceivePump(string clientId, 
-            ISessionClient client, 
-            ReceiveMode receiveMode, 
-            SessionHandlerOptions sessionHandlerOptions, 
-            Func<IMessageSession, Message, CancellationToken, Task> callback, 
-            string endpoint, 
+        public SessionReceivePump(string clientId,
+            ISessionClient client,
+            ReceiveMode receiveMode,
+            SessionHandlerOptions sessionHandlerOptions,
+            Func<IMessageSession, Message, CancellationToken, Task> callback,
+            string endpoint,
             CancellationToken token)
         {
             this.client = client ?? throw new ArgumentException(nameof(client));
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);                    
+                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);
             }
         }
 
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.ServiceBus
                         callbackExceptionOccured = true;
                         if (!(exception is MessageLockLostException || exception is SessionLockLostException))
                         {
-                            await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false); 
+                            await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false);
                         }
                     }
                     finally

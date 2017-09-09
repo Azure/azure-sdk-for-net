@@ -10,10 +10,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
     static class StringUtility
     {
-        public static string GetRandomString()
-        {
-            return Guid.NewGuid().ToString().Substring(0, 6);
-        }
 
         public static string GetFormattedLockTokens(IEnumerable<string> lockTokens)
         {

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     ///     namespaceConnectionString,
     ///     queueName)
     /// </code>
-    /// 
+    ///
     /// Send message
     /// <code>
     /// byte[] data = GetData();
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
-            string connectionString, 
-            string entityPath, 
+            string connectionString,
+            string entityPath,
             RetryPolicy retryPolicy = null)
             : this(entityPath, null, new ServiceBusNamespaceConnection(connectionString), null, retryPolicy)
         {
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     if (!this.SendLinkManager.TryGetOpenedObject(out amqpLink))
                     {
-                        amqpLink = await this.SendLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false); 
+                        amqpLink = await this.SendLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                     }
                     if (amqpLink.Settings.MaxMessageSize.HasValue)
                     {
@@ -525,8 +525,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 endPointAddress,
                 endPointAddress.AbsoluteUri,
                 claims,
-                linkDetails.Item2,
-                this.ClientId);
+                linkDetails.Item2);
 
             this.clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
 
@@ -551,7 +550,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 linkSettings,
                 this.ClientId);
 
-            Tuple<AmqpObject, DateTime> linkDetails = 
+            Tuple<AmqpObject, DateTime> linkDetails =
                 await requestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var requestResponseAmqpLink = (RequestResponseAmqpLink) linkDetails.Item1;

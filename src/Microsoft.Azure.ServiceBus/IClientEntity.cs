@@ -32,7 +32,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.
         /// </summary>
-        /// <returns>The asynchronous operation</returns>
         Task CloseAsync();
 
         /// <summary>

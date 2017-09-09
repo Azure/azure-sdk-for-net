@@ -7,11 +7,11 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Core;
 
-    /// <summary> 
-    /// Describes a Session client. A session client can be used to accept session objects which can be used to interact with all messages with the same sessionId. 
-    /// </summary> 
-    /// <remarks> 
-    /// You can accept any session or a given session (identified by <see cref="IMessageSession.SessionId"/> using a session client. 
+    /// <summary>
+    /// Describes a Session client. A session client can be used to accept session objects which can be used to interact with all messages with the same sessionId.
+    /// </summary>
+    /// <remarks>
+    /// You can accept any session or a given session (identified by <see cref="IMessageSession.SessionId"/> using a session client.
     /// Once you accept a session, you can use it as a <see cref="MessageReceiver"/> which receives only messages having the same session id.
     /// See <see cref="IMessageSession"/> for usage of session object.
     /// <example>
@@ -22,18 +22,18 @@ namespace Microsoft.Azure.ServiceBus
     ///     queueName,
     ///     ReceiveMode.PeekLock);
     /// </code>
-    /// 
+    ///
     /// To receive a session object for a given sessionId
     /// <code>
     /// IMessageSession session = await sessionClient.AcceptMessageSessionAsync(sessionId);
     /// </code>
-    /// 
+    ///
     /// To receive any session
     /// <code>
     /// IMessageSession session = await sessionClient.AcceptMessageSessionAsync();
     /// </code>
     /// </example>
-    /// </remarks> 
+    /// </remarks>
     /// <seealso cref="IMessageSession"/>
     /// <seealso cref="SessionClient"/>
     public interface ISessionClient : IClientEntity

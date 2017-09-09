@@ -30,12 +30,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId1 = "test-message1";
                 var sessionId1 = "sessionId1";
-                await sender.SendAsync(new Message() { MessageId = messageId1, SessionId = sessionId1 }).ConfigureAwait(false);
+                await sender.SendAsync(new Message { MessageId = messageId1, SessionId = sessionId1 }).ConfigureAwait(false);
                 TestUtility.Log($"Sent Message: {messageId1} to Session: {sessionId1}");
 
                 var messageId2 = "test-message2";
                 var sessionId2 = "sessionId2";
-                await sender.SendAsync(new Message() { MessageId = messageId2, SessionId = sessionId2 }).ConfigureAwait(false);
+                await sender.SendAsync(new Message { MessageId = messageId2, SessionId = sessionId2 }).ConfigureAwait(false);
                 TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
 
                 // Receive Message, Complete and Close with SessionId - sessionId 1
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 // Receive Message, Complete and Close - With Null SessionId specified
                 var messageId3 = "test-message3";
                 var sessionId3 = "sessionId3";
-                await sender.SendAsync(new Message() { MessageId = messageId3, SessionId = sessionId3 }).ConfigureAwait(false);
+                await sender.SendAsync(new Message { MessageId = messageId3, SessionId = sessionId3 }).ConfigureAwait(false);
 
                 await this.AcceptAndCompleteSessionsAsync(sessionClient, null, messageId3).ConfigureAwait(false);
             }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        
+
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message()
+                await sender.SendAsync(new Message
                 {
                     MessageId = messageId,
                     SessionId = sessionId
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message() { MessageId = messageId, SessionId = sessionId });
+                await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestUtility.Log("Sleeping 10 seconds...");
                 await Task.Delay(TimeSpan.FromSeconds(10));
 
-                // For session it looks like when the session is received, sometimes the session LockedUntil UTC 
+                // For session it looks like when the session is received, sometimes the session LockedUntil UTC
                 // is turning out slightly more than the Default Lock Duration(lock is for 1 minute, but the session was locked
                 // for 1 min and 2 seconds. We will need to look at if this is an issue on service or some kind of time SKU.
                 // Temporarily changing this test to look at the renew request time instead.
@@ -182,12 +182,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId1 = "test-message1";
                 var sessionId1 = "sessionId1";
-                await sender.SendAsync(new Message() { MessageId = messageId1, SessionId = sessionId1 });
+                await sender.SendAsync(new Message { MessageId = messageId1, SessionId = sessionId1 });
                 TestUtility.Log($"Sent Message: {messageId1} to Session: {sessionId1}");
 
                 var messageId2 = "test-message2";
                 var sessionId2 = "sessionId2";
-                await sender.SendAsync(new Message() { MessageId = messageId2, SessionId = sessionId2 });
+                await sender.SendAsync(new Message { MessageId = messageId2, SessionId = sessionId2 });
                 TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
 
                 // Peek Message, Receive and Delete with SessionId - sessionId 1

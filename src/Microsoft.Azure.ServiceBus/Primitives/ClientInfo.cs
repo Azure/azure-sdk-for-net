@@ -40,8 +40,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         static string GetAssemblyAttributeValue<T>(Assembly assembly, Func<T, string> getter) where T : Attribute
         {
-            var attribute = assembly.GetCustomAttribute(typeof(T)) as T;
-            return attribute == null ? null : getter(attribute);
+            return !(assembly.GetCustomAttribute(typeof(T)) is T attribute) ? null : getter(attribute);
         }
     }
 }

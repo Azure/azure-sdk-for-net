@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         AmqpRequestMessage(string operation, TimeSpan timeout, string trackingId)
         {
             this.Map = new AmqpMap();
-            this.requestMessage = AmqpMessage.Create(new AmqpValue() { Value = this.Map });
+            this.requestMessage = AmqpMessage.Create(new AmqpValue { Value = this.Map });
             this.requestMessage.ApplicationProperties.Map[ManagementConstants.Request.Operation] = operation;
             this.requestMessage.ApplicationProperties.Map[ManagementConstants.Properties.ServerTimeout] = (uint)timeout.TotalMilliseconds;
             this.requestMessage.ApplicationProperties.Map[ManagementConstants.Properties.TrackingId] = trackingId ?? Guid.NewGuid().ToString();

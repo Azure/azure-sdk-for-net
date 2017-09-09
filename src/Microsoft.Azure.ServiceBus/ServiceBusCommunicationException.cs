@@ -10,16 +10,11 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public class ServiceBusCommunicationException : ServiceBusException
     {
-        /// <summary></summary>
-        /// <param name="message"></param>
         protected internal ServiceBusCommunicationException(string message)
             : this(message, null)
         {
         }
 
-        /// <summary></summary>
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
         protected internal ServiceBusCommunicationException(string message, Exception innerException)
             : base(true, message, innerException)
         {

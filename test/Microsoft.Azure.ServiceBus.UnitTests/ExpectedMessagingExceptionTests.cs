@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message() { MessageId = messageId, SessionId = sessionId });
+                await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var messageId = "test-message1";
                 var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message() { MessageId = messageId, SessionId = sessionId });
+                await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
                 TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
                 sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);

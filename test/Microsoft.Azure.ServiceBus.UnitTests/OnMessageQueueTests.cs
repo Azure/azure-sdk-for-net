@@ -22,25 +22,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task OnMessagePeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
+        Task OnMessagePeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
         {
-            await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task OnMessagePeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
+        Task OnMessagePeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
         {
-            await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task OnMessageReceiveDelete(string queueName, int maxConcurrentCalls)
+        Task OnMessageReceiveDelete(string queueName, int maxConcurrentCalls)
         {
-            await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
+            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
 
         [Theory]
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             finally
             {
                 await queueClient.CloseAsync();
-            }            
+            }
         }
 
         async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)

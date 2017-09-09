@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus
     ///     topicName,
     ///     RetryExponential);
     /// </code>
-    /// 
+    ///
     /// Send a message to the topic:
     /// <code>
     /// byte[] data = GetData();
@@ -203,8 +203,6 @@ namespace Microsoft.Azure.ServiceBus
             this.InnerSender.UnregisterPlugin(serviceBusPluginName);
         }
 
-        /// <summary></summary>
-        /// <returns></returns>
         protected override async Task OnClosingAsync()
         {
             if (this.innerSender != null)

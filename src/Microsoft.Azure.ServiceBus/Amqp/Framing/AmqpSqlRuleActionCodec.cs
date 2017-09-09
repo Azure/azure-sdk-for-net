@@ -59,10 +59,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         protected override int OnValueSize()
         {
-            var valueSize = AmqpCodec.GetStringEncodeSize(this.SqlExpression);
-            valueSize += AmqpCodec.GetIntEncodeSize(this.CompatibilityLevel);
-
-            return valueSize;
+            return AmqpCodec.GetStringEncodeSize(this.SqlExpression) +
+                   AmqpCodec.GetIntEncodeSize(this.CompatibilityLevel);
         }
     }
 }

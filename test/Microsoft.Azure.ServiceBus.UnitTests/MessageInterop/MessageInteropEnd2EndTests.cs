@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             {
                 // Send Plain string
                 string message1Body = "contosoString";
-                var message1 = new BrokeredMessage(message1Body);                
+                var message1 = new BrokeredMessage(message1Body);
                 await fullFrameWorkClientSender.SendAsync(message1);
 
                 // Receive Plain string

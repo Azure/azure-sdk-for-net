@@ -11,10 +11,10 @@ namespace Microsoft.Azure.ServiceBus
     /// Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline.
     /// </summary>
     /// <remarks>
-    /// A <see cref="SqlFilter"/> holds a SQL-like condition expression that is evaluated in the broker against the arriving messages' 
-    /// user-defined properties and system properties. All system properties (which are all properties explicitly listed 
-    /// on the <see cref="Message"/> class) must be prefixed with <code>sys.</code> in the condition expression. The SQL subset implements 
-    /// testing for existence of properties (EXISTS), testing for null-values (IS NULL), logical NOT/AND/OR, relational operators, 
+    /// A <see cref="SqlFilter"/> holds a SQL-like condition expression that is evaluated in the broker against the arriving messages'
+    /// user-defined properties and system properties. All system properties (which are all properties explicitly listed
+    /// on the <see cref="Message"/> class) must be prefixed with <code>sys.</code> in the condition expression. The SQL subset implements
+    /// testing for existence of properties (EXISTS), testing for null-values (IS NULL), logical NOT/AND/OR, relational operators,
     /// numeric arithmetic, and simple text pattern matching with LIKE.
     /// </remarks>
     public class SqlFilter : Filter

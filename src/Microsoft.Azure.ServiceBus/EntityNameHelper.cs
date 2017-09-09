@@ -42,7 +42,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="topicPath">The name of the topic, including slashes.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>
-        /// <returns></returns>
         public static string FormatSubscriptionPath(string topicPath, string subscriptionName)
         {
             return string.Concat(topicPath, PathDelimiter, Subscriptions, PathDelimiter, subscriptionName);

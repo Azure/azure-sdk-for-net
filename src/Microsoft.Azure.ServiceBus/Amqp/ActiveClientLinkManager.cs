@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             ActiveClientLinkManager thisPtr = (ActiveClientLinkManager)state;
             await thisPtr.RenewCBSTokenAsync(thisPtr.activeRequestResponseClientLink).ConfigureAwait(false);
         }
-        
+
         async Task RenewCBSTokenAsync(ActiveClientLinkObject activeClientLinkObject)
         {
             try

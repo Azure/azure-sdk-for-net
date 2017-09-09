@@ -112,17 +112,15 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         protected override int OnValueSize()
         {
-            int valueSize = AmqpCodec.GetStringEncodeSize(this.CorrelationId);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.MessageId);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.To);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.ReplyTo);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.Label);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.SessionId);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.ReplyToSessionId);
-            valueSize += AmqpCodec.GetStringEncodeSize(this.ContentType);
-            valueSize += AmqpCodec.GetMapEncodeSize(this.properties);
-
-            return valueSize;
+            return AmqpCodec.GetStringEncodeSize(this.CorrelationId) +
+                   AmqpCodec.GetStringEncodeSize(this.MessageId) +
+                   AmqpCodec.GetStringEncodeSize(this.To) +
+                   AmqpCodec.GetStringEncodeSize(this.ReplyTo) +
+                   AmqpCodec.GetStringEncodeSize(this.Label) +
+                   AmqpCodec.GetStringEncodeSize(this.SessionId) +
+                   AmqpCodec.GetStringEncodeSize(this.ReplyToSessionId) +
+                   AmqpCodec.GetStringEncodeSize(this.ContentType) +
+                   AmqpCodec.GetMapEncodeSize(this.properties);
         }
     }
 }

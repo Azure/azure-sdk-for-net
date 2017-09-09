@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     static class AmqpExceptionHelper
     {
-        static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>()
+        static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>
         {
             { AmqpClientConstants.TimeoutError.Value, AmqpResponseStatusCode.RequestTimeout },
             { AmqpErrorCode.NotFound.Value, AmqpResponseStatusCode.NotFound },
@@ -179,8 +179,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     return new ServiceBusCommunicationException(message, aggregateException);
 
                 case IOException _:
-                    var socketException = exception.InnerException as SocketException;
-                    if (socketException != null)
+                    if (exception.InnerException is SocketException socketException)
                     {
                         message = builder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
                     }

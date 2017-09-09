@@ -28,25 +28,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task OnSessionPeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
+        Task OnSessionPeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
         {
-            await this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            return this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task OnSessionPeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
+        Task OnSessionPeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
         {
-            await this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            return this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Theory]
         [MemberData(nameof(PartitionedNonPartitionedTestPermutations))]
         [DisplayTestMethodName]
-        async Task OnSessionReceiveDelete(string queueName, int maxConcurrentCalls)
+        Task OnSessionReceiveDelete(string queueName, int maxConcurrentCalls)
         {
-            await this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
+            return this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
 
         [Fact]

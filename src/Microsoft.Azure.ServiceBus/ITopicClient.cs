@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus
     ///     topicName,
     ///     RetryExponential);
     /// </code>
-    /// 
+    ///
     /// Send a message to the topic:
     /// <code>
     /// byte[] data = GetData();

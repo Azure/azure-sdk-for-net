@@ -77,7 +77,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="remainingTime">The remaining time before the timeout expires.</param>
         /// <param name="currentRetryCount">The number of attempts that have been processed.</param>
         /// <param name="retryInterval">The amount of time to delay before retry.</param>
-        /// <returns></returns>
         protected override bool OnShouldRetry(TimeSpan remainingTime, int currentRetryCount, out TimeSpan retryInterval)
         {
             if (currentRetryCount > this.MaxRetryCount)

@@ -109,7 +109,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             get { return this.token; }
         }
 
-        /// <summary></summary>
         protected virtual string ExpiresOnFieldName
         {
             get
@@ -118,7 +117,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
         }
 
-        /// <summary></summary>
         protected virtual string AudienceFieldName
         {
             get
@@ -127,7 +125,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
         }
 
-        /// <summary></summary>
         protected virtual string KeyValueSeparator
         {
             get
@@ -136,7 +133,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
         }
 
-        /// <summary></summary>
         protected virtual string PairSeparator
         {
             get

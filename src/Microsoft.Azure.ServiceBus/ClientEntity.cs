@@ -19,10 +19,6 @@ namespace Microsoft.Azure.ServiceBus
         readonly string clientTypeName;
         readonly object syncLock;
 
-        /// <summary></summary>
-        /// <param name="clientTypeName"></param>
-        /// <param name="postfix"></param>
-        /// <param name="retryPolicy"></param>
         protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {
             this.clientTypeName = clientTypeName;
@@ -59,7 +55,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.
         /// </summary>
-        /// <returns>The asynchronous operation</returns>
         public async Task CloseAsync()
         {
             bool callClose = false;
@@ -95,12 +90,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
         public abstract void UnregisterPlugin(string serviceBusPluginName);
 
-        /// <summary></summary>
-        /// <returns></returns>
         protected abstract Task OnClosingAsync();
 
-        /// <summary></summary>
-        /// <returns></returns>
         protected static long GetNextId()
         {
             return Interlocked.Increment(ref nextId);
@@ -126,11 +117,10 @@ namespace Microsoft.Azure.ServiceBus
                 throw new ObjectDisposedException($"{this.clientTypeName} with Id '{this.ClientId}' has already been closed. Please create a new {this.clientTypeName}.");
             }
         }
-        
+
         /// <summary>
         /// Updates the client id.
         /// </summary>
-        /// <param name="newClientId"></param>
         internal void UpdateClientId(string newClientId)
         {
             MessagingEventSource.Log.UpdateClientId(this.ClientId, newClientId);

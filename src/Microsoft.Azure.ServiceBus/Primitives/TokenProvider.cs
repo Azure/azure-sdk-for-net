@@ -16,14 +16,11 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
         const TokenScope DefaultTokenScope = TokenScope.Entity;
 
-        /// <summary></summary>
         protected TokenProvider()
             : this(TokenProvider.DefaultTokenScope)
         {
         }
 
-        /// <summary></summary>
-        /// <param name="tokenScope"></param>
         protected TokenProvider(TokenScope tokenScope)
         {
             this.TokenScope = tokenScope;
@@ -35,7 +32,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// </summary>
         public TokenScope TokenScope { get; }
 
-        /// <summary></summary>
         protected object ThisLock { get; }
 
         /// <summary>
@@ -107,7 +103,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="appliesTo">The URI which the access token applies to</param>
         /// <param name="action">The request action</param>
         /// <param name="timeout">The time span that specifies the timeout value for the message that gets the security token</param>
-        /// <returns></returns>
         public Task<SecurityToken> GetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {
             TimeoutHelper.ThrowIfNegativeArgument(timeout);
@@ -115,16 +110,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             return this.OnGetTokenAsync(appliesTo, action, timeout);
         }
 
-        /// <summary></summary>
-        /// <param name="appliesTo"></param>
-        /// <param name="action"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
         protected abstract Task<SecurityToken> OnGetTokenAsync(string appliesTo, string action, TimeSpan timeout);
 
-        /// <summary></summary>
-        /// <param name="appliesTo"></param>
-        /// <returns></returns>
         protected virtual string NormalizeAppliesTo(string appliesTo)
         {
             return ServiceBusUriHelper.NormalizeUri(appliesTo, "http", true, stripPath: this.TokenScope == TokenScope.Namespace, ensureTrailingSlash: true);

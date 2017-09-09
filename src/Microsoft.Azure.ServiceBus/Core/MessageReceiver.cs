@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     ///     EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName),
     ///     ReceiveMode.PeekLock);
     /// </code>
-    /// 
+    ///
     /// Receive a message from the Subscription.
     /// <code>
     /// var message = await messageReceiver.ReceiveAsync();
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// </code>
     /// </example>
     /// <remarks>
-    /// The MessageReceiver provides advanced functionality that is not found in the 
-    /// <see cref="QueueClient" /> or <see cref="SubscriptionClient" />. For instance, 
+    /// The MessageReceiver provides advanced functionality that is not found in the
+    /// <see cref="QueueClient" /> or <see cref="SubscriptionClient" />. For instance,
     /// <see cref="ReceiveAsync()"/>, which allows you to receive messages on demand, but also requires
     /// you to manually renew locks using <see cref="RenewLockAsync(Message)"/>.
     /// It uses AMQP protocol to communicate with service.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="connectionStringBuilder">The <see cref="ServiceBusConnectionStringBuilder"/> having entity level connection details.</param>
         /// <param name="receiveMode">The <see cref="ServiceBus.ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/>.</param>
-        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver 
+        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageReceiver(
@@ -76,11 +76,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Creates a new MessageReceiver from a specified connection string and entity path.
         /// </summary>
         /// <param name="connectionString">Namespace connection string used to communicate with Service Bus. Must not contain Entity details.</param>
-        /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the path. 
+        /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the path.
         /// You can use <see cref="EntityNameHelper.FormatSubscriptionPath(string, string)"/>, to help create this path.</param>
         /// <param name="receiveMode">The <see cref="ServiceBus.ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver 
+        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
         /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
         /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageReceiver(
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.ReceiveMode = receiveMode;
             this.OperationTimeout = serviceBusConnection.OperationTimeout;
             this.Path = entityPath;
-            this.EntityType = entityType;   
+            this.EntityType = entityType;
             this.CbsTokenProvider = cbsTokenProvider;
             this.SessionIdInternal = sessionId;
             this.isSessionReceiver = isSessionReceiver;
@@ -153,16 +153,16 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Setting the value to zero turns prefetch off.
         /// Defaults to 0.
         /// </summary>
-        /// <remarks> 
+        /// <remarks>
         /// <para>
-        /// When Prefetch is enabled, the receiver will quietly acquire more messages, up to the PrefetchCount limit, than what the application 
-        /// immediately asks for. A single initial Receive/ReceiveAsync call will therefore acquire a message for immediate consumption 
-        /// that will be returned as soon as available, and the client will proceed to acquire further messages to fill the prefetch buffer in the background. 
+        /// When Prefetch is enabled, the receiver will quietly acquire more messages, up to the PrefetchCount limit, than what the application
+        /// immediately asks for. A single initial Receive/ReceiveAsync call will therefore acquire a message for immediate consumption
+        /// that will be returned as soon as available, and the client will proceed to acquire further messages to fill the prefetch buffer in the background.
         /// </para>
         /// <para>
-        /// While messages are available in the prefetch buffer, any subsequent ReceiveAsync calls will be immediately satisfied from the buffer, and the buffer is 
-        /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the 
-        /// buffer and then wait or block as expected. 
+        /// While messages are available in the prefetch buffer, any subsequent ReceiveAsync calls will be immediately satisfied from the buffer, and the buffer is
+        /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the
+        /// buffer and then wait or block as expected.
         /// </para>
         /// <para>Prefetch also works equivalently with the <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, Func{ExceptionReceivedEventArgs, Task})"/> APIs.</para>
         /// <para>Updates to this value take effect on the next receive call to the service.</para>
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Receives a specific deferred message identified by <paramref name="sequenceNumber"/>.
         /// </summary>
         /// <param name="sequenceNumber">The sequence number of the message that will be received.</param>
-        /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found. 
+        /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public async Task<Message> ReceiveDeferredMessageAsync(long sequenceNumber)
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         {
             this.ThrowIfClosed();
             this.ThrowIfNotPeekLockMode();
-            
+
             int count = MessageReceiver.ValidateSequenceNumbers(sequenceNumbers);
 
             MessagingEventSource.Log.MessageReceiveDeferredMessageStart(this.ClientId, count, sequenceNumbers);
@@ -376,11 +376,10 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
+        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        /// <returns>The asynchronous operation.</returns>
         public Task CompleteAsync(string lockToken)
         {
             return this.CompleteAsync(new[] { lockToken });
@@ -390,12 +389,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Completes a series of <see cref="Message"/> using a list of lock tokens. This will delete the message from the service.
         /// </summary>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
+        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
-        /// <returns>The asynchronous operation.</returns>
         public async Task CompleteAsync(IEnumerable<string> lockTokens)
         {
             this.ThrowIfClosed();
@@ -426,12 +424,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Abandons a <see cref="Message"/> using a lock token. This will make the message available again for processing.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
-        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        /// <returns>The asynchronous operation.</returns>
         public async Task AbandonAsync(string lockToken)
         {
             this.ThrowIfClosed();
@@ -459,14 +456,13 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
         /// <param name="lockToken">The lock token of the <see cref="Message" />.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
+        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        /// <returns>The asynchronous operation.</returns>
         public async Task DeferAsync(string lockToken)
         {
             this.ThrowIfClosed();
@@ -497,13 +493,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
         /// <remarks>
-        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. 
+        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path.
         /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        /// <returns>The asynchronous operation.</returns>
         public async Task DeadLetterAsync(string lockToken)
         {
             this.ThrowIfClosed();
@@ -534,12 +529,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="message"> <see cref="Message" />.</param>
         /// <remarks>
-        /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this 
+        /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed. For each renewal, the lock is renewed by 
-        /// the entity's LockDuration. 
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed. For each renewal, the lock is renewed by
+        /// the entity's LockDuration.
         /// </remarks>
-        /// <returns>The asynchronous operation.</returns>
         public async Task RenewLockAsync(Message message)
         {
             this.ThrowIfClosed();
@@ -569,7 +563,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Fetches the next active message without changing the state of the receiver or the message source.
         /// </summary>
         /// <remarks>
-        /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call 
+        /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
@@ -584,7 +578,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
         /// <remarks>
-        /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call 
+        /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
@@ -748,8 +742,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             return responseMessage;
         }
 
-        /// <summary></summary>
-        /// <returns>The asynchronous operation.</returns>
         protected override async Task OnClosingAsync()
         {
             this.clientLinkManager.Close();
@@ -771,10 +763,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        /// <summary></summary>
-        /// <param name="maxMessageCount"></param>
-        /// <param name="serverWaitTime"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
             ReceivingAmqpLink receiveLink = null;
@@ -786,7 +774,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                TimeoutHelper timeoutHelper = new TimeoutHelper(serverWaitTime, true);              
+                TimeoutHelper timeoutHelper = new TimeoutHelper(serverWaitTime, true);
                 if(!this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
                 {
                     MessagingEventSource.Log.CreatingNewLink(this.ClientId, this.isSessionReceiver, this.SessionIdInternal, false, this.LinkException);
@@ -836,7 +824,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                                 brokeredMessages.Add(message);
                             }
                         }
-                        
+
                         if(brokeredMessages != null)
                         {
                             break;
@@ -852,10 +840,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        /// <summary></summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task<IList<Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
         {
             try
@@ -912,9 +896,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        /// <summary></summary>
-        /// <param name="sequenceNumbers"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task<IList<Message>> OnReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers)
         {
             List<Message> messages = new List<Message>();
@@ -957,9 +938,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             return messages;
         }
 
-        /// <summary></summary>
-        /// <param name="lockTokens"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task OnCompleteAsync(IEnumerable<string> lockTokens)
         {
             var lockTokenGuids = lockTokens.Select(lt => new Guid(lt));
@@ -973,9 +951,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        /// <summary></summary>
-        /// <param name="lockToken"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task OnAbandonAsync(string lockToken)
         {
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
@@ -989,9 +964,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        /// <summary></summary>
-        /// <param name="lockToken"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task OnDeferAsync(string lockToken)
         {
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
@@ -1001,13 +973,10 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             else
             {
-                await this.DisposeMessagesAsync(lockTokens, new Modified() { UndeliverableHere = true }).ConfigureAwait(false);
+                await this.DisposeMessagesAsync(lockTokens, new Modified { UndeliverableHere = true }).ConfigureAwait(false);
             }
         }
 
-        /// <summary></summary>
-        /// <param name="lockToken"></param>
-        /// <returns>The asynchronous operation.</returns>
         protected virtual async Task OnDeadLetterAsync(string lockToken)
         {
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
@@ -1021,9 +990,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        /// <summary></summary>
-        /// <param name="lockToken"></param>
-        /// <returns>The asynchronour operation.</returns>
         protected virtual async Task<DateTime> OnRenewLockAsync(string lockToken)
         {
             DateTime lockedUntilUtc = DateTime.MinValue;
@@ -1182,7 +1148,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 if (!this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
                 {
                     MessagingEventSource.Log.CreatingNewLink(this.ClientId, this.isSessionReceiver, this.SessionIdInternal, false, this.LinkException);
-                    receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false); 
+                    receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 }
 
                 Task<Outcome>[] disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
@@ -1294,8 +1260,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 endPointAddress,
                 endPointAddress.AbsoluteUri,
                 claims,
-                linkDetails.Item2,
-                this.ClientId);
+                linkDetails.Item2);
 
             this.clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
 

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             // Authenticate over CBS
             AmqpCbsLink cbsLink = connection.Extensions.Find<AmqpCbsLink>();
-            
+
             string resource = this.endpointAddress.AbsoluteUri;
             MessagingEventSource.Log.AmqpSendAuthenticanTokenStart(this.endpointAddress, resource, resource, this.requiredClaims);
             DateTime cbsTokenExpiresAtUtc = await cbsLink.SendTokenAsync(this.cbsTokenProvider, this.endpointAddress, resource, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false);
