@@ -33,12 +33,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the A2APolicyCreationInput class.
         /// </summary>
         /// <param name="multiVmSyncStatus">A value indicating whether multi-VM
-        /// sync has to be enabled.
-        /// Value should be 'Enabled' or 'Disabled'. Possible values include:
-        /// 'Enable', 'Disable'</param>
+        /// sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
+        /// Possible values include: 'Enable', 'Disable'</param>
         /// <param name="recoveryPointHistory">The duration in minutes until
-        /// which the recovery points need to be
-        /// stored.</param>
+        /// which the recovery points need to be stored.</param>
         /// <param name="crashConsistentFrequencyInMinutes">The crash
         /// consistent snapshot frequency (in minutes).</param>
         /// <param name="appConsistentFrequencyInMinutes">The app consistent
@@ -59,8 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the duration in minutes until which the recovery
-        /// points need to be
-        /// stored.
+        /// points need to be stored.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointHistory")]
         public int? RecoveryPointHistory { get; set; }
@@ -79,9 +76,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether multi-VM sync has to be
-        /// enabled.
-        /// Value should be 'Enabled' or 'Disabled'. Possible values include:
-        /// 'Enable', 'Disable'
+        /// enabled. Value should be 'Enabled' or 'Disabled'. Possible values
+        /// include: 'Enable', 'Disable'
         /// </summary>
         [JsonProperty(PropertyName = "multiVmSyncStatus")]
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; set; }

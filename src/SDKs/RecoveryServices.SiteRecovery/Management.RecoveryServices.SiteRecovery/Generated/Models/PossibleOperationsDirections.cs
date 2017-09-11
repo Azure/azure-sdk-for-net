@@ -28,4 +28,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "RecoveryToPrimary")]
         RecoveryToPrimary
     }
+    internal static class PossibleOperationsDirectionsEnumExtension
+    {
+        internal static string ToSerializedValue(this PossibleOperationsDirections? value)  =>
+            value == null ? null : ((PossibleOperationsDirections)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this PossibleOperationsDirections value)
+        {
+            switch( value )
+            {
+                case PossibleOperationsDirections.PrimaryToRecovery:
+                    return "PrimaryToRecovery";
+                case PossibleOperationsDirections.RecoveryToPrimary:
+                    return "RecoveryToPrimary";
+            }
+            return null;
+        }
+
+        internal static PossibleOperationsDirections? ParsePossibleOperationsDirections(this string value)
+        {
+            switch( value )
+            {
+                case "PrimaryToRecovery":
+                    return PossibleOperationsDirections.PrimaryToRecovery;
+                case "RecoveryToPrimary":
+                    return PossibleOperationsDirections.RecoveryToPrimary;
+            }
+            return null;
+        }
+    }
 }

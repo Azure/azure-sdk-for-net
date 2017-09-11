@@ -49,11 +49,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// responsive.</param>
         /// <param name="protectedItemCount">Number of protected VMs currently
         /// managed by the DRA.</param>
-        /// <param name="allowedScenarios">The scenarions allowed on this
+        /// <param name="allowedScenarios">The scenarios allowed on this
         /// provider.</param>
         /// <param name="healthErrorDetails">The recovery services provider
         /// health error details.</param>
-        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>))
+        /// <param name="draIdentifier">The DRA Id.</param>
+        /// <param name="identityDetails">The identity details.</param>
+        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), IdentityInformation identityDetails = default(IdentityInformation))
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -67,6 +69,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ProtectedItemCount = protectedItemCount;
             AllowedScenarios = allowedScenarios;
             HealthErrorDetails = healthErrorDetails;
+            DraIdentifier = draIdentifier;
+            IdentityDetails = identityDetails;
             CustomInit();
         }
 
@@ -136,7 +140,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public int? ProtectedItemCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the scenarions allowed on this provider.
+        /// Gets or sets the scenarios allowed on this provider.
         /// </summary>
         [JsonProperty(PropertyName = "allowedScenarios")]
         public IList<string> AllowedScenarios { get; set; }
@@ -146,6 +150,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "healthErrorDetails")]
         public IList<HealthError> HealthErrorDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DRA Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "draIdentifier")]
+        public string DraIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity details.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityDetails")]
+        public IdentityInformation IdentityDetails { get; set; }
 
     }
 }

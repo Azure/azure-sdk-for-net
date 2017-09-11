@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string CloudName { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of details regarding state of the
-        /// Protected Entity in SRS and On prem.
+        /// Gets or sets the list of details regarding state of the Protected
+        /// Entity in SRS and On prem.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public IList<string> Details { get; set; }
