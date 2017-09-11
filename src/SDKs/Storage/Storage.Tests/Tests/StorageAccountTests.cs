@@ -517,7 +517,7 @@ namespace Storage.Tests
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
-                
+
                 // Check valid name
                 string accountName = TestUtilities.GenerateName("sto");
                 var checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
@@ -532,7 +532,7 @@ namespace Storage.Tests
                 Assert.Equal(Reason.AccountNameInvalid, checkNameRequest.Reason);
                 Assert.Equal("CAPS is not a valid storage account name. Storage account name must be between 3 and 24 "
                     + "characters in length and use numbers and lower-case letters only.", checkNameRequest.Message);
-                
+
                 // Check name of account that already exists
                 accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
                 checkNameRequest = storageMgmtClient.StorageAccounts.CheckNameAvailability(accountName);
@@ -1034,7 +1034,7 @@ namespace Storage.Tests
 
                 Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
                 Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
-                
+
                 Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
             }
         }
@@ -1454,7 +1454,7 @@ namespace Storage.Tests
                         exists1 = true;
                     }
                     if (operation.Current.ToString().Equals(op2.ToString()))
-                        {
+                    {
                         exists2 = true;
                     }
                 }
@@ -1480,25 +1480,25 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
-                parameters.NetworkAcls = new StorageNetworkAcls { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.90" } } };
+                parameters.NetworkRuleSet = new NetworkRuleSet { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.90" } } };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
 
-                // Verify the vnet acl properties.
-                Assert.NotNull(account.NetworkAcls);
-                Assert.Equal(@"Logging, AzureServices", account.NetworkAcls.Bypass);
-                Assert.Equal(DefaultAction.Deny, account.NetworkAcls.DefaultAction);
-                Assert.Empty(account.NetworkAcls.VirtualNetworkRules);
-                Assert.NotNull(account.NetworkAcls.IpRules);
-                Assert.NotEmpty(account.NetworkAcls.IpRules);
-                Assert.Equal("23.45.67.90", account.NetworkAcls.IpRules[0].IPAddressOrRange);
-                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
+                // Verify the vnet rule properties.
+                Assert.NotNull(account.NetworkRuleSet);
+                Assert.Equal(@"Logging, AzureServices", account.NetworkRuleSet.Bypass);
+                Assert.Equal(DefaultAction.Deny, account.NetworkRuleSet.DefaultAction);
+                Assert.Empty(account.NetworkRuleSet.VirtualNetworkRules);
+                Assert.NotNull(account.NetworkRuleSet.IpRules);
+                Assert.NotEmpty(account.NetworkRuleSet.IpRules);
+                Assert.Equal("23.45.67.90", account.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkRuleSet.IpRules[0].Action);
 
                 // Update Vnet
                 var updateParameters = new StorageAccountUpdateParameters
                 {
-                    NetworkAcls = new StorageNetworkAcls
+                    NetworkRuleSet = new NetworkRuleSet
                     {
                         Bypass = @"Logging, Metrics",
                         IpRules = new List<IPRule> {
@@ -1511,29 +1511,54 @@ namespace Storage.Tests
                 storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
 
-                Assert.NotNull(account.NetworkAcls);
-                Assert.Equal(@"Logging, Metrics", account.NetworkAcls.Bypass);
-                Assert.Equal(DefaultAction.Deny, account.NetworkAcls.DefaultAction);
-                Assert.Empty(account.NetworkAcls.VirtualNetworkRules);
-                Assert.NotNull(account.NetworkAcls.IpRules);
-                Assert.NotEmpty(account.NetworkAcls.IpRules);
-                Assert.Equal("23.45.67.91", account.NetworkAcls.IpRules[0].IPAddressOrRange);
-                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
-                Assert.Equal("23.45.67.92", account.NetworkAcls.IpRules[1].IPAddressOrRange);
-                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[1].Action);
+                Assert.NotNull(account.NetworkRuleSet);
+                Assert.Equal(@"Logging, Metrics", account.NetworkRuleSet.Bypass);
+                Assert.Equal(DefaultAction.Deny, account.NetworkRuleSet.DefaultAction);
+                Assert.Empty(account.NetworkRuleSet.VirtualNetworkRules);
+                Assert.NotNull(account.NetworkRuleSet.IpRules);
+                Assert.NotEmpty(account.NetworkRuleSet.IpRules);
+                Assert.Equal("23.45.67.91", account.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkRuleSet.IpRules[0].Action);
+                Assert.Equal("23.45.67.92", account.NetworkRuleSet.IpRules[1].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkRuleSet.IpRules[1].Action);
 
                 // Delete vnet.
                 updateParameters = new StorageAccountUpdateParameters
                 {
-                    NetworkAcls = new StorageNetworkAcls { }
+                    NetworkRuleSet = new NetworkRuleSet { }
                 };
                 storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
 
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
 
-                Assert.NotNull(account.NetworkAcls);
-                Assert.Equal(@"AzureServices", account.NetworkAcls.Bypass);
-                Assert.Equal(DefaultAction.Allow, account.NetworkAcls.DefaultAction);
+                Assert.NotNull(account.NetworkRuleSet);
+                Assert.Equal(@"AzureServices", account.NetworkRuleSet.Bypass);
+                Assert.Equal(DefaultAction.Allow, account.NetworkRuleSet.DefaultAction);
+            }
+        }
+
+        [Fact]
+        public void StorageSKUListTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                var skulist = storageMgmtClient.SKUs.List();
+                Assert.NotNull(skulist);
+                Assert.Equal(@"storageAccounts", skulist.ElementAt(0).ResourceType);
+                Assert.NotNull(skulist.ElementAt(0).Name);
+                Assert.IsType<SkuName>(skulist.ElementAt(0).Name);
+                Assert.True(skulist.ElementAt(0).Name.Equals(SkuName.PremiumLRS)
+                    || skulist.ElementAt(0).Name.Equals(SkuName.StandardGRS)
+                    || skulist.ElementAt(0).Name.Equals(SkuName.StandardLRS)
+                    || skulist.ElementAt(0).Name.Equals(SkuName.StandardRAGRS)
+                    || skulist.ElementAt(0).Name.Equals(SkuName.StandardZRS));
+                Assert.NotNull(skulist.ElementAt(0).Kind);
+                Assert.True(skulist.ElementAt(0).Kind.Equals(Kind.BlobStorage) || skulist.ElementAt(0).Kind.Equals(Kind.Storage));
             }
         }
     }

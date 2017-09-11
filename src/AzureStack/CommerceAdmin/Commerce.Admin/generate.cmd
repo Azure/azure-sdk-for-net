@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/commerce latest Azure current %CD%
+call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/commerce latest Azure current azure-rest-api-specs %CD%

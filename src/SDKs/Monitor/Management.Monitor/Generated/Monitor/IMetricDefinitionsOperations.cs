@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Monitor
     using Microsoft.Azure.Management;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -30,9 +29,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='resourceUri'>
         /// The identifier of the resource.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -48,6 +44,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListWithHttpMessagesAsync(string resourceUri, ODataQuery<MetricDefinition> odataQuery = default(ODataQuery<MetricDefinition>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

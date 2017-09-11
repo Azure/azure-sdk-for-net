@@ -14,6 +14,9 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
     }
 
     [JsonObject("dog")]
@@ -45,6 +48,9 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
     {
         [JsonProperty("color")]
         public string Color { get; private set; }
+
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties2 { get; set; }
     }
 
     [JsonObject("alien")]

@@ -82,11 +82,11 @@ namespace Monitor.Tests.Scenarios
                     // Utilities.AreEqual(new List<ActionGroupResource> { expectedParameters }, actualGroups.ToList());
                 }
 
-                // TODO: it responds 'already enabled'
+                // TODO: it responds 'already enabled' (Conflict: 409)
                 AzureOperationResponse response = insightsClient.ActionGroups.EnableReceiverWithHttpMessagesAsync(
                     resourceGroupName: ResourceGroupName,
-                    actionGroupName: ActionGroupName,
-                    receiverName: "emailreceiver").Result;
+                            actionGroupName: ActionGroupName,
+                            receiverName: "emailreceiver").Result;
 
                 if (!this.IsRecording)
                 {
