@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulSubscription()
         {
-            bool exceptionReceivedHandlerCalled = false;
+            var exceptionReceivedHandlerCalled = false;
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedTopicName);
             var subscriptionClient = new SubscriptionClient(
                 TestUtility.NamespaceConnectionString,
@@ -49,8 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestConstants.SubscriptionName,
                 ReceiveMode.PeekLock);
 
-            SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(
-            (eventArgs) =>
+            var sessionHandlerOptions = new SessionHandlerOptions(eventArgs =>
             {
                 Assert.NotNull(eventArgs);
                 Assert.NotNull(eventArgs.Exception);
@@ -63,15 +62,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             { MaxConcurrentSessions = 1 };
 
             subscriptionClient.RegisterSessionHandler(
-               (session, message, token) =>
-               {
-                   return Task.CompletedTask;
-               },
+               (session, message, token) => Task.CompletedTask,
                sessionHandlerOptions);
 
             try
             {
-                Stopwatch stopwatch = Stopwatch.StartNew();
+                var stopwatch = Stopwatch.StartNew();
                 while (stopwatch.Elapsed.TotalSeconds <= 10)
                 {
                     if (exceptionReceivedHandlerCalled)
@@ -104,7 +100,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             try
             {
-                SessionHandlerOptions handlerOptions =
+                var sessionHandlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = 5,
@@ -112,9 +108,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         AutoComplete = true
                     };
 
-                TestSessionHandler testSessionHandler = new TestSessionHandler(
+                var testSessionHandler = new TestSessionHandler(
                     subscriptionClient.ReceiveMode,
-                    handlerOptions,
+                    sessionHandlerOptions,
                     topicClient.InnerSender,
                     subscriptionClient.SessionPumpHost);
 
@@ -122,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await testSessionHandler.SendSessionMessages();
 
                 // Register handler
-                testSessionHandler.RegisterSessionHandler(handlerOptions);
+                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
 
                 // Verify messages were received.
                 await testSessionHandler.VerifyRun();

@@ -135,7 +135,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
                 Assert.NotNull(sessionReceiver);
                 TestUtility.Log($"Session LockedUntilUTC: {sessionReceiver.LockedUntilUtc} for Session: {sessionReceiver.SessionId}");
-                Message message = await sessionReceiver.ReceiveAsync();
+                var message = await sessionReceiver.ReceiveAsync();
                 TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
                 Assert.True(message.MessageId == messageId);
 
@@ -146,9 +146,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 // is turning out slightly more than the Default Lock Duration(lock is for 1 minute, but the session was locked
                 // for 1 min and 2 seconds. We will need to look at if this is an issue on service or some kind of time SKU.
                 // Temporarily changing this test to look at the renew request time instead.
-                DateTime renewRequestTime = DateTime.UtcNow;
+                var renewRequestTime = DateTime.UtcNow;
                 await sessionReceiver.RenewSessionLockAsync();
-                DateTime firstLockedUntilUtcTime = sessionReceiver.LockedUntilUtc;
+                var firstLockedUntilUtcTime = sessionReceiver.LockedUntilUtc;
                 TestUtility.Log($"After Renew Session LockedUntilUTC: {firstLockedUntilUtcTime} for Session: {sessionReceiver.SessionId}");
                 Assert.True(firstLockedUntilUtcTime >= renewRequestTime + TimeSpan.FromSeconds(10));
 

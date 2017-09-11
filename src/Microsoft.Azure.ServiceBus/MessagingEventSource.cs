@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                string formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
+                var formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
                 this.MessageCompleteStart(clientId, messageCount, formattedLockTokens);
             }
         }
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                string formattedsequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
+                var formattedsequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
                 this.MessageReceiveDeferredMessageStart(clientId, messageCount, formattedsequenceNumbers);
             }
         }

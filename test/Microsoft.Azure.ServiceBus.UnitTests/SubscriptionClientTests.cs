@@ -219,8 +219,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestConstants.NonPartitionedTopicName,
                 TestConstants.SubscriptionName,
                 ReceiveMode.ReceiveAndDelete);
-            string sqlRuleName = "sqlRule";
-            string correlationRuleName = "correlationRule";
+            var sqlRuleName = "sqlRule";
+            var correlationRuleName = "correlationRule";
 
             try
             {
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 await subscriptionClient.AddRuleAsync(sqlRuleName, new SqlFilter("price > 10"));
 
-                RuleDescription ruleDescription = new RuleDescription(correlationRuleName)
+                var ruleDescription = new RuleDescription(correlationRuleName)
                 {
                     Filter = new CorrelationFilter
                     {

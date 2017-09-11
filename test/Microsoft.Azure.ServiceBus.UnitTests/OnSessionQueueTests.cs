@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         ReceiveMode.PeekLock);
             try
             {
-                SessionHandlerOptions handlerOptions =
+                var sessionHandlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = 5,
@@ -67,14 +67,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         AutoComplete = true
                     };
 
-                TestSessionHandler testSessionHandler = new TestSessionHandler(
+                var testSessionHandler = new TestSessionHandler(
                     queueClient.ReceiveMode,
-                    handlerOptions,
+                    sessionHandlerOptions,
                     queueClient.InnerSender,
                     queueClient.SessionPumpHost);
 
                 // Register handler first without any messages
-                testSessionHandler.RegisterSessionHandler(handlerOptions);
+                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
 
                 // Send messages to Session
                 await testSessionHandler.SendSessionMessages();
@@ -99,10 +99,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
         {
-            bool exceptionReceivedHandlerCalled = false;
+            var exceptionReceivedHandlerCalled = false;
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
 
-            SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(
+            var sessionHandlerOptions = new SessionHandlerOptions(
             (eventArgs) =>
             {
                 Assert.NotNull(eventArgs);
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                },
                sessionHandlerOptions);
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed.TotalSeconds <= 10)
             {
                 if (exceptionReceivedHandlerCalled)
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
             try
             {
-                SessionHandlerOptions handlerOptions =
+                var handlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = maxConcurrentCalls,
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         AutoComplete = autoComplete
                     };
 
-                TestSessionHandler testSessionHandler = new TestSessionHandler(
+                var testSessionHandler = new TestSessionHandler(
                     queueClient.ReceiveMode,
                     handlerOptions,
                     queueClient.InnerSender,

@@ -130,7 +130,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             try
             {
-                for (int i = 0; i < 9; i++)
+                for (var i = 0; i < 9; i++)
                 {
                     var message = new Message(Encoding.UTF8.GetBytes("test" + i))
                     {

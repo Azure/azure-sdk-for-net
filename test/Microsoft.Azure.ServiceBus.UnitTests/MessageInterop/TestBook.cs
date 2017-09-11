@@ -23,12 +23,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 return false;
             }
 
-            TestBook book = (TestBook)obj;
+            var testBook = (TestBook)obj;
 
             return
-                this.Name.Equals(book.Name, StringComparison.OrdinalIgnoreCase) &&
-                this.Count == book.Count &&
-                this.Id == book.Id;
+                this.Name.Equals(testBook.Name, StringComparison.OrdinalIgnoreCase) &&
+                this.Count == testBook.Count &&
+                this.Id == testBook.Id;
         }
 
         public override int GetHashCode()

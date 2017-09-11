@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
         internal static string NormalizeUri(string uri, string scheme, bool stripQueryParameters = true, bool stripPath = false, bool ensureTrailingSlash = false)
         {
-            UriBuilder uriBuilder = new UriBuilder(uri)
+            var uriBuilder = new UriBuilder(uri)
             {
                 Scheme = scheme,
                 Port = -1,

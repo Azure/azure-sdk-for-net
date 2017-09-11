@@ -463,8 +463,8 @@ namespace Microsoft.Azure.ServiceBus
             this.ThrowIfClosed();
 
             MessagingEventSource.Log.GetRulesStart(this.ClientId);
-            int skip = 0;
-            int top = int.MaxValue;
+            var skip = 0;
+            var top = int.MaxValue;
             IEnumerable<RuleDescription> rules;
 
             try

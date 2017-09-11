@@ -89,7 +89,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.NotNull(sessionReceiver);
                 TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
 
-                Message message = await sessionReceiver.ReceiveAsync();
+                var message = await sessionReceiver.ReceiveAsync();
                 Assert.True(message.MessageId == messageId);
                 TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.NotNull(sessionReceiver);
                 TestUtility.Log($"Reaccept Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
 
-                Message message = await sessionReceiver.ReceiveAsync();
+                var message = await sessionReceiver.ReceiveAsync();
                 Assert.True(message.MessageId == messageId);
                 TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
                 await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);

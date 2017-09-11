@@ -155,30 +155,30 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
-            builder.Append("CorrelationFilter: ");
+            stringBuilder.Append("CorrelationFilter: ");
 
-            bool firstExpression = true;
+            var isFirstExpression = true;
 
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.CorrelationId", this.CorrelationId);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.MessageId", this.MessageId);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.To", this.To);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.ReplyTo", this.ReplyTo);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.Label", this.Label);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.SessionId", this.SessionId);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.ReplyToSessionId", this.ReplyToSessionId);
-            this.AppendPropertyExpression(ref firstExpression, builder, "sys.ContentType", this.ContentType);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.CorrelationId", this.CorrelationId);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.MessageId", this.MessageId);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.To", this.To);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyTo", this.ReplyTo);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.Label", this.Label);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.SessionId", this.SessionId);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyToSessionId", this.ReplyToSessionId);
+            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ContentType", this.ContentType);
 
             foreach (var pair in this.Properties)
             {
                 string propertyName = pair.Key;
                 object propertyValue = pair.Value;
 
-                this.AppendPropertyExpression(ref firstExpression, builder, propertyName, propertyValue);
+                this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, propertyName, propertyValue);
             }
 
-            return builder.ToString();
+            return stringBuilder.ToString();
         }
 
         void AppendPropertyExpression(ref bool firstExpression, StringBuilder builder, string propertyName, object value)

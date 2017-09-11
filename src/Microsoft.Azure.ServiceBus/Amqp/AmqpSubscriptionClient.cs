@@ -170,7 +170,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
 
                 var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
-                List<RuleDescription> rules = new List<RuleDescription>();
+                var ruleDescriptions = new List<RuleDescription>();
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
                         var ruleDescription = AmqpMessageConverter.GetRuleDescription(amqpRule);
-                        rules.Add(ruleDescription);
+                        ruleDescriptions.Add(ruleDescription);
                     }
                 }
                 else if (response.StatusCode == AmqpResponseStatusCode.NoContent)
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     throw response.ToMessagingContractException();
                 }
 
-                return rules;
+                return ruleDescriptions;
             }
             catch (Exception exception)
             {

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var retry = new RetryExponential(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(20), 5);
             var remainingTime = Constants.DefaultOperationTimeout;
             TimeSpan retryInterval;
-            bool shouldRetry = retry.ShouldRetry(remainingTime, currentRetryCount, exception, out retryInterval);
+            var shouldRetry = retry.ShouldRetry(remainingTime, currentRetryCount, exception, out retryInterval);
             Assert.True(shouldRetry == expectedShouldRetry);
         }
 
@@ -55,16 +55,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void RetryExponentialRetryIntervalShouldIncreaseTest()
         {
-            RetryExponential policy = (RetryExponential)RetryPolicy.Default;
-            bool retry = true;
-            int retryCount = 0;
-            TimeSpan duration = Constants.DefaultOperationTimeout;
-            TimeSpan lastRetryInterval = TimeSpan.Zero;
-            ServiceBusException exception = new ServiceBusException(true, string.Empty);
+            var policy = (RetryExponential)RetryPolicy.Default;
+            var retry = true;
+            var retryCount = 0;
+            var duration = Constants.DefaultOperationTimeout;
+            var lastRetryInterval = TimeSpan.Zero;
+            var exception = new ServiceBusException(true, string.Empty);
             while (retry)
             {
-                TimeSpan retryInterval;
-                retry = policy.ShouldRetry(duration, retryCount, exception, out retryInterval);
+                retry = policy.ShouldRetry(duration, retryCount, exception, out var retryInterval);
                 if (retry)
                 {
                     Assert.True(retryInterval >= lastRetryInterval, $"Retry sleep should not decrease. Retry = [{retryInterval}]");
@@ -79,17 +78,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             // We use a constant retryCount to just test random-ness. We are
             // not testing increasing interval.
-            int retryCount = 1;
-            RetryExponential policy1 = (RetryExponential)RetryPolicy.Default;
-            RetryExponential policy2 = (RetryExponential)RetryPolicy.Default;
-            ServiceBusException exception = new ServiceBusException(true, string.Empty);
-            int retryMatchingInstances = 0;
-            for (int i = 0; i < 10; i++)
+            var retryCount = 1;
+            var policy1 = (RetryExponential)RetryPolicy.Default;
+            var policy2 = (RetryExponential)RetryPolicy.Default;
+            var exception = new ServiceBusException(true, string.Empty);
+            var retryMatchingInstances = 0;
+            for (var i = 0; i < 10; i++)
             {
-                TimeSpan retryInterval1;
-                policy1.ShouldRetry(Constants.DefaultOperationTimeout, retryCount, exception, out retryInterval1);
-                TimeSpan retryInterval2;
-                policy2.ShouldRetry(Constants.DefaultOperationTimeout, retryCount, exception, out retryInterval2);
+                policy1.ShouldRetry(Constants.DefaultOperationTimeout, retryCount, exception, out var retryInterval1);
+                policy2.ShouldRetry(Constants.DefaultOperationTimeout, retryCount, exception, out var retryInterval2);
                 if (retryInterval1 == retryInterval2)
                 {
                     retryMatchingInstances++;
@@ -102,42 +99,38 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void RetryExponentialServerBusyShouldSelfResetTest()
         {
-            RetryExponential policy1 = (RetryExponential)RetryPolicy.Default;
-            int retryCount = 0;
-            TimeSpan duration = Constants.DefaultOperationTimeout;
-            ServerBusyException exception = new ServerBusyException(string.Empty);
-            TimeSpan retryInterval;
+            var retryExponential = (RetryExponential)RetryPolicy.Default;
+            var retryCount = 0;
+            var duration = Constants.DefaultOperationTimeout;
+            var exception = new ServerBusyException(string.Empty);
 
             // First ServerBusy exception
-            Assert.False(policy1.IsServerBusy, "policy1.IsServerBusy should start with false");
-            Assert.True(policy1.ShouldRetry(duration, retryCount, exception, out retryInterval), "We should retry, but it returned false");
-            Assert.True(policy1.IsServerBusy, "policy1.IsServerBusy should be true");
+            Assert.False(retryExponential.IsServerBusy, "policy1.IsServerBusy should start with false");
+            Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it returned false");
+            Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
 
             System.Threading.Thread.Sleep(3000);
 
             // Setting it a second time should not prolong the call.
-            Assert.True(policy1.IsServerBusy, "policy1.IsServerBusy should be true");
-            Assert.True(policy1.ShouldRetry(duration, retryCount, exception, out retryInterval), "We should retry, but it return false");
-            Assert.True(policy1.IsServerBusy, "policy1.IsServerBusy should be true");
+            Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
+            Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it return false");
+            Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
 
             System.Threading.Thread.Sleep(8000); // 3 + 8 = 11s
-            Assert.False(policy1.IsServerBusy, "policy1.IsServerBusy should stay false after 11s");
+            Assert.False(retryExponential.IsServerBusy, "policy1.IsServerBusy should stay false after 11s");
 
             // Setting ServerBusy for second time.
-            Assert.True(policy1.ShouldRetry(duration, retryCount, exception, out retryInterval), "We should retry, but it return false");
-            Assert.True(policy1.IsServerBusy, "policy1.IsServerBusy is not true");
+            Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it return false");
+            Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy is not true");
         }
 
         [Fact]
         async void RunOperationShouldReturnImmediatelyIfRetryIntervalIsGreaterThanOperationTimeout()
         {
             var policy = RetryPolicy.Default;
-            Stopwatch watch = Stopwatch.StartNew();
+            var watch = Stopwatch.StartNew();
             await Assert.ThrowsAsync<ServiceBusException>(async () => await policy.RunOperation(
-                    () =>
-                    {
-                        throw new ServiceBusException(true, string.Empty);
-                    }, TimeSpan.FromSeconds(8))
+                    () => throw new ServiceBusException(true, string.Empty), TimeSpan.FromSeconds(8))
                 .ConfigureAwait(false));
 
             TestUtility.Log($"Elapsed Milliseconds: {watch.Elapsed.TotalMilliseconds}");
@@ -149,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var policy = RetryPolicy.Default;
             policy.SetServerBusy(Resources.DefaultServerBusyException);
-            Stopwatch watch = Stopwatch.StartNew();
+            var watch = Stopwatch.StartNew();
 
             await policy.RunOperation(
                 () => Task.CompletedTask, TimeSpan.FromMinutes(3))
@@ -163,12 +156,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async void RunOperationShouldWaitForAllOperationsToSucceed()
         {
             var policy = RetryPolicy.Default;
-            Stopwatch watch = Stopwatch.StartNew();
+            var watch = Stopwatch.StartNew();
             var tasks = new List<Task>();
             await policy.RunOperation(
                 async () =>
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (var i = 0; i < 5; i++)
                     {
                         var task = Task.Delay(TimeSpan.FromSeconds(2));
                         tasks.Add(task);

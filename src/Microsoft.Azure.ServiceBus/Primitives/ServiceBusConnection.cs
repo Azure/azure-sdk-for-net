@@ -72,26 +72,26 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
-            string hostName = this.Endpoint.Host;
+            var hostName = this.Endpoint.Host;
 
-            TimeoutHelper timeoutHelper = new TimeoutHelper(timeout);
-            AmqpSettings amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
+            var timeoutHelper = new TimeoutHelper(timeout);
+            var amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
                 amqpVersion: AmqpVersion,
                 useSslStreamSecurity: true,
                 hasTokenProvider: true,
                 useWebSockets: TransportType == TransportType.AmqpWebSockets);
 
-            TransportSettings transportSettings = CreateTransportSettings();
-            AmqpTransportInitiator initiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
-            TransportBase transport = await initiator.ConnectTaskAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            var transportSettings = CreateTransportSettings();
+            var amqpTransportInitiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
+            var transport = await amqpTransportInitiator.ConnectTaskAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
-            string containerId = Guid.NewGuid().ToString();
-            AmqpConnectionSettings amqpConnectionSettings = AmqpConnectionHelper.CreateAmqpConnectionSettings(AmqpConstants.DefaultMaxFrameSize, containerId, hostName);
-            AmqpConnection connection = new AmqpConnection(transport, amqpSettings, amqpConnectionSettings);
+            var containerId = Guid.NewGuid().ToString();
+            var amqpConnectionSettings = AmqpConnectionHelper.CreateAmqpConnectionSettings(AmqpConstants.DefaultMaxFrameSize, containerId, hostName);
+            var connection = new AmqpConnection(transport, amqpSettings, amqpConnectionSettings);
             await connection.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Always create the CBS Link + Session
-            AmqpCbsLink cbsLink = new AmqpCbsLink(connection);
+            var cbsLink = new AmqpCbsLink(connection);
             if (connection.Extensions.Find<AmqpCbsLink>() == null)
             {
                 connection.Extensions.Add(cbsLink);
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         private TransportSettings CreateTransportSettings()
         {
-            string hostName = this.Endpoint.Host;
-            string networkHost = this.Endpoint.Host;
-            int port = this.Endpoint.Port;
+            var hostName = this.Endpoint.Host;
+            var networkHost = this.Endpoint.Host;
+            var port = this.Endpoint.Port;
 
             if (TransportType == TransportType.AmqpWebSockets)
             {

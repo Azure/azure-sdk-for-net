@@ -185,7 +185,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 try
                 {
-                    TimeSpan amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
+                    var amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientId, message, amount);
                     await Task.Delay(amount, renewLockCancellationToken).ConfigureAwait(false);
 

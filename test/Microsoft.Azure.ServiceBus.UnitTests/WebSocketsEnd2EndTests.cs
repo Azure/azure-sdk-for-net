@@ -19,8 +19,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 var random = new Random();
-                byte[] content = new byte[8];
-                random.NextBytes(content);
+                var contentAsBytes = new byte[8];
+                random.NextBytes(contentAsBytes);
 
                 queueClient.RegisterMessageHandler((message, token) =>
                     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         taskCompletionSource.SetException(exceptionReceivedArgs.Exception);
                         return Task.CompletedTask;
                     });
-                await queueClient.SendAsync(new Message(content));
+                await queueClient.SendAsync(new Message(contentAsBytes));
 
                 var timeoutTask = Task.Delay(Timeout);
                 var receiveTask = taskCompletionSource.Task;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
 
                 var receivedMessage = receiveTask.Result;
-                Assert.Equal(content, receivedMessage.Body);
+                Assert.Equal(contentAsBytes, receivedMessage.Body);
             }
             finally
             {

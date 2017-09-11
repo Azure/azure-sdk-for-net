@@ -57,7 +57,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public async Task CloseAsync()
         {
-            bool callClose = false;
+            var callClose = false;
             lock (this.syncLock)
             {
                 if (!this.IsClosedOrClosing)

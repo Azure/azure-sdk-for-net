@@ -163,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
             try
             {
-                bool messageReceived = false;
+                var messageReceived = false;
                 var sendReceivePlugin = new SendReceivePlugin();
                 queueClient.RegisterPlugin(sendReceivePlugin);
 
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     },
                     exceptionArgs => Task.CompletedTask);
 
-                for (int i = 0; i < 20; i++)
+                for (var i = 0; i < 20; i++)
                 {
                     if (messageReceived)
                     {

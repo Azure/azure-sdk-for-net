@@ -63,8 +63,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnMessageExceptionHandlerCalledTest()
         {
-            string queueName = "nonexistentqueuename";
-            bool exceptionReceivedHandlerCalled = false;
+            var queueName = "nonexistentqueuename";
+            var exceptionReceivedHandlerCalled = false;
 
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
             queueClient.RegisterMessageHandler(
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             try
             {
-                Stopwatch stopwatch = Stopwatch.StartNew();
+                var stopwatch = Stopwatch.StartNew();
                 while (stopwatch.Elapsed.TotalSeconds <= 10)
                 {
                     if (exceptionReceivedHandlerCalled)

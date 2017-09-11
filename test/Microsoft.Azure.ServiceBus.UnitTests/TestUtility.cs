@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             var messagesToSend = new List<Message>();
-            for (int i = 0; i < messageCount; i++)
+            for (var i = 0; i < messageCount; i++)
             {
                 var message = new Message(Encoding.UTF8.GetBytes("test" + i));
                 message.Label = "test" + i;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task<IEnumerable<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
-            int receiveAttempts = 0;
+            var receiveAttempts = 0;
             var messagesToReturn = new List<Message>();
 
             while (receiveAttempts++ < TestConstants.MaxAttemptsCount && messagesToReturn.Count < messageCount)
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task<IEnumerable<Message>> PeekMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
-            int receiveAttempts = 0;
+            var receiveAttempts = 0;
             var peekedMessages = new List<Message>();
 
             while (receiveAttempts++ < TestConstants.MaxAttemptsCount && peekedMessages.Count < messageCount)
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task AbandonMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            int count = 0;
+            var count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.AbandonAsync(message.SystemProperties.LockToken);
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task DeadLetterMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            int count = 0;
+            var count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken);
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task DeferMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            int count = 0;
+            var count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.DeferAsync(message.SystemProperties.LockToken);
@@ -158,11 +158,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.FromResult(false);
             }
 
-            for (int i = 0; i < numberOfSessions; i++)
+            for (var i = 0; i < numberOfSessions; i++)
             {
                 var messagesToSend = new List<Message>();
-                string sessionId = TestConstants.SessionPrefix + i;
-                for (int j = 0; j < messagesPerSession; j++)
+                var sessionId = TestConstants.SessionPrefix + i;
+                for (var j = 0; j < messagesPerSession; j++)
                 {
                     var message = new Message(Encoding.UTF8.GetBytes("test" + j));
                     message.Label = "test" + j;

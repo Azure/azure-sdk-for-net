@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void ConnectionStringBuilderShouldNotFailWhileParsingUnknownProperties()
         {
-            string connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
+            var connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
             var csBuilder = new ServiceBusConnectionStringBuilder(connectionString);
             Assert.Equal("amqps://hello.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal("myQ", csBuilder.EntityPath);

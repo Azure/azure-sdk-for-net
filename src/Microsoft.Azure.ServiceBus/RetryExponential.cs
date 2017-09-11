@@ -88,7 +88,7 @@ namespace Microsoft.Azure.ServiceBus
             // Logic: - first use currentRetryCount to calculate the size of the interval.
             //        - then get the interval in terms of sleep time (between min and max sleep time)
             //        - if interval to large to fit inside ReminaingTime, we quit.
-            int randomizedInterval = ConcurrentRandom.Next((int)(this.DeltaBackoff.TotalMilliseconds * 0.8), (int)(this.DeltaBackoff.TotalMilliseconds * 1.2));
+            var randomizedInterval = ConcurrentRandom.Next((int)(this.DeltaBackoff.TotalMilliseconds * 0.8), (int)(this.DeltaBackoff.TotalMilliseconds * 1.2));
             double increment = (Math.Pow(2, currentRetryCount) - 1) * randomizedInterval;
             double timeToSleepMsec = Math.Min(this.MinimalBackoff.TotalMilliseconds + increment, this.MaximumBackoff.TotalMilliseconds);
             retryInterval = TimeSpan.FromMilliseconds(timeToSleepMsec);

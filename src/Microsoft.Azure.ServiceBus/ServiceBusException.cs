@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                string baseMessage = base.Message;
+                var baseMessage = base.Message;
                 if (string.IsNullOrEmpty(this.ServiceBusNamespace))
                 {
                     return baseMessage;

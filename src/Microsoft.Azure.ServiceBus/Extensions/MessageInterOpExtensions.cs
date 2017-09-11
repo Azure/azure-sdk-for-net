@@ -95,12 +95,12 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
                 serializer = DataContractBinarySerializer<T>.Instance;
             }
 
-            using (MemoryStream stream = new MemoryStream(message.Body.Length))
+            using (var memoryStream = new MemoryStream(message.Body.Length))
             {
-                stream.Write(message.Body, 0, message.Body.Length);
-                stream.Flush();
-                stream.Position = 0;
-                return (T)serializer.ReadObject(stream);
+                memoryStream.Write(message.Body, 0, message.Body.Length);
+                memoryStream.Flush();
+                memoryStream.Position = 0;
+                return (T)serializer.ReadObject(memoryStream);
             }
         }
     }

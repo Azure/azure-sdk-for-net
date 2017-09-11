@@ -79,9 +79,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         protected override Task<SecurityToken> OnGetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {
-            string tokenString = this.BuildSignature(appliesTo);
-            SharedAccessSignatureToken securityToken = new SharedAccessSignatureToken(tokenString);
-            return Task.FromResult<SecurityToken>(securityToken);
+            var tokenString = this.BuildSignature(appliesTo);
+            var sharedAccessSignatureToken = new SharedAccessSignatureToken(tokenString);
+            return Task.FromResult<SecurityToken>(sharedAccessSignatureToken);
         }
 
         protected virtual string BuildSignature(string targetUri)
@@ -108,12 +108,12 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 // is case sensitive.
                 string expiresOn = BuildExpiresOn(timeToLive);
                 string audienceUri = WebUtility.UrlEncode(targetUri);
-                List<string> fields = new List<string> { audienceUri, expiresOn };
+                var fields = new List<string> { audienceUri, expiresOn };
 
                 // Example string to be signed:
                 // http://mynamespace.servicebus.windows.net/a/b/c?myvalue1=a
                 // <Value for ExpiresOn>
-                string signature = Sign(string.Join("\n", fields), encodedSharedAccessKey);
+                var signature = Sign(string.Join("\n", fields), encodedSharedAccessKey);
 
                 // Example returned string:
                 // SharedAccessKeySignature
@@ -134,15 +134,15 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             static string BuildExpiresOn(TimeSpan timeToLive)
             {
-                DateTime expiresOn = DateTime.UtcNow.Add(timeToLive);
-                TimeSpan secondsFromBaseTime = expiresOn.Subtract(EpochTime);
-                long seconds = Convert.ToInt64(secondsFromBaseTime.TotalSeconds, CultureInfo.InvariantCulture);
+                var expiresOn = DateTime.UtcNow.Add(timeToLive);
+                var secondsFromBaseTime = expiresOn.Subtract(EpochTime);
+                var seconds = Convert.ToInt64(secondsFromBaseTime.TotalSeconds, CultureInfo.InvariantCulture);
                 return Convert.ToString(seconds, CultureInfo.InvariantCulture);
             }
 
             static string Sign(string requestString, byte[] encodedSharedAccessKey)
             {
-                using (HMACSHA256 hmac = new HMACSHA256(encodedSharedAccessKey))
+                using (var hmac = new HMACSHA256(encodedSharedAccessKey))
                 {
                     return Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(requestString)));
                 }
@@ -211,26 +211,22 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
                 IDictionary<string, string> parsedFields = ExtractFieldValues(sharedAccessSignature);
 
-                string signature;
-                if (!parsedFields.TryGetValue(Signature, out signature))
+                if (!parsedFields.TryGetValue(Signature, out _))
                 {
                     throw new ArgumentNullException(Signature);
                 }
 
-                string expiry;
-                if (!parsedFields.TryGetValue(SignedExpiry, out expiry))
+                if (!parsedFields.TryGetValue(SignedExpiry, out _))
                 {
                     throw new ArgumentNullException(SignedExpiry);
                 }
 
-                string keyName;
-                if (!parsedFields.TryGetValue(SignedKeyName, out keyName))
+                if (!parsedFields.TryGetValue(SignedKeyName, out _))
                 {
                     throw new ArgumentNullException(SignedKeyName);
                 }
 
-                string encodedAudience;
-                if (!parsedFields.TryGetValue(SignedResource, out encodedAudience))
+                if (!parsedFields.TryGetValue(SignedResource, out _))
                 {
                     throw new ArgumentNullException(SignedResource);
                 }

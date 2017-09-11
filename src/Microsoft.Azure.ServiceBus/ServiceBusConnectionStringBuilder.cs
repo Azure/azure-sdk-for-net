@@ -166,7 +166,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>Namespace connection string</returns>
         public string GetNamespaceConnectionString()
         {
-            StringBuilder connectionStringBuilder = new StringBuilder();
+            var connectionStringBuilder = new StringBuilder();
             if (this.Endpoint != null)
             {
                 connectionStringBuilder.Append($"{EndpointConfigName}{KeyValueSeparator}{this.Endpoint}{KeyValuePairDelimiter}");

@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 this.cleanupScheduled = false;
             }
 
-            foreach (TKey key in this.dictionary.Keys)
+            foreach (var key in this.dictionary.Keys)
             {
                 if (DateTime.UtcNow > this.dictionary[key])
                 {

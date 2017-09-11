@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus
         public void StartPump()
         {
             // Schedule Tasks for doing PendingAcceptSession calls
-            for (int i = 0; i < this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls; i++)
+            for (var i = 0; i < this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls; i++)
             {
                 TaskExtensionHelper.Schedule(this.SessionPumpTaskAsync);
             }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus
 
         static void OnUserCallBackTimeout(object state)
         {
-            CancellationTokenSource renewCancellationTokenSource = (CancellationTokenSource)state;
+            var renewCancellationTokenSource = (CancellationTokenSource)state;
             renewCancellationTokenSource?.Cancel();
             renewCancellationTokenSource?.Dispose();
         }
@@ -112,14 +112,14 @@ namespace Microsoft.Azure.ServiceBus
         {
             while (!this.pumpCancellationToken.IsCancellationRequested)
             {
-                bool concurrentSessionSemaphoreAquired = false;
+                var concurrentSessionSemaphoreAquired = false;
                 try
                 {
                     await this.maxConcurrentSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
                     concurrentSessionSemaphoreAquired = true;
 
                     await this.maxPendingAcceptSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-                    IMessageSession session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
+                    var session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
                     if (session == null)
                     {
                         await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.ServiceBus
 
                     // `session` needs to be copied to another local variable before passing to Schedule
                     // because of the way variables are captured. (Refer 'Captured variables')
-                    IMessageSession messageSession = session;
+                    var messageSession = session;
                     TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync(messageSession));
                 }
                 catch (Exception exception)
@@ -167,13 +167,13 @@ namespace Microsoft.Azure.ServiceBus
                 return;
             }
 
-            CancellationTokenSource renewLockCancellationTokenSource = new CancellationTokenSource();
+            var renewLockCancellationTokenSource = new CancellationTokenSource();
             if (this.ShouldRenewSessionLock())
             {
                 TaskExtensionHelper.Schedule(() => this.RenewSessionLockTaskAsync(session, renewLockCancellationTokenSource.Token));
             }
 
-            Timer userCallbackTimer = new Timer(
+            var userCallbackTimer = new Timer(
                 OnUserCallBackTimeout,
                 renewLockCancellationTokenSource,
                 Timeout.Infinite,
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.ServiceBus
 
                     // Set the timer
                     userCallbackTimer.Change(this.sessionHandlerOptions.MaxAutoRenewDuration, TimeSpan.FromMilliseconds(-1));
-                    bool callbackExceptionOccured = false;
+                    var callbackExceptionOccured = false;
                     try
                     {
                         await this.userOnSessionCallback(session, message, this.pumpCancellationToken).ConfigureAwait(false);
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 try
                 {
-                    TimeSpan amount = MessagingUtilities.CalculateRenewAfterDuration(session.LockedUntilUtc);
+                    var amount = MessagingUtilities.CalculateRenewAfterDuration(session.LockedUntilUtc);
 
                     MessagingEventSource.Log.SessionReceivePumpSessionRenewLockStart(this.clientId, session.SessionId, amount);
                     await Task.Delay(amount, renewLockCancellationToken).ConfigureAwait(false);

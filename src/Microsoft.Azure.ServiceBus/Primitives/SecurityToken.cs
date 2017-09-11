@@ -145,9 +145,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
             IEnumerable<string> valueEncodedPairs = encodedString.Split(new[] { pairSeparator }, StringSplitOptions.None);
-            foreach (string valueEncodedPair in valueEncodedPairs)
+            foreach (var valueEncodedPairAsString in valueEncodedPairs)
             {
-                string[] pair = valueEncodedPair.Split(new[] { keyValueSeparator }, StringSplitOptions.None);
+                var pair = valueEncodedPairAsString.Split(new[] { keyValueSeparator }, StringSplitOptions.None);
                 if (pair.Length != 2)
                 {
                     throw new FormatException(Resources.InvalidEncoding);
@@ -161,9 +161,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         string GetAudienceFromToken(string token)
         {
-            string audience;
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
-            if (!decodedToken.TryGetValue(this.AudienceFieldName, out audience))
+            var decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
+            if (!decodedToken.TryGetValue(this.AudienceFieldName, out var audience))
             {
                 throw new FormatException(Resources.TokenMissingAudience);
             }
@@ -173,9 +172,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         void GetExpirationDateAndAudienceFromToken(string token, out DateTime expiresOn, out string audience)
         {
-            string expiresIn;
             IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, this.KeyValueSeparator, this.PairSeparator);
-            if (!decodedToken.TryGetValue(this.ExpiresOnFieldName, out expiresIn))
+            if (!decodedToken.TryGetValue(this.ExpiresOnFieldName, out var expiresIn))
             {
                 throw new FormatException(Resources.TokenMissingExpiresOn);
             }
