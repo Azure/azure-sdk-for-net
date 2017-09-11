@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface INetworkInterfaceLoadBalancersOperations
     {
         /// <summary>
-        /// Get all load balancers in a network interface
+        /// List all load balancers in a network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<IPage<LoadBalancer>>> ListWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all load balancers in a network interface
+        /// List all load balancers in a network interface.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

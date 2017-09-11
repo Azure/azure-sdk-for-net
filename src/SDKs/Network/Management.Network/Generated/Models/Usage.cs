@@ -34,8 +34,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="currentValue">The current value of the usage.</param>
         /// <param name="limit">The limit of usage.</param>
         /// <param name="name">The name of the type of usage.</param>
-        public Usage(long currentValue, long limit, UsageName name)
+        /// <param name="id">Resource identifier.</param>
+        public Usage(long currentValue, long limit, UsageName name, string id = default(string))
         {
+            Id = id;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
@@ -53,6 +55,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets resource identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the current value of the usage.
