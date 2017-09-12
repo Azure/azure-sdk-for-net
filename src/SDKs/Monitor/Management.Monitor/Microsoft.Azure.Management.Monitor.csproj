@@ -6,6 +6,7 @@
     <Version>0.17.0-preview</Version>
     <PackageId>Microsoft.Azure.Management.Monitor</PackageId>
     <PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs</PackageTags>
+    <PackageReleaseNotes>See https://github.com/Azure/azure-sdk-for-net/tree/psSdkJson6/src/SDKs/Monitor/changelog.md for release notes.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
