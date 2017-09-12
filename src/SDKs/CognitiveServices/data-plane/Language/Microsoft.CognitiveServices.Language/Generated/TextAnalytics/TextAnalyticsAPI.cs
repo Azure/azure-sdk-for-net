@@ -19,12 +19,14 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
     /// <summary>
     /// The Text Analytics API is a suite of text analytics web services built
-    /// with best-in-class Microsoft machine learning algorithms. The API can
-    /// be used to analyze unstructured text for tasks such as sentiment
-    /// analysis, key phrase extraction and language detection. No training
-    /// data is needed to use this API; just bring your text data. This API
-    /// uses advanced natural language processing techniques to deliver best in
-    /// class predictions. Further documentation can be found in
+    /// with best-in-class Microsoft machine learning algorithms.
+    /// The API can be used to analyze unstructured text for tasks such as
+    /// sentiment analysis, key phrase extraction and language detection.
+    /// No training data is needed to use this API; just bring your text data.
+    /// This API uses advanced natural language processing techniques to
+    /// deliver best in class predictions.
+    ///
+    /// Further documentation can be found in
     /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview
     /// </summary>
     public partial class TextAnalyticsAPI : ServiceClient<TextAnalyticsAPI>, ITextAnalyticsAPI
@@ -45,16 +47,14 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Supported Azure regions for Cognitive Services endpoints
+        /// </summary>
+        public string AzureRegion { get; private set; }
+
+        /// <summary>
         /// Subscription key in header
         /// </summary>
         public string SubscriptionKey { get; set; }
-
-        /// <summary>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
-        /// </summary>
-        public AzureRegion AzureRegion1 { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the TextAnalyticsAPI class.
@@ -91,6 +91,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         private void Initialize()
         {
             BaseUri = "https://{azureRegion}.api.cognitive.microsoft.com/text/analytics";
+            AzureRegion = "westus";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -121,14 +122,13 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <summary>
         /// The API returns a list of strings denoting the key talking points in the
         /// input text.
-        /// </summary>
-        /// <remarks>
         /// We employ techniques from Microsoft Office's sophisticated Natural Language
-        /// Processing toolkit. See the &lt;a
+        /// Processing toolkit.
+        /// See the &lt;a
         /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
         /// Analytics Documentation&lt;/a&gt; for details about the languages that are
         /// supported by key phrase extraction.
-        /// </remarks>
+        /// </summary>
         /// <param name='input'>
         /// Collection of documents to analyze. Documents can now contain a language
         /// field to indicate the text language
@@ -178,7 +178,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/keyPhrases";
-            _url = _url.Replace("{azureRegion}", SafeJsonConvert.SerializeObject(AzureRegion1, SerializationSettings).Trim('"'));
+            _url = _url.Replace("{azureRegion}", AzureRegion);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -289,11 +289,10 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
         /// <summary>
         /// The API returns the detected language and a numeric score between 0 and 1.
-        /// </summary>
-        /// <remarks>
         /// Scores close to 1 indicate 100% certainty that the identified language is
-        /// true. A total of 120 languages are supported.
-        /// </remarks>
+        /// true.
+        /// A total of 120 languages are supported.
+        /// </summary>
         /// <param name='input'>
         /// Collection of documents to analyze.
         /// </param>
@@ -347,7 +346,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/languages";
-            _url = _url.Replace("{azureRegion}", SafeJsonConvert.SerializeObject(AzureRegion1, SerializationSettings).Trim('"'));
+            _url = _url.Replace("{azureRegion}", AzureRegion);
             List<string> _queryParameters = new List<string>();
             if (numberOfLanguagesToDetect != null)
             {
@@ -467,17 +466,16 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
         /// <summary>
         /// The API returns a numeric score between 0 and 1.
-        /// </summary>
-        /// <remarks>
         /// Scores close to 1 indicate positive sentiment, while scores close to 0
-        /// indicate negative sentiment. Sentiment score is generated using
-        /// classification techniques. The input features to the classifier include
-        /// n-grams, features generated from part-of-speech tags, and word embeddings.
+        /// indicate negative sentiment.
+        /// Sentiment score is generated using classification techniques.
+        /// The input features to the classifier include n-grams, features generated
+        /// from part-of-speech tags, and word embeddings.
         /// See the &lt;a
         /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
         /// Analytics Documentation&lt;/a&gt; for details about the languages that are
         /// supported by sentiment analysis.
-        /// </remarks>
+        /// </summary>
         /// <param name='input'>
         /// Collection of documents to analyze.
         /// </param>
@@ -526,7 +524,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/sentiment";
-            _url = _url.Replace("{azureRegion}", SafeJsonConvert.SerializeObject(AzureRegion1, SerializationSettings).Trim('"'));
+            _url = _url.Replace("{azureRegion}", AzureRegion);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
