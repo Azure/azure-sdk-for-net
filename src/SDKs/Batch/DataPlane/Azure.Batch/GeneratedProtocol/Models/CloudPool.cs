@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public CloudPool()
         {
-          CustomInit();
+            CustomInit();
         }
 
         /// <summary>

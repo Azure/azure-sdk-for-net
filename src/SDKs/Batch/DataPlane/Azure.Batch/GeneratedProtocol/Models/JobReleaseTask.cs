@@ -57,6 +57,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         /// <param name="id">A string that uniquely identifies the Job Release
         /// task within the job.</param>
+        /// <param name="containerSettings">The settings for the container
+        /// under which the Job Release task runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
         /// will download to the compute node before running the command
         /// line.</param>
@@ -76,10 +78,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// contents.</param>
         /// <param name="userIdentity">The user identity under which the Job
         /// Release task runs.</param>
-        public JobReleaseTask(string commandLine, string id = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
+        public JobReleaseTask(string commandLine, string id = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
         {
             Id = id;
             CommandLine = commandLine;
+            ContainerSettings = containerSettings;
             ResourceFiles = resourceFiles;
             EnvironmentSettings = environmentSettings;
             MaxWallClockTime = maxWallClockTime;
@@ -122,6 +125,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the Job
+        /// Release task runs.
+        /// </summary>
+        /// <remarks>
+        /// When this is specified, all directories recursively below the
+        /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
+        /// node) are mapped into the container, all task environment variables
+        /// are mapped into the container, and the task command line is
+        /// executed in the container.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerSettings")]
+        public TaskContainerSettings ContainerSettings { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
@@ -187,6 +204,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (CommandLine == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (ContainerSettings != null)
+            {
+                ContainerSettings.Validate();
             }
             if (ResourceFiles != null)
             {

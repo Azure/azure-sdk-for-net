@@ -55,6 +55,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         /// <param name="displayName">The display name of the Job Manager
         /// task.</param>
+        /// <param name="containerSettings">The settings for the container
+        /// under which the Job Manager task runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
         /// will download to the compute node before running the command
         /// line.</param>
@@ -79,11 +81,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operations.</param>
         /// <param name="allowLowPriorityNode">Whether the Job Manager task may
         /// run on a low-priority compute node.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
         {
             Id = id;
             DisplayName = displayName;
             CommandLine = commandLine;
+            ContainerSettings = containerSettings;
             ResourceFiles = resourceFiles;
             OutputFiles = outputFiles;
             EnvironmentSettings = environmentSettings;
@@ -136,6 +139,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the Job
+        /// Manager task runs.
+        /// </summary>
+        /// <remarks>
+        /// If the pool that will run this task has containerConfiguration set,
+        /// this must be set as well. If the pool that will run this task
+        /// doesn't have containerConfiguration set, this must not be set. When
+        /// this is specified, all directories recursively below the
+        /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
+        /// node) are mapped into the container, all task environment variables
+        /// are mapped into the container, and the task command line is
+        /// executed in the container.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerSettings")]
+        public TaskContainerSettings ContainerSettings { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
@@ -278,6 +298,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (CommandLine == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+            }
+            if (ContainerSettings != null)
+            {
+                ContainerSettings.Validate();
             }
             if (ResourceFiles != null)
             {

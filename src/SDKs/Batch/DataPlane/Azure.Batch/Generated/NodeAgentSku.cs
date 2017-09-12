@@ -58,9 +58,11 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the list of images verified to be compatible with this node agent SKU. This collection is not exhaustive 
-        /// (the node agent may be compatible with other images).
+        /// Gets the list of Azure Marketplace images verified to be compatible with this node agent SKU.
         /// </summary>
+        /// <remarks>
+        /// This collection is not exhaustive (the node agent may be compatible with other images).
+        /// </remarks>
         public IReadOnlyList<ImageReference> VerifiedImageReferences
         {
             get { return this.verifiedImageReferences; }

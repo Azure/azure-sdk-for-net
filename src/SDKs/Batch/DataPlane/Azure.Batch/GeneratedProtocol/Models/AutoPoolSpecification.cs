@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public AutoPoolSpecification()
         {
-          CustomInit();
+            CustomInit();
         }
 
         /// <summary>

@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<AuthenticationTokenSettings> AuthenticationTokenSettingsProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
+            public readonly PropertyAccessor<TaskContainerSettings> ContainerSettingsProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<string> IdProperty;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Batch
                 this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>("ContainerSettings", BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
@@ -77,6 +79,10 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new TaskConstraints(o)),
                     "Constraints",
                     BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
+                    "ContainerSettings",
+                    BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
                     "DisplayName",
@@ -202,6 +208,22 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the settings for the container under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If the pool that will run this task has <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> set, 
+        /// this must be set as well. If the pool that will run this task doesn't have <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> 
+        /// set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR 
+        /// (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables 
+        /// are mapped into the container, and the task command line is executed in the container.
+        /// </remarks>
+        public TaskContainerSettings ContainerSettings
+        {
+            get { return this.propertyContainer.ContainerSettingsProperty.Value; }
+            set { this.propertyContainer.ContainerSettingsProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the display name of the JobManager task.
         /// </summary>
         public string DisplayName
@@ -319,6 +341,7 @@ namespace Microsoft.Azure.Batch
                 AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
+                ContainerSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerSettings, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 Id = this.Id,

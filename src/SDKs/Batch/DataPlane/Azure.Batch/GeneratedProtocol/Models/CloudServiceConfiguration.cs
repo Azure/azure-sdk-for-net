@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string TargetOSVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure Guest OS Version currently installed on the
-        /// virtual machines in the pool.
+        /// Gets the Azure Guest OS Version currently installed on the virtual
+        /// machines in the pool.
         /// </summary>
         /// <remarks>
         /// This may differ from targetOSVersion if the pool state is
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// currentOSVersion is updated to be the same as targetOSVersion.
         /// </remarks>
         [JsonProperty(PropertyName = "currentOSVersion")]
-        public string CurrentOSVersion { get; set; }
+        public string CurrentOSVersion { get; private set; }
 
         /// <summary>
         /// Validate the object.

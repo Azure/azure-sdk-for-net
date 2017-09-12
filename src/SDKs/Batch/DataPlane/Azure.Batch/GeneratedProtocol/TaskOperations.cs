@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Adds a task to the specified job.
         /// </summary>
+        /// <remarks>
+        /// The maximum lifetime of a task from addition to completion is 7 days. If a
+        /// task has not completed within 7 days of being added it will be terminated
+        /// by the Batch service and left in whatever state it was in at that time.
+        /// </remarks>
         /// <param name='jobId'>
         /// The ID of the job to which the task is to be added.
         /// </param>
@@ -596,7 +601,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// unexpectedly. If the response contains any tasks which failed to add, a
         /// client can retry the request. In a retry, it is most efficient to resubmit
         /// only tasks that failed to add, and to omit tasks that were successfully
-        /// added on the first attempt.
+        /// added on the first attempt. The maximum lifetime of a task from addition to
+        /// completion is 7 days. If a task has not completed within 7 days of being
+        /// added it will be terminated by the Batch service and left in whatever state
+        /// it was in at that time.
         /// </remarks>
         /// <param name='jobId'>
         /// The ID of the job to which the task collection is to be added.

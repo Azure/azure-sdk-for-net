@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
+            public readonly PropertyAccessor<TaskContainerSettings> ContainerSettingsProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<bool?> RerunOnComputeNodeRebootAfterSuccessProperty;
@@ -37,6 +38,7 @@ namespace Microsoft.Azure.Batch
             {
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>("ContainerSettings", BindingAccess.Read | BindingAccess.Write);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.RerunOnComputeNodeRebootAfterSuccessProperty = this.CreatePropertyAccessor<bool?>("RerunOnComputeNodeRebootAfterSuccess", BindingAccess.Read | BindingAccess.Write);
@@ -55,6 +57,10 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new TaskConstraints(o)),
                     "Constraints",
                     BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
+                    "ContainerSettings",
+                    BindingAccess.Read);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.EnvironmentSettings),
                     "EnvironmentSettings",
@@ -127,6 +133,20 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.ConstraintsProperty.Value; }
             set { this.propertyContainer.ConstraintsProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch 
+        /// directories on the node) are mapped into the container, all task environment variables are mapped into the container, 
+        /// and the task command line is executed in the container.
+        /// </remarks>
+        public TaskContainerSettings ContainerSettings
+        {
+            get { return this.propertyContainer.ContainerSettingsProperty.Value; }
+            set { this.propertyContainer.ContainerSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -232,6 +252,7 @@ namespace Microsoft.Azure.Batch
             {
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
+                ContainerSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerSettings, (o) => o.GetTransportObject()),
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 Id = this.Id,
                 RerunOnNodeRebootAfterSuccess = this.RerunOnComputeNodeRebootAfterSuccess,

@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public JobScheduleUpdateParameter()
         {
-          CustomInit();
+            JobSpecification = new JobSpecification();
+            CustomInit();
         }
 
         /// <summary>
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the job schedule as metadata.</param>
         public JobScheduleUpdateParameter(Schedule schedule, JobSpecification jobSpecification, IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
+            JobSpecification = new JobSpecification();
             Schedule = schedule;
             JobSpecification = jobSpecification;
             Metadata = metadata;

@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// completed.</param>
         /// <param name="exitCode">The exit code of the program specified on
         /// the subtask command line.</param>
+        /// <param name="containerInfo">Information about the container under
+        /// which the task is executing.</param>
         /// <param name="failureInfo">Information describing the task failure,
         /// if any.</param>
         /// <param name="state">The current state of the subtask.</param>
@@ -50,13 +52,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="previousStateTransitionTime">The time at which the
         /// subtask entered its previous state.</param>
         /// <param name="result">The result of the task execution.</param>
-        public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), SubtaskState? state = default(SubtaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), SubtaskState? previousState = default(SubtaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
+        public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskContainerExecutionInformation containerInfo = default(TaskContainerExecutionInformation), TaskFailureInformation failureInfo = default(TaskFailureInformation), SubtaskState? state = default(SubtaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), SubtaskState? previousState = default(SubtaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             Id = id;
             NodeInfo = nodeInfo;
             StartTime = startTime;
             EndTime = endTime;
             ExitCode = exitCode;
+            ContainerInfo = containerInfo;
             FailureInfo = failureInfo;
             State = state;
             StateTransitionTime = stateTransitionTime;
@@ -117,6 +120,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets information about the container under which the task
+        /// is executing.
+        /// </summary>
+        /// <remarks>
+        /// This property is set only if the task runs in a container context.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerInfo")]
+        public TaskContainerExecutionInformation ContainerInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information describing the task failure, if any.

@@ -950,6 +950,10 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (jobPatchParameter == null)
+            {
+                jobPatchParameter = new JobPatchParameter();
+            }
             int? timeout = default(int?);
             if (jobPatchOptions != null)
             {
@@ -1253,6 +1257,10 @@ namespace Microsoft.Azure.Batch.Protocol
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (jobUpdateParameter == null)
+            {
+                jobUpdateParameter = new JobUpdateParameter();
             }
             int? timeout = default(int?);
             if (jobUpdateOptions != null)
@@ -2454,6 +2462,10 @@ namespace Microsoft.Azure.Batch.Protocol
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (job == null)
+            {
+                job = new JobAddParameter();
             }
             int? timeout = default(int?);
             if (jobAddOptions != null)

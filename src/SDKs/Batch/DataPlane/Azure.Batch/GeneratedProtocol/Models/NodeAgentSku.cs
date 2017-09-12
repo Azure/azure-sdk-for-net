@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the NodeAgentSku class.
         /// </summary>
         /// <param name="id">The ID of the node agent SKU.</param>
-        /// <param name="verifiedImageReferences">The list of images verified
-        /// to be compatible with this node agent SKU.</param>
+        /// <param name="verifiedImageReferences">The list of Azure Marketplace
+        /// images verified to be compatible with this node agent SKU.</param>
         /// <param name="osType">The type of operating system (e.g. Windows or
         /// Linux) compatible with the node agent SKU.</param>
         public NodeAgentSku(string id = default(string), IList<ImageReference> verifiedImageReferences = default(IList<ImageReference>), OSType? osType = default(OSType?))
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of images verified to be compatible with this
-        /// node agent SKU.
+        /// Gets or sets the list of Azure Marketplace images verified to be
+        /// compatible with this node agent SKU.
         /// </summary>
         /// <remarks>
         /// This collection is not exhaustive (the node agent may be compatible

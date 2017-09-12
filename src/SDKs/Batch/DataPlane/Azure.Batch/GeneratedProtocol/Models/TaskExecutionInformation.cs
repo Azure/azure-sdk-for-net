@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="endTime">The time at which the task completed.</param>
         /// <param name="exitCode">The exit code of the program specified on
         /// the task command line.</param>
+        /// <param name="containerInfo">Information about the container under
+        /// which the task is executing.</param>
         /// <param name="failureInfo">Information describing the task failure,
         /// if any.</param>
         /// <param name="lastRetryTime">The most recent time at which a retry
@@ -48,11 +50,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task has been requeued by the Batch service as the result of a user
         /// request.</param>
         /// <param name="result">The result of the task execution.</param>
-        public TaskExecutionInformation(int retryCount, int requeueCount, System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), System.DateTime? lastRequeueTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
+        public TaskExecutionInformation(int retryCount, int requeueCount, System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskContainerExecutionInformation containerInfo = default(TaskContainerExecutionInformation), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), System.DateTime? lastRequeueTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             StartTime = startTime;
             EndTime = endTime;
             ExitCode = exitCode;
+            ContainerInfo = containerInfo;
             FailureInfo = failureInfo;
             RetryCount = retryCount;
             LastRetryTime = lastRetryTime;
@@ -107,6 +110,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets information about the container under which the task
+        /// is executing.
+        /// </summary>
+        /// <remarks>
+        /// This property is set only if the task runs in a container context.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerInfo")]
+        public TaskContainerExecutionInformation ContainerInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information describing the task failure, if any.

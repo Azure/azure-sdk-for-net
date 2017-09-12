@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Batch.Protocol
             Task = new TaskOperations(this);
             ComputeNode = new ComputeNodeOperations(this);
             BaseUri = new System.Uri("https://batch.core.windows.net");
-            ApiVersion = "2017-06-01.5.1";
+            ApiVersion = "2017-09-01.6.0";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

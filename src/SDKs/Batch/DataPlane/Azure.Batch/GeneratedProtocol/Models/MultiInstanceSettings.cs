@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -35,15 +36,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the MultiInstanceSettings class.
         /// </summary>
-        /// <param name="numberOfInstances">The number of compute nodes
-        /// required by the task.</param>
         /// <param name="coordinationCommandLine">The command line to run on
         /// all the compute nodes to enable them to coordinate when the primary
         /// runs the main task command.</param>
+        /// <param name="numberOfInstances">The number of compute nodes
+        /// required by the task.</param>
         /// <param name="commonResourceFiles">A list of files that the Batch
         /// service will download before running the coordination command
         /// line.</param>
-        public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), IList<ResourceFile> commonResourceFiles = default(IList<ResourceFile>))
+        public MultiInstanceSettings(string coordinationCommandLine, int? numberOfInstances = default(int?), IList<ResourceFile> commonResourceFiles = default(IList<ResourceFile>))
         {
             NumberOfInstances = numberOfInstances;
             CoordinationCommandLine = coordinationCommandLine;
@@ -59,8 +60,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the number of compute nodes required by the task.
         /// </summary>
+        /// <remarks>
+        /// If omitted, the default is 1.
+        /// </remarks>
         [JsonProperty(PropertyName = "numberOfInstances")]
-        public int NumberOfInstances { get; set; }
+        public int? NumberOfInstances { get; set; }
 
         /// <summary>
         /// Gets or sets the command line to run on all the compute nodes to
@@ -94,11 +98,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (CoordinationCommandLine == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CoordinationCommandLine");
+            }
             if (CommonResourceFiles != null)
             {
                 foreach (var element in CommonResourceFiles)

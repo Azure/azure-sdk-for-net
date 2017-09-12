@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public PoolInformation()
         {
-          CustomInit();
+            CustomInit();
         }
 
         /// <summary>

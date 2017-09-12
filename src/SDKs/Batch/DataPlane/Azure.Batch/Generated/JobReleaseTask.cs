@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<string> CommandLineProperty;
+            public readonly PropertyAccessor<TaskContainerSettings> ContainerSettingsProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<TimeSpan?> MaxWallClockTimeProperty;
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>("ContainerSettings", BindingAccess.Read | BindingAccess.Write);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("MaxWallClockTime", BindingAccess.Read | BindingAccess.Write);
@@ -49,6 +51,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.CommandLine,
                     "CommandLine",
                     BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
+                    "ContainerSettings",
+                    BindingAccess.Read);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.EnvironmentSettings),
                     "EnvironmentSettings",
@@ -112,6 +118,20 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.CommandLineProperty.Value; }
             set { this.propertyContainer.CommandLineProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch 
+        /// directories on the node) are mapped into the container, all task environment variables are mapped into the container, 
+        /// and the task command line is executed in the container.
+        /// </remarks>
+        public TaskContainerSettings ContainerSettings
+        {
+            get { return this.propertyContainer.ContainerSettingsProperty.Value; }
+            set { this.propertyContainer.ContainerSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -206,6 +226,7 @@ namespace Microsoft.Azure.Batch
             Models.JobReleaseTask result = new Models.JobReleaseTask()
             {
                 CommandLine = this.CommandLine,
+                ContainerSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerSettings, (o) => o.GetTransportObject()),
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 Id = this.Id,
                 MaxWallClockTime = this.MaxWallClockTime,

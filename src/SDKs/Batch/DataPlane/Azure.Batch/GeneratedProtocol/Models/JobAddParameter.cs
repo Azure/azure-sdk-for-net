@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public JobAddParameter()
         {
-          CustomInit();
+            PoolInfo = new PoolInformation();
+            CustomInit();
         }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// define dependencies on each other. The default is false.</param>
         public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
         {
+            PoolInfo = new PoolInformation();
             Id = id;
             DisplayName = displayName;
             Priority = priority;

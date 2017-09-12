@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Batch
     public partial class SubtaskInformation : IPropertyMetadata
     {
         private readonly ComputeNodeInformation computeNodeInformation;
+        private readonly TaskContainerExecutionInformation containerInformation;
         private readonly DateTime? endTime;
         private readonly int? exitCode;
         private readonly TaskFailureInformation failureInformation;
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Batch
         internal SubtaskInformation(Models.SubtaskInformation protocolObject)
         {
             this.computeNodeInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NodeInfo, o => new ComputeNodeInformation(o).Freeze());
+            this.containerInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerInfo, o => new TaskContainerExecutionInformation(o).Freeze());
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
             this.failureInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FailureInfo, o => new TaskFailureInformation(o).Freeze());
@@ -61,6 +63,17 @@ namespace Microsoft.Azure.Batch
         public ComputeNodeInformation ComputeNodeInformation
         {
             get { return this.computeNodeInformation; }
+        }
+
+        /// <summary>
+        /// Gets information about the container under which the task is executing.
+        /// </summary>
+        /// <remarks>
+        /// This property is set only if the task runs in a container context.
+        /// </remarks>
+        public TaskContainerExecutionInformation ContainerInformation
+        {
+            get { return this.containerInformation; }
         }
 
         /// <summary>
