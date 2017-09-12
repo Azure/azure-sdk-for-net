@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>ApplicationInsights.Tests</PackageId>
+    <Description>ApplicationInsights.Tests Class library</Description>
+    <PackageId>ApplicationInsights.Tests</PackageId>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <TargetFrameworks>net452;</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="BasicTests\**" />
+    <EmbeddedResource Remove="BasicTests\**" />
+    <None Remove="BasicTests\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj" />
+  </ItemGroup>
+</Project>
