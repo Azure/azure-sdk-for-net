@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         async () => await receiver.CompleteAsync(message.SystemProperties.LockToken));
 
                 message = await receiver.ReceiveAsync();
-                Assert.NotNull((object)message);
+                Assert.NotNull(message);
             }
             finally
             {

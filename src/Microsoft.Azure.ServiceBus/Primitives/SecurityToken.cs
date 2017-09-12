@@ -82,68 +82,29 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Gets the audience of this token.
         /// </summary>
-        public string Audience
-        {
-            get
-            {
-                return this.audience;
-            }
-        }
+        public string Audience => this.audience;
 
         /// <summary>
         /// Gets the expiration time of this token.
         /// </summary>
-        public DateTime ExpiresAtUtc
-        {
-            get
-            {
-                return this.expiresAtUtc;
-            }
-        }
+        public DateTime ExpiresAtUtc => this.expiresAtUtc;
 
         /// <summary>
         /// Gets the actual token.
         /// </summary>
-        public object TokenValue
-        {
-            get { return this.token; }
-        }
+        public object TokenValue => this.token;
 
-        protected virtual string ExpiresOnFieldName
-        {
-            get
-            {
-                return InternalExpiresOnFieldName;
-            }
-        }
+        protected virtual string ExpiresOnFieldName => InternalExpiresOnFieldName;
 
-        protected virtual string AudienceFieldName
-        {
-            get
-            {
-                return InternalAudienceFieldName;
-            }
-        }
+        protected virtual string AudienceFieldName => InternalAudienceFieldName;
 
-        protected virtual string KeyValueSeparator
-        {
-            get
-            {
-                return InternalKeyValueSeparator;
-            }
-        }
+        protected virtual string KeyValueSeparator => InternalKeyValueSeparator;
 
-        protected virtual string PairSeparator
-        {
-            get
-            {
-                return InternalPairSeparator;
-            }
-        }
+        protected virtual string PairSeparator => InternalPairSeparator;
 
         static IDictionary<string, string> Decode(string encodedString, Func<string, string> keyDecoder, Func<string, string> valueDecoder, string keyValueSeparator, string pairSeparator)
         {
-            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            var dictionary = new Dictionary<string, string>();
             IEnumerable<string> valueEncodedPairs = encodedString.Split(new[] { pairSeparator }, StringSplitOptions.None);
             foreach (var valueEncodedPairAsString in valueEncodedPairs)
             {

@@ -268,10 +268,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     TestUtility.Log($"All '{messageCount}' messages Received.");
                     break;
                 }
-                else
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(5));
-                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
             }
             Assert.True(count == messageCount);
         }

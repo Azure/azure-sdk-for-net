@@ -32,10 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public object this[string key]
         {
-            get
-            {
-                return this.inner[key];
-            }
+            get => this.inner[key];
 
             set
             {

@@ -203,7 +203,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the path.</summary>
-        public virtual string Path { get; private set; }
+        public virtual string Path { get; }
 
         /// <summary>
         /// Duration after which individual operations will timeout.
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         internal string SessionIdInternal { get; set; }
 
-        internal MessagingEntityType? EntityType { get; private set; }
+        internal MessagingEntityType? EntityType { get; }
 
         Exception LinkException { get; set; }
 
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
-        /// <remarks> Receving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
         public Task<IList<Message>> ReceiveAsync(int maxMessageCount)
         {
             return this.ReceiveAsync(maxMessageCount, this.OperationTimeout);
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
-        /// <remarks> Receving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
         public async Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout)
         {
             this.ThrowIfClosed();
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
-        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
+        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>The <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
@@ -597,7 +597,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// The first call to <see cref="PeekAsync()"/> fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
-        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Defered/Deadlettered/Renewed.
+        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveAsync()"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns>List of <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
@@ -730,8 +730,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             receivingAmqpLink.Closed += this.OnSessionReceiverLinkClosed;
             this.SessionIdInternal = tempSessionId;
-            this.LockedUntilUtcInternal = receivingAmqpLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks) 
-                ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc) 
+            this.LockedUntilUtcInternal = receivingAmqpLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
+                ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                 : DateTime.MinValue;
         }
 
@@ -830,15 +830,12 @@ namespace Microsoft.Azure.ServiceBus.Core
                                 receiveLink.ReleaseMessage(amqpMessage);
                                 continue;
                             }
-                            else
+                            if (brokeredMessages == null)
                             {
-                                if (brokeredMessages == null)
-                                {
-                                    brokeredMessages = new List<Message>();
-                                }
-
-                                brokeredMessages.Add(message);
+                                brokeredMessages = new List<Message>();
                             }
+
+                            brokeredMessages.Add(message);
                         }
 
                         if(brokeredMessages != null)
@@ -926,7 +923,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     var amqpMapList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
                     foreach (var entry in amqpMapList)
                     {
-                        ArraySegment<byte> payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
+                        var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
@@ -951,56 +948,44 @@ namespace Microsoft.Azure.ServiceBus.Core
             return messages;
         }
 
-        protected virtual async Task OnCompleteAsync(IEnumerable<string> lockTokens)
+        protected virtual Task OnCompleteAsync(IEnumerable<string> lockTokens)
         {
             var lockTokenGuids = lockTokens.Select(lt => new Guid(lt));
             if (lockTokenGuids.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                await this.DisposeMessageRequestResponseAsync(lockTokenGuids, DispositionStatus.Completed).ConfigureAwait(false);
+                return this.DisposeMessageRequestResponseAsync(lockTokenGuids, DispositionStatus.Completed);
             }
-            else
-            {
-                await this.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome).ConfigureAwait(false);
-            }
+            return this.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome);
         }
 
-        protected virtual async Task OnAbandonAsync(string lockToken)
+        protected virtual Task OnAbandonAsync(string lockToken)
         {
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                await this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Abandoned).ConfigureAwait(false);
+                return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Abandoned);
             }
-            else
-            {
-                await this.DisposeMessagesAsync(lockTokens, new Modified()).ConfigureAwait(false);
-            }
+            return this.DisposeMessagesAsync(lockTokens, new Modified());
         }
 
-        protected virtual async Task OnDeferAsync(string lockToken)
+        protected virtual Task OnDeferAsync(string lockToken)
         {
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                await this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Defered).ConfigureAwait(false);
+                return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Deferred);
             }
-            else
-            {
-                await this.DisposeMessagesAsync(lockTokens, new Modified { UndeliverableHere = true }).ConfigureAwait(false);
-            }
+            return this.DisposeMessagesAsync(lockTokens, new Modified { UndeliverableHere = true });
         }
 
-        protected virtual async Task OnDeadLetterAsync(string lockToken)
+        protected virtual Task OnDeadLetterAsync(string lockToken)
         {
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                await this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Suspended).ConfigureAwait(false);
+                return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Suspended);
             }
-            else
-            {
-                await this.DisposeMessagesAsync(lockTokens, AmqpConstants.RejectedOutcome).ConfigureAwait(false);
-            }
+            return this.DisposeMessagesAsync(lockTokens, AmqpConstants.RejectedOutcome);
         }
 
         protected virtual async Task<DateTime> OnRenewLockAsync(string lockToken)
@@ -1164,7 +1149,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 }
 
-                Task<Outcome>[] disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
+                var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {

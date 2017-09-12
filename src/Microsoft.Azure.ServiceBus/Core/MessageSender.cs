@@ -111,7 +111,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Gets the entity path of the MessageSender.
         /// </summary>
-        public virtual string Path { get; private set; }
+        public virtual string Path { get; }
 
         /// <summary>
         /// Duration after which individual operations will timeout.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             set => this.ServiceBusConnection.OperationTimeout = value;
         }
 
-        internal MessagingEntityType? EntityType { get; private set; }
+        internal MessagingEntityType? EntityType { get; }
 
         ServiceBusConnection ServiceBusConnection { get; }
 
@@ -442,7 +442,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     null);
 
                 ArraySegment<byte>[] payload = amqpMessage.GetPayload();
-                BufferListStream buffer = new BufferListStream(payload);
+                var buffer = new BufferListStream(payload);
                 ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
 
                 var entry = new AmqpMap();

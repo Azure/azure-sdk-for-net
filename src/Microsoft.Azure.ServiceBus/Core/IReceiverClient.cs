@@ -64,7 +64,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
-        /// <remarks>Enable prefetch to speeden up the receive rate.</remarks>
+        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions);
 
         /// <summary>

@@ -180,7 +180,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             if (messages != null && messages.Count > 1)
             {
-                HashSet<long> sequenceNumbers = new HashSet<long>();
+                var sequenceNumbers = new HashSet<long>();
                 foreach (var message in messages)
                 {
                     if (!sequenceNumbers.Add(message.SystemProperties.SequenceNumber))

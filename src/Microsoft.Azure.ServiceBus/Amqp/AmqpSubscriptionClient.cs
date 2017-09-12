@@ -93,13 +93,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        ServiceBusConnection ServiceBusConnection { get; set; }
+        ServiceBusConnection ServiceBusConnection { get; }
 
-        RetryPolicy RetryPolicy { get; set; }
+        RetryPolicy RetryPolicy { get; }
 
-        ICbsTokenProvider CbsTokenProvider { get; set; }
+        ICbsTokenProvider CbsTokenProvider { get; }
 
-        ReceiveMode ReceiveMode { get; set; }
+        ReceiveMode ReceiveMode { get; }
 
         string Path { get; }
 

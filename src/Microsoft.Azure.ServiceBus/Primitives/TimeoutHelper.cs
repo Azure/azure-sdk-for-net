@@ -34,10 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
         }
 
-        public TimeSpan OriginalTimeout
-        {
-            get { return this.originalTimeout; }
-        }
+        public TimeSpan OriginalTimeout => this.originalTimeout;
 
         public static bool IsTooLarge(TimeSpan timeout)
         {

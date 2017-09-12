@@ -50,7 +50,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets the <see cref="ServiceBus.RetryPolicy"/> defined on the client.
         /// </summary>
-        public RetryPolicy RetryPolicy { get; private set; }
+        public RetryPolicy RetryPolicy { get; }
 
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.

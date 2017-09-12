@@ -4,10 +4,7 @@
     <Description>This is the next generation Azure Service Bus .NET Standard client library that focuses on queues &amp; topics. For more information about Service Bus, see https://azure.microsoft.com/en-us/services/service-bus/</Description>
     <VersionPrefix>1.0.0</VersionPrefix>
     <Authors>Microsoft</Authors>
-    <TargetFrameworks>net451;netstandard1.3;uap10.0</TargetFrameworks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AssemblyOriginatorKeyFile>../../build/keyfile.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
+    <TargetFrameworks>net451;netstandard1.3</TargetFrameworks>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;IoT;Queue;Topic</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-service-bus-dotnet/releases</PackageReleaseNotes>
@@ -23,7 +20,6 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <LangVersion>7</LangVersion>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
 
@@ -33,23 +29,9 @@
     </ItemGroup>
   </Target>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <DefineConstants>$(DefineConstants);UAP10_0</DefineConstants>
-    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.1.1" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform " Version="5.2.3" />
   </ItemGroup>
 
   <ItemGroup Label="SourceLink to embed PDBs with the assembly">

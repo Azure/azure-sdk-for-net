@@ -170,37 +170,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             {
             }
 
-            protected override string AudienceFieldName
-            {
-                get
-                {
-                    return SignedResourceFullFieldName;
-                }
-            }
+            protected override string AudienceFieldName => SignedResourceFullFieldName;
 
-            protected override string ExpiresOnFieldName
-            {
-                get
-                {
-                    return SignedExpiry;
-                }
-            }
+            protected override string ExpiresOnFieldName => SignedExpiry;
 
-            protected override string KeyValueSeparator
-            {
-                get
-                {
-                    return SasKeyValueSeparator;
-                }
-            }
+            protected override string KeyValueSeparator => SasKeyValueSeparator;
 
-            protected override string PairSeparator
-            {
-                get
-                {
-                    return SasPairSeparator;
-                }
-            }
+            protected override string PairSeparator => SasPairSeparator;
 
             internal static void Validate(string sharedAccessSignature)
             {
@@ -234,21 +210,21 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             static IDictionary<string, string> ExtractFieldValues(string sharedAccessSignature)
             {
-                string[] tokenLines = sharedAccessSignature.Split();
+                var tokenLines = sharedAccessSignature.Split();
 
                 if (!string.Equals(tokenLines[0].Trim(), SharedAccessSignature, StringComparison.OrdinalIgnoreCase) || tokenLines.Length != 2)
                 {
                     throw new ArgumentNullException(nameof(sharedAccessSignature));
                 }
 
-                IDictionary<string, string> parsedFields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-                string[] tokenFields = tokenLines[1].Trim().Split(new[] { SasPairSeparator }, StringSplitOptions.None);
+                var parsedFields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                var tokenFields = tokenLines[1].Trim().Split(new[] { SasPairSeparator }, StringSplitOptions.None);
 
-                foreach (string tokenField in tokenFields)
+                foreach (var tokenField in tokenFields)
                 {
                     if (tokenField != string.Empty)
                     {
-                        string[] fieldParts = tokenField.Split(new[] { SasKeyValueSeparator }, StringSplitOptions.None);
+                        var fieldParts = tokenField.Split(new[] { SasKeyValueSeparator }, StringSplitOptions.None);
                         if (string.Equals(fieldParts[0], SignedResource, StringComparison.OrdinalIgnoreCase))
                         {
                             // We need to preserve the casing of the escape characters in the audience,

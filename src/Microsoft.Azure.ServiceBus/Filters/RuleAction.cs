@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     /// <remarks>
     /// Filter actions allow for the transformation of a message that have been matched by a filter expression.
-    /// The typical use case for filter acions is to append or update the properties that are attached to a message,
+    /// The typical use case for filter actions is to append or update the properties that are attached to a message,
     /// for example assigning a group ID based on the correlation ID of a message.
     /// </remarks>
     /// <seealso cref="SqlRuleAction"/>

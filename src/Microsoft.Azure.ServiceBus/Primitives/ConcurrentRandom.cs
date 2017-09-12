@@ -27,7 +27,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             var buffer = new byte[8];
             GetThreadLocalRandom().NextBytes(buffer);
             var ulongValue = (long)BitConverter.ToUInt64(buffer, 0);
-            return Math.Abs((long)ulongValue);
+            return Math.Abs(ulongValue);
         }
 
         static Random GetThreadLocalRandom()

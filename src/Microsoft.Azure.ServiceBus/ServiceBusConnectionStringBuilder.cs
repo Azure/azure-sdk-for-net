@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Instatiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
+        /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
         /// </summary>
         /// <param name="connectionString">Connection string for namespace or the entity.</param>
         public ServiceBusConnectionStringBuilder(string connectionString)
@@ -221,18 +221,18 @@ namespace Microsoft.Azure.ServiceBus
         void ParseConnectionString(string connectionString)
         {
             // First split based on ';'
-            string[] keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);
+            var keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var keyValuePair in keyValuePairs)
             {
                 // Now split based on the _first_ '='
-                string[] keyAndValue = keyValuePair.Split(new[] { KeyValueSeparator }, 2);
-                string key = keyAndValue[0];
+                var keyAndValue = keyValuePair.Split(new[] { KeyValueSeparator }, 2);
+                var key = keyAndValue[0];
                 if (keyAndValue.Length != 2)
                 {
                     throw Fx.Exception.Argument(nameof(connectionString), $"Value for the connection string parameter name '{key}' was not found.");
                 }
 
-                string value = keyAndValue[1].Trim();
+                var value = keyAndValue[1].Trim();
                 if (key.Equals(EndpointConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     this.Endpoint = value;

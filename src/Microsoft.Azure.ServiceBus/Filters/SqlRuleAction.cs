@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <value>The SQL expression.</value>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
-        public string SqlExpression { get; private set; }
+        public string SqlExpression { get; }
 
         /// <summary>
         /// Sets the value of a rule action.

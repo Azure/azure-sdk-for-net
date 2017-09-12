@@ -76,10 +76,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="System.ArgumentNullException">null (Nothing in Visual Basic) is assigned.</exception>
         public Filter Filter
         {
-            get
-            {
-                return this.filter;
-            }
+            get => this.filter;
 
             set
             {
@@ -105,10 +102,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>Max allowed length of rule name is 50 chars.</remarks>
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get => this.name;
 
             set
             {

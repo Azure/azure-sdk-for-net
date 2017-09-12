@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             this.Id = id;
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
             {

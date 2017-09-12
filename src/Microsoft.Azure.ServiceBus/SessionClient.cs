@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Creates a new SessionClient from a specified connection string and entity path.
         /// </summary>
         /// <param name="connectionString">Namespace connection string used to communicate with Service Bus. Must not contain entity details.</param>
-        /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the anme, but for Subscriptions this will be the full path.</param>
+        /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the full path.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with ServiceBus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
             }
-            else if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
+            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
             {
                 throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
             }

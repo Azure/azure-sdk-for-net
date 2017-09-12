@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     /// A Message Extension Class that provides extension methods to deserialize
     /// the body of a message that was serialized and sent to ServiceBus Queue/Topic
     /// using the WindowsAzure.Messaging client library. The WindowsAzure.Messaging
-    /// client libary serializes objects using the
+    /// client library serializes objects using the
     /// <see cref="DataContractBinarySerializer"/> (default serializer) or <see cref="DataContractSerializer"/>
     /// when sending message. This class provides extension methods to deserialize
     /// and retrieve the body of such messages.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     ///     await messageSender.SendAsync(message3);
     /// </code>
     ///
-    /// Then retreive the original objects using this client library as follows:
+    /// Then retrieve the original objects using this client library as follows:
     /// (By default <see cref="DataContractBinarySerializer"/> will be used to deserialize and retrieve the body.
     ///  If a serializer other than that was used, pass in the serializer explicitly.)
     /// <code>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     ///     var message4 = new BrokeredMessage(new MemoryStream(Encoding.UTF8.GetBytes("contoso")));
     ///     await messageSender.SendAsync(message4);
     ///
-    ///  Then retreive the original objects using this client library as follows:
+    ///  Then retrieve the original objects using this client library as follows:
     ///     var message4 = await messageReceiver.ReceiveAsync();
     ///     string returned = Encoding.UTF8.GetString(message4.Body); // Since message was sent as Stream, no deserialization required here.
     ///
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
 
             if(message.Body == null || message.Body.Length == 0)
             {
-                return default(T);
+                return default;
             }
 
             if(serializer == null)

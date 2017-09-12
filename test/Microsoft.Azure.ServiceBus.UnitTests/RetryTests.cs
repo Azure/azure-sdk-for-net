@@ -76,7 +76,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void RetryExponentialEnsureRandomTest()
         {
-            // We use a constant retryCount to just test random-ness. We are
+            // We use a constant retryCount to just test randomness. We are
             // not testing increasing interval.
             var retryCount = 1;
             var policy1 = (RetryExponential)RetryPolicy.Default;

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public AmqpResponseStatusCode StatusCode { get; }
 
-        public string TrackingId { get; private set; }
+        public string TrackingId { get; }
 
         public AmqpMap Map { get; }
 

@@ -264,7 +264,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 }
             }
 
-            // Do applicaiton properties before message annotations, because the application properties
+            // Do application properties before message annotations, because the application properties
             // can be updated by entries from message annotation.
             if ((sections & SectionFlag.ApplicationProperties) != 0)
             {
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             ArraySegment<byte> buffer;
             if (stream == null || stream.Length < 1)
             {
-                buffer = default(ArraySegment<byte>);
+                buffer = default;
             }
             else
             {
@@ -630,7 +630,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         private static Data ToData(AmqpMessage message)
         {
             ArraySegment<byte>[] payload = message.GetPayload();
-            BufferListStream buffer = new BufferListStream(payload);
+            var buffer = new BufferListStream(payload);
             ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
             return new Data { Value = value };
         }

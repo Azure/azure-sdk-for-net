@@ -3,8 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
-    using System;
-
     static class WebSocketConstants
     {
         internal const string WebSocketSecureScheme = "wss";

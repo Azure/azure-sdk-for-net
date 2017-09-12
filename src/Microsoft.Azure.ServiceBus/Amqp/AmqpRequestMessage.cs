@@ -21,10 +21,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             this.requestMessage.ApplicationProperties.Map[ManagementConstants.Properties.TrackingId] = trackingId ?? Guid.NewGuid().ToString();
         }
 
-        public AmqpMessage AmqpMessage
-        {
-            get { return this.requestMessage; }
-        }
+        public AmqpMessage AmqpMessage => this.requestMessage;
 
         public AmqpMap Map { get; }
 
