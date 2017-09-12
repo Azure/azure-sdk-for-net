@@ -19,7 +19,7 @@ namespace FaceSDK.Tests
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceDetection");
 
                 IFaceAPI client = GetClient(HttpMockServer.CreateInstance());
-                using (FileStream stream = new FileStream("TestImages\\detection1.jpg", FileMode.Open))
+                using (FileStream stream = new FileStream(Path.Combine("TestImages", "detection1.jpg"), FileMode.Open))
                 {
                     IList<DetectedFace> faceList = client.Face.DetectInStream(stream);
                     Assert.Equal(1, faceList.Count);
