@@ -48,14 +48,15 @@ if not "%2" == "" (set version="%2")         else (set version="latest")
 if not "%3" == "" (set specsRepoUser="%3")   else (set specsRepoUser="Azure")
 if not "%4" == "" (set specsRepoBranch="%4") else (set specsRepoBranch="current")
 if not "%5" == "" (set specsRepoName="%5")   else (set specsRepoName="azure-rest-api-specs")
+if not "%6" == "" (set sdksFolder="%6")      else (set sdksFolder=%~dp0..\src\SDKS)
 set configFile="https://github.com/%specsRepoUser%/%specsRepoName%/blob/%specsRepoBranch%/specification/%rp%/readme.md"
 
 :: installation
-if "%6" == "" (call npm i -g autorest)
+if "%7" == "" (call npm i -g autorest)
 
 :: code generation
 @echo on
-call autorest %configFile% --csharp --csharp-sdks-folder=%~dp0\..\src\SDKs --version=%version%
+call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version%
 @echo off
 
 :: metadata
