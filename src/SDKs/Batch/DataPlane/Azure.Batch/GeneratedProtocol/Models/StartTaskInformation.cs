@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the StartTaskInformation class.
         /// </summary>
-        public StartTaskInformation() { }
+        public StartTaskInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the StartTaskInformation class.
@@ -40,27 +47,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public StartTaskInformation(StartTaskState state, System.DateTime startTime, int retryCount, System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            this.State = state;
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.ExitCode = exitCode;
-            this.FailureInfo = failureInfo;
-            this.RetryCount = retryCount;
-            this.LastRetryTime = lastRetryTime;
-            this.Result = result;
+            State = state;
+            StartTime = startTime;
+            EndTime = endTime;
+            ExitCode = exitCode;
+            FailureInfo = failureInfo;
+            RetryCount = retryCount;
+            LastRetryTime = lastRetryTime;
+            Result = result;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the state of the start task on the compute node.
         /// </summary>
         /// <remarks>
-        /// running - The start task is currently running. completed - The
-        /// start task has exited with exit code 0, or the start task has
-        /// failed and the retry limit has reached, or the start task process
-        /// did not run due to scheduling errors. Possible values include:
+        /// Values are:
+        ///
+        /// running - The start task is currently running.
+        /// completed - The start task has exited with exit code 0, or the
+        /// start task has failed and the retry limit has reached, or the start
+        /// task process did not run due to task preparation errors (such as
+        /// resource file download failures). Possible values include:
         /// 'running', 'completed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state")]
         public StartTaskState State { get; set; }
 
         /// <summary>
@@ -71,7 +87,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// (that is, this is the most recent time at which the start task
         /// started running).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -83,7 +99,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pending). This element is not present if the start task is
         /// currently running.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
@@ -100,7 +116,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the start task (due to timeout, or user termination via the API)
         /// you may see an operating system-defined exit code.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCode")]
+        [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
@@ -110,7 +126,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the task is in the completed state and
         /// encountered a failure.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        [JsonProperty(PropertyName = "failureInfo")]
         public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
@@ -118,13 +134,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch service.
         /// </summary>
         /// <remarks>
-        /// The number of times the task has been retried by the Batch service.
         /// Task application failures (non-zero exit code) are retried,
         /// pre-processing errors (the task could not be run) and file upload
         /// errors are not retried. The Batch service will retry the task up to
         /// the limit specified by the constraints.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "retryCount")]
+        [JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
@@ -139,7 +154,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// rebooted during a retry, then the startTime is updated but the
         /// lastRetryTime is not.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lastRetryTime")]
+        [JsonProperty(PropertyName = "lastRetryTime")]
         public System.DateTime? LastRetryTime { get; set; }
 
         /// <summary>
@@ -150,20 +165,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// found in the failureInfo property. Possible values include:
         /// 'success', 'failure'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        [JsonProperty(PropertyName = "result")]
         public TaskExecutionResult? Result { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.FailureInfo != null)
+            if (FailureInfo != null)
             {
-                this.FailureInfo.Validate();
+                FailureInfo.Validate();
             }
         }
     }

@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeRebootParameter class.
         /// </summary>
-        public NodeRebootParameter() { }
+        public NodeRebootParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NodeRebootParameter class.
@@ -27,18 +34,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// what to do with currently running tasks.</param>
         public NodeRebootParameter(ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?))
         {
-            this.NodeRebootOption = nodeRebootOption;
+            NodeRebootOption = nodeRebootOption;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets when to reboot the compute node and what to do with
         /// currently running tasks.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
+        /// requeue - Terminate running task processes and requeue the tasks.
+        /// The tasks will run again when a node is available. Restart the node
+        /// as soon as tasks have been terminated.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// Restart the node as soon as tasks have been terminated.
+        /// taskcompletion - Allow currently running tasks to complete.
+        /// Schedule no new tasks while waiting. Restart the node when all
+        /// tasks have completed.
+        /// retaineddata - Allow currently running tasks to complete, then wait
+        /// for all task data retention periods to expire. Schedule no new
+        /// tasks while waiting. Restart the node when all task retention
+        /// periods have expired.
+        ///
         /// The default value is requeue. Possible values include: 'requeue',
         /// 'terminate', 'taskCompletion', 'retainedData'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeRebootOption")]
+        [JsonProperty(PropertyName = "nodeRebootOption")]
         public ComputeNodeRebootOption? NodeRebootOption { get; set; }
 
     }

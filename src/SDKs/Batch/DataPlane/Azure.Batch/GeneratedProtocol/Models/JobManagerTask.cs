@@ -8,23 +8,49 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Specifies details of a Job Manager task.
     /// </summary>
+    /// <remarks>
+    /// The Job Manager task is automatically started when the job is created.
+    /// The Batch service tries to schedule the Job Manager task before any
+    /// other tasks in the job. When shrinking a pool, the Batch service tries
+    /// to preserve compute nodes where Job Manager tasks are running for as
+    /// long as possible (that is, nodes running 'normal' tasks are removed
+    /// before nodes running Job Manager tasks). When a Job Manager task fails
+    /// and needs to be restarted, the system tries to schedule it at the
+    /// highest priority. If there are no idle nodes available, the system may
+    /// terminate one of the running tasks in the pool and return it to the
+    /// queue in order to make room for the Job Manager task to restart. Note
+    /// that a Job Manager task in one job does not have priority over tasks in
+    /// other jobs. Across jobs, only job level priorities are observed. For
+    /// example, if a Job Manager in a priority 0 job needs to be restarted, it
+    /// will not displace tasks of a priority 1 job.
+    /// </remarks>
     public partial class JobManagerTask
     {
         /// <summary>
         /// Initializes a new instance of the JobManagerTask class.
         /// </summary>
-        public JobManagerTask() { }
+        public JobManagerTask()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobManagerTask class.
         /// </summary>
         /// <param name="id">A string that uniquely identifies the Job Manager
-        /// taskwithin the job.</param>
+        /// task within the job.</param>
         /// <param name="commandLine">The command line of the Job Manager
         /// task.</param>
         /// <param name="displayName">The display name of the Job Manager
@@ -53,33 +79,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operations.</param>
         /// <param name="allowLowPriorityNode">Whether the Job Manager task may
         /// run on a low-priority compute node.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
         {
-            this.Id = id;
-            this.DisplayName = displayName;
-            this.CommandLine = commandLine;
-            this.ResourceFiles = resourceFiles;
-            this.OutputFiles = outputFiles;
-            this.EnvironmentSettings = environmentSettings;
-            this.Constraints = constraints;
-            this.KillJobOnCompletion = killJobOnCompletion;
-            this.UserIdentity = userIdentity;
-            this.RunExclusive = runExclusive;
-            this.ApplicationPackageReferences = applicationPackageReferences;
-            this.AuthenticationTokenSettings = authenticationTokenSettings;
-            this.AllowLowPriorityNode = allowLowPriorityNode;
+            Id = id;
+            DisplayName = displayName;
+            CommandLine = commandLine;
+            ResourceFiles = resourceFiles;
+            OutputFiles = outputFiles;
+            EnvironmentSettings = environmentSettings;
+            Constraints = constraints;
+            KillJobOnCompletion = killJobOnCompletion;
+            UserIdentity = userIdentity;
+            RunExclusive = runExclusive;
+            ApplicationPackageReferences = applicationPackageReferences;
+            AuthenticationTokenSettings = authenticationTokenSettings;
+            AllowLowPriorityNode = allowLowPriorityNode;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the Job Manager
-        /// taskwithin the job.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets a string that uniquely identifies the Job Manager task
+        /// within the job.
         /// </summary>
         /// <remarks>
-        /// The id can contain any combination of alphanumeric characters
+        /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores and cannot contain more than 64
         /// characters.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -89,7 +121,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// It need not be unique and can contain any Unicode characters up to
         /// a maximum length of 1024.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
+        [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -102,7 +134,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
+        [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
@@ -113,27 +145,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Files listed under this element are located in the task's working
         /// directory.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
-        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
+        [JsonProperty(PropertyName = "resourceFiles")]
+        public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will upload
         /// from the compute node after running the command line.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "outputFiles")]
-        public System.Collections.Generic.IList<OutputFile> OutputFiles { get; set; }
+        /// <remarks>
+        /// For multi-instance tasks, the files will only be uploaded from the
+        /// compute node on which the primary task is executed.
+        /// </remarks>
+        [JsonProperty(PropertyName = "outputFiles")]
+        public IList<OutputFile> OutputFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
         /// Manager task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
-        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [JsonProperty(PropertyName = "environmentSettings")]
+        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets constraints that apply to the Job Manager task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
+        [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
@@ -155,7 +191,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// for the job (not to monitor progress), then it is important to set
         /// killJobOnCompletion to false.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "killJobOnCompletion")]
+        [JsonProperty(PropertyName = "killJobOnCompletion")]
         public bool? KillJobOnCompletion { get; set; }
 
         /// <summary>
@@ -166,7 +202,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, the task runs as a non-administrative user unique to
         /// the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
@@ -181,7 +217,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// limit, so this is only relevant if the node allows multiple
         /// concurrent tasks. The default value is true.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runExclusive")]
+        [JsonProperty(PropertyName = "runExclusive")]
         public bool? RunExclusive { get; set; }
 
         /// <summary>
@@ -190,15 +226,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// Application packages are downloaded and deployed to a shared
-        /// directory, not the task directory. Therefore, if a referenced
-        /// package is already on the compute node, and is up to date, then it
-        /// is not re-downloaded; the existing copy on the compute node is
-        /// used. If a referenced application package cannot be installed, for
-        /// example because the package has been deleted or because download
-        /// failed, the task fails with a scheduling error.
+        /// directory, not the task working directory. Therefore, if a
+        /// referenced package is already on the compute node, and is up to
+        /// date, then it is not re-downloaded; the existing copy on the
+        /// compute node is used. If a referenced application package cannot be
+        /// installed, for example because the package has been deleted or
+        /// because download failed, the task fails.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
-        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [JsonProperty(PropertyName = "applicationPackageReferences")]
+        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the settings for an authentication token that the task
@@ -214,7 +250,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// permissions in order to add other tasks to the job, or check the
         /// status of the job or of other tasks under the job.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "authenticationTokenSettings")]
+        [JsonProperty(PropertyName = "authenticationTokenSettings")]
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
@@ -224,28 +260,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default value is false.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "allowLowPriorityNode")]
+        [JsonProperty(PropertyName = "allowLowPriorityNode")]
         public bool? AllowLowPriorityNode { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Id == null)
+            if (Id == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
             }
-            if (this.CommandLine == null)
+            if (CommandLine == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
             }
-            if (this.ResourceFiles != null)
+            if (ResourceFiles != null)
             {
-                foreach (var element in this.ResourceFiles)
+                foreach (var element in ResourceFiles)
                 {
                     if (element != null)
                     {
@@ -253,9 +289,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.OutputFiles != null)
+            if (OutputFiles != null)
             {
-                foreach (var element1 in this.OutputFiles)
+                foreach (var element1 in OutputFiles)
                 {
                     if (element1 != null)
                     {
@@ -263,9 +299,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (EnvironmentSettings != null)
             {
-                foreach (var element2 in this.EnvironmentSettings)
+                foreach (var element2 in EnvironmentSettings)
                 {
                     if (element2 != null)
                     {
@@ -273,9 +309,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.ApplicationPackageReferences != null)
+            if (ApplicationPackageReferences != null)
             {
-                foreach (var element3 in this.ApplicationPackageReferences)
+                foreach (var element3 in ApplicationPackageReferences)
                 {
                     if (element3 != null)
                     {

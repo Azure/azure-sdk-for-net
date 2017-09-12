@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the InboundEndpoint class.
         /// </summary>
-        public InboundEndpoint() { }
+        public InboundEndpoint()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the InboundEndpoint class.
@@ -35,18 +43,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// endpoint.</param>
         public InboundEndpoint(string name, InboundEndpointProtocol protocol, string publicIPAddress, string publicFQDN, int frontendPort, int backendPort)
         {
-            this.Name = name;
-            this.Protocol = protocol;
-            this.PublicIPAddress = publicIPAddress;
-            this.PublicFQDN = publicFQDN;
-            this.FrontendPort = frontendPort;
-            this.BackendPort = backendPort;
+            Name = name;
+            Protocol = protocol;
+            PublicIPAddress = publicIPAddress;
+            PublicFQDN = publicFQDN;
+            FrontendPort = frontendPort;
+            BackendPort = backendPort;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the endpoint.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -55,53 +69,53 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'tcp', 'udp'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "protocol")]
         public InboundEndpointProtocol Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets the public IP address of the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "publicIPAddress")]
+        [JsonProperty(PropertyName = "publicIPAddress")]
         public string PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the public fully qualified domain name for the compute
         /// node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "publicFQDN")]
+        [JsonProperty(PropertyName = "publicFQDN")]
         public string PublicFQDN { get; set; }
 
         /// <summary>
         /// Gets or sets the public port number of the endpoint.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "frontendPort")]
+        [JsonProperty(PropertyName = "frontendPort")]
         public int FrontendPort { get; set; }
 
         /// <summary>
         /// Gets or sets the backend port number of the endpoint.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "backendPort")]
+        [JsonProperty(PropertyName = "backendPort")]
         public int BackendPort { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Name == null)
+            if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (this.PublicIPAddress == null)
+            if (PublicIPAddress == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PublicIPAddress");
+                throw new ValidationException(ValidationRules.CannotBeNull, "PublicIPAddress");
             }
-            if (this.PublicFQDN == null)
+            if (PublicFQDN == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PublicFQDN");
+                throw new ValidationException(ValidationRules.CannotBeNull, "PublicFQDN");
             }
         }
     }

@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ElevationLevel.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ElevationLevel
     {
-        [System.Runtime.Serialization.EnumMember(Value = "nonAdmin")]
+        [EnumMember(Value = "nonAdmin")]
         NonAdmin,
-        [System.Runtime.Serialization.EnumMember(Value = "admin")]
+        [EnumMember(Value = "admin")]
         Admin
+    }
+    internal static class ElevationLevelEnumExtension
+    {
+        internal static string ToSerializedValue(this ElevationLevel? value)  =>
+            value == null ? null : ((ElevationLevel)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ElevationLevel value)
+        {
+            switch( value )
+            {
+                case ElevationLevel.NonAdmin:
+                    return "nonAdmin";
+                case ElevationLevel.Admin:
+                    return "admin";
+            }
+            return null;
+        }
+
+        internal static ElevationLevel? ParseElevationLevel(this string value)
+        {
+            switch( value )
+            {
+                case "nonAdmin":
+                    return ElevationLevel.NonAdmin;
+                case "admin":
+                    return ElevationLevel.Admin;
+            }
+            return null;
+        }
     }
 }

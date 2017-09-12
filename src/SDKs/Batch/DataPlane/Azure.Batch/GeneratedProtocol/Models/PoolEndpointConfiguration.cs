@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolEndpointConfiguration class.
         /// </summary>
-        public PoolEndpointConfiguration() { }
+        public PoolEndpointConfiguration()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolEndpointConfiguration class.
@@ -26,10 +36,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="inboundNATPools">A list of inbound NAT pools that can
         /// be used to address specific ports on an individual compute node
         /// externally.</param>
-        public PoolEndpointConfiguration(System.Collections.Generic.IList<InboundNATPool> inboundNATPools)
+        public PoolEndpointConfiguration(IList<InboundNATPool> inboundNATPools)
         {
-            this.InboundNATPools = inboundNATPools;
+            InboundNATPools = inboundNATPools;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a list of inbound NAT pools that can be used to
@@ -40,24 +56,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// maximum number of inbound NAT pools is exceeded the request fails
         /// with HTTP status code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "inboundNATPools")]
-        public System.Collections.Generic.IList<InboundNATPool> InboundNATPools { get; set; }
+        [JsonProperty(PropertyName = "inboundNATPools")]
+        public IList<InboundNATPool> InboundNATPools { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.InboundNATPools == null)
+            if (InboundNATPools == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "InboundNATPools");
+                throw new ValidationException(ValidationRules.CannotBeNull, "InboundNATPools");
             }
-            if (this.InboundNATPools != null)
+            if (InboundNATPools != null)
             {
-                foreach (var element in this.InboundNATPools)
+                foreach (var element in InboundNATPools)
                 {
                     if (element != null)
                     {

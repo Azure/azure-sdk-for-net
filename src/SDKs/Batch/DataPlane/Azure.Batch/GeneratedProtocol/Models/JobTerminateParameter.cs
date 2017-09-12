@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobTerminateParameter class.
         /// </summary>
-        public JobTerminateParameter() { }
+        public JobTerminateParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobTerminateParameter class.
@@ -27,14 +34,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job's TerminateReason. The default is 'UserTerminate'.</param>
         public JobTerminateParameter(string terminateReason = default(string))
         {
-            this.TerminateReason = terminateReason;
+            TerminateReason = terminateReason;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the text you want to appear as the job's
         /// TerminateReason. The default is 'UserTerminate'.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "terminateReason")]
+        [JsonProperty(PropertyName = "terminateReason")]
         public string TerminateReason { get; set; }
 
     }

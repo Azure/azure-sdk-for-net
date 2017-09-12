@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TaskExecutionResult.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskExecutionResult
     {
-        [System.Runtime.Serialization.EnumMember(Value = "success")]
+        [EnumMember(Value = "success")]
         Success,
-        [System.Runtime.Serialization.EnumMember(Value = "failure")]
+        [EnumMember(Value = "failure")]
         Failure
+    }
+    internal static class TaskExecutionResultEnumExtension
+    {
+        internal static string ToSerializedValue(this TaskExecutionResult? value)  =>
+            value == null ? null : ((TaskExecutionResult)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this TaskExecutionResult value)
+        {
+            switch( value )
+            {
+                case TaskExecutionResult.Success:
+                    return "success";
+                case TaskExecutionResult.Failure:
+                    return "failure";
+            }
+            return null;
+        }
+
+        internal static TaskExecutionResult? ParseTaskExecutionResult(this string value)
+        {
+            switch( value )
+            {
+                case "success":
+                    return TaskExecutionResult.Success;
+                case "failure":
+                    return TaskExecutionResult.Failure;
+            }
+            return null;
+        }
     }
 }

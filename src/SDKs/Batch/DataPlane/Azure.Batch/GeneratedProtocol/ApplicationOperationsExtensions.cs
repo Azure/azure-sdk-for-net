@@ -8,8 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Extension methods for ApplicationOperations.
@@ -32,9 +35,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='applicationListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<ApplicationSummary> List(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions))
+            public static IPage<ApplicationSummary> List(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions))
             {
-                return ((IApplicationOperations)operations).ListAsync(applicationListOptions).GetAwaiter().GetResult();
+                return operations.ListAsync(applicationListOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<ApplicationSummary>> ListAsync(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<IPage<ApplicationSummary>> ListAsync(this IApplicationOperations operations, ApplicationListOptions applicationListOptions = default(ApplicationListOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(applicationListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -67,6 +70,13 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <summary>
             /// Gets information about the specified application.
             /// </summary>
+            /// <remarks>
+            /// This operation returns only applications and versions that are available
+            /// for use on compute nodes; that is, that can be used in an application
+            /// package reference. For administrator information about applications and
+            /// versions that are not yet available to compute nodes, use the Azure portal
+            /// or the Azure Resource Manager API.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -78,12 +88,19 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static ApplicationSummary Get(this IApplicationOperations operations, string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions))
             {
-                return ((IApplicationOperations)operations).GetAsync(applicationId, applicationGetOptions).GetAwaiter().GetResult();
+                return operations.GetAsync(applicationId, applicationGetOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets information about the specified application.
             /// </summary>
+            /// <remarks>
+            /// This operation returns only applications and versions that are available
+            /// for use on compute nodes; that is, that can be used in an application
+            /// package reference. For administrator information about applications and
+            /// versions that are not yet available to compute nodes, use the Azure portal
+            /// or the Azure Resource Manager API.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -96,7 +113,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ApplicationSummary> GetAsync(this IApplicationOperations operations, string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<ApplicationSummary> GetAsync(this IApplicationOperations operations, string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(applicationId, applicationGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -123,9 +140,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='applicationListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<ApplicationSummary> ListNext(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions))
+            public static IPage<ApplicationSummary> ListNext(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions))
             {
-                return ((IApplicationOperations)operations).ListNextAsync(nextPageLink, applicationListNextOptions).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink, applicationListNextOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -150,7 +167,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<ApplicationSummary>> ListNextAsync(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<IPage<ApplicationSummary>> ListNextAsync(this IApplicationOperations operations, string nextPageLink, ApplicationListNextOptions applicationListNextOptions = default(ApplicationListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, applicationListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

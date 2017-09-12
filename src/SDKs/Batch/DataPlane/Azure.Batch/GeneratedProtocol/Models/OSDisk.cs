@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the OSDisk class.
         /// </summary>
-        public OSDisk() { }
+        public OSDisk()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OSDisk class.
@@ -27,11 +37,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// URIs.</param>
         /// <param name="caching">The type of caching to enable for the OS
         /// disk.</param>
-        public OSDisk(System.Collections.Generic.IList<string> imageUris, CachingType? caching = default(CachingType?))
+        public OSDisk(IList<string> imageUris, CachingType? caching = default(CachingType?))
         {
-            this.ImageUris = imageUris;
-            this.Caching = caching;
+            ImageUris = imageUris;
+            Caching = caching;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the collection of Virtual Hard Disk (VHD) URIs.
@@ -46,34 +62,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the pool. If you do not supply enough VHD URIs, the pool will
         /// partially allocate compute nodes, and a resize error will occur.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "imageUris")]
-        public System.Collections.Generic.IList<string> ImageUris { get; set; }
+        [JsonProperty(PropertyName = "imageUris")]
+        public IList<string> ImageUris { get; set; }
 
         /// <summary>
         /// Gets or sets the type of caching to enable for the OS disk.
         /// </summary>
         /// <remarks>
-        /// none - The caching mode for the disk is not enabled. readOnly - The
-        /// caching mode for the disk is read only. readWrite - The caching
-        /// mode for the disk is read and write. The default value for caching
-        /// is none. For information about the caching options see:
+        /// Values are:
+        ///
+        /// none - The caching mode for the disk is not enabled.
+        /// readOnly - The caching mode for the disk is read only.
+        /// readWrite - The caching mode for the disk is read and write.
+        ///
+        /// The default value for caching is none. For information about the
+        /// caching options see:
         /// https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// Possible values include: 'none', 'readOnly', 'readWrite'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "caching")]
+        [JsonProperty(PropertyName = "caching")]
         public CachingType? Caching { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.ImageUris == null)
+            if (ImageUris == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ImageUris");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ImageUris");
             }
         }
     }

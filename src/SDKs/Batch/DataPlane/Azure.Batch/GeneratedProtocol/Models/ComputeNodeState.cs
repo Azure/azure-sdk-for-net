@@ -8,38 +8,118 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "idle")]
+        [EnumMember(Value = "idle")]
         Idle,
-        [System.Runtime.Serialization.EnumMember(Value = "rebooting")]
+        [EnumMember(Value = "rebooting")]
         Rebooting,
-        [System.Runtime.Serialization.EnumMember(Value = "reimaging")]
+        [EnumMember(Value = "reimaging")]
         Reimaging,
-        [System.Runtime.Serialization.EnumMember(Value = "running")]
+        [EnumMember(Value = "running")]
         Running,
-        [System.Runtime.Serialization.EnumMember(Value = "unusable")]
+        [EnumMember(Value = "unusable")]
         Unusable,
-        [System.Runtime.Serialization.EnumMember(Value = "creating")]
+        [EnumMember(Value = "creating")]
         Creating,
-        [System.Runtime.Serialization.EnumMember(Value = "starting")]
+        [EnumMember(Value = "starting")]
         Starting,
-        [System.Runtime.Serialization.EnumMember(Value = "waitingForStartTask")]
+        [EnumMember(Value = "waitingForStartTask")]
         WaitingForStartTask,
-        [System.Runtime.Serialization.EnumMember(Value = "startTaskFailed")]
+        [EnumMember(Value = "startTaskFailed")]
         StartTaskFailed,
-        [System.Runtime.Serialization.EnumMember(Value = "unknown")]
+        [EnumMember(Value = "unknown")]
         Unknown,
-        [System.Runtime.Serialization.EnumMember(Value = "leavingPool")]
+        [EnumMember(Value = "leavingPool")]
         LeavingPool,
-        [System.Runtime.Serialization.EnumMember(Value = "offline")]
+        [EnumMember(Value = "offline")]
         Offline,
-        [System.Runtime.Serialization.EnumMember(Value = "preempted")]
+        [EnumMember(Value = "preempted")]
         Preempted
+    }
+    internal static class ComputeNodeStateEnumExtension
+    {
+        internal static string ToSerializedValue(this ComputeNodeState? value)  =>
+            value == null ? null : ((ComputeNodeState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ComputeNodeState value)
+        {
+            switch( value )
+            {
+                case ComputeNodeState.Idle:
+                    return "idle";
+                case ComputeNodeState.Rebooting:
+                    return "rebooting";
+                case ComputeNodeState.Reimaging:
+                    return "reimaging";
+                case ComputeNodeState.Running:
+                    return "running";
+                case ComputeNodeState.Unusable:
+                    return "unusable";
+                case ComputeNodeState.Creating:
+                    return "creating";
+                case ComputeNodeState.Starting:
+                    return "starting";
+                case ComputeNodeState.WaitingForStartTask:
+                    return "waitingForStartTask";
+                case ComputeNodeState.StartTaskFailed:
+                    return "startTaskFailed";
+                case ComputeNodeState.Unknown:
+                    return "unknown";
+                case ComputeNodeState.LeavingPool:
+                    return "leavingPool";
+                case ComputeNodeState.Offline:
+                    return "offline";
+                case ComputeNodeState.Preempted:
+                    return "preempted";
+            }
+            return null;
+        }
+
+        internal static ComputeNodeState? ParseComputeNodeState(this string value)
+        {
+            switch( value )
+            {
+                case "idle":
+                    return ComputeNodeState.Idle;
+                case "rebooting":
+                    return ComputeNodeState.Rebooting;
+                case "reimaging":
+                    return ComputeNodeState.Reimaging;
+                case "running":
+                    return ComputeNodeState.Running;
+                case "unusable":
+                    return ComputeNodeState.Unusable;
+                case "creating":
+                    return ComputeNodeState.Creating;
+                case "starting":
+                    return ComputeNodeState.Starting;
+                case "waitingForStartTask":
+                    return ComputeNodeState.WaitingForStartTask;
+                case "startTaskFailed":
+                    return ComputeNodeState.StartTaskFailed;
+                case "unknown":
+                    return ComputeNodeState.Unknown;
+                case "leavingPool":
+                    return ComputeNodeState.LeavingPool;
+                case "offline":
+                    return ComputeNodeState.Offline;
+                case "preempted":
+                    return ComputeNodeState.Preempted;
+            }
+            return null;
+        }
     }
 }

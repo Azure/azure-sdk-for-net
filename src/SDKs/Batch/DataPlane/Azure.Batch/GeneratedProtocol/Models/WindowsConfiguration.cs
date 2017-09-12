@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the WindowsConfiguration class.
         /// </summary>
-        public WindowsConfiguration() { }
+        public WindowsConfiguration()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the WindowsConfiguration class.
@@ -27,8 +34,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// enabled on the virtual machine.</param>
         public WindowsConfiguration(bool? enableAutomaticUpdates = default(bool?))
         {
-            this.EnableAutomaticUpdates = enableAutomaticUpdates;
+            EnableAutomaticUpdates = enableAutomaticUpdates;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets whether automatic updates are enabled on the virtual
@@ -37,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the default value is true.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "enableAutomaticUpdates")]
+        [JsonProperty(PropertyName = "enableAutomaticUpdates")]
         public bool? EnableAutomaticUpdates { get; set; }
 
     }

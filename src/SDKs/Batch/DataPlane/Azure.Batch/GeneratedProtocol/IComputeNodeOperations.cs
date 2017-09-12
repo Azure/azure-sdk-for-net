@@ -8,8 +8,14 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// ComputeNodeOperations operations.
@@ -47,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeAddUserHeaders>> AddUserWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeUser user, ComputeNodeAddUserOptions computeNodeAddUserOptions = default(ComputeNodeAddUserOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeAddUserHeaders>> AddUserWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeUser user, ComputeNodeAddUserOptions computeNodeAddUserOptions = default(ComputeNodeAddUserOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a user account from the specified compute node.
         /// </summary>
@@ -79,9 +85,9 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeDeleteUserHeaders>> DeleteUserWithHttpMessagesAsync(string poolId, string nodeId, string userName, ComputeNodeDeleteUserOptions computeNodeDeleteUserOptions = default(ComputeNodeDeleteUserOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeDeleteUserHeaders>> DeleteUserWithHttpMessagesAsync(string poolId, string nodeId, string userName, ComputeNodeDeleteUserOptions computeNodeDeleteUserOptions = default(ComputeNodeDeleteUserOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the password or expiration time of a user account on the
+        /// Updates the password and expiration time of a user account on the
         /// specified compute node.
         /// </summary>
         /// <remarks>
@@ -118,7 +124,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeUpdateUserHeaders>> UpdateUserWithHttpMessagesAsync(string poolId, string nodeId, string userName, NodeUpdateUserParameter nodeUpdateUserParameter, ComputeNodeUpdateUserOptions computeNodeUpdateUserOptions = default(ComputeNodeUpdateUserOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeUpdateUserHeaders>> UpdateUserWithHttpMessagesAsync(string poolId, string nodeId, string userName, NodeUpdateUserParameter nodeUpdateUserParameter, ComputeNodeUpdateUserOptions computeNodeUpdateUserOptions = default(ComputeNodeUpdateUserOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the specified compute node.
         /// </summary>
@@ -146,7 +152,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ComputeNode,ComputeNodeGetHeaders>> GetWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetOptions computeNodeGetOptions = default(ComputeNodeGetOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<ComputeNode,ComputeNodeGetHeaders>> GetWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetOptions computeNodeGetOptions = default(ComputeNodeGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restarts the specified compute node.
         /// </summary>
@@ -161,8 +167,23 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         /// <param name='nodeRebootOption'>
         /// When to reboot the compute node and what to do with currently
-        /// running tasks. The default value is requeue. Possible values
-        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
+        /// running tasks. Values are:
+        ///
+        /// requeue - Terminate running task processes and requeue the tasks.
+        /// The tasks will run again when a node is available. Restart the node
+        /// as soon as tasks have been terminated.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// Restart the node as soon as tasks have been terminated.
+        /// taskcompletion - Allow currently running tasks to complete.
+        /// Schedule no new tasks while waiting. Restart the node when all
+        /// tasks have completed.
+        /// retaineddata - Allow currently running tasks to complete, then wait
+        /// for all task data retention periods to expire. Schedule no new
+        /// tasks while waiting. Restart the node when all task retention
+        /// periods have expired.
+        ///
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeRebootOptions'>
         /// Additional parameters for the operation
@@ -179,7 +200,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeRebootHeaders>> RebootWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?), ComputeNodeRebootOptions computeNodeRebootOptions = default(ComputeNodeRebootOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeRebootHeaders>> RebootWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?), ComputeNodeRebootOptions computeNodeRebootOptions = default(ComputeNodeRebootOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Reinstalls the operating system on the specified compute node.
         /// </summary>
@@ -196,8 +217,23 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         /// <param name='nodeReimageOption'>
         /// When to reimage the compute node and what to do with currently
-        /// running tasks. The default value is requeue. Possible values
-        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
+        /// running tasks. Values are:
+        ///
+        /// requeue - Terminate running task processes and requeue the tasks.
+        /// The tasks will run again when a node is available. Reimage the node
+        /// as soon as tasks have been terminated.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// Reimage the node as soon as tasks have been terminated.
+        /// taskcompletion - Allow currently running tasks to complete.
+        /// Schedule no new tasks while waiting. Reimage the node when all
+        /// tasks have completed.
+        /// retaineddata - Allow currently running tasks to complete, then wait
+        /// for all task data retention periods to expire. Schedule no new
+        /// tasks while waiting. Reimage the node when all task retention
+        /// periods have expired.
+        ///
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeReimageOptions'>
         /// Additional parameters for the operation
@@ -214,10 +250,14 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeReimageHeaders>> ReimageWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeReimageHeaders>> ReimageWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?), ComputeNodeReimageOptions computeNodeReimageOptions = default(ComputeNodeReimageOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Disables task scheduling on the specified compute node.
         /// </summary>
+        /// <remarks>
+        /// You can disable task scheduling on a node only if its current
+        /// scheduling state is enabled.
+        /// </remarks>
         /// <param name='poolId'>
         /// The ID of the pool that contains the compute node.
         /// </param>
@@ -227,8 +267,20 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         /// <param name='nodeDisableSchedulingOption'>
         /// What to do with currently running tasks when disabling task
-        /// scheduling on the compute node. The default value is requeue.
-        /// Possible values include: 'requeue', 'terminate', 'taskCompletion'
+        /// scheduling on the compute node. Values are:
+        ///
+        /// requeue - Terminate running task processes and requeue the tasks.
+        /// The tasks may run again on other compute nodes, or when task
+        /// scheduling is re-enabled on this node. Enter offline state as soon
+        /// as tasks have been terminated.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// Enter offline state as soon as tasks have been terminated.
+        /// taskcompletion - Allow currently running tasks to complete.
+        /// Schedule no new tasks while waiting. Enter offline state when all
+        /// tasks have completed.
+        ///
+        /// The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskCompletion'
         /// </param>
         /// <param name='computeNodeDisableSchedulingOptions'>
         /// Additional parameters for the operation
@@ -245,10 +297,14 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeDisableSchedulingHeaders>> DisableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeDisableSchedulingHeaders>> DisableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?), ComputeNodeDisableSchedulingOptions computeNodeDisableSchedulingOptions = default(ComputeNodeDisableSchedulingOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Enables task scheduling on the specified compute node.
         /// </summary>
+        /// <remarks>
+        /// You can enable task scheduling on a node only if its current
+        /// scheduling state is disabled
+        /// </remarks>
         /// <param name='poolId'>
         /// The ID of the pool that contains the compute node.
         /// </param>
@@ -271,7 +327,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationHeaderResponse<ComputeNodeEnableSchedulingHeaders>> EnableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationHeaderResponse<ComputeNodeEnableSchedulingHeaders>> EnableSchedulingWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeEnableSchedulingOptions computeNodeEnableSchedulingOptions = default(ComputeNodeEnableSchedulingOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the settings required for remote login to a compute node.
         /// </summary>
@@ -279,7 +335,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Before you can remotely login to a node using the remote login
         /// settings, you must create a user account on the node. This API can
         /// be invoked only on pools created with the virtual machine
-        /// configuration property.
+        /// configuration property. For pools created with a cloud service
+        /// configuration, see the GetRemoteDesktop API.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the pool that contains the compute node.
@@ -306,7 +363,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ComputeNodeGetRemoteLoginSettingsResult,ComputeNodeGetRemoteLoginSettingsHeaders>> GetRemoteLoginSettingsWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<ComputeNodeGetRemoteLoginSettingsResult,ComputeNodeGetRemoteLoginSettingsHeaders>> GetRemoteLoginSettingsWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteLoginSettingsOptions computeNodeGetRemoteLoginSettingsOptions = default(ComputeNodeGetRemoteLoginSettingsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the Remote Desktop Protocol file for the specified compute
         /// node.
@@ -314,7 +371,9 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <remarks>
         /// Before you can access a node by using the RDP file, you must create
         /// a user account on the node. This API can only be invoked on pools
-        /// created with the cloud service configuration property.
+        /// created with a cloud service configuration. For pools created with
+        /// a virtual machine configuration, see the GetRemoteLoginSettings
+        /// API.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the pool that contains the compute node.
@@ -341,7 +400,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the compute nodes in the specified pool.
         /// </summary>
@@ -366,7 +425,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ComputeNode>,ComputeNodeListHeaders>> ListWithHttpMessagesAsync(string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<IPage<ComputeNode>,ComputeNodeListHeaders>> ListWithHttpMessagesAsync(string poolId, ComputeNodeListOptions computeNodeListOptions = default(ComputeNodeListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the compute nodes in the specified pool.
         /// </summary>
@@ -391,6 +450,6 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ComputeNode>,ComputeNodeListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, ComputeNodeListNextOptions computeNodeListNextOptions = default(ComputeNodeListNextOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<AzureOperationResponse<IPage<ComputeNode>,ComputeNodeListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, ComputeNodeListNextOptions computeNodeListNextOptions = default(ComputeNodeListNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

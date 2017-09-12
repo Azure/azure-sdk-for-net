@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +26,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ComputeNodeEndpointConfiguration
         /// class.
         /// </summary>
-        public ComputeNodeEndpointConfiguration() { }
+        public ComputeNodeEndpointConfiguration()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ComputeNodeEndpointConfiguration
@@ -27,33 +37,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="inboundEndpoints">The list of inbound endpoints that
         /// are accessible on the compute node.</param>
-        public ComputeNodeEndpointConfiguration(System.Collections.Generic.IList<InboundEndpoint> inboundEndpoints)
+        public ComputeNodeEndpointConfiguration(IList<InboundEndpoint> inboundEndpoints)
         {
-            this.InboundEndpoints = inboundEndpoints;
+            InboundEndpoints = inboundEndpoints;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the list of inbound endpoints that are accessible on
         /// the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "inboundEndpoints")]
-        public System.Collections.Generic.IList<InboundEndpoint> InboundEndpoints { get; set; }
+        [JsonProperty(PropertyName = "inboundEndpoints")]
+        public IList<InboundEndpoint> InboundEndpoints { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.InboundEndpoints == null)
+            if (InboundEndpoints == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "InboundEndpoints");
+                throw new ValidationException(ValidationRules.CannotBeNull, "InboundEndpoints");
             }
-            if (this.InboundEndpoints != null)
+            if (InboundEndpoints != null)
             {
-                foreach (var element in this.InboundEndpoints)
+                foreach (var element in InboundEndpoints)
                 {
                     if (element != null)
                     {

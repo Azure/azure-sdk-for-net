@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the OutputFile class.
         /// </summary>
-        public OutputFile() { }
+        public OutputFile()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OutputFile class.
@@ -34,10 +42,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// upload.</param>
         public OutputFile(string filePattern, OutputFileDestination destination, OutputFileUploadOptions uploadOptions)
         {
-            this.FilePattern = filePattern;
-            this.Destination = destination;
-            this.UploadOptions = uploadOptions;
+            FilePattern = filePattern;
+            Destination = destination;
+            UploadOptions = uploadOptions;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a pattern indicating which file(s) to upload.
@@ -62,49 +76,49 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// variables (%var% on Windows or $var on Linux) are expanded prior to
         /// the pattern being applied.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "filePattern")]
+        [JsonProperty(PropertyName = "filePattern")]
         public string FilePattern { get; set; }
 
         /// <summary>
         /// Gets or sets the destination for the output file(s).
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "destination")]
+        [JsonProperty(PropertyName = "destination")]
         public OutputFileDestination Destination { get; set; }
 
         /// <summary>
         /// Gets or sets additional options for the upload operation, including
         /// under what conditions to perform the upload.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "uploadOptions")]
+        [JsonProperty(PropertyName = "uploadOptions")]
         public OutputFileUploadOptions UploadOptions { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.FilePattern == null)
+            if (FilePattern == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FilePattern");
+                throw new ValidationException(ValidationRules.CannotBeNull, "FilePattern");
             }
-            if (this.Destination == null)
+            if (Destination == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Destination");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Destination");
             }
-            if (this.UploadOptions == null)
+            if (UploadOptions == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "UploadOptions");
+                throw new ValidationException(ValidationRules.CannotBeNull, "UploadOptions");
             }
-            if (this.Destination != null)
+            if (Destination != null)
             {
-                this.Destination.Validate();
+                Destination.Validate();
             }
-            if (this.UploadOptions != null)
+            if (UploadOptions != null)
             {
-                this.UploadOptions.Validate();
+                UploadOptions.Validate();
             }
         }
     }

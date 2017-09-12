@@ -22,8 +22,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <!-- Portable is defined for legacy reasons, if updating AutoRest removes it from BatchErrorException we can remove it here -->
-    <DefineConstants>$(DefineConstants);netstandard14;PORTABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);netstandard14</DefineConstants>
   </PropertyGroup>
     
   <ItemGroup>

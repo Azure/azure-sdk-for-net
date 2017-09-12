@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the VirtualMachineConfiguration
         /// class.
         /// </summary>
-        public VirtualMachineConfiguration() { }
+        public VirtualMachineConfiguration()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the VirtualMachineConfiguration
@@ -36,11 +44,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// settings on the virtual machine.</param>
         public VirtualMachineConfiguration(string nodeAgentSKUId, ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
         {
-            this.ImageReference = imageReference;
-            this.OsDisk = osDisk;
-            this.NodeAgentSKUId = nodeAgentSKUId;
-            this.WindowsConfiguration = windowsConfiguration;
+            ImageReference = imageReference;
+            OsDisk = osDisk;
+            NodeAgentSKUId = nodeAgentSKUId;
+            WindowsConfiguration = windowsConfiguration;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace
@@ -50,7 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property and osDisk are mutually exclusive and one of the
         /// properties must be specified.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "imageReference")]
+        [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
@@ -62,7 +76,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 'UserSubscription'. This property and imageReference are mutually
         /// exclusive and one of the properties must be specified.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "osDisk")]
+        [JsonProperty(PropertyName = "osDisk")]
         public OSDisk OsDisk { get; set; }
 
         /// <summary>
@@ -79,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// their list of verified image references, see the 'List supported
         /// node agent SKUs' operation.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeAgentSKUId")]
+        [JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
 
         /// <summary>
@@ -90,28 +104,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property must not be specified if the imageReference or osDisk
         /// property specifies a Linux OS image.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "windowsConfiguration")]
+        [JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.NodeAgentSKUId == null)
+            if (NodeAgentSKUId == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NodeAgentSKUId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "NodeAgentSKUId");
             }
-            if (this.ImageReference != null)
+            if (ImageReference != null)
             {
-                this.ImageReference.Validate();
+                ImageReference.Validate();
             }
-            if (this.OsDisk != null)
+            if (OsDisk != null)
             {
-                this.OsDisk.Validate();
+                OsDisk.Validate();
             }
         }
     }

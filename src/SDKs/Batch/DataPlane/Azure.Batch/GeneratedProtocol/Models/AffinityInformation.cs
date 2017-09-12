@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AffinityInformation class.
         /// </summary>
-        public AffinityInformation() { }
+        public AffinityInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AffinityInformation class.
@@ -28,31 +36,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// of a compute node or a task that has run previously.</param>
         public AffinityInformation(string affinityId)
         {
-            this.AffinityId = affinityId;
+            AffinityId = affinityId;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an opaque string representing the location of a
         /// compute node or a task that has run previously.
         /// </summary>
         /// <remarks>
-        /// You can pass the affinityId of a compute node or task to indicate
-        /// that this task needs to be placed close to the node or task.
+        /// You can pass the affinityId of a compute node to indicate that this
+        /// task needs to run on that compute node. Note that this is just a
+        /// soft affinity. If the target node is busy or unavailable at the
+        /// time the task is scheduled, then the task will be scheduled
+        /// elsewhere.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityId")]
+        [JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.AffinityId == null)
+            if (AffinityId == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AffinityId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "AffinityId");
             }
         }
     }

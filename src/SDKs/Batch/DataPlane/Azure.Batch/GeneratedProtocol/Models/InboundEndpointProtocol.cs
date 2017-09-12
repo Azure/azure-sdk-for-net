@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for InboundEndpointProtocol.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum InboundEndpointProtocol
     {
-        [System.Runtime.Serialization.EnumMember(Value = "tcp")]
+        [EnumMember(Value = "tcp")]
         Tcp,
-        [System.Runtime.Serialization.EnumMember(Value = "udp")]
+        [EnumMember(Value = "udp")]
         Udp
+    }
+    internal static class InboundEndpointProtocolEnumExtension
+    {
+        internal static string ToSerializedValue(this InboundEndpointProtocol? value)  =>
+            value == null ? null : ((InboundEndpointProtocol)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this InboundEndpointProtocol value)
+        {
+            switch( value )
+            {
+                case InboundEndpointProtocol.Tcp:
+                    return "tcp";
+                case InboundEndpointProtocol.Udp:
+                    return "udp";
+            }
+            return null;
+        }
+
+        internal static InboundEndpointProtocol? ParseInboundEndpointProtocol(this string value)
+        {
+            switch( value )
+            {
+                case "tcp":
+                    return InboundEndpointProtocol.Tcp;
+                case "udp":
+                    return InboundEndpointProtocol.Udp;
+            }
+            return null;
+        }
     }
 }

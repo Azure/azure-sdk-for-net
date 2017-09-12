@@ -8,26 +8,82 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum JobState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "active")]
+        [EnumMember(Value = "active")]
         Active,
-        [System.Runtime.Serialization.EnumMember(Value = "disabling")]
+        [EnumMember(Value = "disabling")]
         Disabling,
-        [System.Runtime.Serialization.EnumMember(Value = "disabled")]
+        [EnumMember(Value = "disabled")]
         Disabled,
-        [System.Runtime.Serialization.EnumMember(Value = "enabling")]
+        [EnumMember(Value = "enabling")]
         Enabling,
-        [System.Runtime.Serialization.EnumMember(Value = "terminating")]
+        [EnumMember(Value = "terminating")]
         Terminating,
-        [System.Runtime.Serialization.EnumMember(Value = "completed")]
+        [EnumMember(Value = "completed")]
         Completed,
-        [System.Runtime.Serialization.EnumMember(Value = "deleting")]
+        [EnumMember(Value = "deleting")]
         Deleting
+    }
+    internal static class JobStateEnumExtension
+    {
+        internal static string ToSerializedValue(this JobState? value)  =>
+            value == null ? null : ((JobState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this JobState value)
+        {
+            switch( value )
+            {
+                case JobState.Active:
+                    return "active";
+                case JobState.Disabling:
+                    return "disabling";
+                case JobState.Disabled:
+                    return "disabled";
+                case JobState.Enabling:
+                    return "enabling";
+                case JobState.Terminating:
+                    return "terminating";
+                case JobState.Completed:
+                    return "completed";
+                case JobState.Deleting:
+                    return "deleting";
+            }
+            return null;
+        }
+
+        internal static JobState? ParseJobState(this string value)
+        {
+            switch( value )
+            {
+                case "active":
+                    return JobState.Active;
+                case "disabling":
+                    return JobState.Disabling;
+                case "disabled":
+                    return JobState.Disabled;
+                case "enabling":
+                    return JobState.Enabling;
+                case "terminating":
+                    return JobState.Terminating;
+                case "completed":
+                    return JobState.Completed;
+                case "deleting":
+                    return JobState.Deleting;
+            }
+            return null;
+        }
     }
 }

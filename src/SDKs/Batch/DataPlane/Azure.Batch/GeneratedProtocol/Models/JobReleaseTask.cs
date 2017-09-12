@@ -8,18 +8,47 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// A Job Release task to run on job completion on any compute node where
     /// the job has run.
     /// </summary>
+    /// <remarks>
+    /// The Job Release task runs when the job ends, because of one of the
+    /// following: The user calls the Terminate Job API, or the Delete Job API
+    /// while the job is still active, the job's maximum wall clock time
+    /// constraint is reached, and the job is still active, or the job's Job
+    /// Manager task completed, and the job is configured to terminate when the
+    /// Job Manager completes. The Job Release task runs on each compute node
+    /// where tasks of the job have run and the Job Preparation task ran and
+    /// completed. If you reimage a compute node after it has run the Job
+    /// Preparation task, and the job ends without any further tasks of the job
+    /// running on that compute node (and hence the Job Preparation task does
+    /// not re-run), then the Job Release task does not run on that node. If a
+    /// compute node reboots while the Job Release task is still running, the
+    /// Job Release task runs again when the compute node starts up. The job is
+    /// not marked as complete until all Job Release tasks have completed. The
+    /// Job Release task runs in the background. It does not occupy a
+    /// scheduling slot; that is, it does not count towards the maxTasksPerNode
+    /// limit specified on the pool.
+    /// </remarks>
     public partial class JobReleaseTask
     {
         /// <summary>
         /// Initializes a new instance of the JobReleaseTask class.
         /// </summary>
-        public JobReleaseTask() { }
+        public JobReleaseTask()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobReleaseTask class.
@@ -47,16 +76,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// contents.</param>
         /// <param name="userIdentity">The user identity under which the Job
         /// Release task runs.</param>
-        public JobReleaseTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
+        public JobReleaseTask(string commandLine, string id = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
         {
-            this.Id = id;
-            this.CommandLine = commandLine;
-            this.ResourceFiles = resourceFiles;
-            this.EnvironmentSettings = environmentSettings;
-            this.MaxWallClockTime = maxWallClockTime;
-            this.RetentionTime = retentionTime;
-            this.UserIdentity = userIdentity;
+            Id = id;
+            CommandLine = commandLine;
+            ResourceFiles = resourceFiles;
+            EnvironmentSettings = environmentSettings;
+            MaxWallClockTime = maxWallClockTime;
+            RetentionTime = retentionTime;
+            UserIdentity = userIdentity;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the Job Release task
@@ -67,12 +102,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores and cannot contain more than 64
         /// characters. If you do not specify this property, the Batch service
         /// assigns a default value of 'jobrelease'. No other task in the job
-        /// can have the same id as the Job Release task. If you try to submit
+        /// can have the same ID as the Job Release task. If you try to submit
         /// a task with the same id, the Batch service rejects the request with
         /// error code TaskIdSameAsJobReleaseTask; if you are calling the REST
         /// API directly, the HTTP status code is 409 (Conflict).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -85,7 +120,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
+        [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
@@ -96,15 +131,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Files listed under this element are located in the task's working
         /// directory.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
-        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
+        [JsonProperty(PropertyName = "resourceFiles")]
+        public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
         /// Release task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
-        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [JsonProperty(PropertyName = "environmentSettings")]
+        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum elapsed time that the Job Release task may
@@ -115,7 +150,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch service rejects it with an error; if you are calling the REST
         /// API directly, the HTTP status code is 400 (Bad Request).
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "maxWallClockTime")]
+        [JsonProperty(PropertyName = "maxWallClockTime")]
         public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
@@ -127,7 +162,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default is infinite, i.e. the task directory will be retained
         /// until the compute node is removed or reimaged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "retentionTime")]
+        [JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
@@ -138,24 +173,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, the task runs as a non-administrative user unique to
         /// the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.CommandLine == null)
+            if (CommandLine == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
             }
-            if (this.ResourceFiles != null)
+            if (ResourceFiles != null)
             {
-                foreach (var element in this.ResourceFiles)
+                foreach (var element in ResourceFiles)
                 {
                     if (element != null)
                     {
@@ -163,9 +198,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (EnvironmentSettings != null)
             {
-                foreach (var element1 in this.EnvironmentSettings)
+                foreach (var element1 in EnvironmentSettings)
                 {
                     if (element1 != null)
                     {

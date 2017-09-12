@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobPreparationTaskState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum JobPreparationTaskState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "running")]
+        [EnumMember(Value = "running")]
         Running,
-        [System.Runtime.Serialization.EnumMember(Value = "completed")]
+        [EnumMember(Value = "completed")]
         Completed
+    }
+    internal static class JobPreparationTaskStateEnumExtension
+    {
+        internal static string ToSerializedValue(this JobPreparationTaskState? value)  =>
+            value == null ? null : ((JobPreparationTaskState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this JobPreparationTaskState value)
+        {
+            switch( value )
+            {
+                case JobPreparationTaskState.Running:
+                    return "running";
+                case JobPreparationTaskState.Completed:
+                    return "completed";
+            }
+            return null;
+        }
+
+        internal static JobPreparationTaskState? ParseJobPreparationTaskState(this string value)
+        {
+            switch( value )
+            {
+                case "running":
+                    return JobPreparationTaskState.Running;
+                case "completed":
+                    return JobPreparationTaskState.Completed;
+            }
+            return null;
+        }
     }
 }

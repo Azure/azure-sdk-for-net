@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the RecentJob class.
         /// </summary>
-        public RecentJob() { }
+        public RecentJob()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RecentJob class.
@@ -27,20 +34,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="url">The URL of the job.</param>
         public RecentJob(string id = default(string), string url = default(string))
         {
-            this.Id = id;
-            this.Url = url;
+            Id = id;
+            Url = url;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of the job.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the job.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
     }

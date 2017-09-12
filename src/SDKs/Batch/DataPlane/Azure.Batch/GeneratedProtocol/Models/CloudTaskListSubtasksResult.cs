@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,23 +25,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the CloudTaskListSubtasksResult
         /// class.
         /// </summary>
-        public CloudTaskListSubtasksResult() { }
+        public CloudTaskListSubtasksResult()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the CloudTaskListSubtasksResult
         /// class.
         /// </summary>
         /// <param name="value">The list of subtasks.</param>
-        public CloudTaskListSubtasksResult(System.Collections.Generic.IList<SubtaskInformation> value = default(System.Collections.Generic.IList<SubtaskInformation>))
+        public CloudTaskListSubtasksResult(IList<SubtaskInformation> value = default(IList<SubtaskInformation>))
         {
-            this.Value = value;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the list of subtasks.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<SubtaskInformation> Value { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<SubtaskInformation> Value { get; set; }
 
     }
 }

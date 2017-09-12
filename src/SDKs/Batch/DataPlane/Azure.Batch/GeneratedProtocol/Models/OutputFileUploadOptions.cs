@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the OutputFileUploadOptions class.
         /// </summary>
-        public OutputFileUploadOptions() { }
+        public OutputFileUploadOptions()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the OutputFileUploadOptions class.
@@ -28,8 +35,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// output file or set of files should be uploaded.</param>
         public OutputFileUploadOptions(OutputFileUploadCondition uploadCondition)
         {
-            this.UploadCondition = uploadCondition;
+            UploadCondition = uploadCondition;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the conditions under which the task output file or set
@@ -39,13 +52,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default is taskCompletion. Possible values include:
         /// 'taskSuccess', 'taskFailure', 'taskCompletion'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "uploadCondition")]
+        [JsonProperty(PropertyName = "uploadCondition")]
         public OutputFileUploadCondition UploadCondition { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

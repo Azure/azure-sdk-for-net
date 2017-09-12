@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the LinuxUserConfiguration class.
         /// </summary>
-        public LinuxUserConfiguration() { }
+        public LinuxUserConfiguration()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the LinuxUserConfiguration class.
@@ -29,10 +36,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// account.</param>
         public LinuxUserConfiguration(int? uid = default(int?), int? gid = default(int?), string sshPrivateKey = default(string))
         {
-            this.Uid = uid;
-            this.Gid = gid;
-            this.SshPrivateKey = sshPrivateKey;
+            Uid = uid;
+            Gid = gid;
+            SshPrivateKey = sshPrivateKey;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the user ID of the user account.
@@ -42,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// all. If not specified the underlying operating system picks the
         /// uid.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "uid")]
+        [JsonProperty(PropertyName = "uid")]
         public int? Uid { get; set; }
 
         /// <summary>
@@ -53,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// all. If not specified the underlying operating system picks the
         /// gid.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "gid")]
+        [JsonProperty(PropertyName = "gid")]
         public int? Gid { get; set; }
 
         /// <summary>
@@ -69,7 +82,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// password-less SSH is not configured between nodes (no modification
         /// of the user's .ssh directory is done).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sshPrivateKey")]
+        [JsonProperty(PropertyName = "sshPrivateKey")]
         public string SshPrivateKey { get; set; }
 
     }
