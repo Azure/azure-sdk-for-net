@@ -59,7 +59,9 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
 The `Azure` class is the simplest entry point for creating and interacting with Azure resources.
 
 ```csharp
-IAzure azure = Azure.Authenticate(credFile).WithDefaultSubscription();
+// new Microsoft.Azure.Management.ResourceManager.Fluent.Authentication.AzureCredentialsFactory()
+var credentials = new AzureCredentialsFactory().FromServicePrincipal(clientId, clientSecret, tenantId, AzureEnvironment.AzureGlobalCloud);
+IAzure azure = Microsoft.Azure.Management.Fluent.Azure.Authenticate(credentials).WithSubscription(subscriptionId);
 ``` 
 
 #### Create a Cosmos DB with DocumentDB Programming Model
