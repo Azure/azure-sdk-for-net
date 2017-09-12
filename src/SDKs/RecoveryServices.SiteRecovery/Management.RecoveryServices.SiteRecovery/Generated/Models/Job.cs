@@ -37,10 +37,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="location">Resource Location</param>
         /// <param name="properties">The custom data.</param>
         /// <param name="status">The status of the Job. ARM expects the
-        /// terminal status to be one of
-        /// (1) Succeeded, (2) Failed or (3) Canceled.
-        /// All other values imply that the operation is still running / being
-        /// applied.</param>
+        /// terminal status to be one of (1) Succeeded, (2) Failed or (3)
+        /// Canceled. All other values imply that the operation is still
+        /// running / being applied.</param>
         /// <param name="error">The error.</param>
         /// <param name="startTime">The start time.</param>
         /// <param name="endTime">The start time.</param>
@@ -68,10 +67,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the status of the Job. ARM expects the terminal status
-        /// to be one of
-        /// (1) Succeeded, (2) Failed or (3) Canceled.
-        /// All other values imply that the operation is still running / being
-        /// applied.
+        /// to be one of (1) Succeeded, (2) Failed or (3) Canceled. All other
+        /// values imply that the operation is still running / being applied.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

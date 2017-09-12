@@ -78,14 +78,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Deletes provider from fabric.
-        /// Note: Deleting provider for any fabric other than SingleHost is
-        /// unsupported. To
-        /// maintain backward compatibility for released clients the object
-        /// "deleteRspInput" is
-        /// used (if the object is empty we assume that it is old client and continue
-        /// the old
-        /// behavior).
+        /// Deletes provider from fabric. Note: Deleting provider for any fabric other
+        /// than SingleHost is unsupported. To maintain backward compatibility for
+        /// released clients the object "deleteRspInput" is used (if the object is
+        /// empty we assume that it is old client and continue the old behavior).
         /// </summary>
         /// <remarks>
         /// The operation to removes/delete(unregister) a recovery services provider
@@ -546,8 +542,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Gets the list of registered recovery services providers in the vault.
-        /// This is a view only api.
+        /// Gets the list of registered recovery services providers in the vault. This
+        /// is a view only api.
         /// </summary>
         /// <remarks>
         /// Lists the registered recovery services providers in the vault
@@ -948,14 +944,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Deletes provider from fabric.
-        /// Note: Deleting provider for any fabric other than SingleHost is
-        /// unsupported. To
-        /// maintain backward compatibility for released clients the object
-        /// "deleteRspInput" is
-        /// used (if the object is empty we assume that it is old client and continue
-        /// the old
-        /// behavior).
+        /// Deletes provider from fabric. Note: Deleting provider for any fabric other
+        /// than SingleHost is unsupported. To maintain backward compatibility for
+        /// released clients the object "deleteRspInput" is used (if the object is
+        /// empty we assume that it is old client and continue the old behavior).
         /// </summary>
         /// <remarks>
         /// The operation to removes/delete(unregister) a recovery services provider
@@ -1509,8 +1501,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Gets the list of registered recovery services providers in the vault.
-        /// This is a view only api.
+        /// Gets the list of registered recovery services providers in the vault. This
+        /// is a view only api.
         /// </summary>
         /// <remarks>
         /// Lists the registered recovery services providers in the vault

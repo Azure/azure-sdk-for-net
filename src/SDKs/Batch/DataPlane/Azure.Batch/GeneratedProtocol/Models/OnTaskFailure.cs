@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OnTaskFailure.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum OnTaskFailure
     {
-        [System.Runtime.Serialization.EnumMember(Value = "noAction")]
+        [EnumMember(Value = "noAction")]
         NoAction,
-        [System.Runtime.Serialization.EnumMember(Value = "performExitOptionsJobAction")]
+        [EnumMember(Value = "performExitOptionsJobAction")]
         PerformExitOptionsJobAction
+    }
+    internal static class OnTaskFailureEnumExtension
+    {
+        internal static string ToSerializedValue(this OnTaskFailure? value)  =>
+            value == null ? null : ((OnTaskFailure)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this OnTaskFailure value)
+        {
+            switch( value )
+            {
+                case OnTaskFailure.NoAction:
+                    return "noAction";
+                case OnTaskFailure.PerformExitOptionsJobAction:
+                    return "performExitOptionsJobAction";
+            }
+            return null;
+        }
+
+        internal static OnTaskFailure? ParseOnTaskFailure(this string value)
+        {
+            switch( value )
+            {
+                case "noAction":
+                    return OnTaskFailure.NoAction;
+                case "performExitOptionsJobAction":
+                    return OnTaskFailure.PerformExitOptionsJobAction;
+            }
+            return null;
+        }
     }
 }

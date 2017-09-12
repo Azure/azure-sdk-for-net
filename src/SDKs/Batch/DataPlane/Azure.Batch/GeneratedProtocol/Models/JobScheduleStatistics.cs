@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleStatistics class.
         /// </summary>
-        public JobScheduleStatistics() { }
+        public JobScheduleStatistics()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobScheduleStatistics class.
@@ -63,33 +71,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time is the time to the most recent task execution.)</param>
         public JobScheduleStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan userCPUTime, System.TimeSpan kernelCPUTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, System.TimeSpan waitTime)
         {
-            this.Url = url;
-            this.StartTime = startTime;
-            this.LastUpdateTime = lastUpdateTime;
-            this.UserCPUTime = userCPUTime;
-            this.KernelCPUTime = kernelCPUTime;
-            this.WallClockTime = wallClockTime;
-            this.ReadIOps = readIOps;
-            this.WriteIOps = writeIOps;
-            this.ReadIOGiB = readIOGiB;
-            this.WriteIOGiB = writeIOGiB;
-            this.NumSucceededTasks = numSucceededTasks;
-            this.NumFailedTasks = numFailedTasks;
-            this.NumTaskRetries = numTaskRetries;
-            this.WaitTime = waitTime;
+            Url = url;
+            StartTime = startTime;
+            LastUpdateTime = lastUpdateTime;
+            UserCPUTime = userCPUTime;
+            KernelCPUTime = kernelCPUTime;
+            WallClockTime = wallClockTime;
+            ReadIOps = readIOps;
+            WriteIOps = writeIOps;
+            ReadIOGiB = readIOGiB;
+            WriteIOGiB = writeIOGiB;
+            NumSucceededTasks = numSucceededTasks;
+            NumFailedTasks = numFailedTasks;
+            NumTaskRetries = numTaskRetries;
+            WaitTime = waitTime;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the URL of the statistics.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the time range covered by the
         /// statistics.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -97,7 +111,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// All statistics are limited to the range between startTime and
         /// lastUpdateTime.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lastUpdateTime")]
+        [JsonProperty(PropertyName = "lastUpdateTime")]
         public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
@@ -105,7 +119,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and all compute nodes) consumed by all tasks in all jobs created
         /// under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userCPUTime")]
+        [JsonProperty(PropertyName = "userCPUTime")]
         public System.TimeSpan UserCPUTime { get; set; }
 
         /// <summary>
@@ -113,7 +127,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// cores and all compute nodes) consumed by all tasks in all jobs
         /// created under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "kernelCPUTime")]
+        [JsonProperty(PropertyName = "kernelCPUTime")]
         public System.TimeSpan KernelCPUTime { get; set; }
 
         /// <summary>
@@ -127,35 +141,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If a task was retried, this includes the wall clock time of all the
         /// task retries.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "wallClockTime")]
+        [JsonProperty(PropertyName = "wallClockTime")]
         public System.TimeSpan WallClockTime { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk read operations made by all
         /// tasks in all jobs created under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "readIOps")]
+        [JsonProperty(PropertyName = "readIOps")]
         public long ReadIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk write operations made by all
         /// tasks in all jobs created under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "writeIOps")]
+        [JsonProperty(PropertyName = "writeIOps")]
         public long WriteIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total gibibytes read from disk by all tasks in all
         /// jobs created under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "readIOGiB")]
+        [JsonProperty(PropertyName = "readIOGiB")]
         public double ReadIOGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the total gibibytes written to disk by all tasks in
         /// all jobs created under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "writeIOGiB")]
+        [JsonProperty(PropertyName = "writeIOGiB")]
         public double WriteIOGiB { get; set; }
 
         /// <summary>
@@ -163,7 +177,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// during the given time range in jobs created under the schedule. A
         /// task completes successfully if it returns exit code 0.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "numSucceededTasks")]
+        [JsonProperty(PropertyName = "numSucceededTasks")]
         public long NumSucceededTasks { get; set; }
 
         /// <summary>
@@ -171,14 +185,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time range in jobs created under the schedule. A task fails if it
         /// exhausts its maximum retry count without returning exit code 0.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "numFailedTasks")]
+        [JsonProperty(PropertyName = "numFailedTasks")]
         public long NumFailedTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of retries during the given time
         /// range on all tasks in all jobs created under the schedule.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "numTaskRetries")]
+        [JsonProperty(PropertyName = "numTaskRetries")]
         public long NumTaskRetries { get; set; }
 
         /// <summary>
@@ -192,20 +206,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This value is only reported in the account lifetime statistics; it
         /// is not included in the job statistics.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "waitTime")]
+        [JsonProperty(PropertyName = "waitTime")]
         public System.TimeSpan WaitTime { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Url == null)
+            if (Url == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
             }
         }
     }

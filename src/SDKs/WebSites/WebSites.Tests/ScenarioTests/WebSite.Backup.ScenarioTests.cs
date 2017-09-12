@@ -38,7 +38,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, farmName, new AppServicePlan
                 {
-                    Name = farmName,
                     Location = locationName,
                     Sku = new SkuDescription
                     {
@@ -51,7 +50,6 @@ namespace WebSites.Tests.ScenarioTests
                 var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId, resourceGroupName, farmName);
                 webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, siteName, new Site
                 {
-                    Name = siteName,
                     Location = locationName,
                     ServerFarmId = serverfarmId
                 });
@@ -66,7 +64,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 var sr = new BackupRequest()
                 {
-                    Location = locationName,
                     Enabled = false,
                     BackupSchedule = new BackupSchedule()
                     {

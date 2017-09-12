@@ -42,11 +42,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// application consistent snapshot within the VM.</param>
         /// <param name="replicationInterval">The replication interval.</param>
         /// <param name="onlineReplicationStartTime">The scheduled start time
-        /// for the initial replication. If this parameter
-        /// is Null, the initial replication starts immediately.</param>
+        /// for the initial replication. If this parameter is Null, the initial
+        /// replication starts immediately.</param>
         /// <param name="encryption">A value indicating whether encryption is
-        /// enabled for virtual machines
-        /// in this cloud.</param>
+        /// enabled for virtual machines in this cloud.</param>
         /// <param name="activeStorageAccountId">The active storage account
         /// Id.</param>
         public HyperVReplicaAzurePolicyDetails(int? recoveryPointHistoryDurationInHours = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), int? replicationInterval = default(int?), string onlineReplicationStartTime = default(string), string encryption = default(string), string activeStorageAccountId = default(string))
@@ -67,16 +66,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the duration (in hours) to which point the recovery
-        /// history needs to be
-        /// maintained.
+        /// history needs to be maintained.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointHistoryDurationInHours")]
         public int? RecoveryPointHistoryDurationInHours { get; set; }
 
         /// <summary>
         /// Gets or sets the interval (in hours) at which Hyper-V Replica
-        /// should create an
-        /// application consistent snapshot within the VM.
+        /// should create an application consistent snapshot within the VM.
         /// </summary>
         [JsonProperty(PropertyName = "applicationConsistentSnapshotFrequencyInHours")]
         public int? ApplicationConsistentSnapshotFrequencyInHours { get; set; }
@@ -89,16 +86,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the scheduled start time for the initial replication.
-        /// If this parameter
-        /// is Null, the initial replication starts immediately.
+        /// If this parameter is Null, the initial replication starts
+        /// immediately.
         /// </summary>
         [JsonProperty(PropertyName = "onlineReplicationStartTime")]
         public string OnlineReplicationStartTime { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether encryption is enabled for
-        /// virtual machines
-        /// in this cloud.
+        /// virtual machines in this cloud.
         /// </summary>
         [JsonProperty(PropertyName = "encryption")]
         public string Encryption { get; set; }

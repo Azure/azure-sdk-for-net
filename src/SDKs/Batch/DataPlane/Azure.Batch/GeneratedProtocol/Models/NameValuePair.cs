@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NameValuePair class.
         /// </summary>
-        public NameValuePair() { }
+        public NameValuePair()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NameValuePair class.
@@ -27,20 +34,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The value in the name-value pair.</param>
         public NameValuePair(string name = default(string), string value = default(string))
         {
-            this.Name = name;
-            this.Value = value;
+            Name = name;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name in the name-value pair.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the value in the name-value pair.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

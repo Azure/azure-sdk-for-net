@@ -28,4 +28,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "Disable")]
         Disable
     }
+    internal static class SetMultiVmSyncStatusEnumExtension
+    {
+        internal static string ToSerializedValue(this SetMultiVmSyncStatus? value)  =>
+            value == null ? null : ((SetMultiVmSyncStatus)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this SetMultiVmSyncStatus value)
+        {
+            switch( value )
+            {
+                case SetMultiVmSyncStatus.Enable:
+                    return "Enable";
+                case SetMultiVmSyncStatus.Disable:
+                    return "Disable";
+            }
+            return null;
+        }
+
+        internal static SetMultiVmSyncStatus? ParseSetMultiVmSyncStatus(this string value)
+        {
+            switch( value )
+            {
+                case "Enable":
+                    return SetMultiVmSyncStatus.Enable;
+                case "Disable":
+                    return SetMultiVmSyncStatus.Disable;
+            }
+            return null;
+        }
+    }
 }

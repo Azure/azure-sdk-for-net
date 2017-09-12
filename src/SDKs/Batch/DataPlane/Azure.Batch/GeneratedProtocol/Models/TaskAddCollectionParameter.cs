@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,42 +25,58 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionParameter class.
         /// </summary>
-        public TaskAddCollectionParameter() { }
+        public TaskAddCollectionParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionParameter class.
         /// </summary>
         /// <param name="value">The collection of tasks to add.</param>
-        public TaskAddCollectionParameter(System.Collections.Generic.IList<TaskAddParameter> value)
+        public TaskAddCollectionParameter(IList<TaskAddParameter> value)
         {
-            this.Value = value;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the collection of tasks to add.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<TaskAddParameter> Value { get; set; }
+        /// <remarks>
+        /// The total serialized size of this collection must be less than 4MB.
+        /// If it is greater than 4MB (for example if each task has 100's of
+        /// resource files or environment variables), the request will fail
+        /// with code 'RequestBodyTooLarge' and should be retried again with
+        /// fewer tasks.
+        /// </remarks>
+        [JsonProperty(PropertyName = "value")]
+        public IList<TaskAddParameter> Value { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Value == null)
+            if (Value == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Value");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
-            if (this.Value != null)
+            if (Value != null)
             {
-                if (this.Value.Count > 100)
+                if (Value.Count > 100)
                 {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxItems, "Value", 100);
+                    throw new ValidationException(ValidationRules.MaxItems, "Value", 100);
                 }
-                foreach (var element in this.Value)
+                foreach (var element in Value)
                 {
                     if (element != null)
                     {

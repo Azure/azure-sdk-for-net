@@ -30,4 +30,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "WindowsServer")]
         WindowsServer
     }
+    internal static class LicenseTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this LicenseType? value)  =>
+            value == null ? null : ((LicenseType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this LicenseType value)
+        {
+            switch( value )
+            {
+                case LicenseType.NotSpecified:
+                    return "NotSpecified";
+                case LicenseType.NoLicenseType:
+                    return "NoLicenseType";
+                case LicenseType.WindowsServer:
+                    return "WindowsServer";
+            }
+            return null;
+        }
+
+        internal static LicenseType? ParseLicenseType(this string value)
+        {
+            switch( value )
+            {
+                case "NotSpecified":
+                    return LicenseType.NotSpecified;
+                case "NoLicenseType":
+                    return LicenseType.NoLicenseType;
+                case "WindowsServer":
+                    return LicenseType.WindowsServer;
+            }
+            return null;
+        }
+    }
 }

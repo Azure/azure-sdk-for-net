@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +26,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the StartTask class.
         /// </summary>
-        public StartTask() { }
+        public StartTask()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the StartTask class.
@@ -39,15 +49,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// for the start task to complete successfully (that is, to exit with
         /// exit code 0) before scheduling any tasks on the compute
         /// node.</param>
-        public StartTask(string commandLine, System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
+        public StartTask(string commandLine, IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
         {
-            this.CommandLine = commandLine;
-            this.ResourceFiles = resourceFiles;
-            this.EnvironmentSettings = environmentSettings;
-            this.UserIdentity = userIdentity;
-            this.MaxTaskRetryCount = maxTaskRetryCount;
-            this.WaitForSuccess = waitForSuccess;
+            CommandLine = commandLine;
+            ResourceFiles = resourceFiles;
+            EnvironmentSettings = environmentSettings;
+            UserIdentity = userIdentity;
+            MaxTaskRetryCount = maxTaskRetryCount;
+            WaitForSuccess = waitForSuccess;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the command line of the start task.
@@ -59,22 +75,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
+        [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
         /// to the compute node before running the command line.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
-        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
+        /// <remarks>
+        /// Files listed under this element are located in the task's working
+        /// directory.
+        /// </remarks>
+        [JsonProperty(PropertyName = "resourceFiles")]
+        public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the start
         /// task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
-        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [JsonProperty(PropertyName = "environmentSettings")]
+        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the user identity under which the start task runs.
@@ -83,7 +103,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, the task runs as a non-administrative user unique to
         /// the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
@@ -99,7 +119,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task. If the maximum retry count is -1, the Batch service retries
         /// the task without limit.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTaskRetryCount")]
+        [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
         /// <summary>
@@ -113,31 +133,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// (maxTaskRetryCount). If the task has still not completed
         /// successfully after all retries, then the Batch service marks the
         /// compute node unusable, and will not schedule tasks to it. This
-        /// condition can be detected via the node state and scheduling error
-        /// detail. If false, the Batch service will not wait for the start
+        /// condition can be detected via the node state and failure info
+        /// details. If false, the Batch service will not wait for the start
         /// task to complete. In this case, other tasks can start executing on
         /// the compute node while the start task is still running; and even if
         /// the start task fails, new tasks will continue to be scheduled on
         /// the node. The default is false.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "waitForSuccess")]
+        [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.CommandLine == null)
+            if (CommandLine == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
             }
-            if (this.ResourceFiles != null)
+            if (ResourceFiles != null)
             {
-                foreach (var element in this.ResourceFiles)
+                foreach (var element in ResourceFiles)
                 {
                     if (element != null)
                     {
@@ -145,9 +165,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (EnvironmentSettings != null)
             {
-                foreach (var element1 in this.EnvironmentSettings)
+                foreach (var element1 in EnvironmentSettings)
                 {
                     if (element1 != null)
                     {

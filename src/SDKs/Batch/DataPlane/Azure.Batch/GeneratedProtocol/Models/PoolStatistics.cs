@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolStatistics class.
         /// </summary>
-        public PoolStatistics() { }
+        public PoolStatistics()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolStatistics class.
@@ -36,24 +44,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// consumption by compute nodes in the pool.</param>
         public PoolStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, UsageStatistics usageStats = default(UsageStatistics), ResourceStatistics resourceStats = default(ResourceStatistics))
         {
-            this.Url = url;
-            this.StartTime = startTime;
-            this.LastUpdateTime = lastUpdateTime;
-            this.UsageStats = usageStats;
-            this.ResourceStats = resourceStats;
+            Url = url;
+            StartTime = startTime;
+            LastUpdateTime = lastUpdateTime;
+            UsageStats = usageStats;
+            ResourceStats = resourceStats;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the URL for the statistics.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the time range covered by the
         /// statistics.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -61,42 +75,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// All statistics are limited to the range between startTime and
         /// lastUpdateTime.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lastUpdateTime")]
+        [JsonProperty(PropertyName = "lastUpdateTime")]
         public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
         /// Gets or sets statistics related to pool usage, such as the amount
         /// of core-time used.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "usageStats")]
+        [JsonProperty(PropertyName = "usageStats")]
         public UsageStatistics UsageStats { get; set; }
 
         /// <summary>
         /// Gets or sets statistics related to resource consumption by compute
         /// nodes in the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceStats")]
+        [JsonProperty(PropertyName = "resourceStats")]
         public ResourceStatistics ResourceStats { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Url == null)
+            if (Url == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
             }
-            if (this.UsageStats != null)
+            if (UsageStats != null)
             {
-                this.UsageStats.Validate();
+                UsageStats.Validate();
             }
-            if (this.ResourceStats != null)
+            if (ResourceStats != null)
             {
-                this.ResourceStats.Validate();
+                ResourceStats.Validate();
             }
         }
     }

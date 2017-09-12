@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobDisableParameter class.
         /// </summary>
-        public JobDisableParameter() { }
+        public JobDisableParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobDisableParameter class.
@@ -27,26 +34,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// with the job.</param>
         public JobDisableParameter(DisableJobOption disableTasks)
         {
-            this.DisableTasks = disableTasks;
+            DisableTasks = disableTasks;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets what to do with active tasks associated with the job.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
         /// requeue - Terminate running tasks and requeue them. The tasks will
-        /// run again when the job is enabled. terminate - Terminate running
-        /// tasks. The tasks will not run again. wait - Allow currently running
-        /// tasks to complete. Possible values include: 'requeue', 'terminate',
-        /// 'wait'
+        /// run again when the job is enabled.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// wait - Allow currently running tasks to complete. Possible values
+        /// include: 'requeue', 'terminate', 'wait'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "disableTasks")]
+        [JsonProperty(PropertyName = "disableTasks")]
         public DisableJobOption DisableTasks { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

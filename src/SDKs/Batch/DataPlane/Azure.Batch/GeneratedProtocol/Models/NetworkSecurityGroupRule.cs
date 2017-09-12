@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroupRule class.
         /// </summary>
-        public NetworkSecurityGroupRule() { }
+        public NetworkSecurityGroupRule()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroupRule class.
@@ -30,10 +38,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// to match for the rule.</param>
         public NetworkSecurityGroupRule(int priority, NetworkSecurityGroupRuleAccess access, string sourceAddressPrefix)
         {
-            this.Priority = priority;
-            this.Access = access;
-            this.SourceAddressPrefix = sourceAddressPrefix;
+            Priority = priority;
+            Access = access;
+            SourceAddressPrefix = sourceAddressPrefix;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the priority for this rule.
@@ -47,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// to 3500. If any reserved or duplicate values are provided the
         /// request fails with HTTP status code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
+        [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
 
         /// <summary>
@@ -57,7 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'allow', 'deny'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "access")]
+        [JsonProperty(PropertyName = "access")]
         public NetworkSecurityGroupRuleAccess Access { get; set; }
 
         /// <summary>
@@ -70,20 +84,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// any other values are provided the request fails with HTTP status
         /// code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sourceAddressPrefix")]
+        [JsonProperty(PropertyName = "sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.SourceAddressPrefix == null)
+            if (SourceAddressPrefix == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "SourceAddressPrefix");
+                throw new ValidationException(ValidationRules.CannotBeNull, "SourceAddressPrefix");
             }
         }
     }

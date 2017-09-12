@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the DeleteCertificateError class.
         /// </summary>
-        public DeleteCertificateError() { }
+        public DeleteCertificateError()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the DeleteCertificateError class.
@@ -31,26 +40,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// interface.</param>
         /// <param name="values">A list of additional error details related to
         /// the certificate deletion error.</param>
-        public DeleteCertificateError(string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> values = default(System.Collections.Generic.IList<NameValuePair>))
+        public DeleteCertificateError(string code = default(string), string message = default(string), IList<NameValuePair> values = default(IList<NameValuePair>))
         {
-            this.Code = code;
-            this.Message = message;
-            this.Values = values;
+            Code = code;
+            Message = message;
+            Values = values;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an identifier for the certificate deletion error.
         /// Codes are invariant and are intended to be consumed
         /// programmatically.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message describing the certificate deletion error,
         /// intended to be suitable for display in a user interface.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
@@ -63,8 +78,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// resources reference the certificate, the list contains only about
         /// the first hundred.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "values")]
-        public System.Collections.Generic.IList<NameValuePair> Values { get; set; }
+        [JsonProperty(PropertyName = "values")]
+        public IList<NameValuePair> Values { get; set; }
 
     }
 }

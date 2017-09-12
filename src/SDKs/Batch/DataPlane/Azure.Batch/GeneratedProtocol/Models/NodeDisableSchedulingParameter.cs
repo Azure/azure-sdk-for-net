@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the NodeDisableSchedulingParameter
         /// class.
         /// </summary>
-        public NodeDisableSchedulingParameter() { }
+        public NodeDisableSchedulingParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NodeDisableSchedulingParameter
@@ -30,18 +37,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node.</param>
         public NodeDisableSchedulingParameter(DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?))
         {
-            this.NodeDisableSchedulingOption = nodeDisableSchedulingOption;
+            NodeDisableSchedulingOption = nodeDisableSchedulingOption;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets what to do with currently running tasks when disabling
         /// task scheduling on the compute node.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
+        /// requeue - Terminate running task processes and requeue the tasks.
+        /// The tasks may run again on other compute nodes, or when task
+        /// scheduling is re-enabled on this node. Enter offline state as soon
+        /// as tasks have been terminated.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// Enter offline state as soon as tasks have been terminated.
+        /// taskcompletion - Allow currently running tasks to complete.
+        /// Schedule no new tasks while waiting. Enter offline state when all
+        /// tasks have completed.
+        ///
         /// The default value is requeue. Possible values include: 'requeue',
         /// 'terminate', 'taskCompletion'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDisableSchedulingOption")]
+        [JsonProperty(PropertyName = "nodeDisableSchedulingOption")]
         public DisableComputeNodeSchedulingOption? NodeDisableSchedulingOption { get; set; }
 
     }

@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
     /// <summary>
     /// Create network mappings input properties/behaviour specific to Azure to
-    /// Azure Network
-    /// mapping.
+    /// Azure Network mapping.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AzureToAzure")]
     public partial class AzureToAzureCreateNetworkMappingInput : FabricSpecificCreateNetworkMappingInput

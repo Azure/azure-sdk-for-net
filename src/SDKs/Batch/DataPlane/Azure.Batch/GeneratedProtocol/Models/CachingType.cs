@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CachingType.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CachingType
     {
-        [System.Runtime.Serialization.EnumMember(Value = "none")]
+        [EnumMember(Value = "none")]
         None,
-        [System.Runtime.Serialization.EnumMember(Value = "readOnly")]
+        [EnumMember(Value = "readOnly")]
         ReadOnly,
-        [System.Runtime.Serialization.EnumMember(Value = "readWrite")]
+        [EnumMember(Value = "readWrite")]
         ReadWrite
+    }
+    internal static class CachingTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this CachingType? value)  =>
+            value == null ? null : ((CachingType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this CachingType value)
+        {
+            switch( value )
+            {
+                case CachingType.None:
+                    return "none";
+                case CachingType.ReadOnly:
+                    return "readOnly";
+                case CachingType.ReadWrite:
+                    return "readWrite";
+            }
+            return null;
+        }
+
+        internal static CachingType? ParseCachingType(this string value)
+        {
+            switch( value )
+            {
+                case "none":
+                    return CachingType.None;
+                case "readOnly":
+                    return CachingType.ReadOnly;
+                case "readWrite":
+                    return CachingType.ReadWrite;
+            }
+            return null;
+        }
     }
 }
