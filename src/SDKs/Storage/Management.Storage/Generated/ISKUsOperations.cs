@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SKUsOperations operations.
+    /// SkusOperations operations.
     /// </summary>
-    public partial interface ISKUsOperations
+    public partial interface ISkusOperations
     {
         /// <summary>
         /// Lists the available SKUs supported by Microsoft.Storage for given
