@@ -504,6 +504,7 @@ If you would like to become an active contributor to this project please follow 
 
 | Version           | SHA1                                                                                      | Remarks                                               |
 |-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| 1.2               | [1.2](https://github.com/Azure/azure-sdk-for-net/tree/Fluent-v1.2)                | Tagged release for 1.2 version of Azure management libraries |
 | 1.1               | [1.1](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.1)                | Tagged release for 1.1 version of Azure management libraries |
 | 1.0               | [1.0](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-stable)           | Tagged release for 1.0 version of Azure management libraries |
 | 1.0.0-beta5       | [1.0.0-beta5](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta5)           | Tagged release for 1.0.0-beta5 version of Azure management libraries |
