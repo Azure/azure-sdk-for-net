@@ -24,8 +24,8 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         /// Initializes a new instance of the MultiLanguageInputV2 class.
         /// </summary>
         /// <param name="language">This is the 2 letter ISO 639-1
-        /// representation of a language. For example, use "en" for English;
-        /// "es" for Spanish etc.,</param>
+        /// representation of a language.
+        /// For example, use "en" for English; "es" for Spanish etc.,</param>
         /// <param name="id">Unique, non-empty document identifier.</param>
         public MultiLanguageInputV2(string language = default(string), string id = default(string), string text = default(string))
         {
@@ -42,7 +42,8 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
 
         /// <summary>
         /// Gets or sets this is the 2 letter ISO 639-1 representation of a
-        /// language. For example, use "en" for English; "es" for Spanish etc.,
+        /// language.
+        /// For example, use "en" for English; "es" for Spanish etc.,
         /// </summary>
         [JsonProperty(PropertyName = "language")]
         public string Language { get; set; }

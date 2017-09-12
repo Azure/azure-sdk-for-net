@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TaskCountValidationStatus.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskCountValidationStatus
     {
-        [System.Runtime.Serialization.EnumMember(Value = "validated")]
+        [EnumMember(Value = "validated")]
         Validated,
-        [System.Runtime.Serialization.EnumMember(Value = "unvalidated")]
+        [EnumMember(Value = "unvalidated")]
         Unvalidated
+    }
+    internal static class TaskCountValidationStatusEnumExtension
+    {
+        internal static string ToSerializedValue(this TaskCountValidationStatus? value)  =>
+            value == null ? null : ((TaskCountValidationStatus)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this TaskCountValidationStatus value)
+        {
+            switch( value )
+            {
+                case TaskCountValidationStatus.Validated:
+                    return "validated";
+                case TaskCountValidationStatus.Unvalidated:
+                    return "unvalidated";
+            }
+            return null;
+        }
+
+        internal static TaskCountValidationStatus? ParseTaskCountValidationStatus(this string value)
+        {
+            switch( value )
+            {
+                case "validated":
+                    return TaskCountValidationStatus.Validated;
+                case "unvalidated":
+                    return TaskCountValidationStatus.Unvalidated;
+            }
+            return null;
+        }
     }
 }

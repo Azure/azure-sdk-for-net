@@ -9,6 +9,7 @@ ubuntu1404="ubuntu.14.04-x64"
 nugetOrgSource="https://api.nuget.org/v3/index.json"
 localNugetFeed="./tools/LocalNugetFeed"
 sdkdir=$rootdir/src/SDKs
+azStackDir=$rootdir/src/AzureStack
 
 restoreBuildCR() {
     echo "Restore ClientRuntime for $ubuntu1404"
@@ -25,6 +26,30 @@ restoreBuildCR() {
     dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
     dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
 
+}
+
+restoreBuildAzStack() {
+    for dirPath in $azStackDir/*
+    do
+        dirName=`basename $dirPath`
+        if [ -d $azStackDir/$dirName ]; then
+            childDir=($azStackDir/$dirName)
+            printf "$azStackDir/$dirName\n"
+            if [ -f $childDir/*.sln ]; then
+                slnFile=($childDir/*.sln)
+                printf "Restoring :::::: $slnFile for $ubuntu1404\n"
+                dotnet restore $slnFile -r $ubuntu1404
+            fi
+            if [ -d $childDir/*.Tests ]; then
+                testProj=($childDir/*.Tests/*.csproj)
+                if [ -f $testProj ]; then
+                    printf "Test ------ $testProj for framework $netcore11\n"
+                    dotnet build $testProj -f $netcore11
+                    dotnet test $testProj -f $netcore11
+                fi
+            fi
+        fi
+    done
 }
 
 restoreBuildRepo() {
@@ -143,7 +168,7 @@ restoreBuildCR
 restoreBuildRepo
 restoreBuildCog
 restoreBuildKV
-
+restoreBuildAzStack
 
 : '
 #echo "base: "$base

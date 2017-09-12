@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OnAllTasksComplete.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum OnAllTasksComplete
     {
-        [System.Runtime.Serialization.EnumMember(Value = "noAction")]
+        [EnumMember(Value = "noAction")]
         NoAction,
-        [System.Runtime.Serialization.EnumMember(Value = "terminateJob")]
+        [EnumMember(Value = "terminateJob")]
         TerminateJob
+    }
+    internal static class OnAllTasksCompleteEnumExtension
+    {
+        internal static string ToSerializedValue(this OnAllTasksComplete? value)  =>
+            value == null ? null : ((OnAllTasksComplete)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this OnAllTasksComplete value)
+        {
+            switch( value )
+            {
+                case OnAllTasksComplete.NoAction:
+                    return "noAction";
+                case OnAllTasksComplete.TerminateJob:
+                    return "terminateJob";
+            }
+            return null;
+        }
+
+        internal static OnAllTasksComplete? ParseOnAllTasksComplete(this string value)
+        {
+            switch( value )
+            {
+                case "noAction":
+                    return OnAllTasksComplete.NoAction;
+                case "terminateJob":
+                    return OnAllTasksComplete.TerminateJob;
+            }
+            return null;
+        }
     }
 }

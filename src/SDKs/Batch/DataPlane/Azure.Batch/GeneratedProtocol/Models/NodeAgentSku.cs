@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -24,7 +30,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeAgentSku class.
         /// </summary>
-        public NodeAgentSku() { }
+        public NodeAgentSku()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NodeAgentSku class.
@@ -34,17 +43,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// to be compatible with this node agent SKU.</param>
         /// <param name="osType">The type of operating system (e.g. Windows or
         /// Linux) compatible with the node agent SKU.</param>
-        public NodeAgentSku(string id = default(string), System.Collections.Generic.IList<ImageReference> verifiedImageReferences = default(System.Collections.Generic.IList<ImageReference>), OSType? osType = default(OSType?))
+        public NodeAgentSku(string id = default(string), IList<ImageReference> verifiedImageReferences = default(IList<ImageReference>), OSType? osType = default(OSType?))
         {
-            this.Id = id;
-            this.VerifiedImageReferences = verifiedImageReferences;
-            this.OsType = osType;
+            Id = id;
+            VerifiedImageReferences = verifiedImageReferences;
+            OsType = osType;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of the node agent SKU.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -55,8 +70,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This collection is not exhaustive (the node agent may be compatible
         /// with other images).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "verifiedImageReferences")]
-        public System.Collections.Generic.IList<ImageReference> VerifiedImageReferences { get; set; }
+        [JsonProperty(PropertyName = "verifiedImageReferences")]
+        public IList<ImageReference> VerifiedImageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the type of operating system (e.g. Windows or Linux)
@@ -65,7 +80,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'linux', 'windows'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "osType")]
+        [JsonProperty(PropertyName = "osType")]
         public OSType? OsType { get; set; }
 
     }

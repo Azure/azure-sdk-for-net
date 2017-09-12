@@ -8,20 +8,64 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TaskState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "active")]
+        [EnumMember(Value = "active")]
         Active,
-        [System.Runtime.Serialization.EnumMember(Value = "preparing")]
+        [EnumMember(Value = "preparing")]
         Preparing,
-        [System.Runtime.Serialization.EnumMember(Value = "running")]
+        [EnumMember(Value = "running")]
         Running,
-        [System.Runtime.Serialization.EnumMember(Value = "completed")]
+        [EnumMember(Value = "completed")]
         Completed
+    }
+    internal static class TaskStateEnumExtension
+    {
+        internal static string ToSerializedValue(this TaskState? value)  =>
+            value == null ? null : ((TaskState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this TaskState value)
+        {
+            switch( value )
+            {
+                case TaskState.Active:
+                    return "active";
+                case TaskState.Preparing:
+                    return "preparing";
+                case TaskState.Running:
+                    return "running";
+                case TaskState.Completed:
+                    return "completed";
+            }
+            return null;
+        }
+
+        internal static TaskState? ParseTaskState(this string value)
+        {
+            switch( value )
+            {
+                case "active":
+                    return TaskState.Active;
+                case "preparing":
+                    return TaskState.Preparing;
+                case "running":
+                    return TaskState.Running;
+                case "completed":
+                    return TaskState.Completed;
+            }
+            return null;
+        }
     }
 }

@@ -8,22 +8,70 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobScheduleState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum JobScheduleState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "active")]
+        [EnumMember(Value = "active")]
         Active,
-        [System.Runtime.Serialization.EnumMember(Value = "completed")]
+        [EnumMember(Value = "completed")]
         Completed,
-        [System.Runtime.Serialization.EnumMember(Value = "disabled")]
+        [EnumMember(Value = "disabled")]
         Disabled,
-        [System.Runtime.Serialization.EnumMember(Value = "terminating")]
+        [EnumMember(Value = "terminating")]
         Terminating,
-        [System.Runtime.Serialization.EnumMember(Value = "deleting")]
+        [EnumMember(Value = "deleting")]
         Deleting
+    }
+    internal static class JobScheduleStateEnumExtension
+    {
+        internal static string ToSerializedValue(this JobScheduleState? value)  =>
+            value == null ? null : ((JobScheduleState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this JobScheduleState value)
+        {
+            switch( value )
+            {
+                case JobScheduleState.Active:
+                    return "active";
+                case JobScheduleState.Completed:
+                    return "completed";
+                case JobScheduleState.Disabled:
+                    return "disabled";
+                case JobScheduleState.Terminating:
+                    return "terminating";
+                case JobScheduleState.Deleting:
+                    return "deleting";
+            }
+            return null;
+        }
+
+        internal static JobScheduleState? ParseJobScheduleState(this string value)
+        {
+            switch( value )
+            {
+                case "active":
+                    return JobScheduleState.Active;
+                case "completed":
+                    return JobScheduleState.Completed;
+                case "disabled":
+                    return JobScheduleState.Disabled;
+                case "terminating":
+                    return JobScheduleState.Terminating;
+                case "deleting":
+                    return JobScheduleState.Deleting;
+            }
+            return null;
+        }
     }
 }

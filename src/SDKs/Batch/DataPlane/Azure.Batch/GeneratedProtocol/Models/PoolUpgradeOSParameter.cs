@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolUpgradeOSParameter class.
         /// </summary>
-        public PoolUpgradeOSParameter() { }
+        public PoolUpgradeOSParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolUpgradeOSParameter class.
@@ -27,27 +35,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on the virtual machines in the pool.</param>
         public PoolUpgradeOSParameter(string targetOSVersion)
         {
-            this.TargetOSVersion = targetOSVersion;
+            TargetOSVersion = targetOSVersion;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the Azure Guest OS version to be installed on the
         /// virtual machines in the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetOSVersion")]
+        [JsonProperty(PropertyName = "targetOSVersion")]
         public string TargetOSVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.TargetOSVersion == null)
+            if (TargetOSVersion == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TargetOSVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetOSVersion");
             }
         }
     }

@@ -16,12 +16,14 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
     /// <summary>
     /// The Text Analytics API is a suite of text analytics web services built
-    /// with best-in-class Microsoft machine learning algorithms. The API can
-    /// be used to analyze unstructured text for tasks such as sentiment
-    /// analysis, key phrase extraction and language detection. No training
-    /// data is needed to use this API; just bring your text data. This API
-    /// uses advanced natural language processing techniques to deliver best in
-    /// class predictions. Further documentation can be found in
+    /// with best-in-class Microsoft machine learning algorithms.
+    /// The API can be used to analyze unstructured text for tasks such as
+    /// sentiment analysis, key phrase extraction and language detection.
+    /// No training data is needed to use this API; just bring your text data.
+    /// This API uses advanced natural language processing techniques to
+    /// deliver best in class predictions.
+    ///
+    /// Further documentation can be found in
     /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview
     /// </summary>
     public partial interface ITextAnalyticsAPI : System.IDisposable
@@ -41,29 +43,26 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// Supported Azure regions for Cognitive Services endpoints
+        /// </summary>
+        string AzureRegion { get; }
+
+        /// <summary>
         /// Subscription key in header
         /// </summary>
         string SubscriptionKey { get; set; }
-
-        /// <summary>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
-        /// </summary>
-        AzureRegion AzureRegion1 { get; set; }
 
 
         /// <summary>
         /// The API returns a list of strings denoting the key talking points
         /// in the input text.
-        /// </summary>
-        /// <remarks>
         /// We employ techniques from Microsoft Office's sophisticated Natural
-        /// Language Processing toolkit. See the &lt;a
+        /// Language Processing toolkit.
+        /// See the &lt;a
         /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
         /// Analytics Documentation&lt;/a&gt; for details about the languages
         /// that are supported by key phrase extraction.
-        /// </remarks>
+        /// </summary>
         /// <param name='input'>
         /// Collection of documents to analyze. Documents can now contain a
         /// language field to indicate the text language
@@ -79,11 +78,10 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <summary>
         /// The API returns the detected language and a numeric score between 0
         /// and 1.
-        /// </summary>
-        /// <remarks>
         /// Scores close to 1 indicate 100% certainty that the identified
-        /// language is true. A total of 120 languages are supported.
-        /// </remarks>
+        /// language is true.
+        /// A total of 120 languages are supported.
+        /// </summary>
         /// <param name='input'>
         /// Collection of documents to analyze.
         /// </param>
@@ -102,17 +100,16 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
         /// <summary>
         /// The API returns a numeric score between 0 and 1.
-        /// </summary>
-        /// <remarks>
         /// Scores close to 1 indicate positive sentiment, while scores close
-        /// to 0 indicate negative sentiment. Sentiment score is generated
-        /// using classification techniques. The input features to the
-        /// classifier include n-grams, features generated from part-of-speech
-        /// tags, and word embeddings. See the &lt;a
+        /// to 0 indicate negative sentiment.
+        /// Sentiment score is generated using classification techniques.
+        /// The input features to the classifier include n-grams, features
+        /// generated from part-of-speech tags, and word embeddings.
+        /// See the &lt;a
         /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
         /// Analytics Documentation&lt;/a&gt; for details about the languages
         /// that are supported by sentiment analysis.
-        /// </remarks>
+        /// </summary>
         /// <param name='input'>
         /// Collection of documents to analyze.
         /// </param>

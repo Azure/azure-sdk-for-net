@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobGetTaskCountsHeaders class.
         /// </summary>
-        public JobGetTaskCountsHeaders() { }
+        public JobGetTaskCountsHeaders()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobGetTaskCountsHeaders class.
@@ -35,16 +42,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// request was made, and the region that account resides in.</param>
         public JobGetTaskCountsHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?))
         {
-            this.ClientRequestId = clientRequestId;
-            this.RequestId = requestId;
+            ClientRequestId = clientRequestId;
+            RequestId = requestId;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the client-request-id provided by the client during
         /// the request. This will be returned only if the
         /// return-client-request-id parameter was set to true.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
+        [JsonProperty(PropertyName = "client-request-id")]
         public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
@@ -56,7 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// request was made, the Batch account against which the request was
         /// made, and the region that account resides in.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
+        [JsonProperty(PropertyName = "request-id")]
         public System.Guid? RequestId { get; set; }
 
     }

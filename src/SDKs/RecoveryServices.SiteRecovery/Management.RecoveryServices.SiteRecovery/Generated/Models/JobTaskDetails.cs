@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
     /// <summary>
     /// This class represents a task which is actually a workflow so that one
-    /// can navigate
-    /// to its individual drill down.
+    /// can navigate to its individual drill down.
     /// </summary>
     public partial class JobTaskDetails : TaskTypeDetails
     {

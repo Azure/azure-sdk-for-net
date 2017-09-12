@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the list of configured email notification(alert) configurations.
         /// </summary>
         /// <remarks>
-        /// Gets the list of email notification(alert) configurations for the vault. .
+        /// Gets the list of email notification(alert) configurations for the vault.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -660,7 +660,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the list of configured email notification(alert) configurations.
         /// </summary>
         /// <remarks>
-        /// Gets the list of email notification(alert) configurations for the vault. .
+        /// Gets the list of email notification(alert) configurations for the vault.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SchedulingState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum SchedulingState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "enabled")]
+        [EnumMember(Value = "enabled")]
         Enabled,
-        [System.Runtime.Serialization.EnumMember(Value = "disabled")]
+        [EnumMember(Value = "disabled")]
         Disabled
+    }
+    internal static class SchedulingStateEnumExtension
+    {
+        internal static string ToSerializedValue(this SchedulingState? value)  =>
+            value == null ? null : ((SchedulingState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this SchedulingState value)
+        {
+            switch( value )
+            {
+                case SchedulingState.Enabled:
+                    return "enabled";
+                case SchedulingState.Disabled:
+                    return "disabled";
+            }
+            return null;
+        }
+
+        internal static SchedulingState? ParseSchedulingState(this string value)
+        {
+            switch( value )
+            {
+                case "enabled":
+                    return SchedulingState.Enabled;
+                case "disabled":
+                    return SchedulingState.Disabled;
+            }
+            return null;
+        }
     }
 }

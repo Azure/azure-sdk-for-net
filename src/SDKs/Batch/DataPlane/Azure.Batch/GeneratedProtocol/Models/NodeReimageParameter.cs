@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeReimageParameter class.
         /// </summary>
-        public NodeReimageParameter() { }
+        public NodeReimageParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NodeReimageParameter class.
@@ -27,18 +34,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and what to do with currently running tasks.</param>
         public NodeReimageParameter(ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?))
         {
-            this.NodeReimageOption = nodeReimageOption;
+            NodeReimageOption = nodeReimageOption;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets when to reimage the compute node and what to do with
         /// currently running tasks.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
+        /// requeue - Terminate running task processes and requeue the tasks.
+        /// The tasks will run again when a node is available. Reimage the node
+        /// as soon as tasks have been terminated.
+        /// terminate - Terminate running tasks. The tasks will not run again.
+        /// Reimage the node as soon as tasks have been terminated.
+        /// taskcompletion - Allow currently running tasks to complete.
+        /// Schedule no new tasks while waiting. Reimage the node when all
+        /// tasks have completed.
+        /// retaineddata - Allow currently running tasks to complete, then wait
+        /// for all task data retention periods to expire. Schedule no new
+        /// tasks while waiting. Reimage the node when all task retention
+        /// periods have expired.
+        ///
         /// The default value is requeue. Possible values include: 'requeue',
         /// 'terminate', 'taskCompletion', 'retainedData'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeReimageOption")]
+        [JsonProperty(PropertyName = "nodeReimageOption")]
         public ComputeNodeReimageOption? NodeReimageOption { get; set; }
 
     }

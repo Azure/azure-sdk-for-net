@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the BatchError class.
         /// </summary>
-        public BatchError() { }
+        public BatchError()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the BatchError class.
@@ -29,33 +38,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// be suitable for display in a user interface.</param>
         /// <param name="values">A collection of key-value pairs containing
         /// additional details about the error.</param>
-        public BatchError(string code = default(string), ErrorMessage message = default(ErrorMessage), System.Collections.Generic.IList<BatchErrorDetail> values = default(System.Collections.Generic.IList<BatchErrorDetail>))
+        public BatchError(string code = default(string), ErrorMessage message = default(ErrorMessage), IList<BatchErrorDetail> values = default(IList<BatchErrorDetail>))
         {
-            this.Code = code;
-            this.Message = message;
-            this.Values = values;
+            Code = code;
+            Message = message;
+            Values = values;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an identifier for the error. Codes are invariant and
         /// are intended to be consumed programmatically.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message describing the error, intended to be
         /// suitable for display in a user interface.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "message")]
         public ErrorMessage Message { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of key-value pairs containing additional
         /// details about the error.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "values")]
-        public System.Collections.Generic.IList<BatchErrorDetail> Values { get; set; }
+        [JsonProperty(PropertyName = "values")]
+        public IList<BatchErrorDetail> Values { get; set; }
 
     }
 }

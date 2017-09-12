@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNode class.
         /// </summary>
-        public ComputeNode() { }
+        public ComputeNode()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ComputeNode class.
@@ -37,8 +46,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="ipAddress">The IP address that other compute nodes can
         /// use to communicate with this compute node.</param>
         /// <param name="affinityId">An identifier which can be passed when
-        /// adding a task to request that the task be scheduled close to this
-        /// compute node.</param>
+        /// adding a task to request that the task be scheduled on this
+        /// node.</param>
         /// <param name="vmSize">The size of the virtual machine hosting the
         /// compute node.</param>
         /// <param name="totalTasksRun">The total number of job tasks completed
@@ -52,8 +61,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// which completed successfully (with exitCode 0) on the compute node.
         /// This includes Job Preparation, Job Release, and Job Manager tasks,
         /// but not the pool start task.</param>
-        /// <param name="recentTasks">The list of tasks that are currently
-        /// running on the compute node.</param>
+        /// <param name="recentTasks">A list of tasks whose state has recently
+        /// changed.</param>
         /// <param name="startTask">The task specified to run on the compute
         /// node as it joins the pool.</param>
         /// <param name="startTaskInfo">Runtime information about the execution
@@ -66,29 +75,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node. If false, the node is a low-priority node.</param>
         /// <param name="endpointConfiguration">The endpoint configuration for
         /// the compute node.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IList<TaskInformation> recentTasks = default(System.Collections.Generic.IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ComputeNodeError> errors = default(System.Collections.Generic.IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration))
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration))
         {
-            this.Id = id;
-            this.Url = url;
-            this.State = state;
-            this.SchedulingState = schedulingState;
-            this.StateTransitionTime = stateTransitionTime;
-            this.LastBootTime = lastBootTime;
-            this.AllocationTime = allocationTime;
-            this.IpAddress = ipAddress;
-            this.AffinityId = affinityId;
-            this.VmSize = vmSize;
-            this.TotalTasksRun = totalTasksRun;
-            this.RunningTasksCount = runningTasksCount;
-            this.TotalTasksSucceeded = totalTasksSucceeded;
-            this.RecentTasks = recentTasks;
-            this.StartTask = startTask;
-            this.StartTaskInfo = startTaskInfo;
-            this.CertificateReferences = certificateReferences;
-            this.Errors = errors;
-            this.IsDedicated = isDedicated;
-            this.EndpointConfiguration = endpointConfiguration;
+            Id = id;
+            Url = url;
+            State = state;
+            SchedulingState = schedulingState;
+            StateTransitionTime = stateTransitionTime;
+            LastBootTime = lastBootTime;
+            AllocationTime = allocationTime;
+            IpAddress = ipAddress;
+            AffinityId = affinityId;
+            VmSize = vmSize;
+            TotalTasksRun = totalTasksRun;
+            RunningTasksCount = runningTasksCount;
+            TotalTasksSucceeded = totalTasksSucceeded;
+            RecentTasks = recentTasks;
+            StartTask = startTask;
+            StartTaskInfo = startTaskInfo;
+            CertificateReferences = certificateReferences;
+            Errors = errors;
+            IsDedicated = isDedicated;
+            EndpointConfiguration = endpointConfiguration;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of the compute node.
@@ -98,25 +113,54 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Whenever a node is removed from a pool, all of its local files are
         /// deleted, and the ID is reclaimed and could be reused for new nodes.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the compute node.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'idle', 'rebooting', 'reimaging',
-        /// 'running', 'unusable', 'creating', 'starting',
-        /// 'waitingForStartTask', 'startTaskFailed', 'unknown', 'leavingPool',
-        /// 'offline', 'preempted'
+        /// Values are:
+        ///
+        /// idle - The node is not currently running a task.
+        /// rebooting - The node is rebooting.
+        /// reimaging - The node is reimaging.
+        /// running - The node is running one or more tasks (other than a start
+        /// task).
+        /// unusable - The node cannot be used for task execution due to
+        /// errors.
+        /// creating - The Batch service has obtained the underlying virtual
+        /// machine from Azure Compute, but it has not yet started to join the
+        /// pool.
+        /// starting - the Batch service is starting on the underlying virtual
+        /// machine.
+        /// waitingforstarttask - The start task has started running on the
+        /// compute node, but waitForSuccess is set and the start task has not
+        /// yet completed.
+        /// starttaskfailed - The start task has failed on the compute node
+        /// (and exhausted all retries), and waitForSuccess is set. The node is
+        /// not usable for running tasks.
+        /// unknown - The Batch service has lost contact with the node, and
+        /// does not know its true state.
+        /// leavingpool - The node is leaving the pool, either because the user
+        /// explicitly removed it or because the pool is resizing or
+        /// autoscaling down.
+        /// offline - The node is not currently running a task, and scheduling
+        /// of new tasks to the node is disabled.
+        /// preempted - The low-priority node has been preempted. Tasks which
+        /// were running on the node when it was pre-empted will be rescheduled
+        /// when another node becomes available. Possible values include:
+        /// 'idle', 'rebooting', 'reimaging', 'running', 'unusable',
+        /// 'creating', 'starting', 'waitingForStartTask', 'startTaskFailed',
+        /// 'unknown', 'leavingPool', 'offline', 'preempted'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }
 
         /// <summary>
@@ -124,19 +168,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// scheduling.
         /// </summary>
         /// <remarks>
-        /// enabled - Tasks can be scheduled on the node. disabled - No new
-        /// tasks will be scheduled on the node. Tasks already running on the
-        /// node may still run to completion. All nodes start with scheduling
-        /// enabled. Possible values include: 'enabled', 'disabled'
+        /// Values are:
+        ///
+        /// enabled - Tasks can be scheduled on the node.
+        /// disabled - No new tasks will be scheduled on the node. Tasks
+        /// already running on the node may still run to completion. All nodes
+        /// start with scheduling enabled. Possible values include: 'enabled',
+        /// 'disabled'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingState")]
+        [JsonProperty(PropertyName = "schedulingState")]
         public SchedulingState? SchedulingState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the compute node entered its current
         /// state.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        [JsonProperty(PropertyName = "stateTransitionTime")]
         public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
@@ -145,14 +192,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property may not be present if the node state is unusable.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lastBootTime")]
+        [JsonProperty(PropertyName = "lastBootTime")]
         public System.DateTime? LastBootTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which this compute node was allocated to
         /// the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "allocationTime")]
+        [JsonProperty(PropertyName = "allocationTime")]
         public System.DateTime? AllocationTime { get; set; }
 
         /// <summary>
@@ -165,14 +212,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// deleted, and the IP address is reclaimed and could be reused for
         /// new nodes.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "ipAddress")]
+        [JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets an identifier which can be passed when adding a task
-        /// to request that the task be scheduled close to this compute node.
+        /// to request that the task be scheduled on this node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityId")]
+        /// <remarks>
+        /// Note that this is just a soft affinity. If the target node is busy
+        /// or unavailable at the time the task is scheduled, then the task
+        /// will be scheduled elsewhere.
+        /// </remarks>
+        [JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
         /// <summary>
@@ -195,7 +247,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
         /// series).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
+        [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
@@ -203,7 +255,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node. This includes Job Preparation, Job Release and Job Manager
         /// tasks, but not the pool start task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "totalTasksRun")]
+        [JsonProperty(PropertyName = "totalTasksRun")]
         public int? TotalTasksRun { get; set; }
 
         /// <summary>
@@ -211,7 +263,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node. This includes Job Preparation, Job Release, and Job
         /// Manager tasks, but not the pool start task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "runningTasksCount")]
+        [JsonProperty(PropertyName = "runningTasksCount")]
         public int? RunningTasksCount { get; set; }
 
         /// <summary>
@@ -220,28 +272,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job Preparation, Job Release, and Job Manager tasks, but not the
         /// pool start task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "totalTasksSucceeded")]
+        [JsonProperty(PropertyName = "totalTasksSucceeded")]
         public int? TotalTasksSucceeded { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of tasks that are currently running on the
-        /// compute node.
+        /// Gets or sets a list of tasks whose state has recently changed.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "recentTasks")]
-        public System.Collections.Generic.IList<TaskInformation> RecentTasks { get; set; }
+        /// <remarks>
+        /// This property is present only if at least one task has run on this
+        /// node since it was assigned to the pool.
+        /// </remarks>
+        [JsonProperty(PropertyName = "recentTasks")]
+        public IList<TaskInformation> RecentTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the task specified to run on the compute node as it
         /// joins the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
+        [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
         /// Gets or sets runtime information about the execution of the start
         /// task on the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTaskInfo")]
+        [JsonProperty(PropertyName = "startTaskInfo")]
         public StartTaskInformation StartTaskInfo { get; set; }
 
         /// <summary>
@@ -259,40 +314,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// /home/{user-name}/certs) and certificates are placed in that
         /// directory.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
-        public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
+        [JsonProperty(PropertyName = "certificateReferences")]
+        public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of errors that are currently being
         /// encountered by the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "errors")]
-        public System.Collections.Generic.IList<ComputeNodeError> Errors { get; set; }
+        [JsonProperty(PropertyName = "errors")]
+        public IList<ComputeNodeError> Errors { get; set; }
 
         /// <summary>
         /// Gets or sets whether this compute node is a dedicated node. If
         /// false, the node is a low-priority node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "isDedicated")]
+        [JsonProperty(PropertyName = "isDedicated")]
         public bool? IsDedicated { get; set; }
 
         /// <summary>
         /// Gets or sets the endpoint configuration for the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endpointConfiguration")]
+        [JsonProperty(PropertyName = "endpointConfiguration")]
         public ComputeNodeEndpointConfiguration EndpointConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.RecentTasks != null)
+            if (RecentTasks != null)
             {
-                foreach (var element in this.RecentTasks)
+                foreach (var element in RecentTasks)
                 {
                     if (element != null)
                     {
@@ -300,17 +355,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.StartTask != null)
+            if (StartTask != null)
             {
-                this.StartTask.Validate();
+                StartTask.Validate();
             }
-            if (this.StartTaskInfo != null)
+            if (StartTaskInfo != null)
             {
-                this.StartTaskInfo.Validate();
+                StartTaskInfo.Validate();
             }
-            if (this.CertificateReferences != null)
+            if (CertificateReferences != null)
             {
-                foreach (var element1 in this.CertificateReferences)
+                foreach (var element1 in CertificateReferences)
                 {
                     if (element1 != null)
                     {
@@ -318,9 +373,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EndpointConfiguration != null)
+            if (EndpointConfiguration != null)
             {
-                this.EndpointConfiguration.Validate();
+                EndpointConfiguration.Validate();
             }
         }
     }

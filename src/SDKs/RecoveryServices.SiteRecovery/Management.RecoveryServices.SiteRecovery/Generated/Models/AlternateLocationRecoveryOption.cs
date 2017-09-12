@@ -28,4 +28,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "NoAction")]
         NoAction
     }
+    internal static class AlternateLocationRecoveryOptionEnumExtension
+    {
+        internal static string ToSerializedValue(this AlternateLocationRecoveryOption? value)  =>
+            value == null ? null : ((AlternateLocationRecoveryOption)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this AlternateLocationRecoveryOption value)
+        {
+            switch( value )
+            {
+                case AlternateLocationRecoveryOption.CreateVmIfNotFound:
+                    return "CreateVmIfNotFound";
+                case AlternateLocationRecoveryOption.NoAction:
+                    return "NoAction";
+            }
+            return null;
+        }
+
+        internal static AlternateLocationRecoveryOption? ParseAlternateLocationRecoveryOption(this string value)
+        {
+            switch( value )
+            {
+                case "CreateVmIfNotFound":
+                    return AlternateLocationRecoveryOption.CreateVmIfNotFound;
+                case "NoAction":
+                    return AlternateLocationRecoveryOption.NoAction;
+            }
+            return null;
+        }
+    }
 }

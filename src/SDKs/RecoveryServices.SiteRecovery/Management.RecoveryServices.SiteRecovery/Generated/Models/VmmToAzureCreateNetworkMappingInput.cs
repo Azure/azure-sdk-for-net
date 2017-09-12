@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
     /// <summary>
     /// Create network mappings input properties/behaviour specific to Vmm to
-    /// Azure Network
-    /// mapping.
+    /// Azure Network mapping.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VmmToAzure")]
     public partial class VmmToAzureCreateNetworkMappingInput : FabricSpecificCreateNetworkMappingInput

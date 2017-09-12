@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeFillType.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeFillType
     {
-        [System.Runtime.Serialization.EnumMember(Value = "spread")]
+        [EnumMember(Value = "spread")]
         Spread,
-        [System.Runtime.Serialization.EnumMember(Value = "pack")]
+        [EnumMember(Value = "pack")]
         Pack
+    }
+    internal static class ComputeNodeFillTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this ComputeNodeFillType? value)  =>
+            value == null ? null : ((ComputeNodeFillType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ComputeNodeFillType value)
+        {
+            switch( value )
+            {
+                case ComputeNodeFillType.Spread:
+                    return "spread";
+                case ComputeNodeFillType.Pack:
+                    return "pack";
+            }
+            return null;
+        }
+
+        internal static ComputeNodeFillType? ParseComputeNodeFillType(this string value)
+        {
+            switch( value )
+            {
+                case "spread":
+                    return ComputeNodeFillType.Spread;
+                case "pack":
+                    return ComputeNodeFillType.Pack;
+            }
+            return null;
+        }
     }
 }

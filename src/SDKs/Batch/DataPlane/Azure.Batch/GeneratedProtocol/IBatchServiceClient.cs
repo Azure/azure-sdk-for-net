@@ -8,9 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A client for issuing REST requests to the Azure Batch service.
@@ -25,17 +28,17 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
+        JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
+        JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        Microsoft.Rest.ServiceClientCredentials Credentials { get; }
+        ServiceClientCredentials Credentials { get; }
 
         /// <summary>
         /// Client API Version.

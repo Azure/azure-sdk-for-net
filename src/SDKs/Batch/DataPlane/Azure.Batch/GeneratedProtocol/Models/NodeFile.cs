@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeFile class.
         /// </summary>
-        public NodeFile() { }
+        public NodeFile()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NodeFile class.
@@ -30,47 +37,53 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="properties">The file properties.</param>
         public NodeFile(string name = default(string), string url = default(string), bool? isDirectory = default(bool?), FileProperties properties = default(FileProperties))
         {
-            this.Name = name;
-            this.Url = url;
-            this.IsDirectory = isDirectory;
-            this.Properties = properties;
+            Name = name;
+            Url = url;
+            IsDirectory = isDirectory;
+            Properties = properties;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the file path.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the file.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets whether the object represents a directory.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "isDirectory")]
+        [JsonProperty(PropertyName = "isDirectory")]
         public bool? IsDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the file properties.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
+        [JsonProperty(PropertyName = "properties")]
         public FileProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Properties != null)
+            if (Properties != null)
             {
-                this.Properties.Validate();
+                Properties.Validate();
             }
         }
     }

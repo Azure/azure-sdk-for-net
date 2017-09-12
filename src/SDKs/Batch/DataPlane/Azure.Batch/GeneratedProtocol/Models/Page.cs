@@ -8,37 +8,45 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Defines a page in Azure responses.
     /// </summary>
     /// <typeparam name="T">Type of the page content items</typeparam>
-    [Newtonsoft.Json.JsonObject]
-    public class Page<T> : Microsoft.Rest.Azure.IPage<T>
+    [JsonObject]
+    public class Page<T> : IPage<T>
     {
          /// <summary>
          /// Gets the link to the next page.
          /// </summary>
-         [Newtonsoft.Json.JsonProperty("odata.nextLink")]
-         public System.String NextPageLink { get; private set; }
+         [JsonProperty("odata.nextLink")]
+         public string NextPageLink { get; private set; }
 
-         [Newtonsoft.Json.JsonProperty("value")]
-         private System.Collections.Generic.IList<T> Items{ get; set; }
+         [JsonProperty("value")]
+         private IList<T> Items{ get; set; }
 
          /// <summary>
          /// Returns an enumerator that iterates through the collection.
          /// </summary>
          /// <returns>A an enumerator that can be used to iterate through the collection.</returns>
-         public System.Collections.Generic.IEnumerator<T> GetEnumerator()
+         public IEnumerator<T> GetEnumerator()
          {
-              return (Items == null) ? System.Linq.Enumerable.Empty<T>().GetEnumerator() : Items.GetEnumerator();
+              return Items == null ? System.Linq.Enumerable.Empty<T>().GetEnumerator() : Items.GetEnumerator();
          }
 
          /// <summary>
          /// Returns an enumerator that iterates through the collection.
          /// </summary>
          /// <returns>A an enumerator that can be used to iterate through the collection.</returns>
-         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+         IEnumerator IEnumerable.GetEnumerator()
          {
              return GetEnumerator();
          }
