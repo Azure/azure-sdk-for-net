@@ -3,23 +3,15 @@
   <PropertyGroup>
     <PackageId>Microsoft.CognitiveServices.Vision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Vision APIs.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.CognitiveServices.Vision</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;REST HTTP client;Face SDK;netcore451511</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Vision SDK. Included with this release is support for Face API.</PackageReleaseNotes>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System.Web" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
 </Project>
