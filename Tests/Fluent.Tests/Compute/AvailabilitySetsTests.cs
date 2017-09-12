@@ -54,10 +54,6 @@ namespace Fluent.Tests.Compute
                     // Delete
                     computeManager.AvailabilitySets.DeleteById(availabilitySet.Id);
                 }
-                catch
-                {
-                    //
-                }
                 finally
                 {
                     try
