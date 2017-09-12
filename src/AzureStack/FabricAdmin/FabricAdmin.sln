@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabric.Admin", "Fabric.Admi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabric.Tests", "Fabric.Admin.Tests\Fabric.Tests.csproj", "{1B24BC4A-6E4D-4FFB-B5D5-C9684C60A308}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCommon", "..\SDKCommon\TestCommon\TestCommon.csproj", "{EAE2AE14-948D-4613-A4E8-14C50D8D0472}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

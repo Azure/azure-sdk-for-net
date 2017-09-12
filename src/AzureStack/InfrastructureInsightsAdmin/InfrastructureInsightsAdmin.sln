@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.InfrastructureInsight
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureInsights.Tests", "InfrastructureInsights.Admin.Tests\InfrastructureInsights.Tests.csproj", "{1B24BC4A-6E4D-4FFB-B5D5-C9684C60A308}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCommon", "..\SDKCommon\TestCommon\TestCommon.csproj", "{EAE2AE14-948D-4613-A4E8-14C50D8D0472}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0385C8A0-1628-4593-9F6C-46130D9E1686}"
 EndProject
 Global

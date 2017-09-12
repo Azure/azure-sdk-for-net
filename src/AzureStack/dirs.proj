@@ -1,16 +1,14 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  <!-- <Import Project="KeyVault\dataPlane\dirs.proj" /> -->  
 	<ItemGroup Label="SDKProject">	
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\FabricAdmin\Fabric.Admin\Microsoft.AzureStack.Management.Fabric.Admin.csproj" /> 
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\InfrastructureInsights.Admin\InfrastructureInsights.Admin\Microsoft.AzureStack.InfrastructureInsights.Admin.csproj" /> 
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\CommerceAdmin\Commerce.Admin\Microsoft.AzureStack.Commerce.Admin.csproj" /> 
+
 	</ItemGroup>
 
   
 	<ItemGroup Label="TestSDKProject">
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\FabricAdmin\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\InfrastructureInsightsAdmin\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AzureStack\CommerceAdmin\**\*Tests.csproj" ProjectType="Test"/>
 	</ItemGroup>
   
+
+  <ItemGroup>
+  </ItemGroup>
 </Project>

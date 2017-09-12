@@ -1,11 +1,12 @@
-﻿
-using System;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+//
 
 using Microsoft.AzureStack.Management.Commerce.Admin;
 using Microsoft.AzureStack.Management.Commerce.Admin.Models;
-
-using Microsoft.AzureStack.TestFramework;
+using System;
+using Xunit;
 
 namespace Commerce.Tests
 {
@@ -51,7 +52,7 @@ namespace Commerce.Tests
                 var subscriberUsageAggregates = client.SubscriberUsageAggregates.List(start, end);
                 Assert.NotNull(subscriberUsageAggregates);
                 Assert.NotNull(subscriberUsageAggregates.Value);
-                Common.MapOverIEnumerable(subscriberUsageAggregates.Value, (v) => ValidateUsageAggregate(v));
+                subscriberUsageAggregates.Value.ForEach(ValidateUsageAggregate);
             });
         }
 

@@ -11,7 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SDKCommon\TestCommon\TestCommon.csproj" />
     <ProjectReference Include="..\Commerce.Admin\Microsoft.AzureStack.Management.Commerce.Admin.csproj" />
   </ItemGroup>
 
