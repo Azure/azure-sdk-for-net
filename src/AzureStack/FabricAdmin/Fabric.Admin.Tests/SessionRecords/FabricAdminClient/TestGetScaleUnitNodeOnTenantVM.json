@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/scaleUnitNodes/502828aa-de3a-4ba9-a66c-5ae6d49589d7?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWMwZGFhMDQtMDFhZS00ZGY5LWE1ZDgtNDkxYjc1NWY1Mjg4L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvc2NhbGVVbml0Tm9kZXMvNTAyODI4YWEtZGUzYS00YmE5LWE2NmMtNWFlNmQ0OTU4OWQ3P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8b2dfbca-0703-46d2-892d-d6844a0b6145"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Admin.Fabric.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Aug 2017 19:10:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvYUxSldl95oWb/DHw4idZXGNLT10ycRvOiMed916CEawW8k/HBweXBytQUY+xHcgT4sYaEAsI84ka1KDrjJSRQ1Nc958miiXEpAmbN4pizo91PzXNDqMsZ6Ga/0xC/TrllHq0Un7cGGYGYeQ6HZcE"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a33926b-b899-40ee-87a7-3837dbdf85eb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14162"
+        ],
+        "x-ms-request-id": [
+          "0a33926b-b899-40ee-87a7-3837dbdf85eb"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20170830T191058Z:0a33926b-b899-40ee-87a7-3837dbdf85eb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c0daa04-01ae-4df9-a5d8-491b755f5288"
+  }
+}

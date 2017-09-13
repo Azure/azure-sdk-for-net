@@ -1,0 +1,136 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/macAddressPools?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWMwZGFhMDQtMDFhZS00ZGY5LWE1ZDgtNDkxYjc1NWY1Mjg4L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvbWFjQWRkcmVzc1Bvb2xzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f28d6cc3-70b1-4bc5-af09-421c1f222b36"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Admin.Fabric.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/macAddressPools/8197fd09-8a69-417e-a55c-10c2c61f5ee7\",\r\n      \"name\": \"8197fd09-8a69-417e-a55c-10c2c61f5ee7\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/macAddressPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startMacAddress\": \"00-1D-D8-B7-1C-00\",\r\n        \"endMacAddress\": \"00-1D-D8-F4-1F-FF\",\r\n        \"numberOfAllocatedMacAddresses\": 2,\r\n        \"numberOfAvailableMacAddresses\": 3998718\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "510"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Aug 2017 19:22:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv+VUOYemtVho/Fqbr3wYjqCDBfsLASaAxuoJpUz0+HHYctgr5ueFzAa87Aj974MYLbfPfWv+ee/dPPUqUXm2t2QLPurOCe+QCX3p3vVVaemdqNhhNvxJovIv44g2TN83uerfiHNccL10qwTo7eOSD"
+        ],
+        "x-ms-correlation-request-id": [
+          "e7a0b854-c182-4905-b86d-75cb4a537f58"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14132"
+        ],
+        "x-ms-request-id": [
+          "e7a0b854-c182-4905-b86d-75cb4a537f58"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20170830T192220Z:e7a0b854-c182-4905-b86d-75cb4a537f58"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/macAddressPools/8197fd09-8a69-417e-a55c-10c2c61f5ee7?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWMwZGFhMDQtMDFhZS00ZGY5LWE1ZDgtNDkxYjc1NWY1Mjg4L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvbWFjQWRkcmVzc1Bvb2xzLzgxOTdmZDA5LThhNjktNDE3ZS1hNTVjLTEwYzJjNjFmNWVlNz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "27dfec25-85e4-476e-afbe-2a967aa7f7b4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Admin.Fabric.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/macAddressPools/8197fd09-8a69-417e-a55c-10c2c61f5ee7\",\r\n  \"name\": \"8197fd09-8a69-417e-a55c-10c2c61f5ee7\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/macAddressPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startMacAddress\": \"00-1D-D8-B7-1C-00\",\r\n    \"endMacAddress\": \"00-1D-D8-F4-1F-FF\",\r\n    \"numberOfAllocatedMacAddresses\": 2,\r\n    \"numberOfAvailableMacAddresses\": 3998718\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "498"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Aug 2017 19:22:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRve+mtUP9RmTKstNJ1RlHtIzayj6vu4m/YTeSfZUYGbyhE0hSLVYHCqBF4za2pgNVDI7fEfwy3lrfQoSHya6jv92qdWO/YJtFquwlyCvp6k4Rf/R9bwbhxq8SJBjndvPP0eO8xYaE5ST9HAv/nqlfk"
+        ],
+        "x-ms-correlation-request-id": [
+          "9c540bc2-43cd-4e27-b339-5b1bdfb6e35d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14131"
+        ],
+        "x-ms-request-id": [
+          "9c540bc2-43cd-4e27-b339-5b1bdfb6e35d"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20170830T192220Z:9c540bc2-43cd-4e27-b339-5b1bdfb6e35d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c0daa04-01ae-4df9-a5d8-491b755f5288"
+  }
+}
