@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.EventGrid
             Topics = new TopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-06-15-preview";
+            ApiVersion = "2017-09-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -331,6 +331,8 @@ namespace Microsoft.Azure.Management.EventGrid
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

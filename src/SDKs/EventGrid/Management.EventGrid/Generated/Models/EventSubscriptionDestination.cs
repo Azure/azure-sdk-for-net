@@ -11,15 +11,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.EventGrid;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Information about the destination for an event subscription
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class EventSubscriptionDestination
     {
         /// <summary>
@@ -31,50 +27,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
           CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the EventSubscriptionDestination
-        /// class.
-        /// </summary>
-        /// <param name="endpointType">Type of the endpoint for the event
-        /// subscription destination. Possible values include:
-        /// 'WebHook'</param>
-        /// <param name="endpointUrl">The URL that represents the endpoint of
-        /// the destination of an event subscription.</param>
-        /// <param name="endpointBaseUrl">The base URL that represents the
-        /// endpoint of the destination of an event subscription.</param>
-        public EventSubscriptionDestination(string endpointType = default(string), string endpointUrl = default(string), string endpointBaseUrl = default(string))
-        {
-            EndpointType = endpointType;
-            EndpointUrl = endpointUrl;
-            EndpointBaseUrl = endpointBaseUrl;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets type of the endpoint for the event subscription
-        /// destination. Possible values include: 'WebHook'
-        /// </summary>
-        [JsonProperty(PropertyName = "endpointType")]
-        public string EndpointType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URL that represents the endpoint of the
-        /// destination of an event subscription.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.endpointUrl")]
-        public string EndpointUrl { get; set; }
-
-        /// <summary>
-        /// Gets the base URL that represents the endpoint of the destination
-        /// of an event subscription.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.endpointBaseUrl")]
-        public string EndpointBaseUrl { get; private set; }
 
     }
 }

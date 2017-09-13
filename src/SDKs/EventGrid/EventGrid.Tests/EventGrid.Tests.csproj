@@ -28,8 +28,4 @@
   <ItemGroup>
     <Folder Include="SessionRecords\EventGrid.Tests.ScenarioTests.ScenarioTests\" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="xunit" Version="2.3.0-beta4-build3742" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.3.0-beta4-build3742" />
-  </ItemGroup>
 </Project>

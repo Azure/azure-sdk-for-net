@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -46,7 +48,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="provisioningState">Provisioning state of the topic
         /// type. Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
-        public TopicTypeInfo(string id = default(string), string name = default(string), string type = default(string), string provider = default(string), string displayName = default(string), string description = default(string), string resourceRegionType = default(string), string provisioningState = default(string))
+        /// <param name="supportedLocations">List of locations supported by
+        /// this topic type.</param>
+        public TopicTypeInfo(string id = default(string), string name = default(string), string type = default(string), string provider = default(string), string displayName = default(string), string description = default(string), string resourceRegionType = default(string), string provisioningState = default(string), IList<string> supportedLocations = default(IList<string>))
             : base(id, name, type)
         {
             Provider = provider;
@@ -54,6 +58,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             Description = description;
             ResourceRegionType = resourceRegionType;
             ProvisioningState = provisioningState;
+            SupportedLocations = supportedLocations;
             CustomInit();
         }
 
@@ -94,6 +99,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of locations supported by this topic type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportedLocations")]
+        public IList<string> SupportedLocations { get; set; }
 
     }
 }

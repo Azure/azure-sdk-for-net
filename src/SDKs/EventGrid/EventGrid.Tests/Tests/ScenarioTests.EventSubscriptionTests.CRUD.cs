@@ -65,10 +65,9 @@ namespace EventGrid.Tests.ScenarioTests
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
-                    Destination = new EventSubscriptionDestination()
+                    Destination = new WebHookEventSubscriptionDestination()
                     {
-                        EndpointType = EndpointType.WebHook,
-                        EndpointUrl = "https://requestb.in/z5gv8oz5"
+                        EndpointUrl = "https://requestb.in/1e1g85v1"
                     },
                     Filter = new EventSubscriptionFilter()
                     {
@@ -106,10 +105,9 @@ namespace EventGrid.Tests.ScenarioTests
                 // Update the event subscription
                 var eventSubscriptionUpdateParameters = new EventSubscriptionUpdateParameters()
                 {
-                    Destination = new EventSubscriptionDestination()
+                    Destination = new WebHookEventSubscriptionDestination()
                     {
-                        EndpointUrl = "https://requestb.in/wmhzzqwm",
-                        EndpointType = EndpointType.WebHook
+                        EndpointUrl = "https://requestb.in/1e1g85v1",
                     },
                     Filter = new EventSubscriptionFilter()
                     {
@@ -160,10 +158,9 @@ namespace EventGrid.Tests.ScenarioTests
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
-                    Destination = new EventSubscriptionDestination()
+                    Destination = new WebHookEventSubscriptionDestination()
                     {
-                        EndpointType = EndpointType.WebHook,
-                        EndpointUrl = "https://requestb.in/z5gv8oz5"
+                        EndpointUrl = "https://requestb.in/1e1g85v1"
                     },
                     Filter = new EventSubscriptionFilter()
                     {
@@ -228,10 +225,9 @@ namespace EventGrid.Tests.ScenarioTests
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
-                    Destination = new EventSubscriptionDestination()
+                    Destination = new WebHookEventSubscriptionDestination()
                     {
-                        EndpointType = EndpointType.WebHook,
-                        EndpointUrl = "https://requestb.in/z5gv8oz5"
+                        EndpointUrl = "https://requestb.in/1e1g85v1"
                     },
                     Filter = new EventSubscriptionFilter()
                     {
