@@ -105,7 +105,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             Person = new Person(this);
             PersonGroup = new PersonGroup(this);
             FaceList = new FaceList(this);
-            BaseUri = "https://{azureRegion}.api.cognitive.microsoft.com/face/v1.0";
+            BaseUri = "https://{Region}.api.cognitive.microsoft.com/face/v1.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

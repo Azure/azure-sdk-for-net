@@ -90,7 +90,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "https://{azureRegion}.api.cognitive.microsoft.com/text/analytics";
+            BaseUri = "https://{Region}.api.cognitive.microsoft.com/text/analytics";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
