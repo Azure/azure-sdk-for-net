@@ -80,7 +80,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 var cbsLink = activeClientLinkObject.Connection.Extensions.Find<AmqpCbsLink>() ?? new AmqpCbsLink(activeClientLinkObject.Connection);
 
-                MessagingEventSource.Log.AmqpSendAuthenticanTokenStart(activeClientLinkObject.EndpointUri, activeClientLinkObject.Audience, activeClientLinkObject.Audience, activeClientLinkObject.RequiredClaims);
+                MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(activeClientLinkObject.EndpointUri, activeClientLinkObject.Audience, activeClientLinkObject.Audience, activeClientLinkObject.RequiredClaims);
 
                 activeClientLinkObject.AuthorizationValidUntilUtc = await cbsLink.SendTokenAsync(
                     this.cbsTokenProvider,
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 this.SetRenewCBSTokenTimer(activeClientLinkObject);
 
-                MessagingEventSource.Log.AmqpSendAuthenticanTokenStop();
+                MessagingEventSource.Log.AmqpSendAuthenticationTokenStop();
             }
             catch (Exception e)
             {

@@ -250,6 +250,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>The message received. Returns null if no message is found.</returns>
+        /// <remarks>
+        /// The parameter <paramref name="operationTimeout"/> includes the time taken by the receiver to establish a connection
+        /// (either during the first receive or when connection needs to be re-established). If establishing the connection
+        /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
+        /// </remarks>
         public async Task<Message> ReceiveAsync(TimeSpan operationTimeout)
         {
             var messages = await this.ReceiveAsync(1, operationTimeout).ConfigureAwait(false);
@@ -278,7 +283,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
-        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.</remarks>
+        /// <remarks>Receiving less than <paramref name="maxMessageCount"/> messages is not an indication of empty entity.
+        /// The parameter <paramref name="operationTimeout"/> includes the time taken by the receiver to establish a connection
+        /// (either during the first receive or when connection needs to be re-established). If establishing the connection
+        /// times out, this will throw <see cref="ServiceBusTimeoutException"/>.
+        /// </remarks>
         public async Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout)
         {
             this.ThrowIfClosed();
@@ -531,8 +540,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed. For each renewal, the lock is renewed by
-        /// the entity's LockDuration.
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed. 
+        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
         public async Task RenewLockAsync(Message message)
         {
@@ -547,8 +556,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed. For each renewal, the lock is renewed by
-        /// the entity's LockDuration.
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed. 
+        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
         public async Task<DateTime> RenewLockAsync(string lockToken)
         {
@@ -973,7 +982,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Deferred);
+                return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Defered);
             }
             return this.DisposeMessagesAsync(lockTokens, new Modified { UndeliverableHere = true });
         }

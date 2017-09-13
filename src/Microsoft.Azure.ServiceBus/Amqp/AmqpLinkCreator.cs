@@ -43,9 +43,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             var cbsLink = amqpConnection.Extensions.Find<AmqpCbsLink>();
 
             var resource = this.endpointAddress.AbsoluteUri;
-            MessagingEventSource.Log.AmqpSendAuthenticanTokenStart(this.endpointAddress, resource, resource, this.requiredClaims);
+            MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(this.endpointAddress, resource, resource, this.requiredClaims);
             var cbsTokenExpiresAtUtc = await cbsLink.SendTokenAsync(this.cbsTokenProvider, this.endpointAddress, resource, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false);
-            MessagingEventSource.Log.AmqpSendAuthenticanTokenStop();
+            MessagingEventSource.Log.AmqpSendAuthenticationTokenStop();
 
             AmqpSession session = null;
             try

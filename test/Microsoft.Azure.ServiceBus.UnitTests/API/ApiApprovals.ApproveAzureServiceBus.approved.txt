@@ -406,7 +406,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageReceiver(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public long LastPeekedSequenceNumber { get; }
         public override System.TimeSpan OperationTimeout { get; set; }
-        public string Path { get; }
+        public virtual string Path { get; }
         public int PrefetchCount { get; set; }
         public Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; set; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public override System.TimeSpan OperationTimeout { get; set; }
-        public string Path { get; }
+        public virtual string Path { get; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }

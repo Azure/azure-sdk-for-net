@@ -418,22 +418,22 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void AmqpSendAuthenticanTokenStart(Uri address, string audience, string resource, string[] claims)
+        public void AmqpSendAuthenticationTokenStart(Uri address, string audience, string resource, string[] claims)
         {
             if (this.IsEnabled())
             {
-                this.AmqpSendAuthenticanTokenStart(address.ToString(), audience, resource, claims.ToString());
+                this.AmqpSendAuthenticationTokenStart(address.ToString(), audience, resource, claims.ToString());
             }
         }
 
         [Event(40, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken started. Address: {0}, Audience: {1}, Resource: {2}, Claims: {3}")]
-        void AmqpSendAuthenticanTokenStart(string address, string audience, string resource, string claims)
+        void AmqpSendAuthenticationTokenStart(string address, string audience, string resource, string claims)
         {
             this.WriteEvent(40, address, audience, resource, claims);
         }
 
         [Event(41, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken done.")]
-        public void AmqpSendAuthenticanTokenStop()
+        public void AmqpSendAuthenticationTokenStop()
         {
             if (this.IsEnabled())
             {

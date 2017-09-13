@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
     {
         [Fact]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [UseReporter(typeof(DiffReporter))]
+        [UseReporter(typeof(DiffReporter), typeof(ClipboardReporter))]
         public void ApproveAzureServiceBus()
         {
             var publicApi = ApiGenerator.GeneratePublicApi(typeof(Message).Assembly);

@@ -54,8 +54,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>
         /// <para>
         /// When you accept a session, the session is locked for this client instance by the service for a duration as specified during the Queue/Subscription creation.
-        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed. For each renewal, the session-lock is renewed by
-        /// the entity's LockDuration.
+        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed. 
+        /// For each renewal, it resets the time the session is locked by the LockDuration set on the Entity.
         /// </para>
         /// <para>
         /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.

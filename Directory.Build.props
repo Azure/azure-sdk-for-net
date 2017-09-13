@@ -2,7 +2,5 @@
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>7.1</LangVersion>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)/build/keyfile.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 </Project>
