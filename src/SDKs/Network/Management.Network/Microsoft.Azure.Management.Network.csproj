@@ -4,8 +4,10 @@
     <PackageId>Microsoft.Azure.Management.Network</PackageId>
     <Description>Provides management capabilities for Network services.</Description>
     <AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-    <Version>14.1.0-preview</Version>
-    <PackageTags>Microsoft Azure Network management;Network;Network management;windowsazureofficial</PackageTags>    
+    <Version>14.2.0-preview</Version>
+    <PackageTags>Microsoft Azure Network management;Network;Network management;windowsazureofficial</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the Network SDKs. It includes the support for application security groups (ASGs), secure VNETs, ILB HA,
+and small fixes.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
