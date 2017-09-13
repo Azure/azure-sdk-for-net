@@ -2,21 +2,21 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.CognitiveServices.Vision.Face.Models
+namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
 {
     using Microsoft.CognitiveServices;
-    using Microsoft.CognitiveServices.Vision;
-    using Microsoft.CognitiveServices.Vision.Face;
+    using Microsoft.CognitiveServices.Language;
+    using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AzureRegion.
+    /// Defines values for AzureRegions.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AzureRegion
+    public enum AzureRegions
     {
         [EnumMember(Value = "westus")]
         Westus,
@@ -29,43 +29,43 @@ namespace Microsoft.CognitiveServices.Vision.Face.Models
         [EnumMember(Value = "westcentralus")]
         Westcentralus
     }
-    internal static class AzureRegionEnumExtension
+    internal static class AzureRegionsEnumExtension
     {
-        internal static string ToSerializedValue(this AzureRegion? value)  =>
-            value == null ? null : ((AzureRegion)value).ToSerializedValue();
+        internal static string ToSerializedValue(this AzureRegions? value)  =>
+            value == null ? null : ((AzureRegions)value).ToSerializedValue();
 
-        internal static string ToSerializedValue(this AzureRegion value)
+        internal static string ToSerializedValue(this AzureRegions value)
         {
             switch( value )
             {
-                case AzureRegion.Westus:
+                case AzureRegions.Westus:
                     return "westus";
-                case AzureRegion.Westeurope:
+                case AzureRegions.Westeurope:
                     return "westeurope";
-                case AzureRegion.Southeastasia:
+                case AzureRegions.Southeastasia:
                     return "southeastasia";
-                case AzureRegion.Eastus2:
+                case AzureRegions.Eastus2:
                     return "eastus2";
-                case AzureRegion.Westcentralus:
+                case AzureRegions.Westcentralus:
                     return "westcentralus";
             }
             return null;
         }
 
-        internal static AzureRegion? ParseAzureRegion(this string value)
+        internal static AzureRegions? ParseAzureRegions(this string value)
         {
             switch( value )
             {
                 case "westus":
-                    return AzureRegion.Westus;
+                    return AzureRegions.Westus;
                 case "westeurope":
-                    return AzureRegion.Westeurope;
+                    return AzureRegions.Westeurope;
                 case "southeastasia":
-                    return AzureRegion.Southeastasia;
+                    return AzureRegions.Southeastasia;
                 case "eastus2":
-                    return AzureRegion.Eastus2;
+                    return AzureRegions.Eastus2;
                 case "westcentralus":
-                    return AzureRegion.Westcentralus;
+                    return AzureRegions.Westcentralus;
             }
             return null;
         }

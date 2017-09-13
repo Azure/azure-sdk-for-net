@@ -133,7 +133,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -287,7 +287,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -478,7 +478,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -630,7 +630,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -760,7 +760,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -931,7 +931,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces/{persistedFaceId}";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(persistedFaceId));
             // Create HTTP transport objects
@@ -1092,7 +1092,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
             if (userData != null)
@@ -1265,7 +1265,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
-            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
             if (userData != null)

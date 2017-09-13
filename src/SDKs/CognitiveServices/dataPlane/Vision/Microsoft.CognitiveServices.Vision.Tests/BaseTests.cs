@@ -20,7 +20,7 @@ namespace FaceSDK.Tests
         {
             IFaceAPI client;
             client = new FaceAPI(handlers: handler);
-            client.Region = Microsoft.CognitiveServices.Vision.Face.Models.AzureRegion.Westus;
+            client.AzureRegion = Microsoft.CognitiveServices.Vision.Face.Models.AzureRegions.Westus;
             client.SubscriptionKey = SubscriptionKey;
 
             return client;

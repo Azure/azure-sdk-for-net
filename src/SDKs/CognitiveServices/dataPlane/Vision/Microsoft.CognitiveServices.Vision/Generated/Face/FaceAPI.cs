@@ -45,7 +45,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
         /// 'westcentralus'
         /// </summary>
-        public AzureRegion Region { get; set; }
+        public AzureRegions AzureRegion { get; set; }
 
         /// <summary>
         /// Gets the IFaceOperations.
@@ -105,7 +105,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             Person = new Person(this);
             PersonGroup = new PersonGroup(this);
             FaceList = new FaceList(this);
-            BaseUri = "https://{Region}.api.cognitive.microsoft.com/face/v1.0";
+            BaseUri = "https://{AzureRegion}.api.cognitive.microsoft.com/face/v1.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

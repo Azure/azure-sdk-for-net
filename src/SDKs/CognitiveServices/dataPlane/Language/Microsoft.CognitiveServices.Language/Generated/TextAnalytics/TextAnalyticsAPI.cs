@@ -54,7 +54,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
         /// 'westcentralus'
         /// </summary>
-        public AzureRegion Region { get; set; }
+        public AzureRegions AzureRegion { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the TextAnalyticsAPI class.
@@ -90,7 +90,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "https://{Region}.api.cognitive.microsoft.com/text/analytics";
+            BaseUri = "https://{AzureRegion}.api.cognitive.microsoft.com/text/analytics";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -178,7 +178,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/keyPhrases";
-            _url = _url.Replace("{Region}", SafeJsonConvert.SerializeObject(Region, SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -347,7 +347,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/languages";
-            _url = _url.Replace("{Region}", SafeJsonConvert.SerializeObject(Region, SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
             List<string> _queryParameters = new List<string>();
             if (numberOfLanguagesToDetect != null)
             {
@@ -526,7 +526,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2.0/sentiment";
-            _url = _url.Replace("{Region}", SafeJsonConvert.SerializeObject(Region, SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

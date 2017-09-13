@@ -38,7 +38,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
         /// 'westcentralus'
         /// </summary>
-        AzureRegion Region { get; set; }
+        AzureRegions AzureRegion { get; set; }
 
 
         /// <summary>
