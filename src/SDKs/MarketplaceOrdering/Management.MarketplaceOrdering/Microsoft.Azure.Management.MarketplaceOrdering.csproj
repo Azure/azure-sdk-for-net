@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.MarketplaceOrdering</PackageId>
+    <Description>Provides developers with a library to get and set legal terms for Azure Marketplace Offers. Note: This client library is for MarketplaceOrdering under Azure Resource Manager.</Description>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.MarketplaceOrdering</AssemblyName>
+    <PackageTags>Microsoft Azure MarketplaceOrdering Management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
