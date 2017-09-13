@@ -123,7 +123,7 @@
     },
     {
         "name": "arm-eventgrid",
-        "sources": [ "2017-06-15-preview/swagger/EventGrid.json" ],
+        "sources": [ "2017-09-15-preview/swagger/EventGrid.json" ],
         "dotNet": {
             "name": "EventGrid"
         }
