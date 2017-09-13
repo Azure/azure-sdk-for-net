@@ -18,13 +18,14 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// <summary>
             /// The API returns a list of strings denoting the key talking points in the
             /// input text.
+            /// </summary>
+            /// <remarks>
             /// We employ techniques from Microsoft Office's sophisticated Natural Language
-            /// Processing toolkit.
-            /// See the &lt;a
+            /// Processing toolkit. See the &lt;a
             /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
             /// Analytics Documentation&lt;/a&gt; for details about the languages that are
             /// supported by key phrase extraction.
-            /// </summary>
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -40,13 +41,14 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// <summary>
             /// The API returns a list of strings denoting the key talking points in the
             /// input text.
+            /// </summary>
+            /// <remarks>
             /// We employ techniques from Microsoft Office's sophisticated Natural Language
-            /// Processing toolkit.
-            /// See the &lt;a
+            /// Processing toolkit. See the &lt;a
             /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
             /// Analytics Documentation&lt;/a&gt; for details about the languages that are
             /// supported by key phrase extraction.
-            /// </summary>
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -67,10 +69,11 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
             /// <summary>
             /// The API returns the detected language and a numeric score between 0 and 1.
-            /// Scores close to 1 indicate 100% certainty that the identified language is
-            /// true.
-            /// A total of 120 languages are supported.
             /// </summary>
+            /// <remarks>
+            /// Scores close to 1 indicate 100% certainty that the identified language is
+            /// true. A total of 120 languages are supported.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -88,10 +91,11 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
             /// <summary>
             /// The API returns the detected language and a numeric score between 0 and 1.
-            /// Scores close to 1 indicate 100% certainty that the identified language is
-            /// true.
-            /// A total of 120 languages are supported.
             /// </summary>
+            /// <remarks>
+            /// Scores close to 1 indicate 100% certainty that the identified language is
+            /// true. A total of 120 languages are supported.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -115,16 +119,17 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
             /// <summary>
             /// The API returns a numeric score between 0 and 1.
+            /// </summary>
+            /// <remarks>
             /// Scores close to 1 indicate positive sentiment, while scores close to 0
-            /// indicate negative sentiment.
-            /// Sentiment score is generated using classification techniques.
-            /// The input features to the classifier include n-grams, features generated
-            /// from part-of-speech tags, and word embeddings.
+            /// indicate negative sentiment. Sentiment score is generated using
+            /// classification techniques. The input features to the classifier include
+            /// n-grams, features generated from part-of-speech tags, and word embeddings.
             /// See the &lt;a
             /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
             /// Analytics Documentation&lt;/a&gt; for details about the languages that are
             /// supported by sentiment analysis.
-            /// </summary>
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -138,16 +143,17 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
 
             /// <summary>
             /// The API returns a numeric score between 0 and 1.
+            /// </summary>
+            /// <remarks>
             /// Scores close to 1 indicate positive sentiment, while scores close to 0
-            /// indicate negative sentiment.
-            /// Sentiment score is generated using classification techniques.
-            /// The input features to the classifier include n-grams, features generated
-            /// from part-of-speech tags, and word embeddings.
+            /// indicate negative sentiment. Sentiment score is generated using
+            /// classification techniques. The input features to the classifier include
+            /// n-grams, features generated from part-of-speech tags, and word embeddings.
             /// See the &lt;a
             /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
             /// Analytics Documentation&lt;/a&gt; for details about the languages that are
             /// supported by sentiment analysis.
-            /// </summary>
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
