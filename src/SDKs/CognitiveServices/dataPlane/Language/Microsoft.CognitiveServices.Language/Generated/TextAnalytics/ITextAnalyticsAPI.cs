@@ -50,7 +50,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
         /// 'westcentralus'
         /// </summary>
-        AzureRegion AzureRegion1 { get; set; }
+        AzureRegion Region { get; set; }
 
 
         /// <summary>

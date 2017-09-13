@@ -29,16 +29,16 @@ namespace Microsoft.CognitiveServices.Vision.Face
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Supported Azure regions for Face Detection endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
-        /// </summary>
-        string AzureRegion1 { get; set; }
-
-        /// <summary>
         /// Subscription key in header
         /// </summary>
         string SubscriptionKey { get; set; }
+
+        /// <summary>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus'
+        /// </summary>
+        AzureRegion Region { get; set; }
 
 
         /// <summary>

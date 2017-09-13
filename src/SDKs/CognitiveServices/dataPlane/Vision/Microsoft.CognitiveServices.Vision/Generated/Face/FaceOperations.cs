@@ -94,10 +94,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<SimilarFaceResult>>> FindSimilarWithHttpMessagesAsync(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = 20, string mode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -162,7 +158,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "findsimilars";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -301,10 +297,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<GroupResponse>> GroupWithHttpMessagesAsync(IList<string> faceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -339,7 +331,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "group";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -487,10 +479,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<IdentifyResultItem>>> IdentifyWithHttpMessagesAsync(string personGroupId, IList<string> faceIds, int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -548,7 +536,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "identify";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -695,10 +683,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<VerifyResult>> VerifyWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -743,7 +727,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -896,10 +880,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -930,7 +910,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {
@@ -1101,10 +1081,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectInStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -1130,7 +1106,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {

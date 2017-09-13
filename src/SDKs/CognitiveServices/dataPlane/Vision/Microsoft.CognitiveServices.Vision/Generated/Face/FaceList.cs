@@ -79,10 +79,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -137,7 +133,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -258,10 +254,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<GetFaceListResult>> GetWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -295,7 +287,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -432,10 +424,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -490,7 +478,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -609,10 +597,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -646,7 +630,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -759,10 +743,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<GetFaceListResult>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (Client.SubscriptionKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
@@ -780,7 +760,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -913,10 +893,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> DeleteFaceWithHttpMessagesAsync(string faceListId, string persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -955,7 +931,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces/{persistedFaceId}";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(persistedFaceId));
             // Create HTTP transport objects
@@ -1081,10 +1057,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> AddFaceWithHttpMessagesAsync(string faceListId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -1120,7 +1092,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
             if (userData != null)
@@ -1258,10 +1230,6 @@ namespace Microsoft.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.AzureRegion1 == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AzureRegion1");
-            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -1297,7 +1265,7 @@ namespace Microsoft.CognitiveServices.Vision.Face
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
-            _url = _url.Replace("{azureRegion}", Client.AzureRegion1);
+            _url = _url.Replace("{Region}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.Region, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
             if (userData != null)
