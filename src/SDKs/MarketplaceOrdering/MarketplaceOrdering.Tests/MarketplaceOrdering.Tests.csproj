@@ -10,14 +10,8 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="SessionRecords\MarketplaceOrdering.Tests.AgreementsTests\**" />
-    <EmbeddedResource Remove="SessionRecords\MarketplaceOrdering.Tests.AgreementsTests\**" />
-    <None Remove="SessionRecords\MarketplaceOrdering.Tests.AgreementsTests\**" />
-  </ItemGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="Microsoft.Azure.Management.MarketplaceOrdering" Version="1.0.0" /> -->
     <ProjectReference Include="..\Management.MarketplaceOrdering\Microsoft.Azure.Management.MarketplaceOrdering.csproj" />
   </ItemGroup>
   
