@@ -47,7 +47,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)StreamAnalytics\Management.StreamAnalytics\Microsoft.Azure.Management.StreamAnalytics.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\Management.Websites\Microsoft.Azure.Management.Websites.csproj" /> 
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ApplicationInsights\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj" /> 
 		<!--	
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Sql.csproj" />		
@@ -103,7 +102,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)StreamAnalytics\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\**\*Tests.csproj" ProjectType="Test"/>	
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ApplicationInsights\**\*Tests.csproj" ProjectType="Test"/>	
 	</ItemGroup>
   
   <!--

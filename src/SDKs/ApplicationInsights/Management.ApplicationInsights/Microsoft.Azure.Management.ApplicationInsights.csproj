@@ -4,9 +4,9 @@
     <Description>Microsoft Azure Application Insights Library</Description>
     <VersionPrefix>0.1.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.ApplicationInsights</AssemblyName>
-
     <PackageId>Microsoft.Azure.Management.ApplicationInsights</PackageId>
     <PackageTags>Management.ApplicationInsights;</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the Application Insights Management SDK. Included with this release is support for components/webtests/continuous export configuration/pricing tier managment APIs.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

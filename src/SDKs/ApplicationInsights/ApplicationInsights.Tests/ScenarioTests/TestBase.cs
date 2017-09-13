@@ -20,11 +20,6 @@ namespace ApplicationInsights.Tests.Scenarios
 
         public TestBase()
         {
-            // ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(new ServiceManagemenet.Common.Models.XunitTracingInterceptor(output));
-            // HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(ignoreResourcesClient: true, providers: providers);
-            // Set the path to find the recorded session files
-            HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
-
             this.IsRecording = false;
         }
 

@@ -5,24 +5,18 @@
     <Description>ApplicationInsights.Tests Class library</Description>
     <PackageId>ApplicationInsights.Tests</PackageId>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <TargetFrameworks>net452;</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="BasicTests\**" />
-    <EmbeddedResource Remove="BasicTests\**" />
-    <None Remove="BasicTests\**" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.1.3-preview,2.0.0)" />    
+    <!-- Enable below line in local to work around the bug that cannot find test cases -->
+    <!--<PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />-->
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj" />
