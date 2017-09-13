@@ -20,46 +20,45 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
     using System.Linq;
 
     /// <summary>
-    /// Service diagnostic setting resource for patch operations
+    /// Description of diagnostic setting resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ServiceDiagnosticSettingsResourcePatch
+    public partial class DiagnosticSettingsResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ServiceDiagnosticSettingsResourcePatch class.
+        /// Initializes a new instance of the DiagnosticSettingsResource class.
         /// </summary>
-        public ServiceDiagnosticSettingsResourcePatch()
+        public DiagnosticSettingsResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ServiceDiagnosticSettingsResourcePatch class.
+        /// Initializes a new instance of the DiagnosticSettingsResource class.
         /// </summary>
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Azure resource Id</param>
+        /// <param name="name">Azure resource name</param>
+        /// <param name="type">Azure resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="storageAccountId">The resource ID of the storage
         /// account to which you would like to send Diagnostic Logs.</param>
-        /// <param name="serviceBusRuleId">The service bus rule ID of the
-        /// service bus namespace in which you would like to have Event Hubs
-        /// created for streaming Diagnostic Logs. The rule ID is of the
-        /// format: '{service bus resource ID}/authorizationrules/{key
-        /// name}'.</param>
         /// <param name="eventHubAuthorizationRuleId">The resource Id for the
         /// event hub authorization rule.</param>
+        /// <param name="eventHubName">The name of the event hub. If none is
+        /// specified, the default event hub will be selected.</param>
         /// <param name="metrics">the list of metric settings.</param>
         /// <param name="logs">the list of logs settings.</param>
         /// <param name="workspaceId">The workspace ID (resource ID of a Log
         /// Analytics workspace) for a Log Analytics workspace to which you
         /// would like to send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2</param>
-        public ServiceDiagnosticSettingsResourcePatch(IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountId = default(string), string serviceBusRuleId = default(string), string eventHubAuthorizationRuleId = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
+        public DiagnosticSettingsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
+            : base(location, id, name, type, tags)
         {
-            Tags = tags;
             StorageAccountId = storageAccountId;
-            ServiceBusRuleId = serviceBusRuleId;
             EventHubAuthorizationRuleId = eventHubAuthorizationRuleId;
+            EventHubName = eventHubName;
             Metrics = metrics;
             Logs = logs;
             WorkspaceId = workspaceId;
@@ -72,12 +71,6 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
         /// Gets or sets the resource ID of the storage account to which you
         /// would like to send Diagnostic Logs.
         /// </summary>
@@ -85,19 +78,17 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         public string StorageAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the service bus rule ID of the service bus namespace
-        /// in which you would like to have Event Hubs created for streaming
-        /// Diagnostic Logs. The rule ID is of the format: '{service bus
-        /// resource ID}/authorizationrules/{key name}'.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceBusRuleId")]
-        public string ServiceBusRuleId { get; set; }
-
-        /// <summary>
         /// Gets or sets the resource Id for the event hub authorization rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventHubAuthorizationRuleId")]
         public string EventHubAuthorizationRuleId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the event hub. If none is specified, the
+        /// default event hub will be selected.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventHubName")]
+        public string EventHubName { get; set; }
 
         /// <summary>
         /// Gets or sets the list of metric settings.
@@ -120,5 +111,35 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         [JsonProperty(PropertyName = "properties.workspaceId")]
         public string WorkspaceId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (Metrics != null)
+            {
+                foreach (var element in Metrics)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (Logs != null)
+            {
+                foreach (var element1 in Logs)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

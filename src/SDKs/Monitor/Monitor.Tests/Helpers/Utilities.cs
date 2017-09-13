@@ -562,7 +562,7 @@ namespace Monitor.Tests.Helpers
         #endregion
 
         #region ServiceDiagnosticsSettings
-        public static void AreEqual(ServiceDiagnosticSettingsResource exp, ServiceDiagnosticSettingsResource act)
+        public static void AreEqual(DiagnosticSettingsResource exp, DiagnosticSettingsResource act)
         {
             if (exp == act)
             {
@@ -581,7 +581,7 @@ namespace Monitor.Tests.Helpers
 
             Assert.Equal(exp.StorageAccountId, act.StorageAccountId);
             Assert.Equal(exp.WorkspaceId, act.WorkspaceId);
-            Assert.Equal(exp.ServiceBusRuleId, act.ServiceBusRuleId);
+            Assert.Equal(exp.EventHubAuthorizationRuleId, act.EventHubAuthorizationRuleId);
         }
 
         private static void Compare<T>(T exp, T act)

@@ -12,13 +12,13 @@ using Xunit;
 
 namespace Monitor.Tests.BasicTests
 {
-    public class ServiceDiagnosticSettingsTests : TestBase
+    public class DiagnosticSettingsTests : TestBase
     {
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
         [Trait("Category", "Mock")]
-        public void ServiceDiagnosticSettings_PutTest()
+        public void DiagnosticSettings_PutTest()
         {
             var expResponse = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
@@ -34,13 +34,16 @@ namespace Monitor.Tests.BasicTests
 
             var parameters = CreateDiagnosticSettingsParams();
 
-            ServiceDiagnosticSettingsResource response = insightsClient.ServiceDiagnosticSettings.CreateOrUpdate(resourceUri: ResourceUri, parameters: parameters);
+            DiagnosticSettingsResource response = insightsClient.DiagnosticSettings.CreateOrUpdate(
+                resourceUri: ResourceUri, 
+                parameters: parameters,
+                name: "service");
             AreEqual(expResponse, response);
         }
 
         [Fact]
         [Trait("Category", "Mock")]
-        public void ServiceDiagnosticSettings_UpdateTest()
+        public void DiagnosticSettings_UpdateTest()
         {
             var resource = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
@@ -54,23 +57,26 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             monitorManagementClient = GetMonitorManagementClient(handler);
 
-            ServiceDiagnosticSettingsResourcePatch patchResource = new ServiceDiagnosticSettingsResourcePatch(
+            DiagnosticSettingsResource patchResource = new DiagnosticSettingsResource(
                 tags: resource.Tags,
                 storageAccountId: resource.StorageAccountId,
-                serviceBusRuleId: resource.ServiceBusRuleId,
                 eventHubAuthorizationRuleId: resource.EventHubAuthorizationRuleId,
                 metrics: resource.Metrics,
                 logs: resource.Logs,
-                workspaceId: resource.WorkspaceId
+                workspaceId: resource.WorkspaceId,
+                location: "eastus"
             );
 
-            ServiceDiagnosticSettingsResource response = monitorManagementClient.ServiceDiagnosticSettings.Update(resourceUri: ResourceUri, serviceDiagnosticSettingsResource: patchResource);
+            DiagnosticSettingsResource response = monitorManagementClient.DiagnosticSettings.CreateOrUpdate(
+                resourceUri: ResourceUri, 
+                parameters: patchResource,
+                name: "service");
             AreEqual(resource, response);
         }
 
         [Fact]
         [Trait("Category", "Mock")]
-        public void ServiceDiagnosticSettings_GetTest()
+        public void DiagnosticSettings_GetTest()
         {
             var expResponse = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
@@ -84,16 +90,16 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            ServiceDiagnosticSettingsResource actualResponse = insightsClient.ServiceDiagnosticSettings.Get(resourceUri: ResourceUri);
+            DiagnosticSettingsResource actualResponse = insightsClient.DiagnosticSettings.Get(resourceUri: ResourceUri, name: "service");
             AreEqual(expResponse, actualResponse);
         }
 
-        private static ServiceDiagnosticSettingsResource CreateDiagnosticSettingsParams()
+        private static DiagnosticSettingsResource CreateDiagnosticSettingsParams()
         {
-            return new ServiceDiagnosticSettingsResource
+            return new DiagnosticSettingsResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
-                ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
+                EventHubAuthorizationRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
                 WorkspaceId = "wsId",
                 Logs = new List<LogSettings>
                 {
@@ -123,12 +129,12 @@ namespace Monitor.Tests.BasicTests
             };
         }
 
-        private static ServiceDiagnosticSettingsResource CreateDiagnosticSettings()
+        private static DiagnosticSettingsResource CreateDiagnosticSettings()
         {
-            return new ServiceDiagnosticSettingsResource
+            return new DiagnosticSettingsResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
-                ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
+                EventHubAuthorizationRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
                 WorkspaceId = "wsId",
                 Logs = new List<LogSettings>
                 {
@@ -157,7 +163,7 @@ namespace Monitor.Tests.BasicTests
             };
         }
 
-        private static void AreEqual(ServiceDiagnosticSettingsResource exp, ServiceDiagnosticSettingsResource act)
+        private static void AreEqual(DiagnosticSettingsResource exp, DiagnosticSettingsResource act)
         {
             if (exp == act)
             {
@@ -176,7 +182,7 @@ namespace Monitor.Tests.BasicTests
 
             Assert.Equal(exp.StorageAccountId, act.StorageAccountId);
             Assert.Equal(exp.WorkspaceId, act.WorkspaceId);
-            Assert.Equal(exp.ServiceBusRuleId, act.ServiceBusRuleId);
+            Assert.Equal(exp.EventHubAuthorizationRuleId, act.EventHubAuthorizationRuleId);
         }
 
         private static void Compare<T>(T exp, T act)
