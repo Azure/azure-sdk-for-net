@@ -6,6 +6,7 @@
     <AssemblyName>Microsoft.Azure.Management.Storage</AssemblyName>
     <Version>7.0.0-preview</Version>
     <PackageTags>Microsoft Azure Storage management;Storage;Storage management</PackageTags>
+    <PackageReleaseNotes>See https://aka.ms/asdotnetsdkchangelog for release notes.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
