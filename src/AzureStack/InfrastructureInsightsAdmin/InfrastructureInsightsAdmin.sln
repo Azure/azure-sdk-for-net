@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.InfrastructureInsights", "InfrastructureInsights.Admin\Microsoft.AzureStack.Management.InfrastructureInsights.Admin.csproj", "{4960ACDE-30D6-4476-8B8D-40E51ABEE505}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureInsights.Admin", "InfrastructureInsights.Admin\Microsoft.AzureStack.Management.InfrastructureInsights.Admin.csproj", "{4960ACDE-30D6-4476-8B8D-40E51ABEE505}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureInsights.Tests", "InfrastructureInsights.Admin.Tests\InfrastructureInsights.Tests.csproj", "{1B24BC4A-6E4D-4FFB-B5D5-C9684C60A308}"
 EndProject
