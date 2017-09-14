@@ -75,6 +75,16 @@ namespace Microsoft.Azure.Management.Network
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
         /// <summary>
+        /// Gets the IApplicationSecurityGroupsOperations.
+        /// </summary>
+        IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the IAvailableEndpointServicesOperations.
+        /// </summary>
+        IAvailableEndpointServicesOperations AvailableEndpointServices { get; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; }
@@ -235,8 +245,8 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
-        /// Checks whether a domain name in the cloudapp.net zone is available
-        /// for use.
+        /// Checks whether a domain name in the cloudapp.azure.com zone is
+        /// available for use.
         /// </summary>
         /// <param name='location'>
         /// The location of the domain name.
@@ -251,7 +261,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

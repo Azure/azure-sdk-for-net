@@ -37,8 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="processServers">The list of Process Servers associated
         /// with the fabric.</param>
         /// <param name="masterTargetServers">The list of Master Target servers
-        /// associated with
-        /// the fabric.</param>
+        /// associated with the fabric.</param>
         /// <param name="runAsAccounts">The list of run as accounts created on
         /// the server.</param>
         /// <param name="replicationPairCount">The number of replication pairs
@@ -123,8 +122,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public IList<ProcessServer> ProcessServers { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of Master Target servers associated with
-        /// the fabric.
+        /// Gets or sets the list of Master Target servers associated with the
+        /// fabric.
         /// </summary>
         [JsonProperty(PropertyName = "masterTargetServers")]
         public IList<MasterTargetServer> MasterTargetServers { get; set; }

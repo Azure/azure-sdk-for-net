@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,31 +22,53 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskSchedulingPolicy class.
         /// </summary>
-        public TaskSchedulingPolicy() { }
+        public TaskSchedulingPolicy()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskSchedulingPolicy class.
         /// </summary>
-        /// <param name="nodeFillType">How tasks should be distributed across
-        /// compute nodes.</param>
+        /// <param name="nodeFillType">How tasks are distributed across compute
+        /// nodes in a pool. Values are:
+        ///
+        /// pack - As many tasks as possible (maxTasksPerNode) should be
+        /// assigned to each node in the pool before any tasks are assigned to
+        /// the next node in the pool.
+        /// spread - Tasks should be assigned evenly across all nodes in the
+        /// pool.</param>
         public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
         {
-            this.NodeFillType = nodeFillType;
+            NodeFillType = nodeFillType;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets how tasks should be distributed across compute nodes.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets how tasks are distributed across compute nodes in a
+        /// pool. Values are:
+        ///
+        /// pack - As many tasks as possible (maxTasksPerNode) should be
+        /// assigned to each node in the pool before any tasks are assigned to
+        /// the next node in the pool.
+        /// spread - Tasks should be assigned evenly across all nodes in the
+        /// pool.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'spread', 'pack'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeFillType")]
+        [JsonProperty(PropertyName = "nodeFillType")]
         public ComputeNodeFillType NodeFillType { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

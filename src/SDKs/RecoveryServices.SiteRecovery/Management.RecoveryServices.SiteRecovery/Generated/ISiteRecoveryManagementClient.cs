@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
 
         /// <summary>
+        /// Gets the IReplicationVaultHealthOperations.
+        /// </summary>
+        IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
+
+        /// <summary>
         /// Gets the IReplicationProtectedItemsOperations.
         /// </summary>
         IReplicationProtectedItemsOperations ReplicationProtectedItems { get; }

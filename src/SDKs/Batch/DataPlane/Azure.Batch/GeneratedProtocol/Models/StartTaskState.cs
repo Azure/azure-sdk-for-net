@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StartTaskState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum StartTaskState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "running")]
+        [EnumMember(Value = "running")]
         Running,
-        [System.Runtime.Serialization.EnumMember(Value = "completed")]
+        [EnumMember(Value = "completed")]
         Completed
+    }
+    internal static class StartTaskStateEnumExtension
+    {
+        internal static string ToSerializedValue(this StartTaskState? value)  =>
+            value == null ? null : ((StartTaskState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this StartTaskState value)
+        {
+            switch( value )
+            {
+                case StartTaskState.Running:
+                    return "running";
+                case StartTaskState.Completed:
+                    return "completed";
+            }
+            return null;
+        }
+
+        internal static StartTaskState? ParseStartTaskState(this string value)
+        {
+            switch( value )
+            {
+                case "running":
+                    return StartTaskState.Running;
+                case "completed":
+                    return StartTaskState.Completed;
+            }
+            return null;
+        }
     }
 }

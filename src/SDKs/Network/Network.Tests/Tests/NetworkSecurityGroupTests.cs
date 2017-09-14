@@ -20,7 +20,7 @@ namespace Networks.Tests
 
     public class NetworkSecurityGroupTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void NetworkSecurityGroupApiTest()
         {
             var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -101,7 +101,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void NetworkSecurityGroupWithRulesApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

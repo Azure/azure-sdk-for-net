@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
     /// <summary>
     /// Guest disk signature based disk exclusion option when doing enable
-    /// protection of
-    /// virtual machine in InMage provider.
+    /// protection of virtual machine in InMage provider.
     /// </summary>
     public partial class InMageVolumeExclusionOptions
     {
@@ -36,13 +35,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// class.
         /// </summary>
         /// <param name="volumeLabel">The volume label. The disk having any
-        /// volume with this label will be
-        /// excluded from replication.</param>
+        /// volume with this label will be excluded from replication.</param>
         /// <param name="onlyExcludeIfSingleVolume">The value indicating
-        /// whether to exclude multi volume disk or not.
-        /// If a disk has multiple volumes and one of the volume has label
-        /// matching with
-        /// VolumeLabel this disk will be excluded from replication if
+        /// whether to exclude multi volume disk or not. If a disk has multiple
+        /// volumes and one of the volume has label matching with VolumeLabel
+        /// this disk will be excluded from replication if
         /// OnlyExcludeIfSingleVolume is false.</param>
         public InMageVolumeExclusionOptions(string volumeLabel = default(string), string onlyExcludeIfSingleVolume = default(string))
         {
@@ -58,19 +55,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the volume label. The disk having any volume with this
-        /// label will be
-        /// excluded from replication.
+        /// label will be excluded from replication.
         /// </summary>
         [JsonProperty(PropertyName = "volumeLabel")]
         public string VolumeLabel { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to exclude multi volume
-        /// disk or not.
-        /// If a disk has multiple volumes and one of the volume has label
-        /// matching with
-        /// VolumeLabel this disk will be excluded from replication if
-        /// OnlyExcludeIfSingleVolume is false.
+        /// disk or not. If a disk has multiple volumes and one of the volume
+        /// has label matching with VolumeLabel this disk will be excluded from
+        /// replication if OnlyExcludeIfSingleVolume is false.
         /// </summary>
         [JsonProperty(PropertyName = "OnlyExcludeIfSingleVolume")]
         public string OnlyExcludeIfSingleVolume { get; set; }

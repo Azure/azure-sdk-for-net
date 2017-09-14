@@ -8,20 +8,64 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeRebootOption.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeRebootOption
     {
-        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
+        [EnumMember(Value = "requeue")]
         Requeue,
-        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
+        [EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        [EnumMember(Value = "taskCompletion")]
         TaskCompletion,
-        [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
+        [EnumMember(Value = "retainedData")]
         RetainedData
+    }
+    internal static class ComputeNodeRebootOptionEnumExtension
+    {
+        internal static string ToSerializedValue(this ComputeNodeRebootOption? value)  =>
+            value == null ? null : ((ComputeNodeRebootOption)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ComputeNodeRebootOption value)
+        {
+            switch( value )
+            {
+                case ComputeNodeRebootOption.Requeue:
+                    return "requeue";
+                case ComputeNodeRebootOption.Terminate:
+                    return "terminate";
+                case ComputeNodeRebootOption.TaskCompletion:
+                    return "taskCompletion";
+                case ComputeNodeRebootOption.RetainedData:
+                    return "retainedData";
+            }
+            return null;
+        }
+
+        internal static ComputeNodeRebootOption? ParseComputeNodeRebootOption(this string value)
+        {
+            switch( value )
+            {
+                case "requeue":
+                    return ComputeNodeRebootOption.Requeue;
+                case "terminate":
+                    return ComputeNodeRebootOption.Terminate;
+                case "taskCompletion":
+                    return ComputeNodeRebootOption.TaskCompletion;
+                case "retainedData":
+                    return ComputeNodeRebootOption.RetainedData;
+            }
+            return null;
+        }
     }
 }

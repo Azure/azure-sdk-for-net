@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -22,7 +27,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the MetadataItem class.
         /// </summary>
-        public MetadataItem() { }
+        public MetadataItem()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the MetadataItem class.
@@ -31,37 +39,43 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The value of the metadata item.</param>
         public MetadataItem(string name, string value)
         {
-            this.Name = name;
-            this.Value = value;
+            Name = name;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the metadata item.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the metadata item.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Name == null)
+            if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (this.Value == null)
+            if (Value == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Value");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }

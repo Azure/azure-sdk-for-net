@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeUser class.
         /// </summary>
-        public ComputeNodeUser() { }
+        public ComputeNodeUser()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ComputeNodeUser class.
@@ -33,17 +41,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// remote login to the compute node.</param>
         public ComputeNodeUser(string name, bool? isAdmin = default(bool?), System.DateTime? expiryTime = default(System.DateTime?), string password = default(string), string sshPublicKey = default(string))
         {
-            this.Name = name;
-            this.IsAdmin = isAdmin;
-            this.ExpiryTime = expiryTime;
-            this.Password = password;
-            this.SshPublicKey = sshPublicKey;
+            Name = name;
+            IsAdmin = isAdmin;
+            ExpiryTime = expiryTime;
+            Password = password;
+            SshPublicKey = sshPublicKey;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the user name of the account.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -53,7 +67,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default value is false.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "isAdmin")]
+        [JsonProperty(PropertyName = "isAdmin")]
         public bool? IsAdmin { get; set; }
 
         /// <summary>
@@ -63,7 +77,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, the default is 1 day from the current time. For Linux
         /// compute nodes, the expiryTime has a precision up to a day.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "expiryTime")]
+        [JsonProperty(PropertyName = "expiryTime")]
         public System.DateTime? ExpiryTime { get; set; }
 
         /// <summary>
@@ -76,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Linux compute nodes, the password can optionally be specified along
         /// with the sshPublicKey property.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
+        [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -90,20 +104,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch service rejects the request; if you are calling the REST API
         /// directly, the HTTP status code is 400 (Bad Request).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sshPublicKey")]
+        [JsonProperty(PropertyName = "sshPublicKey")]
         public string SshPublicKey { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Name == null)
+            if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
         }
     }

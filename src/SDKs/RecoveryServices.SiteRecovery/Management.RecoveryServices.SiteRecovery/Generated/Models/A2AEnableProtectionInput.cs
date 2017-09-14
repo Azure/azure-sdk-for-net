@@ -45,7 +45,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set Id.</param>
         /// <param name="vmDisks">The list of vm disk details.</param>
-        public A2AEnableProtectionInput(string fabricObjectId = default(string), string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>))
+        /// <param name="vmManagedDisks">The list of vm managed disk
+        /// details.</param>
+        public A2AEnableProtectionInput(string fabricObjectId = default(string), string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>))
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
             VmDisks = vmDisks;
+            VmManagedDisks = vmManagedDisks;
             CustomInit();
         }
 
@@ -97,6 +100,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmDisks")]
         public IList<A2AVmDiskInputDetails> VmDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of vm managed disk details.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmManagedDisks")]
+        public IList<A2AVmManagedDiskInputDetails> VmManagedDisks { get; set; }
 
     }
 }

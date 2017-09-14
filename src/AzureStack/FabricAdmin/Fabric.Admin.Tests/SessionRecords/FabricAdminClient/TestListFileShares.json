@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWMwZGFhMDQtMDFhZS00ZGY5LWE1ZDgtNDkxYjc1NWY1Mjg4L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ce4128eb-889a-4c2b-b55a-51c45e8fc67f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Admin.Fabric.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1\",\r\n      \"name\": \"SU1_Infrastructure_1\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"a42d219b\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2\",\r\n      \"name\": \"SU1_Infrastructure_2\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"a42d219b\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_2\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3\",\r\n      \"name\": \"SU1_Infrastructure_3\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"a42d219b\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_3\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore\",\r\n      \"name\": \"SU1_ObjStore\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"a42d219b\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public\",\r\n      \"name\": \"SU1_Public\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"a42d219b\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Public\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp\",\r\n      \"name\": \"SU1_VmTemp\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"a42d219b\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_VmTemp\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2375"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Aug 2017 19:22:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvHHZ9G/J7SMNQ5HPA5YH5zilw1Rx+rIKYm9VhfdMCNMR/2a276zEY0DDmdFEX7kQl7Aqh9E7VlVXhFf4RgGpCVukg2gwPyi0sSTTUme21iBcP2694eH7Qe5kEPgnDN9jfnoqV3UUC1gtXF+W2ZSQL"
+        ],
+        "x-ms-correlation-request-id": [
+          "c3b319fd-eb99-4650-b2f6-237bd2648877"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14128"
+        ],
+        "x-ms-request-id": [
+          "c3b319fd-eb99-4650-b2f6-237bd2648877"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20170830T192220Z:c3b319fd-eb99-4650-b2f6-237bd2648877"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c0daa04-01ae-4df9-a5d8-491b755f5288"
+  }
+}

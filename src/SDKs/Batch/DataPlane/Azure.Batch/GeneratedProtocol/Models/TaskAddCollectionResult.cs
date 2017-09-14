@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,23 +24,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionResult class.
         /// </summary>
-        public TaskAddCollectionResult() { }
+        public TaskAddCollectionResult()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionResult class.
         /// </summary>
         /// <param name="value">The results of the add task collection
         /// operation.</param>
-        public TaskAddCollectionResult(System.Collections.Generic.IList<TaskAddResult> value = default(System.Collections.Generic.IList<TaskAddResult>))
+        public TaskAddCollectionResult(IList<TaskAddResult> value = default(IList<TaskAddResult>))
         {
-            this.Value = value;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the results of the add task collection operation.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<TaskAddResult> Value { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<TaskAddResult> Value { get; set; }
 
     }
 }

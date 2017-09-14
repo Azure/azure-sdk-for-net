@@ -8,8 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Extension methods for TaskOperations.
@@ -33,7 +38,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static TaskAddHeaders Add(this ITaskOperations operations, string jobId, TaskAddParameter task, TaskAddOptions taskAddOptions = default(TaskAddOptions))
             {
-                return ((ITaskOperations)operations).AddAsync(jobId, task, taskAddOptions).GetAwaiter().GetResult();
+                return operations.AddAsync(jobId, task, taskAddOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,7 +59,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<TaskAddHeaders> AddAsync(this ITaskOperations operations, string jobId, TaskAddParameter task, TaskAddOptions taskAddOptions = default(TaskAddOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<TaskAddHeaders> AddAsync(this ITaskOperations operations, string jobId, TaskAddParameter task, TaskAddOptions taskAddOptions = default(TaskAddOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AddWithHttpMessagesAsync(jobId, task, taskAddOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -79,9 +84,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<CloudTask> List(this ITaskOperations operations, string jobId, TaskListOptions taskListOptions = default(TaskListOptions))
+            public static IPage<CloudTask> List(this ITaskOperations operations, string jobId, TaskListOptions taskListOptions = default(TaskListOptions))
             {
-                return ((ITaskOperations)operations).ListAsync(jobId, taskListOptions).GetAwaiter().GetResult();
+                return operations.ListAsync(jobId, taskListOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,7 +109,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<CloudTask>> ListAsync(this ITaskOperations operations, string jobId, TaskListOptions taskListOptions = default(TaskListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<IPage<CloudTask>> ListAsync(this ITaskOperations operations, string jobId, TaskListOptions taskListOptions = default(TaskListOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(jobId, taskListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -122,9 +127,12 @@ namespace Microsoft.Azure.Batch.Protocol
             /// the request, the request may have been partially or fully processed, or not
             /// at all. In such cases, the user should re-issue the request. Note that it
             /// is up to the user to correctly handle failures when re-issuing a request.
-            /// For example, you should use the same task ids during a retry so that if the
+            /// For example, you should use the same task IDs during a retry so that if the
             /// prior operation succeeded, the retry will not create extra tasks
-            /// unexpectedly.
+            /// unexpectedly. If the response contains any tasks which failed to add, a
+            /// client can retry the request. In a retry, it is most efficient to resubmit
+            /// only tasks that failed to add, and to omit tasks that were successfully
+            /// added on the first attempt.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,14 +141,18 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to which the task collection is to be added.
             /// </param>
             /// <param name='value'>
-            /// The collection of tasks to add.
+            /// The collection of tasks to add. The total serialized size of this
+            /// collection must be less than 4MB. If it is greater than 4MB (for example if
+            /// each task has 100's of resource files or environment variables), the
+            /// request will fail with code 'RequestBodyTooLarge' and should be retried
+            /// again with fewer tasks.
             /// </param>
             /// <param name='taskAddCollectionOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static TaskAddCollectionResult AddCollection(this ITaskOperations operations, string jobId, System.Collections.Generic.IList<TaskAddParameter> value, TaskAddCollectionOptions taskAddCollectionOptions = default(TaskAddCollectionOptions))
+            public static TaskAddCollectionResult AddCollection(this ITaskOperations operations, string jobId, IList<TaskAddParameter> value, TaskAddCollectionOptions taskAddCollectionOptions = default(TaskAddCollectionOptions))
             {
-                return ((ITaskOperations)operations).AddCollectionAsync(jobId, value, taskAddCollectionOptions).GetAwaiter().GetResult();
+                return operations.AddCollectionAsync(jobId, value, taskAddCollectionOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -153,9 +165,12 @@ namespace Microsoft.Azure.Batch.Protocol
             /// the request, the request may have been partially or fully processed, or not
             /// at all. In such cases, the user should re-issue the request. Note that it
             /// is up to the user to correctly handle failures when re-issuing a request.
-            /// For example, you should use the same task ids during a retry so that if the
+            /// For example, you should use the same task IDs during a retry so that if the
             /// prior operation succeeded, the retry will not create extra tasks
-            /// unexpectedly.
+            /// unexpectedly. If the response contains any tasks which failed to add, a
+            /// client can retry the request. In a retry, it is most efficient to resubmit
+            /// only tasks that failed to add, and to omit tasks that were successfully
+            /// added on the first attempt.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -164,7 +179,11 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to which the task collection is to be added.
             /// </param>
             /// <param name='value'>
-            /// The collection of tasks to add.
+            /// The collection of tasks to add. The total serialized size of this
+            /// collection must be less than 4MB. If it is greater than 4MB (for example if
+            /// each task has 100's of resource files or environment variables), the
+            /// request will fail with code 'RequestBodyTooLarge' and should be retried
+            /// again with fewer tasks.
             /// </param>
             /// <param name='taskAddCollectionOptions'>
             /// Additional parameters for the operation
@@ -172,7 +191,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<TaskAddCollectionResult> AddCollectionAsync(this ITaskOperations operations, string jobId, System.Collections.Generic.IList<TaskAddParameter> value, TaskAddCollectionOptions taskAddCollectionOptions = default(TaskAddCollectionOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<TaskAddCollectionResult> AddCollectionAsync(this ITaskOperations operations, string jobId, IList<TaskAddParameter> value, TaskAddCollectionOptions taskAddCollectionOptions = default(TaskAddCollectionOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AddCollectionWithHttpMessagesAsync(jobId, value, taskAddCollectionOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -204,7 +223,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static TaskDeleteHeaders Delete(this ITaskOperations operations, string jobId, string taskId, TaskDeleteOptions taskDeleteOptions = default(TaskDeleteOptions))
             {
-                return ((ITaskOperations)operations).DeleteAsync(jobId, taskId, taskDeleteOptions).GetAwaiter().GetResult();
+                return operations.DeleteAsync(jobId, taskId, taskDeleteOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -232,7 +251,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<TaskDeleteHeaders> DeleteAsync(this ITaskOperations operations, string jobId, string taskId, TaskDeleteOptions taskDeleteOptions = default(TaskDeleteOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<TaskDeleteHeaders> DeleteAsync(this ITaskOperations operations, string jobId, string taskId, TaskDeleteOptions taskDeleteOptions = default(TaskDeleteOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(jobId, taskId, taskDeleteOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -262,7 +281,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CloudTask Get(this ITaskOperations operations, string jobId, string taskId, TaskGetOptions taskGetOptions = default(TaskGetOptions))
             {
-                return ((ITaskOperations)operations).GetAsync(jobId, taskId, taskGetOptions).GetAwaiter().GetResult();
+                return operations.GetAsync(jobId, taskId, taskGetOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -288,7 +307,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CloudTask> GetAsync(this ITaskOperations operations, string jobId, string taskId, TaskGetOptions taskGetOptions = default(TaskGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<CloudTask> GetAsync(this ITaskOperations operations, string jobId, string taskId, TaskGetOptions taskGetOptions = default(TaskGetOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(jobId, taskId, taskGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -310,14 +329,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             /// <param name='constraints'>
             /// Constraints that apply to this task. If omitted, the task is given the
-            /// default constraints.
+            /// default constraints. For multi-instance tasks, updating the retention time
+            /// applies only to the primary task and not subtasks.
             /// </param>
             /// <param name='taskUpdateOptions'>
             /// Additional parameters for the operation
             /// </param>
             public static TaskUpdateHeaders Update(this ITaskOperations operations, string jobId, string taskId, TaskConstraints constraints = default(TaskConstraints), TaskUpdateOptions taskUpdateOptions = default(TaskUpdateOptions))
             {
-                return ((ITaskOperations)operations).UpdateAsync(jobId, taskId, constraints, taskUpdateOptions).GetAwaiter().GetResult();
+                return operations.UpdateAsync(jobId, taskId, constraints, taskUpdateOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -334,7 +354,8 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             /// <param name='constraints'>
             /// Constraints that apply to this task. If omitted, the task is given the
-            /// default constraints.
+            /// default constraints. For multi-instance tasks, updating the retention time
+            /// applies only to the primary task and not subtasks.
             /// </param>
             /// <param name='taskUpdateOptions'>
             /// Additional parameters for the operation
@@ -342,7 +363,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<TaskUpdateHeaders> UpdateAsync(this ITaskOperations operations, string jobId, string taskId, TaskConstraints constraints = default(TaskConstraints), TaskUpdateOptions taskUpdateOptions = default(TaskUpdateOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<TaskUpdateHeaders> UpdateAsync(this ITaskOperations operations, string jobId, string taskId, TaskConstraints constraints = default(TaskConstraints), TaskUpdateOptions taskUpdateOptions = default(TaskUpdateOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(jobId, taskId, constraints, taskUpdateOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -372,7 +393,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CloudTaskListSubtasksResult ListSubtasks(this ITaskOperations operations, string jobId, string taskId, TaskListSubtasksOptions taskListSubtasksOptions = default(TaskListSubtasksOptions))
             {
-                return ((ITaskOperations)operations).ListSubtasksAsync(jobId, taskId, taskListSubtasksOptions).GetAwaiter().GetResult();
+                return operations.ListSubtasksAsync(jobId, taskId, taskListSubtasksOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -398,7 +419,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CloudTaskListSubtasksResult> ListSubtasksAsync(this ITaskOperations operations, string jobId, string taskId, TaskListSubtasksOptions taskListSubtasksOptions = default(TaskListSubtasksOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<CloudTaskListSubtasksResult> ListSubtasksAsync(this ITaskOperations operations, string jobId, string taskId, TaskListSubtasksOptions taskListSubtasksOptions = default(TaskListSubtasksOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSubtasksWithHttpMessagesAsync(jobId, taskId, taskListSubtasksOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -429,7 +450,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static TaskTerminateHeaders Terminate(this ITaskOperations operations, string jobId, string taskId, TaskTerminateOptions taskTerminateOptions = default(TaskTerminateOptions))
             {
-                return ((ITaskOperations)operations).TerminateAsync(jobId, taskId, taskTerminateOptions).GetAwaiter().GetResult();
+                return operations.TerminateAsync(jobId, taskId, taskTerminateOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -456,7 +477,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<TaskTerminateHeaders> TerminateAsync(this ITaskOperations operations, string jobId, string taskId, TaskTerminateOptions taskTerminateOptions = default(TaskTerminateOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<TaskTerminateHeaders> TerminateAsync(this ITaskOperations operations, string jobId, string taskId, TaskTerminateOptions taskTerminateOptions = default(TaskTerminateOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.TerminateWithHttpMessagesAsync(jobId, taskId, taskTerminateOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -465,16 +486,18 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Reactivates the specified task.
+            /// Reactivates a task, allowing it to run again even if its retry count has
+            /// been exhausted.
             /// </summary>
             /// <remarks>
             /// Reactivation makes a task eligible to be retried again up to its maximum
             /// retry count. The task's state is changed to active. As the task is no
-            /// longer in the completed state, any previous exit code or scheduling error
-            /// is no longer available after reactivation. This will fail for tasks that
-            /// are not completed or that previously completed successfully (with an exit
-            /// code of 0). Additionally, this will fail if the job has completed (or is
-            /// terminating or deleting).
+            /// longer in the completed state, any previous exit code or failure
+            /// information is no longer available after reactivation. Each time a task is
+            /// reactivated, its retry count is reset to 0. Reactivation will fail for
+            /// tasks that are not completed or that previously completed successfully
+            /// (with an exit code of 0). Additionally, it will fail if the job has
+            /// completed (or is terminating or deleting).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -490,20 +513,22 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static TaskReactivateHeaders Reactivate(this ITaskOperations operations, string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions))
             {
-                return ((ITaskOperations)operations).ReactivateAsync(jobId, taskId, taskReactivateOptions).GetAwaiter().GetResult();
+                return operations.ReactivateAsync(jobId, taskId, taskReactivateOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Reactivates the specified task.
+            /// Reactivates a task, allowing it to run again even if its retry count has
+            /// been exhausted.
             /// </summary>
             /// <remarks>
             /// Reactivation makes a task eligible to be retried again up to its maximum
             /// retry count. The task's state is changed to active. As the task is no
-            /// longer in the completed state, any previous exit code or scheduling error
-            /// is no longer available after reactivation. This will fail for tasks that
-            /// are not completed or that previously completed successfully (with an exit
-            /// code of 0). Additionally, this will fail if the job has completed (or is
-            /// terminating or deleting).
+            /// longer in the completed state, any previous exit code or failure
+            /// information is no longer available after reactivation. Each time a task is
+            /// reactivated, its retry count is reset to 0. Reactivation will fail for
+            /// tasks that are not completed or that previously completed successfully
+            /// (with an exit code of 0). Additionally, it will fail if the job has
+            /// completed (or is terminating or deleting).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -520,7 +545,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<TaskReactivateHeaders> ReactivateAsync(this ITaskOperations operations, string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<TaskReactivateHeaders> ReactivateAsync(this ITaskOperations operations, string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ReactivateWithHttpMessagesAsync(jobId, taskId, taskReactivateOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -545,9 +570,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='taskListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<CloudTask> ListNext(this ITaskOperations operations, string nextPageLink, TaskListNextOptions taskListNextOptions = default(TaskListNextOptions))
+            public static IPage<CloudTask> ListNext(this ITaskOperations operations, string nextPageLink, TaskListNextOptions taskListNextOptions = default(TaskListNextOptions))
             {
-                return ((ITaskOperations)operations).ListNextAsync(nextPageLink, taskListNextOptions).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink, taskListNextOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -570,7 +595,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Microsoft.Rest.Azure.IPage<CloudTask>> ListNextAsync(this ITaskOperations operations, string nextPageLink, TaskListNextOptions taskListNextOptions = default(TaskListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<IPage<CloudTask>> ListNextAsync(this ITaskOperations operations, string nextPageLink, TaskListNextOptions taskListNextOptions = default(TaskListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, taskListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ResourceFile class.
         /// </summary>
-        public ResourceFile() { }
+        public ResourceFile()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ResourceFile class.
@@ -32,10 +40,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// format.</param>
         public ResourceFile(string blobSource, string filePath, string fileMode = default(string))
         {
-            this.BlobSource = blobSource;
-            this.FilePath = filePath;
-            this.FileMode = fileMode;
+            BlobSource = blobSource;
+            FilePath = filePath;
+            FileMode = fileMode;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the URL of the file within Azure Blob Storage.
@@ -48,14 +62,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// permissions on the blob, or set the ACL for the blob or its
         /// container to allow public access.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "blobSource")]
+        [JsonProperty(PropertyName = "blobSource")]
         public string BlobSource { get; set; }
 
         /// <summary>
         /// Gets or sets the location on the compute node to which to download
         /// the file, relative to the task's working directory.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "filePath")]
+        [JsonProperty(PropertyName = "filePath")]
         public string FilePath { get; set; }
 
         /// <summary>
@@ -68,24 +82,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// property is not specified for a Linux node, then a default value of
         /// 0770 is applied to the file.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "fileMode")]
+        [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.BlobSource == null)
+            if (BlobSource == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "BlobSource");
+                throw new ValidationException(ValidationRules.CannotBeNull, "BlobSource");
             }
-            if (this.FilePath == null)
+            if (FilePath == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FilePath");
+                throw new ValidationException(ValidationRules.CannotBeNull, "FilePath");
             }
         }
     }

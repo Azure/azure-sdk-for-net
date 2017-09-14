@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TaskAddStatus.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskAddStatus
     {
-        [System.Runtime.Serialization.EnumMember(Value = "success")]
+        [EnumMember(Value = "success")]
         Success,
-        [System.Runtime.Serialization.EnumMember(Value = "clientError")]
+        [EnumMember(Value = "clientError")]
         ClientError,
-        [System.Runtime.Serialization.EnumMember(Value = "serverError")]
+        [EnumMember(Value = "serverError")]
         ServerError
+    }
+    internal static class TaskAddStatusEnumExtension
+    {
+        internal static string ToSerializedValue(this TaskAddStatus? value)  =>
+            value == null ? null : ((TaskAddStatus)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this TaskAddStatus value)
+        {
+            switch( value )
+            {
+                case TaskAddStatus.Success:
+                    return "success";
+                case TaskAddStatus.ClientError:
+                    return "clientError";
+                case TaskAddStatus.ServerError:
+                    return "serverError";
+            }
+            return null;
+        }
+
+        internal static TaskAddStatus? ParseTaskAddStatus(this string value)
+        {
+            switch( value )
+            {
+                case "success":
+                    return TaskAddStatus.Success;
+                case "clientError":
+                    return TaskAddStatus.ClientError;
+                case "serverError":
+                    return TaskAddStatus.ServerError;
+            }
+            return null;
+        }
     }
 }

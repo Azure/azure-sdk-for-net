@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LoadBalancingRule class.
         /// </summary>
-        /// <param name="protocol">The transport protocol for the external
-        /// endpoint. Possible values are 'Udp' or 'Tcp'. Possible values
-        /// include: 'Udp', 'Tcp'</param>
+        /// <param name="protocol">Possible values include: 'Udp', 'Tcp',
+        /// 'All'</param>
         /// <param name="frontendPort">The port for the external endpoint. Port
-        /// numbers for each Rule must be unique within the Load Balancer.
-        /// Acceptable values are between 1 and 65534.</param>
+        /// numbers for each rule must be unique within the Load Balancer.
+        /// Acceptable values are between 0 and 65534. Note that value 0
+        /// enables "Any Port"</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="frontendIPConfiguration">A reference to frontend IP
         /// addresses.</param>
@@ -52,7 +52,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'SourceIPProtocol'. Possible values include: 'Default', 'SourceIP',
         /// 'SourceIPProtocol'</param>
         /// <param name="backendPort">The port used for internal connections on
-        /// the endpoint. Acceptable values are between 1 and 65535. </param>
+        /// the endpoint. Acceptable values are between 0 and 65535. Note that
+        /// value 0 enables "Any Port"</param>
         /// <param name="idleTimeoutInMinutes">The timeout for the TCP idle
         /// connection. The value can be set between 4 and 30 minutes. The
         /// default value is 4 minutes. This element is only used when the
@@ -62,6 +63,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// AlwaysOn Availability Group. This setting is required when using
         /// the SQL AlwaysOn Availability Groups in SQL server. This setting
         /// can't be changed after you create the endpoint.</param>
+        /// <param name="disableOutboundSnat">Configures SNAT for the VMs in
+        /// the backend pool to use the publicIP address specified in the
+        /// frontend of the load balancing rule.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
@@ -70,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public LoadBalancingRule(string protocol, int frontendPort, string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public LoadBalancingRule(string protocol, int frontendPort, string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? disableOutboundSnat = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -82,6 +86,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BackendPort = backendPort;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             EnableFloatingIP = enableFloatingIP;
+            DisableOutboundSnat = disableOutboundSnat;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -114,9 +119,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource Probe { get; set; }
 
         /// <summary>
-        /// Gets or sets the transport protocol for the external endpoint.
-        /// Possible values are 'Udp' or 'Tcp'. Possible values include: 'Udp',
-        /// 'Tcp'
+        /// Gets or sets possible values include: 'Udp', 'Tcp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
@@ -131,15 +134,17 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the port for the external endpoint. Port numbers for
-        /// each Rule must be unique within the Load Balancer. Acceptable
-        /// values are between 1 and 65534.
+        /// each rule must be unique within the Load Balancer. Acceptable
+        /// values are between 0 and 65534. Note that value 0 enables "Any
+        /// Port"
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendPort")]
         public int FrontendPort { get; set; }
 
         /// <summary>
         /// Gets or sets the port used for internal connections on the
-        /// endpoint. Acceptable values are between 1 and 65535.
+        /// endpoint. Acceptable values are between 0 and 65535. Note that
+        /// value 0 enables "Any Port"
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendPort")]
         public int? BackendPort { get; set; }
@@ -161,6 +166,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableFloatingIP")]
         public bool? EnableFloatingIP { get; set; }
+
+        /// <summary>
+        /// Gets or sets configures SNAT for the VMs in the backend pool to use
+        /// the publicIP address specified in the frontend of the load
+        /// balancing rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableOutboundSnat")]
+        public bool? DisableOutboundSnat { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the PublicIP resource. Possible

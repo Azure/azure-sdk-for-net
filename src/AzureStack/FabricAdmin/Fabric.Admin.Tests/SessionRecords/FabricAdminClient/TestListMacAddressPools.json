@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/macAddressPools?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWMwZGFhMDQtMDFhZS00ZGY5LWE1ZDgtNDkxYjc1NWY1Mjg4L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvbWFjQWRkcmVzc1Bvb2xzP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3bd4c0f0-472b-449a-abf4-932eccb88a3d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Admin.Fabric.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/macAddressPools/8197fd09-8a69-417e-a55c-10c2c61f5ee7\",\r\n      \"name\": \"8197fd09-8a69-417e-a55c-10c2c61f5ee7\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/macAddressPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startMacAddress\": \"00-1D-D8-B7-1C-00\",\r\n        \"endMacAddress\": \"00-1D-D8-F4-1F-FF\",\r\n        \"numberOfAllocatedMacAddresses\": 2,\r\n        \"numberOfAvailableMacAddresses\": 3998718\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "510"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Aug 2017 19:22:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvDTxe83wN1QrBA+TDh6pyVaI5irLjy27Ta9+LnMFjhed/3/aa1gtNavHdPVMlCfVsrfQy2lAsTVR/sDtKZ2akHmsc5eQR1C7a5enoKRIvC1Qn8GJBU1tIo2sPVBOdl1cO60y0aa5bWCxcdgSHjOFk"
+        ],
+        "x-ms-correlation-request-id": [
+          "2ba3e656-8c68-4a70-b8ec-ba10b88dd497"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14135"
+        ],
+        "x-ms-request-id": [
+          "2ba3e656-8c68-4a70-b8ec-ba10b88dd497"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20170830T192219Z:2ba3e656-8c68-4a70-b8ec-ba10b88dd497"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c0daa04-01ae-4df9-a5d8-491b755f5288"
+  }
+}

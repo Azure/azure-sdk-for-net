@@ -8,20 +8,64 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeReimageOption.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeReimageOption
     {
-        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
+        [EnumMember(Value = "requeue")]
         Requeue,
-        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
+        [EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        [EnumMember(Value = "taskCompletion")]
         TaskCompletion,
-        [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
+        [EnumMember(Value = "retainedData")]
         RetainedData
+    }
+    internal static class ComputeNodeReimageOptionEnumExtension
+    {
+        internal static string ToSerializedValue(this ComputeNodeReimageOption? value)  =>
+            value == null ? null : ((ComputeNodeReimageOption)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ComputeNodeReimageOption value)
+        {
+            switch( value )
+            {
+                case ComputeNodeReimageOption.Requeue:
+                    return "requeue";
+                case ComputeNodeReimageOption.Terminate:
+                    return "terminate";
+                case ComputeNodeReimageOption.TaskCompletion:
+                    return "taskCompletion";
+                case ComputeNodeReimageOption.RetainedData:
+                    return "retainedData";
+            }
+            return null;
+        }
+
+        internal static ComputeNodeReimageOption? ParseComputeNodeReimageOption(this string value)
+        {
+            switch( value )
+            {
+                case "requeue":
+                    return ComputeNodeReimageOption.Requeue;
+                case "terminate":
+                    return ComputeNodeReimageOption.Terminate;
+                case "taskCompletion":
+                    return ComputeNodeReimageOption.TaskCompletion;
+                case "retainedData":
+                    return ComputeNodeReimageOption.RetainedData;
+            }
+            return null;
+        }
     }
 }

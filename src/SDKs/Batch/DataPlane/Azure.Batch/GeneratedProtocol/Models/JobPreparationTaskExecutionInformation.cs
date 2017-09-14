@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobPreparationTaskExecutionInformation class.
         /// </summary>
-        public JobPreparationTaskExecutionInformation() { }
+        public JobPreparationTaskExecutionInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -52,25 +59,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public JobPreparationTaskExecutionInformation(System.DateTime startTime, JobPreparationTaskState state, int retryCount, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.State = state;
-            this.TaskRootDirectory = taskRootDirectory;
-            this.TaskRootDirectoryUrl = taskRootDirectoryUrl;
-            this.ExitCode = exitCode;
-            this.FailureInfo = failureInfo;
-            this.RetryCount = retryCount;
-            this.LastRetryTime = lastRetryTime;
-            this.Result = result;
+            StartTime = startTime;
+            EndTime = endTime;
+            State = state;
+            TaskRootDirectory = taskRootDirectory;
+            TaskRootDirectoryUrl = taskRootDirectoryUrl;
+            ExitCode = exitCode;
+            FailureInfo = failureInfo;
+            RetryCount = retryCount;
+            LastRetryTime = lastRetryTime;
+            Result = result;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the time at which the task started running.
         /// </summary>
         /// <remarks>
-        /// Note that every time the task is restarted, this value is updated.
+        /// If the task has been restarted or retried, this is the most recent
+        /// time at which the task started running.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -79,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the task is in the Completed state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
@@ -87,13 +101,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
         /// running - the task is currently running (including retrying).
         /// completed - the task has exited with exit code 0, or the task has
         /// exhausted its retry limit, or the Batch service was unable to start
-        /// the task due to scheduling errors. Possible values include:
-        /// 'running', 'completed'
+        /// the task due to task preparation errors (such as resource file
+        /// download failures). Possible values include: 'running', 'completed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state")]
         public JobPreparationTaskState State { get; set; }
 
         /// <summary>
@@ -101,14 +117,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node. You can use this path to retrieve files created by
         /// the task, such as log files.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "taskRootDirectory")]
+        [JsonProperty(PropertyName = "taskRootDirectory")]
         public string TaskRootDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to the root directory of the Job Preparation
         /// task on the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "taskRootDirectoryUrl")]
+        [JsonProperty(PropertyName = "taskRootDirectoryUrl")]
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
@@ -125,7 +141,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node operating system, such as when a process is forcibly
         /// terminated.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCode")]
+        [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
@@ -135,7 +151,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the task is in the completed state and
         /// encountered a failure.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        [JsonProperty(PropertyName = "failureInfo")]
         public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
@@ -145,7 +161,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// upload errors are not retried. The Batch service will retry the
         /// task up to the limit specified by the constraints.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "retryCount")]
+        /// <remarks>
+        /// Task application failures (non-zero exit code) are retried,
+        /// pre-processing errors (the task could not be run) and file upload
+        /// errors are not retried. The Batch service will retry the task up to
+        /// the limit specified by the constraints.
+        /// </remarks>
+        [JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
 
         /// <summary>
@@ -160,7 +182,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// during a retry, then the startTime is updated but the lastRetryTime
         /// is not.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lastRetryTime")]
+        [JsonProperty(PropertyName = "lastRetryTime")]
         public System.DateTime? LastRetryTime { get; set; }
 
         /// <summary>
@@ -171,20 +193,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// found in the failureInfo property. Possible values include:
         /// 'success', 'failure'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        [JsonProperty(PropertyName = "result")]
         public TaskExecutionResult? Result { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.FailureInfo != null)
+            if (FailureInfo != null)
             {
-                this.FailureInfo.Validate();
+                FailureInfo.Validate();
             }
         }
     }

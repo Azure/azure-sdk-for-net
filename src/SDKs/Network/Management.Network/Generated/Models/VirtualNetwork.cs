@@ -54,9 +54,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
+        /// <param name="enableDdosProtection">Indicates if DDoS protection is
+        /// enabled for all the protected resources in a Virtual
+        /// Network.</param>
+        /// <param name="enableVmProtection">Indicates if Vm protection is
+        /// enabled for all the subnets in a Virtual Network.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AddressSpace = addressSpace;
@@ -65,6 +70,8 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualNetworkPeerings = virtualNetworkPeerings;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            EnableDdosProtection = enableDdosProtection;
+            EnableVmProtection = enableVmProtection;
             Etag = etag;
             CustomInit();
         }
@@ -113,6 +120,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if DDoS protection is enabled for all the
+        /// protected resources in a Virtual Network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableDdosProtection")]
+        public bool? EnableDdosProtection { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if Vm protection is enabled for all the
+        /// subnets in a Virtual Network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableVmProtection")]
+        public bool? EnableVmProtection { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

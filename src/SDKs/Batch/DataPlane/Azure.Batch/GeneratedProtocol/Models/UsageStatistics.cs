@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the UsageStatistics class.
         /// </summary>
-        public UsageStatistics() { }
+        public UsageStatistics()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the UsageStatistics class.
@@ -32,16 +39,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the dedicated compute node cores being part of the pool.</param>
         public UsageStatistics(System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan dedicatedCoreTime)
         {
-            this.StartTime = startTime;
-            this.LastUpdateTime = lastUpdateTime;
-            this.DedicatedCoreTime = dedicatedCoreTime;
+            StartTime = startTime;
+            LastUpdateTime = lastUpdateTime;
+            DedicatedCoreTime = dedicatedCoreTime;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the start time of the time range covered by the
         /// statistics.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -49,20 +62,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// All statistics are limited to the range between startTime and
         /// lastUpdateTime.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "lastUpdateTime")]
+        [JsonProperty(PropertyName = "lastUpdateTime")]
         public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the aggregated wall-clock time of the dedicated
         /// compute node cores being part of the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "dedicatedCoreTime")]
+        [JsonProperty(PropertyName = "dedicatedCoreTime")]
         public System.TimeSpan DedicatedCoreTime { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

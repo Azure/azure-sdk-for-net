@@ -55,8 +55,7 @@ namespace Relay.Tests.ScenarioTests
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
-                        }                       
-
+                        }
                     });
 
                 Assert.NotNull(createNamespaceResponse);

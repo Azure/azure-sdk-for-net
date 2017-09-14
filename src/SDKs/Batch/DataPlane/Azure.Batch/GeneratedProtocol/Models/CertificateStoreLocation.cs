@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateStoreLocation.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CertificateStoreLocation
     {
-        [System.Runtime.Serialization.EnumMember(Value = "currentUser")]
+        [EnumMember(Value = "currentUser")]
         CurrentUser,
-        [System.Runtime.Serialization.EnumMember(Value = "localMachine")]
+        [EnumMember(Value = "localMachine")]
         LocalMachine
+    }
+    internal static class CertificateStoreLocationEnumExtension
+    {
+        internal static string ToSerializedValue(this CertificateStoreLocation? value)  =>
+            value == null ? null : ((CertificateStoreLocation)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this CertificateStoreLocation value)
+        {
+            switch( value )
+            {
+                case CertificateStoreLocation.CurrentUser:
+                    return "currentUser";
+                case CertificateStoreLocation.LocalMachine:
+                    return "localMachine";
+            }
+            return null;
+        }
+
+        internal static CertificateStoreLocation? ParseCertificateStoreLocation(this string value)
+        {
+            switch( value )
+            {
+                case "currentUser":
+                    return CertificateStoreLocation.CurrentUser;
+                case "localMachine":
+                    return CertificateStoreLocation.LocalMachine;
+            }
+            return null;
+        }
     }
 }

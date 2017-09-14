@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateFormat.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CertificateFormat
     {
-        [System.Runtime.Serialization.EnumMember(Value = "pfx")]
+        [EnumMember(Value = "pfx")]
         Pfx,
-        [System.Runtime.Serialization.EnumMember(Value = "cer")]
+        [EnumMember(Value = "cer")]
         Cer
+    }
+    internal static class CertificateFormatEnumExtension
+    {
+        internal static string ToSerializedValue(this CertificateFormat? value)  =>
+            value == null ? null : ((CertificateFormat)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this CertificateFormat value)
+        {
+            switch( value )
+            {
+                case CertificateFormat.Pfx:
+                    return "pfx";
+                case CertificateFormat.Cer:
+                    return "cer";
+            }
+            return null;
+        }
+
+        internal static CertificateFormat? ParseCertificateFormat(this string value)
+        {
+            switch( value )
+            {
+                case "pfx":
+                    return CertificateFormat.Pfx;
+                case "cer":
+                    return CertificateFormat.Cer;
+            }
+            return null;
+        }
     }
 }

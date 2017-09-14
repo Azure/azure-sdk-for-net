@@ -8,14 +8,46 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AccessScope.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum AccessScope
     {
-        [System.Runtime.Serialization.EnumMember(Value = "job")]
+        [EnumMember(Value = "job")]
         Job
+    }
+    internal static class AccessScopeEnumExtension
+    {
+        internal static string ToSerializedValue(this AccessScope? value)  =>
+            value == null ? null : ((AccessScope)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this AccessScope value)
+        {
+            switch( value )
+            {
+                case AccessScope.Job:
+                    return "job";
+            }
+            return null;
+        }
+
+        internal static AccessScope? ParseAccessScope(this string value)
+        {
+            switch( value )
+            {
+                case "job":
+                    return AccessScope.Job;
+            }
+            return null;
+        }
     }
 }

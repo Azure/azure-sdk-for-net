@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateVisibility.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CertificateVisibility
     {
-        [System.Runtime.Serialization.EnumMember(Value = "startTask")]
+        [EnumMember(Value = "startTask")]
         StartTask,
-        [System.Runtime.Serialization.EnumMember(Value = "task")]
+        [EnumMember(Value = "task")]
         Task,
-        [System.Runtime.Serialization.EnumMember(Value = "remoteUser")]
+        [EnumMember(Value = "remoteUser")]
         RemoteUser
+    }
+    internal static class CertificateVisibilityEnumExtension
+    {
+        internal static string ToSerializedValue(this CertificateVisibility? value)  =>
+            value == null ? null : ((CertificateVisibility)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this CertificateVisibility value)
+        {
+            switch( value )
+            {
+                case CertificateVisibility.StartTask:
+                    return "startTask";
+                case CertificateVisibility.Task:
+                    return "task";
+                case CertificateVisibility.RemoteUser:
+                    return "remoteUser";
+            }
+            return null;
+        }
+
+        internal static CertificateVisibility? ParseCertificateVisibility(this string value)
+        {
+            switch( value )
+            {
+                case "startTask":
+                    return CertificateVisibility.StartTask;
+                case "task":
+                    return CertificateVisibility.Task;
+                case "remoteUser":
+                    return CertificateVisibility.RemoteUser;
+            }
+            return null;
+        }
     }
 }
