@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the ISKUsOperations.
+        /// Gets the ISkusOperations.
         /// </summary>
-        public virtual ISKUsOperations SKUs { get; private set; }
+        public virtual ISkusOperations Skus { get; private set; }
 
         /// <summary>
         /// Gets the IStorageAccountsOperations.
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Storage
         private void Initialize()
         {
             Operations = new Operations(this);
-            SKUs = new SKUsOperations(this);
+            Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Usage = new UsageOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

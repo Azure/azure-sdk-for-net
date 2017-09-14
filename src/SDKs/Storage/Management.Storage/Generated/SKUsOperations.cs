@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SKUsOperations operations.
+    /// SkusOperations operations.
     /// </summary>
-    internal partial class SKUsOperations : IServiceOperations<StorageManagementClient>, ISKUsOperations
+    internal partial class SkusOperations : IServiceOperations<StorageManagementClient>, ISkusOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SKUsOperations class.
+        /// Initializes a new instance of the SkusOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SKUsOperations(StorageManagementClient client)
+        internal SkusOperations(StorageManagementClient client)
         {
             if (client == null)
             {

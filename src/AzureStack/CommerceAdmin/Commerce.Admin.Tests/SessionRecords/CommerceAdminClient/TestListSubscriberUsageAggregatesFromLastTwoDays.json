@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/subscriberUsageAggregates?api-version=2015-06-01-preview&reportedStartTime=2017-09-06T00:00:00Z&reportedEndTime=2017-09-07T00:00:00Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWMwZGFhMDQtMDFhZS00ZGY5LWE1ZDgtNDkxYjc1NWY1Mjg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tbWVyY2Uvc3Vic2NyaWJlclVzYWdlQWdncmVnYXRlcz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXcmcmVwb3J0ZWRTdGFydFRpbWU9MjAxNy0wOS0wNlQwMCUzQTAwJTNBMDBaJnJlcG9ydGVkRW5kVGltZT0yMDE3LTA5LTA3VDAwJTNBMDAlM0EwMFo=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a4a62639-68fa-4fe3-85ea-8d2eb24cad12"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Commerce.Admin.CommerceAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-9764F92C-E44A-498E-8DC1-AAD66587A810\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-9764F92C-E44A-498E-8DC1-AAD66587A810\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Microsoft.Storage/storageaccounts/vmefbj65\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":null,\\\"additionalInfo\\\":null}}\",\r\n        \"quantity\": 0.0029740091413259506,\r\n        \"meterId\": \"9764F92C-E44A-498E-8DC1-AAD66587A810\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-43DAF82B-4618-444A-B994-40C23F7CD438\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-43DAF82B-4618-444A-B994-40C23F7CD438\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Microsoft.Storage/storageaccounts/vmefbj65\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":null,\\\"additionalInfo\\\":null}}\",\r\n        \"quantity\": 0.051000000000000004,\r\n        \"meterId\": \"43DAF82B-4618-444A-B994-40C23F7CD438\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-6dab500f-a4fd-49c4-956d-229bb9c8c793\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-6dab500f-a4fd-49c4-956d-229bb9c8c793\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourceGroups/derpgroup/providers/Microsoft.Compute/virtualMachines/simplewinvmd\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":\\\"null\\\",\\\"additionalInfo\\\":\\\"{\\\\\\\"ServiceType\\\\\\\":\\\\\\\"Standard_A1\\\\\\\",\\\\\\\"ImageType\\\\\\\":null}\\\"}}\",\r\n        \"quantity\": 3.9998271341111109,\r\n        \"meterId\": \"6dab500f-a4fd-49c4-956d-229bb9c8c793\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-9cd92d4c-bafd-4492-b278-bedc2de8232a\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-9cd92d4c-bafd-4492-b278-bedc2de8232a\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourceGroups/derpgroup/providers/Microsoft.Compute/virtualMachines/simplewinvmd\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":\\\"null\\\",\\\"additionalInfo\\\":\\\"{\\\\\\\"ServiceType\\\\\\\":\\\\\\\"Standard_A1\\\\\\\",\\\\\\\"ImageType\\\\\\\":null}\\\"}}\",\r\n        \"quantity\": 3.9998271341111109,\r\n        \"meterId\": \"9cd92d4c-bafd-4492-b278-bedc2de8232a\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-B5C15376-6C94-4FDD-B655-1A69D138ACA3\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-B5C15376-6C94-4FDD-B655-1A69D138ACA3\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Microsoft.Storage/storageaccounts/vmefbj65\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":null,\\\"additionalInfo\\\":null}}\",\r\n        \"quantity\": 47.745195036754012,\r\n        \"meterId\": \"B5C15376-6C94-4FDD-B655-1A69D138ACA3\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-09F8879E-87E9-4305-A572-4B7BE209F857\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-09F8879E-87E9-4305-A572-4B7BE209F857\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Microsoft.Storage/storageaccounts/vmefbj65\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":null,\\\"additionalInfo\\\":null}}\",\r\n        \"quantity\": 6.866455078125E-05,\r\n        \"meterId\": \"09F8879E-87E9-4305-A572-4B7BE209F857\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/UsageAggregate/36770ead-1c95-4048-8ff3-d727dd5007de-3023FEF4-ECA5-4D7B-87B3-CFBC061931E8\",\r\n      \"name\": \"36770ead-1c95-4048-8ff3-d727dd5007de-3023FEF4-ECA5-4D7B-87B3-CFBC061931E8\",\r\n      \"type\": \"Microsoft.Commerce/UsageAggregate\",\r\n      \"properties\": {\r\n        \"subscriptionId\": \"36770ead-1c95-4048-8ff3-d727dd5007de\",\r\n        \"usageStartTime\": \"2017-09-05T17:00:00-07:00\",\r\n        \"usageEndTime\": \"2017-09-06T17:00:00-07:00\",\r\n        \"instanceData\": \"{\\\"Microsoft.Resources\\\":{\\\"resourceUri\\\":\\\"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Microsoft.Storage/storageaccounts/vmefbj65\\\",\\\"location\\\":\\\"local\\\",\\\"tags\\\":null,\\\"additionalInfo\\\":null}}\",\r\n        \"quantity\": 0.00011140573769807816,\r\n        \"meterId\": \"3023FEF4-ECA5-4D7B-87B3-CFBC061931E8\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://adminmanagement.local.azurestack.external/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/subscriberUsageAggregates?api-version=2015-06-01-preview&reportedStartTime=2017-09-06T00:00:00Z&reportedEndTime=2017-09-07T00:00:00Z/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/providers/Microsoft.Commerce/subscriberUsageAggregates?api-version=2015-06-01-preview&reportedStartTime=2017-09-06T00%3a00%3a00Z&reportedEndTime=2017-09-07T00%3a00%3a00Z&continuationToken=L3N1YnNjcmlwdGlvbnMvMzY3NzBlYWQtMWM5NS00MDQ4LThmZjMtZDcyN2RkNTAwN2RlL3Jlc291cmNlZ3JvdXBzL2RlcnBncm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZWFjY291bnRzL3ZtZWZiajY1LzMwMjNGRUY0LUVDQTUtNEQ3Qi04N0IzLUNGQkMwNjE5MzFFOC82MzY0MDI1MjgwMDAwMDAwMDAvNjM2NDAyNTI4MDAwMDAwMDAw\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "6545"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 06 Sep 2017 22:13:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14761"
+        ],
+        "x-ms-request-id": [
+          "d2a24d60-7347-4c54-bb58-1eb04c398e56"
+        ],
+        "x-ms-correlation-request-id": [
+          "d2a24d60-7347-4c54-bb58-1eb04c398e56"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20170906T221336Z:d2a24d60-7347-4c54-bb58-1eb04c398e56"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1c0daa04-01ae-4df9-a5d8-491b755f5288"
+  }
+}

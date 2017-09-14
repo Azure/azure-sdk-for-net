@@ -90,9 +90,14 @@ namespace Microsoft.Azure.Management.Monitor.Management
         public virtual ILogProfilesOperations LogProfiles { get; private set; }
 
         /// <summary>
-        /// Gets the IServiceDiagnosticSettingsOperations.
+        /// Gets the IDiagnosticSettingsOperations.
         /// </summary>
-        public virtual IServiceDiagnosticSettingsOperations ServiceDiagnosticSettings { get; private set; }
+        public virtual IDiagnosticSettingsOperations DiagnosticSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiagnosticSettingsCategoryOperations.
+        /// </summary>
+        public virtual IDiagnosticSettingsCategoryOperations DiagnosticSettingsCategory { get; private set; }
 
         /// <summary>
         /// Gets the IActionGroupsOperations.
@@ -309,7 +314,8 @@ namespace Microsoft.Azure.Management.Monitor.Management
             AlertRuleIncidents = new AlertRuleIncidentsOperations(this);
             AlertRules = new AlertRulesOperations(this);
             LogProfiles = new LogProfilesOperations(this);
-            ServiceDiagnosticSettings = new ServiceDiagnosticSettingsOperations(this);
+            DiagnosticSettings = new DiagnosticSettingsOperations(this);
+            DiagnosticSettingsCategory = new DiagnosticSettingsCategoryOperations(this);
             ActionGroups = new ActionGroupsOperations(this);
             ActivityLogAlerts = new ActivityLogAlertsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

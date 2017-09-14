@@ -85,9 +85,14 @@ namespace Microsoft.Azure.Management.Monitor.Management
         ILogProfilesOperations LogProfiles { get; }
 
         /// <summary>
-        /// Gets the IServiceDiagnosticSettingsOperations.
+        /// Gets the IDiagnosticSettingsOperations.
         /// </summary>
-        IServiceDiagnosticSettingsOperations ServiceDiagnosticSettings { get; }
+        IDiagnosticSettingsOperations DiagnosticSettings { get; }
+
+        /// <summary>
+        /// Gets the IDiagnosticSettingsCategoryOperations.
+        /// </summary>
+        IDiagnosticSettingsCategoryOperations DiagnosticSettingsCategory { get; }
 
         /// <summary>
         /// Gets the IActionGroupsOperations.
