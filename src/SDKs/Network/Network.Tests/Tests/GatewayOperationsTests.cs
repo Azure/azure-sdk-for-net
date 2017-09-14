@@ -1734,7 +1734,7 @@ namespace Networks.Tests
                 Console.WriteLine("Vpn client package Url from GENERATE operation = {0}", packageUrl);
 
                 // Retry to get the package url using the get profile API
-                string packageUrlFromGetOperation = networkManagementClient.VirtualNetworkGateways.GetVpnProfilePacakgeUrl(resourceGroupName, virtualNetworkGatewayName);
+                string packageUrlFromGetOperation = networkManagementClient.VirtualNetworkGateways.GetVpnProfilePackageUrl(resourceGroupName, virtualNetworkGatewayName);
                 Assert.NotNull(packageUrlFromGetOperation);
                 Assert.NotEmpty(packageUrlFromGetOperation);
                 Console.WriteLine("Vpn client package Url from GET operation = {0}", packageUrlFromGetOperation);

@@ -384,9 +384,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkGatewayName'>
             /// The name of the virtual network gateway.
             /// </param>
-            public static string GetVpnProfilePacakgeUrl(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            public static string GetVpnProfilePackageUrl(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
             {
-                return operations.GetVpnProfilePacakgeUrlAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+                return operations.GetVpnProfilePackageUrlAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -406,9 +406,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> GetVpnProfilePacakgeUrlAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GetVpnProfilePackageUrlAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetVpnProfilePacakgeUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -799,9 +799,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkGatewayName'>
             /// The name of the virtual network gateway.
             /// </param>
-            public static string BeginGetVpnProfilePacakgeUrl(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            public static string BeginGetVpnProfilePackageUrl(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
             {
-                return operations.BeginGetVpnProfilePacakgeUrlAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+                return operations.BeginGetVpnProfilePackageUrlAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -821,9 +821,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> BeginGetVpnProfilePacakgeUrlAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> BeginGetVpnProfilePackageUrlAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginGetVpnProfilePacakgeUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginGetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
