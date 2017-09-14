@@ -78,7 +78,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<KeyPhraseBatchResultV2>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInputV2 input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// The API returns the detected language and a numeric score between 0
@@ -102,7 +102,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<LanguageBatchResultV2>> DetectLanguageWithHttpMessagesAsync(BatchInputV2 input, int? numberOfLanguagesToDetect = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(BatchInput input, int? numberOfLanguagesToDetect = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// The API returns a numeric score between 0 and 1.
@@ -126,7 +126,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<SentimentBatchResultV2>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInputV2 input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

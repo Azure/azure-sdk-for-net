@@ -17,11 +17,11 @@ namespace Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
                 ITextAnalyticsAPI client = GetClient(HttpMockServer.CreateInstance());
-                LanguageBatchResultV2 result = client.DetectLanguage(
-                    new BatchInputV2(
-                        new List<InputV2>()
+                LanguageBatchResult result = client.DetectLanguage(
+                    new BatchInput(
+                        new List<Input>()
                         {
-                            new InputV2("id","I love my team mates")
+                            new Input("id","I love my team mates")
                         }));
 
                 Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);

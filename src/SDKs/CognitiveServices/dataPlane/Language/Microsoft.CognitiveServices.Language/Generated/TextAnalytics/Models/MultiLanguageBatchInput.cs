@@ -16,23 +16,22 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SentimentBatchResultV2
+    public partial class MultiLanguageBatchInput
     {
         /// <summary>
-        /// Initializes a new instance of the SentimentBatchResultV2 class.
+        /// Initializes a new instance of the MultiLanguageBatchInput class.
         /// </summary>
-        public SentimentBatchResultV2()
+        public MultiLanguageBatchInput()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SentimentBatchResultV2 class.
+        /// Initializes a new instance of the MultiLanguageBatchInput class.
         /// </summary>
-        public SentimentBatchResultV2(IList<SentimentBatchResultItemV2> documents = default(IList<SentimentBatchResultItemV2>), IList<ErrorRecordV2> errors = default(IList<ErrorRecordV2>))
+        public MultiLanguageBatchInput(IList<MultiLanguageInput> documents = default(IList<MultiLanguageInput>))
         {
             Documents = documents;
-            Errors = errors;
             CustomInit();
         }
 
@@ -44,12 +43,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
-        public IList<SentimentBatchResultItemV2> Documents { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "errors")]
-        public IList<ErrorRecordV2> Errors { get; set; }
+        public IList<MultiLanguageInput> Documents { get; set; }
 
     }
 }

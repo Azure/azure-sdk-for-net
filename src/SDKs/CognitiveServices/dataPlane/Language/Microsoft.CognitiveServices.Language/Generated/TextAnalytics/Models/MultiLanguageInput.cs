@@ -12,30 +12,30 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using Microsoft.CognitiveServices.Language;
     using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class LanguageBatchResultItemV2
+    public partial class MultiLanguageInput
     {
         /// <summary>
-        /// Initializes a new instance of the LanguageBatchResultItemV2 class.
+        /// Initializes a new instance of the MultiLanguageInput class.
         /// </summary>
-        public LanguageBatchResultItemV2()
+        public MultiLanguageInput()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LanguageBatchResultItemV2 class.
+        /// Initializes a new instance of the MultiLanguageInput class.
         /// </summary>
-        /// <param name="id">Unique document identifier.</param>
-        /// <param name="detectedLanguages">A list of extracted
-        /// languages.</param>
-        public LanguageBatchResultItemV2(string id = default(string), IList<DetectedLanguageV2> detectedLanguages = default(IList<DetectedLanguageV2>))
+        /// <param name="language">This is the 2 letter ISO 639-1
+        /// representation of a language. For example, use "en" for English;
+        /// "es" for Spanish etc.,</param>
+        /// <param name="id">Unique, non-empty document identifier.</param>
+        public MultiLanguageInput(string language = default(string), string id = default(string), string text = default(string))
         {
+            Language = language;
             Id = id;
-            DetectedLanguages = detectedLanguages;
+            Text = text;
             CustomInit();
         }
 
@@ -45,16 +45,22 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unique document identifier.
+        /// Gets or sets this is the 2 letter ISO 639-1 representation of a
+        /// language. For example, use "en" for English; "es" for Spanish etc.,
+        /// </summary>
+        [JsonProperty(PropertyName = "language")]
+        public string Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets unique, non-empty document identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of extracted languages.
         /// </summary>
-        [JsonProperty(PropertyName = "detectedLanguages")]
-        public IList<DetectedLanguageV2> DetectedLanguages { get; set; }
+        [JsonProperty(PropertyName = "text")]
+        public string Text { get; set; }
 
     }
 }

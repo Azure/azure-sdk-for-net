@@ -12,30 +12,29 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using Microsoft.CognitiveServices.Language;
     using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class KeyPhraseBatchResultItemV2
+    public partial class SentimentBatchResultItem
     {
         /// <summary>
-        /// Initializes a new instance of the KeyPhraseBatchResultItemV2 class.
+        /// Initializes a new instance of the SentimentBatchResultItem class.
         /// </summary>
-        public KeyPhraseBatchResultItemV2()
+        public SentimentBatchResultItem()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the KeyPhraseBatchResultItemV2 class.
+        /// Initializes a new instance of the SentimentBatchResultItem class.
         /// </summary>
-        /// <param name="keyPhrases">A list of representative words or phrases.
-        /// The number of key phrases returned is proportional to the number of
-        /// words in the input document.</param>
+        /// <param name="score">A decimal number between 0 and 1 denoting the
+        /// sentiment of the document. A score above 0.7 usually refers to a
+        /// positive document while a score below 0.3 normally has a negative
+        /// connotation. Mid values refer to neutral text.</param>
         /// <param name="id">Unique document identifier.</param>
-        public KeyPhraseBatchResultItemV2(IList<string> keyPhrases = default(IList<string>), string id = default(string))
+        public SentimentBatchResultItem(double? score = default(double?), string id = default(string))
         {
-            KeyPhrases = keyPhrases;
+            Score = score;
             Id = id;
             CustomInit();
         }
@@ -46,18 +45,19 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of representative words or phrases. The number
-        /// of key phrases returned is proportional to the number of words in
-        /// the input document.
+        /// Gets a decimal number between 0 and 1 denoting the sentiment of the
+        /// document. A score above 0.7 usually refers to a positive document
+        /// while a score below 0.3 normally has a negative connotation. Mid
+        /// values refer to neutral text.
         /// </summary>
-        [JsonProperty(PropertyName = "keyPhrases")]
-        public IList<string> KeyPhrases { get; set; }
+        [JsonProperty(PropertyName = "score")]
+        public double? Score { get; private set; }
 
         /// <summary>
-        /// Gets or sets unique document identifier.
+        /// Gets unique document identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
     }
 }

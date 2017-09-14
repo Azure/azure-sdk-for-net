@@ -12,28 +12,26 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using Microsoft.CognitiveServices.Language;
     using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ErrorRecordV2
+    public partial class BatchInput
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorRecordV2 class.
+        /// Initializes a new instance of the BatchInput class.
         /// </summary>
-        public ErrorRecordV2()
+        public BatchInput()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorRecordV2 class.
+        /// Initializes a new instance of the BatchInput class.
         /// </summary>
-        /// <param name="id">Input document unique identifier the error refers
-        /// to.</param>
-        /// <param name="message">Error message.</param>
-        public ErrorRecordV2(string id = default(string), string message = default(string))
+        public BatchInput(IList<Input> documents = default(IList<Input>))
         {
-            Id = id;
-            Message = message;
+            Documents = documents;
             CustomInit();
         }
 
@@ -43,16 +41,9 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets input document unique identifier the error refers to.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "documents")]
+        public IList<Input> Documents { get; set; }
 
     }
 }

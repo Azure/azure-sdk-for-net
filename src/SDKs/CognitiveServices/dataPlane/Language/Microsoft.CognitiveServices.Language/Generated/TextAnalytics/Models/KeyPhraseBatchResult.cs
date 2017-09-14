@@ -16,22 +16,23 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class BatchInputV2
+    public partial class KeyPhraseBatchResult
     {
         /// <summary>
-        /// Initializes a new instance of the BatchInputV2 class.
+        /// Initializes a new instance of the KeyPhraseBatchResult class.
         /// </summary>
-        public BatchInputV2()
+        public KeyPhraseBatchResult()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BatchInputV2 class.
+        /// Initializes a new instance of the KeyPhraseBatchResult class.
         /// </summary>
-        public BatchInputV2(IList<InputV2> documents = default(IList<InputV2>))
+        public KeyPhraseBatchResult(IList<KeyPhraseBatchResultItem> documents = default(IList<KeyPhraseBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
         {
             Documents = documents;
+            Errors = errors;
             CustomInit();
         }
 
@@ -43,7 +44,12 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
-        public IList<InputV2> Documents { get; set; }
+        public IList<KeyPhraseBatchResultItem> Documents { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "errors")]
+        public IList<ErrorRecord> Errors { get; private set; }
 
     }
 }

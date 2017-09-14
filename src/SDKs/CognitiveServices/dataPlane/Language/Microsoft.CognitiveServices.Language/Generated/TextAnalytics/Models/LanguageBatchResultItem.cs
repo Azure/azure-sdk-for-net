@@ -12,26 +12,30 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using Microsoft.CognitiveServices.Language;
     using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class InputV2
+    public partial class LanguageBatchResultItem
     {
         /// <summary>
-        /// Initializes a new instance of the InputV2 class.
+        /// Initializes a new instance of the LanguageBatchResultItem class.
         /// </summary>
-        public InputV2()
+        public LanguageBatchResultItem()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InputV2 class.
+        /// Initializes a new instance of the LanguageBatchResultItem class.
         /// </summary>
-        /// <param name="id">Unique, non-empty document identifier.</param>
-        public InputV2(string id = default(string), string text = default(string))
+        /// <param name="id">Unique document identifier.</param>
+        /// <param name="detectedLanguages">A list of extracted
+        /// languages.</param>
+        public LanguageBatchResultItem(string id = default(string), IList<DetectedLanguage> detectedLanguages = default(IList<DetectedLanguage>))
         {
             Id = id;
-            Text = text;
+            DetectedLanguages = detectedLanguages;
             CustomInit();
         }
 
@@ -41,15 +45,16 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unique, non-empty document identifier.
+        /// Gets unique document identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
+        /// Gets a list of extracted languages.
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
+        [JsonProperty(PropertyName = "detectedLanguages")]
+        public IList<DetectedLanguage> DetectedLanguages { get; private set; }
 
     }
 }

@@ -37,7 +37,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// Collection of documents to analyze. Documents can now contain a language
             /// field to indicate the text language
             /// </param>
-            public static KeyPhraseBatchResultV2 KeyPhrases(this ITextAnalyticsAPI operations, MultiLanguageBatchInputV2 input)
+            public static KeyPhraseBatchResult KeyPhrases(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input)
             {
                 return operations.KeyPhrasesAsync(input).GetAwaiter().GetResult();
             }
@@ -63,7 +63,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<KeyPhraseBatchResultV2> KeyPhrasesAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInputV2 input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<KeyPhraseBatchResult> KeyPhrasesAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.KeyPhrasesWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -88,7 +88,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// (Optional. Deprecated) Number of languages to detect. Set to 1 by default.
             /// Irrespective of the value, the language with the highest score is returned.
             /// </param>
-            public static LanguageBatchResultV2 DetectLanguage(this ITextAnalyticsAPI operations, BatchInputV2 input, int? numberOfLanguagesToDetect = default(int?))
+            public static LanguageBatchResult DetectLanguage(this ITextAnalyticsAPI operations, BatchInput input, int? numberOfLanguagesToDetect = default(int?))
             {
                 return operations.DetectLanguageAsync(input, numberOfLanguagesToDetect).GetAwaiter().GetResult();
             }
@@ -113,7 +113,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LanguageBatchResultV2> DetectLanguageAsync(this ITextAnalyticsAPI operations, BatchInputV2 input, int? numberOfLanguagesToDetect = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LanguageBatchResult> DetectLanguageAsync(this ITextAnalyticsAPI operations, BatchInput input, int? numberOfLanguagesToDetect = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(input, numberOfLanguagesToDetect, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -140,7 +140,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// <param name='input'>
             /// Collection of documents to analyze.
             /// </param>
-            public static SentimentBatchResultV2 Sentiment(this ITextAnalyticsAPI operations, MultiLanguageBatchInputV2 input)
+            public static SentimentBatchResult Sentiment(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input)
             {
                 return operations.SentimentAsync(input).GetAwaiter().GetResult();
             }
@@ -167,7 +167,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SentimentBatchResultV2> SentimentAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInputV2 input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SentimentBatchResult> SentimentAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.SentimentWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
                 {

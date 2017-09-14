@@ -158,7 +158,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<KeyPhraseBatchResultV2>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInputV2 input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionKey == null)
             {
@@ -263,7 +263,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<KeyPhraseBatchResultV2>();
+            var _result = new HttpOperationResponse<KeyPhraseBatchResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -272,7 +272,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<KeyPhraseBatchResultV2>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<KeyPhraseBatchResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -326,7 +326,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LanguageBatchResultV2>> DetectLanguageWithHttpMessagesAsync(BatchInputV2 input, int? numberOfLanguagesToDetect = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(BatchInput input, int? numberOfLanguagesToDetect = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionKey == null)
             {
@@ -441,7 +441,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<LanguageBatchResultV2>();
+            var _result = new HttpOperationResponse<LanguageBatchResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -450,7 +450,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<LanguageBatchResultV2>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<LanguageBatchResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -506,7 +506,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SentimentBatchResultV2>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInputV2 input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionKey == null)
             {
@@ -611,7 +611,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<SentimentBatchResultV2>();
+            var _result = new HttpOperationResponse<SentimentBatchResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -620,7 +620,7 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<SentimentBatchResultV2>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<SentimentBatchResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

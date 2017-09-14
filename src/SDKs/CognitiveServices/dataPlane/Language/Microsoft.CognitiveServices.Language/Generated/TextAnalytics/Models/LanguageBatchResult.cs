@@ -16,20 +16,20 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class KeyPhraseBatchResultV2
+    public partial class LanguageBatchResult
     {
         /// <summary>
-        /// Initializes a new instance of the KeyPhraseBatchResultV2 class.
+        /// Initializes a new instance of the LanguageBatchResult class.
         /// </summary>
-        public KeyPhraseBatchResultV2()
+        public LanguageBatchResult()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the KeyPhraseBatchResultV2 class.
+        /// Initializes a new instance of the LanguageBatchResult class.
         /// </summary>
-        public KeyPhraseBatchResultV2(IList<KeyPhraseBatchResultItemV2> documents = default(IList<KeyPhraseBatchResultItemV2>), IList<ErrorRecordV2> errors = default(IList<ErrorRecordV2>))
+        public LanguageBatchResult(IList<LanguageBatchResultItem> documents = default(IList<LanguageBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
         {
             Documents = documents;
             Errors = errors;
@@ -44,12 +44,12 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
-        public IList<KeyPhraseBatchResultItemV2> Documents { get; set; }
+        public IList<LanguageBatchResultItem> Documents { get; private set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
-        public IList<ErrorRecordV2> Errors { get; set; }
+        public IList<ErrorRecord> Errors { get; private set; }
 
     }
 }

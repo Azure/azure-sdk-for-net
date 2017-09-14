@@ -12,26 +12,26 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using Microsoft.CognitiveServices.Language;
     using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class MultiLanguageBatchInputV2
+    public partial class Input
     {
         /// <summary>
-        /// Initializes a new instance of the MultiLanguageBatchInputV2 class.
+        /// Initializes a new instance of the Input class.
         /// </summary>
-        public MultiLanguageBatchInputV2()
+        public Input()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MultiLanguageBatchInputV2 class.
+        /// Initializes a new instance of the Input class.
         /// </summary>
-        public MultiLanguageBatchInputV2(IList<MultiLanguageInputV2> documents = default(IList<MultiLanguageInputV2>))
+        /// <param name="id">Unique, non-empty document identifier.</param>
+        public Input(string id = default(string), string text = default(string))
         {
-            Documents = documents;
+            Id = id;
+            Text = text;
             CustomInit();
         }
 
@@ -41,9 +41,15 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets unique, non-empty document identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "documents")]
-        public IList<MultiLanguageInputV2> Documents { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "text")]
+        public string Text { get; set; }
 
     }
 }

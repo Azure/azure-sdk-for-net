@@ -12,27 +12,28 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
     using Microsoft.CognitiveServices.Language;
     using Microsoft.CognitiveServices.Language.TextAnalytics;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class LanguageBatchResultV2
+    public partial class ErrorRecord
     {
         /// <summary>
-        /// Initializes a new instance of the LanguageBatchResultV2 class.
+        /// Initializes a new instance of the ErrorRecord class.
         /// </summary>
-        public LanguageBatchResultV2()
+        public ErrorRecord()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LanguageBatchResultV2 class.
+        /// Initializes a new instance of the ErrorRecord class.
         /// </summary>
-        public LanguageBatchResultV2(IList<LanguageBatchResultItemV2> documents = default(IList<LanguageBatchResultItemV2>), IList<ErrorRecordV2> errors = default(IList<ErrorRecordV2>))
+        /// <param name="id">Input document unique identifier the error refers
+        /// to.</param>
+        /// <param name="message">Error message.</param>
+        public ErrorRecord(string id = default(string), string message = default(string))
         {
-            Documents = documents;
-            Errors = errors;
+            Id = id;
+            Message = message;
             CustomInit();
         }
 
@@ -42,14 +43,16 @@ namespace Microsoft.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets input document unique identifier the error refers to.
         /// </summary>
-        [JsonProperty(PropertyName = "documents")]
-        public IList<LanguageBatchResultItemV2> Documents { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets error message.
         /// </summary>
-        [JsonProperty(PropertyName = "errors")]
-        public IList<ErrorRecordV2> Errors { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
