@@ -23,12 +23,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
         }
 
-        [Conditional("DEBUG")]
-        public static void Assert(bool condition, string message)
-        {
-            Debug.Assert(condition, message);
-        }
-
         public static class Tag
         {
             public enum CacheAttrition

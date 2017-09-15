@@ -355,9 +355,17 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.ThrowIfClosed();
             this.ThrowIfNotPeekLockMode();
 
-            var count = MessageReceiver.ValidateSequenceNumbers(sequenceNumbers);
+            if (sequenceNumbers == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(sequenceNumbers));
+            }
+            var sequenceNumberList = sequenceNumbers.ToArray();
+            if (sequenceNumberList.Length == 0)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(sequenceNumbers));
+            }
 
-            MessagingEventSource.Log.MessageReceiveDeferredMessageStart(this.ClientId, count, sequenceNumbers);
+            MessagingEventSource.Log.MessageReceiveDeferredMessageStart(this.ClientId, sequenceNumberList.Length, sequenceNumberList);
 
             IList<Message> messages = null;
             try
@@ -365,7 +373,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 await this.RetryPolicy.RunOperation(
                     async () =>
                     {
-                        messages = await this.OnReceiveDeferredMessageAsync(sequenceNumbers).ConfigureAwait(false);
+                        messages = await this.OnReceiveDeferredMessageAsync(sequenceNumberList).ConfigureAwait(false);
                     }, this.OperationTimeout)
                     .ConfigureAwait(false);
             }
@@ -407,16 +415,24 @@ namespace Microsoft.Azure.ServiceBus.Core
         {
             this.ThrowIfClosed();
             this.ThrowIfNotPeekLockMode();
-            var count = MessageReceiver.ValidateLockTokens(lockTokens);
+            if (lockTokens == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(lockTokens));
+            }
+            var lockTokenList = lockTokens.ToList();
+            if (lockTokenList.Count == 0)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(lockTokens));
+            }
 
-            MessagingEventSource.Log.MessageCompleteStart(this.ClientId, count, lockTokens);
+            MessagingEventSource.Log.MessageCompleteStart(this.ClientId, lockTokenList.Count, lockTokenList);
 
             try
             {
                 await this.RetryPolicy.RunOperation(
                     async () =>
                     {
-                        await this.OnCompleteAsync(lockTokens).ConfigureAwait(false);
+                        await this.OnCompleteAsync(lockTokenList).ConfigureAwait(false);
                     }, this.OperationTimeout)
                     .ConfigureAwait(false);
             }
@@ -540,7 +556,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed. 
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
         public async Task RenewLockAsync(Message message)
@@ -556,7 +572,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed. 
+        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
         public async Task<DateTime> RenewLockAsync(string lockToken)
@@ -806,16 +822,15 @@ namespace Microsoft.Azure.ServiceBus.Core
                     receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 }
 
-                IEnumerable<AmqpMessage> amqpMessages = null;
                 IList<Message> brokeredMessages = null;
 
                 while (timeoutHelper.RemainingTime() > TimeSpan.Zero)
                 {
+                    IEnumerable<AmqpMessage> amqpMessages = null;
                     var hasMessages = await Task.Factory.FromAsync(
                         (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),
                         a => receiveLink.EndReceiveMessages(a, out amqpMessages),
                         this).ConfigureAwait(false);
-
                     Exception exception;
                     if ((exception = receiveLink.GetInnerException()) != null)
                     {
@@ -916,13 +931,13 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        protected virtual async Task<IList<Message>> OnReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers)
+        protected virtual async Task<IList<Message>> OnReceiveDeferredMessageAsync(long[] sequenceNumbers)
         {
             var messages = new List<Message>();
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, this.OperationTimeout, null);
-                amqpRequestMessage.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers.ToArray();
+                amqpRequestMessage.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
                 amqpRequestMessage.Map[ManagementConstants.Properties.ReceiverSettleMode] = (uint)(this.ReceiveMode == ReceiveMode.ReceiveAndDelete ? 0 : 1);
 
                 var response = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
@@ -959,7 +974,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         protected virtual Task OnCompleteAsync(IEnumerable<string> lockTokens)
         {
-            var lockTokenGuids = lockTokens.Select(lt => new Guid(lt));
+            var lockTokenGuids = lockTokens.Select(lt => new Guid(lt)).ToArray();
             if (lockTokenGuids.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
                 return this.DisposeMessageRequestResponseAsync(lockTokenGuids, DispositionStatus.Completed);
@@ -969,7 +984,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         protected virtual Task OnAbandonAsync(string lockToken)
         {
-            IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
+            var lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
                 return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Abandoned);
@@ -979,7 +994,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         protected virtual Task OnDeferAsync(string lockToken)
         {
-            IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
+            var lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
                 return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Defered);
@@ -989,7 +1004,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         protected virtual Task OnDeadLetterAsync(string lockToken)
         {
-            IEnumerable<Guid> lockTokens = new[] { new Guid(lockToken) };
+            var lockTokens = new[] { new Guid(lockToken) };
             if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
             {
                 return this.DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Suspended);
@@ -1065,28 +1080,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             MessagingEventSource.Log.RegisterOnMessageHandlerStop(this.ClientId);
-        }
-
-        static int ValidateLockTokens(IEnumerable<string> lockTokens)
-        {
-            int count;
-            if (lockTokens == null || (count = lockTokens.Count()) == 0)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(lockTokens));
-            }
-
-            return count;
-        }
-
-        static int ValidateSequenceNumbers(IEnumerable<long> sequenceNumbers)
-        {
-            int count;
-            if (sequenceNumbers == null || (count = sequenceNumbers.Count()) == 0)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(sequenceNumbers));
-            }
-
-            return count;
         }
 
         static void CloseSession(ReceivingAmqpLink link)
@@ -1208,13 +1201,13 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task DisposeMessageRequestResponseAsync(IEnumerable<Guid> lockTokens, DispositionStatus dispositionStatus)
+        async Task DisposeMessageRequestResponseAsync(Guid[] lockTokens, DispositionStatus dispositionStatus)
         {
             try
             {
                 // Create an AmqpRequest Message to update disposition
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.UpdateDispositionOperation, this.OperationTimeout, null);
-                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens.ToArray();
+                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens;
                 amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);

@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
+    using System.Diagnostics;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public TokenProviderAdapter(TokenProvider tokenProvider, TimeSpan operationTimeout)
         {
-            Fx.Assert(tokenProvider != null, "tokenProvider cannot be null");
+            Debug.Assert(tokenProvider != null, "tokenProvider cannot be null");
             this.tokenProvider = tokenProvider;
             this.operationTimeout = operationTimeout;
         }

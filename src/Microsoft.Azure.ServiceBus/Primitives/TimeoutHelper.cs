@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public TimeoutHelper(TimeSpan timeout, bool startTimeout)
         {
-            Fx.Assert(timeout >= TimeSpan.Zero, "timeout must be non-negative");
+            Debug.Assert(timeout >= TimeSpan.Zero, "timeout must be non-negative");
 
             this.originalTimeout = timeout;
             this.deadline = DateTime.MaxValue;
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         void SetDeadline()
         {
-            Fx.Assert(!this.deadlineSet, "TimeoutHelper deadline set twice.");
+            Debug.Assert(!this.deadlineSet, "TimeoutHelper deadline set twice.");
             this.deadline = DateTime.UtcNow + this.originalTimeout;
             this.deadlineSet = true;
         }

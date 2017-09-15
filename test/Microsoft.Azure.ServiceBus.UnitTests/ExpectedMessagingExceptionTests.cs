@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
-    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Core;
@@ -25,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await TestUtility.SendMessagesAsync(sender, messageCount);
                 var receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
 
-                Assert.True(receivedMessages.Count() == messageCount);
+                Assert.True(receivedMessages.Count == messageCount);
 
                 // Let the messages expire
                 await Task.Delay(TimeSpan.FromMinutes(1));
@@ -36,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         async () => await TestUtility.CompleteMessagesAsync(receiver, receivedMessages));
 
                 receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
-                Assert.True(receivedMessages.Count() == messageCount);
+                Assert.True(receivedMessages.Count == messageCount);
 
                 await TestUtility.CompleteMessagesAsync(receiver, receivedMessages);
             }

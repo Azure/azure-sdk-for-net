@@ -423,7 +423,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         protected virtual void OnMessageHandler(Microsoft.Azure.ServiceBus.MessageHandlerOptions registerHandlerOptions, System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> callback) { }
         protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1) { }
         protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> OnReceiveAsync(int maxMessageCount, System.TimeSpan serverWaitTime) { }
-        protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> OnReceiveDeferredMessageAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers) { }
+        protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> OnReceiveDeferredMessageAsync(long[] sequenceNumbers) { }
         protected virtual System.Threading.Tasks.Task<System.DateTime> OnRenewLockAsync(string lockToken) { }
         public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> PeekAsync() { }
         public System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> PeekAsync(int maxMessageCount) { }

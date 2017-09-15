@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
-            Assert.True(messageCount == receivedMessages.Count());
+            Assert.True(messageCount == receivedMessages.Count);
         }
 
         internal async Task PeekLockWithAbandonTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
@@ -37,13 +37,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Receive 5 messages and Abandon them
             var abandonMessagesCount = 5;
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, abandonMessagesCount);
-            Assert.True(receivedMessages.Count() == abandonMessagesCount);
+            Assert.True(receivedMessages.Count == abandonMessagesCount);
 
             await TestUtility.AbandonMessagesAsync(messageReceiver, receivedMessages);
 
             // Receive all 10 messages
             receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
-            Assert.True(receivedMessages.Count() == messageCount);
+            Assert.True(receivedMessages.Count == messageCount);
 
             // TODO: Some reason for partitioned entities the delivery count is incorrect. Investigate and enable
             // 5 of these messages should have deliveryCount = 2
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Receive 5 messages and Deadletter them
             var deadLetterMessageCount = 5;
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, deadLetterMessageCount);
-            Assert.True(receivedMessages.Count() == deadLetterMessageCount);
+            Assert.True(receivedMessages.Count == deadLetterMessageCount);
 
             await TestUtility.DeadLetterMessagesAsync(messageReceiver, receivedMessages);
 
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Receive 5 DLQ messages and Complete them
             receivedMessages = await TestUtility.ReceiveMessagesAsync(deadLetterReceiver, deadLetterMessageCount);
-            Assert.True(receivedMessages.Count() == deadLetterMessageCount);
+            Assert.True(receivedMessages.Count == deadLetterMessageCount);
             await TestUtility.CompleteMessagesAsync(deadLetterReceiver, receivedMessages);
         }
 
@@ -89,24 +89,24 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Receive 5 messages And Defer them
             var deferMessagesCount = 5;
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, deferMessagesCount);
-            Assert.True(receivedMessages.Count() == deferMessagesCount);
-            var sequenceNumbers = receivedMessages.Select(receivedMessage => receivedMessage.SystemProperties.SequenceNumber);
+            Assert.True(receivedMessages.Count == deferMessagesCount);
+            var sequenceNumbers = receivedMessages.Select(receivedMessage => receivedMessage.SystemProperties.SequenceNumber).ToList();
             await TestUtility.DeferMessagesAsync(messageReceiver, receivedMessages);
 
             // Receive and Complete 5 other regular messages
             receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount - deferMessagesCount);
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
-            Assert.True(receivedMessages.Count() == messageCount - deferMessagesCount);
+            Assert.True(receivedMessages.Count == messageCount - deferMessagesCount);
 
             // Receive / Abandon deferred messages
             receivedMessages = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumbers);
-            Assert.True(receivedMessages.Count() == 5);
+            Assert.True(receivedMessages.Count == 5);
             await TestUtility.DeferMessagesAsync(messageReceiver, receivedMessages);
 
             // Receive Again and Check delivery count
             receivedMessages = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumbers);
             var count = receivedMessages.Count(message => message.SystemProperties.DeliveryCount == 3);
-            Assert.True(count == receivedMessages.Count());
+            Assert.True(count == receivedMessages.Count);
 
             // Complete messages
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Complete Messages
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
 
-            Assert.True(receivedMessages.Count() == messageCount);
+            Assert.True(receivedMessages.Count == messageCount);
         }
 
         internal async Task PeekAsyncTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             peekedMessages.Add(await TestUtility.PeekMessageAsync(messageReceiver));
             peekedMessages.AddRange(await TestUtility.PeekMessagesAsync(messageReceiver, messageCount - 1));
 
-            Assert.True(messageCount == peekedMessages.Count());
+            Assert.True(messageCount == peekedMessages.Count);
             long lastSequenceNumber = -1;
             foreach (var message in peekedMessages)
             {
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => messageReceiver.ReceiveAsync(TimeSpan.Zero));
         }
-        
+
         internal async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
         {
             var startTime = DateTime.UtcNow;

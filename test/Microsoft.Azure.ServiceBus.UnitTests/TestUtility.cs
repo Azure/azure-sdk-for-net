@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Sent {messageCount} messages");
         }
 
-        internal static async Task<IEnumerable<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
+        internal static async Task<IList<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
             var receiveAttempts = 0;
             var messagesToReturn = new List<Message>();
@@ -112,10 +112,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return peekedMessages;
         }
 
-        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
+        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IList<Message> messages)
         {
             await messageReceiver.CompleteAsync(messages.Select(message => message.SystemProperties.LockToken));
-            Log($"Completed {messages.Count()} messages");
+            Log($"Completed {messages.Count} messages");
         }
 
         internal static async Task AbandonMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
