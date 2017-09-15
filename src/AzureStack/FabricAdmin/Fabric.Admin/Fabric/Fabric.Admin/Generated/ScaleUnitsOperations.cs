@@ -70,10 +70,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ProvisioningState>> ScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationStatus>> ScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<ProvisioningState> _response = await BeginScaleOutWithHttpMessagesAsync(location, scaleUnit, serversToBeAdded, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<OperationStatus> _response = await BeginScaleOutWithHttpMessagesAsync(location, scaleUnit, serversToBeAdded, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -505,7 +505,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ProvisioningState>> BeginScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationStatus>> BeginScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -650,7 +650,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ProvisioningState>();
+            var _result = new AzureOperationResponse<OperationStatus>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -663,7 +663,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProvisioningState>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatus>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -681,7 +681,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProvisioningState>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatus>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -699,7 +699,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProvisioningState>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationStatus>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

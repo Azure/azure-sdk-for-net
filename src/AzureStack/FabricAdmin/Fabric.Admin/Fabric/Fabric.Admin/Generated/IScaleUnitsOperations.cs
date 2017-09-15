@@ -52,7 +52,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> ScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> ScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a scale unit.
         /// </summary>
@@ -130,7 +130,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> BeginScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> BeginScaleOutWithHttpMessagesAsync(string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all scale units at a location.
         /// </summary>

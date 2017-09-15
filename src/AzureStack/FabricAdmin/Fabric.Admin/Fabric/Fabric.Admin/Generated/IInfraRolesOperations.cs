@@ -49,7 +49,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> ScaleUpWithHttpMessagesAsync(string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> ScaleUpWithHttpMessagesAsync(string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get an infra role description.
         /// </summary>
@@ -124,7 +124,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> BeginScaleUpWithHttpMessagesAsync(string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> BeginScaleUpWithHttpMessagesAsync(string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all infra roles at a location.
         /// </summary>
