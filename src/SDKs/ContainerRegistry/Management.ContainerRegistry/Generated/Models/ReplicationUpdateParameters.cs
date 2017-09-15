@@ -12,31 +12,32 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ContainerRegistry;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The login password for the container registry.
+    /// The parameters for updating a replication.
     /// </summary>
-    public partial class RegistryPassword
+    public partial class ReplicationUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the RegistryPassword class.
+        /// Initializes a new instance of the ReplicationUpdateParameters
+        /// class.
         /// </summary>
-        public RegistryPassword()
+        public ReplicationUpdateParameters()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegistryPassword class.
+        /// Initializes a new instance of the ReplicationUpdateParameters
+        /// class.
         /// </summary>
-        /// <param name="name">The password name. Possible values include:
-        /// 'password', 'password2'</param>
-        /// <param name="value">The password value.</param>
-        public RegistryPassword(PasswordName? name = default(PasswordName?), string value = default(string))
+        /// <param name="tags">The tags for the replication.</param>
+        public ReplicationUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Name = name;
-            Value = value;
+            Tags = tags;
             CustomInit();
         }
 
@@ -46,17 +47,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the password name. Possible values include:
-        /// 'password', 'password2'
+        /// Gets or sets the tags for the replication.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public PasswordName? Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the password value.
-        /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

@@ -13,15 +13,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Microsoft.Azure.Management.ContainerRegistry;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for WebhookStatus.
     /// </summary>
-    public static class ProvisioningState
+    public static class WebhookStatus
     {
-        public const string Creating = "Creating";
-        public const string Updating = "Updating";
-        public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Canceled = "Canceled";
+        public const string Enabled = "enabled";
+        public const string Disabled = "disabled";
     }
 }

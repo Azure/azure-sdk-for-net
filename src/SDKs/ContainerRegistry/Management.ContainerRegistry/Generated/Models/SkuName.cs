@@ -13,15 +13,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Microsoft.Azure.Management.ContainerRegistry;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for SkuName.
     /// </summary>
-    public static class ProvisioningState
+    public static class SkuName
     {
-        public const string Creating = "Creating";
-        public const string Updating = "Updating";
-        public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Canceled = "Canceled";
+        public const string Classic = "Classic";
+        public const string ManagedBasic = "Managed_Basic";
+        public const string ManagedStandard = "Managed_Standard";
+        public const string ManagedPremium = "Managed_Premium";
     }
 }
