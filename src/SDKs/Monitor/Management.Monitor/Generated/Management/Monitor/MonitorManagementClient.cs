@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         public virtual IAutoscaleSettingsOperations AutoscaleSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IAlertRuleIncidentsOperations.
         /// </summary>
         public virtual IAlertRuleIncidentsOperations AlertRuleIncidents { get; private set; }
@@ -311,6 +316,7 @@ namespace Microsoft.Azure.Management.Monitor.Management
         private void Initialize()
         {
             AutoscaleSettings = new AutoscaleSettingsOperations(this);
+            Operations = new Operations(this);
             AlertRuleIncidents = new AlertRuleIncidentsOperations(this);
             AlertRules = new AlertRulesOperations(this);
             LogProfiles = new LogProfilesOperations(this);

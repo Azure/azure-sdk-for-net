@@ -90,8 +90,7 @@ namespace Monitor.Tests.Scenarios
                         },
                         TimeGrain = TimeSpan.FromMinutes(1)
                     }
-                },
-                Location = string.Empty
+                }
             };
         }
         

@@ -13,38 +13,34 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
     using Microsoft.Azure.Management.Monitor;
     using Microsoft.Azure.Management.Monitor.Management;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The diagnostic settings category resource.
+    /// A proxy only azure resource object
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class DiagnosticSettingsCategoryResource : ProxyOnlyResource
+    public partial class ProxyOnlyResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DiagnosticSettingsCategoryResource class.
+        /// Initializes a new instance of the ProxyOnlyResource class.
         /// </summary>
-        public DiagnosticSettingsCategoryResource()
+        public ProxyOnlyResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DiagnosticSettingsCategoryResource class.
+        /// Initializes a new instance of the ProxyOnlyResource class.
         /// </summary>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
-        /// <param name="categoryType">The type of the diagnostic settings
-        /// category. Possible values include: 'Metrics', 'Logs'</param>
-        public DiagnosticSettingsCategoryResource(string id = default(string), string name = default(string), string type = default(string), CategoryType categoryType = default(CategoryType))
-            : base(id, name, type)
+        public ProxyOnlyResource(string id = default(string), string name = default(string), string type = default(string))
         {
-            CategoryType = categoryType;
+            Id = id;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -54,11 +50,22 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of the diagnostic settings category. Possible
-        /// values include: 'Metrics', 'Logs'
+        /// Gets azure resource Id
         /// </summary>
-        [JsonProperty(PropertyName = "properties.categoryType")]
-        public CategoryType CategoryType { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets azure resource name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets azure resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

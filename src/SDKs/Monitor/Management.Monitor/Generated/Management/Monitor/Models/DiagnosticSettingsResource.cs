@@ -20,10 +20,10 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of diagnostic setting resource.
+    /// The diagnostic setting resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DiagnosticSettingsResource : Resource
+    public partial class DiagnosticSettingsResource : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the DiagnosticSettingsResource class.
@@ -36,11 +36,9 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// <summary>
         /// Initializes a new instance of the DiagnosticSettingsResource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="storageAccountId">The resource ID of the storage
         /// account to which you would like to send Diagnostic Logs.</param>
         /// <param name="eventHubAuthorizationRuleId">The resource Id for the
@@ -53,8 +51,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// Analytics workspace) for a Log Analytics workspace to which you
         /// would like to send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2</param>
-        public DiagnosticSettingsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
-            : base(location, id, name, type, tags)
+        public DiagnosticSettingsResource(string id = default(string), string name = default(string), string type = default(string), string storageAccountId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
+            : base(id, name, type)
         {
             StorageAccountId = storageAccountId;
             EventHubAuthorizationRuleId = eventHubAuthorizationRuleId;
@@ -111,35 +109,5 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         [JsonProperty(PropertyName = "properties.workspaceId")]
         public string WorkspaceId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-            if (Metrics != null)
-            {
-                foreach (var element in Metrics)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (Logs != null)
-            {
-                foreach (var element1 in Logs)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-        }
     }
 }

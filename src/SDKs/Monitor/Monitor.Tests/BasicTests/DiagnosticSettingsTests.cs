@@ -58,13 +58,11 @@ namespace Monitor.Tests.BasicTests
             monitorManagementClient = GetMonitorManagementClient(handler);
 
             DiagnosticSettingsResource patchResource = new DiagnosticSettingsResource(
-                tags: resource.Tags,
                 storageAccountId: resource.StorageAccountId,
                 eventHubAuthorizationRuleId: resource.EventHubAuthorizationRuleId,
                 metrics: resource.Metrics,
                 logs: resource.Logs,
-                workspaceId: resource.WorkspaceId,
-                location: "eastus"
+                workspaceId: resource.WorkspaceId
             );
 
             DiagnosticSettingsResource response = monitorManagementClient.DiagnosticSettings.CreateOrUpdate(
@@ -124,8 +122,7 @@ namespace Monitor.Tests.BasicTests
                         },
                         TimeGrain = TimeSpan.FromMinutes(1)
                     }
-                },
-                Location = ""
+                }
             };
         }
 
