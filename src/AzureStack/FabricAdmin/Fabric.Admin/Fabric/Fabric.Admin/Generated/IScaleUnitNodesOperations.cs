@@ -49,7 +49,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> PowerOffWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> PowerOffWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Power on a scale unit node.
         /// </summary>
@@ -74,7 +74,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> PowerOnWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> PowerOnWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Start maintenance mode for a scale unit node.
         /// </summary>
@@ -99,7 +99,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> StartMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> StartMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Stop maintenance mode for a scale unit node.
         /// </summary>
@@ -124,7 +124,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> StopMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> StopMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a specific scale unit node.
         /// </summary>
@@ -199,7 +199,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> BeginPowerOffWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> BeginPowerOffWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Power on a scale unit node.
         /// </summary>
@@ -224,7 +224,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> BeginPowerOnWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> BeginPowerOnWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Start maintenance mode for a scale unit node.
         /// </summary>
@@ -249,7 +249,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> BeginStartMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> BeginStartMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Stop maintenance mode for a scale unit node.
         /// </summary>
@@ -274,7 +274,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProvisioningState>> BeginStopMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> BeginStopMaintenanceModeWithHttpMessagesAsync(string location, string scaleUnitNode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all scale unit nodes in a location.
         /// </summary>

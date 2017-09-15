@@ -92,7 +92,8 @@ namespace Fabric.Tests
                 var scaleUnitNode = client.ScaleUnitNodes.List(Location).GetFirst();
 
                 var provisioningState = client.ScaleUnitNodes.PowerOn(Location, scaleUnitNode.Name);
-                Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                Assert.NotEqual("", provisioningState.ProvisioningState);
+                Assert.Equal("Succeeded", provisioningState.ProvisioningState);
 
                 var sun = client.ScaleUnitNodes.Get(Location, scaleUnitNode.Name);
                 Assert.Equal("Running", sun.PowerState);
@@ -129,7 +130,8 @@ namespace Fabric.Tests
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
                     var provisioningState = client.ScaleUnitNodes.PowerOn(Location, TenantVMName);
-                    Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                    Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
                 });
             });
         }
@@ -140,7 +142,8 @@ namespace Fabric.Tests
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
                     var provisioningState = client.ScaleUnitNodes.PowerOff(Location, TenantVMName);
-                    Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                    Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
                 });
             });
         }
@@ -150,7 +153,8 @@ namespace Fabric.Tests
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
                     var provisioningState = client.ScaleUnitNodes.StartMaintenanceMode(Location, TenantVMName);
-                    Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                    Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
                 });
             });
         }

@@ -35,7 +35,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRole'>
             /// Infra role name.
             /// </param>
-            public static ProvisioningState ScaleUp(this IInfraRolesOperations operations, string location, string infraRole)
+            public static OperationStatus ScaleUp(this IInfraRolesOperations operations, string location, string infraRole)
             {
                 return operations.ScaleUpAsync(location, infraRole).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> ScaleUpAsync(this IInfraRolesOperations operations, string location, string infraRole, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> ScaleUpAsync(this IInfraRolesOperations operations, string location, string infraRole, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ScaleUpWithHttpMessagesAsync(location, infraRole, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -155,7 +155,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRole'>
             /// Infra role name.
             /// </param>
-            public static ProvisioningState BeginScaleUp(this IInfraRolesOperations operations, string location, string infraRole)
+            public static OperationStatus BeginScaleUp(this IInfraRolesOperations operations, string location, string infraRole)
             {
                 return operations.BeginScaleUpAsync(location, infraRole).GetAwaiter().GetResult();
             }
@@ -175,7 +175,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginScaleUpAsync(this IInfraRolesOperations operations, string location, string infraRole, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginScaleUpAsync(this IInfraRolesOperations operations, string location, string infraRole, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginScaleUpWithHttpMessagesAsync(location, infraRole, null, cancellationToken).ConfigureAwait(false))
                 {

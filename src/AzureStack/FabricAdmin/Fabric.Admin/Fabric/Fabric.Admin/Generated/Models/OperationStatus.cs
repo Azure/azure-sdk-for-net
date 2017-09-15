@@ -34,11 +34,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <summary>
         /// Initializes a new instance of the OperationStatus class.
         /// </summary>
-        /// <param name="provisioningStateProperty">The state of the
-        /// operation.</param>
-        public OperationStatus(string provisioningStateProperty = default(string))
+        /// <param name="provisioningState">The state of the operation.</param>
+        public OperationStatus(string provisioningState = default(string))
         {
-            ProvisioningStateProperty = provisioningStateProperty;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -51,7 +50,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// Gets or sets the state of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningStateProperty { get; set; }
+        public string ProvisioningState { get; set; }
 
     }
 }
