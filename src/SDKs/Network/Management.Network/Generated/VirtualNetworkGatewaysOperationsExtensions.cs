@@ -461,6 +461,46 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets a xml format representation for supported vpn devices.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static string SupportedVpnDevices(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return operations.SupportedVpnDevicesAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for supported vpn devices.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> SupportedVpnDevicesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SupportedVpnDevicesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// This operation retrieves a list of routes the virtual network gateway has
             /// learned, including routes learned from BGP peers.
             /// </summary>
@@ -545,6 +585,54 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<GatewayRouteListResult> GetAdvertisedRoutesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAdvertisedRoutesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for vpn device configuration script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway connection for which the
+            /// configuration script is generated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate vpn device script operation.
+            /// </param>
+            public static string VpnDeviceConfigurationScript(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters)
+            {
+                return operations.VpnDeviceConfigurationScriptAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for vpn device configuration script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway connection for which the
+            /// configuration script is generated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate vpn device script operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> VpnDeviceConfigurationScriptAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.VpnDeviceConfigurationScriptWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
