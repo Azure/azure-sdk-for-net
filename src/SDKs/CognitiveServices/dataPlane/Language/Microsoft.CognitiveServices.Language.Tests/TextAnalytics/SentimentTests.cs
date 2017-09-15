@@ -17,11 +17,11 @@ namespace Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "Sentiment");
                 ITextAnalyticsAPI client = GetClient(HttpMockServer.CreateInstance());
-                SentimentBatchResultV2 result = client.Sentiment(
-                    new MultiLanguageBatchInputV2(
-                        new List<MultiLanguageInputV2>()
+                SentimentBatchResult result = client.Sentiment(
+                    new MultiLanguageBatchInput(
+                        new List<MultiLanguageInput>()
                         {
-                            new MultiLanguageInputV2()
+                            new MultiLanguageInput()
                             {
                                 Id ="id",
                                 Text ="I love my team mates",

@@ -8,21 +8,19 @@ namespace FaceSDK.Tests
     {
         public static bool IsTestTenant = false;
         private static string SubscriptionKey = "";
-        private static string Region = null;
 
         static BaseTests()
         {
             // Retrieve the configuration information.
             SubscriptionKey = "";
             // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-            Region = "WestUS";
         }
 
         protected IFaceAPI GetClient(DelegatingHandler handler)
         {
             IFaceAPI client;
             client = new FaceAPI(handlers: handler);
-            client.AzureRegion1 = Region;
+            client.AzureRegion = Microsoft.CognitiveServices.Vision.Face.Models.AzureRegions.Westus;
             client.SubscriptionKey = SubscriptionKey;
 
             return client;

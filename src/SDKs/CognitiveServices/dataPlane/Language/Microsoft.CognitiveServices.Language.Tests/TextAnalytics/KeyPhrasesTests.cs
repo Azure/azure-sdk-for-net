@@ -17,11 +17,11 @@ namespace Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrases");
                 ITextAnalyticsAPI client = GetClient(HttpMockServer.CreateInstance());
-                KeyPhraseBatchResultV2 result = client.KeyPhrases(
-                    new MultiLanguageBatchInputV2(
-                        new List<MultiLanguageInputV2>()
+                KeyPhraseBatchResult result = client.KeyPhrases(
+                    new MultiLanguageBatchInput(
+                        new List<MultiLanguageInput>()
                         {
-                            new MultiLanguageInputV2()
+                            new MultiLanguageInput()
                             {
                                 Id ="id",
                                 Text ="I love my team mates",
