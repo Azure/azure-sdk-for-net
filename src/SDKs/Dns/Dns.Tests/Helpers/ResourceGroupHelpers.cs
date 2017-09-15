@@ -1,21 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
-using Xunit;
 using Microsoft.Azure.Management.Dns.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using SubResource = Microsoft.Azure.Management.Dns.Models.SubResource;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
     using Rest.ClientRuntime.Azure.TestFramework;
+    using SubResource = Models.SubResource;
 
     public static class ResourceGroupHelper
     {
