@@ -24,52 +24,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     public static partial class ScaleUnitsOperationsExtensions
     {
             /// <summary>
-            /// Scales out the cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='scaleUnit'>
-            /// Name of the scale units.
-            /// </param>
-            /// <param name='serversToBeAdded'>
-            /// Descripion of the server to be added.
-            /// </param>
-            public static OperationStatus ScaleOut(this IScaleUnitsOperations operations, string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded)
-            {
-                return operations.ScaleOutAsync(location, scaleUnit, serversToBeAdded).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Scales out the cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='scaleUnit'>
-            /// Name of the scale units.
-            /// </param>
-            /// <param name='serversToBeAdded'>
-            /// Descripion of the server to be added.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<OperationStatus> ScaleOutAsync(this IScaleUnitsOperations operations, string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ScaleOutWithHttpMessagesAsync(location, scaleUnit, serversToBeAdded, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get a scale unit.
             /// </summary>
             /// <param name='operations'>
@@ -144,52 +98,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             public static async Task<IPage<ScaleUnit>> ListAsync(this IScaleUnitsOperations operations, string location, ODataQuery<ScaleUnit> odataQuery = default(ODataQuery<ScaleUnit>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Scales out the cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='scaleUnit'>
-            /// Name of the scale units.
-            /// </param>
-            /// <param name='serversToBeAdded'>
-            /// Descripion of the server to be added.
-            /// </param>
-            public static OperationStatus BeginScaleOut(this IScaleUnitsOperations operations, string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded)
-            {
-                return operations.BeginScaleOutAsync(location, scaleUnit, serversToBeAdded).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Scales out the cluster.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='scaleUnit'>
-            /// Name of the scale units.
-            /// </param>
-            /// <param name='serversToBeAdded'>
-            /// Descripion of the server to be added.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<OperationStatus> BeginScaleOutAsync(this IScaleUnitsOperations operations, string location, string scaleUnit, BareMetalNodeDescription serversToBeAdded, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginScaleOutWithHttpMessagesAsync(location, scaleUnit, serversToBeAdded, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

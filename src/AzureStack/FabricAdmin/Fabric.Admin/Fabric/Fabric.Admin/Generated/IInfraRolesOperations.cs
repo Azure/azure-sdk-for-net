@@ -26,31 +26,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     public partial interface IInfraRolesOperations
     {
         /// <summary>
-        /// Create new infra role instances.
-        /// </summary>
-        /// <param name='location'>
-        /// Location of the resource.
-        /// </param>
-        /// <param name='infraRole'>
-        /// Infra role name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<OperationStatus>> ScaleUpWithHttpMessagesAsync(string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get an infra role description.
         /// </summary>
         /// <param name='location'>
@@ -100,31 +75,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<InfraRole>>> ListWithHttpMessagesAsync(string location, ODataQuery<InfraRole> odataQuery = default(ODataQuery<InfraRole>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Create new infra role instances.
-        /// </summary>
-        /// <param name='location'>
-        /// Location of the resource.
-        /// </param>
-        /// <param name='infraRole'>
-        /// Infra role name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<OperationStatus>> BeginScaleUpWithHttpMessagesAsync(string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all infra roles at a location.
         /// </summary>
