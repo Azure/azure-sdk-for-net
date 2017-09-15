@@ -117,8 +117,20 @@ namespace Microsoft.Hadoop.Avro.Container
             }
 
             int objectCount = this.decoder.DecodeInt();
+            
+            if (objectCount == 0)
+            {
+                return false;
+            }
+
             int blockSize = this.decoder.DecodeInt();
             this.current = new AvroBufferReaderBlock<T>(this.serializer, this.codec, this.decoder.DecodeFixed(blockSize), objectCount);
+ 			
+            if (this.header.SyncMarker.Length == 0)
+            {
+                return false;
+            }
+            
             var marker = this.decoder.DecodeFixed(this.header.SyncMarker.Length);
             if (!marker.SequenceEqual(this.header.SyncMarker))
             {
