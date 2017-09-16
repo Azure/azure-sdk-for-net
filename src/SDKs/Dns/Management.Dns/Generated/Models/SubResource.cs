@@ -11,30 +11,28 @@ namespace Microsoft.Azure.Management.Dns.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Dns;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Parameters supplied to update a record set.
-    /// </summary>
-    public partial class RecordSetUpdateParameters
+    public partial class SubResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the RecordSetUpdateParameters class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public RecordSetUpdateParameters()
+        public SubResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RecordSetUpdateParameters class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        /// <param name="recordSet">Specifies information about the record set
-        /// being updated.</param>
-        public RecordSetUpdateParameters(RecordSet recordSet = default(RecordSet))
+        /// <param name="id">Resource Id.</param>
+        public SubResource(string id = default(string))
         {
-            RecordSet = recordSet;
+            Id = id;
             CustomInit();
         }
 
@@ -44,11 +42,10 @@ namespace Microsoft.Azure.Management.Dns.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies information about the record set being
-        /// updated.
+        /// Gets or sets resource Id.
         /// </summary>
-        [JsonProperty(PropertyName = "RecordSet")]
-        public RecordSet RecordSet { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

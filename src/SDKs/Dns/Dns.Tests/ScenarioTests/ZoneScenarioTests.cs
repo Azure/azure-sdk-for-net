@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
 using Xunit;
 using Microsoft.Azure.Management.Dns.Models;
+using Microsoft.Azure.Management.Network.Models;
+using SubResource = Microsoft.Azure.Management.Dns.Models.SubResource;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
     public class ZoneScenarioTests
     {
         [Fact]
-        public void CrudZoneFullCycle()
+        public void CrudPublicZoneFullCycle()
         {
             using (
                 MockContext context = MockContext.Start(this.GetType().FullName)
@@ -51,11 +51,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ResourceGroupHelper.CreateResourceGroup(
                         resourceManagementClient);
 
-                Action<Zone> assertZoneInvariants = zone =>
+                void AssertZoneInvariants(Zone zone)
                 {
+                    if (zone == null) throw new ArgumentNullException(nameof(zone));
                     Assert.Equal(zoneName, zone.Name);
                     Assert.False(string.IsNullOrEmpty(zone.Etag));
-                };
+                }
 
                 // Create the zone clean, verify response
                 var createdZone = dnsClient.Zones.CreateOrUpdate(
@@ -66,11 +67,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     parameters: new Zone
                     {
                         Location = location,
+                        ZoneType = ZoneType.Public,
                         Tags =
                             new Dictionary<string, string> {{"tag1", "value1"}},
                     });
 
-                assertZoneInvariants(createdZone);
+                AssertZoneInvariants(createdZone);
                 Assert.Equal(1, createdZone.Tags.Count);
                 Assert.True(
                     createdZone.NameServers != null &&
@@ -79,7 +81,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 // Ensure that Id is parseable into resourceGroup
                 string resourceGroupName =
-                    ExtractResourceGroupNameFromId(createdZone.Id);
+                    ExtractNameFromId(createdZone.Id, "resourceGroups");
                 Assert.True(resourceGroupName.Equals(resourceGroup.Name));
 
                 // Retrieve the zone after create, verify response
@@ -87,7 +89,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceGroup.Name,
                     zoneName);
 
-                assertZoneInvariants(retrievedZone);
+                AssertZoneInvariants(retrievedZone);
                 Assert.Equal(1, retrievedZone.Tags.Count);
 
                 Assert.True(
@@ -110,7 +112,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         ifNoneMatch: null,
                         parameters: createdZone);
 
-                assertZoneInvariants(updateResponse);
+                AssertZoneInvariants(updateResponse);
                 Assert.Equal(2, updateResponse.Tags.Count);
 
                 // Retrieve the zone after create, verify response
@@ -118,7 +120,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceGroup.Name,
                     zoneName);
 
-                assertZoneInvariants(retrievedZone);
+                AssertZoneInvariants(retrievedZone);
                 Assert.Equal(2, retrievedZone.Tags.Count);
 
                 // Call Update on the object returned by Get (important distinction from Create above)
@@ -137,40 +139,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         ifNoneMatch: null,
                         parameters: retrievedZone);
 
-                assertZoneInvariants(updateResponse);
+                AssertZoneInvariants(updateResponse);
                 Assert.Equal(3, updateResponse.Tags.Count);
 
                 // Delete the zone
-                DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
+                DeleteZones(dnsClient, resourceGroup, new List<string> {zoneName});
             }
-        }
-
-        private string ExtractResourceGroupNameFromId(string id)
-        {
-            var parts = id.Split(
-                new[] {'/'},
-                StringSplitOptions.RemoveEmptyEntries);
-            int rgIndex = -1;
-            for (int i = 0; i < parts.Length; i++)
-            {
-                if (parts[i].Equals(
-                    "resourceGroups",
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    rgIndex = i;
-                    break;
-                }
-            }
-
-            if (rgIndex != -1 && rgIndex + 1 < parts.Length)
-            {
-                return parts[rgIndex + 1];
-            }
-
-            throw new FormatException(
-                string.Format(
-                    "Unable to extract resource group name from {0} ",
-                    id));
         }
 
         [Fact]
@@ -188,14 +162,26 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
+                var networkHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
+                };
+
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[]
+                var publicZoneNames = new List<string>
                 {
                     TestUtilities.GenerateName("hydratest.dnszone.com"),
                     TestUtilities.GenerateName("hydratest.dnszone.com")
                 };
+
+                var privateZoneName = new List<string>
+                {
+                    TestUtilities.GenerateName("hydratest.privatednszone.com"),
+                    TestUtilities.GenerateName("hydratest.privatednszone.com")
+                };
+
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
                         context,
@@ -203,31 +189,62 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 ResourceGroup resourceGroup =
                     ResourceGroupHelper.CreateResourceGroup(
                         resourceManagementClient);
+
+                var networkManagementClient =
+                    ResourceGroupHelper.GetNetworkClient(
+                        context, networkHandler);
+
+                var registrationVnet = new List<VirtualNetwork>
+                {
+                    ResourceGroupHelper.CreateVirtualNetwork(resourceGroup.Name, networkManagementClient)
+                };
+
+                var resolutionVnet = new List<VirtualNetwork>
+                {
+                    ResourceGroupHelper.CreateVirtualNetwork(resourceGroup.Name, networkManagementClient)
+                };
+
                 ZoneScenarioTests.CreateZones(
                     dnsClient,
                     resourceGroup,
-                    zoneNames,
+                    publicZoneNames,
+                    resourceManagementClient);
+
+                ZoneScenarioTests.CreatePrivateZones(
+                    dnsClient,
+                    resourceGroup,
+                    privateZoneName,
+                    registrationVnet,
+                    resolutionVnet,
                     resourceManagementClient);
 
                 var listresponse =
                     dnsClient.Zones.ListByResourceGroup(resourceGroup.Name);
 
                 Assert.NotNull(listresponse);
-                Assert.Equal(2, listresponse.Count());
+                Assert.Equal(4, listresponse.Count());
                 Assert.True(
                     listresponse.Any(
                         zoneReturned =>
-                            string.Equals(zoneNames[0], zoneReturned.Name))
+                            string.Equals(publicZoneNames[0], zoneReturned.Name))
                     &&
                     listresponse.Any(
                         zoneReturned =>
-                            string.Equals(zoneNames[1], zoneReturned.Name)),
+                            string.Equals(publicZoneNames[1], zoneReturned.Name))
+                    &&
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(privateZoneName[0], zoneReturned.Name))
+                    &&
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(privateZoneName[1], zoneReturned.Name)),
                     "The response of the List request does not meet expectations.");
 
                 ZoneScenarioTests.DeleteZones(
                     dnsClient,
                     resourceGroup,
-                    zoneNames);
+                    publicZoneNames.Concat(privateZoneName).ToList());
             }
         }
 
@@ -246,14 +263,25 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
+                var networkHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
+                };
+
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[]
+                var publicZoneNames = new List<string>
                 {
                     TestUtilities.GenerateName("hydratest.dnszone.com"),
                     TestUtilities.GenerateName("hydratest.dnszone.com")
                 };
+                var privateZoneNames = new List<string>
+                {
+                    TestUtilities.GenerateName("hydratest.privatednszone.com"),
+                    TestUtilities.GenerateName("hydratest.privatednszone.com")
+                };
+
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
                         context,
@@ -261,10 +289,31 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 ResourceGroup resourceGroup =
                     ResourceGroupHelper.CreateResourceGroup(
                         resourceManagementClient);
+
+                var networkManagementClient = ResourceGroupHelper.GetNetworkClient(context, networkHandler);
+
+                var registationVnets = new List<VirtualNetwork>
+                {
+                    ResourceGroupHelper.CreateVirtualNetwork(resourceGroup.Name, networkManagementClient)
+                };
+
+                var resolutionVnets = new List<VirtualNetwork>
+                {
+                    ResourceGroupHelper.CreateVirtualNetwork(resourceGroup.Name, networkManagementClient)
+                };
+
+
                 ZoneScenarioTests.CreateZones(
                     dnsClient,
                     resourceGroup,
-                    zoneNames,
+                    publicZoneNames,
+                    resourceManagementClient);
+                ZoneScenarioTests.CreatePrivateZones(
+                    dnsClient,
+                    resourceGroup,
+                    privateZoneNames,
+                    registationVnets,
+                    resolutionVnets,
                     resourceManagementClient);
 
                 var listresponse = dnsClient.Zones.List();
@@ -274,17 +323,25 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.True(
                     listresponse.Any(
                         zoneReturned =>
-                            string.Equals(zoneNames[0], zoneReturned.Name))
+                            string.Equals(publicZoneNames[0], zoneReturned.Name))
                     &&
                     listresponse.Any(
                         zoneReturned =>
-                            string.Equals(zoneNames[1], zoneReturned.Name)),
+                            string.Equals(publicZoneNames[1], zoneReturned.Name))
+                    &&
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(privateZoneNames[0], zoneReturned.Name))
+                    &&
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(privateZoneNames[1], zoneReturned.Name)),
                     "The response of the List request does not meet expectations.");
 
                 ZoneScenarioTests.DeleteZones(
                     dnsClient,
                     resourceGroup,
-                    zoneNames);
+                    publicZoneNames.Concat(privateZoneNames).ToList());
             }
         }
 
@@ -306,7 +363,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[]
+                var zoneNames = new List<string>
                 {
                     TestUtilities.GenerateName("hydratest.dnszone") + ".com",
                     TestUtilities.GenerateName("hydratest.dnszone") + ".com"
@@ -358,7 +415,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[]
+                var zoneNames = new List<string>
                 {
                     TestUtilities.GenerateName("hydratest.dnszone.com"),
                     TestUtilities.GenerateName("hydratest.dnszone.com")
@@ -536,6 +593,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     new Zone
                     {
                         Location = location,
+                        ZoneType = ZoneType.Public,
                         MaxNumberOfRecordSets = 42,
                         // Test that specifying this value does not break Create (it must be ignored on server side).
                         NumberOfRecordSets = 65,
@@ -558,7 +616,158 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 retrievedZone.MaxNumberOfRecordSets = null;
 
                 // Delete the zone
-                DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
+                DeleteZones(dnsClient, resourceGroup, new List<string> {zoneName});
+            }
+        }
+
+
+        [Fact]
+        public void CrudPrivateZoneFullCycle()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
+                };
+                var networkHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
+                };
+
+                var dnsClient = ResourceGroupHelper.GetDnsClient(
+                    context,
+                    dnsHandler);
+                var resourceManagementClient = 
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                var networkManagementClient = 
+                    ResourceGroupHelper.GetNetworkClient(
+                        context, networkHandler);
+
+                string zoneName =
+                    TestUtilities.GenerateName("hydratest.privatednszone.com");
+                string location =
+                    ResourceGroupHelper.GetResourceLocation(
+                        resourceManagementClient,
+                        "microsoft.network/dnszones");
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+                VirtualNetwork registrationVnet =
+                    ResourceGroupHelper.CreateVirtualNetwork(resourceGroup.Name, networkManagementClient);
+                VirtualNetwork resolutionVnet =
+                    ResourceGroupHelper.CreateVirtualNetwork(resourceGroup.Name, networkManagementClient);
+
+                void AssertPrivateZoneInvariants(Zone zone)
+                {
+                    if (zone == null) throw new ArgumentNullException(nameof(zone));
+                    Assert.Equal(zoneName, zone.Name);
+                    Assert.Equal(ZoneType.Private, zone.ZoneType);
+                    Assert.False(string.IsNullOrEmpty(zone.Etag));
+                }
+
+                //Create private zone clean, verify reponse
+                var createdPrivateZone = dnsClient.Zones.CreateOrUpdate(
+                    resourceGroup.Name,
+                    zoneName,
+                    new Zone
+                    {
+                        Location = location,
+                        ZoneType = ZoneType.Private,
+                        Tags = new Dictionary<string, string> {{"tag1", "value1"}},
+                        RegistrationVirtualNetworks = new List<SubResource>
+                        {
+                            new SubResource(registrationVnet.Id)
+                        },
+                        ResolutionVirtualNetworks = new List<SubResource>
+                        {
+                            new SubResource(resolutionVnet.Id)
+                        }
+                    });
+
+                AssertPrivateZoneInvariants(createdPrivateZone);
+                Assert.Equal(1, createdPrivateZone.Tags.Count);
+                Assert.True(
+                    !createdPrivateZone.NameServers.IsAny());
+
+                // Ensure that Id is parseable into resourceGroup
+                string resourceGroupName =
+                    ExtractNameFromId(createdPrivateZone.Id, "resourceGroups");
+                Assert.True(resourceGroupName.Equals(resourceGroup.Name));
+
+                var virtualNetworkName = 
+                    ExtractNameFromId(createdPrivateZone.RegistrationVirtualNetworks[0].Id, "virtualNetworks");
+                Assert.True(virtualNetworkName.Equals(registrationVnet.Name));
+
+                virtualNetworkName =
+                    ExtractNameFromId(createdPrivateZone.ResolutionVirtualNetworks[0].Id, "virtualNetworks");
+                Assert.True(virtualNetworkName.Equals(resolutionVnet.Name));
+
+
+                // Retrieve the zone after create, verify response
+                var retrievedPrivateZone = dnsClient.Zones.Get(
+                    resourceGroup.Name,
+                    zoneName);
+
+                AssertPrivateZoneInvariants(retrievedPrivateZone);
+                Assert.Equal(1, retrievedPrivateZone.Tags.Count);
+
+                Assert.True(
+                    !retrievedPrivateZone.NameServers.IsAny());
+
+                // Call Update on the object returned by Create (important distinction from Get below)
+                createdPrivateZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"}
+                };
+
+                var updateResponse =
+                    dnsClient.Zones.CreateOrUpdate(
+                        resourceGroup.Name,
+                        zoneName,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: createdPrivateZone);
+
+                AssertPrivateZoneInvariants(updateResponse);
+                Assert.Equal(2, updateResponse.Tags.Count);
+
+                // Retrieve the zone after create, verify response
+                retrievedPrivateZone = dnsClient.Zones.Get(
+                    resourceGroup.Name,
+                    zoneName);
+
+                AssertPrivateZoneInvariants(retrievedPrivateZone);
+                Assert.Equal(2, retrievedPrivateZone.Tags.Count);
+
+                // Call Update on the object returned by Get (important distinction from Create above)
+                retrievedPrivateZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"},
+                    {"tag3", "value3"}
+                };
+
+                updateResponse =
+                    dnsClient.Zones.CreateOrUpdate(
+                        resourceGroup.Name,
+                        zoneName,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: retrievedPrivateZone);
+
+                AssertPrivateZoneInvariants(updateResponse);
+                Assert.Equal(3, updateResponse.Tags.Count);
+
+                // Delete the zone
+                DeleteZones(dnsClient, resourceGroup, new List<string> { zoneName });
             }
         }
 
@@ -567,7 +776,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public static void CreateZones(
             DnsManagementClient dnsClient,
             ResourceGroup resourceGroup,
-            string[] zoneNames,
+            IList<string> zoneNames,
             ResourceManagementClient resourcesClient)
         {
             string location =
@@ -585,10 +794,34 @@ namespace Microsoft.Azure.Management.Dns.Testing
             }
         }
 
+        public static void CreatePrivateZones(
+            DnsManagementClient dnsClient,
+            ResourceGroup resourceGroup,
+            IList<string> zonesNames,
+            IList<VirtualNetwork> registrationVnets,
+            IList<VirtualNetwork> resolutionVnets,
+            ResourceManagementClient resourcesClient)
+        {
+            string location =
+                ResourceGroupHelper.GetResourceLocation(
+                    resourcesClient,
+                    "microsoft.network/dnszones");
+            foreach (var zonesName in zonesNames)
+            {
+                ResourceGroupHelper.CreatePrivateZone(
+                    dnsClient,
+                    zonesName,
+                    location,
+                    registrationVnets.Select(vNet => new SubResource() { Id = vNet.Id }).ToList(),
+                    resolutionVnets.Select(vNet => new SubResource() { Id = vNet.Id }).ToList(),
+                    resourceGroup);
+            }
+        }
+
         public static void DeleteZones(
             DnsManagementClient dnsClient,
             ResourceGroup resourceGroup,
-            string[] zoneNames)
+            IList<string> zoneNames)
         {
             foreach (string zoneName in zoneNames)
             {
@@ -597,6 +830,34 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     zoneName);
                 Assert.True(response.Status == OperationStatus.Succeeded);
             }
+        }
+
+        private static string ExtractNameFromId(string id, string key)
+        {
+            var parts = id.Split(
+                new[] { '/' },
+                StringSplitOptions.RemoveEmptyEntries);
+            int rgIndex = -1;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Equals(
+                    key,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    rgIndex = i;
+                    break;
+                }
+            }
+
+            if (rgIndex != -1 && rgIndex + 1 < parts.Length)
+            {
+                return parts[rgIndex + 1];
+            }
+
+            throw new FormatException(
+                string.Format(
+                    "Unable to extract resource group name from {0} ",
+                    id));
         }
 
         #endregion
