@@ -259,6 +259,23 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
+        public void CreateGetCaa()
+        {
+            Action<RecordSet> setTestRecords = createParams =>
+            {
+                createParams.CaaRecords = new List<CaaRecord>
+                {
+                    new CaaRecord(1, "issue","contoso.com"),
+                    new CaaRecord(0,"issuewild","")
+                };
+
+                return;
+            };
+
+            this.RecordSetCreateGet(RecordType.CAA, setTestRecords);
+        }
+
+        [Fact]
         public void CreateGetA()
         {
             Action<RecordSet> setTestRecords = createParams =>
@@ -868,6 +885,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ifMatch: null);
             }
         }
+
+
 
         #region Helper methods
 
