@@ -34,44 +34,44 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ContainerConfigurationProperty = this.CreatePropertyAccessor<ContainerConfiguration>("ContainerConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.DataDisksProperty = this.CreatePropertyAccessor<IList<DataDisk>>("DataDisks", BindingAccess.Read | BindingAccess.Write);
-                this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>("ImageReference", BindingAccess.Read | BindingAccess.Write);
-                this.LicenseTypeProperty = this.CreatePropertyAccessor<string>("LicenseType", BindingAccess.Read | BindingAccess.Write);
-                this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>("NodeAgentSkuId", BindingAccess.Read | BindingAccess.Write);
-                this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>("OSDisk", BindingAccess.Read | BindingAccess.Write);
-                this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>("WindowsConfiguration", BindingAccess.Read | BindingAccess.Write);
+                this.ContainerConfigurationProperty = this.CreatePropertyAccessor<ContainerConfiguration>(nameof(ContainerConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.DataDisksProperty = this.CreatePropertyAccessor<IList<DataDisk>>(nameof(DataDisks), BindingAccess.Read | BindingAccess.Write);
+                this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>(nameof(ImageReference), BindingAccess.Read | BindingAccess.Write);
+                this.LicenseTypeProperty = this.CreatePropertyAccessor<string>(nameof(LicenseType), BindingAccess.Read | BindingAccess.Write);
+                this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>(nameof(NodeAgentSkuId), BindingAccess.Read | BindingAccess.Write);
+                this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>(nameof(OSDisk), BindingAccess.Read | BindingAccess.Write);
+                this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>(nameof(WindowsConfiguration), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.VirtualMachineConfiguration protocolObject) : base(BindingState.Bound)
             {
                 this.ContainerConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerConfiguration, o => new ContainerConfiguration(o)),
-                    "ContainerConfiguration",
+                    nameof(ContainerConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.DataDisksProperty = this.CreatePropertyAccessor(
                     DataDisk.ConvertFromProtocolCollection(protocolObject.DataDisks),
-                    "DataDisks",
+                    nameof(DataDisks),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ImageReferenceProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ImageReference, o => new ImageReference(o)),
-                    "ImageReference",
+                    nameof(ImageReference),
                     BindingAccess.Read | BindingAccess.Write);
                 this.LicenseTypeProperty = this.CreatePropertyAccessor(
                     protocolObject.LicenseType,
-                    "LicenseType",
+                    nameof(LicenseType),
                     BindingAccess.Read | BindingAccess.Write);
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor(
                     protocolObject.NodeAgentSKUId,
-                    "NodeAgentSkuId",
+                    nameof(NodeAgentSkuId),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OSDiskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.OsDisk, o => new OSDisk(o)),
-                    "OSDisk",
+                    nameof(OSDisk),
                     BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsConfiguration, o => new WindowsConfiguration(o)),
-                    "WindowsConfiguration",
+                    nameof(WindowsConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

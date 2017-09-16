@@ -23,21 +23,15 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
-        private readonly string offer;
-        private readonly string publisher;
-        private readonly string sku;
-        private readonly string version;
-        private readonly string virtualMachineImageId;
-
         #region Constructors
 
         internal ImageReference(Models.ImageReference protocolObject)
         {
-            this.offer = protocolObject.Offer;
-            this.publisher = protocolObject.Publisher;
-            this.sku = protocolObject.Sku;
-            this.version = protocolObject.Version;
-            this.virtualMachineImageId = protocolObject.VirtualMachineImageId;
+            this.Offer = protocolObject.Offer;
+            this.Publisher = protocolObject.Publisher;
+            this.Sku = protocolObject.Sku;
+            this.Version = protocolObject.Version;
+            this.VirtualMachineImageId = protocolObject.VirtualMachineImageId;
         }
 
         #endregion Constructors
@@ -50,10 +44,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// For example, UbuntuServer or WindowsServer.
         /// </remarks>
-        public string Offer
-        {
-            get { return this.offer; }
-        }
+        public string Offer { get; }
 
         /// <summary>
         /// Gets the publisher of the Azure Virtual Machines Marketplace image.
@@ -61,10 +52,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// For example, Canonical or MicrosoftWindowsServer.
         /// </remarks>
-        public string Publisher
-        {
-            get { return this.publisher; }
-        }
+        public string Publisher { get; }
 
         /// <summary>
         /// Gets the SKU of the Azure Virtual Machines Marketplace image.
@@ -72,10 +60,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
         /// </remarks>
-        public string Sku
-        {
-            get { return this.sku; }
-        }
+        public string Sku { get; }
 
         /// <summary>
         /// Gets the version of the Azure Virtual Machines Marketplace image.
@@ -83,10 +68,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// If this property is not specified, it defaults to 'latest', which is the latest version of the image.
         /// </remarks>
-        public string Version
-        {
-            get { return this.version; }
-        }
+        public string Version { get; }
 
         /// <summary>
         /// Gets the ARM resource identifier of the virtual machine image. Computes nodes of the pool will be created using 
@@ -97,10 +79,7 @@ namespace Microsoft.Azure.Batch
         /// the same region and subscription as the Azure Batch account. For information about the firewall settings for 
         /// the Batch node agent to communicate with Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
-        public string VirtualMachineImageId
-        {
-            get { return this.virtualMachineImageId; }
-        }
+        public string VirtualMachineImageId { get; }
 
         #endregion // ImageReference
 

@@ -65,9 +65,9 @@ if (type.UnboundProperties.Any())
             this.Write(this.ToStringHelper.ToStringWithCulture(property.PropertyContainerPropertyName));
             this.Write(" = this.CreatePropertyAccessor<");
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            this.Write(">(\"");
+            this.Write(">(nameof(");
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            this.Write("\", ");
+            this.Write("), ");
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeGenerationUtilities.GenerateBindingAccessString(property.UnboundAccess)));
             this.Write(");\r\n");
 
@@ -93,9 +93,9 @@ if (type.BoundProperties.Any())
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.PropertyContainerPropertyName));
             this.Write(" = this.CreatePropertyAccessor(\r\n                    ");
             this.Write(this.ToStringHelper.ToStringWithCulture(protocolObjectGetter));
-            this.Write(",\r\n                    \"");
+            this.Write(",\r\n                    nameof(");
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Name));
-            this.Write("\",\r\n                    ");
+            this.Write("),\r\n                    ");
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeGenerationUtilities.GenerateBindingAccessString(kvp.Key.BoundAccess)));
             this.Write(");\r\n");
 
@@ -107,9 +107,9 @@ if (type.BoundProperties.Any())
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.PropertyContainerPropertyName));
             this.Write(" = this.CreatePropertyAccessor<");
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Type));
-            this.Write(">(\r\n                    \"");
+            this.Write(">(\r\n                    nameof(");
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Name));
-            this.Write("\",\r\n                    ");
+            this.Write("),\r\n                    ");
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeGenerationUtilities.GenerateBindingAccessString(kvp.Key.BoundAccess)));
             this.Write(");\r\n");
 

@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskContainerExecutionInformation : IPropertyMetadata
     {
-        private readonly string containerId;
-        private readonly string error;
-        private readonly string state;
-
         #region Constructors
 
         internal TaskContainerExecutionInformation(Models.TaskContainerExecutionInformation protocolObject)
         {
-            this.containerId = protocolObject.ContainerId;
-            this.error = protocolObject.Error;
-            this.state = protocolObject.State;
+            this.ContainerId = protocolObject.ContainerId;
+            this.Error = protocolObject.Error;
+            this.State = protocolObject.State;
         }
 
         #endregion Constructors
@@ -42,10 +38,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the ID of the container.
         /// </summary>
-        public string ContainerId
-        {
-            get { return this.containerId; }
-        }
+        public string ContainerId { get; }
 
         /// <summary>
         /// Gets detailed error information about the container.
@@ -54,10 +47,7 @@ namespace Microsoft.Azure.Batch
         /// This is the detailed error string from the Docker service, if available. It is equivilant to the error field 
         /// returned by "docker inspect".
         /// </remarks>
-        public string Error
-        {
-            get { return this.error; }
-        }
+        public string Error { get; }
 
         /// <summary>
         /// Gets the state of the container.
@@ -66,10 +56,7 @@ namespace Microsoft.Azure.Batch
         /// This is the state of the container according to the Docker service. It is equivilant to the status field returned 
         /// by "docker inspect".
         /// </remarks>
-        public string State
-        {
-            get { return this.state; }
-        }
+        public string State { get; }
 
         #endregion // TaskContainerExecutionInformation
 

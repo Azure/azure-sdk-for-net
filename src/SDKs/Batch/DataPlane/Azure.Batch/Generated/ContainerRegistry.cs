@@ -22,10 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ContainerRegistry : ITransportObjectProvider<Models.ContainerRegistry>, IPropertyMetadata
     {
-        private readonly string password;
-        private readonly string registryServer;
-        private readonly string userName;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistry"/> class.
@@ -38,16 +34,16 @@ namespace Microsoft.Azure.Batch
             string registryServer = default(string),
             string password = default(string))
         {
-            this.userName = userName;
-            this.registryServer = registryServer;
-            this.password = password;
+            this.UserName = userName;
+            this.RegistryServer = registryServer;
+            this.Password = password;
         }
 
         internal ContainerRegistry(Models.ContainerRegistry protocolObject)
         {
-            this.password = protocolObject.Password;
-            this.registryServer = protocolObject.RegistryServer;
-            this.userName = protocolObject.UserName;
+            this.Password = protocolObject.Password;
+            this.RegistryServer = protocolObject.RegistryServer;
+            this.UserName = protocolObject.UserName;
         }
 
         #endregion Constructors
@@ -57,10 +53,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the password to log into the registry server.
         /// </summary>
-        public string Password
-        {
-            get { return this.password; }
-        }
+        public string Password { get; }
 
         /// <summary>
         /// Gets the registry URL.
@@ -68,18 +61,12 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// If omitted, the default is "docker.io".
         /// </remarks>
-        public string RegistryServer
-        {
-            get { return this.registryServer; }
-        }
+        public string RegistryServer { get; }
 
         /// <summary>
         /// Gets the user name to log into the registry server.
         /// </summary>
-        public string UserName
-        {
-            get { return this.userName; }
-        }
+        public string UserName { get; }
 
         #endregion // ContainerRegistry
 

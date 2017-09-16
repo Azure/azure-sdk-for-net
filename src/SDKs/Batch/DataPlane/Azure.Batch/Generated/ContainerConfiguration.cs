@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ContainerImageNamesProperty = this.CreatePropertyAccessor<IList<string>>("ContainerImageNames", BindingAccess.Read | BindingAccess.Write);
-                this.ContainerRegistriesProperty = this.CreatePropertyAccessor<IList<ContainerRegistry>>("ContainerRegistries", BindingAccess.Read | BindingAccess.Write);
+                this.ContainerImageNamesProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ContainerImageNames), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerRegistriesProperty = this.CreatePropertyAccessor<IList<ContainerRegistry>>(nameof(ContainerRegistries), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ContainerConfiguration protocolObject) : base(BindingState.Bound)
             {
                 this.ContainerImageNamesProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.ContainerImageNames, o => o),
-                    "ContainerImageNames",
+                    nameof(ContainerImageNames),
                     BindingAccess.Read);
                 this.ContainerRegistriesProperty = this.CreatePropertyAccessor(
                     ContainerRegistry.ConvertFromProtocolCollectionAndFreeze(protocolObject.ContainerRegistries),
-                    "ContainerRegistries",
+                    nameof(ContainerRegistries),
                     BindingAccess.Read);
             }
         }

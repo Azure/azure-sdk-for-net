@@ -15,10 +15,10 @@
             string sku,
             string version = default(string))
         {
-            this.offer = offer;
-            this.publisher = publisher;
-            this.sku = sku;
-            this.version = version;
+            this.Offer = offer;
+            this.Publisher = publisher;
+            this.Sku = sku;
+            this.Version = version;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@
         public ImageReference(
             string virtualMachineImageId)
         {
-            this.virtualMachineImageId = virtualMachineImageId;
+            this.VirtualMachineImageId = virtualMachineImageId;
         }
     }
 }

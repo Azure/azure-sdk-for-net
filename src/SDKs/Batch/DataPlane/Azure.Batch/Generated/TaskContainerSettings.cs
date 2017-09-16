@@ -22,10 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskContainerSettings : ITransportObjectProvider<Models.TaskContainerSettings>, IPropertyMetadata
     {
-        private readonly string containerRunOptions;
-        private readonly string imageName;
-        private readonly ContainerRegistry registry;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskContainerSettings"/> class.
@@ -38,16 +34,16 @@ namespace Microsoft.Azure.Batch
             string containerRunOptions = default(string),
             ContainerRegistry registry = default(ContainerRegistry))
         {
-            this.imageName = imageName;
-            this.containerRunOptions = containerRunOptions;
-            this.registry = registry;
+            this.ImageName = imageName;
+            this.ContainerRunOptions = containerRunOptions;
+            this.Registry = registry;
         }
 
         internal TaskContainerSettings(Models.TaskContainerSettings protocolObject)
         {
-            this.containerRunOptions = protocolObject.ContainerRunOptions;
-            this.imageName = protocolObject.ImageName;
-            this.registry = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Registry, o => new ContainerRegistry(o).Freeze());
+            this.ContainerRunOptions = protocolObject.ContainerRunOptions;
+            this.ImageName = protocolObject.ImageName;
+            this.Registry = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Registry, o => new ContainerRegistry(o).Freeze());
         }
 
         #endregion Constructors
@@ -61,10 +57,7 @@ namespace Microsoft.Azure.Batch
         /// These additional options are supplied as arguments to the "docker create" command, in addition to those controlled 
         /// by the Batch Service.
         /// </remarks>
-        public string ContainerRunOptions
-        {
-            get { return this.containerRunOptions; }
-        }
+        public string ContainerRunOptions { get; }
 
         /// <summary>
         /// Gets the image to use to create the container in which the task will run.
@@ -73,10 +66,7 @@ namespace Microsoft.Azure.Batch
         /// This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the 
         /// image name, the tag ":latest" is used as a default.
         /// </remarks>
-        public string ImageName
-        {
-            get { return this.imageName; }
-        }
+        public string ImageName { get; }
 
         /// <summary>
         /// Gets the private registry which contains the container image.
@@ -84,10 +74,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// This setting can be omitted if was already provided at pool creation.
         /// </remarks>
-        public ContainerRegistry Registry
-        {
-            get { return this.registry; }
-        }
+        public ContainerRegistry Registry { get; }
 
         #endregion // TaskContainerSettings
 

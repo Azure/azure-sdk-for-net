@@ -31,24 +31,24 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CommonResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("CommonResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.CoordinationCommandLineProperty = this.CreatePropertyAccessor<string>("CoordinationCommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.NumberOfInstancesProperty = this.CreatePropertyAccessor<int?>("NumberOfInstances", BindingAccess.Read | BindingAccess.Write);
+                this.CommonResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(CommonResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.CoordinationCommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CoordinationCommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.NumberOfInstancesProperty = this.CreatePropertyAccessor<int?>(nameof(NumberOfInstances), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.MultiInstanceSettings protocolObject) : base(BindingState.Bound)
             {
                 this.CommonResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.CommonResourceFiles),
-                    "CommonResourceFiles",
+                    nameof(CommonResourceFiles),
                     BindingAccess.Read);
                 this.CoordinationCommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CoordinationCommandLine,
-                    "CoordinationCommandLine",
+                    nameof(CoordinationCommandLine),
                     BindingAccess.Read);
                 this.NumberOfInstancesProperty = this.CreatePropertyAccessor(
                     protocolObject.NumberOfInstances,
-                    "NumberOfInstances",
+                    nameof(NumberOfInstances),
                     BindingAccess.Read);
             }
         }

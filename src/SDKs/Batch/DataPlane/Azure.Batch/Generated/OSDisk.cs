@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class OSDisk : ITransportObjectProvider<Models.OSDisk>, IPropertyMetadata
     {
-        private readonly Common.CachingType? caching;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="OSDisk"/> class.
@@ -32,12 +30,12 @@ namespace Microsoft.Azure.Batch
         public OSDisk(
             Common.CachingType? caching = default(Common.CachingType?))
         {
-            this.caching = caching;
+            this.Caching = caching;
         }
 
         internal OSDisk(Models.OSDisk protocolObject)
         {
-            this.caching = UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching);
+            this.Caching = UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching);
         }
 
         #endregion Constructors
@@ -47,10 +45,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the type of caching to enable for the OS disk.
         /// </summary>
-        public Common.CachingType? Caching
-        {
-            get { return this.caching; }
-        }
+        public Common.CachingType? Caching { get; }
 
         #endregion // OSDisk
 

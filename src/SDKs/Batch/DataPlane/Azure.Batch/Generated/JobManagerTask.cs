@@ -41,79 +41,79 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor<bool?>("AllowLowPriorityNode", BindingAccess.Read | BindingAccess.Write);
-                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
-                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
-                this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
-                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>("ContainerSettings", BindingAccess.Read | BindingAccess.Write);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
-                this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>("KillJobOnCompletion", BindingAccess.Read | BindingAccess.Write);
-                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>("OutputFiles", BindingAccess.Read | BindingAccess.Write);
-                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>("RunExclusive", BindingAccess.Read | BindingAccess.Write);
-                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
+                this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor<bool?>(nameof(AllowLowPriorityNode), BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>(nameof(AuthenticationTokenSettings), BindingAccess.Read | BindingAccess.Write);
+                this.CommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>(nameof(ContainerSettings), BindingAccess.Read | BindingAccess.Write);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(EnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>(nameof(KillJobOnCompletion), BindingAccess.Read | BindingAccess.Write);
+                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>(nameof(OutputFiles), BindingAccess.Read | BindingAccess.Write);
+                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>(nameof(RunExclusive), BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>(nameof(UserIdentity), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
             {
                 this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.AllowLowPriorityNode,
-                    "AllowLowPriorityNode",
+                    nameof(AllowLowPriorityNode),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
-                    "ApplicationPackageReferences",
+                    nameof(ApplicationPackageReferences),
                     BindingAccess.Read | BindingAccess.Write);
                 this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o)),
-                    "AuthenticationTokenSettings",
+                    nameof(AuthenticationTokenSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
-                    "CommandLine",
+                    nameof(CommandLine),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new TaskConstraints(o)),
-                    "Constraints",
+                    nameof(Constraints),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ContainerSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
-                    "ContainerSettings",
+                    nameof(ContainerSettings),
                     BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read | BindingAccess.Write);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.EnvironmentSettings),
-                    "EnvironmentSettings",
+                    nameof(EnvironmentSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read | BindingAccess.Write);
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor(
                     protocolObject.KillJobOnCompletion,
-                    "KillJobOnCompletion",
+                    nameof(KillJobOnCompletion),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OutputFilesProperty = this.CreatePropertyAccessor(
                     OutputFile.ConvertFromProtocolCollection(protocolObject.OutputFiles),
-                    "OutputFiles",
+                    nameof(OutputFiles),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
-                    "ResourceFiles",
+                    nameof(ResourceFiles),
                     BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor(
                     protocolObject.RunExclusive,
-                    "RunExclusive",
+                    nameof(RunExclusive),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
-                    "UserIdentity",
+                    nameof(UserIdentity),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

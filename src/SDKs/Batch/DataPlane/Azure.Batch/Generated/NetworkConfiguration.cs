@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>("EndpointConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.SubnetIdProperty = this.CreatePropertyAccessor<string>("SubnetId", BindingAccess.Read | BindingAccess.Write);
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>(nameof(EndpointConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.NetworkConfiguration protocolObject) : base(BindingState.Bound)
             {
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
-                    "EndpointConfiguration",
+                    nameof(EndpointConfiguration),
                     BindingAccess.Read);
                 this.SubnetIdProperty = this.CreatePropertyAccessor(
                     protocolObject.SubnetId,
-                    "SubnetId",
+                    nameof(SubnetId),
                     BindingAccess.Read);
             }
         }

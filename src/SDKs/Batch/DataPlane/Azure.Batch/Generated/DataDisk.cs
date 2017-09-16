@@ -22,11 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class DataDisk : ITransportObjectProvider<Models.DataDisk>, IPropertyMetadata
     {
-        private readonly Common.CachingType? caching;
-        private readonly int diskSizeGB;
-        private readonly int lun;
-        private readonly Common.StorageAccountType? storageAccountType;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataDisk"/> class.
@@ -41,18 +36,18 @@ namespace Microsoft.Azure.Batch
             Common.CachingType? caching = default(Common.CachingType?),
             Common.StorageAccountType? storageAccountType = default(Common.StorageAccountType?))
         {
-            this.lun = lun;
-            this.diskSizeGB = diskSizeGB;
-            this.caching = caching;
-            this.storageAccountType = storageAccountType;
+            this.Lun = lun;
+            this.DiskSizeGB = diskSizeGB;
+            this.Caching = caching;
+            this.StorageAccountType = storageAccountType;
         }
 
         internal DataDisk(Models.DataDisk protocolObject)
         {
-            this.caching = UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching);
-            this.diskSizeGB = protocolObject.DiskSizeGB;
-            this.lun = protocolObject.Lun;
-            this.storageAccountType = UtilitiesInternal.MapNullableEnum<Models.StorageAccountType, Common.StorageAccountType>(protocolObject.StorageAccountType);
+            this.Caching = UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching);
+            this.DiskSizeGB = protocolObject.DiskSizeGB;
+            this.Lun = protocolObject.Lun;
+            this.StorageAccountType = UtilitiesInternal.MapNullableEnum<Models.StorageAccountType, Common.StorageAccountType>(protocolObject.StorageAccountType);
         }
 
         #endregion Constructors
@@ -65,18 +60,12 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// If omitted, the default is <see cref="Common.CachingType.None" />.
         /// </remarks>
-        public Common.CachingType? Caching
-        {
-            get { return this.caching; }
-        }
+        public Common.CachingType? Caching { get; }
 
         /// <summary>
         /// Gets the initial disk size in gigabytes.
         /// </summary>
-        public int DiskSizeGB
-        {
-            get { return this.diskSizeGB; }
-        }
+        public int DiskSizeGB { get; }
 
         /// <summary>
         /// Gets the logical unit number.
@@ -85,10 +74,7 @@ namespace Microsoft.Azure.Batch
         /// The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct 
         /// lun.
         /// </remarks>
-        public int Lun
-        {
-            get { return this.lun; }
-        }
+        public int Lun { get; }
 
         /// <summary>
         /// Gets the storage account type to be used for the data disk.
@@ -96,10 +82,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// If omitted, the default is <see cref="Common.StorageAccountType.StandardLrs" />.
         /// </remarks>
-        public Common.StorageAccountType? StorageAccountType
-        {
-            get { return this.storageAccountType; }
-        }
+        public Common.StorageAccountType? StorageAccountType { get; }
 
         #endregion // DataDisk
 

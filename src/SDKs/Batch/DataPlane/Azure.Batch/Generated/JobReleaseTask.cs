@@ -35,49 +35,49 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>("ContainerSettings", BindingAccess.Read | BindingAccess.Write);
-                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
-                this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("MaxWallClockTime", BindingAccess.Read | BindingAccess.Write);
-                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RetentionTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("RetentionTime", BindingAccess.Read | BindingAccess.Write);
-                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
+                this.CommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>(nameof(ContainerSettings), BindingAccess.Read | BindingAccess.Write);
+                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(EnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(MaxWallClockTime), BindingAccess.Read | BindingAccess.Write);
+                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.RetentionTimeProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(RetentionTime), BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>(nameof(UserIdentity), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobReleaseTask protocolObject) : base(BindingState.Bound)
             {
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
-                    "CommandLine",
+                    nameof(CommandLine),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ContainerSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
-                    "ContainerSettings",
+                    nameof(ContainerSettings),
                     BindingAccess.Read);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.EnvironmentSettings),
-                    "EnvironmentSettings",
+                    nameof(EnvironmentSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read | BindingAccess.Write);
                 this.MaxWallClockTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxWallClockTime,
-                    "MaxWallClockTime",
+                    nameof(MaxWallClockTime),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
-                    "ResourceFiles",
+                    nameof(ResourceFiles),
                     BindingAccess.Read | BindingAccess.Write);
                 this.RetentionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.RetentionTime,
-                    "RetentionTime",
+                    nameof(RetentionTime),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
-                    "UserIdentity",
+                    nameof(UserIdentity),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
