@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// set.</param>
         /// <param name="tTL">The TTL (time-to-live) of the records in the
         /// record set.</param>
+        /// <param name="fqdn">Fully qualified domain name of the record
+        /// set.</param>
         /// <param name="aRecords">The list of A records in the record
         /// set.</param>
         /// <param name="aaaaRecords">The list of AAAA records in the record
@@ -61,7 +63,9 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="cnameRecord">The CNAME record in the  record
         /// set.</param>
         /// <param name="soaRecord">The SOA record in the record set.</param>
-        public RecordSet(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), long? tTL = default(long?), IList<ARecord> aRecords = default(IList<ARecord>), IList<AaaaRecord> aaaaRecords = default(IList<AaaaRecord>), IList<MxRecord> mxRecords = default(IList<MxRecord>), IList<NsRecord> nsRecords = default(IList<NsRecord>), IList<PtrRecord> ptrRecords = default(IList<PtrRecord>), IList<SrvRecord> srvRecords = default(IList<SrvRecord>), IList<TxtRecord> txtRecords = default(IList<TxtRecord>), CnameRecord cnameRecord = default(CnameRecord), SoaRecord soaRecord = default(SoaRecord))
+        /// <param name="caaRecords">The list of CAA records in the record
+        /// set.</param>
+        public RecordSet(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), long? tTL = default(long?), string fqdn = default(string), IList<ARecord> aRecords = default(IList<ARecord>), IList<AaaaRecord> aaaaRecords = default(IList<AaaaRecord>), IList<MxRecord> mxRecords = default(IList<MxRecord>), IList<NsRecord> nsRecords = default(IList<NsRecord>), IList<PtrRecord> ptrRecords = default(IList<PtrRecord>), IList<SrvRecord> srvRecords = default(IList<SrvRecord>), IList<TxtRecord> txtRecords = default(IList<TxtRecord>), CnameRecord cnameRecord = default(CnameRecord), SoaRecord soaRecord = default(SoaRecord), IList<CaaRecord> caaRecords = default(IList<CaaRecord>))
         {
             Id = id;
             Name = name;
@@ -69,6 +73,7 @@ namespace Microsoft.Azure.Management.Dns.Models
             Etag = etag;
             Metadata = metadata;
             TTL = tTL;
+            Fqdn = fqdn;
             ARecords = aRecords;
             AaaaRecords = aaaaRecords;
             MxRecords = mxRecords;
@@ -78,6 +83,7 @@ namespace Microsoft.Azure.Management.Dns.Models
             TxtRecords = txtRecords;
             CnameRecord = cnameRecord;
             SoaRecord = soaRecord;
+            CaaRecords = caaRecords;
             CustomInit();
         }
 
@@ -122,6 +128,12 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.TTL")]
         public long? TTL { get; set; }
+
+        /// <summary>
+        /// Gets or sets fully qualified domain name of the record set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fqdn")]
+        public string Fqdn { get; set; }
 
         /// <summary>
         /// Gets or sets the list of A records in the record set.
@@ -176,6 +188,12 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.SOARecord")]
         public SoaRecord SoaRecord { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of CAA records in the record set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.caaRecords")]
+        public IList<CaaRecord> CaaRecords { get; set; }
 
     }
 }
