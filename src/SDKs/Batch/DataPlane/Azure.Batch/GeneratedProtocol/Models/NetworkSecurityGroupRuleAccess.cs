@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for NetworkSecurityGroupRuleAccess.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum NetworkSecurityGroupRuleAccess
     {
-        [System.Runtime.Serialization.EnumMember(Value = "allow")]
+        [EnumMember(Value = "allow")]
         Allow,
-        [System.Runtime.Serialization.EnumMember(Value = "deny")]
+        [EnumMember(Value = "deny")]
         Deny
+    }
+    internal static class NetworkSecurityGroupRuleAccessEnumExtension
+    {
+        internal static string ToSerializedValue(this NetworkSecurityGroupRuleAccess? value)  =>
+            value == null ? null : ((NetworkSecurityGroupRuleAccess)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this NetworkSecurityGroupRuleAccess value)
+        {
+            switch( value )
+            {
+                case NetworkSecurityGroupRuleAccess.Allow:
+                    return "allow";
+                case NetworkSecurityGroupRuleAccess.Deny:
+                    return "deny";
+            }
+            return null;
+        }
+
+        internal static NetworkSecurityGroupRuleAccess? ParseNetworkSecurityGroupRuleAccess(this string value)
+        {
+            switch( value )
+            {
+                case "allow":
+                    return NetworkSecurityGroupRuleAccess.Allow;
+                case "deny":
+                    return NetworkSecurityGroupRuleAccess.Deny;
+            }
+            return null;
+        }
     }
 }

@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DisableComputeNodeSchedulingOption.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DisableComputeNodeSchedulingOption
     {
-        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
+        [EnumMember(Value = "requeue")]
         Requeue,
-        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
+        [EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        [EnumMember(Value = "taskCompletion")]
         TaskCompletion
+    }
+    internal static class DisableComputeNodeSchedulingOptionEnumExtension
+    {
+        internal static string ToSerializedValue(this DisableComputeNodeSchedulingOption? value)  =>
+            value == null ? null : ((DisableComputeNodeSchedulingOption)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this DisableComputeNodeSchedulingOption value)
+        {
+            switch( value )
+            {
+                case DisableComputeNodeSchedulingOption.Requeue:
+                    return "requeue";
+                case DisableComputeNodeSchedulingOption.Terminate:
+                    return "terminate";
+                case DisableComputeNodeSchedulingOption.TaskCompletion:
+                    return "taskCompletion";
+            }
+            return null;
+        }
+
+        internal static DisableComputeNodeSchedulingOption? ParseDisableComputeNodeSchedulingOption(this string value)
+        {
+            switch( value )
+            {
+                case "requeue":
+                    return DisableComputeNodeSchedulingOption.Requeue;
+                case "terminate":
+                    return DisableComputeNodeSchedulingOption.Terminate;
+                case "taskCompletion":
+                    return DisableComputeNodeSchedulingOption.TaskCompletion;
+            }
+            return null;
+        }
     }
 }

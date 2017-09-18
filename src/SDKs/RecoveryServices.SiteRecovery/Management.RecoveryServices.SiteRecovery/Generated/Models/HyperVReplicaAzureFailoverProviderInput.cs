@@ -40,9 +40,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="secondaryKekCertificatePfx">Secondary kek certificate
         /// pfx.</param>
         /// <param name="recoveryPointId">The recovery point id to be passed to
-        /// failover to a particular recovery
-        /// point. In case of latest recovery point, null should be
-        /// passed.</param>
+        /// failover to a particular recovery point. In case of latest recovery
+        /// point, null should be passed.</param>
         public HyperVReplicaAzureFailoverProviderInput(string vaultLocation = default(string), string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string), string recoveryPointId = default(string))
         {
             VaultLocation = vaultLocation;
@@ -77,8 +76,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the recovery point id to be passed to failover to a
-        /// particular recovery
-        /// point. In case of latest recovery point, null should be passed.
+        /// particular recovery point. In case of latest recovery point, null
+        /// should be passed.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointId")]
         public string RecoveryPointId { get; set; }

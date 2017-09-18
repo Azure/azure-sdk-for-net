@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the ExportJobDetails class.
         /// </summary>
         /// <param name="affectedObjectDetails">The affected object properties
-        /// like source server, source cloud, target
-        /// server, target cloud etc. based on the workflow object
-        /// details.</param>
+        /// like source server, source cloud, target server, target cloud etc.
+        /// based on the workflow object details.</param>
         /// <param name="blobUri">BlobUri of the exported jobs.</param>
         /// <param name="sasToken">The sas token to access blob.</param>
         public ExportJobDetails(IDictionary<string, string> affectedObjectDetails = default(IDictionary<string, string>), string blobUri = default(string), string sasToken = default(string))

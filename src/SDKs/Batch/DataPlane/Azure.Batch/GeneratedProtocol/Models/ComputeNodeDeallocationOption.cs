@@ -8,20 +8,64 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeDeallocationOption.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeDeallocationOption
     {
-        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
+        [EnumMember(Value = "requeue")]
         Requeue,
-        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
+        [EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "taskCompletion")]
+        [EnumMember(Value = "taskCompletion")]
         TaskCompletion,
-        [System.Runtime.Serialization.EnumMember(Value = "retainedData")]
+        [EnumMember(Value = "retainedData")]
         RetainedData
+    }
+    internal static class ComputeNodeDeallocationOptionEnumExtension
+    {
+        internal static string ToSerializedValue(this ComputeNodeDeallocationOption? value)  =>
+            value == null ? null : ((ComputeNodeDeallocationOption)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ComputeNodeDeallocationOption value)
+        {
+            switch( value )
+            {
+                case ComputeNodeDeallocationOption.Requeue:
+                    return "requeue";
+                case ComputeNodeDeallocationOption.Terminate:
+                    return "terminate";
+                case ComputeNodeDeallocationOption.TaskCompletion:
+                    return "taskCompletion";
+                case ComputeNodeDeallocationOption.RetainedData:
+                    return "retainedData";
+            }
+            return null;
+        }
+
+        internal static ComputeNodeDeallocationOption? ParseComputeNodeDeallocationOption(this string value)
+        {
+            switch( value )
+            {
+                case "requeue":
+                    return ComputeNodeDeallocationOption.Requeue;
+                case "terminate":
+                    return ComputeNodeDeallocationOption.Terminate;
+                case "taskCompletion":
+                    return ComputeNodeDeallocationOption.TaskCompletion;
+                case "retainedData":
+                    return ComputeNodeDeallocationOption.RetainedData;
+            }
+            return null;
+        }
     }
 }

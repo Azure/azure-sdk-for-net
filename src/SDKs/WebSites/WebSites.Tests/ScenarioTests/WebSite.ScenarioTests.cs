@@ -34,7 +34,6 @@ namespace WebSites.Tests.ScenarioTests
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
                     var webSite = webSitesClient.WebApps.Get(resourceGroupName, webSiteName);
-                    webSite.SiteConfig = webSitesClient.WebApps.GetConfiguration(resourceGroupName, webSiteName);
 
                     Assert.Equal(webSiteName, webSite.Name);
                     var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
@@ -42,7 +41,6 @@ namespace WebSites.Tests.ScenarioTests
                     Assert.Equal(serverfarmId, webSite.ServerFarmId, StringComparer.OrdinalIgnoreCase);
                     Assert.Equal("value1", webSite.Tags["tag1"]);
                     Assert.Equal("", webSite.Tags["tag2"]);
-                    Assert.NotNull(webSite.SiteConfig);
                     Assert.NotNull(webSite.HostNameSslStates);
                     Assert.NotEmpty(webSite.HostNameSslStates);
                 });
@@ -93,7 +91,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        //Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        //[Fact(Skip = "Todo")]
         //[Fact(Skip="TODO: Fix datetime parsing in test to properly handle universal time and rerecord.")]
         [Fact]
         public void GetSiteMetrics()
@@ -138,9 +136,8 @@ namespace WebSites.Tests.ScenarioTests
                     Assert.NotNull(configurationResponse);
                     Assert.True(string.IsNullOrEmpty(configurationResponse.PythonVersion));
 
-                    var configurationParameters = new SiteConfig
+                    var configurationParameters = new SiteConfigResource
                     {
-                        Location = configurationResponse.Location,
                         PythonVersion = "3.4"
                     };
 
@@ -165,7 +162,7 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Application settings
 
                     const string settingName = "Application Setting1", settingValue = "Setting Value 1";
-                    var appSetting = new StringDictionary { Name = settingName, Location = locationName, Properties = new Dictionary<string, string> { { settingName, settingValue} } };
+                    var appSetting = new StringDictionary { Properties = new Dictionary<string, string> { { settingName, settingValue} } };
                     var appSettingsResponse = webSitesClient.WebApps.UpdateApplicationSettings(
                         resourceGroupName,
                         siteName,
@@ -184,7 +181,7 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Metadata
 
                     const string metadataName = "Metadata 1", metadataValue = "Metadata Value 1";
-                    var metadata = new StringDictionary { Name = metadataName, Location = locationName, Properties = new Dictionary<string, string> { { metadataName, metadataValue } } };
+                    var metadata = new StringDictionary { Properties = new Dictionary<string, string> { { metadataName, metadataValue } } };
                     var metadataResponse = webSitesClient.WebApps.UpdateMetadata(
                         resourceGroupName,
                         siteName,
@@ -203,8 +200,7 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Connection strings
 
                     const string connectionStringName = "ConnectionString 1",
-                        connectionStringValue = "ConnectionString Value 1",
-                        connectionStringDictionaryName = "ConnectionStringDictionary 1";
+                        connectionStringValue = "ConnectionString Value 1";
                     var connStringValueTypePair = new ConnStringValueTypePair
                     {
                         Value = connectionStringValue,
@@ -214,7 +210,7 @@ namespace WebSites.Tests.ScenarioTests
                     var connectionStringResponse = webSitesClient.WebApps.UpdateConnectionStrings(
                         resourceGroupName,
                         siteName,
-                        new ConnectionStringDictionary { Name = connectionStringDictionaryName, Location = locationName, Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
+                        new ConnectionStringDictionary { Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
 
                     Assert.NotNull(connectionStringResponse);
                     Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
@@ -262,14 +258,11 @@ namespace WebSites.Tests.ScenarioTests
 
                     const string setting1Name = "AppSetting1", setting2Name = "AppSetting2";
                     const string connection1Name = "ConnString1", connection2Name = "ConnString2";
-                    const string SlotConfigName = "SlotConfig1";
                     webSitesClient.WebApps.UpdateSlotConfigurationNames(
                         resourceGroupName,
                         siteName,
                         new SlotConfigNamesResource()
                         {
-                            Name = SlotConfigName,
-                            Location = locationName,
                             AppSettingNames = new List<string> { setting1Name, setting2Name },
                             ConnectionStringNames = new List<string> { connection1Name, connection2Name },
                         });
@@ -349,7 +342,6 @@ namespace WebSites.Tests.ScenarioTests
                 var serverFarm = webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, 
                     new AppServicePlan()
                     {
-                        Name = webHostingPlanName,
                         Location = location,
                         Sku = new SkuDescription()
                         {
@@ -360,7 +352,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 var webSite = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    Name = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                     ServerFarmId = serverFarm.Id
@@ -399,7 +390,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan()
                 {
-                    Name = whpName,
                     Location = locationName,
                     Sku = new SkuDescription
                     {
@@ -411,7 +401,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 var createResponse = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, siteName, new Site
                 {
-                    Name = siteName,
                     Location = locationName,
                     ServerFarmId = serverfarmId
                 });
@@ -424,9 +413,8 @@ namespace WebSites.Tests.ScenarioTests
                     MaxMemoryInMb = 1024,
                     MaxPercentageCpu = 70.5
                 };
-                var siteConfig = new SiteConfig
+                var siteConfig = new SiteConfigResource
                 {
-                    Location = locationName,
                     Limits = expectedSitelimits
                 };
 
@@ -461,13 +449,14 @@ namespace WebSites.Tests.ScenarioTests
                     string targetSiteName = TestUtilities.GenerateName("csmws");
                     string location = ResourceGroupHelper.GetResourceLocation(resourcesClient, "Microsoft.Web/sites");
                     var webAppIdFormat = "/subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.Web/sites/{2}";
+                    var serverFarmIdFormat = "/subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.Web/serverfarms/{2}";
                     var site = new Site()
                     {
-                        Name = targetSiteName,
                         Location = "West US",
+                        ServerFarmId = string.Format(serverFarmIdFormat, webSitesClient.SubscriptionId, resourceGroupName, whpName),
                         CloningInfo = new CloningInfo()
                         {
-                            SourceWebAppId = string.Format(webAppIdFormat, webSitesClient.SubscriptionId, resourceGroupName, webSiteName)
+                            SourceWebAppId = string.Format(webAppIdFormat, webSitesClient.SubscriptionId, resourceGroupName, webSiteName),
                         }
                     };
 

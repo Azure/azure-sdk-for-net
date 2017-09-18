@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeError class.
         /// </summary>
-        public ComputeNodeError() { }
+        public ComputeNodeError()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ComputeNodeError class.
@@ -30,33 +39,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// intended to be suitable for display in a user interface.</param>
         /// <param name="errorDetails">The list of additional error details
         /// related to the compute node error.</param>
-        public ComputeNodeError(string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> errorDetails = default(System.Collections.Generic.IList<NameValuePair>))
+        public ComputeNodeError(string code = default(string), string message = default(string), IList<NameValuePair> errorDetails = default(IList<NameValuePair>))
         {
-            this.Code = code;
-            this.Message = message;
-            this.ErrorDetails = errorDetails;
+            Code = code;
+            Message = message;
+            ErrorDetails = errorDetails;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an identifier for the compute node error. Codes are
         /// invariant and are intended to be consumed programmatically.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message describing the compute node error, intended
         /// to be suitable for display in a user interface.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets the list of additional error details related to the
         /// compute node error.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "errorDetails")]
-        public System.Collections.Generic.IList<NameValuePair> ErrorDetails { get; set; }
+        [JsonProperty(PropertyName = "errorDetails")]
+        public IList<NameValuePair> ErrorDetails { get; set; }
 
     }
 }

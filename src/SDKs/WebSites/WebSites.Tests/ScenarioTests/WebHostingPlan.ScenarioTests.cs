@@ -39,7 +39,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, new AppServicePlan()
                     {
-                        Name = webHostingPlanName,
                         Location = location,
                         Sku = new SkuDescription()
                         {
@@ -80,7 +79,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName1, new AppServicePlan()
                 {
-                    Name = whpName1,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -91,7 +89,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName2, new AppServicePlan()
                 {
-                    Name = whpName2,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -133,7 +130,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan() 
                 {
-                    Name = whpName,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -174,7 +170,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 var serverFarm = webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, webHostingPlanName, new AppServicePlan()
                 {
-                    Name = webHostingPlanName,
                     Location = location,
                     Sku = new SkuDescription
                     {
@@ -186,7 +181,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site()
                 {
-                    Name = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                     ServerFarmId = serverFarmId
@@ -230,7 +224,6 @@ namespace WebSites.Tests.ScenarioTests
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName,
                     new AppServicePlan()
                     {
-                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -242,7 +235,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 var webSite = webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    Name = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                     ServerFarmId = serverfarmId

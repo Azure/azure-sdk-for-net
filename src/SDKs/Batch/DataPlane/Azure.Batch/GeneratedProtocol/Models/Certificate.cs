@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the Certificate class.
         /// </summary>
-        public Certificate() { }
+        public Certificate()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Certificate class.
@@ -42,34 +49,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// last attempt to delete this certificate.</param>
         public Certificate(string thumbprint = default(string), string thumbprintAlgorithm = default(string), string url = default(string), CertificateState? state = default(CertificateState?), System.DateTime? stateTransitionTime = default(System.DateTime?), CertificateState? previousState = default(CertificateState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string publicData = default(string), DeleteCertificateError deleteCertificateError = default(DeleteCertificateError))
         {
-            this.Thumbprint = thumbprint;
-            this.ThumbprintAlgorithm = thumbprintAlgorithm;
-            this.Url = url;
-            this.State = state;
-            this.StateTransitionTime = stateTransitionTime;
-            this.PreviousState = previousState;
-            this.PreviousStateTransitionTime = previousStateTransitionTime;
-            this.PublicData = publicData;
-            this.DeleteCertificateError = deleteCertificateError;
+            Thumbprint = thumbprint;
+            ThumbprintAlgorithm = thumbprintAlgorithm;
+            Url = url;
+            State = state;
+            StateTransitionTime = stateTransitionTime;
+            PreviousState = previousState;
+            PreviousStateTransitionTime = previousStateTransitionTime;
+            PublicData = publicData;
+            DeleteCertificateError = deleteCertificateError;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the X.509 thumbprint of the certificate. This is a
         /// sequence of up to 40 hex digits.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprint")]
+        [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets the algorithm used to derive the thumbprint.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprintAlgorithm")]
+        [JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the certificate.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
@@ -78,14 +91,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'active', 'deleting', 'deleteFailed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state")]
         public CertificateState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the certificate entered its current
         /// state.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        [JsonProperty(PropertyName = "stateTransitionTime")]
         public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
@@ -96,7 +109,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// active state. Possible values include: 'active', 'deleting',
         /// 'deleteFailed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
+        [JsonProperty(PropertyName = "previousState")]
         public CertificateState? PreviousState { get; set; }
 
         /// <summary>
@@ -107,14 +120,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is not set if the certificate is in its initial
         /// Active state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
+        [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the public part of the certificate as a base-64
         /// encoded .cer file.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "publicData")]
+        [JsonProperty(PropertyName = "publicData")]
         public string PublicData { get; set; }
 
         /// <summary>
@@ -125,7 +138,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the certificate is in the DeleteFailed
         /// state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "deleteCertificateError")]
+        [JsonProperty(PropertyName = "deleteCertificateError")]
         public DeleteCertificateError DeleteCertificateError { get; set; }
 
     }

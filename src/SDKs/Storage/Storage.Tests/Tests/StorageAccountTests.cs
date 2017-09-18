@@ -1547,7 +1547,7 @@ namespace Storage.Tests
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
-                var skulist = storageMgmtClient.SKUs.List();
+                var skulist = storageMgmtClient.Skus.List();
                 Assert.NotNull(skulist);
                 Assert.Equal(@"storageAccounts", skulist.ElementAt(0).ResourceType);
                 Assert.NotNull(skulist.ElementAt(0).Name);

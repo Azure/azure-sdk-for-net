@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskCounts class.
         /// </summary>
-        public TaskCounts() { }
+        public TaskCounts()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskCounts class.
@@ -36,69 +43,72 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// if its result (found in the executionInfo property) is
         /// 'failure'.</param>
         /// <param name="validationStatus">Whether the task counts have been
-        /// validated. If the validationStatus is unvalidated, then the Batch
-        /// service has not been able to check state counts against the task
-        /// states as reported in the List Tasks API.</param>
+        /// validated.</param>
         public TaskCounts(int active, int running, int completed, int succeeded, int failed, TaskCountValidationStatus validationStatus)
         {
-            this.Active = active;
-            this.Running = running;
-            this.Completed = completed;
-            this.Succeeded = succeeded;
-            this.Failed = failed;
-            this.ValidationStatus = validationStatus;
+            Active = active;
+            Running = running;
+            Completed = completed;
+            Succeeded = succeeded;
+            Failed = failed;
+            ValidationStatus = validationStatus;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the number of tasks in the active state.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "active")]
+        [JsonProperty(PropertyName = "active")]
         public int Active { get; set; }
 
         /// <summary>
         /// Gets or sets the number of tasks in the running or preparing state.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "running")]
+        [JsonProperty(PropertyName = "running")]
         public int Running { get; set; }
 
         /// <summary>
         /// Gets or sets the number of tasks in the completed state.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "completed")]
+        [JsonProperty(PropertyName = "completed")]
         public int Completed { get; set; }
 
         /// <summary>
         /// Gets or sets the number of tasks which succeeded. A task succeeds
         /// if its result (found in the executionInfo property) is 'success'.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "succeeded")]
+        [JsonProperty(PropertyName = "succeeded")]
         public int Succeeded { get; set; }
 
         /// <summary>
         /// Gets or sets the number of tasks which failed. A task fails if its
         /// result (found in the executionInfo property) is 'failure'.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "failed")]
+        [JsonProperty(PropertyName = "failed")]
         public int Failed { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the task counts have been validated. If the
-        /// validationStatus is unvalidated, then the Batch service has not
-        /// been able to check state counts against the task states as reported
-        /// in the List Tasks API.
+        /// Gets or sets whether the task counts have been validated.
         /// </summary>
         /// <remarks>
-        /// The validationStatus may be unvalidated if the job contains more
-        /// than 200,000 tasks. Possible values include: 'validated',
-        /// 'unvalidated'
+        /// If the validationStatus is unvalidated, then the Batch service has
+        /// not been able to check state counts against the task states as
+        /// reported in the List Tasks API. The validationStatus may be
+        /// unvalidated if the job contains more than 200,000 tasks. Possible
+        /// values include: 'validated', 'unvalidated'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "validationStatus")]
+        [JsonProperty(PropertyName = "validationStatus")]
         public TaskCountValidationStatus ValidationStatus { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

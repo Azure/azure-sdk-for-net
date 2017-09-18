@@ -44,8 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// server.</param>
         /// <param name="versionStatus">Version status</param>
         /// <param name="mobilityServiceUpdates">The list of the mobility
-        /// service updates available on the
-        /// Process Server.</param>
+        /// service updates available on the Process Server.</param>
         /// <param name="hostId">The agent generated Id.</param>
         /// <param name="machineCount">The servers configured with this
         /// PS.</param>
@@ -66,7 +65,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// date.</param>
         /// <param name="sslCertExpiryRemainingDays">CS SSL cert expiry
         /// date.</param>
-        public ProcessServer(string friendlyName = default(string), string id = default(string), string ipAddress = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<MobilityServiceUpdate> mobilityServiceUpdates = default(IList<MobilityServiceUpdate>), string hostId = default(string), string machineCount = default(string), string replicationPairCount = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string psServiceStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?))
+        /// <param name="osVersion">OS Version of the process server. Note:
+        /// This will get populated if user has CS version greater than
+        /// 9.12.0.0.</param>
+        public ProcessServer(string friendlyName = default(string), string id = default(string), string ipAddress = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<MobilityServiceUpdate> mobilityServiceUpdates = default(IList<MobilityServiceUpdate>), string hostId = default(string), string machineCount = default(string), string replicationPairCount = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string psServiceStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string osVersion = default(string))
         {
             FriendlyName = friendlyName;
             Id = id;
@@ -92,6 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             PsServiceStatus = psServiceStatus;
             SslCertExpiryDate = sslCertExpiryDate;
             SslCertExpiryRemainingDays = sslCertExpiryRemainingDays;
+            OsVersion = osVersion;
             CustomInit();
         }
 
@@ -144,8 +147,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the list of the mobility service updates available on
-        /// the
-        /// Process Server.
+        /// the Process Server.
         /// </summary>
         [JsonProperty(PropertyName = "mobilityServiceUpdates")]
         public IList<MobilityServiceUpdate> MobilityServiceUpdates { get; set; }
@@ -245,6 +247,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "sslCertExpiryRemainingDays")]
         public int? SslCertExpiryRemainingDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets OS Version of the process server. Note: This will get
+        /// populated if user has CS version greater than 9.12.0.0.
+        /// </summary>
+        [JsonProperty(PropertyName = "osVersion")]
+        public string OsVersion { get; set; }
 
     }
 }

@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     using Microsoft.Azure.Management.RecoveryServices;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -71,9 +72,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<EventModel> List(this IReplicationEventsOperations operations)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<EventModel> List(this IReplicationEventsOperations operations, ODataQuery<EventQueryParameter> odataQuery = default(ODataQuery<EventQueryParameter>))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return ((IReplicationEventsOperations)operations).ListAsync(odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,12 +89,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EventModel>> ListAsync(this IReplicationEventsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventModel>> ListAsync(this IReplicationEventsOperations operations, ODataQuery<EventQueryParameter> odataQuery = default(ODataQuery<EventQueryParameter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeUpdateUserParameter class.
         /// </summary>
-        public NodeUpdateUserParameter() { }
+        public NodeUpdateUserParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NodeUpdateUserParameter class.
@@ -30,10 +37,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// remote login to the compute node.</param>
         public NodeUpdateUserParameter(string password = default(string), System.DateTime? expiryTime = default(System.DateTime?), string sshPublicKey = default(string))
         {
-            this.Password = password;
-            this.ExpiryTime = expiryTime;
-            this.SshPublicKey = sshPublicKey;
+            Password = password;
+            ExpiryTime = expiryTime;
+            SshPublicKey = sshPublicKey;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the password of the account.
@@ -46,7 +59,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// with the sshPublicKey property. If omitted, any existing password
         /// is removed.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
+        [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -56,7 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, the default is 1 day from the current time. For Linux
         /// compute nodes, the expiryTime has a precision up to a day.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "expiryTime")]
+        [JsonProperty(PropertyName = "expiryTime")]
         public System.DateTime? ExpiryTime { get; set; }
 
         /// <summary>
@@ -71,7 +84,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// directly, the HTTP status code is 400 (Bad Request). If omitted,
         /// any existing SSH public key is removed.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sshPublicKey")]
+        [JsonProperty(PropertyName = "sshPublicKey")]
         public string SshPublicKey { get; set; }
 
     }

@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the UserAccount class.
         /// </summary>
-        public UserAccount() { }
+        public UserAccount()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the UserAccount class.
@@ -32,22 +40,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// configuration for the user account.</param>
         public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration))
         {
-            this.Name = name;
-            this.Password = password;
-            this.ElevationLevel = elevationLevel;
-            this.LinuxUserConfiguration = linuxUserConfiguration;
+            Name = name;
+            Password = password;
+            ElevationLevel = elevationLevel;
+            LinuxUserConfiguration = linuxUserConfiguration;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the user account.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the password for the user account.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
+        [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -59,7 +73,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operates with full Administrator permissions. The default value is
         /// nonAdmin. Possible values include: 'nonAdmin', 'admin'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "elevationLevel")]
+        [JsonProperty(PropertyName = "elevationLevel")]
         public ElevationLevel? ElevationLevel { get; set; }
 
         /// <summary>
@@ -70,24 +84,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is ignored if specified on a Windows pool. If not
         /// specified, the user is created with the default options.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "linuxUserConfiguration")]
+        [JsonProperty(PropertyName = "linuxUserConfiguration")]
         public LinuxUserConfiguration LinuxUserConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Name == null)
+            if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (this.Password == null)
+            if (Password == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Password");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
             }
         }
     }

@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ApplicationPackageReference
         /// class.
         /// </summary>
-        public ApplicationPackageReference() { }
+        public ApplicationPackageReference()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ApplicationPackageReference
@@ -31,14 +39,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// omitted, the default version is deployed.</param>
         public ApplicationPackageReference(string applicationId, string version = default(string))
         {
-            this.ApplicationId = applicationId;
-            this.Version = version;
+            ApplicationId = applicationId;
+            Version = version;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of the application to deploy.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationId")]
+        [JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary>
@@ -46,25 +60,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the default version is deployed.
         /// </summary>
         /// <remarks>
-        /// If this is omitted, and no default version is specified for this
-        /// application, the request fails with the error code
-        /// InvalidApplicationPackageReferences. If you are calling the REST
-        /// API directly, the HTTP status code is 409.
+        /// If this is omitted on a pool, and no default version is specified
+        /// for this application, the request fails with the error code
+        /// InvalidApplicationPackageReferences and HTTP status code 409. If
+        /// this is omitted on a task, and no default version is specified for
+        /// this application, the task fails with a pre-processing error.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
+        [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.ApplicationId == null)
+            if (ApplicationId == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ApplicationId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationId");
             }
         }
     }

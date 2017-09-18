@@ -35,17 +35,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// class.
         /// </summary>
         /// <param name="recoveryPointType">The recovery point type. Values
-        /// from LatestTime,
-        /// LatestTag or Custom. In the case of custom, the recovery point
-        /// provided by
-        /// RecoveryPointId will be used. In the other two cases, recovery
-        /// point id
-        /// will be ignored.</param>
+        /// from LatestTime, LatestTag or Custom. In the case of custom, the
+        /// recovery point provided by RecoveryPointId will be used. In the
+        /// other two cases, recovery point id will be ignored. Possible values
+        /// include: 'LatestTime', 'LatestTag', 'Custom'</param>
         /// <param name="recoveryPointId">The recovery point id to be passed to
-        /// failover to a particular recovery
-        /// point. In case of latest recovery point, null should be
-        /// passed.</param>
-        public InMageFailoverProviderInput(string recoveryPointType = default(string), string recoveryPointId = default(string))
+        /// failover to a particular recovery point. In case of latest recovery
+        /// point, null should be passed.</param>
+        public InMageFailoverProviderInput(RecoveryPointType? recoveryPointType = default(RecoveryPointType?), string recoveryPointId = default(string))
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointId = recoveryPointId;
@@ -60,18 +57,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the recovery point type. Values from LatestTime,
         /// LatestTag or Custom. In the case of custom, the recovery point
-        /// provided by
-        /// RecoveryPointId will be used. In the other two cases, recovery
-        /// point id
-        /// will be ignored.
+        /// provided by RecoveryPointId will be used. In the other two cases,
+        /// recovery point id will be ignored. Possible values include:
+        /// 'LatestTime', 'LatestTag', 'Custom'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public string RecoveryPointType { get; set; }
+        public RecoveryPointType? RecoveryPointType { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery point id to be passed to failover to a
-        /// particular recovery
-        /// point. In case of latest recovery point, null should be passed.
+        /// particular recovery point. In case of latest recovery point, null
+        /// should be passed.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointId")]
         public string RecoveryPointId { get; set; }

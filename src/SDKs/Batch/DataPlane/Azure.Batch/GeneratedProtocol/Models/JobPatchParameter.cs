@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobPatchParameter class.
         /// </summary>
-        public JobPatchParameter() { }
+        public JobPatchParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobPatchParameter class.
@@ -33,14 +42,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job's tasks.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the job as metadata.</param>
-        public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
+        public JobPatchParameter(int? priority = default(int?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
-            this.Priority = priority;
-            this.OnAllTasksComplete = onAllTasksComplete;
-            this.Constraints = constraints;
-            this.PoolInfo = poolInfo;
-            this.Metadata = metadata;
+            Priority = priority;
+            OnAllTasksComplete = onAllTasksComplete;
+            Constraints = constraints;
+            PoolInfo = poolInfo;
+            Metadata = metadata;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the priority of the job.
@@ -50,7 +65,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// lowest priority and 1000 being the highest priority. If omitted,
         /// the priority of the job is left unchanged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
+        [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
@@ -66,7 +81,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// directly, the HTTP status code is 400 (Bad Request). Possible
         /// values include: 'noAction', 'terminateJob'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
+        [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
@@ -75,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the existing execution constraints are left unchanged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
+        [JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
@@ -91,7 +106,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// has a poolLifetimeOption of job. If omitted, the job continues to
         /// run on its current pool.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
+        [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
@@ -101,24 +116,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the existing job metadata is left unchanged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
-        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
+        [JsonProperty(PropertyName = "metadata")]
+        public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.PoolInfo != null)
+            if (PoolInfo != null)
             {
-                this.PoolInfo.Validate();
+                PoolInfo.Validate();
             }
-            if (this.Metadata != null)
+            if (Metadata != null)
             {
-                foreach (var element in this.Metadata)
+                foreach (var element in Metadata)
                 {
                     if (element != null)
                     {

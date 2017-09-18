@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DependencyAction.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DependencyAction
     {
-        [System.Runtime.Serialization.EnumMember(Value = "satisfy")]
+        [EnumMember(Value = "satisfy")]
         Satisfy,
-        [System.Runtime.Serialization.EnumMember(Value = "block")]
+        [EnumMember(Value = "block")]
         Block
+    }
+    internal static class DependencyActionEnumExtension
+    {
+        internal static string ToSerializedValue(this DependencyAction? value)  =>
+            value == null ? null : ((DependencyAction)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this DependencyAction value)
+        {
+            switch( value )
+            {
+                case DependencyAction.Satisfy:
+                    return "satisfy";
+                case DependencyAction.Block:
+                    return "block";
+            }
+            return null;
+        }
+
+        internal static DependencyAction? ParseDependencyAction(this string value)
+        {
+            switch( value )
+            {
+                case "satisfy":
+                    return DependencyAction.Satisfy;
+                case "block":
+                    return DependencyAction.Block;
+            }
+            return null;
+        }
     }
 }

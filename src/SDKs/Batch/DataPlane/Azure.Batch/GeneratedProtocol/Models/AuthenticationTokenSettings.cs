@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +26,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the AuthenticationTokenSettings
         /// class.
         /// </summary>
-        public AuthenticationTokenSettings() { }
+        public AuthenticationTokenSettings()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AuthenticationTokenSettings
@@ -28,10 +37,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="access">The Batch resources to which the token grants
         /// access.</param>
-        public AuthenticationTokenSettings(System.Collections.Generic.IList<AccessScope> access = default(System.Collections.Generic.IList<AccessScope>))
+        public AuthenticationTokenSettings(IList<AccessScope> access = default(IList<AccessScope>))
         {
-            this.Access = access;
+            Access = access;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the Batch resources to which the token grants access.
@@ -42,8 +57,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// access property is 'job', which grants access to all operations
         /// related to the job which contains the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "access")]
-        public System.Collections.Generic.IList<AccessScope> Access { get; set; }
+        [JsonProperty(PropertyName = "access")]
+        public IList<AccessScope> Access { get; set; }
 
     }
 }

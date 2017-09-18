@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -25,7 +29,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskIdRange class.
         /// </summary>
-        public TaskIdRange() { }
+        public TaskIdRange()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskIdRange class.
@@ -34,26 +41,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="end">The last task ID in the range.</param>
         public TaskIdRange(int start, int end)
         {
-            this.Start = start;
-            this.End = end;
+            Start = start;
+            End = end;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the first task ID in the range.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "start")]
+        [JsonProperty(PropertyName = "start")]
         public int Start { get; set; }
 
         /// <summary>
         /// Gets or sets the last task ID in the range.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "end")]
+        [JsonProperty(PropertyName = "end")]
         public int End { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
