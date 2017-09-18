@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.CognitiveServices.Language</PackageId>
+    <PackageId>Microsoft.Azure.CognitiveServices.Language</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Language APIs.</Description>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
