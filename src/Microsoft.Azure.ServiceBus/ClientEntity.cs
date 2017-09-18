@@ -100,7 +100,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Generates a new client id that can be used to identify a specific client in logs and error messages.
         /// </summary>
-        /// <param name="clientTypeName">The type of the client.</param>
         /// <param name="postfix">Information that can be appended by the client.</param>
         protected static string GenerateClientId(string clientTypeName, string postfix = "")
         {

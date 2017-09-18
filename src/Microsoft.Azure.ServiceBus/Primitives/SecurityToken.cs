@@ -32,14 +32,16 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Creates a new instance of the <see cref="SecurityToken"/> class.
         /// </summary>
-        /// <param name="tokenString">The token</param>
         /// <param name="expiresAtUtc">The expiration time</param>
-        /// <param name="audience">The audience</param>
         public SecurityToken(string tokenString, DateTime expiresAtUtc, string audience)
         {
-            if (tokenString == null || audience == null)
+            if (string.IsNullOrWhiteSpace(tokenString))
             {
-                throw Fx.Exception.ArgumentNull(tokenString == null ? nameof(tokenString) : nameof(audience));
+                throw Fx.Exception.ArgumentNull(nameof(tokenString));
+            }
+            if (string.IsNullOrWhiteSpace(audience))
+            {
+                throw Fx.Exception.ArgumentNull(nameof(audience));
             }
 
             this.token = tokenString;
@@ -50,11 +52,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Creates a new instance of the <see cref="SecurityToken"/> class.
         /// </summary>
-        /// <param name="tokenString">The token</param>
         /// <param name="expiresAtUtc">The expiration time</param>
         public SecurityToken(string tokenString, DateTime expiresAtUtc)
         {
-            if (tokenString == null)
+            if (string.IsNullOrWhiteSpace(tokenString))
             {
                 throw Fx.Exception.ArgumentNull(nameof(tokenString));
             }
@@ -67,10 +68,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Creates a new instance of the <see cref="SecurityToken"/> class.
         /// </summary>
-        /// <param name="tokenString">The token</param>
         public SecurityToken(string tokenString)
         {
-            if (tokenString == null)
+            if (string.IsNullOrWhiteSpace(tokenString))
             {
                 throw Fx.Exception.ArgumentNull(nameof(tokenString));
             }

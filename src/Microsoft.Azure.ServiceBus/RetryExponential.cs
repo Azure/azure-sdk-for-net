@@ -17,7 +17,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="minimumBackoff">Minimum backoff interval.</param>
         /// <param name="maximumBackoff">Maximum backoff interval.</param>
-        /// <param name="maximumRetryCount">Maximum retry count.</param>
         public RetryExponential(TimeSpan minimumBackoff, TimeSpan maximumBackoff, int maximumRetryCount)
             : this(minimumBackoff, maximumBackoff, Constants.DefaultRetryDeltaBackoff, maximumRetryCount)
         {

@@ -429,11 +429,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.RetryPolicy.RunOperation(
-                    async () =>
-                    {
-                        await this.OnCompleteAsync(lockTokenList).ConfigureAwait(false);
-                    }, this.OperationTimeout)
+                await this.RetryPolicy.RunOperation(() => this.OnCompleteAsync(lockTokenList), this.OperationTimeout)
                     .ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -462,11 +458,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.MessageAbandonStart(this.ClientId, 1, lockToken);
             try
             {
-                await this.RetryPolicy.RunOperation(
-                    async () =>
-                    {
-                        await this.OnAbandonAsync(lockToken).ConfigureAwait(false);
-                    }, this.OperationTimeout)
+                await this.RetryPolicy.RunOperation(() => this.OnAbandonAsync(lockToken), this.OperationTimeout)
                     .ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -497,11 +489,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.RetryPolicy.RunOperation(
-                    async () =>
-                    {
-                        await this.OnDeferAsync(lockToken).ConfigureAwait(false);
-                    }, this.OperationTimeout)
+                await this.RetryPolicy.RunOperation(() => this.OnDeferAsync(lockToken), this.OperationTimeout)
                     .ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -533,11 +521,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.RetryPolicy.RunOperation(
-                    async () =>
-                    {
-                        await this.OnDeadLetterAsync(lockToken).ConfigureAwait(false);
-                    }, this.OperationTimeout)
+                await this.RetryPolicy.RunOperation(() => this.OnDeadLetterAsync(lockToken), this.OperationTimeout)
                     .ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -552,7 +536,6 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Renews the lock on the message specified by the lock token. The lock will be renewed based on the setting specified on the queue.
         /// </summary>
-        /// <param name="message"> <see cref="Message" />.</param>
         /// <remarks>
         /// When a message is received in <see cref="ServiceBus.ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
@@ -644,7 +627,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         /// <summary>Peeks a batch of messages.</summary>
         /// <param name="fromSequenceNumber">The starting point from which to browse a batch of messages.</param>
-        /// <param name="messageCount">The number of messages.</param>
+        /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <returns>A batch of messages peeked.</returns>
         public async Task<IList<Message>> PeekBySequenceNumberAsync(long fromSequenceNumber, int messageCount)
         {
@@ -698,7 +681,6 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
         /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             this.ThrowIfClosed();
@@ -724,7 +706,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 return;
             }
-            if (serviceBusPluginName == null)
+            if (string.IsNullOrWhiteSpace(serviceBusPluginName))
             {
                 throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
             }

@@ -48,7 +48,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
         /// Individual sessions can further register additional plugins.</remarks>
-        /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync();
 
         /// <summary>
@@ -57,7 +56,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serverWaitTime">Amount of time for which the call should wait for to fetch the next session.</param>
         /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
         /// Individual sessions can further register additional plugins.</remarks>
-        /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime);
 
         /// <summary>
@@ -66,7 +64,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="sessionId">The sessionId present in all its messages.</param>
         /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
         /// Individual sessions can further register additional plugins.</remarks>
-        /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync(string sessionId);
 
         /// <summary>
@@ -76,7 +73,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serverWaitTime">Amount of time for which the call should wait for to fetch the next session.</param>
         /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
         /// Individual sessions can further register additional plugins.</remarks>
-        /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime);
     }
 }

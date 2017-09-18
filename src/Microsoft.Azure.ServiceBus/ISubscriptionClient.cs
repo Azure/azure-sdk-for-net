@@ -59,7 +59,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>
-        /// <param name="ruleName">The name of the rule to add.</param>
         /// <param name="filter">The filter expression against which messages will be matched.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         /// <remarks>
@@ -86,14 +85,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
         /// </summary>
-        /// <param name="ruleName">The name of the rule.</param>
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
         Task RemoveRuleAsync(string ruleName);
 
         /// <summary>
         /// Get all rules associated with the subscription.
         /// </summary>
-        /// <returns>IEnumerable of rules</returns>
         Task<IEnumerable<RuleDescription>> GetRulesAsync();
 
         /// <summary>

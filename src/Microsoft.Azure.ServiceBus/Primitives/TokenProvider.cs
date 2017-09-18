@@ -65,7 +65,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <param name="tokenTimeToLive">The token time to live</param>
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive)
         {
@@ -89,7 +88,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <param name="tokenTimeToLive">The token time to live</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
@@ -101,7 +99,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
         /// </summary>
         /// <param name="appliesTo">The URI which the access token applies to</param>
-        /// <param name="action">The request action</param>
         /// <param name="timeout">The time span that specifies the timeout value for the message that gets the security token</param>
         public Task<SecurityToken> GetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {

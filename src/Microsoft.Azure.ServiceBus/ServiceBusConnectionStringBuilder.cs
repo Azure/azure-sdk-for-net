@@ -57,9 +57,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </code>
         /// </example>
         /// <param name="endpoint">Fully qualified endpoint.</param>
-        /// <param name="entityPath">Path to the entity.</param>
-        /// <param name="sharedAccessKeyName">Shared access key name.</param>
-        /// <param name="sharedAccessKey">Shared access key.</param>
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
@@ -92,10 +89,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </code>
         /// </example>
         /// <param name="endpoint">Fully qualified endpoint.</param>
-        /// <param name="entityPath">Path to the entity.</param>
-        /// <param name="sharedAccessKeyName">Shared access key name.</param>
-        /// <param name="sharedAccessKey">Shared access key.</param>
-        /// <param name="transportType">Transport type</param>
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, TransportType transportType)
             : this(endpoint, entityPath, sharedAccessKeyName, sharedAccessKey)
         {

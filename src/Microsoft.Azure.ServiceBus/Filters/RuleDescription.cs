@@ -33,7 +33,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name.
         /// </summary>
-        /// <param name="name">The name of the rule.</param>
         public RuleDescription(string name)
             : this(name, TrueFilter.Default)
         {
@@ -56,7 +55,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name and filter expression.
         /// </summary>
-        /// <param name="name">The name of the rule.</param>
         /// <param name="filter">The filter expression used to match messages.</param>
         public RuleDescription(string name, Filter filter)
         {

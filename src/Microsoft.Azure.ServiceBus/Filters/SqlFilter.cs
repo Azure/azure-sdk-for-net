@@ -24,7 +24,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlFilter" /> class using the specified SQL expression.
         /// </summary>
-        /// <param name="sqlExpression">The SQL expression.</param>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
         public SqlFilter(string sqlExpression)
         {

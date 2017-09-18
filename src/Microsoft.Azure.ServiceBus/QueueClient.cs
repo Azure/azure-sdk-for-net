@@ -296,8 +296,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Sends a message to Service Bus.
         /// </summary>
-        /// <param name="message">The <see cref="Message"/></param>
-        /// <returns>An asynchronous operation</returns>
         public Task SendAsync(Message message)
         {
             return this.SendAsync(new[] { message });
@@ -306,8 +304,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Sends a list of messages to Service Bus.
         /// </summary>
-        /// <param name="messageList">The list of messages</param>
-        /// <returns>An asynchronous operation</returns>
         public Task SendAsync(IList<Message> messageList)
         {
             this.ThrowIfClosed();
@@ -422,7 +418,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
-        /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
         /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
@@ -435,7 +430,6 @@ namespace Microsoft.Azure.ServiceBus
         /// Cancels a message that was scheduled.
         /// </summary>
         /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
-        /// <returns>An asynchronous operation</returns>
         public Task CancelScheduledMessageAsync(long sequenceNumber)
         {
             this.ThrowIfClosed();
@@ -445,7 +439,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this queue client.
         /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             this.ThrowIfClosed();

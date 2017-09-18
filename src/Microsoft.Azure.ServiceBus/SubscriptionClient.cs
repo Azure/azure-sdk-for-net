@@ -60,7 +60,6 @@ namespace Microsoft.Azure.ServiceBus
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
-        /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
@@ -73,8 +72,6 @@ namespace Microsoft.Azure.ServiceBus
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
         /// </summary>
         /// <param name="connectionString">Namespace connection string. Must not contain topic or subscription information.</param>
-        /// <param name="topicPath">Path to the topic.</param>
-        /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
@@ -374,7 +371,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>
-        /// <param name="ruleName">The name of the rule to add.</param>
         /// <param name="filter">The filter expression against which messages will be matched.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         /// <remarks>
@@ -428,7 +424,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
         /// </summary>
-        /// <param name="ruleName">The name of the rule.</param>
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
         public async Task RemoveRuleAsync(string ruleName)
         {
@@ -457,7 +452,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Get all rules associated with the subscription.
         /// </summary>
-        /// <returns>IEnumerable of rules</returns>
         public async Task<IEnumerable<RuleDescription>> GetRulesAsync()
         {
             this.ThrowIfClosed();

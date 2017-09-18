@@ -52,7 +52,6 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="operation">A <see cref="Func{T, TResult}"/> to be executed.</param>
         /// <param name="operationTimeout">The timeout for the entire operation.</param>
-        /// <returns></returns>
         public async Task RunOperation(Func<Task> operation, TimeSpan operationTimeout)
         {
             var currentRetryCount = 0;
