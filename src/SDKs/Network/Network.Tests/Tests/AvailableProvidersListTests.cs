@@ -17,7 +17,7 @@ namespace Network.Tests.Tests
 
     public class AvailableProvidersListTests
     {
-        [Fact]
+        [Fact(Skip = "Test can be run after fixes for this API will be deployed in every region")]
         public void AvailableProvidersListAzureLocationCountrySpecifiedTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -40,7 +40,7 @@ namespace Network.Tests.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Test can be run after fixes for this API will be deployed in every region")]
         public void AvailableProvidersListAzureLocationCountryStateSpecifiedTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -65,7 +65,7 @@ namespace Network.Tests.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Test can be run after fixes for this API will be deployed in every region")]
         public void AvailableProvidersListAzureLocationCountryStateCitySpecifiedTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
