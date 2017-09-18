@@ -24,46 +24,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     public static partial class InfraRolesOperationsExtensions
     {
             /// <summary>
-            /// Create new infra role instances.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='infraRole'>
-            /// Infra role name.
-            /// </param>
-            public static OperationStatus ScaleUp(this IInfraRolesOperations operations, string location, string infraRole)
-            {
-                return operations.ScaleUpAsync(location, infraRole).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create new infra role instances.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='infraRole'>
-            /// Infra role name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<OperationStatus> ScaleUpAsync(this IInfraRolesOperations operations, string location, string infraRole, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ScaleUpWithHttpMessagesAsync(location, infraRole, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get an infra role description.
             /// </summary>
             /// <param name='operations'>
@@ -138,46 +98,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             public static async Task<IPage<InfraRole>> ListAsync(this IInfraRolesOperations operations, string location, ODataQuery<InfraRole> odataQuery = default(ODataQuery<InfraRole>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Create new infra role instances.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='infraRole'>
-            /// Infra role name.
-            /// </param>
-            public static OperationStatus BeginScaleUp(this IInfraRolesOperations operations, string location, string infraRole)
-            {
-                return operations.BeginScaleUpAsync(location, infraRole).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create new infra role instances.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// Location of the resource.
-            /// </param>
-            /// <param name='infraRole'>
-            /// Infra role name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<OperationStatus> BeginScaleUpAsync(this IInfraRolesOperations operations, string location, string infraRole, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginScaleUpWithHttpMessagesAsync(location, infraRole, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

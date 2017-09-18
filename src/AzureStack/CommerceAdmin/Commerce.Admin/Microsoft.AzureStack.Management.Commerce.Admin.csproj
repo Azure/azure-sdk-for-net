@@ -7,6 +7,7 @@
     <VersionPrefix>0.1.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.AzureStack.Management.Commerce.Admin</AssemblyName>
     <PackageTags>Microsoft Azure Stack;Commerce;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the AzureStack Commerce Admin SDK. Included with this release is support for gathering Usage Aggregates for subscriptions.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
