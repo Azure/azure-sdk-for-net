@@ -1,4 +1,5 @@
-﻿using Microsoft.CognitiveServices.Vision.Face;
+﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using System;
 using System.Net.Http;
 
@@ -20,7 +21,7 @@ namespace FaceSDK.Tests
         {
             IFaceAPI client;
             client = new FaceAPI(handlers: handler);
-            client.AzureRegion = Microsoft.CognitiveServices.Vision.Face.Models.AzureRegions.Westus;
+            client.AzureRegion = AzureRegions.Westus;
             client.SubscriptionKey = SubscriptionKey;
 
             return client;

@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.CognitiveServices.Vision.Tests</PackageId>
-    <Description>Microsoft.CognitiveServices.Vision.Tests Class Library</Description>
-    <AssemblyName>Microsoft.CognitiveServices.Vision.Tests</AssemblyName>
+    <Description>Microsoft.Azure.CognitiveServices.Vision.Tests Class Library</Description>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   
@@ -13,7 +12,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <ProjectReference Include="..\Microsoft.CognitiveServices.Vision\Microsoft.CognitiveServices.Vision.csproj" />
+    <ProjectReference Include="..\Vision\Microsoft.Azure.CognitiveServices.Vision.csproj" />
   </ItemGroup>
 
   <ItemGroup>
