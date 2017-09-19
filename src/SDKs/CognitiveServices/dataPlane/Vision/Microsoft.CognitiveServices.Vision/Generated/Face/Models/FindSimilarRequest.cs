@@ -6,11 +6,12 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.CognitiveServices.Vision.Face.Models
+namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 {
-    using Microsoft.CognitiveServices;
-    using Microsoft.CognitiveServices.Vision;
-    using Microsoft.CognitiveServices.Vision.Face;
+    using Microsoft.Azure;
+    using Microsoft.Azure.CognitiveServices;
+    using Microsoft.Azure.CognitiveServices.Vision;
+    using Microsoft.Azure.CognitiveServices.Vision.Face;
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;

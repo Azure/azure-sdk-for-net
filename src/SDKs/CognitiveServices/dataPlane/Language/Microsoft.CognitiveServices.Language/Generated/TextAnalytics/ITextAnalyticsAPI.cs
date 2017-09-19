@@ -6,10 +6,11 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.CognitiveServices.Language.TextAnalytics
+namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 {
-    using Microsoft.CognitiveServices;
-    using Microsoft.CognitiveServices.Language;
+    using Microsoft.Azure;
+    using Microsoft.Azure.CognitiveServices;
+    using Microsoft.Azure.CognitiveServices.Language;
     using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
