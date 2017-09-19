@@ -1,0 +1,23 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "dataFactoryName": "exampleFactoryName",
+    "gatewayName": "DemoDMG",
+    "parameters": {
+      "nodeName": "DemoDMG"
+    },
+    "api-version": "2015-10-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Fri, 18 Aug 2017 06:02:44 GMT",
+        "x-ms-request-id": "717ec9ef-4581-4e2b-9adc-a6a4b135d543",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-correlation-request-id": "9bde033c-c84c-4593-bc42-0b947a2d63da"
+      },
+      "body": null
+    }
+  }
+}

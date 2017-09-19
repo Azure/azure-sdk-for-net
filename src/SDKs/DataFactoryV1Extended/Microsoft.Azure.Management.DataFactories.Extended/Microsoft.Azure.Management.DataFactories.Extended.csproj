@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.DataFactories.Extended</PackageId>
+    <Description>Provides DataFactory management capabilities for Microsoft Azure.</Description>
+    <VersionPrefix>4.13.0</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.DataFactories.Extended</AssemblyName>
+    <PackageTags>Microsoft Azure DataFactory management;DataFactory;DataFactory management;REST HTTP client;azureofficial;windowsazureofficial;</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

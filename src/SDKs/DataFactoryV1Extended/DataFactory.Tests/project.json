@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "description": "DataFactory.Tests Class Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "DataFactory.Tests Tests.",
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": ""
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net45+win8" ],
+      "dependencies": {
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.2.6-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.2.0-preview",
+    "Microsoft.Rest.ClientRuntime": "2.3.1",
+    "Microsoft.Azure.Management.ResourceManager": "1.4.0-preview",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Azure.Management.DataFactories.Extended": "4.13.0.0",
+    "System.Net.Http": "4.1.0",
+    "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.9",
+    "Microsoft.IdentityModel.Tokens": "5.0.0"
+  }
+}
