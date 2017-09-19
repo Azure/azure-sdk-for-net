@@ -808,6 +808,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                 while (timeoutHelper.RemainingTime() > TimeSpan.Zero)
                 {
+                    this.ThrowIfClosed();
+
                     IEnumerable<AmqpMessage> amqpMessages = null;
                     var hasMessages = await Task.Factory.FromAsync(
                         (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),

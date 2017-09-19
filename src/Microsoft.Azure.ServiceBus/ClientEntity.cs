@@ -18,6 +18,7 @@ namespace Microsoft.Azure.ServiceBus
         static int nextId;
         readonly string clientTypeName;
         readonly object syncLock;
+        bool isClosedOrClosing;
 
         protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {
@@ -32,8 +33,20 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public bool IsClosedOrClosing
         {
-            get;
-            internal set;
+            get
+            {
+                lock (syncLock)
+                {
+                    return isClosedOrClosing;
+                }
+            }
+            internal set
+            {
+                lock (syncLock)
+                {
+                    isClosedOrClosing = value;
+                }
+            }
         }
 
         /// <summary>

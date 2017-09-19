@@ -183,5 +183,35 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await receiver2.CloseAsync().ConfigureAwait(false);
             }
         }
+
+        [Fact]
+        public async Task WaitingReceiveShouldThrowWhenReceiverIsClosed()
+        {
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
+
+            TestUtility.Log("Begin to receive from an empty queue.");
+            Task throwingTask;
+            try
+            {
+                throwingTask = new Task(async () =>
+                {
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                    {
+                        await receiver.ReceiveAsync(TimeSpan.FromSeconds(40));
+                    });
+                });
+                throwingTask.Start();
+                await Task.Delay(1000);
+                TestUtility.Log("Waited for 1 Sec");
+            }
+            finally
+            {
+                await receiver.CloseAsync().ConfigureAwait(false);
+                TestUtility.Log("Closed Receiver");
+            }
+
+            await Task.Delay(3000);
+            Assert.True(throwingTask.IsCompleted);
+        }
     }
 }
