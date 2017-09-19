@@ -7,6 +7,7 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
     using Microsoft.CognitiveServices;
     using Microsoft.CognitiveServices.Search;
     using Microsoft.CognitiveServices.Search.EntitySearch;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -28,13 +29,13 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
         /// <summary>
         /// Initializes a new instance of the Places class.
         /// </summary>
+        /// <param name="value">A list of local entities, such as restaurants
+        /// or hotels.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
         /// to if you display the item.</param>
         /// <param name="webSearchUrl">The URL To Bing's search result for this
         /// item.</param>
-        /// <param name="value">A list of local entities, such as restaurants
-        /// or hotels.</param>
-        public Places(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), QueryContext queryContext = default(QueryContext), IList<Thing> value = default(IList<Thing>))
+        public Places(IList<Thing> value, string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), QueryContext queryContext = default(QueryContext))
             : base(id, contractualRules, webSearchUrl, queryContext)
         {
             Value = value;
@@ -56,12 +57,16 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
             if (Value != null)
             {
                 foreach (var element in Value)

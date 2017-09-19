@@ -72,7 +72,7 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
+        public string Text { get; private set; }
 
         /// <summary>
         /// Validate the object.

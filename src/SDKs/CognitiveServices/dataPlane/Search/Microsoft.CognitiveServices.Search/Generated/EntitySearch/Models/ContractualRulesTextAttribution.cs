@@ -7,6 +7,7 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
     using Microsoft.CognitiveServices;
     using Microsoft.CognitiveServices.Search;
     using Microsoft.CognitiveServices.Search.EntitySearch;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -29,6 +30,12 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
         /// Initializes a new instance of the ContractualRulesTextAttribution
         /// class.
         /// </summary>
+        /// <param name="text">The attribution text. Text attribution applies
+        /// to the entity as a whole and should be displayed immediately
+        /// following the entity presentation. If there are multiple text or
+        /// link attribution rules that do not specify a target, you should
+        /// concatenate them and display them using a "Data from:"
+        /// label.</param>
         /// <param name="targetPropertyName">The name of the field that the
         /// rule applies to.</param>
         /// <param name="mustBeCloseToContent">A Boolean value that determines
@@ -37,15 +44,9 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
         /// be placed in close proximity. If false, or this field does not
         /// exist, the contents may be placed at the caller's
         /// discretion.</param>
-        /// <param name="text">The attribution text. Text attribution applies
-        /// to the entity as a whole and should be displayed immediately
-        /// following the entity presentation. If there are multiple text or
-        /// link attribution rules that do not specify a target, you should
-        /// concatenate them and display them using a "Data from:"
-        /// label.</param>
         /// <param name="optionalForListDisplay">Indicates whether this
         /// provider's attribution is optional.</param>
-        public ContractualRulesTextAttribution(string targetPropertyName = default(string), bool? mustBeCloseToContent = default(bool?), string text = default(string), bool? optionalForListDisplay = default(bool?))
+        public ContractualRulesTextAttribution(string text, string targetPropertyName = default(string), bool? mustBeCloseToContent = default(bool?), bool? optionalForListDisplay = default(bool?))
             : base(targetPropertyName, mustBeCloseToContent)
         {
             Text = text;
@@ -74,5 +75,18 @@ namespace Microsoft.CognitiveServices.Search.EntitySearch.Models
         [JsonProperty(PropertyName = "optionalForListDisplay")]
         public bool? OptionalForListDisplay { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Text == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Text");
+            }
+        }
     }
 }
