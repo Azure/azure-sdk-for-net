@@ -1,0 +1,53 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "filterParameters": {
+      "lastUpdatedAfter": "2017-09-13T17:54:57.0811551Z",
+      "lastUpdatedBefore": "2017-09-13T18:07:59.6211018Z",
+      "filters": [
+        {
+          "operand": "PipelineName",
+          "operator": "Equals",
+          "values": [
+            "examplePipeline"
+          ]
+        }
+      ]
+    },
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:58:09 GMT",
+        "x-ms-request-id": "76f99b48-a79c-4af2-a0f0-0655fead6b24",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-correlation-request-id": "988c8123-bf35-4601-a5d0-8958c1a2114d"
+      },
+      "body": {
+        "value": [
+          {
+            "runId": "a420e4fd-ebe9-4758-8db7-852b4d06245e",
+            "pipelineName": "examplePipeline",
+            "parameters": {
+              "OutputBlobNameList": "[\"exampleoutput.csv\"]"
+            },
+            "invokedBy": {
+              "id": "be423891558d4c5294d4b49401a34620",
+              "name": "Manual"
+            },
+            "runStart": "2017-09-13T17:55:57.1202147Z",
+            "runEnd": "2017-09-13T17:56:25.2051416Z",
+            "durationInMs": 28084,
+            "status": "Succeeded",
+            "message": "",
+            "lastUpdated": "2017-09-13T17:56:25.2051416Z"
+          }
+        ]
+      }
+    }
+  }
+}
