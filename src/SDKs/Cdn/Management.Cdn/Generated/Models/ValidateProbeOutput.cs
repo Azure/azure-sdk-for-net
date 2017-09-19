@@ -15,33 +15,31 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Output of check name availability API.
+    /// Output of the validate probe API.
     /// </summary>
-    public partial class CheckNameAvailabilityOutput
+    public partial class ValidateProbeOutput
     {
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityOutput
-        /// class.
+        /// Initializes a new instance of the ValidateProbeOutput class.
         /// </summary>
-        public CheckNameAvailabilityOutput()
+        public ValidateProbeOutput()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityOutput
-        /// class.
+        /// Initializes a new instance of the ValidateProbeOutput class.
         /// </summary>
-        /// <param name="nameAvailable">Indicates whether the name is
-        /// available.</param>
-        /// <param name="reason">The reason why the name is not
-        /// available.</param>
+        /// <param name="isValid">Indicates whether the probe URL is accepted
+        /// or not.</param>
+        /// <param name="errorCode">Specifies the error code when the probe url
+        /// is not accepted.</param>
         /// <param name="message">The detailed error message describing why the
-        /// name is not available.</param>
-        public CheckNameAvailabilityOutput(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
+        /// probe URL is not accepted.</param>
+        public ValidateProbeOutput(bool? isValid = default(bool?), string errorCode = default(string), string message = default(string))
         {
-            NameAvailable = nameAvailable;
-            Reason = reason;
+            IsValid = isValid;
+            ErrorCode = errorCode;
             Message = message;
             CustomInit();
         }
@@ -52,20 +50,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets indicates whether the name is available.
+        /// Gets indicates whether the probe URL is accepted or not.
         /// </summary>
-        [JsonProperty(PropertyName = "nameAvailable")]
-        public bool? NameAvailable { get; private set; }
+        [JsonProperty(PropertyName = "isValid")]
+        public bool? IsValid { get; private set; }
 
         /// <summary>
-        /// Gets the reason why the name is not available.
+        /// Gets specifies the error code when the probe url is not accepted.
         /// </summary>
-        [JsonProperty(PropertyName = "reason")]
-        public string Reason { get; private set; }
+        [JsonProperty(PropertyName = "errorCode")]
+        public string ErrorCode { get; private set; }
 
         /// <summary>
-        /// Gets the detailed error message describing why the name is not
-        /// available.
+        /// Gets the detailed error message describing why the probe URL is not
+        /// accepted.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }

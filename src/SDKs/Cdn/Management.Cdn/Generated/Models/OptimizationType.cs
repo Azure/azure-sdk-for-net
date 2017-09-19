@@ -13,14 +13,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Azure.Management.Cdn;
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for OptimizationType.
     /// </summary>
-    public static class SkuName
+    public static class OptimizationType
     {
-        public const string StandardVerizon = "Standard_Verizon";
-        public const string PremiumVerizon = "Premium_Verizon";
-        public const string CustomVerizon = "Custom_Verizon";
-        public const string StandardAkamai = "Standard_Akamai";
-        public const string StandardChinaCdn = "Standard_ChinaCdn";
+        public const string GeneralWebDelivery = "GeneralWebDelivery";
+        public const string GeneralMediaStreaming = "GeneralMediaStreaming";
+        public const string VideoOnDemandMediaStreaming = "VideoOnDemandMediaStreaming";
+        public const string LargeFileDownload = "LargeFileDownload";
+        public const string DynamicSiteAcceleration = "DynamicSiteAcceleration";
     }
 }

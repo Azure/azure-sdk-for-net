@@ -12,31 +12,33 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Cdn;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// CIDR Ip address
+    /// The result of the GetSupportedOptimizationTypes API
     /// </summary>
-    public partial class CidrIpAddress
+    public partial class SupportedOptimizationTypesListResult
     {
         /// <summary>
-        /// Initializes a new instance of the CidrIpAddress class.
+        /// Initializes a new instance of the
+        /// SupportedOptimizationTypesListResult class.
         /// </summary>
-        public CidrIpAddress()
+        public SupportedOptimizationTypesListResult()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CidrIpAddress class.
+        /// Initializes a new instance of the
+        /// SupportedOptimizationTypesListResult class.
         /// </summary>
-        /// <param name="baseIpAddress">Ip adress itself.</param>
-        /// <param name="prefixLength">The length of the prefix of the ip
-        /// address.</param>
-        public CidrIpAddress(string baseIpAddress = default(string), int? prefixLength = default(int?))
+        /// <param name="supportedOptimizationTypes">Supported optimization
+        /// types for a profile.</param>
+        public SupportedOptimizationTypesListResult(IList<string> supportedOptimizationTypes = default(IList<string>))
         {
-            BaseIpAddress = baseIpAddress;
-            PrefixLength = prefixLength;
+            SupportedOptimizationTypes = supportedOptimizationTypes;
             CustomInit();
         }
 
@@ -46,16 +48,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ip adress itself.
+        /// Gets supported optimization types for a profile.
         /// </summary>
-        [JsonProperty(PropertyName = "baseIpAddress")]
-        public string BaseIpAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the length of the prefix of the ip address.
-        /// </summary>
-        [JsonProperty(PropertyName = "prefixLength")]
-        public int? PrefixLength { get; set; }
+        [JsonProperty(PropertyName = "supportedOptimizationTypes")]
+        public IList<string> SupportedOptimizationTypes { get; private set; }
 
     }
 }

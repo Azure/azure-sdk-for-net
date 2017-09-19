@@ -17,25 +17,25 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for EdgeNodesOperations.
+    /// Extension methods for ResourceUsageOperations.
     /// </summary>
-    public static partial class EdgeNodesOperationsExtensions
+    public static partial class ResourceUsageOperationsExtensions
     {
             /// <summary>
-            /// Edgenodes are the global Point of Presence (POP) locations used to deliver
-            /// CDN content to end users.
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<EdgeNode> List(this IEdgeNodesOperations operations)
+            public static IPage<ResourceUsage> List(this IResourceUsageOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Edgenodes are the global Point of Presence (POP) locations used to deliver
-            /// CDN content to end users.
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EdgeNode>> ListAsync(this IEdgeNodesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsage>> ListAsync(this IResourceUsageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Edgenodes are the global Point of Presence (POP) locations used to deliver
-            /// CDN content to end users.
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,14 +61,14 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<EdgeNode> ListNext(this IEdgeNodesOperations operations, string nextPageLink)
+            public static IPage<ResourceUsage> ListNext(this IResourceUsageOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Edgenodes are the global Point of Presence (POP) locations used to deliver
-            /// CDN content to end users.
+            /// Check the quota and actual usage of the CDN profiles under the given
+            /// subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EdgeNode>> ListNextAsync(this IEdgeNodesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceUsage>> ListNextAsync(this IResourceUsageOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -11,32 +11,30 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Cdn;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// CIDR Ip address
+    /// Input of the validate probe API.
     /// </summary>
-    public partial class CidrIpAddress
+    public partial class ValidateProbeInput
     {
         /// <summary>
-        /// Initializes a new instance of the CidrIpAddress class.
+        /// Initializes a new instance of the ValidateProbeInput class.
         /// </summary>
-        public CidrIpAddress()
+        public ValidateProbeInput()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CidrIpAddress class.
+        /// Initializes a new instance of the ValidateProbeInput class.
         /// </summary>
-        /// <param name="baseIpAddress">Ip adress itself.</param>
-        /// <param name="prefixLength">The length of the prefix of the ip
-        /// address.</param>
-        public CidrIpAddress(string baseIpAddress = default(string), int? prefixLength = default(int?))
+        /// <param name="probeURL">The probe URL to validate.</param>
+        public ValidateProbeInput(string probeURL)
         {
-            BaseIpAddress = baseIpAddress;
-            PrefixLength = prefixLength;
+            ProbeURL = probeURL;
             CustomInit();
         }
 
@@ -46,16 +44,23 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ip adress itself.
+        /// Gets or sets the probe URL to validate.
         /// </summary>
-        [JsonProperty(PropertyName = "baseIpAddress")]
-        public string BaseIpAddress { get; set; }
+        [JsonProperty(PropertyName = "probeURL")]
+        public string ProbeURL { get; set; }
 
         /// <summary>
-        /// Gets or sets the length of the prefix of the ip address.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "prefixLength")]
-        public int? PrefixLength { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ProbeURL == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProbeURL");
+            }
+        }
     }
 }

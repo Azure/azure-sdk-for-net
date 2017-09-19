@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Cdn
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EdgeNodesOperations operations.
+    /// ResourceUsageOperations operations.
     /// </summary>
-    internal partial class EdgeNodesOperations : IServiceOperations<CdnManagementClient>, IEdgeNodesOperations
+    internal partial class ResourceUsageOperations : IServiceOperations<CdnManagementClient>, IResourceUsageOperations
     {
         /// <summary>
-        /// Initializes a new instance of the EdgeNodesOperations class.
+        /// Initializes a new instance of the ResourceUsageOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EdgeNodesOperations(CdnManagementClient client)
+        internal ResourceUsageOperations(CdnManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Edgenodes are the global Point of Presence (POP) locations used to deliver
-        /// CDN content to end users.
+        /// Check the quota and actual usage of the CDN profiles under the given
+        /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -75,8 +75,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EdgeNode>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceUsage>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -93,7 +97,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Cdn/edgenodes").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -106,7 +111,7 @@ namespace Microsoft.Azure.Management.Cdn
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -187,7 +192,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<EdgeNode>>();
+            var _result = new AzureOperationResponse<IPage<ResourceUsage>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -200,7 +205,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EdgeNode>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceUsage>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -220,8 +225,8 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Edgenodes are the global Point of Presence (POP) locations used to deliver
-        /// CDN content to end users.
+        /// Check the quota and actual usage of the CDN profiles under the given
+        /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -247,7 +252,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EdgeNode>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceUsage>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -275,7 +280,7 @@ namespace Microsoft.Azure.Management.Cdn
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -356,7 +361,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<EdgeNode>>();
+            var _result = new AzureOperationResponse<IPage<ResourceUsage>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -369,7 +374,7 @@ namespace Microsoft.Azure.Management.Cdn
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EdgeNode>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceUsage>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
