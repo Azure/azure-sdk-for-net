@@ -225,6 +225,68 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestCancelDatabaseOperation()
+        {
+            string testPrefix = "sqldblistcanceloperation-";
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup("North Europe");
+                Server server = context.CreateServer(resourceGroup, "northeurope");
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create database only required parameters
+                //
+                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    RequestedServiceObjectiveName = ServiceObjectiveName.S0,
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Start updateslo operation
+                //
+                var dbUpdateResponse = sqlClient.Databases.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    RequestedServiceObjectiveName = ServiceObjectiveName.P2,
+                    Location = server.Location,
+                });
+                Thread.Sleep(3000);
+
+                // Get the updateslo operation
+                //
+                AzureOperationResponse<IPage<DatabaseOperation>> response = sqlClient.DatabaseOperations.ListByDatabaseWithHttpMessagesAsync(
+                    resourceGroup.Name, server.Name, dbName).Result;
+                Assert.Equal(response.Response.StatusCode, HttpStatusCode.OK);
+                IList<DatabaseOperation> responseObject = response.Body.ToList();
+                Assert.Equal(responseObject.Count(), 1);
+
+                // Cancel the database updateslo operation
+                //
+                string requestId = responseObject[0].Name;
+                sqlClient.DatabaseOperations.Cancel(resourceGroup.Name, server.Name, dbName, Guid.Parse(requestId));
+
+                try
+                {
+                    sqlClient.GetPutOrPatchOperationResultAsync(dbUpdateResponse.Result, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
+                }
+                catch (Exception e)
+                {
+                    Assert.Contains("Long running operation failed with status 'Canceled'", e.Message);
+                }
+
+                // Make sure the database is not updated due to cancel operation
+                //
+                var dbGetResponse = sqlClient.Databases.Get(resourceGroup.Name, server.Name, dbName);
+                Assert.Equal(dbGetResponse.ServiceLevelObjective, ServiceObjectiveName.S0);
+            }
+        }
+
+        [Fact]
         public void TestGetAndListDatabase()
         {
             string testPrefix = "sqlcrudtest-";

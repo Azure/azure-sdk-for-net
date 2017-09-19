@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
+        /// <param name="virtualNetworkSubnetId">The ARM resource id of the
+        /// virtual network subnet.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="virtualNetworkSubnetId">The resource ID of the virtual
-        /// network subnet</param>
-        public VirtualNetworkRule(string id = default(string), string name = default(string), string type = default(string), string virtualNetworkSubnetId = default(string))
+        public VirtualNetworkRule(string virtualNetworkSubnetId, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
@@ -51,10 +51,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the virtual network subnet
+        /// Gets or sets the ARM resource id of the virtual network subnet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualNetworkSubnetId")]
         public string VirtualNetworkSubnetId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VirtualNetworkSubnetId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VirtualNetworkSubnetId");
+            }
+        }
     }
 }

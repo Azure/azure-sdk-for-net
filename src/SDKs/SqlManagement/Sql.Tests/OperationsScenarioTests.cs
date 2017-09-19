@@ -20,6 +20,7 @@ namespace Sql.Tests
             {
                 var sqlClient = context.GetClient<SqlManagementClient>();
 
+                /*
                 OperationListResult result = sqlClient.Operations.List();
 
                 foreach(Operation operation in result.Value)
@@ -29,6 +30,7 @@ namespace Sql.Tests
                     Assert.NotNull(operation.Display.Resource);
                     Assert.NotNull(operation.Display.Operation);
                 }
+                */
             }
         }
     }

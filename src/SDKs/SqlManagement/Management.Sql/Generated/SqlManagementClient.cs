@@ -142,11 +142,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
@@ -227,6 +222,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IServerKeysOperations.
         /// </summary>
         public virtual IServerKeysOperations ServerKeys { get; private set; }
@@ -250,6 +250,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        public virtual IDatabaseOperations DatabaseOperations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -466,7 +471,6 @@ namespace Microsoft.Azure.Management.Sql
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
             Databases = new DatabasesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
-            Operations = new Operations(this);
             ReplicationLinks = new ReplicationLinksOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
@@ -483,11 +487,13 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
+            Operations = new Operations(this);
             ServerKeys = new ServerKeysOperations(this);
             SyncAgents = new SyncAgentsOperations(this);
             SyncGroups = new SyncGroupsOperations(this);
             SyncMembers = new SyncMembersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
+            DatabaseOperations = new DatabaseOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
