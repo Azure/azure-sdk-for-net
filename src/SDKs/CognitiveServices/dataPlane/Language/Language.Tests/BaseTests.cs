@@ -1,4 +1,4 @@
-﻿using Microsoft.CognitiveServices.Language.TextAnalytics;
+﻿using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
 using System.Net.Http;
 
 namespace Language.Tests

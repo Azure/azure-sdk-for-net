@@ -1,7 +1,7 @@
 using Language.Tests;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.CognitiveServices.Language.TextAnalytics;
-using Microsoft.CognitiveServices.Language.TextAnalytics.Models;
+using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
+using Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using Xunit;
