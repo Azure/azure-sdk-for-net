@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
+    <Description>Azure Data Factory v2 is a fully managed hybrid data service to compose and manage data integration workflows at scale that are reliable and secure. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
+    <VersionPrefix>0.2.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
+    <PackageTags>Microsoft Azure resource management;Data Factory;ADF;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
