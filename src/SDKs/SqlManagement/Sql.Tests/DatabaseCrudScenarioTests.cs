@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -256,10 +257,7 @@ namespace Sql.Tests
                     RequestedServiceObjectiveName = ServiceObjectiveName.P2,
                     Location = server.Location,
                 });
-                if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                {
-                    Thread.Sleep(TimeSpan.FromSeconds(3));
-                }
+                TestUtilities.Wait(TimeSpan.FromSeconds(3));
 
                 // Get the updateslo operation
                 //
