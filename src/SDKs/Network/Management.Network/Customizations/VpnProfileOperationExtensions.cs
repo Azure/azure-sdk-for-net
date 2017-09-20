@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Microsoft.Azure.Management.Network
+﻿namespace Microsoft.Azure.Management.Network
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
@@ -9,6 +7,7 @@ namespace Microsoft.Azure.Management.Network
     using Microsoft.Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -240,7 +239,7 @@ namespace Microsoft.Azure.Management.Network
             CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<string> _response =
-                await this.BeginGetVpnProfilePacakgeUrlWithHttpMessagesAsync(resourceGroupName,
+                await this.BeginGetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName,
                     virtualNetworkGatewayName,
                     customHeaders,
                     cancellationToken).ConfigureAwait(false);
