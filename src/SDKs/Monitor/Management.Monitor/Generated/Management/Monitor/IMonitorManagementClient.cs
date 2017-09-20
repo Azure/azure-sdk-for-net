@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         IAutoscaleSettingsOperations AutoscaleSettings { get; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IAlertRuleIncidentsOperations.
         /// </summary>
         IAlertRuleIncidentsOperations AlertRuleIncidents { get; }

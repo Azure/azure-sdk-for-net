@@ -87,18 +87,5 @@ namespace Fabric.Tests
                 });
             });
         }
-
-        [Fact(Skip ="no hardware")]
-        public void TestScaleOutScaleUnit() {
-            RunTest((client) => {
-                var scaleUnit = client.ScaleUnits.List(Location).GetFirst();
-                var desc = new BareMetalNodeDescription()
-                {
-                    // TODO
-                };
-                client.ScaleUnits.ScaleOut(Location, scaleUnit.Name, desc);
-            });
-        }
-
     }
 }

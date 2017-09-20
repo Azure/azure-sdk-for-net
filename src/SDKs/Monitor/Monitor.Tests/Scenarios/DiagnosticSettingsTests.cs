@@ -24,7 +24,6 @@ namespace Monitor.Tests.Scenarios
             handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
         }
 
-
         /// <summary>
         /// User needs several permissions before executing these commands. Otherwise it fails for some authorization issue.
         /// </summary>
@@ -90,8 +89,7 @@ namespace Monitor.Tests.Scenarios
                         },
                         TimeGrain = TimeSpan.FromMinutes(1)
                     }
-                },
-                Location = string.Empty
+                }
             };
         }
         

@@ -35,7 +35,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState PowerOff(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus PowerOff(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.PowerOffAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> PowerOffAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> PowerOffAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PowerOffWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -75,7 +75,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState PowerOn(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus PowerOn(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.PowerOnAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -95,7 +95,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> PowerOnAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> PowerOnAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PowerOnWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -115,7 +115,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState Shutdown(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus Shutdown(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.ShutdownAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -135,7 +135,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> ShutdownAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> ShutdownAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ShutdownWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -155,7 +155,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState Reboot(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus Reboot(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.RebootAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -175,7 +175,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> RebootAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> RebootAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RebootWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -275,7 +275,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState BeginPowerOff(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus BeginPowerOff(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.BeginPowerOffAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -295,7 +295,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginPowerOffAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginPowerOffAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPowerOffWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -315,7 +315,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState BeginPowerOn(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus BeginPowerOn(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.BeginPowerOnAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -335,7 +335,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginPowerOnAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginPowerOnAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPowerOnWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -355,7 +355,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState BeginShutdown(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus BeginShutdown(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.BeginShutdownAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -375,7 +375,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginShutdownAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginShutdownAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginShutdownWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -395,7 +395,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='infraRoleInstance'>
             /// Name of an infra role instance.
             /// </param>
-            public static ProvisioningState BeginReboot(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
+            public static OperationStatus BeginReboot(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance)
             {
                 return operations.BeginRebootAsync(location, infraRoleInstance).GetAwaiter().GetResult();
             }
@@ -415,7 +415,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginRebootAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginRebootAsync(this IInfraRoleInstancesOperations operations, string location, string infraRoleInstance, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginRebootWithHttpMessagesAsync(location, infraRoleInstance, null, cancellationToken).ConfigureAwait(false))
                 {

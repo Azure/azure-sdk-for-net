@@ -278,10 +278,6 @@ namespace Microsoft.Azure.Management.Monitor.Management
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");

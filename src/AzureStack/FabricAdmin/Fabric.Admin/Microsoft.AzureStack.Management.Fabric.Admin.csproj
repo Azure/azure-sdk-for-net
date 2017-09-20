@@ -7,6 +7,7 @@
     <VersionPrefix>0.1.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.AzureStack.Management.Fabric.Admin</AssemblyName>
     <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the AzureStack Fabric Admin SDK. Included with this release is support for gathering information about your AzureStack infrastructure and performing administrative operations.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

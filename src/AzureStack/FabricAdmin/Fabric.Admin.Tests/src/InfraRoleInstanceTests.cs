@@ -117,7 +117,8 @@ namespace Fabric.Tests
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
                     var provisioningState = client.InfraRoleInstances.Shutdown(Location, TenantVMName);
-                    Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                    Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
                 });
             });
         }
@@ -127,7 +128,8 @@ namespace Fabric.Tests
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
                     var provisioningState = client.InfraRoleInstances.PowerOff(Location, TenantVMName);
-                    Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                    Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
                 });
             });
         }
@@ -137,7 +139,8 @@ namespace Fabric.Tests
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
                     var provisioningState = client.InfraRoleInstances.Reboot(Location, TenantVMName);
-                    Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                    Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
                 });
             });
         }
@@ -150,7 +153,8 @@ namespace Fabric.Tests
         public void TestInfraRoleInstanceShutdown() {
             RunTest((client) => {
                 var provisioningState = client.InfraRoleInstances.Shutdown(Location, RoleInstance);
-                Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
 
                 var instance = client.InfraRoleInstances.Get(Location, RoleInstance);
                 ValiateInfraRoleInstance(instance);
@@ -162,7 +166,8 @@ namespace Fabric.Tests
         public void TestInfraRoleInstancePowerOff() {
             RunTest((client) => {
                 var provisioningState = client.InfraRoleInstances.PowerOff(Location, "502828aa-de3a-4ba9-a66c-5ae6d49589d7");
-                Assert.NotEqual(provisioningState.ProvisioningStateProperty, "Success");
+                Assert.NotEqual("", provisioningState.ProvisioningState);
+                    Assert.Equal("Failed", provisioningState.ProvisioningState);
             });
         }
 

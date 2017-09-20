@@ -11,7 +11,5 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.Management.Monitor</RootNamespace>
-    <DelaySign>false</DelaySign>
-    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 </Project>

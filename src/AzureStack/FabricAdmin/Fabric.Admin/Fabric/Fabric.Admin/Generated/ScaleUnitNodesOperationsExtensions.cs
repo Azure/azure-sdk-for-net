@@ -35,7 +35,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState PowerOff(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus PowerOff(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.PowerOffAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> PowerOffAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> PowerOffAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PowerOffWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -75,7 +75,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState PowerOn(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus PowerOn(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.PowerOnAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -95,7 +95,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> PowerOnAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> PowerOnAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PowerOnWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -115,7 +115,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState StartMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus StartMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.StartMaintenanceModeAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -135,7 +135,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> StartMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> StartMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.StartMaintenanceModeWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -155,7 +155,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState StopMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus StopMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.StopMaintenanceModeAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -175,7 +175,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> StopMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> StopMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.StopMaintenanceModeWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -275,7 +275,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState BeginPowerOff(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus BeginPowerOff(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.BeginPowerOffAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -295,7 +295,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginPowerOffAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginPowerOffAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPowerOffWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -315,7 +315,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState BeginPowerOn(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus BeginPowerOn(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.BeginPowerOnAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -335,7 +335,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginPowerOnAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginPowerOnAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPowerOnWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -355,7 +355,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState BeginStartMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus BeginStartMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.BeginStartMaintenanceModeAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -375,7 +375,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginStartMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginStartMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginStartMaintenanceModeWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -395,7 +395,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='scaleUnitNode'>
             /// Name of the scale unit node.
             /// </param>
-            public static ProvisioningState BeginStopMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
+            public static OperationStatus BeginStopMaintenanceMode(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode)
             {
                 return operations.BeginStopMaintenanceModeAsync(location, scaleUnitNode).GetAwaiter().GetResult();
             }
@@ -415,7 +415,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningState> BeginStopMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> BeginStopMaintenanceModeAsync(this IScaleUnitNodesOperations operations, string location, string scaleUnitNode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginStopMaintenanceModeWithHttpMessagesAsync(location, scaleUnitNode, null, cancellationToken).ConfigureAwait(false))
                 {
