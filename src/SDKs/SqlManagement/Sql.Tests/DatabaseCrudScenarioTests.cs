@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -225,7 +226,7 @@ namespace Sql.Tests
         }
 
         [Fact]
-        public void TestCancelDatabaseOperation()
+        public async Task TestCancelDatabaseOperation()
         {
             string testPrefix = "sqldblistcanceloperation-";
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -255,7 +256,10 @@ namespace Sql.Tests
                     RequestedServiceObjectiveName = ServiceObjectiveName.P2,
                     Location = server.Location,
                 });
-                Thread.Sleep(3000);
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(3));
+                }
 
                 // Get the updateslo operation
                 //
@@ -270,14 +274,8 @@ namespace Sql.Tests
                 string requestId = responseObject[0].Name;
                 sqlClient.DatabaseOperations.Cancel(resourceGroup.Name, server.Name, dbName, Guid.Parse(requestId));
 
-                try
-                {
-                    sqlClient.GetPutOrPatchOperationResultAsync(dbUpdateResponse.Result, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
-                }
-                catch (Exception e)
-                {
-                    Assert.Contains("Long running operation failed with status 'Canceled'", e.Message);
-                }
+                CloudException ex = await Assert.ThrowsAsync<CloudException>(() => sqlClient.GetPutOrPatchOperationResultAsync(dbUpdateResponse.Result, new Dictionary<string, List<string>>(), CancellationToken.None));
+                Assert.Contains("Long running operation failed with status 'Canceled'", ex.Message);
 
                 // Make sure the database is not updated due to cancel operation
                 //
