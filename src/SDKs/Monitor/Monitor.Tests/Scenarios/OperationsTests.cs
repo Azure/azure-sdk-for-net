@@ -24,7 +24,7 @@ namespace Monitor.Tests.Scenarios
         }
 
         [Fact]
-        [Trait("Category", "Mock")]
+        [Trait("Category", "Scenario")]
         public void ListOperationsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

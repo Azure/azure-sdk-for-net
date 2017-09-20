@@ -39,25 +39,25 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
-        /// <param name="categoryType">The type of the diagnostic settings
-        /// category. Possible values include: 'Metrics', 'Logs'</param>
+        /// <param name="categoryType">The type of the diagnostic settings 
+        /// category. Possible values include: 'Metrics', 'Logs'</param> 
         public DiagnosticSettingsCategoryResource(string id = default(string), string name = default(string), string type = default(string), CategoryType categoryType = default(CategoryType))
-            : base(id, name, type)
-        {
-            CategoryType = categoryType;
-            CustomInit();
+            : base(id, name, type) 
+        { 
+            CategoryType = categoryType; 
+            CustomInit(); 
         }
 
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the type of the diagnostic settings category. Possible
-        /// values include: 'Metrics', 'Logs'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.categoryType")]
+        /// <summary> 
+        /// An initialization method that performs custom operations like setting defaults 
+        /// </summary> 
+        partial void CustomInit(); 
+ 
+        /// <summary> 
+        /// Gets or sets the type of the diagnostic settings category. Possible 
+        /// values include: 'Metrics', 'Logs' 
+        /// </summary> 
+        [JsonProperty(PropertyName = "properties.categoryType")] 
         public CategoryType CategoryType { get; set; }
 
     }
