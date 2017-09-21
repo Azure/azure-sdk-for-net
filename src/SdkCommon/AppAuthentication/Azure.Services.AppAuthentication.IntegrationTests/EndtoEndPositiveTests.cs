@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
     /// <summary>
     /// End to end test cases for AzureServiceTokenProvider class. MSI cases are not covered. 
     /// One must be logged in using Azure CLI to run these tests for Azure CLI cases, and for client secret, and certificate cases. 
-    /// Microsoft.Azure.Services.AppAuthentication.TestCertUrl must be set to a secret URL For a certificate in Key Vault. 
+    /// AppAuthenticationTestCertUrl must be set to a secret URL For a certificate in Key Vault. 
     /// The Integrated Windows Authentication test can only be run on a domain joined machine, where domain is synced with Azure AD. 
     /// </summary>
     public class EndtoEndPositiveTests : IAsyncLifetime
@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             await azureServiceTokenProvider.GetAccessTokenAsync(Constants.ArmResourceId).ConfigureAwait(false);
             _tenantId = azureServiceTokenProvider.PrincipalUsed.TenantId;
         }
+
         public async Task DisposeAsync()
         {
             await Task.Delay(0);
@@ -120,7 +121,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         }
 #endif
         /// <summary>
-        /// One must be logged in using Azure CLI and set Microsoft.Azure.Services.AppAuthentication.TestCertUrl to a secret URL for a certificate in Key Vault before running this test.
+        /// One must be logged in using Azure CLI and set AppAuthenticationTestCertUrl to a secret URL for a certificate in Key Vault before running this test.
         /// The test creates a new Azure AD application and service principal, uses the cert as the credential, and then uses the library to authenticate to it, using the cert. 
         /// After the cert, the Azure AD application is deleted. Cert is removed from current user store on the machine. 
         /// </summary>
