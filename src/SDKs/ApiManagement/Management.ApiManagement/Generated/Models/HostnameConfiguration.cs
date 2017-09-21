@@ -38,16 +38,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="encodedCertificate">Base64 Encoded
         /// certificate.</param>
         /// <param name="certificatePassword">Certificate Password.</param>
+        /// <param name="defaultSslBinding">Specify true to setup the
+        /// certificate associated with this Hostname as the Default SSL
+        /// Certificate. If a client does not send the SNI header, then this
+        /// will be the certificate that will be challenged. The property is
+        /// useful if a service has multiple custom hostname enabled and it
+        /// needs to decide on the default ssl certificate. The setting only
+        /// applied to Proxy Hostname Type.</param>
         /// <param name="negotiateClientCertificate">Specify true to always
         /// negotiate client certificate on the hostname. Default Value is
         /// false.</param>
         /// <param name="certificate">Certificate information.</param>
-        public HostnameConfiguration(HostnameType type, string hostName, string encodedCertificate = default(string), string certificatePassword = default(string), bool? negotiateClientCertificate = default(bool?), CertificateInformation certificate = default(CertificateInformation))
+        public HostnameConfiguration(HostnameType type, string hostName, string encodedCertificate = default(string), string certificatePassword = default(string), bool? defaultSslBinding = default(bool?), bool? negotiateClientCertificate = default(bool?), CertificateInformation certificate = default(CertificateInformation))
         {
             Type = type;
             HostName = hostName;
             EncodedCertificate = encodedCertificate;
             CertificatePassword = certificatePassword;
+            DefaultSslBinding = defaultSslBinding;
             NegotiateClientCertificate = negotiateClientCertificate;
             Certificate = certificate;
             CustomInit();
@@ -82,6 +90,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "certificatePassword")]
         public string CertificatePassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify true to setup the certificate associated with
+        /// this Hostname as the Default SSL Certificate. If a client does not
+        /// send the SNI header, then this will be the certificate that will be
+        /// challenged. The property is useful if a service has multiple custom
+        /// hostname enabled and it needs to decide on the default ssl
+        /// certificate. The setting only applied to Proxy Hostname Type.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultSslBinding")]
+        public bool? DefaultSslBinding { get; set; }
 
         /// <summary>
         /// Gets or sets specify true to always negotiate client certificate on

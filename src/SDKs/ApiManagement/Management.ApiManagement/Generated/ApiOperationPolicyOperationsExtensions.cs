@@ -22,6 +22,62 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ApiOperationPolicyOperationsExtensions
     {
             /// <summary>
+            /// Get the list of policy configuration at the API Operation level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='operationId'>
+            /// Operation identifier within an API. Must be unique in the current API
+            /// Management service instance.
+            /// </param>
+            public static PolicyCollection ListByOperation(this IApiOperationPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId)
+            {
+                return operations.ListByOperationAsync(resourceGroupName, serviceName, apiId, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the list of policy configuration at the API Operation level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='operationId'>
+            /// Operation identifier within an API. Must be unique in the current API
+            /// Management service instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyCollection> ListByOperationAsync(this IApiOperationPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByOperationWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get the policy configuration at the API Operation level.
             /// </summary>
             /// <param name='operations'>

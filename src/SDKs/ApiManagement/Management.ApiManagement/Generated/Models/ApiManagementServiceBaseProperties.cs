@@ -66,6 +66,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// of the API Management service.</param>
         /// <param name="customProperties">Custom properties of the API
         /// Management service, like disabling TLS 1.0.</param>
+        /// <param name="certificates">List of Certificates that need to be
+        /// installed in the API Management service. Max supported certificates
+        /// that can be installed is 10.</param>
         /// <param name="virtualNetworkType">The type of VPN in which API
         /// Managemet service needs to be configured in. None (Default Value)
         /// means the API Management service is not part of any Virtual
@@ -74,7 +77,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Internal means that API Management deployment is setup inside a
         /// Virtual Network having an Intranet Facing Endpoint only. Possible
         /// values include: 'None', 'External', 'Internal'</param>
-        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> staticIps = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), VirtualNetworkType? virtualNetworkType = default(VirtualNetworkType?))
+        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> staticIps = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), VirtualNetworkType? virtualNetworkType = default(VirtualNetworkType?))
         {
             NotificationSenderEmail = notificationSenderEmail;
             ProvisioningState = provisioningState;
@@ -89,6 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             AdditionalLocations = additionalLocations;
             CustomProperties = customProperties;
+            Certificates = certificates;
             VirtualNetworkType = virtualNetworkType;
             CustomInit();
         }
@@ -188,6 +192,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IDictionary<string, string> CustomProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets list of Certificates that need to be installed in the
+        /// API Management service. Max supported certificates that can be
+        /// installed is 10.
+        /// </summary>
+        [JsonProperty(PropertyName = "certificates")]
+        public IList<CertificateConfiguration> Certificates { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of VPN in which API Managemet service needs
         /// to be configured in. None (Default Value) means the API Management
         /// service is not part of any Virtual Network, External means the API
@@ -236,6 +248,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (Certificates != null)
+            {
+                foreach (var element2 in Certificates)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

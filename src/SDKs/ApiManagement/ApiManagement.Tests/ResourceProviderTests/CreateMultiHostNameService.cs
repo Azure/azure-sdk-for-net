@@ -32,7 +32,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Type = HostnameType.Proxy,
                     HostName = "gateway1.powershelltest.net",
                     EncodedCertificate = testBase.base64EncodedTestCertificateData,
-                    CertificatePassword = testBase.testCertificatePassword
+                    CertificatePassword = testBase.testCertificatePassword,
+                    DefaultSslBinding = true
                 };
 
                 var hostnameConfig2 = new HostnameConfiguration()
@@ -40,7 +41,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Type = HostnameType.Proxy,
                     HostName = "gateway2.powershelltest.net",
                     EncodedCertificate = testBase.base64EncodedTestCertificateData,
-                    CertificatePassword = testBase.testCertificatePassword
+                    CertificatePassword = testBase.testCertificatePassword,
+                    NegotiateClientCertificate = true
                 };
 
                 var hostnameConfig3 = new HostnameConfiguration()
@@ -87,7 +89,23 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Assert.NotNull(hostnameConfiguration.Certificate);
                     Assert.NotNull(hostnameConfiguration.Certificate.Subject);
                     Assert.Equal(cert.Thumbprint, hostnameConfiguration.Certificate.Thumbprint);
-                    Assert.Equal(false, hostnameConfiguration.NegotiateClientCertificate);
+                    if (HostnameType.Proxy == hostnameConfiguration.Type)
+                    {
+                        Assert.Equal(true, hostnameConfiguration.DefaultSslBinding);
+                    }
+                    else
+                    {
+                        Assert.Equal(false, hostnameConfiguration.DefaultSslBinding);
+                    }
+
+                    if (hostnameConfig2.HostName.Equals(hostnameConfiguration.HostName))
+                    {
+                        Assert.Equal(true, hostnameConfiguration.NegotiateClientCertificate);
+                    }
+                    else
+                    {
+                        Assert.Equal(false, hostnameConfiguration.NegotiateClientCertificate);
+                    }
                 }
 
                 // Delete

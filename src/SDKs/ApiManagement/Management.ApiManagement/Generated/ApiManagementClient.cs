@@ -261,6 +261,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IUserIdentitiesOperations UserIdentities { get; private set; }
 
         /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        public virtual IApiExportOperations ApiExport { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ApiManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -498,6 +503,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserGroup = new UserGroupOperations(this);
             UserSubscription = new UserSubscriptionOperations(this);
             UserIdentities = new UserIdentitiesOperations(this);
+            ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-03-01";
             AcceptLanguage = "en-US";
