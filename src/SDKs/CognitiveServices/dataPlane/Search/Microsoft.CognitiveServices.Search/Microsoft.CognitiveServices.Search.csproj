@@ -10,12 +10,7 @@
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;EntitySearch API;REST HTTP client;EntitySearch SDK;netcore451511</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Search SDK. Included with this release is support for EntitySearch API.</PackageReleaseNotes>
   </PropertyGroup>
-
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Customizations\" />
-  </ItemGroup>
 </Project>
