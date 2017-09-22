@@ -3,7 +3,7 @@
 
  This SDK allows you to build applications that consumes Microsoft Cognitive Services Language APIs.
 
- ### APIs
+### APIs
 
  For a full list of APIs under Language, please see our [list of language APIs](https://azure.microsoft.com/en-us/services/cognitive-services/?v=17.29#lang).
 
@@ -15,3 +15,5 @@
 ## Build Instructions:
 
 To build this project, please follow the instructions [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/README.md).
+
+## NuGet Package
