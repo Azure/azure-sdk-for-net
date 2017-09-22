@@ -22,11 +22,11 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 Product = GetAssemblyAttributeValue<AssemblyProductAttribute>(assembly, p => p.Product);
                 Version = GetAssemblyAttributeValue<AssemblyFileVersionAttribute>(assembly, v => v.Version);
                 Framework = GetAssemblyAttributeValue<TargetFrameworkAttribute>(assembly, f => f.FrameworkName);
-#if NETSTANDARD1_3
+#if NETSTANDARD2_0
                 Platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 #elif UAP10_0
                 Platform = "UAP";
-#elif NET451
+#elif NET461
                 Platform = Environment.OSVersion.VersionString;
 #else
                 Platform = "Unknown";

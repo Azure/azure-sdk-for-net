@@ -14,7 +14,6 @@
     <PackageProjectUrl>https://github.com/Azure/azure-service-bus-dotnet</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Azure/azure-service-bus-dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.3' ">1.6.1</NetStandardImplicitPackageVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludePDBsInPackage</TargetsForTfmSpecificContentInPackage>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
