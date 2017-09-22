@@ -12,8 +12,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
     /// <summary>
     /// Test cases for MsiAccessTokenProvider class. MsiAccessTokenProvider is an internal class. 
     /// </summary>
-    public class MsiAccessTokenProviderTests
+    public class MsiAccessTokenProviderTests : IDisposable
     {
+        public void Dispose()
+        {
+            // Delete the environment variables
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+
+            AccessTokenCache.Clear();
+        }
+
         [Fact]
         public async Task GetTokenUsingMsiAzureVm()
         {
