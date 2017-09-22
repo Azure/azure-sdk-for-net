@@ -9,7 +9,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <PackageReleaseNotes>Disclaimer:
+    <PackageReleaseNotes><![CDATA[Disclaimer:
 
 We were using a slightly unorthodox convention for some operation ids. Some resource operations were “nested” inside others, e.g. blob auditing policies was nested inside databases as in client.Databases.GetBlobAuditingPolicies(..) instead of the flattened ARM standard client.DatabaseBlobAuditingPolicies.Get(…).
 
@@ -18,70 +18,71 @@ This convention has lead to some inconsistencies, makes some APIs difficult to f
 In order to resolve this and provide a good path moving forward, we have renamed the inconsistent operations to follow the ARM standard. This is an unfortunate breaking change, but it’s best to do now while the SDK is still in preview and since most of these operations were only recently added.
 
 Breaking changes:
-- SqlManagementClient.Database.GetBackupLongTermRetentionPolicy -&gt; SqlManagementClient.BackupLongTermRetentionPolicies.Get
-- SqlManagementClient.Database.CreateOrUpdateBackupLongTermRetentionPolicy -&gt; SqlManagementClient.BackupLongTermRetentionPolicies.CreateOrUpdate
+- SqlManagementClient.Database.GetBackupLongTermRetentionPolicy -> SqlManagementClient.BackupLongTermRetentionPolicies.Get
+- SqlManagementClient.Database.CreateOrUpdateBackupLongTermRetentionPolicy -> SqlManagementClient.BackupLongTermRetentionPolicies.CreateOrUpdate
 
-- SqlManagementClient.Servers.CreateBackupLongTermRetentionVault -&gt; SqlManagementClient.BackupLongTermRetentionVaults.CreateOrUpdate
-- SqlManagementClient.Servers.GetBackupLongTermRetentionVault -&gt; SqlManagementClient.BackupLongTermRetentionVaults.Get
+- SqlManagementClient.Servers.CreateBackupLongTermRetentionVault -> SqlManagementClient.BackupLongTermRetentionVaults.CreateOrUpdate
+- SqlManagementClient.Servers.GetBackupLongTermRetentionVault -> SqlManagementClient.BackupLongTermRetentionVaults.Get
 
-- SqlManagementClient.Database.ListRestorePoints -&gt; SqlManagementClient.RestorePoints.ListByDatabase
+- SqlManagementClient.Database.ListRestorePoints -> SqlManagementClient.RestorePoints.ListByDatabase
 
-- SqlManagementClient.Servers.CreateOrUpdateConnectionPolicy -&gt; SqlManagementClient.ServerConnectionPolicies.CreateOrUpdate
-- SqlManagementClient.Servers.GetConnectionPolicy -&gt; SqlManagementClient.ServerConnectionPolicies.Get
+- SqlManagementClient.Servers.CreateOrUpdateConnectionPolicy -> SqlManagementClient.ServerConnectionPolicies.CreateOrUpdate
+- SqlManagementClient.Servers.GetConnectionPolicy -> SqlManagementClient.ServerConnectionPolicies.Get
 
-- SqlManagementClient.Databases.CreateOrUpdateDataMaskingPolicy -&gt; SqlManagementClient.DataMaskingPolicies.CreateOrUpdate
-- SqlManagementClient.Databases.GetDataMaskingPolicy -&gt; SqlManagementClient.DataMaskingPolicies.Get
+- SqlManagementClient.Databases.CreateOrUpdateDataMaskingPolicy -> SqlManagementClient.DataMaskingPolicies.CreateOrUpdate
+- SqlManagementClient.Databases.GetDataMaskingPolicy -> SqlManagementClient.DataMaskingPolicies.Get
 
-- SqlManagementClient.Databases.CreateOrUpdateDataMaskingRule -&gt; SqlManagementClient.DataMaskingRules.CreateOrUpdate
-- SqlManagementClient.Databases.GetDataMaskingRule -&gt; SqlManagementClient.DataMaskingRules.Get
-- SqlManagementClient.Databases.ListDataMaskingRules -&gt; SqlManagementClient.DataMaskingRules.ListByDatabase
+- SqlManagementClient.Databases.CreateOrUpdateDataMaskingRule -> SqlManagementClient.DataMaskingRules.CreateOrUpdate
+- SqlManagementClient.Databases.GetDataMaskingRule -> SqlManagementClient.DataMaskingRules.Get
+- SqlManagementClient.Databases.ListDataMaskingRules -> SqlManagementClient.DataMaskingRules.ListByDatabase
 
-- SqlManagementClient.Databases.GetThreatDetectionPolicy -&gt; SqlManagementClient.DatabaseThreatDetectionPolicies.Get
-- SqlManagementClient.Databases.CreateOrUpdateThreatDetectionPolicy -&gt; SqlManagementClient.DatabaseThreatDetectionPolicies.CreateOrUpdate
+- SqlManagementClient.Databases.GetThreatDetectionPolicy -> SqlManagementClient.DatabaseThreatDetectionPolicies.Get
+- SqlManagementClient.Databases.CreateOrUpdateThreatDetectionPolicy -> SqlManagementClient.DatabaseThreatDetectionPolicies.CreateOrUpdate
 
-- SqlManagementClient.Databases.CreateOrUpdateGeoBackupPolicy -&gt; SqlManagementClient.GeoBackupPolicies.CreateOrUpdate
-- SqlManagementClient.Databases.GetGeoBackupPolicy -&gt; SqlManagementClient.GeoBackupPolicies.Get
-- SqlManagementClient.Databases.ListGeoBackupPolicies -&gt; SqlManagementClient.GeoBackupPolicies.ListByDatabase
+- SqlManagementClient.Databases.CreateOrUpdateGeoBackupPolicy -> SqlManagementClient.GeoBackupPolicies.CreateOrUpdate
+- SqlManagementClient.Databases.GetGeoBackupPolicy -> SqlManagementClient.GeoBackupPolicies.Get
+- SqlManagementClient.Databases.ListGeoBackupPolicies -> SqlManagementClient.GeoBackupPolicies.ListByDatabase
 
-- SqlManagementClient.Databases.DeleteReplicationLink -&gt; SqlManagementClient.ReplicationLinks.Delete
-- SqlManagementClient.Databases.GetReplicationLink -&gt; SqlManagementClient.ReplicationLinks.Get
-- SqlManagementClient.Databases.FailoverReplicationLink -&gt; SqlManagementClient.ReplicationLinks.Failover
-- SqlManagementClient.Databases.FailoverReplicationLinkAllowDataLoss -&gt; SqlManagementClient.ReplicationLinks.FailoverAllowDataLoss
-- SqlManagementClient.Databases.ListReplicationLinks -&gt; SqlManagementClient.ReplicationLinks.ListByDatabase
+- SqlManagementClient.Databases.DeleteReplicationLink -> SqlManagementClient.ReplicationLinks.Delete
+- SqlManagementClient.Databases.GetReplicationLink -> SqlManagementClient.ReplicationLinks.Get
+- SqlManagementClient.Databases.FailoverReplicationLink -> SqlManagementClient.ReplicationLinks.Failover
+- SqlManagementClient.Databases.FailoverReplicationLinkAllowDataLoss -> SqlManagementClient.ReplicationLinks.FailoverAllowDataLoss
+- SqlManagementClient.Databases.ListReplicationLinks -> SqlManagementClient.ReplicationLinks.ListByDatabase
 
-- SqlManagementClient.ServerAzureADAdministrators.List -&gt; SqlManagementClient.ServerAzureADAdministrators.ListByServer
-- SqlManagementClient.Servers.GetServiceObjective -&gt; SqlManagementClient.ServiceObjectives.Get
-- SqlManagementClient.Servers.ListServiceObjectives -&gt; SqlManagementClient.ServiceObjectives.ListByServer
+- SqlManagementClient.ServerAzureADAdministrators.List -> SqlManagementClient.ServerAzureADAdministrators.ListByServer
+- SqlManagementClient.Servers.GetServiceObjective -> SqlManagementClient.ServiceObjectives.Get
+- SqlManagementClient.Servers.ListServiceObjectives -> SqlManagementClient.ServiceObjectives.ListByServer
 
-- SqlManagementClient.ElasticPools.ListActivity -&gt; SqlManagementClient.ElasticPoolActivities.ListByElasticPool
-- SqlManagementClient.ElasticPools.ListDatabaseActivity -&gt; SqlManagementClient.ElasticPoolDatabaseActivities.ListByElasticPool
-- SqlManagementClient.ElasticPools.GetDatabase -&gt; SqlManagementClient.Databases.GetByElasticPool
-- SqlManagementClient.ElasticPools.ListDatabases -&gt; SqlManagementClient.Databases.ListByElasticPool
+- SqlManagementClient.ElasticPools.ListActivity -> SqlManagementClient.ElasticPoolActivities.ListByElasticPool
+- SqlManagementClient.ElasticPools.ListDatabaseActivity -> SqlManagementClient.ElasticPoolDatabaseActivities.ListByElasticPool
+- SqlManagementClient.ElasticPools.GetDatabase -> SqlManagementClient.Databases.GetByElasticPool
+- SqlManagementClient.ElasticPools.ListDatabases -> SqlManagementClient.Databases.ListByElasticPool
 
-- SqlManagementClient.RecommendedElasticPools.GetDatabases -&gt; SqlManagementClient.Databases.GetByRecommendedElasticPool
-- SqlManagementClient.RecommendedElasticPools.ListDatabases -&gt; SqlManagementClient.Databases.ListByRecommendedElasticPool
+- SqlManagementClient.RecommendedElasticPools.GetDatabases -> SqlManagementClient.Databases.GetByRecommendedElasticPool
+- SqlManagementClient.RecommendedElasticPools.ListDatabases -> SqlManagementClient.Databases.ListByRecommendedElasticPool
 
-- SqlManagementClient.Databases.GetServiceTierAdvisor -&gt; SqlManagementClient.ServiceTierAdvisors.Get
-- SqlManagementClient.Databases.ListServiceTierAdvisors -&gt; SqlManagementClient.ServiceTierAdvisors.ListByDatabase
+- SqlManagementClient.Databases.GetServiceTierAdvisor -> SqlManagementClient.ServiceTierAdvisors.Get
+- SqlManagementClient.Databases.ListServiceTierAdvisors -> SqlManagementClient.ServiceTierAdvisors.ListByDatabase
 
-- SqlManagementClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration -&gt; SqlManagementClient.TransparentDataEncryptions.CreateOrUpdate
-- SqlManagementClient.Databases.GetTransparentDataEncryptionConfiguration -&gt; SqlManagementClient.TransparentDataEncryptions.Get
-- SqlManagementClient.Databases.ListTransparentDataEncryptionActivity -&gt; SqlManagementClient.TransparentDataEncryptionActivities.ListByConfiguration
+- SqlManagementClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration -> SqlManagementClient.TransparentDataEncryptions.CreateOrUpdate
+- SqlManagementClient.Databases.GetTransparentDataEncryptionConfiguration -> SqlManagementClient.TransparentDataEncryptions.Get
+- SqlManagementClient.Databases.ListTransparentDataEncryptionActivity -> SqlManagementClient.TransparentDataEncryptionActivities.ListByConfiguration
 
-- SqlManagementClient.Servers.ListUsages -&gt; SqlManagementClient.ServerUsages.ListByServer
-- SqlManagementClient.Databases.ListUsages -&gt; SqlManagementClient.DatabaseUsages.ListByDatabase
+- SqlManagementClient.Servers.ListUsages -> SqlManagementClient.ServerUsages.ListByServer
+- SqlManagementClient.Databases.ListUsages -> SqlManagementClient.DatabaseUsages.ListByDatabase
 
-- SqlManagementClient.Databases.GetBlobAuditingPolicy -&gt; SqlManagementClient.DatabaseBlobAuditingPolicies.Get
-- SqlManagementClient.Databases.CreateOrUpdateBlobAuditingPolicy -&gt; SqlManagementClient.DatabaseBlobAuditingPolicies.CreateOrUpdate
+- SqlManagementClient.Databases.GetBlobAuditingPolicy -> SqlManagementClient.DatabaseBlobAuditingPolicies.Get
+- SqlManagementClient.Databases.CreateOrUpdateBlobAuditingPolicy -> SqlManagementClient.DatabaseBlobAuditingPolicies.CreateOrUpdate
 
-- SqlManagementClient.Servers.ListEncryptionProtectors, -&gt; SqlManagementClient.EncryptionProtectors.ListByServer
-- SqlManagementClient.Servers.GetEncryptionProtector -&gt; SqlManagementClient.EncryptionProtectors.Get
-- SqlManagementClient.Servers.CreateOrUpdateEncryptionProtector -&gt; SqlManagementClient.EncryptionProtectors.CreateOrUpdate
+- SqlManagementClient.Servers.ListEncryptionProtectors, -> SqlManagementClient.EncryptionProtectors.ListByServer
+- SqlManagementClient.Servers.GetEncryptionProtector -> SqlManagementClient.EncryptionProtectors.Get
+- SqlManagementClient.Servers.CreateOrUpdateEncryptionProtector -> SqlManagementClient.EncryptionProtectors.CreateOrUpdate
 
 Features:
 - Added server connection policy support
 - Added .Update() for Server, Database, and ElasticPool
 - Added support for Data Sync
-- Added support for getting and canceling in-progress database update operations</PackageReleaseNotes>
+- Added support for getting and canceling in-progress database update operations
+- client.Operations.List() now returnes a full list of operations and not a limited subset]]></PackageReleaseNotes>
   </PropertyGroup>
 </Project>
