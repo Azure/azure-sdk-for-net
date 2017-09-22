@@ -12,8 +12,13 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
     /// <summary>
     /// Test cases for AzureServiceTokenProvider class. 
     /// </summary>
-    public class AzureServiceTokenProviderTests
+    public class AzureServiceTokenProviderTests : IDisposable
     {
+        public void Dispose()
+        {
+            AccessTokenCache.Clear();
+        }
+
         /// <summary>
         /// Test that the cache works as expected. 
         /// </summary>
