@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// Initializes a new instance of the RuleDataSource class.
         /// </summary>
         /// <param name="resourceUri">the resource identifier of the resource
-        /// the rule monitors.</param>
+        /// the rule monitors. **NOTE**: this property cannot be updated for an
+        /// existing rule.</param>
         public RuleDataSource(string resourceUri = default(string))
         {
             ResourceUri = resourceUri;
@@ -46,7 +47,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
 
         /// <summary>
         /// Gets or sets the resource identifier of the resource the rule
-        /// monitors.
+        /// monitors. **NOTE**: this property cannot be updated for an existing
+        /// rule.
         /// </summary>
         [JsonProperty(PropertyName = "resourceUri")]
         public string ResourceUri { get; set; }
