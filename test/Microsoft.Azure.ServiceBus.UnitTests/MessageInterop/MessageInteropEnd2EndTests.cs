@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#if NET46
+#if NET461
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
     using Microsoft.ServiceBus.Messaging;

@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.0;net46</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
     <AssemblyOriginatorKeyFile>../../build/keyfile.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net46+win8</PackageTargetFallback>
-    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +21,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
   </ItemGroup>
@@ -32,7 +29,7 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="ApiApprover">
       <Version>6.0.0</Version>
     </PackageReference>

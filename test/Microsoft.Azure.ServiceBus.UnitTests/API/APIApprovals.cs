@@ -1,4 +1,4 @@
-﻿#if NET46
+﻿#if NET461
 namespace Microsoft.Azure.ServiceBus.UnitTests.API
 {
     using System.Runtime.CompilerServices;

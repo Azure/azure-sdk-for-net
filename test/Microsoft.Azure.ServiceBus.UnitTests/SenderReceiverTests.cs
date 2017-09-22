@@ -185,20 +185,34 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task WaitingReceiveShouldThrowWhenReceiverIsClosed()
         {
             var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
 
             TestUtility.Log("Begin to receive from an empty queue.");
             Task throwingTask;
+            bool exceptionReceived = false;
+            object syncLock = new object();
             try
             {
                 throwingTask = new Task(async () =>
                 {
-                    await Assert.ThrowsAsync<ObjectDisposedException>(async () =>
+                    try
                     {
                         await receiver.ReceiveAsync(TimeSpan.FromSeconds(40));
-                    });
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        lock (syncLock)
+                        {
+                            exceptionReceived = true;
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        TestUtility.Log("Unexpected exception: " + e);
+                    }
                 });
                 throwingTask.Start();
                 await Task.Delay(1000);
@@ -210,8 +224,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestUtility.Log("Closed Receiver");
             }
 
-            await Task.Delay(3000);
-            Assert.True(throwingTask.IsCompleted);
+            TestUtility.Log("Waiting for 4 Secs");
+            await Task.Delay(4000);
+            Assert.True(throwingTask.IsCompleted, "ReceiveAsync did not return immediately after closing connection");
+            lock (syncLock)
+            {
+                Assert.True(exceptionReceived, "Did not receive ObjectDisposedException"); 
+            }
         }
     }
 }
