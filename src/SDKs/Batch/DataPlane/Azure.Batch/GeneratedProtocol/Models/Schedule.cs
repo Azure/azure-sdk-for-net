@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the Schedule class.
         /// </summary>
-        public Schedule() { }
+        public Schedule()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Schedule class.
@@ -38,11 +45,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time.</param>
         public Schedule(System.DateTime? doNotRunUntil = default(System.DateTime?), System.DateTime? doNotRunAfter = default(System.DateTime?), System.TimeSpan? startWindow = default(System.TimeSpan?), System.TimeSpan? recurrenceInterval = default(System.TimeSpan?))
         {
-            this.DoNotRunUntil = doNotRunUntil;
-            this.DoNotRunAfter = doNotRunAfter;
-            this.StartWindow = startWindow;
-            this.RecurrenceInterval = recurrenceInterval;
+            DoNotRunUntil = doNotRunUntil;
+            DoNotRunAfter = doNotRunAfter;
+            StartWindow = startWindow;
+            RecurrenceInterval = recurrenceInterval;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the earliest time at which any job may be created
@@ -52,7 +65,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you do not specify a doNotRunUntil time, the schedule becomes
         /// ready to create jobs immediately.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "doNotRunUntil")]
+        [JsonProperty(PropertyName = "doNotRunUntil")]
         public System.DateTime? DoNotRunUntil { get; set; }
 
         /// <summary>
@@ -66,7 +79,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// recurring job schedule, the job schedule will remain active until
         /// you explicitly terminate it.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "doNotRunAfter")]
+        [JsonProperty(PropertyName = "doNotRunAfter")]
         public System.DateTime? DoNotRunAfter { get; set; }
 
         /// <summary>
@@ -86,7 +99,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// rejects the schedule with an error; if you are calling the REST API
         /// directly, the HTTP status code is 400 (Bad Request).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startWindow")]
+        [JsonProperty(PropertyName = "startWindow")]
         public System.TimeSpan? StartWindow { get; set; }
 
         /// <summary>
@@ -113,7 +126,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// if you are calling the REST API directly, the HTTP status code is
         /// 400 (Bad Request).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "recurrenceInterval")]
+        [JsonProperty(PropertyName = "recurrenceInterval")]
         public System.TimeSpan? RecurrenceInterval { get; set; }
 
     }

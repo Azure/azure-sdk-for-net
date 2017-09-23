@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AutoUserSpecification class.
         /// </summary>
-        public AutoUserSpecification() { }
+        public AutoUserSpecification()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AutoUserSpecification class.
@@ -29,20 +36,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// user.</param>
         public AutoUserSpecification(AutoUserScope? scope = default(AutoUserScope?), ElevationLevel? elevationLevel = default(ElevationLevel?))
         {
-            this.Scope = scope;
-            this.ElevationLevel = elevationLevel;
+            Scope = scope;
+            ElevationLevel = elevationLevel;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the scope for the auto user
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
         /// pool - specifies that the task runs as the common auto user account
-        /// which is created on every node in a pool. task - specifies that the
-        /// service should create a new user for the task. The default value is
-        /// task. Possible values include: 'task', 'pool'
+        /// which is created on every node in a pool.
+        /// task - specifies that the service should create a new user for the
+        /// task.
+        /// The default value is task. Possible values include: 'task', 'pool'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "scope")]
+        [JsonProperty(PropertyName = "scope")]
         public AutoUserScope? Scope { get; set; }
 
         /// <summary>
@@ -54,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operates with full Administrator permissions. The default value is
         /// nonAdmin. Possible values include: 'nonAdmin', 'admin'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "elevationLevel")]
+        [JsonProperty(PropertyName = "elevationLevel")]
         public ElevationLevel? ElevationLevel { get; set; }
 
     }

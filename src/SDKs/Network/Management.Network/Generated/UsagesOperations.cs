@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists compute usages for a subscription.
+        /// List network usages for a subscription.
         /// </summary>
         /// <param name='location'>
         /// The location where resource usage is queried.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Lists compute usages for a subscription.
+        /// List network usages for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

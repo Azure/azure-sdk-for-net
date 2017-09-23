@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolEvaluateAutoScaleParameter
         /// class.
         /// </summary>
-        public PoolEvaluateAutoScaleParameter() { }
+        public PoolEvaluateAutoScaleParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolEvaluateAutoScaleParameter
@@ -29,8 +37,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// of compute nodes in the pool.</param>
         public PoolEvaluateAutoScaleParameter(string autoScaleFormula)
         {
-            this.AutoScaleFormula = autoScaleFormula;
+            AutoScaleFormula = autoScaleFormula;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the formula for the desired number of compute nodes in
@@ -44,20 +58,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch pool
         /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
+        [JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.AutoScaleFormula == null)
+            if (AutoScaleFormula == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AutoScaleFormula");
+                throw new ValidationException(ValidationRules.CannotBeNull, "AutoScaleFormula");
             }
         }
     }

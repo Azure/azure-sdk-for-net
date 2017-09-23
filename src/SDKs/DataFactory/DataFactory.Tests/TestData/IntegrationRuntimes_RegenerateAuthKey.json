@@ -1,0 +1,26 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "regenerateKeyParameters": {
+      "keyName": "authKey2"
+    },
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:55:52 GMT",
+        "x-ms-request-id": "706b5711-16e1-455b-808a-30cc120a061c",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1188",
+        "x-ms-correlation-request-id": "46ee8708-affc-403d-ab9f-53824b169fdf"
+      },
+      "body": {
+        "authKey2": "IR@1baad24d-93e5-4074-8eeb-cd93fbb83b42@exampleFactoryName@eu@IYLMSMWzzjQswOJHrTJNZc2SGwWla/SQ3QraZs3wqbw="
+      }
+    }
+  }
+}

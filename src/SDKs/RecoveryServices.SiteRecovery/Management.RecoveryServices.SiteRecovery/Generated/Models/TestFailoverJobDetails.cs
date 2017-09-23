@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the TestFailoverJobDetails class.
         /// </summary>
         /// <param name="affectedObjectDetails">The affected object properties
-        /// like source server, source cloud, target
-        /// server, target cloud etc. based on the workflow object
-        /// details.</param>
+        /// like source server, source cloud, target server, target cloud etc.
+        /// based on the workflow object details.</param>
         /// <param name="testFailoverStatus">The test failover status.</param>
         /// <param name="comments">The test failover comments.</param>
         /// <param name="networkName">The test network name.</param>
@@ -45,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="networkType">The test network type (see
         /// TestFailoverInput enum for possible values).</param>
         /// <param name="protectedItemDetails">The test VM details.</param>
-        public TestFailoverJobDetails(IDictionary<string, string> affectedObjectDetails = default(IDictionary<string, string>), string testFailoverStatus = default(string), string comments = default(string), string networkName = default(string), string networkFriendlyName = default(string), string networkType = default(string), IList<TestFailoverReplicationProtectedItemDetails> protectedItemDetails = default(IList<TestFailoverReplicationProtectedItemDetails>))
+        public TestFailoverJobDetails(IDictionary<string, string> affectedObjectDetails = default(IDictionary<string, string>), string testFailoverStatus = default(string), string comments = default(string), string networkName = default(string), string networkFriendlyName = default(string), string networkType = default(string), IList<FailoverReplicationProtectedItemDetails> protectedItemDetails = default(IList<FailoverReplicationProtectedItemDetails>))
             : base(affectedObjectDetails)
         {
             TestFailoverStatus = testFailoverStatus;
@@ -97,7 +96,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Gets or sets the test VM details.
         /// </summary>
         [JsonProperty(PropertyName = "protectedItemDetails")]
-        public IList<TestFailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; set; }
+        public IList<FailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; set; }
 
     }
 }

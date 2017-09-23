@@ -512,7 +512,8 @@ namespace Microsoft.Azure.Management.Network
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
         /// <summary>
-        /// Checks whether a domain name in the cloudapp.net zone is available for use.
+        /// Checks whether a domain name in the cloudapp.azure.com zone is available
+        /// for use.
         /// </summary>
         /// <param name='location'>
         /// The location of the domain name.
@@ -542,11 +543,15 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            if (domainNameLabel == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "domainNameLabel");
             }
             if (SubscriptionId == null)
             {

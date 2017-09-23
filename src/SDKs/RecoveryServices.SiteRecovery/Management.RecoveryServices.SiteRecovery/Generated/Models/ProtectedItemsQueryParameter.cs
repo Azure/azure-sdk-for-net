@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="sourceFabricName">The source fabric name
         /// filter.</param>
         /// <param name="recoveryPlanName">The recovery plan filter.</param>
-        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string))
+        /// <param name="vCenterName">The vCenter name filter.</param>
+        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string))
         {
             SourceFabricName = sourceFabricName;
             RecoveryPlanName = recoveryPlanName;
+            VCenterName = vCenterName;
             CustomInit();
         }
 
@@ -59,6 +61,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPlanName")]
         public string RecoveryPlanName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vCenter name filter.
+        /// </summary>
+        [JsonProperty(PropertyName = "vCenterName")]
+        public string VCenterName { get; set; }
 
     }
 }

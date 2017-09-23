@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -78,6 +79,16 @@ namespace Microsoft.Rest.Serialization
                     writer.WritePropertyName(propertyName);
                     serializer.Serialize(writer, memberValue);
                 }
+
+                // serialize additional properties
+                if (property.IsJsonExtensionData() && memberValue is IDictionary<string, object> additionalProperties)
+                {
+                    foreach (var additionalProperty in additionalProperties)
+                    {
+                        writer.WritePropertyName(additionalProperty.Key);
+                        serializer.Serialize(writer, additionalProperty.Value);
+                    }
+                }
             }
         }
 
@@ -104,5 +115,8 @@ namespace Microsoft.Rest.Serialization
 
             return propertyName;            
         }
+
+        public static bool IsJsonExtensionData(this JsonProperty property)
+            => property.AttributeProvider.GetAttributes(typeof(JsonExtensionDataAttribute), true).Count != 0;
     }
 }

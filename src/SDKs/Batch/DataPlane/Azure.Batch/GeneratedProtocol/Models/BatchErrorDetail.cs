@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the BatchErrorDetail class.
         /// </summary>
-        public BatchErrorDetail() { }
+        public BatchErrorDetail()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the BatchErrorDetail class.
@@ -30,22 +37,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// error response.</param>
         public BatchErrorDetail(string key = default(string), string value = default(string))
         {
-            this.Key = key;
-            this.Value = value;
+            Key = key;
+            Value = value;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an identifier specifying the meaning of the Value
         /// property.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "key")]
+        [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Gets or sets the additional information included with the error
         /// response.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

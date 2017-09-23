@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,15 +24,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobReleaseTaskExecutionInformation class.
         /// </summary>
-        public JobReleaseTaskExecutionInformation() { }
+        public JobReleaseTaskExecutionInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the
         /// JobReleaseTaskExecutionInformation class.
         /// </summary>
-        /// <param name="startTime">The time at which the task started running.
-        /// Note that every time the task is restarted, this value is
-        /// updated.</param>
+        /// <param name="startTime">The time at which the task started
+        /// running.</param>
         /// <param name="state">The current state of the Job Release task on
         /// the compute node.</param>
         /// <param name="endTime">The time at which the Job Release task
@@ -45,21 +51,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public JobReleaseTaskExecutionInformation(System.DateTime startTime, JobReleaseTaskState state, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.State = state;
-            this.TaskRootDirectory = taskRootDirectory;
-            this.TaskRootDirectoryUrl = taskRootDirectoryUrl;
-            this.ExitCode = exitCode;
-            this.FailureInfo = failureInfo;
-            this.Result = result;
+            StartTime = startTime;
+            EndTime = endTime;
+            State = state;
+            TaskRootDirectory = taskRootDirectory;
+            TaskRootDirectoryUrl = taskRootDirectoryUrl;
+            ExitCode = exitCode;
+            FailureInfo = failureInfo;
+            Result = result;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets the time at which the task started running. Note that
-        /// every time the task is restarted, this value is updated.
+        /// An initialization method that performs custom operations like setting defaults
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the time at which the task started running.
+        /// </summary>
+        /// <remarks>
+        /// If the task has been restarted or retried, this is the most recent
+        /// time at which the task started running.
+        /// </remarks>
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -68,7 +83,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the task is in the Completed state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
@@ -76,12 +91,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
         /// running - the task is currently running (including retrying).
         /// completed - the task has exited, or the Batch service was unable to
-        /// start the task due to scheduling errors. Possible values include:
-        /// 'running', 'completed'
+        /// start the task due to task preparation errors (such as resource
+        /// file download failures). Possible values include: 'running',
+        /// 'completed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state")]
         public JobReleaseTaskState State { get; set; }
 
         /// <summary>
@@ -89,14 +107,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node. You can use this path to retrieve files created by
         /// the task, such as log files.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "taskRootDirectory")]
+        [JsonProperty(PropertyName = "taskRootDirectory")]
         public string TaskRootDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to the root directory of the Job Release task
         /// on the compute node.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "taskRootDirectoryUrl")]
+        [JsonProperty(PropertyName = "taskRootDirectoryUrl")]
         public string TaskRootDirectoryUrl { get; set; }
 
         /// <summary>
@@ -113,7 +131,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node operating system, such as when a process is forcibly
         /// terminated.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCode")]
+        [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
@@ -123,7 +141,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the task is in the completed state and
         /// encountered a failure.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        [JsonProperty(PropertyName = "failureInfo")]
         public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
@@ -134,20 +152,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// found in the failureInfo property. Possible values include:
         /// 'success', 'failure'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        [JsonProperty(PropertyName = "result")]
         public TaskExecutionResult? Result { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.FailureInfo != null)
+            if (FailureInfo != null)
             {
-                this.FailureInfo.Validate();
+                FailureInfo.Validate();
             }
         }
     }

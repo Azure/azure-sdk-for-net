@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -21,7 +27,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the MultiInstanceSettings class.
         /// </summary>
-        public MultiInstanceSettings() { }
+        public MultiInstanceSettings()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the MultiInstanceSettings class.
@@ -34,17 +43,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="commonResourceFiles">A list of files that the Batch
         /// service will download before running the coordination command
         /// line.</param>
-        public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), System.Collections.Generic.IList<ResourceFile> commonResourceFiles = default(System.Collections.Generic.IList<ResourceFile>))
+        public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), IList<ResourceFile> commonResourceFiles = default(IList<ResourceFile>))
         {
-            this.NumberOfInstances = numberOfInstances;
-            this.CoordinationCommandLine = coordinationCommandLine;
-            this.CommonResourceFiles = commonResourceFiles;
+            NumberOfInstances = numberOfInstances;
+            CoordinationCommandLine = coordinationCommandLine;
+            CommonResourceFiles = commonResourceFiles;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the number of compute nodes required by the task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfInstances")]
+        [JsonProperty(PropertyName = "numberOfInstances")]
         public int NumberOfInstances { get; set; }
 
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and verifies that the service is ready to process inter-node
         /// messages.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "coordinationCommandLine")]
+        [JsonProperty(PropertyName = "coordinationCommandLine")]
         public string CoordinationCommandLine { get; set; }
 
         /// <summary>
@@ -68,22 +83,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The difference between common resource files and task resource
         /// files is that common resource files are downloaded for all subtasks
         /// including the primary, whereas task resource files are downloaded
-        /// only for the primary.
+        /// only for the primary. Also note that these resource files are not
+        /// downloaded to the task working directory, but instead are
+        /// downloaded to the task root directory (one directory above the
+        /// working directory).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "commonResourceFiles")]
-        public System.Collections.Generic.IList<ResourceFile> CommonResourceFiles { get; set; }
+        [JsonProperty(PropertyName = "commonResourceFiles")]
+        public IList<ResourceFile> CommonResourceFiles { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.CommonResourceFiles != null)
+            if (CommonResourceFiles != null)
             {
-                foreach (var element in this.CommonResourceFiles)
+                foreach (var element in CommonResourceFiles)
                 {
                     if (element != null)
                     {

@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Monitor
     using Microsoft.Azure.Management;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -33,12 +32,9 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='resourceUri'>
             /// The identifier of the resource.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IEnumerable<MetricDefinition> List(this IMetricDefinitionsOperations operations, string resourceUri, ODataQuery<MetricDefinition> odataQuery = default(ODataQuery<MetricDefinition>))
+            public static IEnumerable<MetricDefinition> List(this IMetricDefinitionsOperations operations, string resourceUri)
             {
-                return ((IMetricDefinitionsOperations)operations).ListAsync(resourceUri, odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceUri).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,15 +46,12 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='resourceUri'>
             /// The identifier of the resource.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<MetricDefinition>> ListAsync(this IMetricDefinitionsOperations operations, string resourceUri, ODataQuery<MetricDefinition> odataQuery = default(ODataQuery<MetricDefinition>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<MetricDefinition>> ListAsync(this IMetricDefinitionsOperations operations, string resourceUri, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

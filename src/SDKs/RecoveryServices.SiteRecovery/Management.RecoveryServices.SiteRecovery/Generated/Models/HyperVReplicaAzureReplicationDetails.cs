@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryAzureStorageAccount">The recovery Azure
         /// storage account.</param>
         /// <param name="recoveryAzureLogStorageAccountId">The ARM id of the
-        /// log storage acount used for replication.
-        /// This will be set to null if no log storage account was provided
-        /// during enable
+        /// log storage account used for replication. This will be set to null
+        /// if no log storage account was provided during enable
         /// protection.</param>
         /// <param name="lastReplicatedTime">The Last replication time.</param>
         /// <param name="vmId">The virtual machine Id.</param>
@@ -66,9 +65,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="sourceVmCPUCount">The CPU count of the VM on the
         /// primary side.</param>
         /// <param name="enableRDPOnTargetOption">The selected option to enable
-        /// RDP\SSH on target vm after failover.
-        /// String value of {SrsDataContract.EnableRDPOnTargetOption}
-        /// enum.</param>
+        /// RDP\SSH on target vm after failover. String value of
+        /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
         /// <param name="recoveryAzureResourceGroupId">The target resource
         /// group Id.</param>
         /// <param name="recoveryAvailabilitySetId">The recovery availability
@@ -133,11 +131,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryAzureStorageAccount { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM id of the log storage acount used for
-        /// replication.
-        /// This will be set to null if no log storage account was provided
-        /// during enable
-        /// protection.
+        /// Gets or sets the ARM id of the log storage account used for
+        /// replication. This will be set to null if no log storage account was
+        /// provided during enable protection.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAzureLogStorageAccountId")]
         public string RecoveryAzureLogStorageAccountId { get; set; }
@@ -210,8 +206,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the selected option to enable RDP\SSH on target vm
-        /// after failover.
-        /// String value of {SrsDataContract.EnableRDPOnTargetOption} enum.
+        /// after failover. String value of
+        /// {SrsDataContract.EnableRDPOnTargetOption} enum.
         /// </summary>
         [JsonProperty(PropertyName = "enableRDPOnTargetOption")]
         public string EnableRDPOnTargetOption { get; set; }

@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OSType.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum OSType
     {
-        [System.Runtime.Serialization.EnumMember(Value = "linux")]
+        [EnumMember(Value = "linux")]
         Linux,
-        [System.Runtime.Serialization.EnumMember(Value = "windows")]
+        [EnumMember(Value = "windows")]
         Windows
+    }
+    internal static class OSTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this OSType? value)  =>
+            value == null ? null : ((OSType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this OSType value)
+        {
+            switch( value )
+            {
+                case OSType.Linux:
+                    return "linux";
+                case OSType.Windows:
+                    return "windows";
+            }
+            return null;
+        }
+
+        internal static OSType? ParseOSType(this string value)
+        {
+            switch( value )
+            {
+                case "linux":
+                    return OSType.Linux;
+                case "windows":
+                    return OSType.Windows;
+            }
+            return null;
+        }
     }
 }

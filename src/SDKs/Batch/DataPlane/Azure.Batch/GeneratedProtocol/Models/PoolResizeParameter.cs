@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolResizeParameter class.
         /// </summary>
-        public PoolResizeParameter() { }
+        public PoolResizeParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolResizeParameter class.
@@ -35,24 +42,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// decreasing.</param>
         public PoolResizeParameter(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
-            this.TargetDedicatedNodes = targetDedicatedNodes;
-            this.TargetLowPriorityNodes = targetLowPriorityNodes;
-            this.ResizeTimeout = resizeTimeout;
-            this.NodeDeallocationOption = nodeDeallocationOption;
+            TargetDedicatedNodes = targetDedicatedNodes;
+            TargetLowPriorityNodes = targetLowPriorityNodes;
+            ResizeTimeout = resizeTimeout;
+            NodeDeallocationOption = nodeDeallocationOption;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the desired number of dedicated compute nodes in the
         /// pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicatedNodes")]
+        [JsonProperty(PropertyName = "targetDedicatedNodes")]
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
         /// Gets or sets the desired number of low-priority compute nodes in
         /// the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetLowPriorityNodes")]
+        [JsonProperty(PropertyName = "targetLowPriorityNodes")]
         public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
@@ -65,7 +78,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// an error; if you are calling the REST API directly, the HTTP status
         /// code is 400 (Bad Request).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
+        [JsonProperty(PropertyName = "resizeTimeout")]
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
@@ -76,7 +89,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default value is requeue. Possible values include: 'requeue',
         /// 'terminate', 'taskCompletion', 'retainedData'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeDeallocationOption")]
+        [JsonProperty(PropertyName = "nodeDeallocationOption")]
         public ComputeNodeDeallocationOption? NodeDeallocationOption { get; set; }
 
     }

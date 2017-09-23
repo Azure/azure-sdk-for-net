@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the AccountListNodeAgentSkusOptions
         /// class.
         /// </summary>
-        public AccountListNodeAgentSkusOptions() { }
+        public AccountListNodeAgentSkusOptions()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AccountListNodeAgentSkusOptions
@@ -41,32 +50,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// it explicitly if you are calling the REST API directly.</param>
         public AccountListNodeAgentSkusOptions(string filter = default(string), int? maxResults = default(int?), int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
-            this.Filter = filter;
-            this.MaxResults = maxResults;
-            this.Timeout = timeout;
-            this.ClientRequestId = clientRequestId;
-            this.ReturnClientRequestId = returnClientRequestId;
-            this.OcpDate = ocpDate;
+            Filter = filter;
+            MaxResults = maxResults;
+            Timeout = timeout;
+            ClientRequestId = clientRequestId;
+            ReturnClientRequestId = returnClientRequestId;
+            OcpDate = ocpDate;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an OData $filter clause.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
         /// A maximum of 1000 results will be returned.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public int? MaxResults { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum time that the server can spend processing
         /// the request, in seconds. The default is 30 seconds.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public int? Timeout { get; set; }
 
         /// <summary>
@@ -74,14 +89,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the client-request-id
         /// in the response.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
@@ -89,8 +104,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// typically set this to the current system clock time; set it
         /// explicitly if you are calling the REST API directly.
         /// </summary>
-        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
-        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
+        [JsonProperty(PropertyName = "")]
         public System.DateTime? OcpDate { get; set; }
 
     }

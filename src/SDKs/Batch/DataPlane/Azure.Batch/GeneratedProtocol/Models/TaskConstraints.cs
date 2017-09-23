@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskConstraints class.
         /// </summary>
-        public TaskConstraints() { }
+        public TaskConstraints()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskConstraints class.
@@ -36,10 +43,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// code is nonzero.</param>
         public TaskConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), int? maxTaskRetryCount = default(int?))
         {
-            this.MaxWallClockTime = maxWallClockTime;
-            this.RetentionTime = retentionTime;
-            this.MaxTaskRetryCount = maxTaskRetryCount;
+            MaxWallClockTime = maxWallClockTime;
+            RetentionTime = retentionTime;
+            MaxTaskRetryCount = maxTaskRetryCount;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the maximum elapsed time that the task may run,
@@ -50,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If this is not specified, there is no time limit on how long the
         /// task may run.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "maxWallClockTime")]
+        [JsonProperty(PropertyName = "maxWallClockTime")]
         public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
@@ -63,7 +76,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default is infinite, i.e. the task directory will be retained
         /// until the compute node is removed or reimaged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "retentionTime")]
+        [JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
@@ -79,7 +92,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task. If the maximum retry count is -1, the Batch service retries
         /// the task without limit.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTaskRetryCount")]
+        [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
     }

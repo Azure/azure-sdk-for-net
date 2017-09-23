@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolInformation class.
         /// </summary>
-        public PoolInformation() { }
+        public PoolInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolInformation class.
@@ -30,9 +37,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job is submitted.</param>
         public PoolInformation(string poolId = default(string), AutoPoolSpecification autoPoolSpecification = default(AutoPoolSpecification))
         {
-            this.PoolId = poolId;
-            this.AutoPoolSpecification = autoPoolSpecification;
+            PoolId = poolId;
+            AutoPoolSpecification = autoPoolSpecification;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of an existing pool. All the tasks of the job
@@ -47,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// You must specify either the pool ID or the auto pool specification,
         /// but not both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
+        [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
@@ -64,20 +77,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// You must specify either the pool ID or the auto pool specification,
         /// but not both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "autoPoolSpecification")]
+        [JsonProperty(PropertyName = "autoPoolSpecification")]
         public AutoPoolSpecification AutoPoolSpecification { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.AutoPoolSpecification != null)
+            if (AutoPoolSpecification != null)
             {
-                this.AutoPoolSpecification.Validate();
+                AutoPoolSpecification.Validate();
             }
         }
     }

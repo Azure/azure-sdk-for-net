@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -21,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the UserIdentity class.
         /// </summary>
-        public UserIdentity() { }
+        public UserIdentity()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the UserIdentity class.
@@ -32,9 +39,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// run.</param>
         public UserIdentity(string userName = default(string), AutoUserSpecification autoUser = default(AutoUserSpecification))
         {
-            this.UserName = userName;
-            this.AutoUser = autoUser;
+            UserName = userName;
+            AutoUser = autoUser;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the user identity under which the task is
@@ -44,7 +57,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The userName and autoUser properties are mutually exclusive; you
         /// must specify one but not both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "username")]
+        [JsonProperty(PropertyName = "username")]
         public string UserName { get; set; }
 
         /// <summary>
@@ -54,7 +67,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The userName and autoUser properties are mutually exclusive; you
         /// must specify one but not both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "autoUser")]
+        [JsonProperty(PropertyName = "autoUser")]
         public AutoUserSpecification AutoUser { get; set; }
 
     }

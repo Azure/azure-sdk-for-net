@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +26,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CertificateReference class.
         /// </summary>
-        public CertificateReference() { }
+        public CertificateReference()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the CertificateReference class.
@@ -33,26 +43,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node into which to install the certificate.</param>
         /// <param name="visibility">Which user accounts on the compute node
         /// should have access to the private data of the certificate.</param>
-        public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), System.Collections.Generic.IList<CertificateVisibility> visibility = default(System.Collections.Generic.IList<CertificateVisibility>))
+        public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), IList<CertificateVisibility> visibility = default(IList<CertificateVisibility>))
         {
-            this.Thumbprint = thumbprint;
-            this.ThumbprintAlgorithm = thumbprintAlgorithm;
-            this.StoreLocation = storeLocation;
-            this.StoreName = storeName;
-            this.Visibility = visibility;
+            Thumbprint = thumbprint;
+            ThumbprintAlgorithm = thumbprintAlgorithm;
+            StoreLocation = storeLocation;
+            StoreName = storeName;
+            Visibility = visibility;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the thumbprint of the certificate.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprint")]
+        [JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets the algorithm with which the thumbprint is associated.
         /// This must be sha1.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprintAlgorithm")]
+        [JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
@@ -72,7 +88,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// certificates are placed in that directory. Possible values include:
         /// 'currentUser', 'localMachine'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "storeLocation")]
+        [JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
 
         /// <summary>
@@ -80,12 +96,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// into which to install the certificate.
         /// </summary>
         /// <remarks>
-        /// The default value is My. This property is applicable only for pools
-        /// configured with Windows nodes (that is, created with
-        /// cloudServiceConfiguration, or with virtualMachineConfiguration
-        /// using a Windows image reference).
+        /// This property is applicable only for pools configured with Windows
+        /// nodes (that is, created with cloudServiceConfiguration, or with
+        /// virtualMachineConfiguration using a Windows image reference).
+        /// Common store names include: My, Root, CA, Trust, Disallowed,
+        /// TrustedPeople, TrustedPublisher, AuthRoot, AddressBook, but any
+        /// custom store name can also be used. The default value is My.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "storeName")]
+        [JsonProperty(PropertyName = "storeName")]
         public string StoreName { get; set; }
 
         /// <summary>
@@ -93,26 +111,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// access to the private data of the certificate.
         /// </summary>
         /// <remarks>
-        /// The default is all accounts.
+        /// Values are:
+        ///
+        /// starttask - The user account under which the start task is run.
+        /// task - The accounts under which job tasks are run.
+        /// remoteuser - The accounts under which users remotely access the
+        /// node.
+        ///
+        /// You can specify more than one visibility in this collection. The
+        /// default is all accounts.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "visibility")]
-        public System.Collections.Generic.IList<CertificateVisibility> Visibility { get; set; }
+        [JsonProperty(PropertyName = "visibility")]
+        public IList<CertificateVisibility> Visibility { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Thumbprint == null)
+            if (Thumbprint == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Thumbprint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Thumbprint");
             }
-            if (this.ThumbprintAlgorithm == null)
+            if (ThumbprintAlgorithm == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
             }
         }
     }

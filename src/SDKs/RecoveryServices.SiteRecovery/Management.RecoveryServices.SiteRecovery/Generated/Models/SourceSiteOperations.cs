@@ -28,4 +28,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "NotRequired")]
         NotRequired
     }
+    internal static class SourceSiteOperationsEnumExtension
+    {
+        internal static string ToSerializedValue(this SourceSiteOperations? value)  =>
+            value == null ? null : ((SourceSiteOperations)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this SourceSiteOperations value)
+        {
+            switch( value )
+            {
+                case SourceSiteOperations.Required:
+                    return "Required";
+                case SourceSiteOperations.NotRequired:
+                    return "NotRequired";
+            }
+            return null;
+        }
+
+        internal static SourceSiteOperations? ParseSourceSiteOperations(this string value)
+        {
+            switch( value )
+            {
+                case "Required":
+                    return SourceSiteOperations.Required;
+                case "NotRequired":
+                    return SourceSiteOperations.NotRequired;
+            }
+            return null;
+        }
+    }
 }

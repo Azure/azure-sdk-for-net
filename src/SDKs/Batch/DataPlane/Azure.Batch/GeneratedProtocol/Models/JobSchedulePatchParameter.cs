@@ -8,6 +8,12 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSchedulePatchParameter class.
         /// </summary>
-        public JobSchedulePatchParameter() { }
+        public JobSchedulePatchParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobSchedulePatchParameter class.
@@ -29,12 +38,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// created on this schedule.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the job schedule as metadata.</param>
-        public JobSchedulePatchParameter(Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
+        public JobSchedulePatchParameter(Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
-            this.Schedule = schedule;
-            this.JobSpecification = jobSpecification;
-            this.Metadata = metadata;
+            Schedule = schedule;
+            JobSpecification = jobSpecification;
+            Metadata = metadata;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
@@ -43,7 +58,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you do not specify this element, the existing schedule is left
         /// unchanged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "schedule")]
+        [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
@@ -55,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// taken place. Any currently active job continues with the older
         /// specification.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
+        [JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
@@ -66,24 +81,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you do not specify this element, existing metadata is left
         /// unchanged.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
-        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
+        [JsonProperty(PropertyName = "metadata")]
+        public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.JobSpecification != null)
+            if (JobSpecification != null)
             {
-                this.JobSpecification.Validate();
+                JobSpecification.Validate();
             }
-            if (this.Metadata != null)
+            if (Metadata != null)
             {
-                foreach (var element in this.Metadata)
+                foreach (var element in Metadata)
                 {
                     if (element != null)
                     {

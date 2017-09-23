@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DisableJobOption.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DisableJobOption
     {
-        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
+        [EnumMember(Value = "requeue")]
         Requeue,
-        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
+        [EnumMember(Value = "terminate")]
         Terminate,
-        [System.Runtime.Serialization.EnumMember(Value = "wait")]
+        [EnumMember(Value = "wait")]
         Wait
+    }
+    internal static class DisableJobOptionEnumExtension
+    {
+        internal static string ToSerializedValue(this DisableJobOption? value)  =>
+            value == null ? null : ((DisableJobOption)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this DisableJobOption value)
+        {
+            switch( value )
+            {
+                case DisableJobOption.Requeue:
+                    return "requeue";
+                case DisableJobOption.Terminate:
+                    return "terminate";
+                case DisableJobOption.Wait:
+                    return "wait";
+            }
+            return null;
+        }
+
+        internal static DisableJobOption? ParseDisableJobOption(this string value)
+        {
+            switch( value )
+            {
+                case "requeue":
+                    return DisableJobOption.Requeue;
+                case "terminate":
+                    return DisableJobOption.Terminate;
+                case "wait":
+                    return DisableJobOption.Wait;
+            }
+            return null;
+        }
     }
 }

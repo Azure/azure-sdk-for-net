@@ -23,6 +23,43 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationFabricsOperationsExtensions
     {
             /// <summary>
+            /// Migrates the site to AAD.
+            /// </summary>
+            /// <remarks>
+            /// The operation to migrate an Azure Site Recovery fabric to AAD.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// ASR fabric to migrate.
+            /// </param>
+            public static void MigrateToAad(this IReplicationFabricsOperations operations, string fabricName)
+            {
+                operations.MigrateToAadAsync(fabricName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrates the site to AAD.
+            /// </summary>
+            /// <remarks>
+            /// The operation to migrate an Azure Site Recovery fabric to AAD.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// ASR fabric to migrate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task MigrateToAadAsync(this IReplicationFabricsOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.MigrateToAadWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Renews certificate for the fabric.
             /// </summary>
             /// <remarks>
@@ -82,8 +119,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the fabric containing the process server.
             /// </param>
             /// <param name='failoverProcessServerRequest'>
-            /// The input to the failover process
-            /// server operation.
+            /// The input to the failover process server operation.
             /// </param>
             public static Fabric ReassociateGateway(this IReplicationFabricsOperations operations, string fabricName, FailoverProcessServerRequest failoverProcessServerRequest)
             {
@@ -104,8 +140,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the fabric containing the process server.
             /// </param>
             /// <param name='failoverProcessServerRequest'>
-            /// The input to the failover process
-            /// server operation.
+            /// The input to the failover process server operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -355,6 +390,43 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Migrates the site to AAD.
+            /// </summary>
+            /// <remarks>
+            /// The operation to migrate an Azure Site Recovery fabric to AAD.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// ASR fabric to migrate.
+            /// </param>
+            public static void BeginMigrateToAad(this IReplicationFabricsOperations operations, string fabricName)
+            {
+                operations.BeginMigrateToAadAsync(fabricName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrates the site to AAD.
+            /// </summary>
+            /// <remarks>
+            /// The operation to migrate an Azure Site Recovery fabric to AAD.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// ASR fabric to migrate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginMigrateToAadAsync(this IReplicationFabricsOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginMigrateToAadWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Renews certificate for the fabric.
             /// </summary>
             /// <remarks>
@@ -414,8 +486,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the fabric containing the process server.
             /// </param>
             /// <param name='failoverProcessServerRequest'>
-            /// The input to the failover process
-            /// server operation.
+            /// The input to the failover process server operation.
             /// </param>
             public static Fabric BeginReassociateGateway(this IReplicationFabricsOperations operations, string fabricName, FailoverProcessServerRequest failoverProcessServerRequest)
             {
@@ -436,8 +507,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the fabric containing the process server.
             /// </param>
             /// <param name='failoverProcessServerRequest'>
-            /// The input to the failover process
-            /// server operation.
+            /// The input to the failover process server operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobExecutionInformation class.
         /// </summary>
-        public JobExecutionInformation() { }
+        public JobExecutionInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobExecutionInformation class.
@@ -34,12 +41,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job ended.</param>
         public JobExecutionInformation(System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?), string poolId = default(string), JobSchedulingError schedulingError = default(JobSchedulingError), string terminateReason = default(string))
         {
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.PoolId = poolId;
-            this.SchedulingError = schedulingError;
-            this.TerminateReason = terminateReason;
+            StartTime = startTime;
+            EndTime = endTime;
+            PoolId = poolId;
+            SchedulingError = schedulingError;
+            TerminateReason = terminateReason;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the start time of the job.
@@ -47,7 +60,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This is the time at which the job was created.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
@@ -56,7 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the job is in the completed state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
@@ -69,9 +82,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// when the job was added or updated. That poolInfo element may also
         /// contain a poolId element. If it does, the two IDs are the same. If
         /// it does not, it means the job ran on an auto pool, and this
-        /// property contains the id of that auto pool.
+        /// property contains the ID of that auto pool.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
+        [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
@@ -81,7 +94,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is not set if there was no error starting the job.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
+        [JsonProperty(PropertyName = "schedulingError")]
         public JobSchedulingError SchedulingError { get; set; }
 
         /// <summary>
@@ -102,20 +115,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// other string is a user-defined reason specified in a call to the
         /// 'Terminate a job' operation.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "terminateReason")]
+        [JsonProperty(PropertyName = "terminateReason")]
         public string TerminateReason { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.SchedulingError != null)
+            if (SchedulingError != null)
             {
-                this.SchedulingError.Validate();
+                SchedulingError.Validate();
             }
         }
     }
