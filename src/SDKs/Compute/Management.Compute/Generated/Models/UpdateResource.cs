@@ -11,30 +11,33 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Compute;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes the recovery policy.
+    /// The Update Resource model definition.
     /// </summary>
-    public partial class RecoveryPolicy
+    public partial class UpdateResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the RecoveryPolicy class.
+        /// Initializes a new instance of the UpdateResource class.
         /// </summary>
-        public RecoveryPolicy()
+        public UpdateResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RecoveryPolicy class.
+        /// Initializes a new instance of the UpdateResource class.
         /// </summary>
-        /// <param name="mode">The recovery mode. Possible values include:
-        /// 'None', 'OverProvision', 'Reprovision'</param>
-        public RecoveryPolicy(RecoveryMode? mode = default(RecoveryMode?))
+        /// <param name="tags">Resource tags</param>
+        public UpdateResource(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Mode = mode;
+            Tags = tags;
             CustomInit();
         }
 
@@ -44,11 +47,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the recovery mode. Possible values include: 'None',
-        /// 'OverProvision', 'Reprovision'
+        /// Gets or sets resource tags
         /// </summary>
-        [JsonProperty(PropertyName = "mode")]
-        public RecoveryMode? Mode { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

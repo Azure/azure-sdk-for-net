@@ -11,8 +11,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Compute;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -21,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// The Resource model definition.
     /// </summary>
-    public partial class ResourceUpdate : IResource
+    public partial class ResourceUpdate
     {
         /// <summary>
         /// Initializes a new instance of the ResourceUpdate class.

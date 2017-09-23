@@ -34,7 +34,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="publisher">The publisher ID.</param>
         /// <param name="name">The plan ID.</param>
-        /// <param name="product">The product ID.</param>
+        /// <param name="product">Specifies the product of the image from the
+        /// marketplace. This is the same value as Offer under the
+        /// imageReference element.</param>
         public PurchasePlan(string publisher, string name, string product)
         {
             Publisher = publisher;
@@ -61,7 +63,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the product ID.
+        /// Gets or sets specifies the product of the image from the
+        /// marketplace. This is the same value as Offer under the
+        /// imageReference element.
         /// </summary>
         [JsonProperty(PropertyName = "product")]
         public string Product { get; set; }

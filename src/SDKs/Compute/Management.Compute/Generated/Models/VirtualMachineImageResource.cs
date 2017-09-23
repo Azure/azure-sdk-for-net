@@ -39,7 +39,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="location">The supported Azure location of the
         /// resource.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="tags">The tags attached to the resource.</param>
+        /// <param name="tags">Specifies the tags that are assigned to the
+        /// virtual machine. For more information about using tags, see [Using
+        /// tags to organize your Azure
+        /// resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).</param>
         public VirtualMachineImageResource(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id)
         {
@@ -67,7 +70,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the tags attached to the resource.
+        /// Gets or sets specifies the tags that are assigned to the virtual
+        /// machine. For more information about using tags, see [Using tags to
+        /// organize your Azure
+        /// resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

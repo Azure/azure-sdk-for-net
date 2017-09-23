@@ -15,7 +15,12 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes Boot Diagnostics.
+    /// Boot Diagnostics is a debugging feature which allows you to view
+    /// Console Output and Screenshot to diagnose VM status.
+    /// &lt;br&gt;&lt;br&gt; For Linux Virtual Machines, you can easily view
+    /// the output of your console log. &lt;br&gt;&lt;br&gt; For both Windows
+    /// and Linux virtual machines, Azure also enables you to see a screenshot
+    /// of the VM from the hypervisor.
     /// </summary>
     public partial class BootDiagnostics
     {
@@ -32,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="enabled">Whether boot diagnostics should be enabled on
         /// the Virtual Machine.</param>
-        /// <param name="storageUri">URI of the storage account to use for
+        /// <param name="storageUri">Uri of the storage account to use for
         /// placing the console output and screenshot.</param>
         public BootDiagnostics(bool? enabled = default(bool?), string storageUri = default(string))
         {
@@ -54,7 +59,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets URI of the storage account to use for placing the
+        /// Gets or sets uri of the storage account to use for placing the
         /// console output and screenshot.
         /// </summary>
         [JsonProperty(PropertyName = "storageUri")]

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ResourceSkuRestrictions class.
         /// </summary>
         /// <param name="type">The type of restrictions. Possible values
-        /// include: 'location'</param>
+        /// include: 'Location'</param>
         /// <param name="values">The value of restrictions. If the restriction
         /// type is set to location. This would be different locations where
         /// the SKU is restricted.</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the type of restrictions. Possible values include: 'location'
+        /// Gets the type of restrictions. Possible values include: 'Location'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceSkuRestrictionsType? Type { get; private set; }

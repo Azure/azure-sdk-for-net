@@ -34,10 +34,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetNetworkProfile class.
         /// </summary>
+        /// <param name="healthProbe">A reference to a load balancer probe used
+        /// to determine the health of an instance in the virtual machine scale
+        /// set. The reference will be in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.</param>
         /// <param name="networkInterfaceConfigurations">The list of network
         /// configurations.</param>
-        public VirtualMachineScaleSetNetworkProfile(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default(IList<VirtualMachineScaleSetNetworkConfiguration>))
+        public VirtualMachineScaleSetNetworkProfile(ApiEntityReference healthProbe = default(ApiEntityReference), IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default(IList<VirtualMachineScaleSetNetworkConfiguration>))
         {
+            HealthProbe = healthProbe;
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
             CustomInit();
         }
@@ -46,6 +51,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets a reference to a load balancer probe used to determine
+        /// the health of an instance in the virtual machine scale set. The
+        /// reference will be in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'.
+        /// </summary>
+        [JsonProperty(PropertyName = "healthProbe")]
+        public ApiEntityReference HealthProbe { get; set; }
 
         /// <summary>
         /// Gets or sets the list of network configurations.

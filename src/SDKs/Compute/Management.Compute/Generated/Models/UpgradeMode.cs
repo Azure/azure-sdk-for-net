@@ -25,7 +25,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         [EnumMember(Value = "Automatic")]
         Automatic,
         [EnumMember(Value = "Manual")]
-        Manual
+        Manual,
+        [EnumMember(Value = "Rolling")]
+        Rolling
     }
     internal static class UpgradeModeEnumExtension
     {
@@ -40,6 +42,8 @@ namespace Microsoft.Azure.Management.Compute.Models
                     return "Automatic";
                 case UpgradeMode.Manual:
                     return "Manual";
+                case UpgradeMode.Rolling:
+                    return "Rolling";
             }
             return null;
         }
@@ -52,6 +56,8 @@ namespace Microsoft.Azure.Management.Compute.Models
                     return UpgradeMode.Automatic;
                 case "Manual":
                     return UpgradeMode.Manual;
+                case "Rolling":
+                    return UpgradeMode.Rolling;
             }
             return null;
         }
