@@ -38,10 +38,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public VirtualNetworkRule(string virtualNetworkSubnetId, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="ignoreMissingVnetServiceEndpoint">Create firewall rule
+        /// before the virtual network has vnet service endpoint
+        /// enabled.</param>
+        /// <param name="state">Virtual Network Rule State. Possible values
+        /// include: 'Initializing', 'InProgress', 'Ready', 'Deleting',
+        /// 'Unknown'</param>
+        public VirtualNetworkRule(string virtualNetworkSubnetId, string id = default(string), string name = default(string), string type = default(string), bool? ignoreMissingVnetServiceEndpoint = default(bool?), string state = default(string))
             : base(id, name, type)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
+            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
+            State = state;
             CustomInit();
         }
 
@@ -55,6 +63,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualNetworkSubnetId")]
         public string VirtualNetworkSubnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets create firewall rule before the virtual network has
+        /// vnet service endpoint enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ignoreMissingVnetServiceEndpoint")]
+        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets virtual Network Rule State. Possible values include:
+        /// 'Initializing', 'InProgress', 'Ready', 'Deleting', 'Unknown'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; private set; }
 
         /// <summary>
         /// Validate the object.
