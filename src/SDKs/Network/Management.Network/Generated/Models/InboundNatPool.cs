@@ -33,9 +33,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the InboundNatPool class.
         /// </summary>
-        /// <param name="protocol">The transport protocol for the endpoint.
-        /// Possible values are: 'Udp' or 'Tcp'. Possible values include:
-        /// 'Udp', 'Tcp'</param>
+        /// <param name="protocol">Possible values include: 'Udp', 'Tcp',
+        /// 'All'</param>
         /// <param name="frontendPortRangeStart">The first port number in the
         /// range of external ports that will be used to provide Inbound Nat to
         /// NICs associated with a load balancer. Acceptable values range
@@ -83,8 +82,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the transport protocol for the endpoint. Possible
-        /// values are: 'Udp' or 'Tcp'. Possible values include: 'Udp', 'Tcp'
+        /// Gets or sets possible values include: 'Udp', 'Tcp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

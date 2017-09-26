@@ -49,7 +49,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// peering can have this flag set to true. This flag cannot be set if
         /// virtual network already has a gateway.</param>
         /// <param name="remoteVirtualNetwork">The reference of the remote
-        /// virtual network.</param>
+        /// virtual network. The remote virtual network can be in the same or
+        /// different region (preview). See here to register for the preview
+        /// and learn more
+        /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).</param>
         /// <param name="peeringState">The status of the virtual network
         /// peering. Possible values are 'Initiated', 'Connected', and
         /// 'Disconnected'. Possible values include: 'Initiated', 'Connected',
@@ -114,7 +117,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? UseRemoteGateways { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the remote virtual network.
+        /// Gets or sets the reference of the remote virtual network. The
+        /// remote virtual network can be in the same or different region
+        /// (preview). See here to register for the preview and learn more
+        /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).
         /// </summary>
         [JsonProperty(PropertyName = "properties.remoteVirtualNetwork")]
         public SubResource RemoteVirtualNetwork { get; set; }
