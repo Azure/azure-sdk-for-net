@@ -1,8 +1,63 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Jlc291cmNlZ3JvdXBzL21sY3JwLWRvdG5ldC1jbGllbnQtdGVzdC1jaGVja3VwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "00e173e0-1160-45b6-8c56-db95bd082189"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute\",\r\n  \"namespace\": \"Microsoft.MachineLearningCompute\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"0736f41a-0425-4b46-bdb5-1563eff02385\",\r\n    \"roleDefinitionId\": \"376aa7d7-51a9-463d-bd4d-7e1691345612\",\r\n    \"managedByRoleDefinitionId\": \"91d00862-cf55-46a5-9dce-260bbd92ce25\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"operationalizationClusters\",\r\n      \"locations\": [\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"Australia East\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-08-01-preview\",\r\n        \"2017-06-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-08-01-preview\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-08-01-preview\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"Australia East\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-08-01-preview\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationsStatus\",\r\n      \"locations\": [\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"Australia East\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-08-01-preview\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:18:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14963"
+        ],
+        "x-ms-request-id": [
+          "e9efb8e4-dcae-46a0-8cb0-7492907a4da1"
+        ],
+        "x-ms-correlation-request-id": [
+          "e9efb8e4-dcae-46a0-8cb0-7492907a4da1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T181817Z:e9efb8e4-dcae-46a0-8cb0-7492907a4da1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Jlc291cmNlZ3JvdXBzL21sY3JwLWRvdG5ldC10ZXN0LWNoZWNrdXBkYXRlODQ4NT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +68,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "0fad8769-b42d-4ced-bbd3-8898f925220e"
+          "43d49006-32bb-43df-b16b-8d363e7ccc38"
         ],
         "accept-language": [
           "en-US"
@@ -23,10 +78,10 @@
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourceGroups/mlcrp-dotnet-client-test-checkupdate\",\r\n  \"name\": \"mlcrp-dotnet-client-test-checkupdate\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourceGroups/mlcrp-dotnet-test-checkupdate8485\",\r\n  \"name\": \"mlcrp-dotnet-test-checkupdate8485\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "226"
+          "220"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -38,22 +93,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Sep 2017 23:26:35 GMT"
+          "Tue, 26 Sep 2017 18:18:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1199"
         ],
         "x-ms-request-id": [
-          "b74fba56-c0fb-470c-817f-411c70851e31"
+          "7ed9e51e-cf62-4c91-a09e-c281ce9a0217"
         ],
         "x-ms-correlation-request-id": [
-          "b74fba56-c0fb-470c-817f-411c70851e31"
+          "7ed9e51e-cf62-4c91-a09e-c281ce9a0217"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232635Z:b74fba56-c0fb-470c-817f-411c70851e31"
+          "WESTUS:20170926T181818Z:7ed9e51e-cf62-4c91-a09e-c281ce9a0217"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,19 +117,19 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourceGroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-test-checkupdate?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC1jbGllbnQtdGVzdC1jaGVja3VwZGF0ZS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtdGVzdC1jaGVja3VwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourceGroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-dotnet-test-checkupdate5961?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC10ZXN0LWNoZWNrdXBkYXRlODQ4NS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtZG90bmV0LXRlc3QtY2hlY2t1cGRhdGU1OTYxP2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Test cluster\",\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"00000000-0000-0000-0000-000000000000\",\r\n          \"secret\": \"abcde\"\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"East US 2 EUAP\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"Test cluster\",\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"00000000-0000-0000-0000-000000000000b\",\r\n          \"secret\": \"abcde\"\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"East US 2\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "416"
+          "411"
         ],
         "x-ms-client-request-id": [
-          "1608d423-5866-4c8e-bf44-7ddfb8fee933"
+          "25d146ba-614b-419a-b46a-960480bd2cf2"
         ],
         "accept-language": [
           "en-US"
@@ -84,10 +139,10 @@
           "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-test-checkupdate\",\r\n  \"name\": \"mlcrp-test-checkupdate\",\r\n  \"type\": \"Microsoft.MachineLearningCompute/operationalizationClusters\",\r\n  \"location\": \"East US 2 EUAP\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"createdOn\": \"2017-09-05T23:26:41.08Z\",\r\n    \"description\": \"Test cluster\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"storageAccount\": {\r\n      \"resourceId\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.Storage/storageAccounts/mlcrpstg13347904daf2\"\r\n    },\r\n    \"containerRegistry\": {\r\n      \"resourceId\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.ContainerRegistry/registries/mlcrpacrf2200784780b\"\r\n    },\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"clusterFqdn\": \"mlcrp-test-checkupdate-fa503091\",\r\n      \"systemServices\": null,\r\n      \"masterCount\": 1,\r\n      \"agentCount\": 2,\r\n      \"agentVmSize\": \"Standard_D3_v2\",\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"00000000-0000-0000-0000-000000000000\",\r\n          \"secret\": null\r\n        }\r\n      }\r\n    },\r\n    \"appInsights\": {\r\n      \"resourceId\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.Insights/components/mlcrpai229654104638\"\r\n    },\r\n    \"globalServiceConfiguration\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-dotnet-test-checkupdate5961\",\r\n  \"name\": \"mlcrp-dotnet-test-checkupdate5961\",\r\n  \"type\": \"Microsoft.MachineLearningCompute/operationalizationClusters\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"createdOn\": \"2017-09-26T18:18:26.233Z\",\r\n    \"description\": \"Test cluster\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"provisioningErrors\": null,\r\n    \"storageAccount\": {\r\n      \"resourceId\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.Storage/storageAccounts/mlcrpstg0bd4595372c0\"\r\n    },\r\n    \"containerRegistry\": {\r\n      \"resourceId\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.ContainerRegistry/registries/mlcrpacr5c3628591605\"\r\n    },\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"clusterFqdn\": \"mlcrp-dotnet-test-checkupdate5961-b1584324\",\r\n      \"systemServices\": null,\r\n      \"masterCount\": 1,\r\n      \"agentCount\": 2,\r\n      \"agentVmSize\": \"Standard_D3_v2\",\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"00000000-0000-0000-0000-000000000000b\",\r\n          \"secret\": null\r\n        }\r\n      }\r\n    },\r\n    \"appInsights\": {\r\n      \"resourceId\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.Insights/components/mlcrpaie5098724df36\"\r\n    },\r\n    \"globalServiceConfiguration\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1420"
+          "1462"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,19 +154,19 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Sep 2017 23:26:44 GMT"
+          "Tue, 26 Sep 2017 18:18:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1199"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview"
+          "https://management.azure.com/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview"
         ],
         "x-ms-client-request-id": [
-          "1608d42358664c8ebf447ddfb8fee933"
+          "25d146ba614b419ab46a960480bd2cf2"
         ],
         "x-ms-client-session-id": [
           ""
@@ -126,20 +181,20 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "5b4834d0-d753-460b-88e5-e84e78a1aeaa"
+          "86968259-a5d9-453e-b29b-86b8e5c8026f"
         ],
         "x-ms-correlation-request-id": [
-          "5b4834d0-d753-460b-88e5-e84e78a1aeaa"
+          "86968259-a5d9-453e-b29b-86b8e5c8026f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232644Z:5b4834d0-d753-460b-88e5-e84e78a1aeaa"
+          "WESTUS:20170926T181827Z:86968259-a5d9-453e-b29b-86b8e5c8026f"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -148,7 +203,7 @@
           "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -160,7 +215,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Sep 2017 23:27:15 GMT"
+          "Tue, 26 Sep 2017 18:18:57 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -172,10 +227,10 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14888"
+          "14959"
         ],
         "x-ms-client-request-id": [
-          "a7a07ba999e443ceaee7c91715338bb3"
+          "d6966b4de0e0408bb6a93f51d3cde5c9"
         ],
         "x-ms-client-session-id": [
           ""
@@ -190,20 +245,20 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "14f08976-4174-437a-ad01-d38e27e9fedc"
+          "40dfa9d9-41f0-442a-a0a4-b2bdacd44bd9"
         ],
         "x-ms-correlation-request-id": [
-          "14f08976-4174-437a-ad01-d38e27e9fedc"
+          "40dfa9d9-41f0-442a-a0a4-b2bdacd44bd9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232715Z:14f08976-4174-437a-ad01-d38e27e9fedc"
+          "WESTUS:20170926T181857Z:40dfa9d9-41f0-442a-a0a4-b2bdacd44bd9"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -212,7 +267,7 @@
           "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -224,1991 +279,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Sep 2017 23:27:44 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14886"
-        ],
-        "x-ms-client-request-id": [
-          "8ee8ff18c397475eb093feeb2bde7a43"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "4defccfd-9c73-41cf-a2d2-cff22418161c"
-        ],
-        "x-ms-correlation-request-id": [
-          "4defccfd-9c73-41cf-a2d2-cff22418161c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232745Z:4defccfd-9c73-41cf-a2d2-cff22418161c"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:28:14 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14884"
-        ],
-        "x-ms-client-request-id": [
-          "8469203f66324a439b3bc8e997d563db"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "43fcaa9d-baef-45a1-bb31-02b62c1a5ee8"
-        ],
-        "x-ms-correlation-request-id": [
-          "43fcaa9d-baef-45a1-bb31-02b62c1a5ee8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232815Z:43fcaa9d-baef-45a1-bb31-02b62c1a5ee8"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:28:45 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14879"
-        ],
-        "x-ms-client-request-id": [
-          "987df03524de4468a091185b9e8a94c0"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "1bbe19e6-e69c-4642-8a17-8b287060b144"
-        ],
-        "x-ms-correlation-request-id": [
-          "1bbe19e6-e69c-4642-8a17-8b287060b144"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232845Z:1bbe19e6-e69c-4642-8a17-8b287060b144"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:29:15 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14876"
-        ],
-        "x-ms-client-request-id": [
-          "e12e106dfd5a4d169fce7ac9390df4e9"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "3d32603b-69cc-49fa-9fed-db6582999016"
-        ],
-        "x-ms-correlation-request-id": [
-          "3d32603b-69cc-49fa-9fed-db6582999016"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232916Z:3d32603b-69cc-49fa-9fed-db6582999016"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:29:45 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14873"
-        ],
-        "x-ms-client-request-id": [
-          "a705fa2ee31f4a649651d0ec2c9d7e30"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "0f57b375-e412-4b1a-9caa-80bf28bd5056"
-        ],
-        "x-ms-correlation-request-id": [
-          "0f57b375-e412-4b1a-9caa-80bf28bd5056"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T232946Z:0f57b375-e412-4b1a-9caa-80bf28bd5056"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:30:16 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14877"
-        ],
-        "x-ms-client-request-id": [
-          "f6cedd6a8e654fd6a7d6f46eecb6fd94"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "7a4892ee-303e-4531-ba05-859366873769"
-        ],
-        "x-ms-correlation-request-id": [
-          "7a4892ee-303e-4531-ba05-859366873769"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233016Z:7a4892ee-303e-4531-ba05-859366873769"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:30:46 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14871"
-        ],
-        "x-ms-client-request-id": [
-          "7553295952554a698679aeea2e71b1ef"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "e7bf1abd-80a3-4807-aa24-c94ffe32f081"
-        ],
-        "x-ms-correlation-request-id": [
-          "e7bf1abd-80a3-4807-aa24-c94ffe32f081"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233046Z:e7bf1abd-80a3-4807-aa24-c94ffe32f081"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:31:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14868"
-        ],
-        "x-ms-client-request-id": [
-          "682337d9bf6c4b189bc4e088bb9dde79"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "0a43c934-44b1-4732-9127-aabf98125790"
-        ],
-        "x-ms-correlation-request-id": [
-          "0a43c934-44b1-4732-9127-aabf98125790"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233118Z:0a43c934-44b1-4732-9127-aabf98125790"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:31:47 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14867"
-        ],
-        "x-ms-client-request-id": [
-          "7f2336662310436d8193fd64a10e0ae4"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "b019b6d5-c69c-4837-ae98-e503caaa5f76"
-        ],
-        "x-ms-correlation-request-id": [
-          "b019b6d5-c69c-4837-ae98-e503caaa5f76"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233148Z:b019b6d5-c69c-4837-ae98-e503caaa5f76"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:32:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14864"
-        ],
-        "x-ms-client-request-id": [
-          "c2feba1bdb894c359a1a0ade2ba2591a"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "2d0388e1-0978-4d75-b148-f45147b8189b"
-        ],
-        "x-ms-correlation-request-id": [
-          "2d0388e1-0978-4d75-b148-f45147b8189b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233218Z:2d0388e1-0978-4d75-b148-f45147b8189b"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:32:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14863"
-        ],
-        "x-ms-client-request-id": [
-          "776446ff019f45289504affedfccbc63"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "e3e6fd31-1983-4850-bdd2-ac2c2bfc8633"
-        ],
-        "x-ms-correlation-request-id": [
-          "e3e6fd31-1983-4850-bdd2-ac2c2bfc8633"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233249Z:e3e6fd31-1983-4850-bdd2-ac2c2bfc8633"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:33:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14862"
-        ],
-        "x-ms-client-request-id": [
-          "ef4af5d8376248c59fd313a8c75b2ddc"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "163f96fe-9aa6-409e-9e6b-694f768e962d"
-        ],
-        "x-ms-correlation-request-id": [
-          "163f96fe-9aa6-409e-9e6b-694f768e962d"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233319Z:163f96fe-9aa6-409e-9e6b-694f768e962d"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:33:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
-        ],
-        "x-ms-client-request-id": [
-          "fd1a0c83f4e145559366e744c112611b"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "f55af0a2-f22a-429a-a16e-842ee61a41de"
-        ],
-        "x-ms-correlation-request-id": [
-          "f55af0a2-f22a-429a-a16e-842ee61a41de"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233349Z:f55af0a2-f22a-429a-a16e-842ee61a41de"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:34:19 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
-        ],
-        "x-ms-client-request-id": [
-          "592d3022913d48af9310d14c4095a701"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "fd3fc777-db1f-454f-aae9-6759d60dc9cc"
-        ],
-        "x-ms-correlation-request-id": [
-          "fd3fc777-db1f-454f-aae9-6759d60dc9cc"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233420Z:fd3fc777-db1f-454f-aae9-6759d60dc9cc"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:34:49 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
-        ],
-        "x-ms-client-request-id": [
-          "1b532df564fd40f1b1723415eb054836"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "dc60f52d-2da6-4841-a45d-8360563cb68d"
-        ],
-        "x-ms-correlation-request-id": [
-          "dc60f52d-2da6-4841-a45d-8360563cb68d"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233450Z:dc60f52d-2da6-4841-a45d-8360563cb68d"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:35:20 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
-        ],
-        "x-ms-client-request-id": [
-          "cdf8102d3b244260afb14d34e794392c"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "10370e4d-74c9-4bf2-9311-646c6d999109"
-        ],
-        "x-ms-correlation-request-id": [
-          "10370e4d-74c9-4bf2-9311-646c6d999109"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233520Z:10370e4d-74c9-4bf2-9311-646c6d999109"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:35:50 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
-        ],
-        "x-ms-client-request-id": [
-          "015745d5a5e849759b46bbcbb8dc7b92"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "88fdb7b6-154d-4810-8dec-97f372393542"
-        ],
-        "x-ms-correlation-request-id": [
-          "88fdb7b6-154d-4810-8dec-97f372393542"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233550Z:88fdb7b6-154d-4810-8dec-97f372393542"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:36:20 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
-        ],
-        "x-ms-client-request-id": [
-          "132e1e41c7d44bfd9798556debf1ce59"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "3af4a202-789f-4cfe-8357-dd32b2ff0180"
-        ],
-        "x-ms-correlation-request-id": [
-          "3af4a202-789f-4cfe-8357-dd32b2ff0180"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233621Z:3af4a202-789f-4cfe-8357-dd32b2ff0180"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:36:50 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
-        ],
-        "x-ms-client-request-id": [
-          "8c005bd70728457b8241537ff53a4c16"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "7597e9f5-0c0a-4939-ab7b-37479fffae1f"
-        ],
-        "x-ms-correlation-request-id": [
-          "7597e9f5-0c0a-4939-ab7b-37479fffae1f"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233651Z:7597e9f5-0c0a-4939-ab7b-37479fffae1f"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:37:20 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
-        ],
-        "x-ms-client-request-id": [
-          "54e123a449de41c8b925d4f5fa2d308f"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "e25ccc31-b59c-42da-ad1f-4a3d78537f32"
-        ],
-        "x-ms-correlation-request-id": [
-          "e25ccc31-b59c-42da-ad1f-4a3d78537f32"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233721Z:e25ccc31-b59c-42da-ad1f-4a3d78537f32"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:37:51 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
-        ],
-        "x-ms-client-request-id": [
-          "8221d024cd764073a17e341993306ce7"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "db1c0aaf-a6b2-4d1b-bc70-b2a50aed54bf"
-        ],
-        "x-ms-correlation-request-id": [
-          "db1c0aaf-a6b2-4d1b-bc70-b2a50aed54bf"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233751Z:db1c0aaf-a6b2-4d1b-bc70-b2a50aed54bf"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:38:21 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
-        ],
-        "x-ms-client-request-id": [
-          "064005a00f0b4677a6d6580e52d53bc5"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "56d00dbb-1f3a-4649-9b59-e909d9e2b390"
-        ],
-        "x-ms-correlation-request-id": [
-          "56d00dbb-1f3a-4649-9b59-e909d9e2b390"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233821Z:56d00dbb-1f3a-4649-9b59-e909d9e2b390"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:38:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14982"
-        ],
-        "x-ms-client-request-id": [
-          "aef930a56dac425986f1abb794ce0ed8"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "861f055a-0016-4352-8d63-6dc6acf1ed50"
-        ],
-        "x-ms-correlation-request-id": [
-          "861f055a-0016-4352-8d63-6dc6acf1ed50"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233852Z:861f055a-0016-4352-8d63-6dc6acf1ed50"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:39:21 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14980"
-        ],
-        "x-ms-client-request-id": [
-          "478865d753e146b7b0446a9c21d1b691"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "9c20c246-6f55-4a4b-8d7f-784ebd99c97b"
-        ],
-        "x-ms-correlation-request-id": [
-          "9c20c246-6f55-4a4b-8d7f-784ebd99c97b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233922Z:9c20c246-6f55-4a4b-8d7f-784ebd99c97b"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:39:51 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14977"
-        ],
-        "x-ms-client-request-id": [
-          "ae17c5bc28394b6493221d78ae765cbb"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "cd7b6efa-7667-4b69-8737-92a59701dd05"
-        ],
-        "x-ms-correlation-request-id": [
-          "cd7b6efa-7667-4b69-8737-92a59701dd05"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T233952Z:cd7b6efa-7667-4b69-8737-92a59701dd05"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:40:22 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14974"
-        ],
-        "x-ms-client-request-id": [
-          "dd32f09ae1d448218977f2ac1a961862"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "ad1efa59-14d3-40cd-8e1e-117c1efdd562"
-        ],
-        "x-ms-correlation-request-id": [
-          "ad1efa59-14d3-40cd-8e1e-117c1efdd562"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234022Z:ad1efa59-14d3-40cd-8e1e-117c1efdd562"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:40:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14972"
-        ],
-        "x-ms-client-request-id": [
-          "948040d44b304bcd956c93a57202ef15"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "f45775e5-b8e5-442e-8710-b48291c84771"
-        ],
-        "x-ms-correlation-request-id": [
-          "f45775e5-b8e5-442e-8710-b48291c84771"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234052Z:f45775e5-b8e5-442e-8710-b48291c84771"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:41:21 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14968"
-        ],
-        "x-ms-client-request-id": [
-          "d24042a195124fa18849229e81dfbe50"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "bf96373b-120d-41ea-8ced-d4ac5c3ab386"
-        ],
-        "x-ms-correlation-request-id": [
-          "bf96373b-120d-41ea-8ced-d4ac5c3ab386"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234122Z:bf96373b-120d-41ea-8ced-d4ac5c3ab386"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:41:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14967"
-        ],
-        "x-ms-client-request-id": [
-          "0fca1e0cc7d1469e8b1f473f1d14df99"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "5a591a5c-2f0b-4b81-9047-fa049018fd64"
-        ],
-        "x-ms-correlation-request-id": [
-          "5a591a5c-2f0b-4b81-9047-fa049018fd64"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234153Z:5a591a5c-2f0b-4b81-9047-fa049018fd64"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:42:22 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14964"
-        ],
-        "x-ms-client-request-id": [
-          "66761b69b0bc4ae1a0e5cb4a72497d1f"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "eed18b5c-21fd-4171-ac28-b3d7f01e9574"
-        ],
-        "x-ms-correlation-request-id": [
-          "eed18b5c-21fd-4171-ac28-b3d7f01e9574"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234223Z:eed18b5c-21fd-4171-ac28-b3d7f01e9574"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:42:53 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14963"
-        ],
-        "x-ms-client-request-id": [
-          "0f26a191c0c24d2da818483fe8e46f4e"
-        ],
-        "x-ms-client-session-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "ff928372-e61e-41a5-8cef-b7ec0b9d30bb"
-        ],
-        "x-ms-correlation-request-id": [
-          "ff928372-e61e-41a5-8cef-b7ec0b9d30bb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234253Z:ff928372-e61e-41a5-8cef-b7ec0b9d30bb"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/providers/Microsoft.MachineLearningCompute/locations/eastus2euap/operationsStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvb3BlcmF0aW9uc1N0YXR1cy80YzdkMzdmMi1mNDkxLTQyZjctOWQ0ZC04ZTdlYTYxZTNkZGU/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/locations/eastus2euap/operationStatus/4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"name\": \"4c7d37f2-f491-42f7-9d4d-8e7ea61e3dde\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-09-05T23:26:42.448Z\",\r\n  \"endTime\": \"2017-09-05T23:42:55.496Z\",\r\n  \"percentComplete\": 0.0\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Sep 2017 23:43:23 GMT"
+          "Tue, 26 Sep 2017 18:19:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2223,7 +294,7 @@
           "14958"
         ],
         "x-ms-client-request-id": [
-          "b01caf82fc0b43d29130b2be5ff42350"
+          "f31f8968ba6b4a71a9f12553fba8fe84"
         ],
         "x-ms-client-session-id": [
           ""
@@ -2238,20 +309,20 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "e9b4f9b5-fbe1-48e6-aa41-4d10aeb739a7"
+          "b012646c-7c9e-4ae3-9492-d6e672bff86b"
         ],
         "x-ms-correlation-request-id": [
-          "e9b4f9b5-fbe1-48e6-aa41-4d10aeb739a7"
+          "b012646c-7c9e-4ae3-9492-d6e672bff86b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234323Z:e9b4f9b5-fbe1-48e6-aa41-4d10aeb739a7"
+          "WESTUS:20170926T181927Z:b012646c-7c9e-4ae3-9492-d6e672bff86b"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourceGroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-test-checkupdate?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC1jbGllbnQtdGVzdC1jaGVja3VwZGF0ZS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtdGVzdC1jaGVja3VwZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2260,7 +331,7 @@
           "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-test-checkupdate\",\r\n  \"name\": \"mlcrp-test-checkupdate\",\r\n  \"type\": \"Microsoft.MachineLearningCompute/operationalizationClusters\",\r\n  \"location\": \"East US 2 EUAP\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"createdOn\": \"2017-09-05T23:26:41.08Z\",\r\n    \"description\": \"Test cluster\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"storageAccount\": {\r\n      \"resourceId\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.Storage/storageAccounts/mlcrpstg13347904daf2\"\r\n    },\r\n    \"containerRegistry\": {\r\n      \"resourceId\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.ContainerRegistry/registries/mlcrpacrf2200784780b\"\r\n    },\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"clusterFqdn\": \"mlcrp-test-checkupdate-fa503091.eastus2.cloudapp.azure.com\",\r\n      \"systemServices\": [\r\n        {\r\n          \"systemServiceType\": \"ScoringFrontEnd\",\r\n          \"publicIpAddress\": \"23.101.146.142\",\r\n          \"version\": \"prod/1.20170905.2/master.308253995bd64e1d222e5be31f2d3eb284ba4d83\"\r\n        }\r\n      ],\r\n      \"masterCount\": 1,\r\n      \"agentCount\": 2,\r\n      \"agentVmSize\": \"Standard_D3_v2\",\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"00000000-0000-0000-0000-000000000000\",\r\n          \"secret\": null\r\n        }\r\n      }\r\n    },\r\n    \"appInsights\": {\r\n      \"resourceId\": \"/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourcegroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.Insights/components/mlcrpai229654104638\"\r\n    },\r\n    \"globalServiceConfiguration\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2272,7 +343,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Sep 2017 23:43:23 GMT"
+          "Tue, 26 Sep 2017 18:19:57 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2287,7 +358,7 @@
           "14957"
         ],
         "x-ms-client-request-id": [
-          "5f96b7ff34b24c83a03dc5a8fe1a1992"
+          "44e8a994747347799d256a97163fd6e9"
         ],
         "x-ms-client-session-id": [
           ""
@@ -2302,25 +373,1753 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "1ba5f1e6-2ff3-48b0-9b5b-681e6d200b23"
+          "f9c0ba54-4762-4809-9f39-f13e5b5bade3"
         ],
         "x-ms-correlation-request-id": [
-          "1ba5f1e6-2ff3-48b0-9b5b-681e6d200b23"
+          "f9c0ba54-4762-4809-9f39-f13e5b5bade3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234324Z:1ba5f1e6-2ff3-48b0-9b5b-681e6d200b23"
+          "WESTUS:20170926T181958Z:f9c0ba54-4762-4809-9f39-f13e5b5bade3"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f455bd0-f95a-4b7d-8d08-078611508e0b/resourceGroups/mlcrp-dotnet-client-test-checkupdate/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-test-checkupdate/checkSystemServicesUpdatesAvailable?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY0NTViZDAtZjk1YS00YjdkLThkMDgtMDc4NjExNTA4ZTBiL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC1jbGllbnQtdGVzdC1jaGVja3VwZGF0ZS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtdGVzdC1jaGVja3VwZGF0ZS9jaGVja1N5c3RlbVNlcnZpY2VzVXBkYXRlc0F2YWlsYWJsZT9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:20:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14959"
+        ],
+        "x-ms-client-request-id": [
+          "c91da321a02a4898b43f66ec4bef8aee"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "bf8382db-9783-46d2-a363-186e59cff4c0"
+        ],
+        "x-ms-correlation-request-id": [
+          "bf8382db-9783-46d2-a363-186e59cff4c0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182028Z:bf8382db-9783-46d2-a363-186e59cff4c0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:20:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-client-request-id": [
+          "d8fa29404e154d23911b321c71ba246d"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "ea00bb64-52b5-43e8-802c-05c5b7a78a5f"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea00bb64-52b5-43e8-802c-05c5b7a78a5f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182058Z:ea00bb64-52b5-43e8-802c-05c5b7a78a5f"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:21:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14957"
+        ],
+        "x-ms-client-request-id": [
+          "42b878e6afbc44c18f173b36457b8416"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "04fbaa74-221c-4513-a43c-51daa6e8b1bb"
+        ],
+        "x-ms-correlation-request-id": [
+          "04fbaa74-221c-4513-a43c-51daa6e8b1bb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182128Z:04fbaa74-221c-4513-a43c-51daa6e8b1bb"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:21:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14956"
+        ],
+        "x-ms-client-request-id": [
+          "7265de0a81cd48f29eda36bd8592aebd"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "42026dde-7c8b-43fb-b317-babad92d4635"
+        ],
+        "x-ms-correlation-request-id": [
+          "42026dde-7c8b-43fb-b317-babad92d4635"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182158Z:42026dde-7c8b-43fb-b317-babad92d4635"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:22:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14954"
+        ],
+        "x-ms-client-request-id": [
+          "736f38c3871147318e638574bd1d1e81"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "6915d692-9274-4d9c-b8e8-46ff35b7c9e5"
+        ],
+        "x-ms-correlation-request-id": [
+          "6915d692-9274-4d9c-b8e8-46ff35b7c9e5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182229Z:6915d692-9274-4d9c-b8e8-46ff35b7c9e5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:22:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14953"
+        ],
+        "x-ms-client-request-id": [
+          "762e042df5ef494ab2148fd0f1a884bb"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "ba567545-7924-442e-a05f-37709eb9118f"
+        ],
+        "x-ms-correlation-request-id": [
+          "ba567545-7924-442e-a05f-37709eb9118f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182259Z:ba567545-7924-442e-a05f-37709eb9118f"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:23:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14952"
+        ],
+        "x-ms-client-request-id": [
+          "339cd596e74a4e4c951f5f313e10d445"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "db460e33-e38c-4675-bb5f-d7de23ae7315"
+        ],
+        "x-ms-correlation-request-id": [
+          "db460e33-e38c-4675-bb5f-d7de23ae7315"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182329Z:db460e33-e38c-4675-bb5f-d7de23ae7315"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:23:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14951"
+        ],
+        "x-ms-client-request-id": [
+          "8c53eb7896234b7e85538cbf8c2ea1de"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "b447fb50-2526-49aa-9a33-2753ede7881c"
+        ],
+        "x-ms-correlation-request-id": [
+          "b447fb50-2526-49aa-9a33-2753ede7881c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182359Z:b447fb50-2526-49aa-9a33-2753ede7881c"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:24:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14950"
+        ],
+        "x-ms-client-request-id": [
+          "847866af4c6e46aba6107da131daa61f"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f13c9586-671e-47aa-8246-54dc66498816"
+        ],
+        "x-ms-correlation-request-id": [
+          "f13c9586-671e-47aa-8246-54dc66498816"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182429Z:f13c9586-671e-47aa-8246-54dc66498816"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:24:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14949"
+        ],
+        "x-ms-client-request-id": [
+          "c804599098d644b8bfdb68123052d20c"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "0f1e8ac5-29e9-46e2-b9e9-9f43e526f92d"
+        ],
+        "x-ms-correlation-request-id": [
+          "0f1e8ac5-29e9-46e2-b9e9-9f43e526f92d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182459Z:0f1e8ac5-29e9-46e2-b9e9-9f43e526f92d"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:25:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14956"
+        ],
+        "x-ms-client-request-id": [
+          "be2339d8df694631a9833d66ae25d47f"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "61b7ad98-7003-4cf4-afeb-35cbe28281cf"
+        ],
+        "x-ms-correlation-request-id": [
+          "61b7ad98-7003-4cf4-afeb-35cbe28281cf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182530Z:61b7ad98-7003-4cf4-afeb-35cbe28281cf"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:25:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14954"
+        ],
+        "x-ms-client-request-id": [
+          "264af3e007af4c2a929836f3aae1afd6"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "49aa7f6c-e0da-4b27-8e3a-8ea4dcef9c09"
+        ],
+        "x-ms-correlation-request-id": [
+          "49aa7f6c-e0da-4b27-8e3a-8ea4dcef9c09"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182600Z:49aa7f6c-e0da-4b27-8e3a-8ea4dcef9c09"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:26:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14953"
+        ],
+        "x-ms-client-request-id": [
+          "18f1effb34cb4015b78377cc69d11310"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "b6bc764c-506d-40b3-82db-3a4c361b7a18"
+        ],
+        "x-ms-correlation-request-id": [
+          "b6bc764c-506d-40b3-82db-3a4c361b7a18"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182630Z:b6bc764c-506d-40b3-82db-3a4c361b7a18"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:26:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14952"
+        ],
+        "x-ms-client-request-id": [
+          "d08f993e28b64c9c91f34cec291df9d2"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "ba7a84ed-3c0c-4957-8d9d-2515ea56afaf"
+        ],
+        "x-ms-correlation-request-id": [
+          "ba7a84ed-3c0c-4957-8d9d-2515ea56afaf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182700Z:ba7a84ed-3c0c-4957-8d9d-2515ea56afaf"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:27:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14951"
+        ],
+        "x-ms-client-request-id": [
+          "619a823c7d974bda954c0ada9b0172ca"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "7c23a006-69ca-41a2-87d4-2e06387cd78d"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c23a006-69ca-41a2-87d4-2e06387cd78d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182730Z:7c23a006-69ca-41a2-87d4-2e06387cd78d"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:28:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14950"
+        ],
+        "x-ms-client-request-id": [
+          "784aa997dbf9455499b269688d888971"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f7a32827-ea46-40cf-9cb5-e1c488d3f854"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7a32827-ea46-40cf-9cb5-e1c488d3f854"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182801Z:f7a32827-ea46-40cf-9cb5-e1c488d3f854"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:28:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14949"
+        ],
+        "x-ms-client-request-id": [
+          "7c40d6333e98476cbe400001b6742335"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "6e978c32-cb28-431b-975a-b661aa6145ee"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e978c32-cb28-431b-975a-b661aa6145ee"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182831Z:6e978c32-cb28-431b-975a-b661aa6145ee"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:29:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14948"
+        ],
+        "x-ms-client-request-id": [
+          "45156ad9e20347c7801cc43db3c72155"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "023a0af4-57f0-40f5-a9cc-cd09e15c3e4a"
+        ],
+        "x-ms-correlation-request-id": [
+          "023a0af4-57f0-40f5-a9cc-cd09e15c3e4a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182902Z:023a0af4-57f0-40f5-a9cc-cd09e15c3e4a"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:29:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14947"
+        ],
+        "x-ms-client-request-id": [
+          "5c84087fb5534397b113364d47608280"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "7b65cca0-953f-4962-9d2b-4ce4f11ea446"
+        ],
+        "x-ms-correlation-request-id": [
+          "7b65cca0-953f-4962-9d2b-4ce4f11ea446"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T182932Z:7b65cca0-953f-4962-9d2b-4ce4f11ea446"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:30:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14947"
+        ],
+        "x-ms-client-request-id": [
+          "0573ad9912734a58b85676e5c55c1b20"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "9dd61f7b-d97b-4881-b99a-303c7cdd55ef"
+        ],
+        "x-ms-correlation-request-id": [
+          "9dd61f7b-d97b-4881-b99a-303c7cdd55ef"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183002Z:9dd61f7b-d97b-4881-b99a-303c7cdd55ef"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:30:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14945"
+        ],
+        "x-ms-client-request-id": [
+          "c018ec5ad3fb4d8c9bcd5becaa1b4c17"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "743ca315-4b6d-46c9-9085-5d0c25a725e3"
+        ],
+        "x-ms-correlation-request-id": [
+          "743ca315-4b6d-46c9-9085-5d0c25a725e3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183032Z:743ca315-4b6d-46c9-9085-5d0c25a725e3"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:31:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14944"
+        ],
+        "x-ms-client-request-id": [
+          "6f26828fb26840e08414a3192ed69a4d"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "9a3b3c72-2d8d-4b69-822c-4fe94ce1c2bf"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a3b3c72-2d8d-4b69-822c-4fe94ce1c2bf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183103Z:9a3b3c72-2d8d-4b69-822c-4fe94ce1c2bf"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:31:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14942"
+        ],
+        "x-ms-client-request-id": [
+          "c7d096038483428a8290bba9700c6ea1"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "ce740e14-53d0-461a-85bf-17d53b02b49a"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce740e14-53d0-461a-85bf-17d53b02b49a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183133Z:ce740e14-53d0-461a-85bf-17d53b02b49a"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:32:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14941"
+        ],
+        "x-ms-client-request-id": [
+          "fe0d4917014149f091aaf8a64459eb44"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "4950a717-a217-4d97-948b-182bba54e17d"
+        ],
+        "x-ms-correlation-request-id": [
+          "4950a717-a217-4d97-948b-182bba54e17d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183203Z:4950a717-a217-4d97-948b-182bba54e17d"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Creating\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:32:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14940"
+        ],
+        "x-ms-client-request-id": [
+          "562e217fd4ff4108876dadb5161cc716"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "5fc31b41-16d6-4665-8bcf-f91d9d8dd550"
+        ],
+        "x-ms-correlation-request-id": [
+          "5fc31b41-16d6-4665-8bcf-f91d9d8dd550"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183233Z:5fc31b41-16d6-4665-8bcf-f91d9d8dd550"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/providers/Microsoft.MachineLearningCompute/locations/eastus2/operationsStatus/e09456d3-cef7-48b3-9052-99c69f019073?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9vcGVyYXRpb25zU3RhdHVzL2UwOTQ1NmQzLWNlZjctNDhiMy05MDUyLTk5YzY5ZjAxOTA3Mz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/locations/eastus2/operationStatus/e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"name\": \"e09456d3-cef7-48b3-9052-99c69f019073\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-09-26T18:18:26.729Z\",\r\n  \"endTime\": \"2017-09-26T18:32:39.249Z\",\r\n  \"percentComplete\": 0.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:33:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14939"
+        ],
+        "x-ms-client-request-id": [
+          "333fd46da1844f1f8bedd3ebfbf16f0c"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "6d695b24-70db-453f-a0ef-911f08f3868c"
+        ],
+        "x-ms-correlation-request-id": [
+          "6d695b24-70db-453f-a0ef-911f08f3868c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183304Z:6d695b24-70db-453f-a0ef-911f08f3868c"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourceGroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-dotnet-test-checkupdate5961?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC10ZXN0LWNoZWNrdXBkYXRlODQ4NS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtZG90bmV0LXRlc3QtY2hlY2t1cGRhdGU1OTYxP2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.MachineLearningCompute.MachineLearningComputeManagementClient/0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-dotnet-test-checkupdate5961\",\r\n  \"name\": \"mlcrp-dotnet-test-checkupdate5961\",\r\n  \"type\": \"Microsoft.MachineLearningCompute/operationalizationClusters\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"createdOn\": \"2017-09-26T18:18:26.233Z\",\r\n    \"description\": \"Test cluster\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"provisioningErrors\": null,\r\n    \"storageAccount\": {\r\n      \"resourceId\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.Storage/storageAccounts/mlcrpstg0bd4595372c0\"\r\n    },\r\n    \"containerRegistry\": {\r\n      \"resourceId\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.ContainerRegistry/registries/mlcrpacr5c3628591605\"\r\n    },\r\n    \"clusterType\": \"ACS\",\r\n    \"containerService\": {\r\n      \"clusterFqdn\": \"mlcrp-dotnet-test-checkupdate5961-b1584324.eastus2.cloudapp.azure.com\",\r\n      \"systemServices\": [\r\n        {\r\n          \"systemServiceType\": \"ScoringFrontEnd\",\r\n          \"publicIpAddress\": \"52.225.227.53\",\r\n          \"version\": \"prod/1.20170919.2/master/d1204f76830c897fa2c607f9b21aaec7c9eb1a9e\"\r\n        }\r\n      ],\r\n      \"masterCount\": 1,\r\n      \"agentCount\": 2,\r\n      \"agentVmSize\": \"Standard_D3_v2\",\r\n      \"orchestratorType\": \"Kubernetes\",\r\n      \"orchestratorProperties\": {\r\n        \"servicePrincipal\": {\r\n          \"clientId\": \"00000000-0000-0000-0000-000000000000b\",\r\n          \"secret\": null\r\n        }\r\n      }\r\n    },\r\n    \"appInsights\": {\r\n      \"resourceId\": \"/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourcegroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.Insights/components/mlcrpaie5098724df36\"\r\n    },\r\n    \"globalServiceConfiguration\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 26 Sep 2017 18:33:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14938"
+        ],
+        "x-ms-client-request-id": [
+          "a105b2f2ee7143d589d2b310dc846713"
+        ],
+        "x-ms-client-session-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f5367742-fd15-48a6-ad0e-8e2feb3c0324"
+        ],
+        "x-ms-correlation-request-id": [
+          "f5367742-fd15-48a6-ad0e-8e2feb3c0324"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170926T183304Z:f5367742-fd15-48a6-ad0e-8e2feb3c0324"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74eccef0-4b8d-4f83-b5f9-fa100d155b22/resourceGroups/mlcrp-dotnet-test-checkupdate8485/providers/Microsoft.MachineLearningCompute/operationalizationClusters/mlcrp-dotnet-test-checkupdate5961/checkSystemServicesUpdatesAvailable?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRlY2NlZjAtNGI4ZC00ZjgzLWI1ZjktZmExMDBkMTU1YjIyL3Jlc291cmNlR3JvdXBzL21sY3JwLWRvdG5ldC10ZXN0LWNoZWNrdXBkYXRlODQ4NS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZ0NvbXB1dGUvb3BlcmF0aW9uYWxpemF0aW9uQ2x1c3RlcnMvbWxjcnAtZG90bmV0LXRlc3QtY2hlY2t1cGRhdGU1OTYxL2NoZWNrU3lzdGVtU2VydmljZXNVcGRhdGVzQXZhaWxhYmxlP2FwaS12ZXJzaW9uPTIwMTctMDgtMDEtcHJldmlldw==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0016e432-cc58-4ca2-b4f5-b46b7ef5d57d"
+          "53108416-f85b-486b-a204-b83d01200043"
         ],
         "accept-language": [
           "en-US"
@@ -2342,7 +2141,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Sep 2017 23:43:24 GMT"
+          "Tue, 26 Sep 2017 18:33:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2357,7 +2156,7 @@
           "1198"
         ],
         "x-ms-client-request-id": [
-          "0016e432cc584ca2b4f5b46b7ef5d57d"
+          "53108416f85b486ba204b83d01200043"
         ],
         "x-ms-client-session-id": [
           ""
@@ -2372,21 +2171,26 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0d6b4cf1-6da4-41fd-be85-ce0d6ce2b2a3"
+          "06f0bcea-02bb-485d-b357-4a0f1f6ea54f"
         ],
         "x-ms-correlation-request-id": [
-          "0d6b4cf1-6da4-41fd-be85-ce0d6ce2b2a3"
+          "06f0bcea-02bb-485d-b357-4a0f1f6ea54f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170905T234325Z:0d6b4cf1-6da4-41fd-be85-ce0d6ce2b2a3"
+          "WESTUS:20170926T183305Z:06f0bcea-02bb-485d-b357-4a0f1f6ea54f"
         ]
       },
       "StatusCode": 200
     }
   ],
-  "Names": {},
+  "Names": {
+    ".ctor": [
+      "mlcrp-dotnet-test-checkupdate8485",
+      "mlcrp-dotnet-test-checkupdate5961"
+    ]
+  },
   "Variables": {
-    "SubscriptionId": "4f455bd0-f95a-4b7d-8d08-078611508e0b",
-    "ServicePrincipal": "00000000-0000-0000-0000-000000000000"
+    "SubscriptionId": "74eccef0-4b8d-4f83-b5f9-fa100d155b22",
+    "ServicePrincipal": "00000000-0000-0000-0000-000000000000b"
   }
 }
