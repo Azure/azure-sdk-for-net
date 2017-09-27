@@ -19,13 +19,22 @@ namespace Microsoft.Azure.Management.DataFactory
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// CancelPipelineRunOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface ICancelPipelineRunOperations
     {
         /// <summary>
-        /// Lists the available Azure Data Factory API operations.
+        /// Cancel pipeline run by its run ID.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='factoryName'>
+        /// The factory name.
+        /// </param>
+        /// <param name='runId'>
+        /// The pipeline run identifier.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -35,12 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationListResponse>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> PostWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
