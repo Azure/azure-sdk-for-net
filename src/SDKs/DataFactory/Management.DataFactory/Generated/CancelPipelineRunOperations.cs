@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DataFactory
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// CancelPipelineRunOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<DataFactoryManagementClient>, IOperations
+    internal partial class CancelPipelineRunOperations : IServiceOperations<DataFactoryManagementClient>, ICancelPipelineRunOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the CancelPipelineRunOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(DataFactoryManagementClient client)
+        internal CancelPipelineRunOperations(DataFactoryManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,17 @@ namespace Microsoft.Azure.Management.DataFactory
         public DataFactoryManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the available Azure Data Factory API operations.
+        /// Cancel pipeline run by its run ID.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='factoryName'>
+        /// The factory name.
+        /// </param>
+        /// <param name='runId'>
+        /// The pipeline run identifier.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -61,9 +70,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </param>
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
@@ -74,8 +80,54 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationListResponse>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> PostWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (factoryName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "factoryName");
+            }
+            if (factoryName != null)
+            {
+                if (factoryName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "factoryName", 63);
+                }
+                if (factoryName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "factoryName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(factoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "factoryName", "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$");
+                }
+            }
+            if (runId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "runId");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -87,12 +139,19 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("factoryName", factoryName);
+                tracingParameters.Add("runId", runId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Post", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DataFactory/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/cancelpipelinerun/{runId}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{factoryName}", System.Uri.EscapeDataString(factoryName));
+            _url = _url.Replace("{runId}", System.Uri.EscapeDataString(runId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -105,7 +164,7 @@ namespace Microsoft.Azure.Management.DataFactory
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -186,30 +245,12 @@ namespace Microsoft.Azure.Management.DataFactory
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationListResponse>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationListResponse>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
