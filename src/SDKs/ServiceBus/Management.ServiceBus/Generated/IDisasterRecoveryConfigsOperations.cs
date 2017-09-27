@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DisasterRecoveryConfigOperations operations.
+    /// DisasterRecoveryConfigsOperations operations.
     /// </summary>
-    public partial interface IDisasterRecoveryConfigOperations
+    public partial interface IDisasterRecoveryConfigsOperations
     {
         /// <summary>
         /// Gets all Alias(Disaster Recovery configurations)

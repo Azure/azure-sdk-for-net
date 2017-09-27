@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigOperations.
+        /// Gets the IDisasterRecoveryConfigsOperations.
         /// </summary>
-        public virtual IDisasterRecoveryConfigOperations DisasterRecoveryConfig { get; private set; }
+        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
 
         /// <summary>
         /// Gets the IQueuesOperations.
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         {
             Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
-            DisasterRecoveryConfig = new DisasterRecoveryConfigOperations(this);
+            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
             Queues = new QueuesOperations(this);
             Topics = new TopicsOperations(this);
             Subscriptions = new SubscriptionsOperations(this);

@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for DisasterRecoveryConfigOperations.
+    /// Extension methods for DisasterRecoveryConfigsOperations.
     /// </summary>
-    public static partial class DisasterRecoveryConfigOperationsExtensions
+    public static partial class DisasterRecoveryConfigsOperationsExtensions
     {
             /// <summary>
             /// Gets all Alias(Disaster Recovery configurations)
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            public static IPage<ArmDisasterRecovery> List(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName)
+            public static IPage<ArmDisasterRecovery> List(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName)
             {
                 return operations.ListAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ArmDisasterRecovery>> ListAsync(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ArmDisasterRecovery>> ListAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='parameters'>
             /// Parameters required to create an Alias(Disaster Recovery configuration)
             /// </param>
-            public static ArmDisasterRecovery CreateOrUpdate(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters)
+            public static ArmDisasterRecovery CreateOrUpdate(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, alias, parameters).GetAwaiter().GetResult();
             }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ArmDisasterRecovery> CreateOrUpdateAsync(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ArmDisasterRecovery> CreateOrUpdateAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            public static void Delete(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias)
+            public static void Delete(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
             {
                 operations.DeleteAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            public static ArmDisasterRecovery Get(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias)
+            public static ArmDisasterRecovery Get(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
             {
                 return operations.GetAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
             }
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ArmDisasterRecovery> GetAsync(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ArmDisasterRecovery> GetAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            public static void BreakPairing(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias)
+            public static void BreakPairing(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
             {
                 operations.BreakPairingAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
             }
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BreakPairingAsync(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BreakPairingAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BreakPairingWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            public static void FailOver(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias)
+            public static void FailOver(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
             {
                 operations.FailOverAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
             }
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FailOverAsync(this IDisasterRecoveryConfigOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailOverAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.FailOverWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ArmDisasterRecovery> ListNext(this IDisasterRecoveryConfigOperations operations, string nextPageLink)
+            public static IPage<ArmDisasterRecovery> ListNext(this IDisasterRecoveryConfigsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ArmDisasterRecovery>> ListNextAsync(this IDisasterRecoveryConfigOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ArmDisasterRecovery>> ListNextAsync(this IDisasterRecoveryConfigsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

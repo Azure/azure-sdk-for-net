@@ -38,8 +38,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="provisioningState">Provisioning state of the
-        /// Alias(Disaster Recovery configurations) - possible values
-        /// 'Accepted' or 'Succeeded'</param>
+        /// Alias(Disaster Recovery configuration) - possible values 'Accepted'
+        /// or 'Succeeded' or 'Failed'. Possible values include: 'Accepted',
+        /// 'Succeeded', 'Failed'</param>
         /// <param name="partnerNamespace">Primary/Secondary eventhub namespace
         /// name, which is part of GEO DR pairning</param>
         /// <param name="role">role of namespace in GEO DR - possible values
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Secondary'</param>
         /// <param name="lastSynced">Timestamp of when Data/Metdata was last
         /// synced with Primary and Secondary namespce</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string partnerNamespace = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), System.DateTime? lastSynced = default(System.DateTime?))
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), System.DateTime? lastSynced = default(System.DateTime?))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
@@ -65,10 +66,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// Gets provisioning state of the Alias(Disaster Recovery
-        /// configurations) - possible values 'Accepted' or 'Succeeded'
+        /// configuration) - possible values 'Accepted' or 'Succeeded' or
+        /// 'Failed'. Possible values include: 'Accepted', 'Succeeded',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public ProvisioningStateDR? ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets primary/Secondary eventhub namespace name, which is
