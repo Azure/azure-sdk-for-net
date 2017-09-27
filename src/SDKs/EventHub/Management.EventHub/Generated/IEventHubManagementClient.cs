@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.EventHub
         INamespacesOperations Namespaces { get; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigOperations.
+        /// Gets the IDisasterRecoveryConfigsOperations.
         /// </summary>
-        IDisasterRecoveryConfigOperations DisasterRecoveryConfig { get; }
+        IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
 
         /// <summary>
         /// Gets the IEventHubsOperations.

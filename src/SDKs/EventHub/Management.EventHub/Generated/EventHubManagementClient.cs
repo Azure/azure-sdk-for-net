@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.EventHub
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Gets the IDisasterRecoveryConfigOperations.
+        /// Gets the IDisasterRecoveryConfigsOperations.
         /// </summary>
-        public virtual IDisasterRecoveryConfigOperations DisasterRecoveryConfig { get; private set; }
+        public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
 
         /// <summary>
         /// Gets the IEventHubsOperations.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.EventHub
         {
             Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
-            DisasterRecoveryConfig = new DisasterRecoveryConfigOperations(this);
+            DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
             EventHubs = new EventHubsOperations(this);
             ConsumerGroups = new ConsumerGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
