@@ -78,7 +78,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='pool'>
             /// Ip pool object to send.
             /// </param>
-            public static IpPool Create(this IIpPoolsOperations operations, string location, string ipPool, IpPool pool)
+            public static OperationStatus Create(this IIpPoolsOperations operations, string location, string ipPool, IpPool pool)
             {
                 return operations.CreateAsync(location, ipPool, pool).GetAwaiter().GetResult();
             }
@@ -101,7 +101,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IpPool> CreateAsync(this IIpPoolsOperations operations, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> CreateAsync(this IIpPoolsOperations operations, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(location, ipPool, pool, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -144,6 +144,52 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             public static async Task<IPage<IpPool>> ListAsync(this IIpPoolsOperations operations, string location, ODataQuery<IpPool> odataQuery = default(ODataQuery<IpPool>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create an ip pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the resource.
+            /// </param>
+            /// <param name='ipPool'>
+            /// Ip pool name.
+            /// </param>
+            /// <param name='pool'>
+            /// Ip pool object to send.
+            /// </param>
+            public static OperationStatus BeginCreate(this IIpPoolsOperations operations, string location, string ipPool, IpPool pool)
+            {
+                return operations.BeginCreateAsync(location, ipPool, pool).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create an ip pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Location of the resource.
+            /// </param>
+            /// <param name='ipPool'>
+            /// Ip pool name.
+            /// </param>
+            /// <param name='pool'>
+            /// Ip pool object to send.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> BeginCreateAsync(this IIpPoolsOperations operations, string location, string ipPool, IpPool pool, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(location, ipPool, pool, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
