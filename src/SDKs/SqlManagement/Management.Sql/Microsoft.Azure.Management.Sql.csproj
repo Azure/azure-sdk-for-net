@@ -11,7 +11,8 @@
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <PackageReleaseNotes>
       <![CDATA[
-        Added support for state and migration flag properties for SQL Vnet rules
+New features:
+- Added support for state and migration flag properties for SQL Vnet rules
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
