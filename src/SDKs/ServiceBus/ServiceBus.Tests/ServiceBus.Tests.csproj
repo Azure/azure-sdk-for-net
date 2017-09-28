@@ -10,6 +10,12 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests\ScenarioTests.QueuesTests.CRUDAuthorizationRules_Length.cs" />
+    <Compile Remove="Tests\ScenarioTests.SubscriptionsTests.CRUD_Length.cs" />
+    <Compile Remove="Tests\ScenarioTests.TopicsTests.CRUDAuthorizationRules_Length.cs" />
+  </ItemGroup>
   <ItemGroup>   
     <ProjectReference Include="..\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />
   </ItemGroup>
