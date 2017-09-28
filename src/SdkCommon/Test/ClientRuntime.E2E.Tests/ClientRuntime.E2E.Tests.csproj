@@ -27,8 +27,8 @@
     <ProjectReference Include="..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
     <ProjectReference Include="..\..\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
 
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.5" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.11" />
     <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
     -->
