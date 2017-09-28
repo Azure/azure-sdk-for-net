@@ -13,7 +13,6 @@ namespace Fabric.Tests {
     /// Summary description for FabricTest
     /// </summary>
     public class InfraRoleTests : FabricTestBase {
-        private string InfraRoleName = "Backup controller";
 
         private void ValidateInfraRole(InfraRole role) {
             Assert.True(FabricCommon.ValidateResource(role));
@@ -70,13 +69,5 @@ namespace Fabric.Tests {
             });
         }
         
-        // TODO: Figure out what this does before we call it and then break something
-        [Fact(Skip ="No hardware")]
-        public void TestScaleUpInfraRole() {
-            RunTest((client) => {
-                var role = client.InfraRoles.ScaleUp(Location, InfraRoleName);
-                Assert.Null(role); // ???
-            });
-        }
     }
 }

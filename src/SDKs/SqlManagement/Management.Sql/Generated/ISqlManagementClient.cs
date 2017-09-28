@@ -137,11 +137,6 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         IReplicationLinksOperations ReplicationLinks { get; }
@@ -222,6 +217,11 @@ namespace Microsoft.Azure.Management.Sql
         IFailoverGroupsOperations FailoverGroups { get; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IServerKeysOperations.
         /// </summary>
         IServerKeysOperations ServerKeys { get; }
@@ -245,6 +245,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        IDatabaseOperations DatabaseOperations { get; }
 
     }
 }

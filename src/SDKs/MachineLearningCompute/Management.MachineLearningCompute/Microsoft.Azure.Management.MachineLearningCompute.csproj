@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.MachineLearningCompute</PackageId>
+        <Description>Provides developers with a library to create and manage machine learning compute resources.</Description>
+        <AssemblyName>Microsoft.Azure.Management.MachineLearningCompute</AssemblyName>
+        <Version>0.1.0</Version>
+        <PackageTags>Microsoft Azure Machine Learning Compute management;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+        <PackageReleaseNotes>This is a preview release of the Machine Learning Compute SDK.</PackageReleaseNotes>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    </PropertyGroup>
+</Project>

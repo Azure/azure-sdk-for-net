@@ -15,15 +15,13 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Description of diagnostic setting category.
+    /// The diagnostic settings category resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DiagnosticSettingsCategoryResource : Resource
+    public partial class DiagnosticSettingsCategoryResource : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -38,15 +36,13 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// Initializes a new instance of the
         /// DiagnosticSettingsCategoryResource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="categoryType">The type of the diagnostic settings
         /// category. Possible values include: 'Metrics', 'Logs'</param>
-        public DiagnosticSettingsCategoryResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CategoryType categoryType = default(CategoryType))
-            : base(location, id, name, type, tags)
+        public DiagnosticSettingsCategoryResource(string id = default(string), string name = default(string), string type = default(string), CategoryType categoryType = default(CategoryType))
+            : base(id, name, type)
         {
             CategoryType = categoryType;
             CustomInit();
@@ -64,15 +60,5 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         [JsonProperty(PropertyName = "properties.categoryType")]
         public CategoryType CategoryType { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

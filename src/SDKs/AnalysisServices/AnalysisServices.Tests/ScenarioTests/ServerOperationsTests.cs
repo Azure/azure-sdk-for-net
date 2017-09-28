@@ -337,6 +337,24 @@ namespace AnalysisServices.Tests.ScenarioTests
 
                 Assert.Equal(listGatewayStatus.Status, Status.Live);
 
+                // Dissociate gateway.
+                client.Servers.DissociateGateway(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // List gateway status again.
+                try
+                {
+                    listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName);
+                }
+                catch (GatewayListStatusErrorException gatewayException)
+                {
+                    Assert.Equal(HttpStatusCode.BadRequest, gatewayException.Response.StatusCode);
+                    var errorResponse = gatewayException.Body.Error;
+                    var expectedMessage = string.Format("A unified gateway is not associated with server {0}.", AnalysisServicesTestUtilities.DefaultServerName);
+                    Assert.Equal("GatewayNotAssociated", errorResponse.Code);
+                    Assert.Equal(expectedMessage, errorResponse.Message);
+                }
+
                 // delete the server with its old name, which should also succeed.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
 
