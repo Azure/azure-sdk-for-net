@@ -8,16 +8,52 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ErrorCategory.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ErrorCategory
     {
-        [System.Runtime.Serialization.EnumMember(Value = "userError")]
+        [EnumMember(Value = "userError")]
         UserError,
-        [System.Runtime.Serialization.EnumMember(Value = "serverError")]
+        [EnumMember(Value = "serverError")]
         ServerError
+    }
+    internal static class ErrorCategoryEnumExtension
+    {
+        internal static string ToSerializedValue(this ErrorCategory? value)  =>
+            value == null ? null : ((ErrorCategory)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ErrorCategory value)
+        {
+            switch( value )
+            {
+                case ErrorCategory.UserError:
+                    return "userError";
+                case ErrorCategory.ServerError:
+                    return "serverError";
+            }
+            return null;
+        }
+
+        internal static ErrorCategory? ParseErrorCategory(this string value)
+        {
+            switch( value )
+            {
+                case "userError":
+                    return ErrorCategory.UserError;
+                case "serverError":
+                    return ErrorCategory.ServerError;
+            }
+            return null;
+        }
     }
 }

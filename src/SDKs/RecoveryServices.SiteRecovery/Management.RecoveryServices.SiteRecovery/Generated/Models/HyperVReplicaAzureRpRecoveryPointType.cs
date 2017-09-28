@@ -30,4 +30,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "LatestProcessed")]
         LatestProcessed
     }
+    internal static class HyperVReplicaAzureRpRecoveryPointTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this HyperVReplicaAzureRpRecoveryPointType? value)  =>
+            value == null ? null : ((HyperVReplicaAzureRpRecoveryPointType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this HyperVReplicaAzureRpRecoveryPointType value)
+        {
+            switch( value )
+            {
+                case HyperVReplicaAzureRpRecoveryPointType.Latest:
+                    return "Latest";
+                case HyperVReplicaAzureRpRecoveryPointType.LatestApplicationConsistent:
+                    return "LatestApplicationConsistent";
+                case HyperVReplicaAzureRpRecoveryPointType.LatestProcessed:
+                    return "LatestProcessed";
+            }
+            return null;
+        }
+
+        internal static HyperVReplicaAzureRpRecoveryPointType? ParseHyperVReplicaAzureRpRecoveryPointType(this string value)
+        {
+            switch( value )
+            {
+                case "Latest":
+                    return HyperVReplicaAzureRpRecoveryPointType.Latest;
+                case "LatestApplicationConsistent":
+                    return HyperVReplicaAzureRpRecoveryPointType.LatestApplicationConsistent;
+                case "LatestProcessed":
+                    return HyperVReplicaAzureRpRecoveryPointType.LatestProcessed;
+            }
+            return null;
+        }
+    }
 }

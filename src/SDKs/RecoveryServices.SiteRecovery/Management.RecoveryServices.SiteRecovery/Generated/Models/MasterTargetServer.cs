@@ -47,7 +47,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="dataStores">The list of data stores in the
         /// fabric.</param>
         /// <param name="validationErrors">Validation errors.</param>
-        public MasterTargetServer(string id = default(string), string ipAddress = default(string), string name = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<RetentionVolume> retentionVolumes = default(IList<RetentionVolume>), IList<DataStore> dataStores = default(IList<DataStore>), IList<HealthError> validationErrors = default(IList<HealthError>))
+        /// <param name="diskCount">Disk count of the master target.</param>
+        /// <param name="osVersion">OS Version of the master target.</param>
+        public MasterTargetServer(string id = default(string), string ipAddress = default(string), string name = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<RetentionVolume> retentionVolumes = default(IList<RetentionVolume>), IList<DataStore> dataStores = default(IList<DataStore>), IList<HealthError> validationErrors = default(IList<HealthError>), int? diskCount = default(int?), string osVersion = default(string))
         {
             Id = id;
             IpAddress = ipAddress;
@@ -59,6 +61,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RetentionVolumes = retentionVolumes;
             DataStores = dataStores;
             ValidationErrors = validationErrors;
+            DiskCount = diskCount;
+            OsVersion = osVersion;
             CustomInit();
         }
 
@@ -126,6 +130,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "validationErrors")]
         public IList<HealthError> ValidationErrors { get; set; }
+
+        /// <summary>
+        /// Gets or sets disk count of the master target.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskCount")]
+        public int? DiskCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets OS Version of the master target.
+        /// </summary>
+        [JsonProperty(PropertyName = "osVersion")]
+        public string OsVersion { get; set; }
 
     }
 }

@@ -8,6 +8,11 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolUsageMetrics class.
         /// </summary>
-        public PoolUsageMetrics() { }
+        public PoolUsageMetrics()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolUsageMetrics class.
@@ -39,34 +47,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// from the pool during this interval, in GiB.</param>
         public PoolUsageMetrics(string poolId, System.DateTime startTime, System.DateTime endTime, string vmSize, double totalCoreHours, double dataIngressGiB, double dataEgressGiB)
         {
-            this.PoolId = poolId;
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.VmSize = vmSize;
-            this.TotalCoreHours = totalCoreHours;
-            this.DataIngressGiB = dataIngressGiB;
-            this.DataEgressGiB = dataEgressGiB;
+            PoolId = poolId;
+            StartTime = startTime;
+            EndTime = endTime;
+            VmSize = vmSize;
+            TotalCoreHours = totalCoreHours;
+            DataIngressGiB = dataIngressGiB;
+            DataEgressGiB = dataEgressGiB;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of the pool whose metrics are aggregated in
         /// this entry.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
+        [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the aggregation interval covered by
         /// this entry.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the aggregation interval covered by
         /// this entry.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime EndTime { get; set; }
 
         /// <summary>
@@ -78,10 +92,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Services pools (pools created with cloudServiceConfiguration), see
         /// Sizes for Cloud Services
         /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
-        /// and A2V2. For information about available VM sizes for pools using
-        /// images from the Virtual Machines Marketplace (pools created with
-        /// virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall,
+        /// STANDARD_A1_V2 and STANDARD_A2_V2. For information about available
+        /// VM sizes for pools using images from the Virtual Machines
+        /// Marketplace (pools created with virtualMachineConfiguration) see
+        /// Sizes for Virtual Machines (Linux)
         /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
         /// or Sizes for Virtual Machines (Windows)
         /// (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/).
@@ -89,45 +104,45 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
         /// series).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
+        [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
         /// Gets or sets the total core hours used in the pool during this
         /// aggregation interval.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "totalCoreHours")]
+        [JsonProperty(PropertyName = "totalCoreHours")]
         public double TotalCoreHours { get; set; }
 
         /// <summary>
         /// Gets or sets the cross data center network ingress to the pool
         /// during this interval, in GiB.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "dataIngressGiB")]
+        [JsonProperty(PropertyName = "dataIngressGiB")]
         public double DataIngressGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the cross data center network egress from the pool
         /// during this interval, in GiB.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "dataEgressGiB")]
+        [JsonProperty(PropertyName = "dataEgressGiB")]
         public double DataEgressGiB { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.PoolId == null)
+            if (PoolId == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "PoolId");
             }
-            if (this.VmSize == null)
+            if (VmSize == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmSize");
+                throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");
             }
         }
     }

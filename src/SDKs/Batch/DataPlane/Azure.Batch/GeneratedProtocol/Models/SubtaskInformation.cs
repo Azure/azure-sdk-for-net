@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the SubtaskInformation class.
         /// </summary>
-        public SubtaskInformation() { }
+        public SubtaskInformation()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SubtaskInformation class.
@@ -45,30 +52,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), SubtaskState? state = default(SubtaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), SubtaskState? previousState = default(SubtaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            this.Id = id;
-            this.NodeInfo = nodeInfo;
-            this.StartTime = startTime;
-            this.EndTime = endTime;
-            this.ExitCode = exitCode;
-            this.FailureInfo = failureInfo;
-            this.State = state;
-            this.StateTransitionTime = stateTransitionTime;
-            this.PreviousState = previousState;
-            this.PreviousStateTransitionTime = previousStateTransitionTime;
-            this.Result = result;
+            Id = id;
+            NodeInfo = nodeInfo;
+            StartTime = startTime;
+            EndTime = endTime;
+            ExitCode = exitCode;
+            FailureInfo = failureInfo;
+            State = state;
+            StateTransitionTime = stateTransitionTime;
+            PreviousState = previousState;
+            PreviousStateTransitionTime = previousStateTransitionTime;
+            Result = result;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ID of the subtask.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
         /// Gets or sets information about the compute node on which the
         /// subtask ran.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeInfo")]
+        [JsonProperty(PropertyName = "nodeInfo")]
         public ComputeNodeInformation NodeInfo { get; set; }
 
         /// <summary>
@@ -76,7 +89,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// subtask has been restarted or retried, this is the most recent time
         /// at which the subtask started running.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
@@ -85,7 +98,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the subtask is in the Completed state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
@@ -102,7 +115,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// subtask (due to timeout, or user termination via the API) you may
         /// see an operating system-defined exit code.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCode")]
+        [JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
@@ -112,7 +125,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the task is in the completed state and
         /// encountered a failure.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        [JsonProperty(PropertyName = "failureInfo")]
         public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
@@ -121,14 +134,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'preparing', 'running', 'completed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        [JsonProperty(PropertyName = "state")]
         public SubtaskState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the subtask entered its current
         /// state.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        [JsonProperty(PropertyName = "stateTransitionTime")]
         public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
@@ -138,7 +151,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is not set if the subtask is in its initial running
         /// state. Possible values include: 'preparing', 'running', 'completed'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
+        [JsonProperty(PropertyName = "previousState")]
         public SubtaskState? PreviousState { get; set; }
 
         /// <summary>
@@ -149,7 +162,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is not set if the subtask is in its initial running
         /// state.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
+        [JsonProperty(PropertyName = "previousStateTransitionTime")]
         public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
@@ -160,20 +173,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// found in the failureInfo property. Possible values include:
         /// 'success', 'failure'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        [JsonProperty(PropertyName = "result")]
         public TaskExecutionResult? Result { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.FailureInfo != null)
+            if (FailureInfo != null)
             {
-                this.FailureInfo.Validate();
+                FailureInfo.Validate();
             }
         }
     }

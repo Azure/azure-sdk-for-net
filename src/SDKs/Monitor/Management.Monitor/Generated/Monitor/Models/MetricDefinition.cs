@@ -32,6 +32,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Initializes a new instance of the MetricDefinition class.
         /// </summary>
+        /// <param name="isDimensionRequired">Flag to indicate whether the
+        /// dimension is required.</param>
         /// <param name="resourceId">the resource identifier of the resource
         /// that emitted the metric.</param>
         /// <param name="name">the name and the display name of the metric,
@@ -47,14 +49,18 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// aggregation intervals are available to be queried.</param>
         /// <param name="id">the resource identifier of the metric
         /// definition.</param>
-        public MetricDefinition(string resourceId = default(string), LocalizableString name = default(LocalizableString), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string))
+        /// <param name="dimensions">the name and the display name of the
+        /// dimension, i.e. it is a localizable string.</param>
+        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), LocalizableString name = default(LocalizableString), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
         {
+            IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
             Name = name;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             MetricAvailabilities = metricAvailabilities;
             Id = id;
+            Dimensions = dimensions;
             CustomInit();
         }
 
@@ -62,6 +68,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets flag to indicate whether the dimension is required.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDimensionRequired")]
+        public bool? IsDimensionRequired { get; set; }
 
         /// <summary>
         /// Gets or sets the resource identifier of the resource that emitted
@@ -107,6 +119,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the name and the display name of the dimension, i.e.
+        /// it is a localizable string.
+        /// </summary>
+        [JsonProperty(PropertyName = "dimensions")]
+        public IList<LocalizableString> Dimensions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -117,6 +136,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (Name != null)
             {
                 Name.Validate();
+            }
+            if (Dimensions != null)
+            {
+                foreach (var element in Dimensions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

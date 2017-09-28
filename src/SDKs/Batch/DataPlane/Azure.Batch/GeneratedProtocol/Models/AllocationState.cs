@@ -8,18 +8,58 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AllocationState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum AllocationState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "steady")]
+        [EnumMember(Value = "steady")]
         Steady,
-        [System.Runtime.Serialization.EnumMember(Value = "resizing")]
+        [EnumMember(Value = "resizing")]
         Resizing,
-        [System.Runtime.Serialization.EnumMember(Value = "stopping")]
+        [EnumMember(Value = "stopping")]
         Stopping
+    }
+    internal static class AllocationStateEnumExtension
+    {
+        internal static string ToSerializedValue(this AllocationState? value)  =>
+            value == null ? null : ((AllocationState)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this AllocationState value)
+        {
+            switch( value )
+            {
+                case AllocationState.Steady:
+                    return "steady";
+                case AllocationState.Resizing:
+                    return "resizing";
+                case AllocationState.Stopping:
+                    return "stopping";
+            }
+            return null;
+        }
+
+        internal static AllocationState? ParseAllocationState(this string value)
+        {
+            switch( value )
+            {
+                case "steady":
+                    return AllocationState.Steady;
+                case "resizing":
+                    return AllocationState.Resizing;
+                case "stopping":
+                    return AllocationState.Stopping;
+            }
+            return null;
+        }
     }
 }

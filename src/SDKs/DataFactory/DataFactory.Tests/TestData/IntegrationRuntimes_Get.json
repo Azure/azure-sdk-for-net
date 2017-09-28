@@ -1,0 +1,29 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:55:51 GMT",
+        "x-ms-request-id": "61423813-3e7f-485e-b6c3-dd332b3dc9e1",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14916",
+        "x-ms-correlation-request-id": "ed66496f-3cad-4f82-b955-86503726cfe5"
+      },
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
+        "name": "exampleIntegrationRuntime",
+        "properties": {
+          "type": "SelfHosted",
+          "description": "Update description"
+        },
+        "etag": "28031ba7-0000-0000-0000-59b971260000"
+      }
+    }
+  }
+}

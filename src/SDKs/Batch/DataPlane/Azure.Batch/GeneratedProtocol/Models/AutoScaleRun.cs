@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AutoScaleRun class.
         /// </summary>
-        public AutoScaleRun() { }
+        public AutoScaleRun()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the AutoScaleRun class.
@@ -32,16 +39,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// unsuccessful.</param>
         public AutoScaleRun(System.DateTime timestamp, string results = default(string), AutoScaleRunError error = default(AutoScaleRunError))
         {
-            this.Timestamp = timestamp;
-            this.Results = results;
-            this.Error = error;
+            Timestamp = timestamp;
+            Results = results;
+            Error = error;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the time at which the autoscale formula was last
         /// evaluated.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "timestamp")]
+        [JsonProperty(PropertyName = "timestamp")]
         public System.DateTime Timestamp { get; set; }
 
         /// <summary>
@@ -52,20 +65,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Each variable value is returned in the form $variable=value, and
         /// variables are separated by semicolons.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "results")]
+        [JsonProperty(PropertyName = "results")]
         public string Results { get; set; }
 
         /// <summary>
         /// Gets or sets details of the error encountered evaluating the
         /// autoscale formula on the pool, if the evaluation was unsuccessful.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "error")]
+        [JsonProperty(PropertyName = "error")]
         public AutoScaleRunError Error { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

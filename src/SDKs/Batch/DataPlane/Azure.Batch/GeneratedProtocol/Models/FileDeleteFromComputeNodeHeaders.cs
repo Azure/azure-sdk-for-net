@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the FileDeleteFromComputeNodeHeaders
         /// class.
         /// </summary>
-        public FileDeleteFromComputeNodeHeaders() { }
+        public FileDeleteFromComputeNodeHeaders()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the FileDeleteFromComputeNodeHeaders
@@ -37,16 +44,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// request was made, and the region that account resides in.</param>
         public FileDeleteFromComputeNodeHeaders(string clientRequestId = default(string), string requestId = default(string))
         {
-            this.ClientRequestId = clientRequestId;
-            this.RequestId = requestId;
+            ClientRequestId = clientRequestId;
+            RequestId = requestId;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the client-request-id provided by the client during
         /// the request. This will be returned only if the
         /// return-client-request-id parameter was set to true.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
+        [JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
@@ -58,7 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// request was made, the Batch account against which the request was
         /// made, and the region that account resides in.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
+        [JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }
 
     }

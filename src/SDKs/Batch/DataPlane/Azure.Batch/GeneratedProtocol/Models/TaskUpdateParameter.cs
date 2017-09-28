@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskUpdateParameter class.
         /// </summary>
-        public TaskUpdateParameter() { }
+        public TaskUpdateParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskUpdateParameter class.
@@ -27,16 +34,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         public TaskUpdateParameter(TaskConstraints constraints = default(TaskConstraints))
         {
-            this.Constraints = constraints;
+            Constraints = constraints;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets constraints that apply to this task.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task is given the default constraints.
+        /// If omitted, the task is given the default constraints. For
+        /// multi-instance tasks, updating the retention time applies only to
+        /// the primary task and not subtasks.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
+        [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
     }

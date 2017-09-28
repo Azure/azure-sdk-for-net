@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +22,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NetworkConfiguration class.
         /// </summary>
-        public NetworkConfiguration() { }
+        public NetworkConfiguration()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the NetworkConfiguration class.
@@ -31,9 +38,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// on compute nodes in the Batch pool.</param>
         public NetworkConfiguration(string subnetId = default(string), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration))
         {
-            this.SubnetId = subnetId;
-            this.EndpointConfiguration = endpointConfiguration;
+            SubnetId = subnetId;
+            EndpointConfiguration = endpointConfiguration;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the ARM resource identifier of the virtual network
@@ -57,9 +70,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// denied by an NSG, then the Batch service will set the state of the
         /// compute nodes to unusable. For pools created via
         /// virtualMachineConfiguration the Batch account must have
-        /// poolAllocationMode userSubscription in order to use a VNet.
+        /// poolAllocationMode userSubscription in order to use a VNet. If the
+        /// specified VNet has any associated Network Security Groups (NSG),
+        /// then a few reserved system ports must be enabled for inbound
+        /// communication. For pools created with a virtual machine
+        /// configuration, enable ports 29876 and 29877, as well as port 22 for
+        /// Linux and port 3389 for Windows. For pools created with a cloud
+        /// service configuration, enable ports 10100, 20100, and 30100. Also
+        /// enable outbound connections to Azure Storage on port 443. For more
+        /// details see:
+        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "subnetId")]
+        [JsonProperty(PropertyName = "subnetId")]
         public string SubnetId { get; set; }
 
         /// <summary>
@@ -70,20 +92,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Pool endpoint configuration is only supported on pools with the
         /// virtualMachineConfiguration property.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "endpointConfiguration")]
+        [JsonProperty(PropertyName = "endpointConfiguration")]
         public PoolEndpointConfiguration EndpointConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.EndpointConfiguration != null)
+            if (EndpointConfiguration != null)
             {
-                this.EndpointConfiguration.Validate();
+                EndpointConfiguration.Validate();
             }
         }
     }

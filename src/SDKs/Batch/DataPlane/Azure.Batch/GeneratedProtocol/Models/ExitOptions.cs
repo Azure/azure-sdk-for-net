@@ -8,6 +8,10 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +23,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ExitOptions class.
         /// </summary>
-        public ExitOptions() { }
+        public ExitOptions()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ExitOptions class.
@@ -32,9 +39,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// performs on tasks that depend on this task.</param>
         public ExitOptions(JobAction? jobAction = default(JobAction?), DependencyAction? dependencyAction = default(DependencyAction?))
         {
-            this.JobAction = jobAction;
-            this.DependencyAction = dependencyAction;
+            JobAction = jobAction;
+            DependencyAction = dependencyAction;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets an action to take on the job containing the task, if
@@ -42,14 +55,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// onTaskFailed property is 'performExitOptionsJobAction'.
         /// </summary>
         /// <remarks>
-        /// The default is none for exit code 0 and terminate for all other
-        /// exit conditions. If the job's onTaskFailed property is noAction,
-        /// then specify this property returns an error. The add task request
-        /// fails with an invalid property value error;; if you are calling the
-        /// REST API directly, the HTTP status code is 400 (Bad Request).
-        /// Possible values include: 'none', 'disable', 'terminate'
+        /// Values are:
+        ///
+        /// none - Take no action.
+        /// disable - Disable the job. This is equivalent to calling the
+        /// disable job API, with a disableTasks value of requeue.
+        /// terminate - Terminate the job. The terminateReason in the job's
+        /// executionInfo is set to "TaskFailed". The default is none for exit
+        /// code 0 and terminate for all other exit conditions.
+        ///
+        /// If the job's onTaskFailed property is noAction, then specifying
+        /// this property returns an error and the add task request fails with
+        /// an invalid property value error; if you are calling the REST API
+        /// directly, the HTTP status code is 400 (Bad Request). Possible
+        /// values include: 'none', 'disable', 'terminate'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "jobAction")]
+        [JsonProperty(PropertyName = "jobAction")]
         public JobAction? JobAction { get; set; }
 
         /// <summary>
@@ -57,15 +78,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// that depend on this task.
         /// </summary>
         /// <remarks>
+        /// Values are:
+        ///
+        /// satisfy - Satisfy the task's dependencies.
+        /// block - Block the task's dependencies.
+        ///
         /// The default is 'satisfy' for exit code 0, and 'block' for all other
         /// exit conditions. If the job's usesTaskDependencies property is set
         /// to false, then specifying the dependencyAction property returns an
-        /// error. The add task request fails with an invalid property value
+        /// erro and the add task request fails with an invalid property value
         /// error; if you are calling the REST API directly, the HTTP status
         /// code is 400  (Bad Request). Possible values include: 'satisfy',
         /// 'block'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "dependencyAction")]
+        [JsonProperty(PropertyName = "dependencyAction")]
         public DependencyAction? DependencyAction { get; set; }
 
     }

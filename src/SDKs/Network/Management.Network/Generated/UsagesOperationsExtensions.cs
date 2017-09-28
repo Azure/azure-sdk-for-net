@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class UsagesOperationsExtensions
     {
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// List network usages for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// List network usages for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// List network usages for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists compute usages for a subscription.
+            /// List network usages for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

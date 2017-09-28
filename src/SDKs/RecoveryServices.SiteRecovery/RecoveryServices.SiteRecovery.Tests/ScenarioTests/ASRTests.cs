@@ -9,8 +9,9 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using System.Linq;
 using SiteRecovery.Tests;
+using Microsoft.Rest.Azure.OData;
 
-namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Tests.ScenarioTests
+namespace RecoveryServices.SiteRecovery.Tests
 {
     public class ASRTests : SiteRecoveryTestsBase
     {
@@ -1525,6 +1526,44 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Tests.Scenari
                 var client = testHelper.SiteRecoveryClient;
 
                 client.ReplicationNetworkMappings.Delete(vmmFabric, vmNetworkName, networkMappingName);
+            }
+        }
+        
+       
+        [Fact]
+        public void MigrateToAad()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context, "canaryexproute", "IbizaV2ATest");
+                var client = testHelper.SiteRecoveryClient;
+
+                client.ReplicationFabrics.MigrateToAad("38de67c62c2b231fb647b060df06a8a69da7e305c44db6646693b7470d709c87");
+            }
+        }
+
+        [Fact]
+        public void ListEventByQuery()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context, "canaryexproute", "IbizaV2ATest");
+                var client = testHelper.SiteRecoveryClient;
+
+                var querydata = new ODataQuery<EventQueryParameter>("Severity  eq 'Critical'");
+                client.ReplicationEvents.List(querydata);
+            }
+        }
+
+        [Fact]
+        public void GetHealthDetails()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context, "canaryexproute", "IbizaV2ATest");
+                var client = testHelper.SiteRecoveryClient;
+
+                client.ReplicationVaultHealth.Get();
             }
         }
     }

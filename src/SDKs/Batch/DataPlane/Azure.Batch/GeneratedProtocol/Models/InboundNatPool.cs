@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +26,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the InboundNATPool class.
         /// </summary>
-        public InboundNATPool() { }
+        public InboundNATPool()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the InboundNATPool class.
@@ -36,15 +46,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// to the backendPort on individual compute nodes.</param>
         /// <param name="networkSecurityGroupRules">A list of network security
         /// group rules that will be applied to the endpoint.</param>
-        public InboundNATPool(string name, InboundEndpointProtocol protocol, int backendPort, int frontendPortRangeStart, int frontendPortRangeEnd, System.Collections.Generic.IList<NetworkSecurityGroupRule> networkSecurityGroupRules = default(System.Collections.Generic.IList<NetworkSecurityGroupRule>))
+        public InboundNATPool(string name, InboundEndpointProtocol protocol, int backendPort, int frontendPortRangeStart, int frontendPortRangeEnd, IList<NetworkSecurityGroupRule> networkSecurityGroupRules = default(IList<NetworkSecurityGroupRule>))
         {
-            this.Name = name;
-            this.Protocol = protocol;
-            this.BackendPort = backendPort;
-            this.FrontendPortRangeStart = frontendPortRangeStart;
-            this.FrontendPortRangeEnd = frontendPortRangeEnd;
-            this.NetworkSecurityGroupRules = networkSecurityGroupRules;
+            Name = name;
+            Protocol = protocol;
+            BackendPort = backendPort;
+            FrontendPortRangeStart = frontendPortRangeStart;
+            FrontendPortRangeEnd = frontendPortRangeEnd;
+            NetworkSecurityGroupRules = networkSecurityGroupRules;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets the name of the endpoint.
@@ -56,7 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and cannot exceed 77 characters.  If any invalid values are
         /// provided the request fails with HTTP status code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -65,7 +81,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'tcp', 'udp'
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "protocol")]
         public InboundEndpointProtocol Protocol { get; set; }
 
         /// <summary>
@@ -77,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// are reserved. If any reserved values are provided the request fails
         /// with HTTP status code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "backendPort")]
+        [JsonProperty(PropertyName = "backendPort")]
         public int BackendPort { get; set; }
 
         /// <summary>
@@ -91,7 +107,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// distinct and cannot overlap. If any reserved or overlapping values
         /// are provided the request fails with HTTP status code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "frontendPortRangeStart")]
+        [JsonProperty(PropertyName = "frontendPortRangeStart")]
         public int FrontendPortRangeStart { get; set; }
 
         /// <summary>
@@ -106,7 +122,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// overlapping values are provided the request fails with HTTP status
         /// code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "frontendPortRangeEnd")]
+        [JsonProperty(PropertyName = "frontendPortRangeEnd")]
         public int FrontendPortRangeEnd { get; set; }
 
         /// <summary>
@@ -121,24 +137,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// network security group rules is exceeded the request fails with
         /// HTTP status code 400.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "networkSecurityGroupRules")]
-        public System.Collections.Generic.IList<NetworkSecurityGroupRule> NetworkSecurityGroupRules { get; set; }
+        [JsonProperty(PropertyName = "networkSecurityGroupRules")]
+        public IList<NetworkSecurityGroupRule> NetworkSecurityGroupRules { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Name == null)
+            if (Name == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (this.NetworkSecurityGroupRules != null)
+            if (NetworkSecurityGroupRules != null)
             {
-                foreach (var element in this.NetworkSecurityGroupRules)
+                foreach (var element in NetworkSecurityGroupRules)
                 {
                     if (element != null)
                     {

@@ -8,24 +8,25 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
 
     /// <summary>
     /// Exception thrown for an invalid response with BatchError information.
     /// </summary>
-#if !PORTABLE
-    [System.Serializable]
-#endif
-    public class BatchErrorException : Microsoft.Rest.RestException
+    public class BatchErrorException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
         /// </summary>
-        public Microsoft.Rest.HttpRequestMessageWrapper Request { get; set; }
+        public HttpRequestMessageWrapper Request { get; set; }
 
         /// <summary>
         /// Gets information about the associated HTTP response.
         /// </summary>
-        public Microsoft.Rest.HttpResponseMessageWrapper Response { get; set; }
+        public HttpResponseMessageWrapper Response { get; set; }
 
         /// <summary>
         /// Gets or sets the body object.
@@ -57,39 +58,5 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             : base(message, innerException)
         {
         }
-
-#if !PORTABLE
-        /// <summary>
-        /// Initializes a new instance of the BatchErrorException class.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected BatchErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
-
-        /// <summary>
-        /// Serializes content of the exception.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            if (info == null)
-            {
-                throw new System.ArgumentNullException("info");
-            }
-
-            info.AddValue("Request", Request);
-            info.AddValue("Response", Response);
-            info.AddValue("Body", Body);
-        }
-#endif
     }
 }

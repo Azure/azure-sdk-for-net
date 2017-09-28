@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolAddParameter class.
         /// </summary>
-        public PoolAddParameter() { }
+        public PoolAddParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PoolAddParameter class.
@@ -60,36 +70,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.</param>
         /// <param name="maxTasksPerNode">The maximum number of tasks that can
         /// run concurrently on a single compute node in the pool.</param>
-        /// <param name="taskSchedulingPolicy">How the Batch service
-        /// distributes tasks between compute nodes in the pool.</param>
+        /// <param name="taskSchedulingPolicy">How tasks are distributed across
+        /// compute nodes in a pool.</param>
         /// <param name="userAccounts">The list of user accounts to be created
         /// on each node in the pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
-        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<string> applicationLicenses = default(System.Collections.Generic.IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
+        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
-            this.Id = id;
-            this.DisplayName = displayName;
-            this.VmSize = vmSize;
-            this.CloudServiceConfiguration = cloudServiceConfiguration;
-            this.VirtualMachineConfiguration = virtualMachineConfiguration;
-            this.ResizeTimeout = resizeTimeout;
-            this.TargetDedicatedNodes = targetDedicatedNodes;
-            this.TargetLowPriorityNodes = targetLowPriorityNodes;
-            this.EnableAutoScale = enableAutoScale;
-            this.AutoScaleFormula = autoScaleFormula;
-            this.AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
-            this.EnableInterNodeCommunication = enableInterNodeCommunication;
-            this.NetworkConfiguration = networkConfiguration;
-            this.StartTask = startTask;
-            this.CertificateReferences = certificateReferences;
-            this.ApplicationPackageReferences = applicationPackageReferences;
-            this.ApplicationLicenses = applicationLicenses;
-            this.MaxTasksPerNode = maxTasksPerNode;
-            this.TaskSchedulingPolicy = taskSchedulingPolicy;
-            this.UserAccounts = userAccounts;
-            this.Metadata = metadata;
+            Id = id;
+            DisplayName = displayName;
+            VmSize = vmSize;
+            CloudServiceConfiguration = cloudServiceConfiguration;
+            VirtualMachineConfiguration = virtualMachineConfiguration;
+            ResizeTimeout = resizeTimeout;
+            TargetDedicatedNodes = targetDedicatedNodes;
+            TargetLowPriorityNodes = targetLowPriorityNodes;
+            EnableAutoScale = enableAutoScale;
+            AutoScaleFormula = autoScaleFormula;
+            AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
+            EnableInterNodeCommunication = enableInterNodeCommunication;
+            NetworkConfiguration = networkConfiguration;
+            StartTask = startTask;
+            CertificateReferences = certificateReferences;
+            ApplicationPackageReferences = applicationPackageReferences;
+            ApplicationLicenses = applicationLicenses;
+            MaxTasksPerNode = maxTasksPerNode;
+            TaskSchedulingPolicy = taskSchedulingPolicy;
+            UserAccounts = userAccounts;
+            Metadata = metadata;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the pool within the
@@ -102,7 +118,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// is, you may not have two pool IDs within an account that differ
         /// only by case).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -112,7 +128,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The display name need not be unique and can contain any Unicode
         /// characters up to a maximum length of 1024.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
+        [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -135,7 +151,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2
         /// series).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
+        [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
@@ -147,7 +163,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// property cannot be specified if the Batch account was created with
         /// its poolAllocationMode property set to 'UserSubscription'.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "cloudServiceConfiguration")]
+        [JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
 
         /// <summary>
@@ -157,7 +173,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property and cloudServiceConfiguration are mutually exclusive
         /// and one of the properties must be specified.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "virtualMachineConfiguration")]
+        [JsonProperty(PropertyName = "virtualMachineConfiguration")]
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
@@ -171,7 +187,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// minutes, the Batch service returns an error; if you are calling the
         /// REST API directly, the HTTP status code is 400 (Bad Request).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
+        [JsonProperty(PropertyName = "resizeTimeout")]
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
@@ -183,7 +199,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// true. If enableAutoScale is set to false, then you must set either
         /// targetDedicatedNodes, targetLowPriorityNodes, or both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicatedNodes")]
+        [JsonProperty(PropertyName = "targetDedicatedNodes")]
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
@@ -195,7 +211,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// true. If enableAutoScale is set to false, then you must set either
         /// targetDedicatedNodes, targetLowPriorityNodes, or both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetLowPriorityNodes")]
+        [JsonProperty(PropertyName = "targetLowPriorityNodes")]
         public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
@@ -208,7 +224,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// autoScaleFormula property is required and the pool automatically
         /// resizes according to the formula. The default value is false.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "enableAutoScale")]
+        [JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
 
         /// <summary>
@@ -225,7 +241,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch pool'
         /// (https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
+        [JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
@@ -239,7 +255,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// an error; if you are calling the REST API directly, the HTTP status
         /// code is 400 (Bad Request).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
+        [JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
         public System.TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
         /// <summary>
@@ -252,13 +268,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// may result in the pool not reaching its desired size. The default
         /// value is false.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "enableInterNodeCommunication")]
+        [JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
         /// <summary>
         /// Gets or sets the network configuration for the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "networkConfiguration")]
+        [JsonProperty(PropertyName = "networkConfiguration")]
         public NetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
@@ -269,7 +285,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The task runs when the node is added to the pool or when the node
         /// is restarted.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
+        [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
@@ -287,15 +303,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// /home/{user-name}/certs) and certificates are placed in that
         /// directory.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
-        public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
+        [JsonProperty(PropertyName = "certificateReferences")]
+        public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of application packages to be installed on
         /// each compute node in the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
-        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [JsonProperty(PropertyName = "applicationPackageReferences")]
+        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of application licenses the Batch service
@@ -306,8 +322,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Batch service application licenses. If a license is requested which
         /// is not supported, pool creation will fail.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationLicenses")]
-        public System.Collections.Generic.IList<string> ApplicationLicenses { get; set; }
+        [JsonProperty(PropertyName = "applicationLicenses")]
+        public IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of tasks that can run concurrently
@@ -317,22 +333,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default value is 1. The maximum value of this setting depends
         /// on the size of the compute nodes in the pool (the vmSize setting).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTasksPerNode")]
+        [JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
         /// <summary>
-        /// Gets or sets how the Batch service distributes tasks between
-        /// compute nodes in the pool.
+        /// Gets or sets how tasks are distributed across compute nodes in a
+        /// pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "taskSchedulingPolicy")]
+        [JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the list of user accounts to be created on each node
         /// in the pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userAccounts")]
-        public System.Collections.Generic.IList<UserAccount> UserAccounts { get; set; }
+        [JsonProperty(PropertyName = "userAccounts")]
+        public IList<UserAccount> UserAccounts { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool as
@@ -342,44 +358,44 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The Batch service does not assign any meaning to metadata; it is
         /// solely for the use of user code.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
-        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
+        [JsonProperty(PropertyName = "metadata")]
+        public IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Id == null)
+            if (Id == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
             }
-            if (this.VmSize == null)
+            if (VmSize == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmSize");
+                throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");
             }
-            if (this.CloudServiceConfiguration != null)
+            if (CloudServiceConfiguration != null)
             {
-                this.CloudServiceConfiguration.Validate();
+                CloudServiceConfiguration.Validate();
             }
-            if (this.VirtualMachineConfiguration != null)
+            if (VirtualMachineConfiguration != null)
             {
-                this.VirtualMachineConfiguration.Validate();
+                VirtualMachineConfiguration.Validate();
             }
-            if (this.NetworkConfiguration != null)
+            if (NetworkConfiguration != null)
             {
-                this.NetworkConfiguration.Validate();
+                NetworkConfiguration.Validate();
             }
-            if (this.StartTask != null)
+            if (StartTask != null)
             {
-                this.StartTask.Validate();
+                StartTask.Validate();
             }
-            if (this.CertificateReferences != null)
+            if (CertificateReferences != null)
             {
-                foreach (var element in this.CertificateReferences)
+                foreach (var element in CertificateReferences)
                 {
                     if (element != null)
                     {
@@ -387,9 +403,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.ApplicationPackageReferences != null)
+            if (ApplicationPackageReferences != null)
             {
-                foreach (var element1 in this.ApplicationPackageReferences)
+                foreach (var element1 in ApplicationPackageReferences)
                 {
                     if (element1 != null)
                     {
@@ -397,13 +413,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.TaskSchedulingPolicy != null)
+            if (TaskSchedulingPolicy != null)
             {
-                this.TaskSchedulingPolicy.Validate();
+                TaskSchedulingPolicy.Validate();
             }
-            if (this.UserAccounts != null)
+            if (UserAccounts != null)
             {
-                foreach (var element2 in this.UserAccounts)
+                foreach (var element2 in UserAccounts)
                 {
                     if (element2 != null)
                     {
@@ -411,9 +427,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.Metadata != null)
+            if (Metadata != null)
             {
-                foreach (var element3 in this.Metadata)
+                foreach (var element3 in Metadata)
                 {
                     if (element3 != null)
                     {

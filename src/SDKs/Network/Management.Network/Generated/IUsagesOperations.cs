@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IUsagesOperations
     {
         /// <summary>
-        /// Lists compute usages for a subscription.
+        /// List network usages for a subscription.
         /// </summary>
         /// <param name='location'>
         /// The location where resource usage is queried.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<IPage<Usage>>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists compute usages for a subscription.
+        /// List network usages for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

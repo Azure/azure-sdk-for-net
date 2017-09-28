@@ -8,18 +8,48 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// A Job Preparation task to run before any tasks of the job on any given
     /// compute node.
     /// </summary>
+    /// <remarks>
+    /// You can use Job Preparation to prepare a compute node to run tasks for
+    /// the job. Activities commonly performed in Job Preparation include:
+    /// Downloading common resource files used by all the tasks in the job. The
+    /// Job Preparation task can download these common resource files to the
+    /// shared location on the compute node. (AZ_BATCH_NODE_ROOT_DIR\shared),
+    /// or starting a local service on the compute node so that all tasks of
+    /// that job can communicate with it. If the Job Preparation task fails
+    /// (that is, exhausts its retry count before exiting with exit code 0),
+    /// Batch will not run tasks of this job on the compute node. The node
+    /// remains ineligible to run tasks of this job until it is reimaged. The
+    /// node remains active and can be used for other jobs. The Job Preparation
+    /// task can run multiple times on the same compute node. Therefore, you
+    /// should write the Job Preparation task to handle re-execution. If the
+    /// compute node is rebooted, the Job Preparation task is run again on the
+    /// node before scheduling any other task of the job, if
+    /// rerunOnNodeRebootAfterSuccess is true or if the Job Preparation task
+    /// did not previously complete. If the compute node is reimaged, the Job
+    /// Preparation task is run again before scheduling any task of the job.
+    /// </remarks>
     public partial class JobPreparationTask
     {
         /// <summary>
         /// Initializes a new instance of the JobPreparationTask class.
         /// </summary>
-        public JobPreparationTask() { }
+        public JobPreparationTask()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the JobPreparationTask class.
@@ -37,23 +67,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Preparation task.</param>
         /// <param name="waitForSuccess">Whether the Batch service should wait
         /// for the Job Preparation task to complete successfully before
-        /// scheduling any other tasks of the job on the compute node.</param>
+        /// scheduling any other tasks of the job on the compute node. A Job
+        /// Preparation task has completed successfully if it exits with exit
+        /// code 0.</param>
         /// <param name="userIdentity">The user identity under which the Job
         /// Preparation task runs.</param>
         /// <param name="rerunOnNodeRebootAfterSuccess">Whether the Batch
         /// service should rerun the Job Preparation task after a compute node
         /// reboots.</param>
-        public JobPreparationTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
+        public JobPreparationTask(string commandLine, string id = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? waitForSuccess = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? rerunOnNodeRebootAfterSuccess = default(bool?))
         {
-            this.Id = id;
-            this.CommandLine = commandLine;
-            this.ResourceFiles = resourceFiles;
-            this.EnvironmentSettings = environmentSettings;
-            this.Constraints = constraints;
-            this.WaitForSuccess = waitForSuccess;
-            this.UserIdentity = userIdentity;
-            this.RerunOnNodeRebootAfterSuccess = rerunOnNodeRebootAfterSuccess;
+            Id = id;
+            CommandLine = commandLine;
+            ResourceFiles = resourceFiles;
+            EnvironmentSettings = environmentSettings;
+            Constraints = constraints;
+            WaitForSuccess = waitForSuccess;
+            UserIdentity = userIdentity;
+            RerunOnNodeRebootAfterSuccess = rerunOnNodeRebootAfterSuccess;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the Job Preparation
@@ -64,13 +102,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores and cannot contain more than 64
         /// characters. If you do not specify this property, the Batch service
         /// assigns a default value of 'jobpreparation'. No other task in the
-        /// job can have the same id as the Job Preparation task. If you try to
+        /// job can have the same ID as the Job Preparation task. If you try to
         /// submit a task with the same id, the Batch service rejects the
         /// request with error code TaskIdSameAsJobPreparationTask; if you are
         /// calling the REST API directly, the HTTP status code is 409
         /// (Conflict).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -83,7 +121,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
+        [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
@@ -94,26 +132,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Files listed under this element are located in the task's working
         /// directory.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
-        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
+        [JsonProperty(PropertyName = "resourceFiles")]
+        public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
         /// Preparation task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
-        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [JsonProperty(PropertyName = "environmentSettings")]
+        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets constraints that apply to the Job Preparation task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
+        [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets whether the Batch service should wait for the Job
         /// Preparation task to complete successfully before scheduling any
-        /// other tasks of the job on the compute node.
+        /// other tasks of the job on the compute node. A Job Preparation task
+        /// has completed successfully if it exits with exit code 0.
         /// </summary>
         /// <remarks>
         /// If true and the Job Preparation task fails on a compute node, the
@@ -129,7 +168,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// new tasks will continue to be scheduled on the node. The default
         /// value is true.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "waitForSuccess")]
+        [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
         /// <summary>
@@ -138,9 +177,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// If omitted, the task runs as a non-administrative user unique to
-        /// the task.
+        /// the task on Windows nodes, or a a non-administrative user unique to
+        /// the pool on Linux nodes.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
@@ -155,24 +195,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// to behave correctly if run multiple times. The default value is
         /// true.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
+        [JsonProperty(PropertyName = "rerunOnNodeRebootAfterSuccess")]
         public bool? RerunOnNodeRebootAfterSuccess { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.CommandLine == null)
+            if (CommandLine == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
             }
-            if (this.ResourceFiles != null)
+            if (ResourceFiles != null)
             {
-                foreach (var element in this.ResourceFiles)
+                foreach (var element in ResourceFiles)
                 {
                     if (element != null)
                     {
@@ -180,9 +220,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (EnvironmentSettings != null)
             {
-                foreach (var element1 in this.EnvironmentSettings)
+                foreach (var element1 in EnvironmentSettings)
                 {
                     if (element1 != null)
                     {

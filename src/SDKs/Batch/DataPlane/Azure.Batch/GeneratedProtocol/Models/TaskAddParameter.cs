@@ -8,6 +8,13 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
+    using Microsoft.Azure;
+    using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,7 +25,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddParameter class.
         /// </summary>
-        public TaskAddParameter() { }
+        public TaskAddParameter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the TaskAddParameter class.
@@ -55,23 +65,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="authenticationTokenSettings">The settings for an
         /// authentication token that the task can use to perform Batch service
         /// operations.</param>
-        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
+        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
-            this.Id = id;
-            this.DisplayName = displayName;
-            this.CommandLine = commandLine;
-            this.ExitConditions = exitConditions;
-            this.ResourceFiles = resourceFiles;
-            this.OutputFiles = outputFiles;
-            this.EnvironmentSettings = environmentSettings;
-            this.AffinityInfo = affinityInfo;
-            this.Constraints = constraints;
-            this.UserIdentity = userIdentity;
-            this.MultiInstanceSettings = multiInstanceSettings;
-            this.DependsOn = dependsOn;
-            this.ApplicationPackageReferences = applicationPackageReferences;
-            this.AuthenticationTokenSettings = authenticationTokenSettings;
+            Id = id;
+            DisplayName = displayName;
+            CommandLine = commandLine;
+            ExitConditions = exitConditions;
+            ResourceFiles = resourceFiles;
+            OutputFiles = outputFiles;
+            EnvironmentSettings = environmentSettings;
+            AffinityInfo = affinityInfo;
+            Constraints = constraints;
+            UserIdentity = userIdentity;
+            MultiInstanceSettings = multiInstanceSettings;
+            DependsOn = dependsOn;
+            ApplicationPackageReferences = applicationPackageReferences;
+            AuthenticationTokenSettings = authenticationTokenSettings;
+            CustomInit();
         }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the task within the
@@ -84,7 +100,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// is, you may not have two IDs within a job that differ only by
         /// case).
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
@@ -94,7 +110,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The display name need not be unique and can contain any Unicode
         /// characters up to a maximum length of 1024.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
+        [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -110,14 +126,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// command line, for example using "cmd /c MyCommand" in Windows or
         /// "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
+        [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets how the Batch service should respond when the task
         /// completes.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "exitConditions")]
+        [JsonProperty(PropertyName = "exitConditions")]
         public ExitConditions ExitConditions { get; set; }
 
         /// <summary>
@@ -129,8 +145,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// downloaded to the compute node on which the primary task is
         /// executed.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
-        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
+        [JsonProperty(PropertyName = "resourceFiles")]
+        public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will upload
@@ -140,20 +156,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// For multi-instance tasks, the files will only be uploaded from the
         /// compute node on which the primary task is executed.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "outputFiles")]
-        public System.Collections.Generic.IList<OutputFile> OutputFiles { get; set; }
+        [JsonProperty(PropertyName = "outputFiles")]
+        public IList<OutputFile> OutputFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
-        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [JsonProperty(PropertyName = "environmentSettings")]
+        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets a locality hint that can be used by the Batch service
         /// to select a compute node on which to start the new task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityInfo")]
+        [JsonProperty(PropertyName = "affinityInfo")]
         public AffinityInformation AffinityInfo { get; set; }
 
         /// <summary>
@@ -164,7 +180,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// maxTaskRetryCount specified for the job, and the maxWallClockTime
         /// and retentionTime are infinite.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
+        [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
@@ -174,7 +190,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, the task runs as a non-administrative user unique to
         /// the task.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "userIdentity")]
+        [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
@@ -182,7 +198,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// multi-instance task, and contains information about how to run the
         /// multi-instance task.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "multiInstanceSettings")]
+        [JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
@@ -196,15 +212,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// present, the request fails with error code
         /// TaskDependenciesNotSpecifiedOnJob.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "dependsOn")]
+        [JsonProperty(PropertyName = "dependsOn")]
         public TaskDependencies DependsOn { get; set; }
 
         /// <summary>
         /// Gets or sets a list of application packages that the Batch service
         /// will deploy to the compute node before running the command line.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
-        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        /// <remarks>
+        /// Application packages are downloaded and deployed to a shared
+        /// directory, not the task working directory. Therefore, if a
+        /// referenced package is already on the compute node, and is up to
+        /// date, then it is not re-downloaded; the existing copy on the
+        /// compute node is used. If a referenced application package cannot be
+        /// installed, for example because the package has been deleted or
+        /// because download failed, the task fails.
+        /// </remarks>
+        [JsonProperty(PropertyName = "applicationPackageReferences")]
+        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the settings for an authentication token that the task
@@ -220,28 +245,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// permissions in order to add other tasks to the job, or check the
         /// status of the job or of other tasks under the job.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "authenticationTokenSettings")]
+        [JsonProperty(PropertyName = "authenticationTokenSettings")]
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (this.Id == null)
+            if (Id == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
             }
-            if (this.CommandLine == null)
+            if (CommandLine == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
+                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
             }
-            if (this.ResourceFiles != null)
+            if (ResourceFiles != null)
             {
-                foreach (var element in this.ResourceFiles)
+                foreach (var element in ResourceFiles)
                 {
                     if (element != null)
                     {
@@ -249,9 +274,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.OutputFiles != null)
+            if (OutputFiles != null)
             {
-                foreach (var element1 in this.OutputFiles)
+                foreach (var element1 in OutputFiles)
                 {
                     if (element1 != null)
                     {
@@ -259,9 +284,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (EnvironmentSettings != null)
             {
-                foreach (var element2 in this.EnvironmentSettings)
+                foreach (var element2 in EnvironmentSettings)
                 {
                     if (element2 != null)
                     {
@@ -269,17 +294,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.AffinityInfo != null)
+            if (AffinityInfo != null)
             {
-                this.AffinityInfo.Validate();
+                AffinityInfo.Validate();
             }
-            if (this.MultiInstanceSettings != null)
+            if (MultiInstanceSettings != null)
             {
-                this.MultiInstanceSettings.Validate();
+                MultiInstanceSettings.Validate();
             }
-            if (this.ApplicationPackageReferences != null)
+            if (ApplicationPackageReferences != null)
             {
-                foreach (var element3 in this.ApplicationPackageReferences)
+                foreach (var element3 in ApplicationPackageReferences)
                 {
                     if (element3 != null)
                     {

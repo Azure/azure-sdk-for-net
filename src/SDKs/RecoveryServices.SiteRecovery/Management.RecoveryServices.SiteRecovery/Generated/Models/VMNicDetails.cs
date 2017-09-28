@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="replicaNicStaticIPAddress">Replica nic static IP
         /// address.</param>
         /// <param name="selectionType">Selection type for failover.</param>
-        public VMNicDetails(string nicId = default(string), string replicaNicId = default(string), string sourceNicArmId = default(string), string vMSubnetName = default(string), string vMNetworkName = default(string), string recoveryVMNetworkId = default(string), string recoveryVMSubnetName = default(string), string ipAddressType = default(string), string primaryNicStaticIPAddress = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string))
+        /// <param name="recoveryNicIpAddressType">IP allocation type for
+        /// recovery VM.</param>
+        public VMNicDetails(string nicId = default(string), string replicaNicId = default(string), string sourceNicArmId = default(string), string vMSubnetName = default(string), string vMNetworkName = default(string), string recoveryVMNetworkId = default(string), string recoveryVMSubnetName = default(string), string ipAddressType = default(string), string primaryNicStaticIPAddress = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryNicIpAddressType = default(string))
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             PrimaryNicStaticIPAddress = primaryNicStaticIPAddress;
             ReplicaNicStaticIPAddress = replicaNicStaticIPAddress;
             SelectionType = selectionType;
+            RecoveryNicIpAddressType = recoveryNicIpAddressType;
             CustomInit();
         }
 
@@ -130,6 +133,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "selectionType")]
         public string SelectionType { get; set; }
+
+        /// <summary>
+        /// Gets or sets IP allocation type for recovery VM.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryNicIpAddressType")]
+        public string RecoveryNicIpAddressType { get; set; }
 
     }
 }
