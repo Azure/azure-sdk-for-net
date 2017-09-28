@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dbcdbf2a-96f2-417b-abfe-996488afaadb"
+          "7b6af4d0-999b-449b-b7c0-d92e23f481af"
         ],
         "accept-language": [
           "en-US"
@@ -19,10 +19,10 @@
           "Microsoft.Azure.Management.ResourceManager.ManagementGroupsAPIClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n      \"properties\": {\r\n        \"tenantId\": \"eddd1d84-0039-4ead-b954-e59a7a523f42\",\r\n        \"displayName\": \"Contoso\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n      \"properties\": {\r\n        \"tenantId\": \"eddd1d84-0039-4ead-b954-e59a7a523f42\",\r\n        \"displayName\": \"SAB BVT (DO NOT USE)8\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "299"
+          "313"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -34,13 +34,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "518cd5cf-785e-4372-af40-43dcd6284644"
+          "7f9052f8-b39d-4447-9316-6b7a583d0faa"
         ],
         "x-ms-correlation-request-id": [
-          "518cd5cf-785e-4372-af40-43dcd6284644"
+          "7f9052f8-b39d-4447-9316-6b7a583d0faa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170926T211653Z:518cd5cf-785e-4372-af40-43dcd6284644"
+          "WESTUS2:20170928T214748Z:7f9052f8-b39d-4447-9316-6b7a583d0faa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Sep 2017 21:16:52 GMT"
+          "Thu, 28 Sep 2017 21:47:48 GMT"
         ]
       },
       "StatusCode": 200

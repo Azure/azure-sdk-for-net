@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bbd80f21-dd62-45f2-b1a3-1b2e7787d60d"
+          "dabb0681-6de7-42f5-ac2e-941af43bc34d"
         ],
         "accept-language": [
           "en-US"
@@ -19,10 +19,10 @@
           "Microsoft.Azure.Management.ResourceManager.ManagementGroupsAPIClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n  \"properties\": {\r\n    \"tenantId\": \"eddd1d84-0039-4ead-b954-e59a7a523f42\",\r\n    \"displayName\": \"Contoso\",\r\n    \"details\": {\r\n      \"version\": 3,\r\n      \"updatedTime\": \"2017-09-23T10:59:52.8732375Z\",\r\n      \"updatedBy\": \"PartialResync\",\r\n      \"managementGroupType\": \"Enrollment\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n  \"properties\": {\r\n    \"tenantId\": \"eddd1d84-0039-4ead-b954-e59a7a523f42\",\r\n    \"displayName\": \"SAB BVT (DO NOT USE)8\",\r\n    \"details\": {\r\n      \"version\": 4,\r\n      \"updatedTime\": \"2017-09-27T11:33:08.1328542Z\",\r\n      \"updatedBy\": \"PartialResync\",\r\n      \"managementGroupType\": \"Enrollment\"\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "419"
+          "433"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -37,22 +37,22 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14988"
+          "14999"
         ],
         "x-ms-request-id": [
-          "westus:1be608fe-484f-430f-b7a4-d0c9a94579dd"
+          "westus:f6708f9d-a137-4cc8-ad57-f0cf661bb415"
         ],
         "x-ba-restapi": [
           "1.0.3.353"
         ],
         "request-id": [
-          "0379d4f6-ab7a-4a3a-a2a7-50f0e53018fa"
+          "6d4ffee7-5efb-4b83-97c4-de97ce2f2987"
         ],
         "x-ms-correlation-request-id": [
-          "d057ed29-efe3-4f8b-bbc4-97445244c9d3"
+          "a2ed79ba-b3b7-4fcf-928a-789b5aca0d51"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170926T211654Z:d057ed29-efe3-4f8b-bbc4-97445244c9d3"
+          "WESTUS2:20170928T214749Z:a2ed79ba-b3b7-4fcf-928a-789b5aca0d51"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,7 +61,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Sep 2017 21:16:53 GMT"
+          "Thu, 28 Sep 2017 21:47:48 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"

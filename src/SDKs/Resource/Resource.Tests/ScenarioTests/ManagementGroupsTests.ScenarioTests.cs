@@ -16,7 +16,7 @@ namespace ResourceGroups.Tests
 #if FullNetFx
 
         [Fact]
-        public void ListManagementGroupsTest()
+        public void ListGroups()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -37,7 +37,7 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void GetManagementGroup()
+        public void GetGroup()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -60,7 +60,7 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void GetManagementGroupWithExpand()
+        public void GetGroupExpand()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -89,7 +89,7 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void GetManagementGroupWithExpandAndRecurse()
+        public void GetGroupExpandRecurse()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
