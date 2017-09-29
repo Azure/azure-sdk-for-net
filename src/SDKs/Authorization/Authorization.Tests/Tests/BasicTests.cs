@@ -17,7 +17,6 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure.OData;
 using System.Reflection;
-using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
 using Microsoft.Rest;
 
@@ -87,10 +86,12 @@ namespace Authorization.Tests
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
-                var newRoleAssignment = new RoleAssignmentProperties()
-                {
-                    RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString()
+                var newRoleAssignment = new RoleAssignmentCreateParameters() {
+                    Properties = new RoleAssignmentProperties() {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = principalId.ToString(),
+                        CanDelegate = false
+                    }
                 };
 
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
@@ -146,10 +147,11 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var roleDefinition = client.RoleDefinitions.List(scope, null).Where(r => r.Properties.Type == "BuiltInRole").Last();
-                var newRoleAssignment = new RoleAssignmentProperties()
-                {
-                    RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString()
+                var newRoleAssignment = new RoleAssignmentCreateParameters() {
+                    Properties = new RoleAssignmentProperties() {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = principalId.ToString()
+                    }
                 };
 
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
@@ -199,10 +201,11 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var roleDefinition = client.RoleDefinitions.List(scope).Last();
-                var newRoleAssignment = new RoleAssignmentProperties()
-                {
-                    RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString()
+                var newRoleAssignment = new RoleAssignmentCreateParameters() {
+                    Properties = new RoleAssignmentProperties() {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = principalId.ToString()
+                    }
                 };
 
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
@@ -274,10 +277,11 @@ namespace Authorization.Tests
                 for (int i = 0; i < testContext.Users.Count; i++)
                 {
                     var pId = new Guid(testContext.Users.ElementAt(i).ObjectId);
-                    var newRoleAssignment = new RoleAssignmentProperties()
-                    {
-                        RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = pId.ToString()
+                    var newRoleAssignment = new RoleAssignmentCreateParameters() {
+                        Properties = new RoleAssignmentProperties() {
+                            RoleDefinitionId = roleDefinition.Id,
+                            PrincipalId = principalId.ToString()
+                        }
                     };
                     var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_" + i);
                     var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
@@ -352,7 +356,7 @@ namespace Authorization.Tests
                             createResult = client.RoleAssignments.Create(
                                 scope,
                                 assignmentName.ToString(),
-                                newRoleAssignment.Properties);
+                                newRoleAssignment);
                         }
                         catch (CloudException e)
                         {
@@ -468,7 +472,7 @@ namespace Authorization.Tests
                 var assignmentToGroup = client.RoleAssignments.Create(
                     scope,
                     assignmentName.ToString(),
-                    newRoleAssignmentToGroupParams.Properties);
+                    newRoleAssignmentToGroupParams);
 
                 // create assignment to user
                 var newRoleAssignmentToUserParams = new RoleAssignmentCreateParameters()
@@ -483,7 +487,7 @@ namespace Authorization.Tests
                 assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_User");
                 var assignmentToUser = client.RoleAssignments.Create(scope,
                     assignmentName.ToString(),
-                    newRoleAssignmentToUserParams.Properties);
+                    newRoleAssignmentToUserParams);
 
                 // List role assignments with AssignedTo filter = user id
                 var allRoleAssignments = client.RoleAssignments
