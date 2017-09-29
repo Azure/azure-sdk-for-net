@@ -13,15 +13,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Microsoft.Azure.Management.ContainerRegistry;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for RegistryUsageUnit.
     /// </summary>
-    public static class ProvisioningState
+    public static class RegistryUsageUnit
     {
-        public const string Creating = "Creating";
-        public const string Updating = "Updating";
-        public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Canceled = "Canceled";
+        public const string Count = "Count";
+        public const string Bytes = "Bytes";
     }
 }

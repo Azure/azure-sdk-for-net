@@ -13,33 +13,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using Microsoft.Azure.Management.ContainerRegistry;
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The SKU of a container registry.
+    /// The configuration of service URI and custom headers for the webhook.
     /// </summary>
-    public partial class Sku
+    public partial class CallbackConfig
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the CallbackConfig class.
         /// </summary>
-        public Sku()
+        public CallbackConfig()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the CallbackConfig class.
         /// </summary>
-        /// <param name="name">The SKU name of the container registry. Required
-        /// for registry creation. Possible values include: 'Classic',
-        /// 'Managed_Basic', 'Managed_Standard', 'Managed_Premium'</param>
-        /// <param name="tier">The SKU tier based on the SKU name. Possible
-        /// values include: 'Classic', 'Managed'</param>
-        public Sku(string name, string tier = default(string))
+        /// <param name="serviceUri">The service URI for the webhook to post
+        /// notifications.</param>
+        /// <param name="customHeaders">Custom headers that will be added to
+        /// the webhook notifications.</param>
+        public CallbackConfig(string serviceUri, IDictionary<string, string> customHeaders = default(IDictionary<string, string>))
         {
-            Name = name;
-            Tier = tier;
+            ServiceUri = serviceUri;
+            CustomHeaders = customHeaders;
             CustomInit();
         }
 
@@ -49,19 +50,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the SKU name of the container registry. Required for
-        /// registry creation. Possible values include: 'Classic',
-        /// 'Managed_Basic', 'Managed_Standard', 'Managed_Premium'
+        /// Gets or sets the service URI for the webhook to post notifications.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "serviceUri")]
+        public string ServiceUri { get; set; }
 
         /// <summary>
-        /// Gets the SKU tier based on the SKU name. Possible values include:
-        /// 'Classic', 'Managed'
+        /// Gets or sets custom headers that will be added to the webhook
+        /// notifications.
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; private set; }
+        [JsonProperty(PropertyName = "customHeaders")]
+        public IDictionary<string, string> CustomHeaders { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -71,9 +70,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (ServiceUri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceUri");
             }
         }
     }
