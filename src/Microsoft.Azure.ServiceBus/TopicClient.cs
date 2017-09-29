@@ -77,9 +77,7 @@ namespace Microsoft.Azure.ServiceBus
             this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
             this.syncLock = new object();
             this.TopicName = entityPath;
-            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
-                serviceBusConnection.SasKeyName,
-                serviceBusConnection.SasKey);
+            this.TokenProvider = this.ServiceBusConnection.CreateTokenProvider();
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
 
             MessagingEventSource.Log.TopicClientCreateStop(serviceBusConnection?.Endpoint.Authority, entityPath, this.ClientId);

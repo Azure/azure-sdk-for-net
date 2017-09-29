@@ -252,6 +252,7 @@ namespace Microsoft.Azure.ServiceBus
         public string EntityPath { get; set; }
         public string SasKey { get; set; }
         public string SasKeyName { get; set; }
+        public string SasToken { get; set; }
         public Microsoft.Azure.ServiceBus.TransportType TransportType { get; set; }
         public string GetEntityConnectionString() { }
         public string GetNamespaceConnectionString() { }

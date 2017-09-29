@@ -107,9 +107,7 @@ namespace Microsoft.Azure.ServiceBus
             this.syncLock = new object();
             this.QueueName = entityPath;
             this.ReceiveMode = receiveMode;
-            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
-                serviceBusConnection.SasKeyName,
-                serviceBusConnection.SasKey);
+            this.TokenProvider = this.ServiceBusConnection.CreateTokenProvider();
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
 
             MessagingEventSource.Log.QueueClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);

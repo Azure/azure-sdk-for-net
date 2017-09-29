@@ -101,7 +101,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             this.ownsConnection = true;
-            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(this.ServiceBusConnection.SasKeyName, this.ServiceBusConnection.SasKey);
+            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
             this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
         }
 

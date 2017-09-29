@@ -123,5 +123,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
             Assert.Equal(TransportType.Amqp, csBuilder.TransportType);
         }
+
+        [Fact]
+        void ConnectionStringBuilderShouldParseToken()
+        {
+            var token = "SharedAccessSignature sr=https%3a%2f%2fmynamespace.servicebus.windows.net%2fvendor-&sig=AQGQJjSzXxECxcz%2bbT2rasdfasdfasdfa%2bkBq%2bdJZVabU%3d&se=64953734126&skn=PolicyName";
+            var csBuilder = new ServiceBusConnectionStringBuilder("SharedAccessSignature=" + token+";Endpoint=sb://contoso.servicebus.windows.net");
+            Assert.Equal("sb://contoso.servicebus.windows.net", csBuilder.Endpoint);
+            Assert.Equal(token, csBuilder.SasToken);
+        }
     }
 }

@@ -38,9 +38,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public string SasKey { get; set; }
 
         /// <summary>
-        /// Get the shared access policy owner name from the connection string
+        /// Get the shared access policy name from the connection string
         /// </summary>
         public string SasKeyName { get; set; }
+
+        /// <summary>
+        /// Get the shared access signature token from the connection string
+        /// </summary>
+        public string SasToken { get; set; }
 
         /// <summary>
         /// Get the transport type from the connection string.
@@ -60,6 +65,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             this.Endpoint = new Uri(builder.Endpoint);
             this.SasKeyName = builder.SasKeyName;
             this.SasKey = builder.SasKey;
+            this.SasToken = builder.SasToken;
             this.TransportType = builder.TransportType;
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);
         }
@@ -122,5 +128,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 port: port,
                 useSslStreamSecurity: true);
         }
+
+        internal TokenProvider CreateTokenProvider()
+        {
+            if (SasToken != null)
+            {
+                return TokenProvider.CreateSharedAccessSignatureTokenProvider(SasToken);
+            }
+            else
+            {
+                return TokenProvider.CreateSharedAccessSignatureTokenProvider(SasKeyName, SasKey);
+            }
+        }
+
     }
 }

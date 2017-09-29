@@ -106,9 +106,7 @@ namespace Microsoft.Azure.ServiceBus
             this.SubscriptionName = subscriptionName;
             this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
             this.ReceiveMode = receiveMode;
-            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
-                serviceBusConnection.SasKeyName,
-                serviceBusConnection.SasKey);
+            this.TokenProvider = this.ServiceBusConnection.CreateTokenProvider();
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
 
             MessagingEventSource.Log.SubscriptionClientCreateStop(serviceBusConnection.Endpoint.Authority, topicPath, subscriptionName, this.ClientId);
