@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />
+    <!--<PackageReference Include="Microsoft.Azure.Management.Dns" Version="1.8.0-preview" />-->
     <ProjectReference Include="..\Management.Dns\Microsoft.Azure.Management.Dns.csproj" />
   </ItemGroup>
   
