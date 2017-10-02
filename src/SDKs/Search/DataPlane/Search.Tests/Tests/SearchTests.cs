@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2", "6");
+            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2", "6", "7", "8");
         }
 
         protected void TestSearchWithoutOrderBySortsByScore()
@@ -381,10 +381,10 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(200.0, baseRateFacets[3].From);
             Assert.False(baseRateFacets[3].To.HasValue);
 
-            Assert.Equal(1, baseRateFacets[0].Count);
+            Assert.Equal(2, baseRateFacets[0].Count);
             Assert.Equal(3, baseRateFacets[1].Count);
             Assert.Equal(1, baseRateFacets[2].Count);
-            Assert.Equal(1, baseRateFacets[3].Count);
+            Assert.Equal(2, baseRateFacets[3].Count);
 
             RangeFacetResult<DateTimeOffset>[] lastRenovationDateFacets =
                 GetRangeFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 2);
@@ -445,10 +445,10 @@ namespace Microsoft.Azure.Search.Tests
 
             AssertValueFacetsEqual(
                 GetValueFacetsForField<double>(response.Facets, "baseRate", 4),
-                new ValueFacetResult<double>(1, 79.99),
+                new ValueFacetResult<double>(2, 79.99),
                 new ValueFacetResult<double>(3, 129.99),
                 new ValueFacetResult<double>(1, 199.0),
-                new ValueFacetResult<double>(1, 279.99));
+                new ValueFacetResult<double>(2, 279.99));
 
             AssertValueFacetsEqual(
                 GetValueFacetsForField<string>(response.Facets, "tags", 6),
