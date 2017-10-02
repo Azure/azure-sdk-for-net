@@ -14,10 +14,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
     internal class MsiAccessTokenProvider : NonInteractiveAzureServiceTokenProviderBase
     {
         // This is for unit testing
-        private readonly HttpMessageHandler _httpMessageHandler;
+        private readonly HttpClient _httpClient;
 
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
-        private static readonly HttpClient HttpClient = new HttpClient();
+        private static readonly HttpClient DefaultHttpClient = new HttpClient();
 
         // Default Azure VM MSI endpoint
         private const string AzureVmMsiEndpoint = "http://localhost:50342/oauth2/token";
@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             PrincipalUsed = new Principal { Type = "App" };
         }
 
-        internal MsiAccessTokenProvider(HttpMessageHandler httpMessageHandler) : this()
+        internal MsiAccessTokenProvider(HttpClient httpClient) : this()
         {
-            _httpMessageHandler = httpMessageHandler;
+            _httpClient = httpClient;
         }
 
         public override async Task<string> GetTokenAsync(string resource, string authority)
@@ -44,23 +44,25 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string authorityParameter = string.IsNullOrEmpty(authority) ? string.Empty : $"&authority={authority}";
 
                 // Craft request as per the MSI protocol
-                var request = isAppServicesMsiAvailable
+                var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}&api-version=2017-09-01"
                     : $"{AzureVmMsiEndpoint}?resource={resource}{authorityParameter}";
 
-                // If _httpMessageHandler is specified, use a new HttpClient with the handler (This is for unit testing). 
-                HttpClient httpClient = _httpMessageHandler == null ? HttpClient : new HttpClient(_httpMessageHandler);
+                // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 
+                HttpClient httpClient = _httpClient ?? DefaultHttpClient;
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 
                 if (isAppServicesMsiAvailable)
                 {
-                    httpClient.DefaultRequestHeaders.Add("Secret", msiSecret);
+                    request.Headers.Add("Secret", msiSecret);
                 }
                 else
                 {
-                    httpClient.DefaultRequestHeaders.Add("Metadata", "true");
+                    request.Headers.Add("Metadata", "true");
                 }
-
-                HttpResponseMessage response = await httpClient.GetAsync(request).ConfigureAwait(false);
+                
+                HttpResponseMessage response = await httpClient.SendAsync(request).ConfigureAwait(false);
 
                 // If the response is successful, it should have JSON response with an access_token field
                 if (response.IsSuccessStatusCode)

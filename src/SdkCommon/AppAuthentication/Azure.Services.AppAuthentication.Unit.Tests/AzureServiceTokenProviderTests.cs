@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using Xunit;
@@ -116,8 +117,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi msiStubHandler = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(msiStubHandler);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
@@ -129,7 +131,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(1, mockProcessManager.HitCount);
 
             // Msi handler will not be hit, since AzureCliAccessTokenProvider was able to return token. So this hit count should be 0. 
-            Assert.Equal(0, msiStubHandler.HitCount);
+            Assert.Equal(0, mockMsi.HitCount);
 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId);
 
@@ -145,8 +147,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi msiStubHandler = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(msiStubHandler);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase>{azureCliAccessTokenProvider, msiAccessTokenProvider};
@@ -158,7 +161,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(1, mockProcessManager.HitCount);
 
             // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 1 here.
-            Assert.Equal(1, msiStubHandler.HitCount);
+            Assert.Equal(1, mockMsi.HitCount);
 
             // MsiAccessTokenProvider should succeed, and we should get a valid token. 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);

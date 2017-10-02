@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using Xunit;
@@ -27,8 +28,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async Task GetTokenUsingMsiAzureVm()
         {
             // MockMsi is being asked to act like response from Azure VM MSI suceeded. 
-            MockMsi msiStubHandler = new MockMsi(MockMsi.MsiTestType.MsiAzureVmSuccess);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(msiStubHandler);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmSuccess);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // Get token.
             var token = await msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId,Constants.TenantId).ConfigureAwait(false);
@@ -48,7 +50,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // MockMsi is being asked to act like response from App Service MSI suceeded. 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(mockMsi);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // Get token. This confirms that the environment variables are being read. 
             var token = await msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
@@ -75,7 +78,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // MockMsi is being asked to act like response from App Service MSI failed (unauthorized). 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesUnauthorized);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(mockMsi);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
@@ -99,7 +103,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesIncorrectRequest);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(mockMsi);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
