@@ -14,28 +14,27 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The login password for the container registry.
+    /// The agent that initiated the event. For most situations, this could be
+    /// from the authorization context of the request.
     /// </summary>
-    public partial class RegistryPassword
+    public partial class Actor
     {
         /// <summary>
-        /// Initializes a new instance of the RegistryPassword class.
+        /// Initializes a new instance of the Actor class.
         /// </summary>
-        public RegistryPassword()
+        public Actor()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegistryPassword class.
+        /// Initializes a new instance of the Actor class.
         /// </summary>
-        /// <param name="name">The password name. Possible values include:
-        /// 'password', 'password2'</param>
-        /// <param name="value">The password value.</param>
-        public RegistryPassword(PasswordName? name = default(PasswordName?), string value = default(string))
+        /// <param name="name">The subject or username associated with the
+        /// request context that generated the event.</param>
+        public Actor(string name = default(string))
         {
             Name = name;
-            Value = value;
             CustomInit();
         }
 
@@ -45,17 +44,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the password name. Possible values include:
-        /// 'password', 'password2'
+        /// Gets or sets the subject or username associated with the request
+        /// context that generated the event.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public PasswordName? Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the password value.
-        /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        public string Name { get; set; }
 
     }
 }
