@@ -10,29 +10,27 @@
 
 namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The properties of a storage account for a container registry. Only
-    /// applicable to Classic SKU.
+    /// The basic information of an event.
     /// </summary>
-    public partial class StorageAccountProperties
+    public partial class EventInfo
     {
         /// <summary>
-        /// Initializes a new instance of the StorageAccountProperties class.
+        /// Initializes a new instance of the EventInfo class.
         /// </summary>
-        public StorageAccountProperties()
+        public EventInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageAccountProperties class.
+        /// Initializes a new instance of the EventInfo class.
         /// </summary>
-        /// <param name="id">The resource ID of the storage account.</param>
-        public StorageAccountProperties(string id)
+        /// <param name="id">The event ID.</param>
+        public EventInfo(string id = default(string))
         {
             Id = id;
             CustomInit();
@@ -44,23 +42,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the storage account.
+        /// Gets or sets the event ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-        }
     }
 }

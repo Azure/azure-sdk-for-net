@@ -19,17 +19,22 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RegistriesOperations operations.
+    /// WebhooksOperations operations.
     /// </summary>
-    public partial interface IRegistriesOperations
+    public partial interface IWebhooksOperations
     {
         /// <summary>
-        /// Checks whether the container registry name is available for use.
-        /// The name must contain only alphanumeric characters, be globally
-        /// unique, and between 5 and 50 characters in length.
+        /// Gets the properties of the specified webhook.
         /// </summary>
-        /// <param name='name'>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
         /// The name of the container registry.
+        /// </param>
+        /// <param name='webhookName'>
+        /// The name of the webhook.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,9 +51,100 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistryNameStatus>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Webhook>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the properties of the specified container registry.
+        /// Creates a webhook for a container registry with the specified
+        /// parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='webhookName'>
+        /// The name of the webhook.
+        /// </param>
+        /// <param name='webhookCreateParameters'>
+        /// The parameters for creating a webhook.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Webhook>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a webhook from a container registry.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='webhookName'>
+        /// The name of the webhook.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a webhook with the specified parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='webhookName'>
+        /// The name of the webhook.
+        /// </param>
+        /// <param name='webhookUpdateParameters'>
+        /// The parameters for updating a webhook.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Webhook>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all the webhooks for the specified container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -72,9 +168,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Registry>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Webhook>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a container registry with the specified parameters.
+        /// Triggers a ping event to be sent to the webhook.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -83,8 +179,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='registry'>
-        /// The parameters for creating a container registry.
+        /// <param name='webhookName'>
+        /// The name of the webhook.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -101,9 +197,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Registry>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, Registry registry, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventInfo>> PingWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a container registry.
+        /// Gets the configuration of service URI and custom headers for the
+        /// webhook.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -112,31 +209,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates a container registry with the specified parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='registryUpdateParameters'>
-        /// The parameters for updating a container registry.
+        /// <param name='webhookName'>
+        /// The name of the webhook.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -153,53 +227,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Registry>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CallbackConfig>> GetCallbackConfigWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all the container registries under the specified resource
-        /// group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Registry>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all the container registries under the specified
-        /// subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Registry>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the login credentials for the specified container registry.
+        /// Lists recent events for the specified webhook.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -208,37 +238,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<RegistryListCredentialsResult>> ListCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Regenerates one of the login credentials for the specified
-        /// container registry.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='name'>
-        /// Specifies name of the password which should be regenerated --
-        /// password or password2. Possible values include: 'password',
-        /// 'password2'
+        /// <param name='webhookName'>
+        /// The name of the webhook.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -255,9 +256,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistryListCredentialsResult>> RegenerateCredentialWithHttpMessagesAsync(string resourceGroupName, string registryName, PasswordName name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventModel>>> ListEventsWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the quota usages for the specified container registry.
+        /// Creates a webhook for a container registry with the specified
+        /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -265,6 +267,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </param>
         /// <param name='registryName'>
         /// The name of the container registry.
+        /// </param>
+        /// <param name='webhookName'>
+        /// The name of the webhook.
+        /// </param>
+        /// <param name='webhookCreateParameters'>
+        /// The parameters for creating a webhook.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -281,9 +289,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistryUsageListResult>> ListUsagesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Webhook>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookCreateParameters webhookCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a container registry with the specified parameters.
+        /// Deletes a webhook from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -292,8 +300,37 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='registry'>
-        /// The parameters for creating a container registry.
+        /// <param name='webhookName'>
+        /// The name of the webhook.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a webhook with the specified parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='webhookName'>
+        /// The name of the webhook.
+        /// </param>
+        /// <param name='webhookUpdateParameters'>
+        /// The parameters for updating a webhook.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -310,62 +347,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Registry>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, Registry registry, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Webhook>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string webhookName, WebhookUpdateParameters webhookUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a container registry.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates a container registry with the specified parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='registryUpdateParameters'>
-        /// The parameters for updating a container registry.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Registry>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all the container registries under the specified resource
-        /// group.
+        /// Lists all the webhooks for the specified container registry.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -385,10 +369,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Registry>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Webhook>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all the container registries under the specified
-        /// subscription.
+        /// Lists recent events for the specified webhook.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -408,6 +391,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Registry>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventModel>>> ListEventsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
