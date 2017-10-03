@@ -348,6 +348,30 @@ namespace Microsoft.AzureStack.Management
                                     }
                                 }
                                 
+                                if (resourceTypesItem.ApiProfiles != null)
+                                {
+                                    if (resourceTypesItem.ApiProfiles is ILazyCollection == false || ((ILazyCollection)resourceTypesItem.ApiProfiles).IsInitialized)
+                                    {
+                                        JArray apiProfilesArray = new JArray();
+                                        foreach (ApiProfile apiProfilesItem in resourceTypesItem.ApiProfiles)
+                                        {
+                                            JObject apiProfileValue = new JObject();
+                                            apiProfilesArray.Add(apiProfileValue);
+                                            
+                                            if (apiProfilesItem.ProfileVersion != null)
+                                            {
+                                                apiProfileValue["profileVersion"] = apiProfilesItem.ProfileVersion;
+                                            }
+                                            
+                                            if (apiProfilesItem.ApiVersion != null)
+                                            {
+                                                apiProfileValue["apiVersion"] = apiProfilesItem.ApiVersion;
+                                            }
+                                        }
+                                        resourceTypeValue["apiProfiles"] = apiProfilesArray;
+                                    }
+                                }
+                                
                                 if (resourceTypesItem.MeteredResourceIds != null)
                                 {
                                     if (resourceTypesItem.MeteredResourceIds is ILazyCollection == false || ((ILazyCollection)resourceTypesItem.MeteredResourceIds).IsInitialized)
@@ -737,6 +761,30 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
+                                        JToken apiProfilesArray2 = resourceTypesValue["apiProfiles"];
+                                        if (apiProfilesArray2 != null && apiProfilesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken apiProfilesValue in ((JArray)apiProfilesArray2))
+                                            {
+                                                ApiProfile apiProfileInstance = new ApiProfile();
+                                                resourceTypeInstance.ApiProfiles.Add(apiProfileInstance);
+                                                
+                                                JToken profileVersionValue = apiProfilesValue["profileVersion"];
+                                                if (profileVersionValue != null && profileVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string profileVersionInstance = ((string)profileVersionValue);
+                                                    apiProfileInstance.ProfileVersion = profileVersionInstance;
+                                                }
+                                                
+                                                JToken apiVersionValue2 = apiProfilesValue["apiVersion"];
+                                                if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                {
+                                                    string apiVersionInstance2 = ((string)apiVersionValue2);
+                                                    apiProfileInstance.ApiVersion = apiVersionInstance2;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken meteredResourceIdsArray2 = resourceTypesValue["meteredResourceIds"];
                                         if (meteredResourceIdsArray2 != null && meteredResourceIdsArray2.Type != JTokenType.Null)
                                         {
@@ -770,11 +818,11 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                JToken apiVersionValue3 = endpointsValue["apiVersion"];
+                                                if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
                                                 {
-                                                    string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                    resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                    string apiVersionInstance3 = ((string)apiVersionValue3);
+                                                    resourceProviderEndpointInstance.ApiVersion = apiVersionInstance3;
                                                 }
                                                 
                                                 JToken enabledValue3 = endpointsValue["enabled"];
@@ -1405,6 +1453,30 @@ namespace Microsoft.AzureStack.Management
                                             }
                                         }
                                         
+                                        JToken apiProfilesArray = resourceTypesValue["apiProfiles"];
+                                        if (apiProfilesArray != null && apiProfilesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken apiProfilesValue in ((JArray)apiProfilesArray))
+                                            {
+                                                ApiProfile apiProfileInstance = new ApiProfile();
+                                                resourceTypeInstance.ApiProfiles.Add(apiProfileInstance);
+                                                
+                                                JToken profileVersionValue = apiProfilesValue["profileVersion"];
+                                                if (profileVersionValue != null && profileVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string profileVersionInstance = ((string)profileVersionValue);
+                                                    apiProfileInstance.ProfileVersion = profileVersionInstance;
+                                                }
+                                                
+                                                JToken apiVersionValue2 = apiProfilesValue["apiVersion"];
+                                                if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                {
+                                                    string apiVersionInstance2 = ((string)apiVersionValue2);
+                                                    apiProfileInstance.ApiVersion = apiVersionInstance2;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken meteredResourceIdsArray = resourceTypesValue["meteredResourceIds"];
                                         if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
                                         {
@@ -1438,11 +1510,11 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
-                                                JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                JToken apiVersionValue3 = endpointsValue["apiVersion"];
+                                                if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
                                                 {
-                                                    string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                    resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                    string apiVersionInstance3 = ((string)apiVersionValue3);
+                                                    resourceProviderEndpointInstance.ApiVersion = apiVersionInstance3;
                                                 }
                                                 
                                                 JToken enabledValue3 = endpointsValue["enabled"];
@@ -1921,6 +1993,30 @@ namespace Microsoft.AzureStack.Management
                                                     }
                                                 }
                                                 
+                                                JToken apiProfilesArray = resourceTypesValue["apiProfiles"];
+                                                if (apiProfilesArray != null && apiProfilesArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiProfilesValue in ((JArray)apiProfilesArray))
+                                                    {
+                                                        ApiProfile apiProfileInstance = new ApiProfile();
+                                                        resourceTypeInstance.ApiProfiles.Add(apiProfileInstance);
+                                                        
+                                                        JToken profileVersionValue = apiProfilesValue["profileVersion"];
+                                                        if (profileVersionValue != null && profileVersionValue.Type != JTokenType.Null)
+                                                        {
+                                                            string profileVersionInstance = ((string)profileVersionValue);
+                                                            apiProfileInstance.ProfileVersion = profileVersionInstance;
+                                                        }
+                                                        
+                                                        JToken apiVersionValue2 = apiProfilesValue["apiVersion"];
+                                                        if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string apiVersionInstance2 = ((string)apiVersionValue2);
+                                                            apiProfileInstance.ApiVersion = apiVersionInstance2;
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 JToken meteredResourceIdsArray = resourceTypesValue["meteredResourceIds"];
                                                 if (meteredResourceIdsArray != null && meteredResourceIdsArray.Type != JTokenType.Null)
                                                 {
@@ -1954,11 +2050,11 @@ namespace Microsoft.AzureStack.Management
                                                             }
                                                         }
                                                         
-                                                        JToken apiVersionValue2 = endpointsValue["apiVersion"];
-                                                        if (apiVersionValue2 != null && apiVersionValue2.Type != JTokenType.Null)
+                                                        JToken apiVersionValue3 = endpointsValue["apiVersion"];
+                                                        if (apiVersionValue3 != null && apiVersionValue3.Type != JTokenType.Null)
                                                         {
-                                                            string apiVersionInstance2 = ((string)apiVersionValue2);
-                                                            resourceProviderEndpointInstance.ApiVersion = apiVersionInstance2;
+                                                            string apiVersionInstance3 = ((string)apiVersionValue3);
+                                                            resourceProviderEndpointInstance.ApiVersion = apiVersionInstance3;
                                                         }
                                                         
                                                         JToken enabledValue3 = endpointsValue["enabled"];
