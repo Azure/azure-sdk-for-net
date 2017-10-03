@@ -36,6 +36,7 @@ namespace OperationalInsights.Tests.Helpers
         public const string StorageInsightResourceType = "Microsoft.OperationalInsights/workspaces/storageinsightconfigs";
         public const string DataSourceResourceType = "Microsoft.OperationalInsights/workspaces/datasources";
         public const string LinkedServiceResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
+        public const string SubscriptionId = "a6383be3-f0e8-4968-93d5-10f2625f5bb5";
 
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.
@@ -44,7 +45,9 @@ namespace OperationalInsights.Tests.Helpers
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
         public static ResourceManagementClient GetResourceManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<ResourceManagementClient>();
+            var rmClient = context.GetServiceClient<ResourceManagementClient>();
+            rmClient.SubscriptionId = SubscriptionId;
+            return rmClient;
         }
 
         /// <summary>
@@ -54,7 +57,9 @@ namespace OperationalInsights.Tests.Helpers
         /// <returns>Operational Insights client</returns>
         public static OperationalInsightsManagementClient GetOperationalInsightsManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<OperationalInsightsManagementClient>();
+            var oiClient = context.GetServiceClient<OperationalInsightsManagementClient>();
+            oiClient.SubscriptionId = SubscriptionId;
+            return oiClient;
         }
 
         /// <summary>
@@ -121,6 +126,7 @@ namespace OperationalInsights.Tests.Helpers
             Assert.NotNull(actual.PortalUrl);
             Assert.Equal("Succeeded", actual.ProvisioningState, StringComparer.OrdinalIgnoreCase);
             Assert.Equal("Azure", actual.Source, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expected.Features.SearchVersion == "OQL" ? "0" : "1", actual.Features.SearchVersion, StringComparer.OrdinalIgnoreCase);
             Assert.NotNull(actual.CustomerId);
         }
 

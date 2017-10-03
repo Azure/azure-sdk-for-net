@@ -44,7 +44,12 @@ namespace OperationalInsights.Test.ScenarioTests
                 var workspace = new Workspace()
                 {
                     Location = resourceGroup.Location,
-                    Sku = new Sku(SkuNameEnum.Standard)
+                    Sku = new Sku(SkuNameEnum.Standard),
+                    Features = new Features()
+                    {
+                        Legacy = "None",
+                        SearchVersion = "KQL"
+                    }
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(
@@ -58,7 +63,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 string dataSourceName = TestUtilities.GenerateName("AzTestDS");
                 var createParameters = new DataSource
                 {
-                    Kind = "AzureAuditLog",
+                    Kind = "AzureActivityLog",
                     Properties = JToken.Parse("{\"LinkedResourceId\":\"/subscriptions/0b88dfdb-55b3-4fb0-b474-5b6dcbe6b2ef/providers/microsoft.insights/eventtypes/management\"}")
                 };
 
@@ -77,7 +82,7 @@ namespace OperationalInsights.Test.ScenarioTests
                 TestHelper.ValidateDatasource(createParameters, createResponse);
 
                 // List the data sources in the workspace
-                var listResponse = client.DataSources.ListByWorkspace(new ODataQuery<DataSourceFilter>(ds=> ds.Kind == "AzureAuditLog" ), resourceGroupName, workspaceName);
+                var listResponse = client.DataSources.ListByWorkspace(new ODataQuery<DataSourceFilter>(ds=> ds.Kind == "AzureActivityLog"), resourceGroupName, workspaceName);
                 Assert.Equal(2, listResponse.Count());
                 Assert.Null(listResponse.NextPageLink);
                 Assert.Single(listResponse.Where(w => w.Name.Equals(dataSourceName, StringComparison.OrdinalIgnoreCase)));
@@ -114,7 +119,12 @@ namespace OperationalInsights.Test.ScenarioTests
                 var workspace = new Workspace()
                 {
                     Location = resourceGroup.Location,
-                    Sku = new Sku(SkuNameEnum.Standard)
+                    Sku = new Sku(SkuNameEnum.Standard),
+                    Features = new Features()
+                    {
+                        Legacy = "None",
+                        SearchVersion = "KQL"
+                    }
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(

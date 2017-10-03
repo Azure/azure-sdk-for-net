@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using Microsoft.Azure.Management.OperationalInsights;
 
     /// <summary>
-    /// Defines values for StorageInsightState.
+    /// Defines values for SearchVersionNameEnum.
     /// </summary>
-    public static class StorageInsightState
+    public static class SearchVersionNameEnum
     {
-        public const string OK = "OK";
-        public const string ERROR = "ERROR";
+        public const string OQL = "OQL";
+        public const string KQL = "KQL";
     }
 }

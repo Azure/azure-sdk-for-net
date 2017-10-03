@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/OIAutoRest22?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL09JQXV0b1Jlc3QyMj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/OIAutoRest4901?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL09JQXV0b1Jlc3Q0OTAxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Australia Southeast\"\r\n}",
       "RequestHeaders": {
@@ -13,20 +13,20 @@
           "41"
         ],
         "x-ms-client-request-id": [
-          "dce49dbf-0601-43a2-8d5b-4cb609f02aa5"
+          "f2e9646a-0be8-4dc0-8d5a-619ad5a79fdd"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/OIAutoRest22\",\r\n  \"name\": \"OIAutoRest22\",\r\n  \"location\": \"australiasoutheast\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/OIAutoRest4901\",\r\n  \"name\": \"OIAutoRest4901\",\r\n  \"location\": \"australiasoutheast\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "189"
+          "193"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 02 Nov 2016 20:31:40 GMT"
+          "Mon, 02 Oct 2017 23:19:04 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1197"
         ],
         "x-ms-request-id": [
-          "ab471ecd-24bb-4bb8-aeb6-cfd004832a38"
+          "235ef058-36eb-493f-8d45-6cc5d2724e9b"
         ],
         "x-ms-correlation-request-id": [
-          "ab471ecd-24bb-4bb8-aeb6-cfd004832a38"
+          "235ef058-36eb-493f-8d45-6cc5d2724e9b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161102T203140Z:ab471ecd-24bb-4bb8-aeb6-cfd004832a38"
+          "WESTUS:20171002T231904Z:235ef058-36eb-493f-8d45-6cc5d2724e9b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,32 +62,32 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/OIAutoRest22/providers/Microsoft.OperationalInsights/workspaces/AzTest6434/dataSources/AzTestDS9030?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL09JQXV0b1Jlc3QyMi9wcm92aWRlcnMvTWljcm9zb2Z0Lk9wZXJhdGlvbmFsSW5zaWdodHMvd29ya3NwYWNlcy9BelRlc3Q2NDM0L2RhdGFTb3VyY2VzL0F6VGVzdERTOTAzMD9hcGktdmVyc2lvbj0yMDE1LTExLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/OIAutoRest4901/providers/Microsoft.OperationalInsights/workspaces/AzTest372/dataSources/AzTestDS3770?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL09JQXV0b1Jlc3Q0OTAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuT3BlcmF0aW9uYWxJbnNpZ2h0cy93b3Jrc3BhY2VzL0F6VGVzdDM3Mi9kYXRhU291cmNlcy9BelRlc3REUzM3NzA/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"LinkedResourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"kind\": \"AzureAuditLog\",\r\n  \"name\": \"AzTestDS9030\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"LinkedResourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/providers/microsoft.insights/eventtypes/management\"\r\n  },\r\n  \"kind\": \"AzureAuditLog\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "213"
+          "186"
         ],
         "x-ms-client-request-id": [
-          "e057639f-726c-4bbd-aa88-e9ca3f88c214"
+          "598f7de6-cf35-40cb-b34b-300336336faa"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/2.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ParentResourceNotFound\",\r\n    \"message\": \"Can not perform requested operation on nested resource. Parent resource 'AzTest6434' not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ParentResourceNotFound\",\r\n    \"message\": \"Can not perform requested operation on nested resource. Parent resource 'AzTest372' not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "151"
+          "150"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 02 Nov 2016 20:32:13 GMT"
+          "Mon, 02 Oct 2017 23:19:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -108,13 +108,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "05e82e19-5257-41d0-b2e4-df8a641eccb3"
+          "6560ea3a-7172-4be4-b66f-beed41b06fdb"
         ],
         "x-ms-correlation-request-id": [
-          "05e82e19-5257-41d0-b2e4-df8a641eccb3"
+          "6560ea3a-7172-4be4-b66f-beed41b06fdb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161102T203213Z:05e82e19-5257-41d0-b2e4-df8a641eccb3"
+          "WESTUS:20171002T231905Z:6560ea3a-7172-4be4-b66f-beed41b06fdb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -125,12 +125,12 @@
   ],
   "Names": {
     "DataSourceCreateFailsWithoutWorkspace": [
-      "OIAutoRest22",
-      "AzTestDS9030",
-      "AzTest6434"
+      "OIAutoRest4901",
+      "AzTestDS3770",
+      "AzTest372"
     ]
   },
   "Variables": {
-    "SubscriptionId": "a6383be3-f0e8-4968-93d5-10f2625f5bb5"
+    "SubscriptionId": ""
   }
 }

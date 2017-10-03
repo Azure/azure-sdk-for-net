@@ -13,11 +13,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using Microsoft.Azure.Management.OperationalInsights;
 
     /// <summary>
-    /// Defines values for StorageInsightState.
+    /// Defines values for LegacyNameEnum.
     /// </summary>
-    public static class StorageInsightState
+    public static class LegacyNameEnum
     {
-        public const string OK = "OK";
-        public const string ERROR = "ERROR";
+        public const string None = "None";
+        public const string GrandfatheredNonSuite = "GrandfatheredNonSuite";
+        public const string GrandfatheredSuite = "GrandfatheredSuite";
     }
 }

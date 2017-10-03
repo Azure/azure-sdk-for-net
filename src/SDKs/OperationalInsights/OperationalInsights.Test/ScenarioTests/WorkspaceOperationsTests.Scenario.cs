@@ -44,7 +44,11 @@ namespace OperationalInsights.Test.ScenarioTests
                     Location = resourceGroup.Location,
                     Tags = new Dictionary<string, string> { { "tag1", "val1" } },
                     Sku = new Sku(SkuNameEnum.PerNode),
-                    RetentionInDays = 30
+                    RetentionInDays = 30,
+                    Features = new Features() {
+                        Legacy = "None",
+                        SearchVersion = "KQL"
+                    }
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(
@@ -88,7 +92,12 @@ namespace OperationalInsights.Test.ScenarioTests
                 workspace = new Workspace()
                 {
                     Location = resourceGroup.Location,
-                    Sku = new Sku(SkuNameEnum.Free)
+                    Sku = new Sku(SkuNameEnum.Free),
+                    Features = new Features()
+                    {
+                        Legacy = "None",
+                        SearchVersion = "KQL"
+                    }
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(
@@ -136,7 +145,12 @@ namespace OperationalInsights.Test.ScenarioTests
                     Location = resourceGroup.Location,
                     Tags = new Dictionary<string, string> { { "tag1", "val1" } },
                     Sku = new Sku(SkuNameEnum.PerNode),
-                    RetentionInDays = 30
+                    RetentionInDays = 30,
+                    Features = new Features()
+                    {
+                        Legacy = "None",
+                        SearchVersion = "KQL"
+                    }
                 };
 
                 var workspaceResponse = client.Workspaces.CreateOrUpdate(
