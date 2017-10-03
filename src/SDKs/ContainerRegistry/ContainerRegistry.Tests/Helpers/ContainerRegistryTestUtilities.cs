@@ -45,7 +45,7 @@ namespace ContainerRegistry.Tests
             Provider provider = client.Providers.Get(ContainerRegistryNamespace);
             ProviderResourceType resourceType = provider.ResourceTypes.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.ResourceType, ContainerRegistryResourceType));
-            return resourceType.Locations.First();
+            return "westcentralus"; // resourceType.Locations.First();
         }
 
         public static string GetNonDefaultRegistryLocation(ResourceManagementClient client, string defaultLocation)
