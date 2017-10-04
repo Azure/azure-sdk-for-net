@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             ProcessNotFound, // When requested program is not installed
             Success,
+            Failure,
             NoToken
         }
 
@@ -51,6 +52,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
                 case MockProcessManagerRequestType.ProcessNotFound:
                     throw new Exception(Constants.ProgramNotFoundError);
+
+                case MockProcessManagerRequestType.Failure:
+                    return Task.FromResult(new Tuple<bool, string>(false, tokenResult));
 
             }
 
