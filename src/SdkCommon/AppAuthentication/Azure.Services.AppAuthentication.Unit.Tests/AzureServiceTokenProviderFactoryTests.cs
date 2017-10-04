@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// If a key in the connection string is not in the correct format, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void AzureCliIncorrectFormatConnectionStringTest()
+        {
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.IncorrectFormatConnectionString, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.NotInProperFormatError, exception.ToString());
+        }
+
+        /// <summary>
         /// If connection string ends with "; ", then the parser should ignore the white space and continue. 
         /// </summary>
         [Fact]

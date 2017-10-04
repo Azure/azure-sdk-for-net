@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string IncorrectSecretError = "Secret not correct";
         public static readonly string IncorrectFormatError = "Incorrect format";
         public static readonly string NotInExpectedFormatError = "not in expected format";
+        public static readonly string NotInProperFormatError = "not in a proper format. Expected format is Key1=Value1;Key2=Value=2;";
         public static readonly string ProgramNotFoundError = "No such file";
         public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AzureCliConnectionString = "RunAs=Developer; DeveloperTool=AzureCli";
         public static readonly string InvalidDeveloperToolConnectionString = "RunAs=Developer; DeveloperTool=InvalidCLI";
         public static readonly string InvalidRunAsConnectionString = "RunAs=Invalid; DeveloperTool=AzureCLI";
+        public static readonly string IncorrectFormatConnectionString = "RunAs:Invalid; DeveloperTool:AzureCLI";
         public static readonly string AzureCliConnectionStringWithSpaces = "RunAs = Developer; DeveloperTool =AzureCLI";
         public static readonly string AzureCliConnectionStringEndingWithSemiColonAndSpace = "RunAs=Developer; DeveloperTool=AzureCLI; ";
         public static readonly string AzureCliConnectionStringWithEmptyDeveloperTool = "RunAs=Developer; DeveloperTool=";
