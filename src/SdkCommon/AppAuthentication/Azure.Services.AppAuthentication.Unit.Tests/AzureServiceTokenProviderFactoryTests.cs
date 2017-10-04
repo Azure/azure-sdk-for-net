@@ -102,6 +102,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// If the connection string is RunAs App and does not have a certificate location or app key, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void AzureCliConnectionStringNoCertLocationOrAppKeyTest()
+        {
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.AppConnStringNoLocationOrAppKey, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.ConnectionStringNotHaveAtLeastOneRequiredKey, exception.ToString());
+        }
+
+        /// <summary>
         /// If connection string ends with "; ", then the parser should ignore the white space and continue. 
         /// </summary>
         [Fact]
