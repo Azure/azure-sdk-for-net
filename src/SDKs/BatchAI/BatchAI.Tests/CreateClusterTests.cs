@@ -21,7 +21,7 @@ namespace BatchAI.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            string clusterName = $"testcluster_{DateTime.UtcNow.ToString("MM-dd-HH-mm-ss-fffff")}";
+            string clusterName = TestUtilities.GenerateName("testcluster");
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {

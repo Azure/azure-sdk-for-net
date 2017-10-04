@@ -14,8 +14,8 @@ namespace BatchAI.Tests
         [Fact]
         public void TestJobCreationAndDeletion()
         {
-            string clusterName = $"testcluster_{DateTime.UtcNow.ToString("MM-dd-HH-mm-ss-fffff")}";
-            string jobName = $"testjob_{DateTime.UtcNow.ToString("MM-dd-HH-mm-ss-fffff")}";
+            string clusterName = TestUtilities.GenerateName("testcluster");
+            string jobName = TestUtilities.GenerateName("testjob");
 
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
