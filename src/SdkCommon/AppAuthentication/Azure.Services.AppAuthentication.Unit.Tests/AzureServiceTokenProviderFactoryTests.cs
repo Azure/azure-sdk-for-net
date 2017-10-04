@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        /// If a key in the connection string is not in the correct format, an exception should be thrown. 
+        /// If the connection string is not in the correct format, an exception should be thrown. 
         /// </summary>
         [Fact]
         public void AzureCliIncorrectFormatConnectionStringTest()
@@ -84,6 +84,21 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.IncorrectFormatConnectionString, Constants.AzureAdInstance));
 
             Assert.Contains(Constants.NotInProperFormatError, exception.ToString());
+        }
+
+        /// <summary>
+        /// If the connection string is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void AzureCliConnectionStringNullOrEmptyTest()
+        {
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(null, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.ConnectionStringEmpty, exception.ToString());
+
+            exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(string.Empty, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.ConnectionStringEmpty, exception.ToString());
         }
 
         /// <summary>
