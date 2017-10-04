@@ -27,12 +27,26 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.IsType(typeof(AzureCliAccessTokenProvider), provider);
         }
 
+        /// <summary>
+        /// If DevelopmentTool in the connection string is invalid , an exception should be thrown. 
+        /// </summary>
         [Fact]
         public void AzureCliInvalidDeveloperToolTest()
         {
-            var exception = Assert.Throws<FormatException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidAzureCliConnectionString, Constants.AzureAdInstance));
+            var exception = Assert.Throws<FormatException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidDeveloperToolConnectionString, Constants.AzureAdInstance));
 
-            Assert.Contains(Constants.InvalidAzureCliConnectionString, exception.ToString());           
+            Assert.Contains(Constants.InvalidConnectionString, exception.ToString());           
+        }
+
+        /// <summary>
+        /// If RunAs in the connection string is invalid , an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void AzureCliInvalidRunAsTest()
+        {
+            var exception = Assert.Throws<FormatException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidRunAsConnectionString, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.InvalidConnectionString, exception.ToString());
         }
 
         [Fact]

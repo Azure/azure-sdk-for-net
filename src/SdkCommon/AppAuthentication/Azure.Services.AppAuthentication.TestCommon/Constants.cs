@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ClientSecret = "Secret";
         public static readonly string IntegratedAuthConnectionString = "RunAs = CurrentUser;";
         public static readonly string AzureCliConnectionString = "RunAs=Developer; DeveloperTool=AzureCli";
-        public static readonly string InvalidAzureCliConnectionString = "RunAs=Developer; DeveloperTool=InvalidCLI";
+        public static readonly string InvalidDeveloperToolConnectionString = "RunAs=Developer; DeveloperTool=InvalidCLI";
+        public static readonly string InvalidRunAsConnectionString = "RunAs=Invalid; DeveloperTool=AzureCLI";
         public static readonly string AzureCliConnectionStringWithSpaces = "RunAs = Developer; DeveloperTool =AzureCLI";
         public static readonly string ActiveDirectoryIntegratedConnectionString = "RunAs=CurrentUser;";
         public static readonly string ManagedServiceIdentityConnectionString = "RunAs=App;";
