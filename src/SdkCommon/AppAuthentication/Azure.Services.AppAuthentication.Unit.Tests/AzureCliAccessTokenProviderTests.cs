@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async Task GetTokenUsingAzureCliTest()
         {
             // Mock the progress manager. This emulates running an actual process e.g. az account get-access-token
-            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
+             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
 
             // AzureCliAccessTokenProvider has in internal only constructor to allow for unit testing. 
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
@@ -43,6 +43,22 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureCliAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.ProgramNotFoundError, exception.Message);
+        }
+
+        /// <summary>
+        /// Test that if Azure CLI failed to get token, the right type of exception is thrown, and that the error response is as expected. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task FailedToGetTokenUsingAzureCliTest()
+        {
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Failure);
+
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureCliAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+
+            Assert.Contains(Constants.FailedToGetTokenError, exception.Message);
         }
 
         /// <summary>

@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string IncorrectFormatError = "Incorrect format";
         public static readonly string NotInExpectedFormatError = "not in expected format";
         public static readonly string ProgramNotFoundError = "No such file";
+        public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
         public static readonly string NoConnectionString = "[No connection string specified]";
         public static readonly string Redacted = "<<Redacted>>";
