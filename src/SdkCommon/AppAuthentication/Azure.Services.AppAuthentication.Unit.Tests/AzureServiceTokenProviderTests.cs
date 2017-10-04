@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
 
-            exception = Assert.Throws<ArgumentNullException>(() => new AzureServiceTokenProvider(azureAdInstance: ""));
+            exception = Assert.Throws<ArgumentNullException>(() => new AzureServiceTokenProvider(azureAdInstance: string.Empty));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
