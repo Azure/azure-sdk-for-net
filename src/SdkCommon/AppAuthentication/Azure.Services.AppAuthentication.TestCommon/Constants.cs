@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string MustUseHttpsError = "must use https";
         public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
+        public static readonly string ConnectionStringEmpty = "Connection string is empty.";
         public static readonly string KeyRepeatedInConnectionString = "is repeated";
         public static readonly string InvalidConnectionString = "is not valid";
         public static readonly string Redacted = "<<Redacted>>";
