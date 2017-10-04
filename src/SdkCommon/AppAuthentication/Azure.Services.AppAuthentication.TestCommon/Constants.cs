@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string InvalidRunAsConnectionString = "RunAs=Invalid; DeveloperTool=AzureCLI";
         public static readonly string AzureCliConnectionStringWithSpaces = "RunAs = Developer; DeveloperTool =AzureCLI";
         public static readonly string AzureCliConnectionStringEndingWithSemiColonAndSpace = "RunAs=Developer; DeveloperTool=AzureCLI; ";
+        public static readonly string AzureCliConnectionStringWithEmptyDeveloperTool = "RunAs=Developer; DeveloperTool=";
+        public static readonly string AzureCliConnectionStringNoRunAs = "DeveloperTool=AzureCLI";
         public static readonly string ActiveDirectoryIntegratedConnectionString = "RunAs=CurrentUser;";
         public static readonly string ManagedServiceIdentityConnectionString = "RunAs=App;";
         public static readonly string CertificateConnStringThumbprintLocalMachine = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=LocalMachine";

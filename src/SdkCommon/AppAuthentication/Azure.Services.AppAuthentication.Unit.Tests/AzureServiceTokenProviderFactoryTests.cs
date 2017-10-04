@@ -50,6 +50,21 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// If a key in the connection string is empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void AzureCliInvalidConnectionStringTest()
+        {
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.AzureCliConnectionStringNoRunAs, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.InvalidConnectionString, exception.ToString());
+
+            exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.AzureCliConnectionStringWithEmptyDeveloperTool, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.InvalidConnectionString, exception.ToString());
+        }
+
+        /// <summary>
         /// If connection string ends with "; ", then the parser should ignore the white space and continue. 
         /// </summary>
         [Fact]
