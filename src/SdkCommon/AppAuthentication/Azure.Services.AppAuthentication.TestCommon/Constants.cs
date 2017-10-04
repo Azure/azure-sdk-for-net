@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ProgramNotFoundError = "No such file";
         public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
+        public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
         public static readonly string Redacted = "<<Redacted>>";
         public static readonly string InvalidResource = "invalid_resource";

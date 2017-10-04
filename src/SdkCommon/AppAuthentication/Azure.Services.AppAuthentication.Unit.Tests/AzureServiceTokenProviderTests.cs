@@ -141,6 +141,21 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.MustUseHttpsError, exception.ToString());
         }
 
+        /// <summary>
+        /// If azureAdInstance is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void NullOrEmptyAzureAdInstanceTest()
+        {
+            var exception = Assert.Throws<ArgumentNullException>(() => new AzureServiceTokenProvider(azureAdInstance: null));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            exception = Assert.Throws<ArgumentNullException>(() => new AzureServiceTokenProvider(azureAdInstance: ""));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+        }
+
         [Fact]
         public async Task DiscoveryTestFirstSuccess()
         {
