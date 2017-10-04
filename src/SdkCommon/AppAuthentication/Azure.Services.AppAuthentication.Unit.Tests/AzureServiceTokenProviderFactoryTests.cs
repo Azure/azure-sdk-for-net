@@ -49,6 +49,18 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.InvalidConnectionString, exception.ToString());
         }
 
+        /// <summary>
+        /// If connection string ends with "; ", then the parser should ignore the white space and continue. 
+        /// </summary>
+        [Fact]
+        public void AzureCliConnectionStringEndsWithSpaceTest()
+        {
+            var provider = AzureServiceTokenProviderFactory.Create(Constants.AzureCliConnectionStringEndingWithSemiColonAndSpace, Constants.AzureAdInstance);
+            var expected = typeof(AzureCliAccessTokenProvider);
+
+            Assert.IsType(expected, provider);
+        }
+
         [Fact]
         public void ActiveDirectoryIntegratedValidTest()
         {
