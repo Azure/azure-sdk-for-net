@@ -25,8 +25,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var token = await azureCliAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
             Validator.ValidateToken(token, azureCliAccessTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId);
-
-            AccessTokenCache.Clear();
         }
 
         /// <summary>

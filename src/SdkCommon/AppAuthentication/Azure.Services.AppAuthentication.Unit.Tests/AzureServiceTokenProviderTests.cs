@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using Xunit;
@@ -16,6 +18,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
     {
         public void Dispose()
         {
+            // Clear the cache after running each test.
             AccessTokenCache.Clear();
         }
 
@@ -26,35 +29,67 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public async Task GetTokenCacheTest()
         {
-            // Create an instance of AzureServiceTokenProvider based on AzureCliAccessTokenProvider. 
+            // Create two instances of AzureServiceTokenProvider based on AzureCliAccessTokenProvider. 
             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
             AzureServiceTokenProvider azureServiceTokenProvider1 = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
 
-            List<Task<string>> tasks = new List<Task<string>>();
+            List<Task> tasks = new List<Task>();
 
-            // Use AzureServiceTokenProvider to get tokens in parallel.
+            // ManualResetEvent will enable testing of SemaphoreSlim used in AzureServiceTokenProvider.
+            ManualResetEvent manualResetEvent = new ManualResetEvent(false);
+            
+            // Use AzureServiceTokenProviders to get tokens in parallel.
+            for (int i = 0; i < 5; i++)
+            {
+                Task task = Task.Run(async delegate
+                {
+                    // This will prevent the next line from running, until manualResetEvent.Set() is called. 
+                    // This will ensure all GetAccessTokenAsync calls are made at once.
+                    manualResetEvent.WaitOne();
+
+                    await azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+                });
+
+                tasks.Add(task);
+
+                Task task1 = Task.Run(async delegate
+                {
+                    manualResetEvent.WaitOne();
+
+                    // This is using the other instance of AzureServiceTokenProvider.
+                    await azureServiceTokenProvider1.GetAccessTokenAsync(Constants.KeyVaultResourceId);
+                });
+
+                tasks.Add(task1);
+            }
+
+            // This will cause GetAccessTokenAsync calls to be made concurrently. 
+            manualResetEvent.Set();
+            await Task.WhenAll(tasks);
+
+            // Even though multiple calls are made to get token concurrently, using two different instances, the process manager should only be called once. 
+            // This test tells us that the cache is working as intended. 
+            Assert.Equal(1, mockProcessManager.HitCount);
+
+            // Get the token again. This will test if the cache call before semaphore use is working as intended.
             for (int i = 0; i < 5; i++)
             {
                 tasks.Add(azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId));
             }
 
             await Task.WhenAll(tasks);
-            
-            // Use a new token provider instance to get a token, and check token was fetched correctly. 
-            // The token is set to expire in 5 minutes and 2 seconds. 
-            var token = await azureServiceTokenProvider1.GetAccessTokenAsync(Constants.KeyVaultResourceId).ConfigureAwait(false);
-            Validator.ValidateToken(token, azureCliAccessTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId);
 
-            // Even though multiple calls are made to get token, using two different instances, the actual process manager should only be called once. 
-            // This test tells us that the cache is working as intended. 
+            // The hit count should still be 1, since the token should be fetched from cache. 
             Assert.Equal(1, mockProcessManager.HitCount);
 
-            // Wait for 2 seconds. The previous token was created to expire in 5 minutes and 2 seconds. 
-            await Task.Delay(2000);
-
-            // It should be within 5 minutes of expiry now. 
+            // Update the cache entry, to simulate token expiration. This updated token will expire in just less than 5 minutes. 
+            // In a real scenario, the token will expire after some time. 
+            // AccessTokenCache should not return this, since it is about to expire. 
+            AccessTokenCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/", 
+                new Tuple<AccessToken, Principal>(AccessToken.Parse(TokenHelper.GetUserTokenResponse(5 * 60 - 2)), null));
+            
             // Get the token again. 
             for (int i = 0; i < 5; i++)
             {
@@ -65,8 +100,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Hit count should be 2 now, since new token should have been aquired. 
             Assert.Equal(2, mockProcessManager.HitCount);
-
-            AccessTokenCache.Clear();
         }
 
         /// <summary>
@@ -116,8 +149,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi msiStubHandler = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(msiStubHandler);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
@@ -129,12 +163,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(1, mockProcessManager.HitCount);
 
             // Msi handler will not be hit, since AzureCliAccessTokenProvider was able to return token. So this hit count should be 0. 
-            Assert.Equal(0, msiStubHandler.HitCount);
+            Assert.Equal(0, mockMsi.HitCount);
 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.UserType, Constants.TenantId);
-
-            AccessTokenCache.Clear();
-
         }
 
         [Fact]
@@ -145,8 +176,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi msiStubHandler = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
-            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(msiStubHandler);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase>{azureCliAccessTokenProvider, msiAccessTokenProvider};
@@ -158,12 +190,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(1, mockProcessManager.HitCount);
 
             // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 1 here.
-            Assert.Equal(1, msiStubHandler.HitCount);
+            Assert.Equal(1, mockMsi.HitCount);
 
             // MsiAccessTokenProvider should succeed, and we should get a valid token. 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
-
-            AccessTokenCache.Clear();
         }
     }
 }

@@ -26,8 +26,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Check if the principal used and type were as expected. 
             Validator.ValidateToken(token, clientSecretAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
-            
-            AccessTokenCache.Clear();
         }
 
         /// <summary>
