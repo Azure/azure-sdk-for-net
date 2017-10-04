@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string MustUseHttpsError = "must use https";
         public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
+        public static readonly string InvalidConnectionString = "is not valid";
         public static readonly string Redacted = "<<Redacted>>";
         public static readonly string InvalidResource = "invalid_resource";
 
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ClientSecret = "Secret";
         public static readonly string IntegratedAuthConnectionString = "RunAs = CurrentUser;";
         public static readonly string AzureCliConnectionString = "RunAs=Developer; DeveloperTool=AzureCli";
+        public static readonly string InvalidAzureCliConnectionString = "RunAs=Developer; DeveloperTool=InvalidCLI";
         public static readonly string AzureCliConnectionStringWithSpaces = "RunAs = Developer; DeveloperTool =AzureCLI";
         public static readonly string ActiveDirectoryIntegratedConnectionString = "RunAs=CurrentUser;";
         public static readonly string ManagedServiceIdentityConnectionString = "RunAs=App;";

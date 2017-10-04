@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
+using System;
 using Xunit;
 
 namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
@@ -27,12 +28,21 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         [Fact]
+        public void AzureCliInvalidDeveloperToolTest()
+        {
+            var exception = Assert.Throws<FormatException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidAzureCliConnectionString, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.InvalidAzureCliConnectionString, exception.ToString());           
+        }
+
+        [Fact]
         public void ActiveDirectoryIntegratedValidTest()
         {
             var provider = AzureServiceTokenProviderFactory.Create(Constants.ActiveDirectoryIntegratedConnectionString, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.ActiveDirectoryIntegratedConnectionString, provider.ConnectionString);
         }
+
 
         [Fact]
         public void ManagedServiceIdentityValidTest()
