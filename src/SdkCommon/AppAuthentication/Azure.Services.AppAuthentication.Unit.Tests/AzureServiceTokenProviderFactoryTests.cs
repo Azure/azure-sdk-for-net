@@ -113,6 +113,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// If the connection string has invalid cert location, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void AzureCliConnectionStringInvalidCertLocationTest()
+        {
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringThumbprintInvalidLocation, Constants.AzureAdInstance));
+
+            Assert.Contains(Constants.InvalidCertLocationError, exception.ToString());
+        }
+
+        /// <summary>
         /// If connection string ends with "; ", then the parser should ignore the white space and continue. 
         /// </summary>
         [Fact]
