@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.BatchAI</PackageId>
+    <Description>Provides management capabilities for Azure Batch AI.</Description>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.BatchAI</AssemblyName>    
+    <PackageTags>Microsoft Azure BatchAI;BatchAI;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
