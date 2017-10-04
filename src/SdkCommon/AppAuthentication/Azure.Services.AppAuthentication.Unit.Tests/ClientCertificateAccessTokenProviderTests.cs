@@ -22,9 +22,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Delete the cert
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
             CertUtil.DeleteCertificate(cert.Thumbprint);
-
-            // Clear the cache
-            AccessTokenCache.Clear();
         }
 
         [Fact]
@@ -48,8 +45,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
             Validator.ValidateToken(token, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
-
-            AccessTokenCache.Clear();
         }
 
         [Fact]
@@ -73,8 +68,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
             Validator.ValidateToken(token, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
-
-            AccessTokenCache.Clear();
         }
 
         /// <summary>

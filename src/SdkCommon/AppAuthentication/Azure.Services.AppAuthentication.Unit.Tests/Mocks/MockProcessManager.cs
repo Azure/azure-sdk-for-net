@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             HitCount++;
                                    
-            // This token will expire after 5 minutes and 2 seconds.
+            // This token will expire after 1 hour.
             // This is used to test the cache.
-            var tokenResult = TokenHelper.GetUserTokenResponse(5*60 + 2);
+            var tokenResult = TokenHelper.GetUserTokenResponse(60*60);
 
             switch (_requestType)
             {

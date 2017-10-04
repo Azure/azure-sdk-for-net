@@ -20,8 +20,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Delete the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
-
-            AccessTokenCache.Clear();
         }
 
         [Fact]
@@ -37,8 +35,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Check if the principalused and type are as expected. 
             Validator.ValidateToken(token, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
-
-            AccessTokenCache.Clear();
         }
 
         [Fact]
@@ -61,8 +57,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
 
             Validator.ValidateToken(token, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
-
-            AccessTokenCache.Clear();
         }
 
         /// <summary>
