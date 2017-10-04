@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<ComputeNodeInformation> ComputeNodeInformationProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
+            public readonly PropertyAccessor<TaskContainerSettings> ContainerSettingsProperty;
             public readonly PropertyAccessor<DateTime?> CreationTimeProperty;
             public readonly PropertyAccessor<TaskDependencies> DependsOnProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
@@ -54,138 +55,143 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.AffinityInformationProperty = this.CreatePropertyAccessor<AffinityInformation>("AffinityInformation", BindingAccess.Read | BindingAccess.Write);
-                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
-                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
-                this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.ComputeNodeInformationProperty = this.CreatePropertyAccessor<ComputeNodeInformation>("ComputeNodeInformation", BindingAccess.None);
-                this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
-                this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>("CreationTime", BindingAccess.None);
-                this.DependsOnProperty = this.CreatePropertyAccessor<TaskDependencies>("DependsOn", BindingAccess.Read | BindingAccess.Write);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.ETagProperty = this.CreatePropertyAccessor<string>("ETag", BindingAccess.None);
-                this.ExecutionInformationProperty = this.CreatePropertyAccessor<TaskExecutionInformation>("ExecutionInformation", BindingAccess.None);
-                this.ExitConditionsProperty = this.CreatePropertyAccessor<ExitConditions>("ExitConditions", BindingAccess.Read | BindingAccess.Write);
-                this.FilesToStageProperty = this.CreatePropertyAccessor<IList<IFileStagingProvider>>("FilesToStage", BindingAccess.Read | BindingAccess.Write);
-                this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
-                this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
-                this.MultiInstanceSettingsProperty = this.CreatePropertyAccessor<MultiInstanceSettings>("MultiInstanceSettings", BindingAccess.Read | BindingAccess.Write);
-                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>("OutputFiles", BindingAccess.Read | BindingAccess.Write);
-                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.TaskState?>("PreviousState", BindingAccess.None);
-                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
-                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.StateProperty = this.CreatePropertyAccessor<Common.TaskState?>("State", BindingAccess.None);
-                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
-                this.StatisticsProperty = this.CreatePropertyAccessor<TaskStatistics>("Statistics", BindingAccess.None);
-                this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
-                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
+                this.AffinityInformationProperty = this.CreatePropertyAccessor<AffinityInformation>(nameof(AffinityInformation), BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>(nameof(AuthenticationTokenSettings), BindingAccess.Read | BindingAccess.Write);
+                this.CommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.ComputeNodeInformationProperty = this.CreatePropertyAccessor<ComputeNodeInformation>(nameof(ComputeNodeInformation), BindingAccess.None);
+                this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>(nameof(ContainerSettings), BindingAccess.Read | BindingAccess.Write);
+                this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
+                this.DependsOnProperty = this.CreatePropertyAccessor<TaskDependencies>(nameof(DependsOn), BindingAccess.Read | BindingAccess.Write);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(EnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.ETagProperty = this.CreatePropertyAccessor<string>(nameof(ETag), BindingAccess.None);
+                this.ExecutionInformationProperty = this.CreatePropertyAccessor<TaskExecutionInformation>(nameof(ExecutionInformation), BindingAccess.None);
+                this.ExitConditionsProperty = this.CreatePropertyAccessor<ExitConditions>(nameof(ExitConditions), BindingAccess.Read | BindingAccess.Write);
+                this.FilesToStageProperty = this.CreatePropertyAccessor<IList<IFileStagingProvider>>(nameof(FilesToStage), BindingAccess.Read | BindingAccess.Write);
+                this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
+                this.MultiInstanceSettingsProperty = this.CreatePropertyAccessor<MultiInstanceSettings>(nameof(MultiInstanceSettings), BindingAccess.Read | BindingAccess.Write);
+                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>(nameof(OutputFiles), BindingAccess.Read | BindingAccess.Write);
+                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.TaskState?>(nameof(PreviousState), BindingAccess.None);
+                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(PreviousStateTransitionTime), BindingAccess.None);
+                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.StateProperty = this.CreatePropertyAccessor<Common.TaskState?>(nameof(State), BindingAccess.None);
+                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(StateTransitionTime), BindingAccess.None);
+                this.StatisticsProperty = this.CreatePropertyAccessor<TaskStatistics>(nameof(Statistics), BindingAccess.None);
+                this.UrlProperty = this.CreatePropertyAccessor<string>(nameof(Url), BindingAccess.None);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>(nameof(UserIdentity), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CloudTask protocolObject) : base(BindingState.Bound)
             {
                 this.AffinityInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AffinityInfo, o => new AffinityInformation(o).Freeze()),
-                    "AffinityInformation",
+                    nameof(AffinityInformation),
                     BindingAccess.Read);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollectionAndFreeze(protocolObject.ApplicationPackageReferences),
-                    "ApplicationPackageReferences",
+                    nameof(ApplicationPackageReferences),
                     BindingAccess.Read);
                 this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o).Freeze()),
-                    "AuthenticationTokenSettings",
+                    nameof(AuthenticationTokenSettings),
                     BindingAccess.Read);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
-                    "CommandLine",
+                    nameof(CommandLine),
                     BindingAccess.Read);
                 this.ComputeNodeInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NodeInfo, o => new ComputeNodeInformation(o).Freeze()),
-                    "ComputeNodeInformation",
+                    nameof(ComputeNodeInformation),
                     BindingAccess.Read);
                 this.ConstraintsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new TaskConstraints(o)),
-                    "Constraints",
+                    nameof(Constraints),
                     BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
+                    nameof(ContainerSettings),
+                    BindingAccess.Read);
                 this.CreationTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.CreationTime,
-                    "CreationTime",
+                    nameof(CreationTime),
                     BindingAccess.Read);
                 this.DependsOnProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.DependsOn, o => new TaskDependencies(o).Freeze()),
-                    "DependsOn",
+                    nameof(DependsOn),
                     BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollectionAndFreeze(protocolObject.EnvironmentSettings),
-                    "EnvironmentSettings",
+                    nameof(EnvironmentSettings),
                     BindingAccess.Read);
                 this.ETagProperty = this.CreatePropertyAccessor(
                     protocolObject.ETag,
-                    "ETag",
+                    nameof(ETag),
                     BindingAccess.Read);
                 this.ExecutionInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExecutionInfo, o => new TaskExecutionInformation(o).Freeze()),
-                    "ExecutionInformation",
+                    nameof(ExecutionInformation),
                     BindingAccess.Read);
                 this.ExitConditionsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExitConditions, o => new ExitConditions(o).Freeze()),
-                    "ExitConditions",
+                    nameof(ExitConditions),
                     BindingAccess.Read);
                 this.FilesToStageProperty = this.CreatePropertyAccessor<IList<IFileStagingProvider>>(
-                    "FilesToStage",
+                    nameof(FilesToStage),
                     BindingAccess.None);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read);
                 this.LastModifiedProperty = this.CreatePropertyAccessor(
                     protocolObject.LastModified,
-                    "LastModified",
+                    nameof(LastModified),
                     BindingAccess.Read);
                 this.MultiInstanceSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.MultiInstanceSettings, o => new MultiInstanceSettings(o).Freeze()),
-                    "MultiInstanceSettings",
+                    nameof(MultiInstanceSettings),
                     BindingAccess.Read);
                 this.OutputFilesProperty = this.CreatePropertyAccessor(
                     OutputFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.OutputFiles),
-                    "OutputFiles",
+                    nameof(OutputFiles),
                     BindingAccess.Read);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.PreviousState),
-                    "PreviousState",
+                    nameof(PreviousState),
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.PreviousStateTransitionTime,
-                    "PreviousStateTransitionTime",
+                    nameof(PreviousStateTransitionTime),
                     BindingAccess.Read);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.ResourceFiles),
-                    "ResourceFiles",
+                    nameof(ResourceFiles),
                     BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.State),
-                    "State",
+                    nameof(State),
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.StateTransitionTime,
-                    "StateTransitionTime",
+                    nameof(StateTransitionTime),
                     BindingAccess.Read);
                 this.StatisticsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Stats, o => new TaskStatistics(o).Freeze()),
-                    "Statistics",
+                    nameof(Statistics),
                     BindingAccess.Read);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
-                    "Url",
+                    nameof(Url),
                     BindingAccess.Read);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o).Freeze()),
-                    "UserIdentity",
+                    nameof(UserIdentity),
                     BindingAccess.Read);
             }
         }
@@ -302,6 +308,22 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.ConstraintsProperty.Value; }
             set { this.propertyContainer.ConstraintsProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If the pool that will run this task has <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> set, 
+        /// this must be set as well. If the pool that will run this task doesn't have <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> 
+        /// set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR 
+        /// (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables 
+        /// are mapped into the container, and the task command line is executed in the container.
+        /// </remarks>
+        public TaskContainerSettings ContainerSettings
+        {
+            get { return this.propertyContainer.ContainerSettingsProperty.Value; }
+            set { this.propertyContainer.ContainerSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -539,6 +561,7 @@ namespace Microsoft.Azure.Batch
                 AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
+                ContainerSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerSettings, (o) => o.GetTransportObject()),
                 DependsOn = UtilitiesInternal.CreateObjectWithNullCheck(this.DependsOn, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),

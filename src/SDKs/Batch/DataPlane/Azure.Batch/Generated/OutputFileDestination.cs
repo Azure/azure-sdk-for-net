@@ -22,13 +22,11 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class OutputFileDestination : ITransportObjectProvider<Models.OutputFileDestination>, IPropertyMetadata
     {
-        private readonly OutputFileBlobContainerDestination container;
-
         #region Constructors
 
         internal OutputFileDestination(Models.OutputFileDestination protocolObject)
         {
-            this.container = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Container, o => new OutputFileBlobContainerDestination(o).Freeze());
+            this.Container = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Container, o => new OutputFileBlobContainerDestination(o).Freeze());
         }
 
         #endregion Constructors
@@ -38,10 +36,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets a location in Azure blob storage to which files are uploaded.
         /// </summary>
-        public OutputFileBlobContainerDestination Container
-        {
-            get { return this.container; }
-        }
+        public OutputFileBlobContainerDestination Container { get; }
 
         #endregion // OutputFileDestination
 

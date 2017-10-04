@@ -22,21 +22,15 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class PoolStatistics : IPropertyMetadata
     {
-        private readonly DateTime lastUpdateTime;
-        private readonly ResourceStatistics resourceStatistics;
-        private readonly DateTime startTime;
-        private readonly string url;
-        private readonly UsageStatistics usageStatistics;
-
         #region Constructors
 
         internal PoolStatistics(Models.PoolStatistics protocolObject)
         {
-            this.lastUpdateTime = protocolObject.LastUpdateTime;
-            this.resourceStatistics = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ResourceStats, o => new ResourceStatistics(o).Freeze());
-            this.startTime = protocolObject.StartTime;
-            this.url = protocolObject.Url;
-            this.usageStatistics = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UsageStats, o => new UsageStatistics(o).Freeze());
+            this.LastUpdateTime = protocolObject.LastUpdateTime;
+            this.ResourceStatistics = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ResourceStats, o => new ResourceStatistics(o).Freeze());
+            this.StartTime = protocolObject.StartTime;
+            this.Url = protocolObject.Url;
+            this.UsageStatistics = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UsageStats, o => new UsageStatistics(o).Freeze());
         }
 
         #endregion Constructors
@@ -47,42 +41,27 @@ namespace Microsoft.Azure.Batch
         /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
         /// cref="StartTime"/> and this value.
         /// </summary>
-        public DateTime LastUpdateTime
-        {
-            get { return this.lastUpdateTime; }
-        }
+        public DateTime LastUpdateTime { get; }
 
         /// <summary>
         /// Gets statistics related to resource consumption by compute nodes in the pool, such as average CPU utilization.
         /// </summary>
-        public ResourceStatistics ResourceStatistics
-        {
-            get { return this.resourceStatistics; }
-        }
+        public ResourceStatistics ResourceStatistics { get; }
 
         /// <summary>
         /// Gets the start time of the time range covered by the statistics.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         /// <summary>
         /// Gets the URL for the statistics.
         /// </summary>
-        public string Url
-        {
-            get { return this.url; }
-        }
+        public string Url { get; }
 
         /// <summary>
         /// Gets statistics related to pool usage, such as the amount of core-time used.
         /// </summary>
-        public UsageStatistics UsageStatistics
-        {
-            get { return this.usageStatistics; }
-        }
+        public UsageStatistics UsageStatistics { get; }
 
         #endregion // PoolStatistics
 
