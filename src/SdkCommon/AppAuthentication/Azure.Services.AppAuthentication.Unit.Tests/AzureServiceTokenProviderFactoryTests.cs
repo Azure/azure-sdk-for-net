@@ -119,9 +119,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public void AzureCliConnectionStringEndsWithSpaceTest()
         {
             var provider = AzureServiceTokenProviderFactory.Create(Constants.AzureCliConnectionStringEndingWithSemiColonAndSpace, Constants.AzureAdInstance);
-            var expected = typeof(AzureCliAccessTokenProvider);
 
-            Assert.IsType(expected, provider);
+            Assert.NotNull(provider);
+            Assert.Equal(Constants.AzureCliConnectionStringEndingWithSemiColonAndSpace, provider.ConnectionString);
+            Assert.IsType(typeof(AzureCliAccessTokenProvider), provider);
         }
 
         [Fact]
