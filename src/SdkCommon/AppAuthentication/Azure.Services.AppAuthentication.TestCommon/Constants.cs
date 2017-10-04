@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
         public static readonly string ConnectionStringEmpty = "Connection string is empty.";
+        public static readonly string InvalidCertLocationError = "is not valid. Valid values are CurrentUser and LocalMachine.";
         public static readonly string ConnectionStringNotHaveAtLeastOneRequiredKey = "is not valid. Must contain at least one of";
         public static readonly string KeyRepeatedInConnectionString = "is repeated";
         public static readonly string InvalidConnectionString = "is not valid";
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ActiveDirectoryIntegratedConnectionString = "RunAs=CurrentUser;";
         public static readonly string ManagedServiceIdentityConnectionString = "RunAs=App;";
         public static readonly string CertificateConnStringThumbprintLocalMachine = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=LocalMachine";
+        public static readonly string CertificateConnStringThumbprintInvalidLocation = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=InvalidLocation";
         public static readonly string AppConnStringNoLocationOrAppKey = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;";
         public static readonly string CertificateConnStringThumbprintCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringSubjectNameCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateSubjectName=123;CertificateStoreLocation=CurrentUser";
