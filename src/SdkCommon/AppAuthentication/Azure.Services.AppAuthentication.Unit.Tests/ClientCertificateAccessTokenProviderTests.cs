@@ -118,6 +118,26 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
 
+        /// <summary>
+        /// If the store location is invalid, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void InvalidStoreLocationTest()
+        {
+            // Import the test certificate. 
+            X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
+            CertUtil.ImportCertificate(cert);
+
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
+
+            // Create ClientCertificateAzureServiceTokenProvider instance
+            var exception = Assert.Throws<ArgumentException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                cert.Thumbprint, true, Constants.InvalidString, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.InvalidCertLocationError, exception.ToString());
+        }
+
         [Fact]
         public async Task SubjectNameSuccessTest()
         {
