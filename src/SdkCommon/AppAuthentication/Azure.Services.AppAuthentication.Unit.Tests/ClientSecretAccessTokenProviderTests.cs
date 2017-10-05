@@ -99,5 +99,25 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
+
+        /// <summary>
+        /// If the clientSecret is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void ClientSecretNullOrEmptyTest()
+        {
+            // MockAuthenticationContext is being asked to act like client secret auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCredentialSuccess);
+
+            // Create ClientSecretAccessTokenProvider instance
+            var exception = Assert.Throws<ArgumentNullException>(() => new ClientSecretAccessTokenProvider(Constants.TestAppId, null, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            // Create ClientSecretAccessTokenProvider instance
+            exception = Assert.Throws<ArgumentNullException>(() => new ClientSecretAccessTokenProvider(Constants.TestAppId, string.Empty, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+        }
     }
 }
