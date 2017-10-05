@@ -6,8 +6,13 @@
     <VersionPrefix>2.0.2</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
     <PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup>
+	<PackageReleaseNotes>
+	  <![CDATA[
+		This change adds metadata Geo-Disaster recovery support to the Eventhub .NET management client.
+		1) Added APIs for creating and managing Disaster recovery configurations which allows users to pair two Eventhub namespaces in a primary-secondary configuration and creates an alias to represent the DR pair.
+		2) Added APIs to trigger a Geo-DR failover which re-points the alias from the primary to the secondary namespace and APIs to break DR pairing which disables Geo-DR
+	  ]]>
+	</PackageReleaseNotes>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 </Project>
