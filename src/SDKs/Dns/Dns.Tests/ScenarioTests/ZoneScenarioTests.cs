@@ -443,17 +443,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
                             null),
                     ex => ex.Body.Code == "PreconditionFailed");
 
-                var result = dnsClient.Zones.Delete(
+                dnsClient.Zones.Delete(
                     resourceGroup.Name,
                     zoneName,
                     ifMatch: null);
-                Assert.Equal(result.Status, OperationStatus.Succeeded);
 
-                result = dnsClient.Zones.Delete(
+                dnsClient.Zones.Delete(
                     resourceGroup.Name,
                     "hiya.com",
                     ifMatch: null);
-                Assert.Null(result);
+                //Assert.Null(result);
             }
         }
 
@@ -536,10 +535,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     new Zone
                     {
                         Location = location,
-                        MaxNumberOfRecordSets = 42,
-                        // Test that specifying this value does not break Create (it must be ignored on server side).
-                        NumberOfRecordSets = 65,
-                        // Test that specifying this value does not break Create (it must be ignored on server side).
                     });
 
                 // Retrieve the zone after create
@@ -554,8 +549,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     {"tag1", "value1"}
                 };
-                retrievedZone.NumberOfRecordSets = null;
-                retrievedZone.MaxNumberOfRecordSets = null;
 
                 // Delete the zone
                 DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
@@ -592,10 +585,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
         {
             foreach (string zoneName in zoneNames)
             {
-                var response = dnsClient.Zones.Delete(
+                dnsClient.Zones.Delete(
                     resourceGroup.Name,
                     zoneName);
-                Assert.True(response.Status == OperationStatus.Succeeded);
             }
         }
 
