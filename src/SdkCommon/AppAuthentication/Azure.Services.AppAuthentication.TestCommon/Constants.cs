@@ -59,6 +59,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ClientSecretConnString = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};AppKey={ClientSecret}";
         public static readonly string ConnectionStringEnvironmentVariableName = "AzureServicesAuthConnectionString";
         public static readonly string CurrentUserStore = "CurrentUser";
+        public static readonly string InvalidString = "Invalid";
 
         // Http related constants
         public static readonly string JsonContentType = "application/json";
