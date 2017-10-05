@@ -97,6 +97,27 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
 
+        /// <summary>
+        /// If the certificateSubjectNameOrThumbprint is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void CertSubjectNameOrThumbprintNullOrEmptyTest()
+        {
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
+
+            // Create ClientCertificateAzureServiceTokenProvider instance
+            var exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                null, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                string.Empty, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+        }
+
         [Fact]
         public async Task SubjectNameSuccessTest()
         {
