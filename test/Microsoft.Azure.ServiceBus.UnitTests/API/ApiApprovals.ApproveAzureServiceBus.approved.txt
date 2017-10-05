@@ -123,6 +123,8 @@ namespace Microsoft.Azure.ServiceBus
     }
     public class Message
     {
+        public static string DeadLetterErrorDescriptionHeader;
+        public static string DeadLetterReasonHeader;
         public Message() { }
         public Message(byte[] body) { }
         public byte[] Body { get; set; }
@@ -184,10 +186,11 @@ namespace Microsoft.Azure.ServiceBus
         public string QueueName { get; }
         public Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
-        public System.Threading.Tasks.Task AbandonAsync(string lockToken) { }
+        public System.Threading.Tasks.Task AbandonAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
         public System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber) { }
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
-        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken) { }
+        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
+        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageHandlerOptions) { }
@@ -321,11 +324,13 @@ namespace Microsoft.Azure.ServiceBus
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public string SubscriptionName { get; }
         public string TopicPath { get; }
-        public System.Threading.Tasks.Task AbandonAsync(string lockToken) { }
+        public System.Threading.Tasks.Task AbandonAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
         public System.Threading.Tasks.Task AddRuleAsync(string ruleName, Microsoft.Azure.ServiceBus.Filter filter) { }
         public System.Threading.Tasks.Task AddRuleAsync(Microsoft.Azure.ServiceBus.RuleDescription description) { }
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
         public System.Threading.Tasks.Task DeadLetterAsync(string lockToken) { }
+        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify) { }
+        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null) { }
         public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Microsoft.Azure.ServiceBus.RuleDescription>> GetRulesAsync() { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
@@ -370,7 +375,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         long LastPeekedSequenceNumber { get; }
         System.Threading.Tasks.Task CompleteAsync(System.Collections.Generic.IEnumerable<string> lockTokens);
-        System.Threading.Tasks.Task DeferAsync(string lockToken);
+        System.Threading.Tasks.Task DeferAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null);
         System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> PeekAsync();
         System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> PeekAsync(int maxMessageCount);
         System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> PeekBySequenceNumberAsync(long fromSequenceNumber);
@@ -390,9 +395,10 @@ namespace Microsoft.Azure.ServiceBus.Core
         string Path { get; }
         int PrefetchCount { get; set; }
         Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; }
-        System.Threading.Tasks.Task AbandonAsync(string lockToken);
+        System.Threading.Tasks.Task AbandonAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null);
         System.Threading.Tasks.Task CompleteAsync(string lockToken);
-        System.Threading.Tasks.Task DeadLetterAsync(string lockToken);
+        System.Threading.Tasks.Task DeadLetterAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null);
+        System.Threading.Tasks.Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null);
         void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler);
         void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageHandlerOptions);
     }
@@ -413,16 +419,17 @@ namespace Microsoft.Azure.ServiceBus.Core
         public int PrefetchCount { get; set; }
         public Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; set; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
-        public System.Threading.Tasks.Task AbandonAsync(string lockToken) { }
+        public System.Threading.Tasks.Task AbandonAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
         public System.Threading.Tasks.Task CompleteAsync(System.Collections.Generic.IEnumerable<string> lockTokens) { }
-        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken) { }
-        public System.Threading.Tasks.Task DeferAsync(string lockToken) { }
-        protected virtual System.Threading.Tasks.Task OnAbandonAsync(string lockToken) { }
+        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
+        public System.Threading.Tasks.Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null) { }
+        public System.Threading.Tasks.Task DeferAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
+        protected virtual System.Threading.Tasks.Task OnAbandonAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         protected virtual System.Threading.Tasks.Task OnCompleteAsync(System.Collections.Generic.IEnumerable<string> lockTokens) { }
-        protected virtual System.Threading.Tasks.Task OnDeadLetterAsync(string lockToken) { }
-        protected virtual System.Threading.Tasks.Task OnDeferAsync(string lockToken) { }
+        protected virtual System.Threading.Tasks.Task OnDeadLetterAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, string deadLetterReason = null, string deadLetterErrorDescription = null) { }
+        protected virtual System.Threading.Tasks.Task OnDeferAsync(string lockToken, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null) { }
         protected virtual void OnMessageHandler(Microsoft.Azure.ServiceBus.MessageHandlerOptions registerHandlerOptions, System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> callback) { }
         protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1) { }
         protected virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> OnReceiveAsync(int maxMessageCount, System.TimeSpan serverWaitTime) { }

@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Text;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Xunit;
 
     public class SenderReceiverTests : SenderReceiverClientTestBase
@@ -230,6 +230,81 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             lock (syncLock)
             {
                 Assert.True(exceptionReceived, "Did not receive ObjectDisposedException"); 
+            }
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task DeadLetterReasonShouldPropagateToTheReceivedMessage()
+        {
+            var queueName = TestConstants.NonPartitionedQueueName;
+
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
+            var dlqReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueName), ReceiveMode.ReceiveAndDelete);
+
+            try
+            {
+                await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("deadLetterTest2")));
+                var message = await receiver.ReceiveAsync();
+                await receiver.DeadLetterAsync(
+                    message.SystemProperties.LockToken,
+                    "deadLetterReason",
+                    "deadLetterDescription");
+                var dlqMessage = await dlqReceiver.ReceiveAsync();
+
+                Assert.True(dlqMessage.UserProperties.ContainsKey(Message.DeadLetterReasonHeader));
+                Assert.True(dlqMessage.UserProperties.ContainsKey(Message.DeadLetterErrorDescriptionHeader));
+                Assert.Equal(dlqMessage.UserProperties[Message.DeadLetterReasonHeader], "deadLetterReason");
+                Assert.Equal(dlqMessage.UserProperties[Message.DeadLetterErrorDescriptionHeader], "deadLetterDescription");
+            }
+            finally
+            {
+                await sender.CloseAsync();
+                await receiver.CloseAsync();
+                await dlqReceiver.CloseAsync();
+            }
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task DispositionWithUpdatedPropertiesShouldPropagateToReceivedMessage()
+        {
+            var queueName = TestConstants.NonPartitionedQueueName;
+
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
+
+            try
+            {
+                await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("propertiesToUpdate")));
+
+                var message = await receiver.ReceiveAsync();
+                await receiver.AbandonAsync(message.SystemProperties.LockToken, new Dictionary<string, object>
+                {
+                    {"key", "value1"}
+                });
+
+                message = await receiver.ReceiveAsync();
+                Assert.True(message.UserProperties.ContainsKey("key"));
+                Assert.Equal(message.UserProperties["key"], "value1");
+
+                long sequenceNumber = message.SystemProperties.SequenceNumber;
+                await receiver.DeferAsync(message.SystemProperties.LockToken, new Dictionary<string, object>
+                {
+                    {"key", "value2"}
+                });
+
+                message = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
+                Assert.True(message.UserProperties.ContainsKey("key"));
+                Assert.Equal(message.UserProperties["key"], "value2");
+
+                await receiver.CompleteAsync(message.SystemProperties.LockToken);
+            }
+            finally
+            {
+                await sender.CloseAsync();
+                await receiver.CloseAsync();
             }
         }
     }

@@ -23,6 +23,8 @@ namespace Microsoft.Azure.ServiceBus
 
         public const int DefaultClientPrefetchCount = 0;
 
+        public const int MaxDeadLetterReasonLength = 4096;
+
         public static readonly long DefaultLastPeekedSequenceNumber = 0;
 
         public static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
