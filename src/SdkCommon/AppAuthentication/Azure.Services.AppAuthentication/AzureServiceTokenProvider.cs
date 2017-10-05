@@ -124,11 +124,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns></returns>
         private async Task<string> GetAccessTokenAsyncImpl(string authority, string resource, string scope)
         {
-            if (string.IsNullOrWhiteSpace(resource))
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
-
             // Check if the token is present in cache, for the given connection string, authority, and resource
             // This is an in-memory global cache, that will be used across instances of this class. 
             string cacheKey = $"ConnectionString:{_connectionString};Authority:{authority};Resource:{resource}";
