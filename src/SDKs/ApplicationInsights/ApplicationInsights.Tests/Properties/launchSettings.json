@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ApplicationInsights.Tests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AZURE_TEST_MODE": "record"
+      }
+    }
+  }
+}

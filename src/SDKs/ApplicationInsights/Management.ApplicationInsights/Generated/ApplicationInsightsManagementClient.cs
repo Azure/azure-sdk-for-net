@@ -105,6 +105,11 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         public virtual IComponentQuotaStatusOperations ComponentQuotaStatus { get; private set; }
 
         /// <summary>
+        /// Gets the IAPIKeysOperations.
+        /// </summary>
+        public virtual IAPIKeysOperations APIKeys { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ApplicationInsightsManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -311,6 +316,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             ExportConfigurations = new ExportConfigurationsOperations(this);
             ComponentCurrentBillingFeatures = new ComponentCurrentBillingFeaturesOperations(this);
             ComponentQuotaStatus = new ComponentQuotaStatusOperations(this);
+            APIKeys = new APIKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2015-05-01";
             AcceptLanguage = "en-US";

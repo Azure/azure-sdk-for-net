@@ -99,5 +99,10 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// </summary>
         IComponentQuotaStatusOperations ComponentQuotaStatus { get; }
 
+        /// <summary>
+        /// Gets the IAPIKeysOperations.
+        /// </summary>
+        IAPIKeysOperations APIKeys { get; }
+
     }
 }
