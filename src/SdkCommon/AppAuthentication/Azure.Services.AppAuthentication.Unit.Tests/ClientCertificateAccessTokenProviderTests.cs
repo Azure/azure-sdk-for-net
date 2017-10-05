@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        /// If the AppId is null or empty, an exception should be thrown. 
+        /// If the ClientId is null or empty, an exception should be thrown. 
         /// </summary>
         [Fact]
-        public void AppIdNullOrEmptyTest()
+        public void ClientIdNullOrEmptyTest()
         {
             // Import the test certificate. 
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
@@ -68,6 +68,31 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(string.Empty,
                 cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+        }
+
+        /// <summary>
+        /// If the storeLocation is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void StoreLocationNullOrEmptyTest()
+        {
+            // Import the test certificate. 
+            X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
+            CertUtil.ImportCertificate(cert);
+
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess);
+
+            // Create ClientCertificateAzureServiceTokenProvider instance
+            var exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                cert.Thumbprint, true, null, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            exception = Assert.Throws<ArgumentNullException>(() => new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                cert.Thumbprint, true, string.Empty, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext));
 
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
