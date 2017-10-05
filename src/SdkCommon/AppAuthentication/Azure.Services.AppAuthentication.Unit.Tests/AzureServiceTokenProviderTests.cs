@@ -142,6 +142,27 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// If resource id is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public async Task ResourceNullOrEmptyWhenGettingTokenTest()
+        {
+            // Mock ProcessManager is being asked to act like Azure CLI is not installed. 
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.ProcessNotFound);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+            AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
+
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(null, Constants.TenantId)));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            exception = await Assert.ThrowsAsync<ArgumentNullException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(string.Empty, Constants.TenantId)));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+        }
+
+        /// <summary>
         /// If azureAdInstance is null or empty, an exception should be thrown. 
         /// </summary>
         [Fact]
