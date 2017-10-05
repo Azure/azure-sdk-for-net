@@ -177,6 +177,30 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
 
+        /// <summary>
+        /// If connectionstring is not specified in AzureServiceTokenProvider, ensure connection string is assigned from 
+        /// AzureServicesAuthConnectionString environment variable.
+        /// </summary>
+        [Fact]
+        public void UnspecifiedConnectionStringTest()
+        {
+            string connString = Environment.GetEnvironmentVariable("AzureServicesAuthConnectionString");
+            
+            if (connString == null)
+            {
+                // Set environment variable AzureServicesAuthConnectionString
+                Environment.SetEnvironmentVariable("AzureServicesAuthConnectionString", Constants.AzureCliConnectionString);
+                // Assert variable exists
+                connString = Environment.GetEnvironmentVariable("AzureServicesAuthConnectionString");
+                Assert.Equal(Constants.AzureCliConnectionString, connString);
+            }
+
+            var provider = new AzureServiceTokenProvider();
+
+            Assert.NotNull(provider);
+            Assert.IsType(typeof(AzureServiceTokenProvider), provider);
+        }
+
         [Fact]
         public async Task DiscoveryTestFirstSuccess()
         {
