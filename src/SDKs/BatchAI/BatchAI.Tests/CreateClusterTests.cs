@@ -21,7 +21,7 @@ namespace BatchAI.Tests
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            string clusterName = TestUtilities.GenerateName("testcluster");
+            string clusterName = "testclustercreationanddeletion_testcluster";
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -49,16 +49,12 @@ namespace BatchAI.Tests
                     Location = Helpers.LOCATION,
                 };
 
-                try
-                {
-                    Cluster cluster = client.Clusters.Create(rgName, clusterName, createParams);
+                Cluster cluster = client.Clusters.Create(rgName, clusterName, createParams);
 
-                    Helpers.VerifyClusterProperties(clusterName, createParams, cluster);
-                }
-                finally
-                {
-                    client.Clusters.Delete(rgName, clusterName);
-                }
+                Helpers.VerifyClusterProperties(clusterName, createParams, cluster);
+
+                client.Clusters.Delete(rgName, clusterName);
+
             }
 
         }

@@ -14,8 +14,8 @@ namespace BatchAI.Tests
         [Fact]
         public void TestJobCreationAndDeletion()
         {
-            string clusterName = TestUtilities.GenerateName("testcluster");
-            string jobName = TestUtilities.GenerateName("testjob");
+            string clusterName = "testjobcreationanddeletion_cluster";
+            string jobName = "testjobcreationanddeletion_testjob";
 
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -45,37 +45,29 @@ namespace BatchAI.Tests
                     },
                     Location = Helpers.LOCATION,
                 };
-                try
+                
+                Cluster cluster = client.Clusters.Create(rgName, clusterName, clusterCreateParams);
+
+                Helpers.WaitAllNodesToBeIdle(client, rgName, clusterName);
+
+                var jobCreateParams = new JobCreateParameters()
                 {
-                    Cluster cluster = client.Clusters.Create(rgName, clusterName, clusterCreateParams);
-
-                    Helpers.WaitAllNodesToBeIdle(client, rgName, clusterName);
-
-                    var jobCreateParams = new JobCreateParameters()
+                    Cluster = new ResourceId(cluster.Id),
+                    NodeCount = 1,
+                    CustomToolkitSettings = new CustomToolkitSettings()
                     {
-                        Cluster = new ResourceId(cluster.Id),
-                        NodeCount = 1,
-                        CustomToolkitSettings = new CustomToolkitSettings()
-                        {
-                            CommandLine = "echo Hello"
-                        },
+                        CommandLine = "echo Hello"
+                    },
 
-                        StdOutErrPathPrefix = "$AZ_BATCHAI_JOB_TEMP",
-                        Location = Helpers.LOCATION,
-                    };
+                    StdOutErrPathPrefix = "$AZ_BATCHAI_JOB_TEMP",
+                    Location = Helpers.LOCATION,
+                };
 
-                    client.Jobs.Create(rgName, jobName, jobCreateParams);
-                    Helpers.WaitJobSucceeded(client, rgName, jobName);
-                }
-                finally
-                {
-                    client.Clusters.Delete(rgName, clusterName);
-                    client.Jobs.Delete(rgName, jobName);
-                }
+                client.Jobs.Create(rgName, jobName, jobCreateParams);
+                Helpers.WaitJobSucceeded(client, rgName, jobName);
+                client.Clusters.Delete(rgName, clusterName);
+                client.Jobs.Delete(rgName, jobName);
             }
-
-
-
         }
     }
 }
