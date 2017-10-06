@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for SkuTier.
+    /// Defines values for RegistryUsageUnit.
     /// </summary>
-    public static class SkuTier
+    public static class RegistryUsageUnit
     {
-        public const string Classic = "Classic";
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
+        public const string Count = "Count";
+        public const string Bytes = "Bytes";
     }
 }

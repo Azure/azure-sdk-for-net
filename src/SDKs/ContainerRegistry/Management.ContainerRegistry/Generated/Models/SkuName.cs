@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for SkuTier.
+    /// Defines values for SkuName.
     /// </summary>
-    public static class SkuTier
+    public static class SkuName
     {
         public const string Classic = "Classic";
         public const string Basic = "Basic";
