@@ -32,17 +32,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <param name="accountName">Name of the storage account.</param>
         /// <param name="azureFileUrl">URL to access the Azure File.</param>
-        /// <param name="credentialsInfo">Information of the Azure File
+        /// <param name="credentials">Information of the Azure File
         /// credentials.</param>
         /// <param name="relativeMountPath">Specifies the relative path on the
         /// compute node where the Azure file share will be mounted.</param>
-        /// <param name="fileMode">Specifies the file Mode.</param>
+        /// <param name="fileMode">Specifies the file mode.</param>
         /// <param name="directoryMode">Specifies the directory Mode.</param>
-        public AzureFileShareReference(string accountName, string azureFileUrl, AzureStorageCredentialsInfo credentialsInfo, string relativeMountPath, string fileMode = default(string), string directoryMode = default(string))
+        public AzureFileShareReference(string accountName, string azureFileUrl, AzureStorageCredentialsInfo credentials, string relativeMountPath, string fileMode = default(string), string directoryMode = default(string))
         {
             AccountName = accountName;
             AzureFileUrl = azureFileUrl;
-            CredentialsInfo = credentialsInfo;
+            Credentials = credentials;
             RelativeMountPath = relativeMountPath;
             FileMode = fileMode;
             DirectoryMode = directoryMode;
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Gets or sets information of the Azure File credentials.
         /// </summary>
-        [JsonProperty(PropertyName = "credentialsInfo")]
-        public AzureStorageCredentialsInfo CredentialsInfo { get; set; }
+        [JsonProperty(PropertyName = "credentials")]
+        public AzureStorageCredentialsInfo Credentials { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the relative path on the compute node where
@@ -78,13 +78,13 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Note that all file shares will be mounted under
-        /// $AZ_LEARNING_MOUNT_ROOT location.
+        /// $AZ_BATCHAI_MOUNT_ROOT location.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the file Mode.
+        /// Gets or sets specifies the file mode.
         /// </summary>
         /// <remarks>
         /// Default value is 0777. Valid only if OS is linux.
@@ -117,17 +117,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AzureFileUrl");
             }
-            if (CredentialsInfo == null)
+            if (Credentials == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CredentialsInfo");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Credentials");
             }
             if (RelativeMountPath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RelativeMountPath");
             }
-            if (CredentialsInfo != null)
+            if (Credentials != null)
             {
-                CredentialsInfo.Validate();
+                Credentials.Validate();
             }
         }
     }

@@ -162,8 +162,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse> TerminateWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch AI jobs associated with the
-        /// subscription.
+        /// Gets information about the jobs associated with the subscription.
         /// </summary>
         /// <param name='jobsListOptions'>
         /// Additional parameters for the operation
@@ -212,7 +211,8 @@ namespace Microsoft.Azure.Management.BatchAI
         Task<AzureOperationResponse<IPage<Job>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, JobsListByResourceGroupOptions jobsListByResourceGroupOptions = default(JobsListByResourceGroupOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all files inside the given output directory (Only if the
-        /// output directory is on Azure File Share).
+        /// output directory is on Azure File Share or Azure Storage
+        /// container).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -347,8 +347,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch AI jobs associated with the
-        /// subscription.
+        /// Gets information about the jobs associated with the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -394,7 +393,8 @@ namespace Microsoft.Azure.Management.BatchAI
         Task<AzureOperationResponse<IPage<Job>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all files inside the given output directory (Only if the
-        /// output directory is on Azure File Share).
+        /// output directory is on Azure File Share or Azure Storage
+        /// container).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

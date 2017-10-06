@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="commandLine">Command Line to start Setup
         /// process.</param>
         /// <param name="stdOutErrPathPrefix">The path where the Batch AI
-        /// service will upload stdout and stderror of setup task.</param>
+        /// service will upload the stdout and stderror of setup task.</param>
         /// <param name="environmentVariables">Collection of environment
         /// settings.</param>
         /// <param name="runElevated">Specifies whether to run the setup task
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public bool? RunElevated { get; set; }
 
         /// <summary>
-        /// Gets or sets the path where the Batch AI service will upload stdout
-        /// and stderror of setup task.
+        /// Gets or sets the path where the Batch AI service will upload the
+        /// stdout and stderror of setup task.
         /// </summary>
         [JsonProperty(PropertyName = "stdOutErrPathPrefix")]
         public string StdOutErrPathPrefix { get; set; }

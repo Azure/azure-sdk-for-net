@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the ManualScaleSettings class.
         /// </summary>
         /// <param name="targetNodeCount">The desired number of compute nodes
-        /// in the cluster.</param>
-        /// <param name="nodeDeallocationOption">Determines what to do with a
-        /// compute node and its running task(s) if the cluster size is
+        /// in the Cluster.</param>
+        /// <param name="nodeDeallocationOption">Determines what to do with the
+        /// job(s) running on compute node if the Cluster size is
         /// decreasing.</param>
         public ManualScaleSettings(int targetNodeCount, DeallocationOption? nodeDeallocationOption = default(DeallocationOption?))
         {
@@ -47,18 +47,18 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the desired number of compute nodes in the cluster.
+        /// Gets or sets the desired number of compute nodes in the Cluster.
         /// </summary>
         /// <remarks>
         /// Default is 0. If autoScaleSettings are not specified, then the
-        /// cluster starts with this target.
+        /// Cluster starts with this target.
         /// </remarks>
         [JsonProperty(PropertyName = "targetNodeCount")]
         public int TargetNodeCount { get; set; }
 
         /// <summary>
-        /// Gets or sets determines what to do with a compute node and its
-        /// running task(s) if the cluster size is decreasing.
+        /// Gets or sets determines what to do with the job(s) running on
+        /// compute node if the Cluster size is decreasing.
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',

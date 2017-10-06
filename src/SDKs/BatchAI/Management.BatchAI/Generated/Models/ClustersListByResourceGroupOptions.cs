@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the
         /// ClustersListByResourceGroupOptions class.
         /// </summary>
-        /// <param name="filter">An OData $filter clause.</param>
-        /// <param name="select">list of files.</param>
+        /// <param name="filter">An OData $filter clause.. Used to filter
+        /// results that are returned in the GET respnose.</param>
+        /// <param name="select">An OData $select clause. Used to select the
+        /// properties to be returned in the GET respnose.</param>
         /// <param name="maxResults">The maximum number of items to return in
         /// the response. A maximum of 1000 files can be returned.</param>
         public ClustersListByResourceGroupOptions(string filter = default(string), string select = default(string), int? maxResults = default(int?))
@@ -49,13 +51,15 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an OData $filter clause.
+        /// Gets or sets an OData $filter clause.. Used to filter results that
+        /// are returned in the GET respnose.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets list of files.
+        /// Gets or sets an OData $select clause. Used to select the properties
+        /// to be returned in the GET respnose.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string Select { get; set; }

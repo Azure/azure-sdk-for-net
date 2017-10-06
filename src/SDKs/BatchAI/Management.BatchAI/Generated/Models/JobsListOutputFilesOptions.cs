@@ -30,8 +30,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the JobsListOutputFilesOptions class.
         /// </summary>
-        /// <param name="outputdirectoryid">Id of the job output
-        /// directory.</param>
+        /// <param name="outputdirectoryid">Id of the job output directory.
+        /// This is the OutputDirectory--&gt;id parameter that is given by the
+        /// user during Create Job.</param>
         /// <param name="linkexpiryinminutes">The number of minutes after which
         /// the download link will expire.</param>
         /// <param name="maxResults">The maximum number of items to return in
@@ -50,7 +51,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets id of the job output directory.
+        /// Gets or sets id of the job output directory. This is the
+        /// OutputDirectory--&amp;gt;id parameter that is given by the user
+        /// during Create Job.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string Outputdirectoryid { get; set; }

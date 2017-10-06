@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     {
         [EnumMember(Value = "dedicated")]
         Dedicated,
-        [EnumMember(Value = "lowPriority")]
-        LowPriority
+        [EnumMember(Value = "lowpriority")]
+        Lowpriority
     }
     internal static class VmPriorityEnumExtension
     {
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             {
                 case VmPriority.Dedicated:
                     return "dedicated";
-                case VmPriority.LowPriority:
-                    return "lowPriority";
+                case VmPriority.Lowpriority:
+                    return "lowpriority";
             }
             return null;
         }
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             {
                 case "dedicated":
                     return VmPriority.Dedicated;
-                case "lowPriority":
-                    return VmPriority.LowPriority;
+                case "lowpriority":
+                    return VmPriority.Lowpriority;
             }
             return null;
         }

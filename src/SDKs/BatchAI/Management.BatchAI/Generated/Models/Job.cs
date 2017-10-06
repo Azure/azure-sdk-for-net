@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about an Azure Batch AI job.
+    /// Contains information about the job.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Job : Resource
@@ -239,11 +239,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// job.
         /// </summary>
         /// <remarks>
-        /// Batch AI services sends the following environment variables for all
-        /// jobs: AZ_LEARNING_INPUT_id, AZ_LEARNING_OUTPUT_id,
-        /// AZ_LEARNING_NUM_GPUS_PER_NODE, For distributed TensorFlow jobs,
+        /// Batch AI services sets the following environment variables for all
+        /// jobs: AZ_BATCHAI_INPUT_id, AZ_BATCHAI_OUTPUT_id,
+        /// AZ_BATCHAI_NUM_GPUS_PER_NODE, For distributed TensorFlow jobs,
         /// following additional environment variables are set by the Batch AI
-        /// Service: AZ_LEARNING_PS_HOSTS, AZ_LEARNING_WORKER_HOSTS
+        /// Service: AZ_BATCHAI_PS_HOSTS, AZ_BATCHAI_WORKER_HOSTS.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.environmentVariables")]
         public IList<EnvironmentSetting> EnvironmentVariables { get; set; }

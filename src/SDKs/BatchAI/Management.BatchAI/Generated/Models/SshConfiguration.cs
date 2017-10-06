@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <param name="userAccountSettings">Settings for user account of
         /// VMs.</param>
-        /// <param name="publicIPsToAllow">List of source IPs range which would
-        /// be allowed to perform SSH with the VMs.</param>
+        /// <param name="publicIPsToAllow">List of source IP ranges to allow
+        /// SSH connection to VM.</param>
         public SshConfiguration(UserAccountSettings userAccountSettings, IList<string> publicIPsToAllow = default(IList<string>))
         {
             PublicIPsToAllow = publicIPsToAllow;
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of source IPs range which would be allowed to
-        /// perform SSH with the VMs.
+        /// Gets or sets list of source IP ranges to allow SSH connection to
+        /// VM.
         /// </summary>
         /// <remarks>
         /// Default value is '*' can be used to match all source IPs. Maximum

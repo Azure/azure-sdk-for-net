@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the file Server.
+    /// Details of the File Server.
     /// </summary>
     public partial class MountSettings
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <param name="mountPoint">Path where the NFS is mounted on the
         /// Server.</param>
-        /// <param name="fileServerPublicIP">Public IP which can be used to
-        /// access the file Server VM.</param>
+        /// <param name="fileServerPublicIP">Public IP of the File Server
+        /// VM.</param>
         /// <param name="fileServerInternalIP">Internal subnet IP which can be
         /// used to access the file Server from within the subnet.</param>
         /// <param name="fileServerType">Type of the fileserver e.g. nfs,
@@ -58,8 +58,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string MountPoint { get; set; }
 
         /// <summary>
-        /// Gets or sets public IP which can be used to access the file Server
-        /// VM.
+        /// Gets or sets public IP of the File Server VM.
         /// </summary>
         [JsonProperty(PropertyName = "fileServerPublicIP")]
         public string FileServerPublicIP { get; set; }

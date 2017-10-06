@@ -757,7 +757,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -777,8 +777,7 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated with the
-        /// subscription.
+        /// Gets information about the Clusters associated with the subscription.
         /// </summary>
         /// <param name='clustersListOptions'>
         /// Additional parameters for the operation
@@ -969,7 +968,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Cluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -989,8 +988,8 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated within the
-        /// specified resource group.
+        /// Gets information about the Clusters associated within the specified
+        /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1197,7 +1196,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Cluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1808,7 +1807,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1828,8 +1827,7 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated with the
-        /// subscription.
+        /// Gets information about the Clusters associated with the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1982,7 +1980,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Cluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2002,8 +2000,8 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated within the
-        /// specified resource group.
+        /// Gets information about the Clusters associated within the specified
+        /// resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2156,7 +2154,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Cluster>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

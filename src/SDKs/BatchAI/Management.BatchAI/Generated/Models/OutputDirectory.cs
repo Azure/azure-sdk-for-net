@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="id">The name for the output directory.</param>
         /// <param name="pathPrefix">The prefix path where the output directory
         /// will be created.</param>
-        /// <param name="pathSuffix">The path of the directory to
-        /// create.</param>
+        /// <param name="pathSuffix">The suffix path where the output directory
+        /// will be created.</param>
         /// <param name="type">An enumeration, which specifies the type of job
         /// output directory.</param>
         /// <param name="createNew">True to create new directory.</param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// It will be available for the job as an environment variable under
-        /// AZ_LEARNING_OUTPUT_id.
+        /// AZ_BATCHAI_OUTPUT_id.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -69,21 +69,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// NOTE: This is an absolute path to prefix. E.g.
-        /// $AZ_LEARNING_MOUNT_ROOT/MyNFS/MyLearningLogs.
+        /// $AZ_BATCHAI_MOUNT_ROOT/MyNFS/MyLogs.
         /// </remarks>
         [JsonProperty(PropertyName = "pathPrefix")]
         public string PathPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the path of the directory to create.
+        /// Gets or sets the suffix path where the output directory will be
+        /// created.
         /// </summary>
         /// <remarks>
-        /// The learning system will create the following directory on user's
-        /// behalf: PathPrefix/JobID/jobVersion/directoryName, where the JobID
-        /// is a unique name created by the Batch AI Service and jobVersion is
-        /// the version of the job. The Batch AI Service will also populate a
-        /// file under this the PathPrefix/JobID/jobVersion directory, which
-        /// maps the directory to a job ARM resource ID.
+        /// The suffix path where the output directory will be created.
         /// </remarks>
         [JsonProperty(PropertyName = "pathSuffix")]
         public string PathSuffix { get; set; }

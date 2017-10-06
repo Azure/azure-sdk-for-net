@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets azure File Share setup configuration.
         /// </summary>
         /// <remarks>
-        /// Azure File will be mounted to the cluster node.
+        /// References to Azure File Shares that are to be mounted to the
+        /// cluster nodes.
         /// </remarks>
         [JsonProperty(PropertyName = "azureFileShares")]
         public IList<AzureFileShareReference> AzureFileShares { get; set; }
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets azure Blob FileSystem setup configuration.
         /// </summary>
         /// <remarks>
-        /// Azure Blob file system will be mounted to the cluster node.
+        /// References to Azure Blob FUSE that are to be mounted to the cluster
+        /// nodes.
         /// </remarks>
         [JsonProperty(PropertyName = "azureBlobFileSystems")]
         public IList<AzureBlobFileSystemReference> AzureBlobFileSystems { get; set; }

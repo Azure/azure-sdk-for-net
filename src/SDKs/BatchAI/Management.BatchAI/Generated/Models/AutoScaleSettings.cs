@@ -14,7 +14,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the autoscale settings for the cluster.
+    /// The system automatically scales the cluster up and down (within
+    /// minimumNodeCount and maximumNodeCount) based on the pending and running
+    /// jobs on the cluster.
     /// </summary>
     public partial class AutoScaleSettings
     {

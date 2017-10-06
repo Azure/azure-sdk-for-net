@@ -34,16 +34,16 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the FileServerCreateParameters class.
         /// </summary>
-        /// <param name="location">The region in which to create the
-        /// cluster.</param>
+        /// <param name="location">The region in which to create the File
+        /// Server.</param>
         /// <param name="vmSize">The size of the virtual machine of the file
         /// server.</param>
         /// <param name="sshConfiguration">SSH settings for the file
         /// server.</param>
         /// <param name="dataDisks">Settings for the data disk which would be
         /// created for the file server.</param>
-        /// <param name="tags">The user specified tags associated with the
-        /// cluster.</param>
+        /// <param name="tags">The user specified tags associated with the File
+        /// Server.</param>
         /// <param name="subnet">Specifies the identifier of the
         /// subnet.</param>
         public FileServerCreateParameters(string location, string vmSize, SshConfiguration sshConfiguration, DataDisks dataDisks, IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceId subnet = default(ResourceId))
@@ -63,13 +63,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the region in which to create the cluster.
+        /// Gets or sets the region in which to create the File Server.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the user specified tags associated with the cluster.
+        /// Gets or sets the user specified tags associated with the File
+        /// Server.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

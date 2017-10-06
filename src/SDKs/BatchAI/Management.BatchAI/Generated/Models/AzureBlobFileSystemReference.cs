@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure Blob Storage container to mount on the cluster.
+    /// Provides required information, for the service to be able to mount
+    /// Azure Blob Storage container on the cluster nodes.
     /// </summary>
     public partial class AzureBlobFileSystemReference
     {
@@ -36,18 +37,18 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// account.</param>
         /// <param name="containerName">Name of the Azure Blob Storage
         /// container to mount on the cluster.</param>
-        /// <param name="credentialsInfo">Information of the Azure Blob Storage
+        /// <param name="credentials">Information of the Azure Blob Storage
         /// account credentials.</param>
         /// <param name="relativeMountPath">Specifies the relative path on the
         /// compute node where the Azure Blob file system will be
         /// mounted.</param>
         /// <param name="mountOptions">Specifies the various mount options that
         /// can be used to configure Blob file system.</param>
-        public AzureBlobFileSystemReference(string accountName, string containerName, AzureStorageCredentialsInfo credentialsInfo, string relativeMountPath, string mountOptions = default(string))
+        public AzureBlobFileSystemReference(string accountName, string containerName, AzureStorageCredentialsInfo credentials, string relativeMountPath, string mountOptions = default(string))
         {
             AccountName = accountName;
             ContainerName = containerName;
-            CredentialsInfo = credentialsInfo;
+            Credentials = credentials;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
             CustomInit();
@@ -75,8 +76,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets information of the Azure Blob Storage account
         /// credentials.
         /// </summary>
-        [JsonProperty(PropertyName = "credentialsInfo")]
-        public AzureStorageCredentialsInfo CredentialsInfo { get; set; }
+        [JsonProperty(PropertyName = "credentials")]
+        public AzureStorageCredentialsInfo Credentials { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the relative path on the compute node where
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Note that all blob file systems will be mounted under
-        /// $AZ_LEARNING_MOUNT_ROOT location.
+        /// $AZ_BATCHAI_MOUNT_ROOT location.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }
@@ -112,17 +113,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ContainerName");
             }
-            if (CredentialsInfo == null)
+            if (Credentials == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CredentialsInfo");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Credentials");
             }
             if (RelativeMountPath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RelativeMountPath");
             }
-            if (CredentialsInfo != null)
+            if (Credentials != null)
             {
-                CredentialsInfo.Validate();
+                Credentials.Validate();
             }
         }
     }

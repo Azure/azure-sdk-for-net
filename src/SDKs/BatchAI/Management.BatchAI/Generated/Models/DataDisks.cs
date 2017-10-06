@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for the data disk which would be created for the file server.
+    /// Settings for the data disk which would be created for the File Server.
     /// </summary>
     public partial class DataDisks
     {
@@ -30,25 +30,19 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the DataDisks class.
         /// </summary>
-        /// <param name="diskSizeInGB">initial disk size in GB for blank data
-        /// disks, and the new desired size for resizing existing OS and data
+        /// <param name="diskSizeInGB">Initial disk size in GB for blank data
+        /// disks, and the new desired size for resizing existing data
         /// disks.</param>
         /// <param name="diskCount">Number of data disks to be attached to the
-        /// VM.</param>
+        /// VM. RAID level 0 will be applied in the case of multiple
+        /// disks.</param>
         /// <param name="storageAccountType">Specifies the type of storage
         /// account to be used on the disk. Possible values are: Standard_LRS
         /// or Premium_LRS.</param>
-        /// <param name="fileSystemType">The type of filesystem to use. Valid
-        /// values are btrfs, ext4, ext3 and ext2. Default value is
-        /// btrfs.</param>
-        /// <param name="raidLevel">The RAID level to apply to the
-        /// disks.</param>
         /// <param name="cachingType">None, ReadOnly, ReadWrite. Default value
         /// is None. This property is not patchable.</param>
-        public DataDisks(int diskSizeInGB, int diskCount, string storageAccountType, string fileSystemType = default(string), RaidLevel? raidLevel = default(RaidLevel?), CachingType? cachingType = default(CachingType?))
+        public DataDisks(int diskSizeInGB, int diskCount, string storageAccountType, CachingType? cachingType = default(CachingType?))
         {
-            FileSystemType = fileSystemType;
-            RaidLevel = raidLevel;
             DiskSizeInGB = diskSizeInGB;
             CachingType = cachingType;
             DiskCount = diskCount;
@@ -62,28 +56,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the type of filesystem to use. Valid values are btrfs, ext4,
-        /// ext3 and ext2. Default value is btrfs.
-        /// </summary>
-        /// <remarks>
-        /// Possible values include: 'btrfs', 'ext4', 'ext3', 'ext2'
-        /// </remarks>
-        [JsonProperty(PropertyName = "fileSystemType")]
-        public string FileSystemType { get; private set; }
-
-        /// <summary>
-        /// Gets the RAID level to apply to the disks.
-        /// </summary>
-        /// <remarks>
-        /// Possible values include: 'NoRaid', 'RAID0', 'RAID1', 'RAID2',
-        /// 'RAID3', 'RAID4', 'RAID5', 'RAID6'
-        /// </remarks>
-        [JsonProperty(PropertyName = "raidLevel")]
-        public RaidLevel? RaidLevel { get; private set; }
-
-        /// <summary>
         /// Gets or sets initial disk size in GB for blank data disks, and the
-        /// new desired size for resizing existing OS and data disks.
+        /// new desired size for resizing existing data disks.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeInGB")]
         public int DiskSizeInGB { get; set; }
@@ -93,13 +67,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// property is not patchable.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'none', 'readOnly', 'readWrite'
+        /// Possible values include: 'none', 'readonly', 'readwrite'
         /// </remarks>
         [JsonProperty(PropertyName = "cachingType")]
         public CachingType? CachingType { get; private set; }
 
         /// <summary>
-        /// Gets or sets number of data disks to be attached to the VM.
+        /// Gets or sets number of data disks to be attached to the VM. RAID
+        /// level 0 will be applied in the case of multiple disks.
         /// </summary>
         [JsonProperty(PropertyName = "diskCount")]
         public int DiskCount { get; set; }

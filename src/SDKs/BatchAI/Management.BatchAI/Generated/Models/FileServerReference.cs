@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the file server to mount on the cluster.
+    /// Provides required information, for the service to be able to mount
+    /// Azure FileShare on the cluster nodes.
     /// </summary>
     public partial class FileServerReference
     {
@@ -33,11 +34,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="fileServer">Reference to the file server
         /// resource.</param>
         /// <param name="relativeMountPath">Specifies the relative path on the
-        /// compute node where the file server will be mounted.</param>
+        /// compute node where the File Server will be mounted.</param>
         /// <param name="sourceDirectory">Specifies the source directory in
-        /// file server that needs to be mounted.</param>
-        /// <param name="mountOptions">Specifies the various mount options
-        /// required for mounting the file server.</param>
+        /// File Server that needs to be mounted.</param>
+        /// <param name="mountOptions">Specifies the mount options for File
+        /// Server.</param>
         public FileServerReference(ResourceId fileServer, string relativeMountPath, string sourceDirectory = default(string), string mountOptions = default(string))
         {
             FileServer = fileServer;
@@ -59,11 +60,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public ResourceId FileServer { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the source directory in file server that
+        /// Gets or sets specifies the source directory in File Server that
         /// needs to be mounted.
         /// </summary>
         /// <remarks>
-        /// If this property is not specified, the entire file server will be
+        /// If this property is not specified, the entire File Server will be
         /// mounted.
         /// </remarks>
         [JsonProperty(PropertyName = "sourceDirectory")]
@@ -71,18 +72,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
 
         /// <summary>
         /// Gets or sets specifies the relative path on the compute node where
-        /// the file server will be mounted.
+        /// the File Server will be mounted.
         /// </summary>
         /// <remarks>
         /// Note that all file shares will be mounted under
-        /// $AZ_LEARNING_MOUNT_ROOT location.
+        /// $AZ_BATCHAI_MOUNT_ROOT location.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the various mount options required for
-        /// mounting the file server.
+        /// Gets or sets specifies the mount options for File Server.
         /// </summary>
         [JsonProperty(PropertyName = "mountOptions")]
         public string MountOptions { get; set; }

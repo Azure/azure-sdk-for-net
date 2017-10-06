@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// job.</param>
         /// <param name="customToolkitSettings">Specifies the settings for
         /// custom tool kit job.</param>
-        /// <param name="jobPreparation">Specifies the actions to be performed
-        /// before tool kit is launched.</param>
+        /// <param name="jobPreparation">Specifies the command line to be
+        /// executed before tool kit is launched.</param>
         /// <param name="inputDirectories">Specifies the list of input
         /// directories for the Job.</param>
         /// <param name="outputDirectories">Specifies the list of output
@@ -195,8 +195,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public CustomToolkitSettings CustomToolkitSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the actions to be performed before tool kit
-        /// is launched.
+        /// Gets or sets specifies the command line to be executed before tool
+        /// kit is launched.
         /// </summary>
         /// <remarks>
         /// The specified actions will run on all the nodes that are part of
@@ -230,10 +230,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Batch AI service sets the following environment variables for all
-        /// jobs: AZ_LEARNING_INPUT_id, AZ_LEARNING_OUTPUT_id,
-        /// AZ_LEARNING_NUM_GPUS_PER_NODE. For distributed TensorFlow jobs,
+        /// jobs: AZ_BATCHAI_INPUT_id, AZ_BATCHAI_OUTPUT_id,
+        /// AZ_BATCHAI_NUM_GPUS_PER_NODE. For distributed TensorFlow jobs,
         /// following additional environment variables are set by the Batch AI
-        /// Service: AZ_LEARNING_PS_HOSTS, AZ_LEARNING_WORKER_HOSTS
+        /// Service: AZ_BATCHAI_PS_HOSTS, AZ_BATCHAI_WORKER_HOSTS
         /// </remarks>
         [JsonProperty(PropertyName = "properties.environmentVariables")]
         public IList<EnvironmentSetting> EnvironmentVariables { get; set; }

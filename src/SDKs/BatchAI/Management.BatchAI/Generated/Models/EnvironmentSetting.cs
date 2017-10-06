@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// An environment variable to be set on a job.
+    /// A collection of environment variables to set.
     /// </summary>
     public partial class EnvironmentSetting
     {

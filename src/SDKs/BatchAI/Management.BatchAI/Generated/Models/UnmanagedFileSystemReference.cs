@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the file system to mount on the compute cluster.
+    /// Details of the file system to mount on the compute cluster nodes.
     /// </summary>
     public partial class UnmanagedFileSystemReference
     {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Note that all file shares will be mounted under
-        /// $AZ_LEARNING_MOUNT_ROOT location.
+        /// $AZ_BATCHAI_MOUNT_ROOT location.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }

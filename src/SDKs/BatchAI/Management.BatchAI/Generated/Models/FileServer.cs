@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about an Azure Batch AI file server.
+    /// Contains information about the File Server.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class FileServer : Resource
@@ -39,23 +39,22 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="type">The type of the resource</param>
         /// <param name="location">The location of the resource</param>
         /// <param name="tags">The tags of the resource</param>
-        /// <param name="vmSize">The size of the virtual machine of the file
-        /// server.</param>
-        /// <param name="sshConfiguration">SSH settings for the file
-        /// server.</param>
+        /// <param name="vmSize">The size of the virtual machine of the File
+        /// Server.</param>
+        /// <param name="sshConfiguration">SSH settings for the File
+        /// Server.</param>
         /// <param name="dataDisks">Settings for the data disk which would be
-        /// created for the file server.</param>
+        /// created for the File Server.</param>
         /// <param name="subnet">Specifies the identifier of the
         /// subnet.</param>
-        /// <param name="mountSettings">Details of the file Server.</param>
+        /// <param name="mountSettings">Details of the File Server.</param>
         /// <param name="provisioningStateTransitionTime">Time when the status
         /// was changed.</param>
         /// <param name="creationTime">Time when the FileServer was
         /// created.</param>
         /// <param name="provisioningState">Specifies the provisioning state of
-        /// the file server.</param>
-        /// <param name="statuses">Captures file server status.</param>
-        public FileServer(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vmSize = default(string), SshConfiguration sshConfiguration = default(SshConfiguration), DataDisks dataDisks = default(DataDisks), ResourceId subnet = default(ResourceId), MountSettings mountSettings = default(MountSettings), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), FileServerProvisioningState provisioningState = default(FileServerProvisioningState), IList<FileServerStatus> statuses = default(IList<FileServerStatus>))
+        /// the File Server.</param>
+        public FileServer(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vmSize = default(string), SshConfiguration sshConfiguration = default(SshConfiguration), DataDisks dataDisks = default(DataDisks), ResourceId subnet = default(ResourceId), MountSettings mountSettings = default(MountSettings), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), FileServerProvisioningState provisioningState = default(FileServerProvisioningState))
             : base(id, name, type, location, tags)
         {
             VmSize = vmSize;
@@ -66,7 +65,6 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             ProvisioningStateTransitionTime = provisioningStateTransitionTime;
             CreationTime = creationTime;
             ProvisioningState = provisioningState;
-            Statuses = statuses;
             CustomInit();
         }
 
@@ -76,10 +74,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the size of the virtual machine of the file server.
+        /// Gets or sets the size of the virtual machine of the File Server.
         /// </summary>
         /// <remarks>
-        /// For information about available VM sizes for fileservers from the
+        /// For information about available VM sizes for File Server from the
         /// Virtual Machines Marketplace, see Sizes for Virtual Machines
         /// (Linux).
         /// </remarks>
@@ -87,14 +85,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets SSH settings for the file server.
+        /// Gets or sets SSH settings for the File Server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sshConfiguration")]
         public SshConfiguration SshConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets settings for the data disk which would be created for
-        /// the file server.
+        /// the File Server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataDisks")]
         public DataDisks DataDisks { get; set; }
@@ -106,7 +104,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public ResourceId Subnet { get; set; }
 
         /// <summary>
-        /// Gets details of the file Server.
+        /// Gets details of the File Server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.mountSettings")]
         public MountSettings MountSettings { get; private set; }
@@ -124,26 +122,21 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets specifies the provisioning state of the file server.
+        /// Gets specifies the provisioning state of the File Server.
         /// </summary>
         /// <remarks>
-        /// Possible values: creating - The fileServer is just getting created.
-        /// Updating - The file server creation has been accepted and it is
-        /// getting updated. Deleting - The user has requested that the cluster
-        /// be deleted, but the delete operation has not yet completed. Failed
-        /// - The file server creation has failed with the specified errorCode.
-        /// Details about the error code are specified in the message field.
-        /// Succeeded - The file server creation has succeeded. Possible values
-        /// include: 'creating', 'updating', 'deleting', 'succeeded', 'failed'
+        /// Possible values: creating - The File Server is getting created.
+        /// updating - The File Server creation has been accepted and it is
+        /// getting updated. deleting - The user has requested that the File
+        /// Server be deleted, and it is in the process of being deleted.
+        /// failed - The File Server creation has failed with the specified
+        /// errorCode. Details about the error code are specified in the
+        /// message field. succeeded - The File Server creation has succeeded.
+        /// Possible values include: 'creating', 'updating', 'deleting',
+        /// 'succeeded', 'failed'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public FileServerProvisioningState ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets captures file server status.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.statuses")]
-        public IList<FileServerStatus> Statuses { get; private set; }
 
         /// <summary>
         /// Validate the object.

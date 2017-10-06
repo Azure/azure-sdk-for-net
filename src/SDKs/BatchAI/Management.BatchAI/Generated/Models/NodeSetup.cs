@@ -14,7 +14,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Setup to be done on all compute nodes in the cluster.
+    /// Use this to prepare the VM. NOTE: The volumes specified in mountVolumes
+    /// are mounted first and then the setupTask is run. Therefore the setup
+    /// task can use local mountPaths in its execution.
     /// </summary>
     public partial class NodeSetup
     {
@@ -30,9 +32,13 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the NodeSetup class.
         /// </summary>
         /// <param name="setupTask">Specifies a setup task which can be used to
-        /// customize the compute nodes of the cluster.</param>
+        /// customize the compute nodes of the cluster. The NodeSetup task runs
+        /// everytime a VM is rebooted. For that reason the task code needs to
+        /// be idempotent. Generally it is used to either download static data
+        /// that is required for all jobs that run on the cluster VMs or to
+        /// download/install software.</param>
         /// <param name="mountVolumes">Information on shared volumes to be used
-        /// for the job.</param>
+        /// by jobs.</param>
         public NodeSetup(SetupTask setupTask = default(SetupTask), MountVolumes mountVolumes = default(MountVolumes))
         {
             SetupTask = setupTask;
@@ -47,13 +53,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
 
         /// <summary>
         /// Gets or sets specifies a setup task which can be used to customize
-        /// the compute nodes of the cluster.
+        /// the compute nodes of the cluster. The NodeSetup task runs everytime
+        /// a VM is rebooted. For that reason the task code needs to be
+        /// idempotent. Generally it is used to either download static data
+        /// that is required for all jobs that run on the cluster VMs or to
+        /// download/install software.
         /// </summary>
         [JsonProperty(PropertyName = "setupTask")]
         public SetupTask SetupTask { get; set; }
 
         /// <summary>
-        /// Gets or sets information on shared volumes to be used for the job.
+        /// Gets or sets information on shared volumes to be used by jobs.
         /// </summary>
         [JsonProperty(PropertyName = "mountVolumes")]
         public MountVolumes MountVolumes { get; set; }

@@ -38,18 +38,18 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// cluster.</param>
         /// <param name="vmSize">The size of the virtual machines in the
         /// cluster.</param>
-        /// <param name="userAccountSettings">Settings for user account of
-        /// compute nodes.</param>
+        /// <param name="userAccountSettings">Settings for user account that
+        /// will be created on all compute nodes of the cluster.</param>
         /// <param name="tags">The user specified tags associated with the
-        /// cluster.</param>
-        /// <param name="vmPriority">dedicated or lowPriority.</param>
-        /// <param name="scaleSettings">Desired scale for the cluster</param>
+        /// Cluster.</param>
+        /// <param name="vmPriority">dedicated or lowpriority.</param>
+        /// <param name="scaleSettings">Desired scale for the cluster.</param>
         /// <param name="virtualMachineConfiguration">Settings for OS image and
         /// mounted data volumes.</param>
         /// <param name="nodeSetup">Setup to be done on all compute nodes in
         /// the cluster.</param>
-        /// <param name="subnet">Specifies the identifier of the
-        /// subnet.</param>
+        /// <param name="subnet">Specifies the identifier of the subnet.
+        /// </param>
         public ClusterCreateParameters(string location, string vmSize, UserAccountSettings userAccountSettings, IDictionary<string, string> tags = default(IDictionary<string, string>), VmPriority? vmPriority = default(VmPriority?), ScaleSettings scaleSettings = default(ScaleSettings), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), NodeSetup nodeSetup = default(NodeSetup), ResourceId subnet = default(ResourceId))
         {
             Location = location;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the user specified tags associated with the cluster.
+        /// Gets or sets the user specified tags associated with the Cluster.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
@@ -97,17 +97,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets dedicated or lowPriority.
+        /// Gets or sets dedicated or lowpriority.
         /// </summary>
         /// <remarks>
         /// Default is dedicated. Possible values include: 'dedicated',
-        /// 'lowPriority'
+        /// 'lowpriority'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.vmPriority")]
         public VmPriority? VmPriority { get; set; }
 
         /// <summary>
-        /// Gets or sets desired scale for the cluster
+        /// Gets or sets desired scale for the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleSettings")]
         public ScaleSettings ScaleSettings { get; set; }
@@ -125,7 +125,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public NodeSetup NodeSetup { get; set; }
 
         /// <summary>
-        /// Gets or sets settings for user account of compute nodes.
+        /// Gets or sets settings for user account that will be created on all
+        /// compute nodes of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.userAccountSettings")]
         public UserAccountSettings UserAccountSettings { get; set; }

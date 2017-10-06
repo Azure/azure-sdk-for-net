@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// A definition of a resource ID.
+    /// Represents a resource ID. For example, for a subnet, it is the resource
+    /// URL for the subnet.
     /// </summary>
     public partial class ResourceId : IResource
     {

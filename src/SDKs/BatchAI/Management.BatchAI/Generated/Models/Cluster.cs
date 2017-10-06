@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about an Azure Batch AI Cluster.
+    /// Contains information about a Cluster.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Cluster : Resource
@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="tags">The tags of the resource</param>
         /// <param name="vmSize">The size of the virtual machines in the
         /// cluster.</param>
-        /// <param name="vmPriority">dedicated or low-Priority.</param>
-        /// <param name="scaleSettings">Desired scale for the cluster</param>
+        /// <param name="vmPriority">dedicated or lowpriority.</param>
+        /// <param name="scaleSettings">Desired scale for the Cluster.</param>
         /// <param name="virtualMachineConfiguration">Settings for OS image and
         /// mounted data volumes.</param>
         /// <param name="nodeSetup">Setup to be done on all compute nodes in
-        /// the cluster.</param>
+        /// the Cluster.</param>
         /// <param name="userAccountSettings">Settings for user account of
         /// compute nodes.</param>
         /// <param name="subnet">Specifies the identifier of the
@@ -109,17 +109,19 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets dedicated or low-Priority.
+        /// Gets or sets dedicated or lowpriority.
         /// </summary>
         /// <remarks>
-        /// Default is dedicated. Possible values include: 'dedicated',
-        /// 'lowPriority'
+        /// The default value is dedicated. The node can get preempted while
+        /// the task is running if lowpriority is choosen. This is best suited
+        /// if the workload is checkpointing and can be restarted. Possible
+        /// values include: 'dedicated', 'lowpriority'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.vmPriority")]
         public VmPriority? VmPriority { get; set; }
 
         /// <summary>
-        /// Gets or sets desired scale for the cluster
+        /// Gets or sets desired scale for the Cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleSettings")]
         public ScaleSettings ScaleSettings { get; set; }
@@ -131,7 +133,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets setup to be done on all compute nodes in the cluster.
+        /// Gets or sets setup to be done on all compute nodes in the Cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeSetup")]
         public NodeSetup NodeSetup { get; set; }

@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Batch AI jobs associated with the subscription.
+        /// Gets information about the jobs associated with the subscription.
         /// </summary>
         /// <param name='jobsListOptions'>
         /// Additional parameters for the operation
@@ -758,7 +758,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Job>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Job>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -986,7 +986,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Job>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Job>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1007,7 +1007,7 @@ namespace Microsoft.Azure.Management.BatchAI
 
         /// <summary>
         /// List all files inside the given output directory (Only if the output
-        /// directory is on Azure File Share).
+        /// directory is on Azure File Share or Azure Storage container).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1248,7 +1248,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<File>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<File>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2058,7 +2058,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RemoteLoginInformation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2078,7 +2078,7 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Batch AI jobs associated with the subscription.
+        /// Gets information about the jobs associated with the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2231,7 +2231,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Job>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Job>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2405,7 +2405,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Job>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Job>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2426,7 +2426,7 @@ namespace Microsoft.Azure.Management.BatchAI
 
         /// <summary>
         /// List all files inside the given output directory (Only if the output
-        /// directory is on Azure File Share).
+        /// directory is on Azure File Share or Azure Storage container).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2579,7 +2579,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<File>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<File>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

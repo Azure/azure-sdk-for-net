@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the CustomToolkitSettings class.
         /// </summary>
         /// <param name="commandLine">The command line to execute the custom
-        /// toolkit learning Job.</param>
+        /// toolkit Job.</param>
         public CustomToolkitSettings(string commandLine = default(string))
         {
             CommandLine = commandLine;
@@ -43,8 +43,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the command line to execute the custom toolkit
-        /// learning Job.
+        /// Gets or sets the command line to execute the custom toolkit Job.
         /// </summary>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }

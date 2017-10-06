@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI jobs associated with the subscription.
+            /// Gets information about the jobs associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI jobs associated with the subscription.
+            /// Gets information about the jobs associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.BatchAI
 
             /// <summary>
             /// List all files inside the given output directory (Only if the output
-            /// directory is on Azure File Share).
+            /// directory is on Azure File Share or Azure Storage container).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.BatchAI
 
             /// <summary>
             /// List all files inside the given output directory (Only if the output
-            /// directory is on Azure File Share).
+            /// directory is on Azure File Share or Azure Storage container).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI jobs associated with the subscription.
+            /// Gets information about the jobs associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI jobs associated with the subscription.
+            /// Gets information about the jobs associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -611,7 +611,7 @@ namespace Microsoft.Azure.Management.BatchAI
 
             /// <summary>
             /// List all files inside the given output directory (Only if the output
-            /// directory is on Azure File Share).
+            /// directory is on Azure File Share or Azure Storage container).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -626,7 +626,7 @@ namespace Microsoft.Azure.Management.BatchAI
 
             /// <summary>
             /// List all files inside the given output directory (Only if the output
-            /// directory is on Azure File Share).
+            /// directory is on Azure File Share or Azure Storage container).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

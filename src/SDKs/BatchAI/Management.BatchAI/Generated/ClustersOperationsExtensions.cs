@@ -253,8 +253,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated with the
-            /// subscription.
+            /// Gets information about the Clusters associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -268,8 +267,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated with the
-            /// subscription.
+            /// Gets information about the Clusters associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -289,8 +287,8 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated within the
-            /// specified resource group.
+            /// Gets information about the Clusters associated within the specified
+            /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -307,8 +305,8 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated within the
-            /// specified resource group.
+            /// Gets information about the Clusters associated within the specified
+            /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -458,8 +456,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated with the
-            /// subscription.
+            /// Gets information about the Clusters associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -473,8 +470,7 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated with the
-            /// subscription.
+            /// Gets information about the Clusters associated with the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -494,8 +490,8 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated within the
-            /// specified resource group.
+            /// Gets information about the Clusters associated within the specified
+            /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -509,8 +505,8 @@ namespace Microsoft.Azure.Management.BatchAI
             }
 
             /// <summary>
-            /// Gets information about the Batch AI Clusters associated within the
-            /// specified resource group.
+            /// Gets information about the Clusters associated within the specified
+            /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     {
         [EnumMember(Value = "none")]
         None,
-        [EnumMember(Value = "readOnly")]
-        ReadOnly,
-        [EnumMember(Value = "readWrite")]
-        ReadWrite
+        [EnumMember(Value = "readonly")]
+        Readonly,
+        [EnumMember(Value = "readwrite")]
+        Readwrite
     }
     internal static class CachingTypeEnumExtension
     {
@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             {
                 case CachingType.None:
                     return "none";
-                case CachingType.ReadOnly:
-                    return "readOnly";
-                case CachingType.ReadWrite:
-                    return "readWrite";
+                case CachingType.Readonly:
+                    return "readonly";
+                case CachingType.Readwrite:
+                    return "readwrite";
             }
             return null;
         }
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             {
                 case "none":
                     return CachingType.None;
-                case "readOnly":
-                    return CachingType.ReadOnly;
-                case "readWrite":
-                    return CachingType.ReadWrite;
+                case "readonly":
+                    return CachingType.Readonly;
+                case "readwrite":
+                    return CachingType.Readwrite;
             }
             return null;
         }

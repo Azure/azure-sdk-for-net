@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ImageReference class.
         /// </summary>
-        /// <param name="publisher">publisher of the image.</param>
-        /// <param name="offer">offer of the image.</param>
+        /// <param name="publisher">Publisher of the image.</param>
+        /// <param name="offer">Offer of the image.</param>
         /// <param name="sku">SKU of the image.</param>
-        /// <param name="version">version of the image</param>
+        /// <param name="version">Version of the image</param>
         public ImageReference(string publisher, string offer, string sku, string version = default(string))
         {
             Publisher = publisher;

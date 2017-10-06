@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for OS image and mounted data volumes.
+    /// Settings for OS image.
     /// </summary>
     public partial class VirtualMachineConfiguration
     {

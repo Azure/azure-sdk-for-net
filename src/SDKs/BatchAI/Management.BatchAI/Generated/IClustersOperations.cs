@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated with the
+        /// Gets information about the Clusters associated with the
         /// subscription.
         /// </summary>
         /// <param name='clustersListOptions'>
@@ -191,8 +191,8 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<Cluster>>> ListWithHttpMessagesAsync(ClustersListOptions clustersListOptions = default(ClustersListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated within the
-        /// specified resource group.
+        /// Gets information about the Clusters associated within the specified
+        /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated with the
+        /// Gets information about the Clusters associated with the
         /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -319,8 +319,8 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<Cluster>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch AI Clusters associated within the
-        /// specified resource group.
+        /// Gets information about the Clusters associated within the specified
+        /// resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for user account of VMs.
+    /// Settings for user account that gets created on each on the nodes of a
+    /// cluster.
     /// </summary>
     public partial class UserAccountSettings
     {
@@ -33,9 +34,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="adminUserName">Specifies the name of the administrator
         /// account.</param>
         /// <param name="adminUserSshPublicKey">SSH public keys used to
-        /// authenticate with linux based VMs.</param>
-        /// <param name="adminUserPassword">Admin user Password (linux and
-        /// windows).</param>
+        /// authenticate with linux based VMs. This does not get returned in a
+        /// GET response body.</param>
+        /// <param name="adminUserPassword">Admin user Password (linux only).
+        /// This does not get returned in a GET response body.</param>
         public UserAccountSettings(string adminUserName, string adminUserSshPublicKey = default(string), string adminUserPassword = default(string))
         {
             AdminUserName = adminUserName;
@@ -57,13 +59,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
 
         /// <summary>
         /// Gets or sets SSH public keys used to authenticate with linux based
-        /// VMs.
+        /// VMs. This does not get returned in a GET response body.
         /// </summary>
         [JsonProperty(PropertyName = "adminUserSshPublicKey")]
         public string AdminUserSshPublicKey { get; set; }
 
         /// <summary>
-        /// Gets or sets admin user Password (linux and windows).
+        /// Gets or sets admin user Password (linux only). This does not get
+        /// returned in a GET response body.
         /// </summary>
         [JsonProperty(PropertyName = "adminUserPassword")]
         public string AdminUserPassword { get; set; }
