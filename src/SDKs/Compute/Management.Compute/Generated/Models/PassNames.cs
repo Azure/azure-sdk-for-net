@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum PassNames
     {
-        [EnumMember(Value = "oobeSystem")]
+        [EnumMember(Value = "OobeSystem")]
         OobeSystem
     }
     internal static class PassNamesEnumExtension
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             switch( value )
             {
                 case PassNames.OobeSystem:
-                    return "oobeSystem";
+                    return "OobeSystem";
             }
             return null;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             switch( value )
             {
-                case "oobeSystem":
+                case "OobeSystem":
                     return PassNames.OobeSystem;
             }
             return null;

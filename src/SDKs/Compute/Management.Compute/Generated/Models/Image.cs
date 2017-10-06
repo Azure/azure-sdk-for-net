@@ -19,7 +19,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an Image.
+    /// The source user image virtual hard disk. The virtual hard disk will be
+    /// copied before being attached to the virtual machine. If SourceImage is
+    /// provided, the destination virtual hard drive must not exist.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Image : Resource
@@ -42,7 +44,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="sourceVirtualMachine">The source virtual machine from
         /// which Image is created.</param>
-        /// <param name="storageProfile">The storage profile.</param>
+        /// <param name="storageProfile">Specifies the storage settings for the
+        /// virtual machine disks.</param>
         /// <param name="provisioningState">The provisioning state.</param>
         public Image(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string))
             : base(location, id, name, type, tags)
@@ -66,7 +69,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SubResource SourceVirtualMachine { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage profile.
+        /// Gets or sets specifies the storage settings for the virtual machine
+        /// disks.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public ImageStorageProfile StorageProfile { get; set; }

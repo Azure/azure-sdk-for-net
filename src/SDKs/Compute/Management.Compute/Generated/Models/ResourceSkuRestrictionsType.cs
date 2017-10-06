@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ResourceSkuRestrictionsType
     {
-        [EnumMember(Value = "location")]
+        [EnumMember(Value = "Location")]
         Location
     }
     internal static class ResourceSkuRestrictionsTypeEnumExtension
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             switch( value )
             {
                 case ResourceSkuRestrictionsType.Location:
-                    return "location";
+                    return "Location";
             }
             return null;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             switch( value )
             {
-                case "location":
+                case "Location":
                     return ResourceSkuRestrictionsType.Location;
             }
             return null;

@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DiskCreateOptionTypes
     {
-        [EnumMember(Value = "fromImage")]
+        [EnumMember(Value = "FromImage")]
         FromImage,
-        [EnumMember(Value = "empty")]
+        [EnumMember(Value = "Empty")]
         Empty,
-        [EnumMember(Value = "attach")]
+        [EnumMember(Value = "Attach")]
         Attach
     }
     internal static class DiskCreateOptionTypesEnumExtension
@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.Compute.Models
             switch( value )
             {
                 case DiskCreateOptionTypes.FromImage:
-                    return "fromImage";
+                    return "FromImage";
                 case DiskCreateOptionTypes.Empty:
-                    return "empty";
+                    return "Empty";
                 case DiskCreateOptionTypes.Attach:
-                    return "attach";
+                    return "Attach";
             }
             return null;
         }
@@ -52,11 +52,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         {
             switch( value )
             {
-                case "fromImage":
+                case "FromImage":
                     return DiskCreateOptionTypes.FromImage;
-                case "empty":
+                case "Empty":
                     return DiskCreateOptionTypes.Empty;
-                case "attach":
+                case "Attach":
                     return DiskCreateOptionTypes.Attach;
             }
             return null;

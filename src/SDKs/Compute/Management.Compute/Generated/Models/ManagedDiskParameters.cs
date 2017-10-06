@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ManagedDiskParameters class.
         /// </summary>
         /// <param name="id">Resource Id</param>
-        /// <param name="storageAccountType">The Storage Account type. Possible
-        /// values include: 'Standard_LRS', 'Premium_LRS'</param>
+        /// <param name="storageAccountType">Specifies the storage account type
+        /// for the managed disk. Possible values are: Standard_LRS or
+        /// Premium_LRS. Possible values include: 'Standard_LRS',
+        /// 'Premium_LRS'</param>
         public ManagedDiskParameters(string id = default(string), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
             : base(id)
         {
@@ -46,8 +48,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Storage Account type. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS'
+        /// Gets or sets specifies the storage account type for the managed
+        /// disk. Possible values are: Standard_LRS or Premium_LRS. Possible
+        /// values include: 'Standard_LRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
         public StorageAccountTypes? StorageAccountType { get; set; }

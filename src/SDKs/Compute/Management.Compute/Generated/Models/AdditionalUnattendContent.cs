@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Additional XML formatted information that can be included in the
-    /// Unattend.xml file, which is used by Windows Setup. Contents are defined
-    /// by setting name, component name, and the pass in which the content is a
-    /// applied.
+    /// Specifies additional XML formatted information that can be included in
+    /// the Unattend.xml file, which is used by Windows Setup. Contents are
+    /// defined by setting name, component name, and the pass in which the
+    /// content is applied.
     /// </summary>
     public partial class AdditionalUnattendContent
     {
@@ -34,17 +34,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the AdditionalUnattendContent class.
         /// </summary>
         /// <param name="passName">The pass name. Currently, the only allowable
-        /// value is oobeSystem. Possible values include: 'oobeSystem'</param>
+        /// value is oobeSystem. Possible values include: 'OobeSystem'</param>
         /// <param name="componentName">The component name. Currently, the only
         /// allowable value is Microsoft-Windows-Shell-Setup. Possible values
         /// include: 'Microsoft-Windows-Shell-Setup'</param>
-        /// <param name="settingName">Setting name (e.g. FirstLogonCommands,
-        /// AutoLogon ). Possible values include: 'AutoLogon',
+        /// <param name="settingName">Specifies the name of the setting to
+        /// which the content applies. Possible values are: FirstLogonCommands
+        /// and AutoLogon. Possible values include: 'AutoLogon',
         /// 'FirstLogonCommands'</param>
-        /// <param name="content">XML formatted content that is added to the
-        /// unattend.xml file in the specified pass and component. The XML must
-        /// be less than 4 KB and must include the root element for the setting
-        /// or feature that is being inserted.</param>
+        /// <param name="content">Specifies the XML formatted content that is
+        /// added to the unattend.xml file for the specified path and
+        /// component. The XML must be less than 4KB and must include the root
+        /// element for the setting or feature that is being inserted.</param>
         public AdditionalUnattendContent(PassNames? passName = default(PassNames?), ComponentNames? componentName = default(ComponentNames?), SettingNames? settingName = default(SettingNames?), string content = default(string))
         {
             PassName = passName;
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the pass name. Currently, the only allowable value is
-        /// oobeSystem. Possible values include: 'oobeSystem'
+        /// oobeSystem. Possible values include: 'OobeSystem'
         /// </summary>
         [JsonProperty(PropertyName = "passName")]
         public PassNames? PassName { get; set; }
@@ -75,17 +76,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ComponentNames? ComponentName { get; set; }
 
         /// <summary>
-        /// Gets or sets setting name (e.g. FirstLogonCommands, AutoLogon ).
+        /// Gets or sets specifies the name of the setting to which the content
+        /// applies. Possible values are: FirstLogonCommands and AutoLogon.
         /// Possible values include: 'AutoLogon', 'FirstLogonCommands'
         /// </summary>
         [JsonProperty(PropertyName = "settingName")]
         public SettingNames? SettingName { get; set; }
 
         /// <summary>
-        /// Gets or sets XML formatted content that is added to the
-        /// unattend.xml file in the specified pass and component. The XML must
-        /// be less than 4 KB and must include the root element for the setting
-        /// or feature that is being inserted.
+        /// Gets or sets specifies the XML formatted content that is added to
+        /// the unattend.xml file for the specified path and component. The XML
+        /// must be less than 4KB and must include the root element for the
+        /// setting or feature that is being inserted.
         /// </summary>
         [JsonProperty(PropertyName = "content")]
         public string Content { get; set; }

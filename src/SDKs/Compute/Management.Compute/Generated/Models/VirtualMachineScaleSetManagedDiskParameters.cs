@@ -32,8 +32,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetManagedDiskParameters class.
         /// </summary>
-        /// <param name="storageAccountType">The Storage Account type. Possible
-        /// values include: 'Standard_LRS', 'Premium_LRS'</param>
+        /// <param name="storageAccountType">Specifies the storage account type
+        /// for the managed disk. Possible values are: Standard_LRS or
+        /// Premium_LRS. Possible values include: 'Standard_LRS',
+        /// 'Premium_LRS'</param>
         public VirtualMachineScaleSetManagedDiskParameters(StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
         {
             StorageAccountType = storageAccountType;
@@ -46,8 +48,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Storage Account type. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS'
+        /// Gets or sets specifies the storage account type for the managed
+        /// disk. Possible values are: Standard_LRS or Premium_LRS. Possible
+        /// values include: 'Standard_LRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
         public StorageAccountTypes? StorageAccountType { get; set; }
