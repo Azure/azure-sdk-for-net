@@ -42,8 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="runAsAccountId">The CS account Id.</param>
         /// <param name="policyId">The Policy Id.</param>
         /// <param name="logStorageAccountId">The storage account to be used
-        /// for logging
-        /// during replication.</param>
+        /// for logging during replication.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
         public InMageAzureV2ReprotectInput(string masterTargetId = default(string), string processServerId = default(string), string storageAccountId = default(string), string runAsAccountId = default(string), string policyId = default(string), string logStorageAccountId = default(string), IList<string> disksToInclude = default(IList<string>))
         {
@@ -93,8 +92,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string PolicyId { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage account to be used for logging
-        /// during replication.
+        /// Gets or sets the storage account to be used for logging during
+        /// replication.
         /// </summary>
         [JsonProperty(PropertyName = "logStorageAccountId")]
         public string LogStorageAccountId { get; set; }

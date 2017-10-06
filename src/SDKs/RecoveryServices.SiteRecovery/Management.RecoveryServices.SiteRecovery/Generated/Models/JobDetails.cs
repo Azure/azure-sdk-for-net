@@ -34,9 +34,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the JobDetails class.
         /// </summary>
         /// <param name="affectedObjectDetails">The affected object properties
-        /// like source server, source cloud, target
-        /// server, target cloud etc. based on the workflow object
-        /// details.</param>
+        /// like source server, source cloud, target server, target cloud etc.
+        /// based on the workflow object details.</param>
         public JobDetails(IDictionary<string, string> affectedObjectDetails = default(IDictionary<string, string>))
         {
             AffectedObjectDetails = affectedObjectDetails;
@@ -50,8 +49,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the affected object properties like source server,
-        /// source cloud, target
-        /// server, target cloud etc. based on the workflow object details.
+        /// source cloud, target server, target cloud etc. based on the
+        /// workflow object details.
         /// </summary>
         [JsonProperty(PropertyName = "affectedObjectDetails")]
         public IDictionary<string, string> AffectedObjectDetails { get; set; }

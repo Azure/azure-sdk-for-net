@@ -12,15 +12,6 @@
     /// </summary>
     public partial class <#= type.Name #> :<# if(type.ShouldDefineGetTransportObject) { #> ITransportObjectProvider<<#= type.TransportObjectTypeName #>>,<# } #> IPropertyMetadata
     {
-<#
-foreach (var property in type.OrderedPublicProperties.Select(p => p.Key))
-{
-#>
-        private readonly <#= property.Type #> <#= property.CamelName #>;
-<#
-}
-#>
-
         #region Constructors
 <# if (type.ShouldDefineCustomConstructor)
 {
@@ -42,7 +33,7 @@ foreach (var property in type.OrderedPublicProperties.Select(p => p.Key))
     foreach (var property in type.ConstructorProperties)
     {
 #>
-            this.<#= property.CamelName #> = <#= property.CamelName #>;
+            this.<#= property.Name #> = <#= property.CamelName #>;
 <#
     }
 #>
@@ -58,7 +49,7 @@ foreach (var kvp in type.BoundProperties)
 {
     var protocolObjectGetter = CodeGenerationUtilities.GetProtocolToObjectModelString(kvp.Key, kvp.Value);
 #>
-            this.<#= kvp.Key.CamelName #> = <#= protocolObjectGetter #>;
+            this.<#= kvp.Key.Name #> = <#= protocolObjectGetter #>;
 <#
 }
 #>
@@ -85,10 +76,7 @@ if (!string.IsNullOrEmpty(property.RemarksComment))
 <#
 }
 #>
-        public <#= property.Type #> <#= property.Name #>
-        {
-            get { return this.<#= property.CamelName #>; }
-        }
+        public <#= property.Type #> <#= property.Name #> { get; }
 
 <#
 }

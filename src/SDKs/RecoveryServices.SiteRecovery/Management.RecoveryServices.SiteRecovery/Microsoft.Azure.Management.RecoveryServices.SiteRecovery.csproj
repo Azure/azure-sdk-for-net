@@ -3,9 +3,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
     <Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-    <VersionPrefix>1.0.1-preview</VersionPrefix>
+    <VersionPrefix>1.0.2-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
-    <PackageTags>Microsoft Azure resource management</PackageTags>    
+    <PackageTags>Microsoft Azure resource management</PackageTags>
+    <PackageReleaseNotes>Additional event search, migration support and Replication Health for site recovery.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
