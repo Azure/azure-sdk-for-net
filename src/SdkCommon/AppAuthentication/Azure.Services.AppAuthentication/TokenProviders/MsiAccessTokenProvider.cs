@@ -104,6 +104,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
                     $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
             }
+            catch (Exception exp)
+            {
+                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
+                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.GenericErrorMessage}  {exp.Message}");
+            }
         }
     }
 }

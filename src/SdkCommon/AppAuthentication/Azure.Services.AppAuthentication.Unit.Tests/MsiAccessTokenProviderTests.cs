@@ -37,6 +37,25 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Validator.ValidateToken(token, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
         }
 
+        /// <summary>
+        /// If json parse error when aquiring token, an exception should be thrown. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ParseErrorMsiGetTokenTest()
+        {
+            // MockMsi is being asked to act like response from Azure VM MSI suceeded. 
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppJsonParseFailure);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // Ensure exception is thrown when getting the token
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+
+            Assert.Contains(AzureServiceTokenProviderException.ManagedServiceIdentityUsed, exception.ToString());
+            Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.ToString());
+        }
+
         [Fact]
         public async Task GetTokenUsingMsiAppServices()
         {
