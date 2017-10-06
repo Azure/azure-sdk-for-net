@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobScheduleExecutionInformation : IPropertyMetadata
     {
-        private readonly DateTime? endTime;
-        private readonly DateTime? nextRunTime;
-        private readonly RecentJob recentJob;
-
         #region Constructors
 
         internal JobScheduleExecutionInformation(Models.JobScheduleExecutionInformation protocolObject)
         {
-            this.endTime = protocolObject.EndTime;
-            this.nextRunTime = protocolObject.NextRunTime;
-            this.recentJob = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.RecentJob, o => new RecentJob(o).Freeze());
+            this.EndTime = protocolObject.EndTime;
+            this.NextRunTime = protocolObject.NextRunTime;
+            this.RecentJob = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.RecentJob, o => new RecentJob(o).Freeze());
         }
 
         #endregion Constructors
@@ -42,28 +38,19 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the completion time of the job schedule. This property is only returned for completed job schedules.
         /// </summary>
-        public DateTime? EndTime
-        {
-            get { return this.endTime; }
-        }
+        public DateTime? EndTime { get; }
 
         /// <summary>
         /// Gets the time at which the next job will be scheduled under this job schedule. This property is only returned 
         /// for active job schedules.
         /// </summary>
-        public DateTime? NextRunTime
-        {
-            get { return this.nextRunTime; }
-        }
+        public DateTime? NextRunTime { get; }
 
         /// <summary>
         /// Gets the information about the most recent job under the job schedule. Note that this element is only returned 
         /// if the job schedule contains at least one job under it.
         /// </summary>
-        public RecentJob RecentJob
-        {
-            get { return this.recentJob; }
-        }
+        public RecentJob RecentJob { get; }
 
         #endregion // JobScheduleExecutionInformation
 

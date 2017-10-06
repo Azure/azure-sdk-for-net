@@ -18,31 +18,24 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A reference to an OS disk image.
+    /// Settings for the operating system disk of the virtual machine.
     /// </summary>
     public partial class OSDisk : ITransportObjectProvider<Models.OSDisk>, IPropertyMetadata
     {
-        private readonly Common.CachingType? caching;
-        private readonly IEnumerable<string> imageUris;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="OSDisk"/> class.
         /// </summary>
-        /// <param name='imageUris'>The collection of Virtual Hard Disk (VHD) URIs.</param>
         /// <param name='caching'>The type of caching to enable for the OS disk.</param>
         public OSDisk(
-            IEnumerable<string> imageUris,
             Common.CachingType? caching = default(Common.CachingType?))
         {
-            this.imageUris = imageUris;
-            this.caching = caching;
+            this.Caching = caching;
         }
 
         internal OSDisk(Models.OSDisk protocolObject)
         {
-            this.caching = UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching);
-            this.imageUris = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ImageUris, o => o.ToList().AsReadOnly());
+            this.Caching = UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching);
         }
 
         #endregion Constructors
@@ -52,25 +45,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the type of caching to enable for the OS disk.
         /// </summary>
-        public Common.CachingType? Caching
-        {
-            get { return this.caching; }
-        }
-
-        /// <summary>
-        /// Gets the collection of Virtual Hard Disk (VHD) URIs.
-        /// </summary>
-        /// <remarks>
-        /// All the VHDs must be identical and must reside in an Azure Storage account within the same subscription and same 
-        /// region as the Batch account. For best performance, it is recommended that each VHD resides in a separate Azure 
-        /// Storage account. Each VHD can serve upto 20 Windows compute nodes or 40 Linux compute nodes. You must supply 
-        /// enough VHD URIs to satisfy the 'targetDedicated' property of the pool. If you do not supply enough VHD URIs, 
-        /// the pool will partially allocate compute nodes, and a resize error will occur.
-        /// </remarks>
-        public IEnumerable<string> ImageUris
-        {
-            get { return this.imageUris; }
-        }
+        public Common.CachingType? Caching { get; }
 
         #endregion // OSDisk
 
@@ -104,7 +79,6 @@ namespace Microsoft.Azure.Batch
             Models.OSDisk result = new Models.OSDisk()
             {
                 Caching = UtilitiesInternal.MapNullableEnum<Common.CachingType, Models.CachingType>(this.Caching),
-                ImageUris = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageUris, o => o.ToList()),
             };
 
             return result;

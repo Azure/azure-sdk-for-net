@@ -4,8 +4,15 @@
     <PackageId>Microsoft.Azure.Management.ServiceBus</PackageId>
     <Description>Provides developers with libraries to create and manage Namespaces and manage Authorization Rules. Note: This client library is for ServiceBus under Azure Resource Manager.</Description>
     <AssemblyName>Microsoft.Azure.Management.ServiceBus</AssemblyName>
-    <PackageTags>Microsoft Azure ServiceBus Management;ServiceBus;ServiceBus management</PackageTags>      
+    <PackageTags>Microsoft Azure ServiceBus Management;ServiceBus;ServiceBus management</PackageTags>
+	<PackageReleaseNotes>
+	  <![CDATA[
+		This change adds metadata Geo-Disaster recovery support to the Service Bus .NET management client.
+		1) Added APIs for creating and managing Disaster recovery configurations which allows users to pair two Service Bus namespaces in a primary-secondary configuration and creates an alias to represent the DR pair.
+		2) Added APIs to trigger a Geo-DR failover which re-points the alias from the primary to the secondary namespace and APIs to break DR pairing which disables Geo-DR
+	  ]]>
+	</PackageReleaseNotes>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
   </PropertyGroup>
 </Project>
