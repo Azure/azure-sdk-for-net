@@ -276,6 +276,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(path, getResponse.Path);
                     Assert.Equal("Swagger Petstore Extensive", getResponse.DisplayName);
                     Assert.Equal("http://petstore.swagger.wordnik.com/api", getResponse.ServiceUrl);
+                    
+                    ApiExportResult swaggerExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, swaggerApi, ExportFormat.OpenApi2);
+
+                    Assert.NotNull(swaggerExport);
+                    Assert.NotNull(swaggerExport.Link);
                 }
                 finally
                 {
@@ -334,6 +339,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(getResponse.IsCurrent);
                     Assert.True(getResponse.Protocols.Contains(Protocol.Https));
                     Assert.Equal("1", getResponse.ApiRevision);
+
+                    ApiExportResult wadlExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, wadlApi, ExportFormat.Wadl);
+
+                    Assert.NotNull(wadlExport);
+                    Assert.NotNull(wadlExport.Link);
                 }
                 finally
                 {

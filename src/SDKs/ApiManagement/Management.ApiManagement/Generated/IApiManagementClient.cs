@@ -255,5 +255,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </summary>
         IUserIdentitiesOperations UserIdentities { get; }
 
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        IApiExportOperations ApiExport { get; }
+
     }
 }
