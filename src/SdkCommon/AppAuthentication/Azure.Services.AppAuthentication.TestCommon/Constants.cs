@@ -21,9 +21,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AdalException = "Adal Exception";
         public static readonly string CertificateNotFoundError = "Specified certificate was not found. ";
         public static readonly string IncorrectSecretError = "Secret not correct";
+        public static readonly string MsiFailureError = "MSI failed to get token";
         public static readonly string IncorrectFormatError = "Incorrect format";
         public static readonly string NotInExpectedFormatError = "not in expected format";
         public static readonly string NotInProperFormatError = "not in a proper format. Expected format is Key1=Value1;Key2=Value=2;";
+        public static readonly string NoMethodWorkedToGetTokenError = "methods to get an access token, but none of them worked";
         public static readonly string ProgramNotFoundError = "No such file";
         public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
