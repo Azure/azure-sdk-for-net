@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             MsiAppServicesUnauthorized,
             MsiAppServicesSuccess,
+            MsiAppServicesFailure,
             MsiAzureVmSuccess,
             MsiAppServicesIncorrectRequest
         }
@@ -61,6 +62,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     };
                     break;
                 case MsiTestType.MsiAppServicesSuccess:
+                case MsiTestType.MsiAppServicesFailure:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        StatusCode = HttpStatusCode.RequestTimeout,
+                        Content = new StringContent(Constants.MsiFailureError,
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
                 case MsiTestType.MsiAzureVmSuccess:
                     responseMessage = new HttpResponseMessage
                     {
