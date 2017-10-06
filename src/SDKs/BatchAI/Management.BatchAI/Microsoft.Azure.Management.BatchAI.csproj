@@ -6,6 +6,11 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.BatchAI</AssemblyName>    
     <PackageTags>Microsoft Azure BatchAI;BatchAI;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure BatchAI SDK. Included with this release is support for all cluster, job and file server related APIs.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   
   <PropertyGroup>
