@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     {
         private readonly IAuthenticationContext _authenticationContext;
         private readonly string _azureAdInstance;
-        private const string ClientId = "872cd9fa-d31f-45e0-9eab-6e460a02d1f1";
+        private const string ClientId = "d7813711-9094-4ad3-a062-cac3ec74ebe8";
 
         // Current user's home tenant. 
         private static string _currentUserTenant;
