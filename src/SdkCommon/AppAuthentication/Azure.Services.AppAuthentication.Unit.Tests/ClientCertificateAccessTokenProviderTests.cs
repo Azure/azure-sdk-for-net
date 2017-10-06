@@ -48,6 +48,31 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// Getting token should throw an error if cert thumbprint failed  
+        /// </summary>
+        [Fact]
+        public async Task ThumbprintFailTest()
+        {
+            // Import the test certificate. 
+            X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
+            CertUtil.ImportCertificate(cert);
+
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateFail);
+
+            // Create ClientCertificateAzureServiceTokenProvider instance
+            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+
+            // Ensure exception is thrown when getting the token
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+
+            Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.ToString());
+            // Delete the cert, since testing is done. 
+            CertUtil.DeleteCertificate(cert.Thumbprint);
+        }
+
+        /// <summary>
         /// If the ClientId is null or empty, an exception should be thrown. 
         /// </summary>
         [Fact]
