@@ -65,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus
                     return baseMessage;
                 }
 
-                return StringUtility.FormatInvariant("{0}, ({1})", this.ServiceBusNamespace);
+                return "{0}, ({1})".FormatInvariant(baseMessage, this.ServiceBusNamespace);
             }
         }
 
