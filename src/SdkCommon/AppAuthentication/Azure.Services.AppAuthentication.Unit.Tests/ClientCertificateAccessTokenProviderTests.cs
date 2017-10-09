@@ -187,6 +187,33 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// Test that exception when token cannot be aquired through a cert. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public void CannotAcquireTokenThroughCertTest()
+        {
+            // Import the test certificate. 
+            X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
+            CertUtil.ImportCertificate(cert);
+
+            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireInvalidTokenAsycFail);
+
+            // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
+            ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
+                cert.Subject, false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
+
+            // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on subject name in the connection string. 
+            var exception = Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty));
+
+            // Delete the cert, since testing is done. 
+            CertUtil.DeleteCertificate(cert.Thumbprint);
+
+            Assert.Contains(Constants.TokenFormatExceptionMessage, exception.Result.Message);
+        }
+
+        /// <summary>
         /// Test that exception when cert is not found is as expected. 
         /// </summary>
         /// <returns></returns>
