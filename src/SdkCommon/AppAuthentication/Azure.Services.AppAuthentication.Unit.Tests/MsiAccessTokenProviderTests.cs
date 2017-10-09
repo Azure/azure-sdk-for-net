@@ -145,6 +145,30 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.IncorrectFormatError, exception.Message);
             Assert.Contains(HttpStatusCode.BadRequest.ToString(), exception.Message);
         }
+
+        /// <summary>
+        /// If an unexpected http response has been received, ensure exception is thrown. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task HttpResponseExceptionTest()
+        {
+            // Setup the environment variables
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+
+            // Delete the environment variables
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+
+            Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
+        }
     }
     
 }
