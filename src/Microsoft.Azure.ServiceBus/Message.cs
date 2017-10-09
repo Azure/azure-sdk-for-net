@@ -53,8 +53,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
         /// </summary>
-        /// <remarks>A value set by the user to identify the message. In case message deduplication is enabled on the entity, this value will be used for deduplication.
-        /// Max MessageId size is 128 chars.</remarks>
+        /// <remarks>
+        ///    The message identifier is an application-defined value that uniquely identifies the 
+        ///    message and its payload. The identifier is a free-form string and can reflect a GUID 
+        ///    or an identifier derived from the application context. If enabled, the 
+        ///    <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/duplicate-detection">duplicate detection</a> 
+        ///    feature identifies and removes second and further submissions of messages with the 
+        ///    same MessageId.
+        /// </remarks>
         public string MessageId
         {
             get => this.messageId;
@@ -66,10 +72,14 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets a partition key for sending a transactional message to a queue or topic that is not session-aware.</summary>
-        /// <value>The partition key for sending a transactional message.</value>
-        /// <remarks>Transactions are not currently supported with this library. Messages with same partitionKey are sent to the same partition.
-        /// Max PartitionKey size is 128 chars.</remarks>
+        /// <summary>Gets or sets a partition key for sending a message to a partitioned entity.</summary>
+        /// <value>The partition key. Maximum length is 128 characters.</value>
+        /// <remarks>
+        ///    For <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-partitioning">partitioned entities</a>, 
+        ///    setting this value enables assigning related messages to the same internal partition, so that submission sequence 
+        ///    order is correctly recorded. The partition is chosen by a hash function over this value and cannot be chosen 
+        ///    directly. For session-aware entities, the <see cref="SessionId"/> property overrides this value.
+        /// </remarks>
         public string PartitionKey
         {
             get => this.partitionKey;
@@ -81,9 +91,14 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets a partition key for sending a transactional message via a transfer queue.</summary>
-        /// <value>The partition key value when a transaction is to be used to send messages via a transfer queue.</value>
-        /// <remarks>Max size of ViaPartitionKey is 128 chars.</remarks>
+        /// <summary>Gets or sets a partition key for sending a message into an entity via a partitioned transfer queue.</summary>
+        /// <value>The partition key. Maximum length is 128 characters. </value>
+        /// <remarks>
+        ///    If a message is sent via a transfer queue in the scope of a transaction, this value selects the 
+        ///    transfer queue partition: This is functionally equivalent to <see cref="PartitionKey"/> and ensures that
+        ///    messages are kept together and in order as they are transferred.
+        ///    See <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</a>.
+        /// </remarks>
         public string ViaPartitionKey
         {
             get => this.viaPartitionKey;
@@ -95,9 +110,15 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets a sessionId. A message with sessionId set can only be received using a <see cref="IMessageSession"/> object.</summary>
-        /// <value>The identifier of the session.</value>
-        /// <remarks>Max size of sessionId is 128 chars.</remarks>
+        /// <summary>Gets or sets the session identifier for a session-aware entity.</summary>
+        /// <value>The session identifier. Maximum length is 128 characters.</value>
+        /// <remarks>
+        ///    For session-aware entities, this application-defined value specifies the session 
+        ///    affiliation of the message. Messages with the same session identifier are subject 
+        ///    to summary locking and enable exact in-order processing and demultiplexing. 
+        ///    For session-unaware entities, this value is ignored.
+        ///    See <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-sessions">Message Sessions</a>.
+        /// </remarks>
         public string SessionId
         {
             get => this.sessionId;
@@ -109,9 +130,12 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the session identifier to reply to.</summary>
-        /// <value>The session identifier to reply to.</value>
-        /// <remarks>Max size of ReplyToSessionId is 128.</remarks>
+        /// <summary>Gets or sets a session identifier augmenting the <see cref="ReplyTo"/> address.</summary>
+        /// <value>Session identifier. Maximum length is 128 characters.</value>
+        /// <remarks>
+        ///    This value augments the ReplyTo information and specifies which SessionId should be set 
+        ///    for the reply when sent to the reply entity. See <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>
+        /// </remarks>
         public string ReplyToSessionId
         {
             get => this.replyToSessionId;
@@ -124,9 +148,12 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>Gets the date and time in UTC at which the message is set to expire.</summary>
-        /// <value>The message expiration time in UTC.</value>
+        /// <value>The message expiration time in UTC. This property is read-only.</value>
         /// <exception cref="System.InvalidOperationException">If the message has not been received. For example if a new message was created but not yet sent and received.</exception>
-        /// <remarks>Unless specifically set for a message, this value is controlled by the 'DefaultMessageTimeToLive' property set while creating the entity.</remarks>
+        /// <remarks>
+        ///  The UTC instant at which the message is marked for removal and no longer available for retrieval 
+        ///  from the entity due to expiration. Expiry is controlled by the <see cref="TimeToLive"/> property 
+        ///  and this property is computed from <see cref="EnqueuedTimeUtc"/>+<see cref="TimeToLive"/></remarks>
         public DateTime ExpiresAtUtc
         {
             get
@@ -141,14 +168,17 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus.
-        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Expired messages cannot be received.
-        /// TimeToLive is the maximum lifetime that a message can be received, but its value cannot exceed the entity specified value on the destination queue or subscription.
-        /// If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the
-        /// entity’s DefaultMessageTimeToLive value.
+        /// Gets or sets the message’s "time to live" value. 
         /// </summary>
         /// <value>The message’s time to live value.</value>
-        /// <remarks>If the TTL set on a message by the sender exceeds the destination's TTL, then the message's TTL will be overwritten by the later one.</remarks>
+        /// <remarks>
+        ///     This value is the relative duration after which the message expires, starting from the instant 
+        ///      the message has been accepted and stored by the broker, as captured in <see cref="EnqueueTimeUtc"/>. 
+        ///      When not set explicitly, the assumed value is the DefaultTimeToLive for the respective queue or topic. 
+        ///      A message-level <see cref="TimeToLive"/> value cannot be longer than the entity's DefaultTimeToLive 
+        ///      setting and it is silently adjusted if it does. 
+        ///      See <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-expiration">Expiration</a>
+        /// </remarks>
         public TimeSpan TimeToLive
         {
             get
@@ -169,25 +199,48 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>Gets or sets the a correlation identifier.</summary>
-        /// <value>The identifier of the correlation.</value>
-        /// <remarks>Its a custom property that can be used to either transfer a correlation Id to the destination or be used in <see cref="CorrelationFilter"/></remarks>
+        /// <value>Correlation identifier.</value>
+        /// <remarks>
+        ///    Allows an application to specify a context for the message for the purposes of correlation, 
+        ///    for example reflecting the MessageId of a message that is being replied to.
+        ///    See <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
+        /// </remarks>
         public string CorrelationId { get; set; }
 
-        /// <summary>Gets or sets the application specific label.</summary>
-        /// <value>The application specific label.</value>
+        /// <summary>Gets or sets an application specific label.</summary>
+        /// <value>The application specific label</value>
+        /// <remarks>
+        ///   This property enables the application to indicate the purpose of the message to the receiver in a standardized 
+        ///   fashion, similar to an email subject line. The mapped AMQP property is "subject".
+        /// </remarks>
         public string Label { get; set; }
 
-        /// <summary>Gets or sets the send to address.</summary>
-        /// <value>The send to address.</value>
+        /// <summary>Gets or sets the "to" address.</summary>
+        /// <value>The "to" address.</value>
+        /// <remarks>
+        ///    This property is reserved for future use in routing scenarios and presently ignored by the broker itself. 
+        ///     Applications can use this value in rule-driven 
+        ///     <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-auto-forwarding">auto-forward chaining</a> scenarios to indicate the 
+        ///     intended logical destination of the message.
+        /// </remarks>
         public string To { get; set; }
 
-        /// <summary>Gets or sets the type of the content.</summary>
-        /// <value>The type of the content of the message body. This is a
-        /// content type identifier utilized by the sender and receiver for application specific logic.</value>
+        /// <summary>Gets or sets the content tpye descriptor.</summary>
+        /// <value>RFC2045 Content-Type descriptor.</value>
+        /// <remarks>
+        ///   Optionally describes the payload of the message, with a descriptor following the format of 
+        ///   RFC2045, Section 5, for example "application/json".
+        /// </remarks>
         public string ContentType { get; set; }
 
-        /// <summary>Gets or sets the address of the queue to reply to.</summary>
-        /// <value>The reply to queue address.</value>
+        /// <summary>Gets or sets the address of an entity to send replies to.</summary>
+        /// <value>The reply entity address.</value>
+        /// <remarks>
+        ///    This optional and application-defined value is a standard way to express a reply path 
+        ///    to the receiver of the message. When a sender expects a reply, it sets the value to the 
+        ///    absolute or relative path of the queue or topic it expects the reply to be sent to.
+        ///    See <a href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
+        /// </remarks>
         public string ReplyTo { get; set; }
 
         /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This
@@ -205,7 +258,7 @@ namespace Microsoft.Azure.ServiceBus
         public long Size => Body.Length;
 
         /// <summary>
-        /// Gets the user property bag, which can be used for custom message properties.
+        /// Gets the "user properties" bag, which can be used for custom message metadata.
         /// </summary>
         /// <remarks>
         /// Only following value types are supported:
@@ -227,8 +280,8 @@ namespace Microsoft.Azure.ServiceBus
             return string.Format(CultureInfo.CurrentCulture, $"{{MessageId:{this.MessageId}}}");
         }
 
-        /// <summary>Clones a message, so that it is possible to send a clone of a message as a new message.</summary>
-        /// <returns>The <see cref="Message" /> that contains the cloned message.</returns>
+        /// <summary>Clones a message, so that it is possible to send a clone of an already received message as a new message.</summary>
+        /// <returns>A cloned <see cref="Message" />.</returns>
         public Message Clone()
         {
             var clone = (Message)this.MemberwiseClone();
@@ -294,16 +347,24 @@ namespace Microsoft.Azure.ServiceBus
             /// <summary>
             /// Gets the lock token for the current message.
             /// </summary>
-            /// <remarks>A lock token will only be specified if the message was received using <see cref="ReceiveMode.PeekLock"/></remarks>
+            /// <remarks>
+            ///   The lock token is a reference to the lock that is being held by the broker in <see cref="ReceiveMode.PeekLock"/> mode. 
+            ///   The token can be used to pin the lock permanently through the Deferral API and, with that, take the message out of the 
+            ///   regular delivery state flow. This property is read-only.
+            /// </remarks>
             public string LockToken => this.LockTokenGuid.ToString();
 
-            /// <summary>Specifies if message is a received message or not.</summary>
+            /// <summary>Specifies if the message has been obtained from the broker.</summary>
             public bool IsReceived => this.sequenceNumber > -1;
 
             /// <summary>
             /// Get the current delivery count.
             /// </summary>
             /// <value>This value starts at 1.</value>
+            /// <remarks>
+            ///    Number of deliveries that have been attempted for this message. The count is incremented when a message lock expires, 
+            ///    or the message is explicitly abandoned by the receiver. This property is read-only.
+            /// </remarks>
             public int DeliveryCount
             {
                 get
@@ -317,6 +378,11 @@ namespace Microsoft.Azure.ServiceBus
 
             /// <summary>Gets the date and time in UTC until which the message will be locked in the queue/subscription.</summary>
             /// <value>The date and time until which the message will be locked in the queue/subscription.</value>
+            /// <remarks>
+            /// 	For messages retrieved under a lock (peek-lock receive mode, not pre-settled) this property reflects the UTC 
+            ///     instant until which the message is held locked in the queue/subscription. When the lock expires, the <see cref="DeliveryCount"/> 
+            ///     is incremented and the message is again available for retrieval. This property is read-only.
+            /// </remarks>
             public DateTime LockedUntilUtc
             {
                 get
@@ -328,7 +394,13 @@ namespace Microsoft.Azure.ServiceBus
                 internal set => this.lockedUntilUtc = value;
             }
 
-            /// <summary>Gets the unique number assigned to a message by Service Bus, for this entity.</summary>
+            /// <summary>Gets the unique number assigned to a message by Service Bus.</summary>
+            /// <remarks>
+            ///     The sequence number is a unique 64-bit integer assigned to a message as it is accepted 
+            ///     and stored by the broker and functions as its true identifier. For partitioned entities, 
+            ///     the topmost 16 bits reflect the partition identifier. Sequence numbers monotonically increase 
+            ///     and are gapless. They roll over to 0 when the 48-64 bit range is exhausted. This property is read-only.
+            /// </remarks>
             public long SequenceNumber
             {
                 get
@@ -343,6 +415,10 @@ namespace Microsoft.Azure.ServiceBus
             /// <summary>
             /// Gets the name of the queue or subscription that this message was enqueued on, before it was deadlettered.
             /// </summary>
+            /// <remarks>
+            /// 	Only set in messages that have been dead-lettered and subsequently auto-forwarded from the dead-letter queue 
+            ///     to another entity. Indicates the entity in which the message was dead-lettered. This property is read-only.
+            /// </remarks>
             public string DeadLetterSource
             {
                 get
@@ -365,10 +441,12 @@ namespace Microsoft.Azure.ServiceBus
                 set => this.partitionId = value;
             }
 
-            /// <summary>Gets or sets the enqueued sequence number of the message.</summary>
+            /// <summary>Gets or sets the original sequence number of the message.</summary>
             /// <value>The enqueued sequence number of the message.</value>
-            /// <remarks>In scenarios of Topic-Subscription or ForwardTo, the message is initially enqueued on a different entity as compared to the
-            /// entity from where the message is received. This returns the sequence number of the message in the initial entity.</remarks>
+            /// <remarks>
+            /// For messages that have been auto-forwarded, this property reflects the sequence number 
+            /// that had first been assigned to the message at its original point of submission. This property is read-only.
+            /// </remarks>
             public long EnqueuedSequenceNumber
             {
                 get
@@ -381,7 +459,12 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
-            /// <value>The enqueue time in UTC. This value represents the actual time of enqueuing the message.</value>
+            /// <value>The enqueue time in UTC. </value>
+            /// <remarks>
+            ///    The UTC instant at which the message has been accepted and stored in the entity. 
+            ///    This value can be used as an authoritative and neutral arrival time indicator when 
+            ///    the receiver does not want to trust the sender's clock. This property is read-only.
+            /// </remarks>
             public DateTime EnqueuedTimeUtc
             {
                 get
