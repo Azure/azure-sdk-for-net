@@ -52,8 +52,25 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Ensure exception is thrown when getting the token
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
-            Assert.Contains(AzureServiceTokenProviderException.ManagedServiceIdentityUsed, exception.ToString());
-            Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.ToString());
+            Assert.Contains(Constants.TokenResponseFormatExceptionMessage, exception.ToString());
+        }
+
+        /// <summary>
+        /// If MSI response if missing the token, an exception should be thrown. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task MsiResponseMissingTokenTest()
+        {
+            // MockMsi is being asked to act like response from Azure VM MSI suceeded. 
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiMissingToken);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // Ensure exception is thrown when getting the token
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+
+            Assert.Contains(Constants.TokenFormatExceptionMessage, exception.ToString());
         }
 
         [Fact]

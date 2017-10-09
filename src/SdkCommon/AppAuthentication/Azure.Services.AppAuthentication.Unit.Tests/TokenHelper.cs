@@ -65,6 +65,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        ///  The response from MSI missing token
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetMsiMissingTokenResponse()
+        {
+            return
+                "{\"refresh_token\":\"\",\"expires_in\":\"3600\",\"expires_on\":\"1492269961\",\"not_before\":\"1492266061\",\"resource\":\"https://vault.azure.net\",\"token_type\":\"Bearer\"}";
+        }
+
+        /// <summary>
         ///  The response has claims as expected from MSI response with invalid json
         /// </summary>
         /// <returns></returns>
