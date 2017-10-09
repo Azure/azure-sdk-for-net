@@ -1,10 +1,10 @@
 ﻿#if NET461
+
 namespace Microsoft.Azure.ServiceBus.UnitTests.API
 {
     using System.Runtime.CompilerServices;
     using ApprovalTests;
     using ApprovalTests.Reporters;
-    using PublicApiGenerator;
     using Xunit;
 
     public class ApiApprovals
@@ -14,7 +14,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
         [UseReporter(typeof(DiffReporter), typeof(ClipboardReporter))]
         public void ApproveAzureServiceBus()
         {
-            var publicApi = ApiGenerator.GeneratePublicApi(typeof(Message).Assembly);
+            var assembly = typeof(Message).Assembly;
+            var publicApi = PublicApiGenerator.ApiGenerator.GeneratePublicApi(assembly);
             Approvals.Verify(publicApi);
         }
     }
