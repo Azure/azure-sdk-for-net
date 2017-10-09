@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ApplicationIdProperty = this.CreatePropertyAccessor<string>("ApplicationId", BindingAccess.Read | BindingAccess.Write);
-                this.VersionProperty = this.CreatePropertyAccessor<string>("Version", BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationIdProperty = this.CreatePropertyAccessor<string>(nameof(ApplicationId), BindingAccess.Read | BindingAccess.Write);
+                this.VersionProperty = this.CreatePropertyAccessor<string>(nameof(Version), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ApplicationPackageReference protocolObject) : base(BindingState.Bound)
             {
                 this.ApplicationIdProperty = this.CreatePropertyAccessor(
                     protocolObject.ApplicationId,
-                    "ApplicationId",
+                    nameof(ApplicationId),
                     BindingAccess.Read);
                 this.VersionProperty = this.CreatePropertyAccessor(
                     protocolObject.Version,
-                    "Version",
+                    nameof(Version),
                     BindingAccess.Read);
             }
         }

@@ -13,9 +13,6 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Test;
 using Xunit;
 using Microsoft.Azure.Management.Dns.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
-using SubResource = Microsoft.Azure.Management.Dns.Models.SubResource;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
@@ -36,17 +33,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
             public DnsManagementClient DnsClient { get; set; }
 
-            public NetworkManagementClient NetworkClient { get; set; }
-
             public RecordedDelegatingHandler DnsHandler { get; set; }
 
             public RecordedDelegatingHandler ResourcesHandler { get; set; }
-
-            public RecordedDelegatingHandler NetworkHandler { get; set; }
-
-            public IList<VirtualNetwork> RegistationVirtualNetworks { get; set; }
-
-            public IList<VirtualNetwork> ResolutionVirtualNetworks { get; set; }
 
             public RecordSet TestRecordSkeleton
                 => this.GetNewTestRecordSkeleton(this.RecordSetName);
@@ -76,11 +65,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 StatusCodeToReturn = System.Net.HttpStatusCode.OK
             };
-            testContext.NetworkHandler = new RecordedDelegatingHandler
-            {
-                StatusCodeToReturn =  System.Net.HttpStatusCode.OK
-            };
-
             testContext.DnsClient = ResourceGroupHelper.GetDnsClient(
                 context,
                 testContext.DnsHandler);
@@ -88,10 +72,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 ResourceGroupHelper.GetResourcesClient(
                     context,
                     testContext.ResourcesHandler);
-            testContext.NetworkClient = ResourceGroupHelper.GetNetworkClient(
-                context,
-                testContext.NetworkHandler);
-
             testContext.ZoneName =
                 TestUtilities.GenerateName("hydratest.dnszone.com");
             testContext.RecordSetName =
@@ -103,20 +83,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
             testContext.ResourceGroup =
                 ResourceGroupHelper.CreateResourceGroup(
                     resourceManagementClient);
-            testContext.RegistationVirtualNetworks = new List<VirtualNetwork>
-            {
-                ResourceGroupHelper.CreateVirtualNetwork(testContext.ResourceGroup.Name, testContext.NetworkClient)
-            };
-            testContext.ResolutionVirtualNetworks = new List<VirtualNetwork>
-            {
-                ResourceGroupHelper.CreateVirtualNetwork(testContext.ResourceGroup.Name, testContext.NetworkClient)
-            };
             ResourceGroupHelper.CreateZone(
                 testContext.DnsClient,
                 testContext.ZoneName,
                 testContext.Location,
-                //testContext.RegistationVirtualNetworks.Select(vNet => new SubResource() { Id = vNet.Id }).ToList(),
-                //testContext.ResolutionVirtualNetworks.Select(vNet => new SubResource() { Id = vNet.Id }).ToList(),
                 testContext.ResourceGroup);
             return testContext;
         }

@@ -22,10 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ExitCodeRangeMapping : ITransportObjectProvider<Models.ExitCodeRangeMapping>, IPropertyMetadata
     {
-        private readonly int end;
-        private readonly ExitOptions exitOptions;
-        private readonly int start;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="ExitCodeRangeMapping"/> class.
@@ -39,16 +35,16 @@ namespace Microsoft.Azure.Batch
             int end,
             ExitOptions exitOptions)
         {
-            this.start = start;
-            this.end = end;
-            this.exitOptions = exitOptions;
+            this.Start = start;
+            this.End = end;
+            this.ExitOptions = exitOptions;
         }
 
         internal ExitCodeRangeMapping(Models.ExitCodeRangeMapping protocolObject)
         {
-            this.end = protocolObject.End;
-            this.exitOptions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExitOptions, o => new ExitOptions(o).Freeze());
-            this.start = protocolObject.Start;
+            this.End = protocolObject.End;
+            this.ExitOptions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExitOptions, o => new ExitOptions(o).Freeze());
+            this.Start = protocolObject.Start;
         }
 
         #endregion Constructors
@@ -62,19 +58,13 @@ namespace Microsoft.Azure.Batch
         /// Ranges are inclusive. For example, if an <see cref="ExitCodeRangeMapping" /> specifies Start 8 and End 10, then 
         /// it matches exit codes 8, 9 and 10.
         /// </remarks>
-        public int End
-        {
-            get { return this.end; }
-        }
+        public int End { get; }
 
         /// <summary>
         /// Gets an <see cref="ExitOptions" /> specifying how the Batch service should respond if the task exits with an 
         /// exit code in the range <see cref="Start"/> to <see cref="End"/> inclusive.
         /// </summary>
-        public ExitOptions ExitOptions
-        {
-            get { return this.exitOptions; }
-        }
+        public ExitOptions ExitOptions { get; }
 
         /// <summary>
         /// Gets the first exit code in the range.
@@ -83,10 +73,7 @@ namespace Microsoft.Azure.Batch
         /// Ranges are inclusive. For example, if an <see cref="ExitCodeRangeMapping" /> specifies Start 8 and End 10, then 
         /// it matches exit codes 8, 9 and 10.
         /// </remarks>
-        public int Start
-        {
-            get { return this.start; }
-        }
+        public int Start { get; }
 
         #endregion // ExitCodeRangeMapping
 

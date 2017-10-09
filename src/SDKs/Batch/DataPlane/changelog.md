@@ -3,6 +3,19 @@
 ### Upcoming changes
 These changes are planned but haven't been published yet.
 
+### Changes in 8.0.0
+#### Features
+- Added the ability to get a discount on Windows VM pricing if you have on-premises licenses for the OS SKUs you are deploying, via `LicenseType` on `VirtualMachineConfiguration`.
+- Added support for attaching empty data drives to `VirtualMachineConfiguration` based pools, via the new `DataDisks` property on `VirtualMachineConfiguration`.
+- **[Breaking]** Custom images must now be deployed using a reference to an ARM Image, instead of pointing to .vhd files in blobs directly.
+  - The new `VirtualMachineImageId` property on `ImageReference` contains the reference to the ARM Image, and `OSDisk.ImageUris` no longer exists.
+  - Because of this, `ImageReference` is now a required property of `VirtualMachineConfiguration`.
+- **[Breaking]** Multi-instance tasks (created using `MultiInstanceSettings`) must now specify a `CoordinationCommandLine`, and `NumberOfInstances` is now optional and defaults to 1.
+- Added support for tasks run using Docker containers. To run a task using a Docker container you must specify a `ContainerConfiguration` on the `VirtualMachineConfiguration` for a pool, and then add `TaskContainerSettings` on the Task.
+
+#### REST API version
+This version of the Batch .NET client library targets version 2017-09-01.6.0 of the Azure Batch REST API.
+
 ### Changes in 7.1.0
 #### Features
 - Added support for detailed aggregate task counts via a new `JobOperations.GetJobTaskCounts` API. Also available on `CloudJob.GetTaskCounts`.
@@ -10,7 +23,6 @@ These changes are planned but haven't been published yet.
 
 #### REST API version
 This version of the Batch .NET client library targets version 2017-06-01.5.1 of the Azure Batch REST API.
-
 
 ### Changes in 7.0.1
 #### Bug fixes
