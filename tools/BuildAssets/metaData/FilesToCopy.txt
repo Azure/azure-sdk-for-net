@@ -9,7 +9,6 @@ tasks/net46/Microsoft.Build.Framework.dll
 tasks/net46/Microsoft.Build.Tasks.Core.dll
 tasks/net46/Microsoft.Build.Utilities.Core.dll
 tasks/net46/Microsoft.WindowsAzure.Build.Tasks.dll
-tasks/net46/Microsoft.WindowsAzure.Build.Tasks.pdb
 tasks/net46/Microsoft.WindowsAzure.Build.Tasks.runtimeconfig.dev.json
 tasks/net46/Microsoft.WindowsAzure.Build.Tasks.runtimeconfig.json
 tasks/net46/System.Threading.Thread.dll
