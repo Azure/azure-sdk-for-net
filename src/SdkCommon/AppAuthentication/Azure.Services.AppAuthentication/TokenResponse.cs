@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 return JsonHelper.Deserialize<TokenResponse>(Encoding.UTF8.GetBytes(tokenResponse));
             }
-            catch
+            catch (Exception exp)
             {
-                throw new FormatException(TokenResponseFormatExceptionMessage);
+                throw new FormatException($"{TokenResponseFormatExceptionMessage} Exception Message: {exp.Message}");
             }
         }
 

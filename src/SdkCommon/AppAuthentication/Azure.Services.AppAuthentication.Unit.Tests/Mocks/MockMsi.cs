@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAppServicesFailure,
             MsiAzureVmSuccess,
             MsiAppJsonParseFailure,
+            MsiMissingToken,
             MsiAppServicesIncorrectRequest
         }
 
@@ -68,6 +69,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     {
                         StatusCode = HttpStatusCode.RequestTimeout,
                         Content = new StringContent(Constants.MsiFailureError,
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiMissingToken:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetMsiMissingTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };
