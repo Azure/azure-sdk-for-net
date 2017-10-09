@@ -65,14 +65,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
                 case MsiTestType.MsiAppServicesSuccess:
                 case MsiTestType.MsiAppServicesFailure:
-                    responseMessage = new HttpResponseMessage
-                    {
-                        StatusCode = HttpStatusCode.RequestTimeout,
-                        Content = new StringContent(Constants.MsiFailureError,
-                            Encoding.UTF8,
-                            Constants.JsonContentType)
-                    };
-                    break;
+                    throw new HttpRequestException();
 
                 case MsiTestType.MsiMissingToken:
                     responseMessage = new HttpResponseMessage
