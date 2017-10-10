@@ -1,7 +1,7 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "D:\\myFork\\SdkBuildTools\\restoredPackages"
+      "C:\\Users\\abhishah\\.nuget\\packages"
     ]
   }
 }

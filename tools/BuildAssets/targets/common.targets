@@ -1,5 +1,5 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="common.tasks"/>
+  <Import Project="..\tasks\common.tasks"/>
   <Import Project="signing.targets"/>
   <Import Project="additional.targets"/>
 
