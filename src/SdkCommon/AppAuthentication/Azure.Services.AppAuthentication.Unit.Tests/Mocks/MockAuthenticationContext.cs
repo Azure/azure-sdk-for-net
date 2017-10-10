@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 case MockAuthenticationContextTestType.AcquireTokenAsyncUserCredentialFail:
                     return Task.FromResult<string>(null);
 
-                case MockAuthenticationContextTestType.AcquireInvalidTokenAsycFail:
+                case MockAuthenticationContextTestType.AcquireInvalidTokenAsyncFail:
                     return Task.FromResult(TokenHelper.GetInvalidAppToken());
 
                 case MockAuthenticationContextTestType.AcquireTokenAsyncException:
