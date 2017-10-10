@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public async Task MsiResponseMissingTokenTest()
         {
-            // MockMsi is being asked to act like response from Azure VM MSI suceeded. 
+            // MockMsi is being asked to act like response from Azure VM MSI failed. 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiMissingToken);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
@@ -72,6 +72,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
             Assert.Contains(Constants.TokenFormatExceptionMessage, exception.ToString());
+            Assert.Contains(Constants.AccessTokenNullException, exception.ToString());
         }
 
         [Fact]
