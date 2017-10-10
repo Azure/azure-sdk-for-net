@@ -31,8 +31,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="ApprovalTests" Version="3.0.13" />
-    <PackageReference Include="PublicApiGenerator" Version="6.1.0-*" />
-    <PackageReference Include="Mono.Cecil" Version="0.10.0-*" />
+    <PackageReference Include="PublicApiGenerator" Version="6.*" />
     <PackageReference Include="WindowsAzure.ServiceBus" Version="4.1.2" />
   </ItemGroup>
 
