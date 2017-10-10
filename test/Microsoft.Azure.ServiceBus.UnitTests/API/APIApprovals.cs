@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
         public void ApproveAzureServiceBus()
         {
             var assembly = typeof(Message).Assembly;
-            var publicApi = PublicApiGenerator.ApiGenerator.GeneratePublicApi(assembly);
+            var publicApi = PublicApiGenerator.ApiGenerator.GeneratePublicApi(assembly, whitelistedNamespacePrefixes: new [] { "Microsoft.Azure.ServiceBus." });
             Approvals.Verify(publicApi);
         }
     }
