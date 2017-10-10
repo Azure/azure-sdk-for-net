@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string TokenFormatExceptionMessage = "Access token is not in the expected format.";
         public static readonly string TokenResponseFormatExceptionMessage = "Token response is not in the expected format.";
         public static readonly string AzureCliError = "You are not logged into to Azure CLI.";
+        public static readonly string JsonParseErrorException = "There was an error deserializing the object of type";
 
         // Connection strings
         public static readonly string ClientSecret = "Secret";
