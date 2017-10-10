@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />  
+  <PropertyGroup>
+    <Description>PowerBIDedicated.Tests Class Library</Description>
+    <AssemblyName>PowerBIDedicated.Tests</AssemblyName>
+    <PackageId>PowerBIDedicated.Tests</PackageId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="------SessionRecords - Copy\**" />
+    <EmbeddedResource Remove="------SessionRecords - Copy\**" />
+    <None Remove="------SessionRecords - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.PowerBIDedicated\Microsoft.Azure.Management.PowerBIDedicated.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c359}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20171009-10" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
+    <PackageReference Update="xunit" Version="2.3.0-rc2-build3812" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.3.0-rc2-build3812" />
+  </ItemGroup>
+</Project>
