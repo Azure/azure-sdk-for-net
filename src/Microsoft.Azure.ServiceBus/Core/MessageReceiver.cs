@@ -1240,8 +1240,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     var amqpPropertiesToModify = new AmqpMap();
                     foreach (var pair in propertiesToModify)
                     {
-                        object amqpObject;
-                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out amqpObject))
+                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                         {
                             amqpPropertiesToModify[new MapKey(pair.Key)] = amqpObject;
                         }
@@ -1408,8 +1407,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 modified.MessageAnnotations = new Fields();
                 foreach (var pair in propertiesToModify)
                 {
-                    object amqpObject;
-                    if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out amqpObject))
+                    if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                     {
                         modified.MessageAnnotations.Add(pair.Key, amqpObject);
                     }
@@ -1443,8 +1441,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     foreach (var pair in propertiesToModify)
                     {
-                        object amqpObject;
-                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out amqpObject))
+                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                         {
                             rejected.Error.Info.Add(pair.Key, amqpObject);
                         }
