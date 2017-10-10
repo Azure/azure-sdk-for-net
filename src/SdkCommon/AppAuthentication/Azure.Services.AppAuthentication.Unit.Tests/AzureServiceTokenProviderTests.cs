@@ -20,6 +20,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Clear the cache after running each test.
             AccessTokenCache.Clear();
+
+            // Delete environment variable
+            Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, null);
         }
 
         /// <summary>
@@ -184,17 +187,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void UnspecifiedConnectionStringTest()
         {
-            string connString = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
-            
-            if (connString == null)
-            {
-                // Set environment variable AzureServicesAuthConnectionString
-                Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, Constants.AzureCliConnectionString);
-                // Assert variable exists
-                connString = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
-                Assert.Equal(Constants.AzureCliConnectionString, connString);
-            }
-
+            // Set environment variable AzureServicesAuthConnectionString
+            Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, Constants.AzureCliConnectionString);
+           
             var provider = new AzureServiceTokenProvider();
 
             Assert.NotNull(provider);
