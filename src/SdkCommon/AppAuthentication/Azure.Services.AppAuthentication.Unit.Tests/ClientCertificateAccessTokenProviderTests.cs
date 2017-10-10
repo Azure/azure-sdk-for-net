@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             CertUtil.ImportCertificate(cert);
 
             // MockAuthenticationContext is being asked to act like client cert auth failed. 
-            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireInvalidTokenAsycFail);
+            MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireInvalidTokenAsyncFail);
 
             // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
