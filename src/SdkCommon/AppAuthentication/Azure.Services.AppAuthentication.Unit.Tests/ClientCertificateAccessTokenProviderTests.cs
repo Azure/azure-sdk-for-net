@@ -211,6 +211,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
             Assert.Contains(Constants.TokenFormatExceptionMessage, exception.Result.Message);
+            Assert.Contains(Constants.TokenNotInExpectedFormatError, exception.Result.Message);
         }
 
         /// <summary>
