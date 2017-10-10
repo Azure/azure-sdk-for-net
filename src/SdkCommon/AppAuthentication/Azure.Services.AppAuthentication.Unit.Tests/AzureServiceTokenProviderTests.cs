@@ -184,14 +184,14 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void UnspecifiedConnectionStringTest()
         {
-            string connString = Environment.GetEnvironmentVariable("AzureServicesAuthConnectionString");
+            string connString = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
             
             if (connString == null)
             {
                 // Set environment variable AzureServicesAuthConnectionString
-                Environment.SetEnvironmentVariable("AzureServicesAuthConnectionString", Constants.AzureCliConnectionString);
+                Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, Constants.AzureCliConnectionString);
                 // Assert variable exists
-                connString = Environment.GetEnvironmentVariable("AzureServicesAuthConnectionString");
+                connString = Environment.GetEnvironmentVariable(Constants.TestCertUrlEnv);
                 Assert.Equal(Constants.AzureCliConnectionString, connString);
             }
 
