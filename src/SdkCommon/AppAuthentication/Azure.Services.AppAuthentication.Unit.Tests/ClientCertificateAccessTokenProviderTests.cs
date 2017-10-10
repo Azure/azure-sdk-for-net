@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
             CertUtil.ImportCertificate(cert);
 
-            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            // MockAuthenticationContext is being asked to act like client cert auth failed. 
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateFail);
 
             // Create ClientCertificateAzureServiceTokenProvider instance
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             X509Certificate2 cert = new X509Certificate2(Convert.FromBase64String(Constants.TestCert), string.Empty);
             CertUtil.ImportCertificate(cert);
 
-            // MockAuthenticationContext is being asked to act like client cert auth suceeded. 
+            // MockAuthenticationContext is being asked to act like client cert auth failed. 
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireInvalidTokenAsycFail);
 
             // Create ClientCertificateAzureServiceTokenProvider instance with a subject name
