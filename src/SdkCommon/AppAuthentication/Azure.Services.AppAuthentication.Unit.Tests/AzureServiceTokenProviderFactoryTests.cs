@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void AzureCliInvalidDeveloperToolTest()
         {
-            var exception = Assert.Throws<FormatException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidDeveloperToolConnectionString, Constants.AzureAdInstance));
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidDeveloperToolConnectionString, Constants.AzureAdInstance));
 
             Assert.Contains(Constants.InvalidConnectionString, exception.ToString());           
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public void AzureCliInvalidRunAsTest()
         {
-            var exception = Assert.Throws<FormatException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidRunAsConnectionString, Constants.AzureAdInstance));
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.Create(Constants.InvalidRunAsConnectionString, Constants.AzureAdInstance));
 
             Assert.Contains(Constants.InvalidConnectionString, exception.ToString());
         }
