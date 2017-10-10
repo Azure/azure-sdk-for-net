@@ -186,37 +186,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task WaitingReceiveShouldThrowWhenReceiverIsClosed()
+        public async Task WaitingReceiveShouldReturnImmediatelyWhenReceiverIsClosed()
         {
             var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
 
             TestUtility.Log("Begin to receive from an empty queue.");
-            Task throwingTask;
-            var exceptionReceived = false;
-            var syncLock = new object();
+            Task quickTask;
             try
             {
-                throwingTask = Task.Run(async () =>
+                quickTask = Task.Run(async () =>
                 {
                     try
                     {
-                        var message = await receiver.ReceiveAsync(TimeSpan.FromSeconds(40));
-                        throw new Exception($"Received unexpected message: {Encoding.ASCII.GetString(message.Body)}");
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        lock (syncLock)
-                        {
-                            exceptionReceived = true;
-                        }
+                        await receiver.ReceiveAsync(TimeSpan.FromSeconds(40));
                     }
                     catch (Exception e)
                     {
                         TestUtility.Log("Unexpected exception: " + e);
                     }
                 });
-                await Task.Delay(1000);
-                TestUtility.Log("Waited for 1 Sec");
+                await Task.Delay(2000);
+                TestUtility.Log("Waited for 2 Seconds for the ReceiveAsync to establish connection.");
             }
             finally
             {
@@ -226,13 +216,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             TestUtility.Log("Waiting for maximum 10 Secs");
             var waitingTask = Task.Delay(10000);
-            await Task.WhenAny(throwingTask, waitingTask);
-
-            Assert.True(throwingTask.IsCompleted, "ReceiveAsync did not return immediately after closing connection");
-            lock (syncLock)
-            {
-                Assert.True(exceptionReceived, "Did not receive ObjectDisposedException"); 
-            }
+            Assert.Equal(quickTask, await Task.WhenAny(quickTask, waitingTask));
         }
 
         [Fact]
