@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 }
                 else
                 {
-                    throw new FormatException($"Connection string {connectionString} is not valid. {DeveloperTool} '{connectionSettings[DeveloperTool]}' is not valid. " +
+                    throw new ArgumentException($"Connection string {connectionString} is not valid. {DeveloperTool} '{connectionSettings[DeveloperTool]}' is not valid. " +
                                                 $"Allowed value is {AzureCli}");
                 }
             }
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
             else
             {
-                throw new FormatException($"Connection string {connectionString} is not valid. RunAs value '{connectionSettings[RunAs]}' is not valid.  " +
+                throw new ArgumentException($"Connection string {connectionString} is not valid. RunAs value '{connectionSettings[RunAs]}' is not valid.  " +
                                             $"Allowed values are {Developer}, {CurrentUser}, or {App}");
             }
 
