@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AcquireTokenAsyncClientCredentialFail,
             AcquireTokenAsyncClientCertificateSuccess,
             AcquireTokenAsyncClientCertificateFail,
-            AcquireInvalidTokenAsycFail
+            AcquireInvalidTokenAsyncFail
         }
 
         private readonly MockAuthenticationContextTestType _mockAuthenticationContextTestType;
