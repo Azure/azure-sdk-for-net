@@ -5,11 +5,11 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Monitor Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Monitor operations.")]
+[assembly: AssemblyTitle("Microsoft Azure Management Application Insights Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Management Application Insights operations.")]
 
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.1.0.1")]
+[assembly: AssemblyFileVersion("0.1.0.1")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
