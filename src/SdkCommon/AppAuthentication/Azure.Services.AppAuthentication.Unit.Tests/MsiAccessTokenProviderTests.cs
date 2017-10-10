@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
             Assert.Contains(Constants.TokenResponseFormatExceptionMessage, exception.ToString());
+            Assert.Contains(Constants.JsonParseErrorException, exception.ToString());
         }
 
         /// <summary>
