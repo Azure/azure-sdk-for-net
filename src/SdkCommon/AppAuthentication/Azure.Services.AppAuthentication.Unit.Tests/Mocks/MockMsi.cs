@@ -63,7 +63,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             Constants.JsonContentType)
                     };
                     break;
-                case MsiTestType.MsiAppServicesSuccess:
                 case MsiTestType.MsiAppServicesFailure:
                     throw new HttpRequestException();
 
@@ -84,7 +83,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                             Constants.JsonContentType)
                     };
                     break;
-
+                case MsiTestType.MsiAppServicesSuccess:
                 case MsiTestType.MsiAzureVmSuccess:
                     responseMessage = new HttpResponseMessage
                     {
