@@ -42,6 +42,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         public static AccessToken Parse(string accessToken)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
+
             try
             {
                 // Access token as 3 parts. We are interested in the second part, which has claims. 
