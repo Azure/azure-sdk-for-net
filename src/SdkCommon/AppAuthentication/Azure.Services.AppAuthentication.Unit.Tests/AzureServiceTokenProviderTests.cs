@@ -20,6 +20,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             // Clear the cache after running each test.
             AccessTokenCache.Clear();
+
+            // Delete environment variable
+            Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, null);
         }
 
         /// <summary>
@@ -141,6 +144,58 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.MustUseHttpsError, exception.ToString());
         }
 
+        /// <summary>
+        /// If resource id is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public async Task ResourceNullOrEmptyWhenGettingTokenTest()
+        {
+            // Mock ProcessManager is being asked to act like Azure CLI is not installed. 
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.ProcessNotFound);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+            AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(azureCliAccessTokenProvider);
+
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(null, Constants.TenantId)));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            exception = await Assert.ThrowsAsync<ArgumentNullException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(string.Empty, Constants.TenantId)));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+        }
+
+        /// <summary>
+        /// If azureAdInstance is null or empty, an exception should be thrown. 
+        /// </summary>
+        [Fact]
+        public void NullOrEmptyAzureAdInstanceTest()
+        {
+            var exception = Assert.Throws<ArgumentNullException>(() => new AzureServiceTokenProvider(azureAdInstance: null));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+
+            exception = Assert.Throws<ArgumentNullException>(() => new AzureServiceTokenProvider(azureAdInstance: string.Empty));
+
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+        }
+
+        /// <summary>
+        /// If connectionstring is not specified in AzureServiceTokenProvider, ensure connection string is assigned from 
+        /// AzureServicesAuthConnectionString environment variable.
+        /// </summary>
+        [Fact]
+        public void UnspecifiedConnectionStringTest()
+        {
+            // Set environment variable AzureServicesAuthConnectionString
+            Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, Constants.AzureCliConnectionString);
+           
+            var provider = new AzureServiceTokenProvider();
+
+            Assert.NotNull(provider);
+            Assert.IsType(typeof(AzureServiceTokenProvider), provider);
+        }
+
         [Fact]
         public async Task DiscoveryTestFirstSuccess()
         {
@@ -194,6 +249,35 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // MsiAccessTokenProvider should succeed, and we should get a valid token. 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+        }
+
+        /// <summary>
+        /// If token could not be aquired through any of the specified providers, an exception should be thrown
+        /// </summary>
+        [Fact]
+        public void DiscoveryTestBothFail()
+        {
+            // Mock process manager is being asked to act like Azure CLI was NOT able to get the token. 
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.ProcessNotFound);
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
+            // Mock MSI is being asked to act like MSI was able to get token. 
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // AzureServiceTokenProvider is being asked to use two providers, and and both should fail to get token.  
+            var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
+            AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(providers);
+
+            var exception = Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId));
+            Assert.Contains(Constants.NoMethodWorkedToGetTokenError, exception.Result.Message);
+
+            // Mock process manager will fail, and so hit count will be 1. 
+            Assert.Equal(1, mockProcessManager.HitCount);
+
+            // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 1 here.
+            Assert.Equal(1, mockMsi.HitCount);
         }
     }
 }

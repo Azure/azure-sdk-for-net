@@ -42,26 +42,26 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         public static AccessToken Parse(string accessToken)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
+
             try
             {
                 // Access token as 3 parts. We are interested in the second part, which has claims. 
                 string[] splitStrings = accessToken.Split('.');
 
                 var token = JsonHelper.Deserialize<AccessToken>(DecodeBytes(splitStrings[1]));
+                
+                token._accessToken = accessToken;
 
-                if (token != null)
-                {
-                    token._accessToken = accessToken;
-
-                    return token;
-                }
+                return token;
             }
-            catch
+            catch (Exception exp)
             {
-                throw new FormatException(TokenFormatExceptionMessage);
+                throw new FormatException($"{TokenFormatExceptionMessage} Exception: {exp.Message}");
             }
-
-            throw new FormatException(TokenFormatExceptionMessage);
         }
 
         private static byte[] DecodeBytes(string arg)

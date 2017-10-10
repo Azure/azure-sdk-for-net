@@ -65,6 +65,26 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        ///  The response from MSI missing token
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetMsiMissingTokenResponse()
+        {
+            return
+                "{\"refresh_token\":\"\",\"expires_in\":\"3600\",\"expires_on\":\"1492269961\",\"not_before\":\"1492266061\",\"resource\":\"https://vault.azure.net\",\"token_type\":\"Bearer\"}";
+        }
+
+        /// <summary>
+        ///  The response has claims as expected from MSI response with invalid json
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetInvalidMsiTokenResponse()
+        {
+            return
+                "{\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImEzUU4wQlpTN3M0bk4tQmRyamJGMFlfTGRNTSIsImtpZCI6ImEzUU4wQlpTN3M0bk4tQmRyamJGMFlfTGRNTSJ9.eyJhdWQiOiJodHRwczovL3ZhdWx0LmF6dXJlLm5ldCIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJpYXQiOjE0OTIyNjYwNjEsIm5iZiI6MTQ5MjI2NjA2MSwiZXhwIjoxNDkyMjY5OTYxLCJhaW8iOiJZMlpnWUNoTk91Yy9ZKzJMOVM3Ty8yWTBDL2lhQUFBPSIsImFwcGlkIjoiZjBiMWY4NGEtZWM3NC00Y2VmLTgwMzQtYWRiYWQxNjhjZTMzIiwiYXBwaWRhY3IiOiIyIiwiZV9leHAiOjI2MjgwMCwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsIm9pZCI6ImY4NDYwMGM1LWE5ZDgtNDEyOS1hMTk5LWNjNDE4MDYwNzQxMSIsInN1YiI6ImY4NDYwMGM1LWE5ZDgtNDEyOS1hMTk5LWNjNDE4MDYwNzQxMSIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInZlciI6IjEuMCJ9.TjnKtpTJ_dvQc3GQO9QSA0Sm9MISNakF8IT9-abzkaWqmwruhB2Tls9QTHe-P_xp09Jrt6JPhC8Z5mTTWgKqV_LV-KbJe_NmlYMTU_X5AcaPIQoi2ctSv62-wnnl-2IQjEEkyX7Vc0ixnPdWOG5LCO4ctTmURRO-tWN_jIK5up-wb0-ks1STFSBGJZtJ0xNTdTb9SSG4HpHzbLdkEmg-oAvOBX2OmwaNbBsU3chi4G5MoLtm5oXvL36z9vsf2bN_H7Sg-mss1Ua7OOwFVPMrx0rrIqXzKYQUSvNFAHLebKcp2SccpYWrgp7lKQGrbQhJsYYkzl-R-NTB5fUPUB7B3Q\",\"refresh_token\"\"\",\"expires_in\":\"3600\",\"expires_on\":\"1492269961\",\"not_before\":\"1492266061\",\"resource\":\"https://vault.azure.net\",\"token_type\":\"Bearer\"";
+        }
+
+        /// <summary>
         ///  The response has claims as expected from Client Credentials flow response. 
         /// </summary>
         /// <returns></returns>
@@ -72,6 +92,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             return
                 "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USIsImtpZCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USJ9.eyJhdWQiOiJodHRwczovL2RhdGFiYXNlLndpbmRvd3MubmV0LyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJpYXQiOjE1MDMxOTAwNjAsIm5iZiI6MTUwMzE5MDA2MCwiZXhwIjoxNTAzMTkzOTYwLCJfY2xhaW1fbmFtZXMiOnsiZ3JvdXBzIjoic3JjMSJ9LCJfY2xhaW1fc291cmNlcyI6eyJzcmMxIjp7ImVuZHBvaW50IjoiaHR0cHM6Ly9ncmFwaC53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvdXNlcnMvOWNlYjQ0YWYtNDQzNy00Y2NjLWE0OWEtOWE5YmRlMDY3NTJlL2dldE1lbWJlck9iamVjdHMifX0sImFjciI6IjEiLCJhaW8iOiJZMkZnWUxEZVZPZDh6Lzlydy8vM3M4N1plREdYM1NxL21odnBJaDZsdTlqbnlQU0d2bE1BIiwiYW1yIjpbIndpYSIsIm1mYSJdLCJhcHBpZCI6IjA0YjA3Nzk1LThkZGItNDYxYS1iYmVlLTAyZjllMWJmN2I0NiIsImFwcGlkYWNyIjoiMCIsImVfZXhwIjoyNjI4MDAsImZhbWlseV9uYW1lIjoiU2hhcm1hIiwiZ2l2ZW5fbmFtZSI6IlZhcnVuIiwiaW5fY29ycCI6InRydWUiLCJpcGFkZHIiOiIxNjcuMjIwLjAuMjExIiwibmFtZSI6IlZhcnVuIFNoYXJtYSIsIm9pZCI6IjljZWI0NGFmLTQ0MzctNGNjYy1hNDlhLTlhOWJkZTA2NzUyZSIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMTI3NTIxMTg0LTE2MDQwMTI5MjAtMTg4NzkyNzUyNy0xODMzNjYyMSIsInB1aWQiOiIxMDAzM0ZGRjgwMUI5MTg4Iiwic2NwIjoidXNlcl9pbXBlcnNvbmF0aW9uIiwic3ViIjoiX1ZCcElTQWVJX0tVQVR2T3Zfd0Vic3ZRNWJWY1BEUi1IbkU1QVJrM29tRSIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInVuaXF1ZV9uYW1lIjoidmFydW5zaEBtaWNyb3NvZnQuY29tIiwidXBuIjoidmFydW5zaEBtaWNyb3NvZnQuY29tIiwidmVyIjoiMS4wIn0.gGo1wCH2k8kqt6JUdjBMavZX9Sq2L_tKLvVDPUJv3NurZT5JGYyS7gJ11RMrVaxyG48dnlWat1vEBcB-YLOkpL-2gR_sSAoAStPuz8yXAFHxluw-WOqiWxlm2leENqwMmCrMYinm8ohkrScpfRFm6-4fzgczdhNi0vjkTHaycYnrPrH9cZHSL9Qyzt6MH6pEyGct4zmgASI1Vlrga5_x_x8xj-FscIRYorrvx61fThaor8M4FjzglNgum4j5yecn1pIcp75CK43xb7e4jdsfL2nl6wgn5mZj_59b_aKNa3_VA-NmZTlxjvjlL_AHdDkYPlku_B75-0EbfKN2IR5eLw";
+        }
+
+        /// <summary>
+        ///  Invalid AppToken. 
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetInvalidAppToken()
+        {
+            return
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USIsImtpZCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USJ9";
         }
     }
 }

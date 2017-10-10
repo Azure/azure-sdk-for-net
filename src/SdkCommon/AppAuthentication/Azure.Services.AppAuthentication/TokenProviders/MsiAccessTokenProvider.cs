@@ -74,14 +74,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     // Parse the JSON response
                     TokenResponse tokenResponse = TokenResponse.Parse(jsonResponse);
 
-                    // If something goes wrong in the parsing, the protocol has likely changed
-                    // Throw an exception with details
-                    if (string.IsNullOrWhiteSpace(tokenResponse?.AccessToken))
-                    {
-                        throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                            AzureServiceTokenProviderException.UnableToParseMsiTokenResponse);
-                    }
-
                     AccessToken token = AccessToken.Parse(tokenResponse.AccessToken);
 
                     // If token is null, then there has been a parsing issue, which means the access token format has changed
@@ -96,13 +88,17 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 string exceptionText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority, 
-                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} ResponseCode: {response.StatusCode}, Response: {exceptionText}");
+                throw new Exception($"MSI ResponseCode: {response.StatusCode}, Response: {exceptionText}");
             }
             catch (HttpRequestException)
             {
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
                     $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+            }
+            catch (Exception exp)
+            {
+                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
+                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.GenericErrorMessage}  {exp.Message}");
             }
         }
     }

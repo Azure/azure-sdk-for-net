@@ -37,6 +37,44 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Validator.ValidateToken(token, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
         }
 
+        /// <summary>
+        /// If json parse error when aquiring token, an exception should be thrown. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ParseErrorMsiGetTokenTest()
+        {
+            // MockMsi is being asked to act like response from Azure VM MSI suceeded. 
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppJsonParseFailure);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // Ensure exception is thrown when getting the token
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+
+            Assert.Contains(Constants.TokenResponseFormatExceptionMessage, exception.ToString());
+            Assert.Contains(Constants.JsonParseErrorException, exception.ToString());
+        }
+
+        /// <summary>
+        /// If MSI response if missing the token, an exception should be thrown. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task MsiResponseMissingTokenTest()
+        {
+            // MockMsi is being asked to act like response from Azure VM MSI failed. 
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiMissingToken);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // Ensure exception is thrown when getting the token
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+
+            Assert.Contains(Constants.FailedToGetTokenError, exception.ToString());
+            Assert.Contains(Constants.CannotBeNullError, exception.ToString());
+        }
+
         [Fact]
         public async Task GetTokenUsingMsiAppServices()
         {
@@ -108,6 +146,30 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.Contains(Constants.IncorrectFormatError, exception.Message);
             Assert.Contains(HttpStatusCode.BadRequest.ToString(), exception.Message);
+        }
+
+        /// <summary>
+        /// If an unexpected http response has been received, ensure exception is thrown. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task HttpResponseExceptionTest()
+        {
+            // Setup the environment variables
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+
+            // Delete the environment variables
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+
+            Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
         }
     }
     

@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             MsiAppServicesUnauthorized,
             MsiAppServicesSuccess,
+            MsiAppServicesFailure,
             MsiAzureVmSuccess,
+            MsiAppJsonParseFailure,
+            MsiMissingToken,
             MsiAppServicesIncorrectRequest
         }
 
@@ -56,6 +59,26 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     {
                         StatusCode = HttpStatusCode.Forbidden,
                         Content = new StringContent(Constants.IncorrectSecretError,
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+                case MsiTestType.MsiAppServicesFailure:
+                    throw new HttpRequestException();
+
+                case MsiTestType.MsiMissingToken:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetMsiMissingTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiAppJsonParseFailure:
+                    responseMessage = new HttpResponseMessage
+                    {
+                        Content = new StringContent(TokenHelper.GetInvalidMsiTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
                     };

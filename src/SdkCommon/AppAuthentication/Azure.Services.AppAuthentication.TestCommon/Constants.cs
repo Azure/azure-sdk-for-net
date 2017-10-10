@@ -21,27 +21,52 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AdalException = "Adal Exception";
         public static readonly string CertificateNotFoundError = "Specified certificate was not found. ";
         public static readonly string IncorrectSecretError = "Secret not correct";
+        public static readonly string MsiFailureError = "MSI failed to get token";
         public static readonly string IncorrectFormatError = "Incorrect format";
         public static readonly string NotInExpectedFormatError = "not in expected format";
+        public static readonly string NotInProperFormatError = "not in a proper format. Expected format is Key1=Value1;Key2=Value=2;";
+        public static readonly string NoMethodWorkedToGetTokenError = "methods to get an access token, but none of them worked";
         public static readonly string ProgramNotFoundError = "No such file";
+        public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
+        public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
+        public static readonly string ConnectionStringEmpty = "Connection string is empty.";
+        public static readonly string InvalidCertLocationError = "is not valid. Valid values are CurrentUser and LocalMachine.";
+        public static readonly string ConnectionStringNotHaveAtLeastOneRequiredKey = "is not valid. Must contain at least one of";
+        public static readonly string KeyRepeatedInConnectionString = "is repeated";
+        public static readonly string InvalidConnectionString = "is not valid";
         public static readonly string Redacted = "<<Redacted>>";
         public static readonly string InvalidResource = "invalid_resource";
+        public static readonly string TokenFormatExceptionMessage = "Access token is not in the expected format.";
+        public static readonly string TokenResponseFormatExceptionMessage = "Token response is not in the expected format.";
+        public static readonly string AzureCliError = "You are not logged into to Azure CLI.";
+        public static readonly string JsonParseErrorException = "There was an error deserializing the object of type";
+        public static readonly string TokenNotInExpectedFormatError = "Index was outside the bounds of the array";
 
         // Connection strings
         public static readonly string ClientSecret = "Secret";
         public static readonly string IntegratedAuthConnectionString = "RunAs = CurrentUser;";
         public static readonly string AzureCliConnectionString = "RunAs=Developer; DeveloperTool=AzureCli";
+        public static readonly string InvalidDeveloperToolConnectionString = "RunAs=Developer; DeveloperTool=InvalidCLI";
+        public static readonly string InvalidRunAsConnectionString = "RunAs=Invalid; DeveloperTool=AzureCLI";
+        public static readonly string IncorrectFormatConnectionString = "RunAs:Invalid; DeveloperTool:AzureCLI";
         public static readonly string AzureCliConnectionStringWithSpaces = "RunAs = Developer; DeveloperTool =AzureCLI";
+        public static readonly string AzureCliConnectionStringEndingWithSemiColonAndSpace = "RunAs=Developer; DeveloperTool=AzureCLI; ";
+        public static readonly string AzureCliConnectionStringWithEmptyDeveloperTool = "RunAs=Developer; DeveloperTool=";
+        public static readonly string AzureCliConnectionStringRepeatedRunAs = "RunAs=Developer; DeveloperTool=AzureCli; RunAs=Developer";
+        public static readonly string AzureCliConnectionStringNoRunAs = "DeveloperTool=AzureCLI";
         public static readonly string ActiveDirectoryIntegratedConnectionString = "RunAs=CurrentUser;";
         public static readonly string ManagedServiceIdentityConnectionString = "RunAs=App;";
         public static readonly string CertificateConnStringThumbprintLocalMachine = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=LocalMachine";
+        public static readonly string CertificateConnStringThumbprintInvalidLocation = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=InvalidLocation";
+        public static readonly string AppConnStringNoLocationOrAppKey = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;";
         public static readonly string CertificateConnStringThumbprintCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringSubjectNameCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateSubjectName=123;CertificateStoreLocation=CurrentUser";
         public static readonly string ClientSecretConnString = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};AppKey={ClientSecret}";
         public static readonly string ConnectionStringEnvironmentVariableName = "AzureServicesAuthConnectionString";
         public static readonly string CurrentUserStore = "CurrentUser";
+        public static readonly string InvalidString = "Invalid";
 
         // Http related constants
         public static readonly string JsonContentType = "application/json";

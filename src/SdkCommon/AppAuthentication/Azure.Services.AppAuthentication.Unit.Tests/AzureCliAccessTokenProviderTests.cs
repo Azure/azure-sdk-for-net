@@ -44,6 +44,23 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
+        /// Test that if Azure CLI failed to get token, the right type of exception is thrown, and that the error response is as expected. 
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task FailedToGetTokenUsingAzureCliTest()
+        {
+            MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Failure);
+
+            AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureCliAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+
+            Assert.Contains(Constants.FailedToGetTokenError, exception.Message);
+            Assert.Contains(Constants.AzureCliError, exception.Message);
+        }
+
+        /// <summary>
         /// This is a security test. The resource id should only have allowed characters. 
         /// Check that the right type of exception is thrown, and the error message is as expected. 
         /// </summary>

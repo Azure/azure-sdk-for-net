@@ -26,7 +26,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AcquireTokenAsyncClientCredentialSuccess,
             AcquireTokenAsyncClientCredentialFail,
             AcquireTokenAsyncClientCertificateSuccess,
-            AcquireTokenAsyncClientCertificateFail
+            AcquireTokenAsyncClientCertificateFail,
+            AcquireInvalidTokenAsyncFail
         }
 
         private readonly MockAuthenticationContextTestType _mockAuthenticationContextTestType;
@@ -49,6 +50,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 case MockAuthenticationContextTestType.AcquireTokenAsyncClientCredentialFail:
                 case MockAuthenticationContextTestType.AcquireTokenAsyncUserCredentialFail:
                     return Task.FromResult<string>(null);
+
+                case MockAuthenticationContextTestType.AcquireInvalidTokenAsyncFail:
+                    return Task.FromResult(TokenHelper.GetInvalidAppToken());
 
                 case MockAuthenticationContextTestType.AcquireTokenAsyncException:
                     throw new Exception(Constants.AdalException);
