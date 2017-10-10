@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     throw new Exception(Constants.ProgramNotFoundError);
 
                 case MockProcessManagerRequestType.Failure:
-                    return Task.FromResult(new Tuple<bool, string>(false, tokenResult));
+                    return Task.FromResult(new Tuple<bool, string>(false, Constants.AzureCliError));
 
             }
 
