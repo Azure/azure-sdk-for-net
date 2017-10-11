@@ -10,6 +10,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
+  
   <ItemGroup>   
     <ProjectReference Include="..\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />
   </ItemGroup>

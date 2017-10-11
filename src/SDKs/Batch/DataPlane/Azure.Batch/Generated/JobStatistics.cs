@@ -22,39 +22,24 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobStatistics : IPropertyMetadata
     {
-        private readonly long failedTaskCount;
-        private readonly TimeSpan kernelCpuTime;
-        private readonly DateTime lastUpdateTime;
-        private readonly double readIOGiB;
-        private readonly long readIOps;
-        private readonly DateTime startTime;
-        private readonly long succeededTaskCount;
-        private readonly long taskRetryCount;
-        private readonly string url;
-        private readonly TimeSpan userCpuTime;
-        private readonly TimeSpan waitTime;
-        private readonly TimeSpan wallClockTime;
-        private readonly double writeIOGiB;
-        private readonly long writeIOps;
-
         #region Constructors
 
         internal JobStatistics(Models.JobStatistics protocolObject)
         {
-            this.failedTaskCount = protocolObject.NumFailedTasks;
-            this.kernelCpuTime = protocolObject.KernelCPUTime;
-            this.lastUpdateTime = protocolObject.LastUpdateTime;
-            this.readIOGiB = protocolObject.ReadIOGiB;
-            this.readIOps = protocolObject.ReadIOps;
-            this.startTime = protocolObject.StartTime;
-            this.succeededTaskCount = protocolObject.NumSucceededTasks;
-            this.taskRetryCount = protocolObject.NumTaskRetries;
-            this.url = protocolObject.Url;
-            this.userCpuTime = protocolObject.UserCPUTime;
-            this.waitTime = protocolObject.WaitTime;
-            this.wallClockTime = protocolObject.WallClockTime;
-            this.writeIOGiB = protocolObject.WriteIOGiB;
-            this.writeIOps = protocolObject.WriteIOps;
+            this.FailedTaskCount = protocolObject.NumFailedTasks;
+            this.KernelCpuTime = protocolObject.KernelCPUTime;
+            this.LastUpdateTime = protocolObject.LastUpdateTime;
+            this.ReadIOGiB = protocolObject.ReadIOGiB;
+            this.ReadIOps = protocolObject.ReadIOps;
+            this.StartTime = protocolObject.StartTime;
+            this.SucceededTaskCount = protocolObject.NumSucceededTasks;
+            this.TaskRetryCount = protocolObject.NumTaskRetries;
+            this.Url = protocolObject.Url;
+            this.UserCpuTime = protocolObject.UserCPUTime;
+            this.WaitTime = protocolObject.WaitTime;
+            this.WallClockTime = protocolObject.WallClockTime;
+            this.WriteIOGiB = protocolObject.WriteIOGiB;
+            this.WriteIOps = protocolObject.WriteIOps;
         }
 
         #endregion Constructors
@@ -64,83 +49,53 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the total number of task failures in the job.
         /// </summary>
-        public long FailedTaskCount
-        {
-            get { return this.failedTaskCount; }
-        }
+        public long FailedTaskCount { get; }
 
         /// <summary>
         /// Gets the total kernel mode CPU time (per core) consumed by all tasks in the job.
         /// </summary>
-        public TimeSpan KernelCpuTime
-        {
-            get { return this.kernelCpuTime; }
-        }
+        public TimeSpan KernelCpuTime { get; }
 
         /// <summary>
         /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
         /// cref="StartTime"/> and this value.
         /// </summary>
-        public DateTime LastUpdateTime
-        {
-            get { return this.lastUpdateTime; }
-        }
+        public DateTime LastUpdateTime { get; }
 
         /// <summary>
         /// Gets the total gibibytes of I/O read from disk by all tasks in the job.
         /// </summary>
-        public double ReadIOGiB
-        {
-            get { return this.readIOGiB; }
-        }
+        public double ReadIOGiB { get; }
 
         /// <summary>
         /// Gets the total number of disk read operations made by all tasks in the job.
         /// </summary>
-        public long ReadIOps
-        {
-            get { return this.readIOps; }
-        }
+        public long ReadIOps { get; }
 
         /// <summary>
         /// Gets the start time of the time range covered by the statistics.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         /// <summary>
         /// Gets the total number of tasks successfully completed in the job during the given time range.
         /// </summary>
-        public long SucceededTaskCount
-        {
-            get { return this.succeededTaskCount; }
-        }
+        public long SucceededTaskCount { get; }
 
         /// <summary>
         /// Gets the total number of task retries in the job.
         /// </summary>
-        public long TaskRetryCount
-        {
-            get { return this.taskRetryCount; }
-        }
+        public long TaskRetryCount { get; }
 
         /// <summary>
         /// Gets the URL of the job statistics.
         /// </summary>
-        public string Url
-        {
-            get { return this.url; }
-        }
+        public string Url { get; }
 
         /// <summary>
         /// Gets the total user mode CPU time (per core) consumed by all tasks in the job.
         /// </summary>
-        public TimeSpan UserCpuTime
-        {
-            get { return this.userCpuTime; }
-        }
+        public TimeSpan UserCpuTime { get; }
 
         /// <summary>
         /// Gets the total wait time of all tasks in the job. The wait time for a task is defined as the elapsed time between 
@@ -150,34 +105,22 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// This value is only reported in the account lifetime statistics.
         /// </remarks>
-        public TimeSpan WaitTime
-        {
-            get { return this.waitTime; }
-        }
+        public TimeSpan WaitTime { get; }
 
         /// <summary>
         /// Gets the total elapsed time.
         /// </summary>
-        public TimeSpan WallClockTime
-        {
-            get { return this.wallClockTime; }
-        }
+        public TimeSpan WallClockTime { get; }
 
         /// <summary>
         /// Gets the total gibibytes of I/O written to disk by all tasks in the job.
         /// </summary>
-        public double WriteIOGiB
-        {
-            get { return this.writeIOGiB; }
-        }
+        public double WriteIOGiB { get; }
 
         /// <summary>
         /// Gets the total number of disk write operations made by all tasks in the job.
         /// </summary>
-        public long WriteIOps
-        {
-            get { return this.writeIOps; }
-        }
+        public long WriteIOps { get; }
 
         #endregion // JobStatistics
 

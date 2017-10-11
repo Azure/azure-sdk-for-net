@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>("MaxTaskRetryCount", BindingAccess.Read | BindingAccess.Write);
-                this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("MaxWallClockTime", BindingAccess.Read | BindingAccess.Write);
+                this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTaskRetryCount), BindingAccess.Read | BindingAccess.Write);
+                this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(MaxWallClockTime), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobConstraints protocolObject) : base(BindingState.Bound)
             {
                 this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxTaskRetryCount,
-                    "MaxTaskRetryCount",
+                    nameof(MaxTaskRetryCount),
                     BindingAccess.Read | BindingAccess.Write);
                 this.MaxWallClockTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxWallClockTime,
-                    "MaxWallClockTime",
+                    nameof(MaxWallClockTime),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
