@@ -296,14 +296,6 @@
       <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
     </ItemGroup>
   </Target>
-  
-  <Target Name="UpdateTools">
-	<Message Text="$(LibraryToolsFolder) Root Path"/>
-	 <!-- <RemoveDir Directories="$(LibraryToolsFolder)\SdkBuildTools" /> -->
-			
-	<Message Text="Updating tools ...."/>
-	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/" DebugTrace="$(DebugTrace)"/>
-  </Target>
 
   <Target Name="DisplayHelp">
     <Message Text="msbuild build.proj /t:Build"/>
