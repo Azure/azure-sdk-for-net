@@ -23,7 +23,7 @@ namespace Build.Tasks.Tests
             sourceRootDir = GetSourceRootDir();
             sourceRootDir = Path.Combine(sourceRootDir, "src");
             ignoreDir = @"Microsoft.Azure.KeyVault.Samples";
-            System.Environment.SetEnvironmentVariable("MSBuildSDKsPath", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Sdks");
+            //System.Environment.SetEnvironmentVariable("MSBuildSDKsPath", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Sdks");
         }
 
         [Fact]
@@ -113,8 +113,6 @@ namespace Build.Tasks.Tests
         [Fact]
         public void ClientRuntimeProjects()
         {
-            System.Collections.IDictionary foo = System.Environment.GetEnvironmentVariables();
-            System.Environment.SetEnvironmentVariable("MSBuildSDKsPath", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Sdks");
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKCommon\ClientRuntime";

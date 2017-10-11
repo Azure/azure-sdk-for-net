@@ -26,7 +26,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\taskSrc\Microsoft.Azure.Sdk.Build.Tasks.csproj" />
+    <ProjectReference Include="..\..\SdkBuildTasks\Microsoft.Azure.Sdk.Build.Tasks.csproj" />
+    <ProjectReference Include="..\..\BootstrapTasks\Microsoft.Azure.Build.BootstrapTasks.csproj" />
   </ItemGroup>
   
   <ItemGroup>
