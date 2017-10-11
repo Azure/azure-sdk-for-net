@@ -10,9 +10,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
-      GetBuildEnv;
+      UpdateTools;
+	  GetBuildEnv;
       BuildCiSign;
-      BuildMsBuildTask;
       CategorizeProjects;
     </PreBuildStaticAnalysisTargets>
     <PreBuildCategorizePrjectTargets>
@@ -28,7 +28,7 @@
       CleanSDKPackageFiles
     </CleanTraversedProjectsDependsOn>
     <BuildTraversedProjectsDependsOn>
-      PreBuildStaticAnalysis;
+      $(PreBuildStaticAnalysisTargets);
       RestoreLatestProjects;
       BuildLatestProjects;
     </BuildTraversedProjectsDependsOn>
@@ -295,6 +295,11 @@
       <ProjectToScanDirs Include="%(FilteredSdkProjects.RootDir)%(FilteredSdkProjects.Directory)"/>
       <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
     </ItemGroup>
+  </Target>
+  
+  <Target Name="UpdateTools">
+	<Message Text="Updating tools ...."/>
+	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/" DebugTrace="$(DebugTrace)"/>
   </Target>
 
   <Target Name="DisplayHelp">
