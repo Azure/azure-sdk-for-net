@@ -67,6 +67,11 @@
             /// </summary>
             public List<string> unableToCopyFilePath;
 
+            /// <summary>
+            /// Output debug traces during execution of task
+            /// </summary>
+            public bool DebugTrace { get; set; }
+
             #region Misc external objects
             /// <summary>
             /// Logger
@@ -77,7 +82,7 @@
                 {
                     if (_buildToolsLogger == null)
                     {
-                        _buildToolsLogger = new TaskLogger();
+                        _buildToolsLogger = new TaskLogger(DebugTrace);
                         _buildToolsLogger.BuildEngine = this.BuildEngine;
                     }
 
@@ -116,7 +121,7 @@
         /// </summary>
         public GetBuildTools()
         {
-            Init();
+            //Init();
         }
 
         private void Init()
@@ -160,6 +165,7 @@
         {
             try
             {
+                Init();
                 IBuildEngine buildEng = this.BuildEngine;
                 string copyFrom = string.Empty;
                 string copyTo = string.Empty;

@@ -1,6 +1,8 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <CustomTaskDirectory>$(BuildAssetsDir)\tasks\net46</CustomTaskDirectory>
+    <CustomTaskDirectory Condition="Exists('$(BuildAssetsDir)\tasks\net46')">$(BuildAssetsDir)\tasks\net46</CustomTaskDirectory>
+	<CustomTaskDirectory Condition="Exists('$(SdkBuildToolsDir)\tasks\net46') AND '$(CustomTaskDirectory)' == '' ">$(SdkBuildToolsDir)\tasks\net46</CustomTaskDirectory>
+	<CustomTaskDirectory Condition="'$(CustomTaskDirectory)' == '' ">$(LibraryToolsFolder)\BuildAssets\tasks\net46</CustomTaskDirectory>
   </PropertyGroup>
   
   <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll" />
@@ -12,6 +14,7 @@
   <UsingTask TaskName="DebugTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="SDKCategorizeProjects" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="PublishSDKNuget" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
+  <UsingTask TaskName="GetBuildTools" AssemblyFile="$(CustomTaskDirectory)\net46\Microsoft.Azure.Build.BootstrapTasks.dll" />
   <UsingTask TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
   <UsingTask TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
   <UsingTask TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />

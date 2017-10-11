@@ -9,9 +9,12 @@
     {
         private bool _isBuildEngineInitialized;
 
-        public TaskLogger()
+        private bool OutputDebugTrace { get; set; }
+
+        public TaskLogger(bool debugTrace)
         {
             _isBuildEngineInitialized = false;
+            OutputDebugTrace = debugTrace;
         }
 
         internal bool IsBuildEngineInitialized
@@ -32,7 +35,8 @@
         {
             if (IsBuildEngineInitialized)
             {
-                Log.LogMessage(messageToLog);
+                if(OutputDebugTrace)
+                    Log.LogMessage(messageToLog);
             }
             else
             {
