@@ -1,0 +1,14 @@
+targets/additional.targets
+targets/common.Build.props
+targets/common.NugetPackage.props
+targets/common.targets
+targets/signing.targets
+tasks/common.tasks
+tasks/net46/Microsoft.Build.dll
+tasks/net46/Microsoft.Build.Framework.dll
+tasks/net46/Microsoft.Build.Tasks.Core.dll
+tasks/net46/Microsoft.Build.Utilities.Core.dll
+tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll
+tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.runtimeconfig.dev.json
+tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.runtimeconfig.json
+tasks/net46/System.Threading.Thread.dll

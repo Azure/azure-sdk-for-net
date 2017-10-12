@@ -17,6 +17,8 @@ build/
 restoredPackages/
 PolicheckOutput/
 tools/net46/
+tools/SdkBuildTools
+tools/BuildAssets/tasks/net46/*runtimeconfig*.json
 tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
 src/NuGet.Config
