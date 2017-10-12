@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DataFactory.Tests.ScenarioTests
@@ -15,11 +16,11 @@ namespace DataFactory.Tests.ScenarioTests
     {
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
-        public void CancelPipelineRun()
+        public async Task CancelPipelineRun()
         {
             var expectedFactory = new Factory(location: FactoryLocation);
 
-            Action<DataFactoryManagementClient> action = async (client) =>
+            Func<DataFactoryManagementClient, Task> action = async (client) =>
             {
                 Factory createResponse = client.Factories.CreateOrUpdate(ResourceGroupName, DataFactoryName, expectedFactory);
                 ErrorResponseException exception = await Assert.ThrowsAsync<ErrorResponseException>(async () =>
@@ -30,11 +31,11 @@ namespace DataFactory.Tests.ScenarioTests
                 Assert.Equal(exception.Response.StatusCode, HttpStatusCode.BadRequest);
             };
 
-            Action<DataFactoryManagementClient> finallyAction = (client) =>
+            Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>
             {
-                client.Factories.Delete(ResourceGroupName, DataFactoryName);
+                await client.Factories.DeleteAsync(ResourceGroupName, DataFactoryName);
             };
-            this.RunTest(action, finallyAction);
+            await this.RunTest(action, finallyAction);
         }
     }
 }
