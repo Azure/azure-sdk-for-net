@@ -43,6 +43,6 @@
 	<NetSdkBuildToolsDir Condition=" '$(NetSdkBuildToolsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildToolsDir>
   </PropertyGroup>
  
-	<Import Project="$(NetSdkBuildTargetsDir)\common.build.props"/>
+	<Import Project="$(NetSdkBuildTargetsDir)\common.Build.props"/>
 	<Import Project="$(NetSdkBuildTargetsDir)\common.NugetPackage.props"/>
 </Project>
