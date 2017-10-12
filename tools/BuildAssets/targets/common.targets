@@ -10,7 +10,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
-      UpdateTools;
 	  GetBuildEnv;
       BuildCiSign;
       CategorizeProjects;
@@ -67,7 +66,7 @@
     <Message Text="BuildInParallel .... $(BuildInParallel)"/>
   </Target>
 
-  <Target Name="CleanLatestProjects" >
+  <Target Name="CleanLatestProjects" Condition=" '$(SkipClean)' != 'true' ">
     <PropertyGroup>
       <LatestProjectDefaultCleanTarget Condition=" '$(LatestProjectDefaultCleanTarget)' == '' ">Clean</LatestProjectDefaultCleanTarget>
     </PropertyGroup>
@@ -298,8 +297,12 @@
   </Target>
   
   <Target Name="UpdateTools">
+  <PropertyGroup>
+	<RemoteRootDir Condition=" '$(RemoteRootDir)' == '' ">D:\myFork\SdkBuildTools</RemoteRootDir>
+  </PropertyGroup>
 	<Message Text="Updating tools ...."/>
-	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/" DebugTrace="$(DebugTrace)"/>
+	<!-- https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/ -->
+	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
   </Target>
 
   <Target Name="DisplayHelp">
