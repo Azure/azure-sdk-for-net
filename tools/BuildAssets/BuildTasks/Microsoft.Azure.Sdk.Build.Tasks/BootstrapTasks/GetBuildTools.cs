@@ -154,6 +154,9 @@
                 RemoteCopyFromRootDir = Path.Combine(RemoteRootDir, COPY_FROM_RELATIVEPATH);
                 RemoteMetaDataFilePath = Path.Combine(RemoteCopyFromRootDir, @"metaData\FilesToCopy.txt");
             }
+
+            BuildToolsLogger.LogInfo("RemoteCopyFromRootDir '{0}'", RemoteCopyFromRootDir);
+            BuildToolsLogger.LogInfo("LocalBranchCopyToRootDir '{0}'", LocalBranchCopyToRootDir);
         }
         #endregion
 
@@ -221,7 +224,7 @@
             }
             else
             {
-                File.Copy(sourceFile, destinationPath);
+                File.Copy(sourceFile, destinationPath, true);
             }
 
             if (!File.Exists(destinationPath))
