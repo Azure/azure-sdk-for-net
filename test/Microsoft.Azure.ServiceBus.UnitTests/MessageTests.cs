@@ -124,7 +124,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    var maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
+                    int maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
                     var maxPayload = Encoding.ASCII.GetBytes(new string('a', maxMessageSize));
                     var maxSizeMessage = new Message(maxPayload);
 

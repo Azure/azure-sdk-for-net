@@ -70,10 +70,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         protected override int OnValueSize()
         {
-            return AmqpCodec.GetSerializableEncodeSize(this.Filter) +
-                   AmqpCodec.GetSerializableEncodeSize(this.Action) +
-                   AmqpCodec.GetStringEncodeSize(this.RuleName) +
-                   AmqpCodec.GetTimeStampEncodeSize(this.CreatedAt);
+            var valueSize = AmqpCodec.GetSerializableEncodeSize(this.Filter);
+            valueSize += AmqpCodec.GetSerializableEncodeSize(this.Action);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.RuleName);
+            valueSize += AmqpCodec.GetTimeStampEncodeSize(this.CreatedAt);
+
+            return valueSize;
         }
     }
 }

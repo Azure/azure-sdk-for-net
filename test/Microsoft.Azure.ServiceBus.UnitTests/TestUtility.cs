@@ -24,12 +24,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Validate the connection string
             NamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString).ToString();
-            WebSocketsNamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString){TransportType = TransportType.AmqpWebSockets}.ToString();
         }
 
         internal static string NamespaceConnectionString { get; }
-
-        internal static string WebSocketsNamespaceConnectionString { get; }
 
         internal static string GetEntityConnectionString(string entityName)
         {
@@ -56,7 +53,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             var messagesToSend = new List<Message>();
-            for (var i = 0; i < messageCount; i++)
+            for (int i = 0; i < messageCount; i++)
             {
                 var message = new Message(Encoding.UTF8.GetBytes("test" + i));
                 message.Label = "test" + i;
@@ -67,9 +64,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Sent {messageCount} messages");
         }
 
-        internal static async Task<IList<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
+        internal static async Task<IEnumerable<Message>> ReceiveMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
-            var receiveAttempts = 0;
+            int receiveAttempts = 0;
             var messagesToReturn = new List<Message>();
 
             while (receiveAttempts++ < TestConstants.MaxAttemptsCount && messagesToReturn.Count < messageCount)
@@ -95,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task<IEnumerable<Message>> PeekMessagesAsync(IMessageReceiver messageReceiver, int messageCount)
         {
-            var receiveAttempts = 0;
+            int receiveAttempts = 0;
             var peekedMessages = new List<Message>();
 
             while (receiveAttempts++ < TestConstants.MaxAttemptsCount && peekedMessages.Count < messageCount)
@@ -112,15 +109,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return peekedMessages;
         }
 
-        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IList<Message> messages)
+        internal static async Task CompleteMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
             await messageReceiver.CompleteAsync(messages.Select(message => message.SystemProperties.LockToken));
-            Log($"Completed {messages.Count} messages");
+            Log($"Completed {messages.Count()} messages");
         }
 
         internal static async Task AbandonMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            var count = 0;
+            int count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.AbandonAsync(message.SystemProperties.LockToken);
@@ -131,7 +128,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task DeadLetterMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            var count = 0;
+            int count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken);
@@ -142,7 +139,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         internal static async Task DeferMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<Message> messages)
         {
-            var count = 0;
+            int count = 0;
             foreach (var message in messages)
             {
                 await messageReceiver.DeferAsync(message.SystemProperties.LockToken);
@@ -158,11 +155,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.FromResult(false);
             }
 
-            for (var i = 0; i < numberOfSessions; i++)
+            for (int i = 0; i < numberOfSessions; i++)
             {
                 var messagesToSend = new List<Message>();
-                var sessionId = TestConstants.SessionPrefix + i;
-                for (var j = 0; j < messagesPerSession; j++)
+                string sessionId = TestConstants.SessionPrefix + i;
+                for (int j = 0; j < messagesPerSession; j++)
                 {
                     var message = new Message(Encoding.UTF8.GetBytes("test" + j));
                     message.Label = "test" + j;
@@ -180,7 +177,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             if (messages != null && messages.Count > 1)
             {
-                var sequenceNumbers = new HashSet<long>();
+                HashSet<long> sequenceNumbers = new HashSet<long>();
                 foreach (var message in messages)
                 {
                     if (!sequenceNumbers.Add(message.SystemProperties.SequenceNumber))

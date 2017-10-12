@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         public async Task VerifyRun()
         {
             // Wait for the OnMessage Tasks to finish
-            var stopwatch = Stopwatch.StartNew();
+            Stopwatch stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed.TotalSeconds <= 180)
             {
                 if (this.totalMessageCount == MessagesPerSession * NumberOfSessions)
@@ -81,7 +81,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     TestUtility.Log($"All '{this.totalMessageCount}' messages Received.");
                     break;
                 }
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                else
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
             }
 
             foreach (KeyValuePair<string, int> keyValuePair in this.sessionMessageMap)

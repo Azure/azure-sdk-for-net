@@ -8,13 +8,13 @@ namespace Microsoft.Azure.ServiceBus
     {
         /// <summary>Message completion operation</summary>
         public const string Complete = "Complete";
-
+        
         /// <summary>Message abandon operation</summary>
         public const string Abandon = "Abandon";
-
+        
         /// <summary>User message handler invocation</summary>
         public const string UserCallback = "UserCallback";
-
+        
         /// <summary>Message receive operation</summary>
         public const string Receive = "Receive";
 

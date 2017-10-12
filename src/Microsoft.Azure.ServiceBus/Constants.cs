@@ -23,8 +23,6 @@ namespace Microsoft.Azure.ServiceBus
 
         public const int DefaultClientPrefetchCount = 0;
 
-        public const int MaxDeadLetterReasonLength = 4096;
-
         public static readonly long DefaultLastPeekedSequenceNumber = 0;
 
         public static readonly TimeSpan DefaultOperationTimeout = TimeSpan.FromMinutes(1);
@@ -34,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus
         public static readonly TimeSpan MaximumRenewBufferDuration = TimeSpan.FromSeconds(10);
 
         public static readonly TimeSpan DefaultRetryDeltaBackoff = TimeSpan.FromSeconds(3);
-
+        
         public static readonly TimeSpan NoMessageBackoffTimeSpan = TimeSpan.FromSeconds(5);
     }
 }

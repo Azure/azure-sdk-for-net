@@ -93,13 +93,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        ServiceBusConnection ServiceBusConnection { get; }
+        ServiceBusConnection ServiceBusConnection { get; set; }
 
-        RetryPolicy RetryPolicy { get; }
+        RetryPolicy RetryPolicy { get; set; }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        ICbsTokenProvider CbsTokenProvider { get; set; }
 
-        ReceiveMode ReceiveMode { get; }
+        ReceiveMode ReceiveMode { get; set; }
 
         string Path { get; }
 
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
 
                 var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
-                var ruleDescriptions = new List<RuleDescription>();
+                List<RuleDescription> rules = new List<RuleDescription>();
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
                         var ruleDescription = AmqpMessageConverter.GetRuleDescription(amqpRule);
-                        ruleDescriptions.Add(ruleDescription);
+                        rules.Add(ruleDescription);
                     }
                 }
                 else if (response.StatusCode == AmqpResponseStatusCode.NoContent)
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     throw response.ToMessagingContractException();
                 }
 
-                return ruleDescriptions;
+                return rules;
             }
             catch (Exception exception)
             {

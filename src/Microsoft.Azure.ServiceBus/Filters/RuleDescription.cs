@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets the name of the default rule on the subscription.
         /// </summary>
         /// <remarks>
-        /// Whenever a new subscription is created, a default rule is always added.
+        /// Whenever a new subscription is created, a default rule is always added. 
         /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
         /// </remarks>
         public const string DefaultRuleName = "$Default";
@@ -33,6 +33,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name.
         /// </summary>
+        /// <param name="name">The name of the rule.</param>
         public RuleDescription(string name)
             : this(name, TrueFilter.Default)
         {
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with the specified name and filter expression.
         /// </summary>
+        /// <param name="name">The name of the rule.</param>
         /// <param name="filter">The filter expression used to match messages.</param>
         public RuleDescription(string name, Filter filter)
         {
@@ -74,7 +76,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="System.ArgumentNullException">null (Nothing in Visual Basic) is assigned.</exception>
         public Filter Filter
         {
-            get => this.filter;
+            get
+            {
+                return this.filter;
+            }
 
             set
             {
@@ -100,7 +105,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>Max allowed length of rule name is 50 chars.</remarks>
         public string Name
         {
-            get => this.name;
+            get
+            {
+                return this.name;
+            }
 
             set
             {

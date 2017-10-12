@@ -24,24 +24,24 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteTrue(string topicName, int maxConcurrentCalls)
+        async Task OnSessionPeekLockWithAutoCompleteTrue(string topicName, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(topicName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            await this.OnSessionTestAsync(topicName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteFalse(string topicName, int maxConcurrentCalls)
+        async Task OnSessionPeekLockWithAutoCompleteFalse(string topicName, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(topicName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            await this.OnSessionTestAsync(topicName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Fact]
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulSubscription()
         {
-            var exceptionReceivedHandlerCalled = false;
+            bool exceptionReceivedHandlerCalled = false;
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedTopicName);
             var subscriptionClient = new SubscriptionClient(
                 TestUtility.NamespaceConnectionString,
@@ -49,7 +49,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestConstants.SubscriptionName,
                 ReceiveMode.PeekLock);
 
-            var sessionHandlerOptions = new SessionHandlerOptions(eventArgs =>
+            SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(
+            (eventArgs) =>
             {
                 Assert.NotNull(eventArgs);
                 Assert.NotNull(eventArgs.Exception);
@@ -62,12 +63,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             { MaxConcurrentSessions = 1 };
 
             subscriptionClient.RegisterSessionHandler(
-               (session, message, token) => Task.CompletedTask,
+               (session, message, token) =>
+               {
+                   return Task.CompletedTask;
+               },
                sessionHandlerOptions);
 
             try
             {
-                var stopwatch = Stopwatch.StartNew();
+                Stopwatch stopwatch = Stopwatch.StartNew();
                 while (stopwatch.Elapsed.TotalSeconds <= 10)
                 {
                     if (exceptionReceivedHandlerCalled)
@@ -100,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             try
             {
-                var sessionHandlerOptions =
+                SessionHandlerOptions handlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = 5,
@@ -108,9 +112,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         AutoComplete = true
                     };
 
-                var testSessionHandler = new TestSessionHandler(
+                TestSessionHandler testSessionHandler = new TestSessionHandler(
                     subscriptionClient.ReceiveMode,
-                    sessionHandlerOptions,
+                    handlerOptions,
                     topicClient.InnerSender,
                     subscriptionClient.SessionPumpHost);
 
@@ -118,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await testSessionHandler.SendSessionMessages();
 
                 // Register handler
-                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+                testSessionHandler.RegisterSessionHandler(handlerOptions);
 
                 // Verify messages were received.
                 await testSessionHandler.VerifyRun();

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus
     ///     topicName,
     ///     RetryExponential);
     /// </code>
-    ///
+    /// 
     /// Send a message to the topic:
     /// <code>
     /// byte[] data = GetData();
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         TopicClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, RetryPolicy retryPolicy)
-            : base(nameof(TopicClient), entityPath, retryPolicy)
+            : base(ClientEntity.GenerateClientId(nameof(TopicClient), entityPath), retryPolicy)
         {
             MessagingEventSource.Log.TopicClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
@@ -77,7 +77,9 @@ namespace Microsoft.Azure.ServiceBus
             this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
             this.syncLock = new object();
             this.TopicName = entityPath;
-            this.TokenProvider = this.ServiceBusConnection.CreateTokenProvider();
+            this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
+                serviceBusConnection.SasKeyName,
+                serviceBusConnection.SasKey);
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
 
             MessagingEventSource.Log.TopicClientCreateStop(serviceBusConnection?.Endpoint.Authority, entityPath, this.ClientId);
@@ -132,69 +134,8 @@ namespace Microsoft.Azure.ServiceBus
 
         TokenProvider TokenProvider { get; }
 
-        /// <summary>
-        /// Sends a message to Service Bus.
-        /// </summary>
-        public Task SendAsync(Message message)
-        {
-            return this.SendAsync(new[] { message });
-        }
-
-        /// <summary>
-        /// Sends a list of messages to Service Bus.
-        /// </summary>
-        public Task SendAsync(IList<Message> messageList)
-        {
-            this.ThrowIfClosed();
-            return this.InnerSender.SendAsync(messageList);
-        }
-
-        /// <summary>
-        /// Schedules a message to appear on Service Bus at a later time.
-        /// </summary>
-        /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
-        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing.</param>
-        /// <returns>The sequence number of the message that was scheduled.</returns>
-        public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
-        {
-            this.ThrowIfClosed();
-            return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
-        }
-
-        /// <summary>
-        /// Cancels a message that was scheduled.
-        /// </summary>
-        /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
-        public Task CancelScheduledMessageAsync(long sequenceNumber)
-        {
-            this.ThrowIfClosed();
-            return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
-        }
-
-        /// <summary>
-        /// Gets a list of currently registered plugins for this TopicClient.
-        /// </summary>
-        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
-
-        /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this topic client.
-        /// </summary>
-        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
-        {
-            this.ThrowIfClosed();
-            this.InnerSender.RegisterPlugin(serviceBusPlugin);
-        }
-
-        /// <summary>
-        /// Unregisters a <see cref="ServiceBusPlugin"/>.
-        /// </summary>
-        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public override void UnregisterPlugin(string serviceBusPluginName)
-        {
-            this.ThrowIfClosed();
-            this.InnerSender.UnregisterPlugin(serviceBusPluginName);
-        }
-
+        /// <summary></summary>
+        /// <returns></returns>
         protected override async Task OnClosingAsync()
         {
             if (this.innerSender != null)
@@ -206,6 +147,70 @@ namespace Microsoft.Azure.ServiceBus
             {
                 await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }
+        }
+
+        /// <summary>
+        /// Sends a message to Service Bus.
+        /// </summary>
+        /// <param name="message">The <see cref="Message"/></param>
+        /// <returns>An asynchronous operation</returns>
+        public Task SendAsync(Message message)
+        {
+            return this.SendAsync(new[] { message });
+        }
+
+        /// <summary>
+        /// Sends a list of messages to Service Bus.
+        /// </summary>
+        /// <param name="messageList">The list of messages</param>
+        /// <returns>An asynchronous operation</returns>
+        public Task SendAsync(IList<Message> messageList)
+        {
+            return this.InnerSender.SendAsync(messageList);
+        }
+
+        /// <summary>
+        /// Schedules a message to appear on Service Bus at a later time.
+        /// </summary>
+        /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
+        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing.</param>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
+        public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
+        {
+            return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
+        }
+
+        /// <summary>
+        /// Cancels a message that was scheduled.
+        /// </summary>
+        /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <returns>An asynchronous operation</returns>
+        public Task CancelScheduledMessageAsync(long sequenceNumber)
+        {
+            return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
+        }
+
+        /// <summary>
+        /// Gets a list of currently registered plugins for this TopicClient.
+        /// </summary>
+        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this topic client.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
+        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        {
+            this.InnerSender.RegisterPlugin(serviceBusPlugin);
+        }
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        public override void UnregisterPlugin(string serviceBusPluginName)
+        {
+            this.InnerSender.UnregisterPlugin(serviceBusPluginName);
         }
     }
 }

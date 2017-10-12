@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         [Fact]
         [DisplayTestMethodName]
-        Task Registering_plugin_multiple_times_should_throw()
+        async Task Registering_plugin_multiple_times_should_throw()
         {
             var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
             var firstPlugin = new FirstSendPlugin();
@@ -23,19 +23,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             messageReceiver.RegisterPlugin(firstPlugin);
             Assert.Throws<ArgumentException>(() => messageReceiver.RegisterPlugin(secondPlugin));
-            return messageReceiver.CloseAsync();
+            await messageReceiver.CloseAsync();
         }
 
         [Fact]
         [DisplayTestMethodName]
-        Task Unregistering_plugin_should_complete_with_plugin_set()
+        async Task Unregistering_plugin_should_complete_with_plugin_set()
         {
             var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
             var firstPlugin = new FirstSendPlugin();
 
             messageReceiver.RegisterPlugin(firstPlugin);
             messageReceiver.UnregisterPlugin(firstPlugin.Name);
-            return messageReceiver.CloseAsync();
+            await messageReceiver.CloseAsync();
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 var plugin = new ExceptionPlugin();
-
+                
                 messageSender.RegisterPlugin(plugin);
 
                 var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"));
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
             try
             {
-                var messageReceived = false;
+                bool messageReceived = false;
                 var sendReceivePlugin = new SendReceivePlugin();
                 queueClient.RegisterPlugin(sendReceivePlugin);
 
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     },
                     exceptionArgs => Task.CompletedTask);
 
-                for (var i = 0; i < 20; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     if (messageReceived)
                     {

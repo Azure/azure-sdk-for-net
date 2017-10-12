@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#if NET461
+#if NET46
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
     using Microsoft.ServiceBus.Messaging;
@@ -25,20 +25,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
         [DisplayTestMethodName]
         async Task RunEnd2EndSerializerTests(TransportType transportType, string sbConnectionString)
         {
-            var queueName = TestConstants.NonPartitionedQueueName;
+            string queueName = TestConstants.NonPartitionedQueueName;
 
             // Create a full framework MessageSender
-            var messagingFactory = MessagingFactory.CreateFromConnectionString(sbConnectionString);
-            var fullFrameWorkClientSender = messagingFactory.CreateMessageSender(queueName);
+            MessagingFactory messagingFactory = MessagingFactory.CreateFromConnectionString(sbConnectionString);
+            MessageSender fullFrameWorkClientSender = messagingFactory.CreateMessageSender(queueName);
 
             // Create a .NetStandard MessageReceiver
-            var dotNetStandardMessageReceiver = new Core.MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ServiceBus.ReceiveMode.ReceiveAndDelete);
+            Core.MessageReceiver dotNetStandardMessageReceiver = new Core.MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ServiceBus.ReceiveMode.ReceiveAndDelete);
 
             try
             {
                 // Send Plain string
-                var message1Body = "contosoString";
-                var message1 = new BrokeredMessage(message1Body);
+                string message1Body = "contosoString";
+                var message1 = new BrokeredMessage(message1Body);                
                 await fullFrameWorkClientSender.SendAsync(message1);
 
                 // Receive Plain string
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 Assert.Equal(book, returnedBody2);
 
                 // Send UTF8 encoded byte array object
-                var message3Body = "contosoBytes";
+                string message3Body = "contosoBytes";
                 var message3 = new BrokeredMessage(Encoding.UTF8.GetBytes(message3Body));
                 await fullFrameWorkClientSender.SendAsync(message3);
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 Assert.True(string.Equals(message3Body, returnedBody3));
 
                 // Send Stream Object
-                var message4Body = "contosoStreamObject";
+                string message4Body = "contosoStreamObject";
                 var message4 = new BrokeredMessage(new MemoryStream(Encoding.UTF8.GetBytes(message4Body)));
                 await fullFrameWorkClientSender.SendAsync(message4);
 
@@ -94,8 +94,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
         internal static string GetSbConnectionString(TransportType transportType)
         {
             // Override and Create a new ConnectionString with SbmpConnection Endpoint scheme
-            string[] parts = TestUtility.NamespaceConnectionString.Split(':');
-            var sbConnectionString = "Endpoint=sb:" + parts[1];
+            string[] temp = TestUtility.NamespaceConnectionString.Split(':');
+            string sbConnectionString = "Endpoint=sb:" + temp[1];
 
             if (transportType == TransportType.Amqp)
             {

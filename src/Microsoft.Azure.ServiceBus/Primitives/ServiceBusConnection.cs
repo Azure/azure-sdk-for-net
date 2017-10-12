@@ -38,20 +38,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public string SasKey { get; set; }
 
         /// <summary>
-        /// Get the shared access policy name from the connection string
+        /// Get the shared access policy owner name from the connection string
         /// </summary>
         public string SasKeyName { get; set; }
-
-        /// <summary>
-        /// Get the shared access signature token from the connection string
-        /// </summary>
-        public string SasToken { get; set; }
-
-        /// <summary>
-        /// Get the transport type from the connection string.
-        /// <remarks>Amqp and AmqpWebSockets are available.</remarks>
-        /// </summary>
-        public TransportType TransportType { get; set; }
 
         internal FaultTolerantAmqpObject<AmqpConnection> ConnectionManager { get; set; }
 
@@ -65,8 +54,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             this.Endpoint = new Uri(builder.Endpoint);
             this.SasKeyName = builder.SasKeyName;
             this.SasKey = builder.SasKey;
-            this.SasToken = builder.SasToken;
-            this.TransportType = builder.TransportType;
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);
         }
 
@@ -78,26 +65,32 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
-            var hostName = this.Endpoint.Host;
+            string hostName = this.Endpoint.Host;
+            string networkHost = this.Endpoint.Host;
+            int port = this.Endpoint.Port;
 
-            var timeoutHelper = new TimeoutHelper(timeout);
-            var amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
+            TimeoutHelper timeoutHelper = new TimeoutHelper(timeout);
+            AmqpSettings amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
                 amqpVersion: AmqpVersion,
                 useSslStreamSecurity: true,
-                hasTokenProvider: true,
-                useWebSockets: TransportType == TransportType.AmqpWebSockets);
+                hasTokenProvider: true);
 
-            var transportSettings = CreateTransportSettings();
-            var amqpTransportInitiator = new AmqpTransportInitiator(amqpSettings, transportSettings);
-            var transport = await amqpTransportInitiator.ConnectTaskAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            TransportSettings tpSettings = AmqpConnectionHelper.CreateTcpTransportSettings(
+                networkHost: networkHost,
+                hostName: hostName,
+                port: port,
+                useSslStreamSecurity: true);
 
-            var containerId = Guid.NewGuid().ToString();
-            var amqpConnectionSettings = AmqpConnectionHelper.CreateAmqpConnectionSettings(AmqpConstants.DefaultMaxFrameSize, containerId, hostName);
-            var connection = new AmqpConnection(transport, amqpSettings, amqpConnectionSettings);
+            AmqpTransportInitiator initiator = new AmqpTransportInitiator(amqpSettings, tpSettings);
+            TransportBase transport = await initiator.ConnectTaskAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+
+            string containerId = Guid.NewGuid().ToString();
+            AmqpConnectionSettings amqpConnectionSettings = AmqpConnectionHelper.CreateAmqpConnectionSettings(AmqpConstants.DefaultMaxFrameSize, containerId, hostName);
+            AmqpConnection connection = new AmqpConnection(transport, amqpSettings, amqpConnectionSettings);
             await connection.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             // Always create the CBS Link + Session
-            var cbsLink = new AmqpCbsLink(connection);
+            AmqpCbsLink cbsLink = new AmqpCbsLink(connection);
             if (connection.Extensions.Find<AmqpCbsLink>() == null)
             {
                 connection.Extensions.Add(cbsLink);
@@ -107,39 +100,5 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             return connection;
         }
-
-        private TransportSettings CreateTransportSettings()
-        {
-            var hostName = this.Endpoint.Host;
-            var networkHost = this.Endpoint.Host;
-            var port = this.Endpoint.Port;
-
-            if (TransportType == TransportType.AmqpWebSockets)
-            {
-                return AmqpConnectionHelper.CreateWebSocketTransportSettings(
-                    networkHost: networkHost,
-                    hostName: hostName,
-                    port: port);
-            }
-
-            return AmqpConnectionHelper.CreateTcpTransportSettings(
-                networkHost: networkHost,
-                hostName: hostName,
-                port: port,
-                useSslStreamSecurity: true);
-        }
-
-        internal TokenProvider CreateTokenProvider()
-        {
-            if (SasToken != null)
-            {
-                return TokenProvider.CreateSharedAccessSignatureTokenProvider(SasToken);
-            }
-            else
-            {
-                return TokenProvider.CreateSharedAccessSignatureTokenProvider(SasKeyName, SasKey);
-            }
-        }
-
     }
 }

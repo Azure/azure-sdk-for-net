@@ -32,12 +32,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
         Message GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)
         {
             byte[] payload = null;
-            using (var memoryStream = new MemoryStream(10))
+            using (MemoryStream stream = new MemoryStream(10))
             {
-                serializer.WriteObject(memoryStream, book);
-                memoryStream.Flush();
-                memoryStream.Position = 0;
-                payload = memoryStream.ToArray();
+                serializer.WriteObject(stream, book);
+                stream.Flush();
+                stream.Position = 0;
+                payload = stream.ToArray();
             };
 
             return new Message(payload);

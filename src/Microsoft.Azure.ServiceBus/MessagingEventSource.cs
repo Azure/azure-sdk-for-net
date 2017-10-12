@@ -9,6 +9,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Reflection;
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
+    using Microsoft.Azure.Amqp.Framing;
     using Microsoft.Azure.ServiceBus.Amqp;
     using Microsoft.Azure.ServiceBus.Primitives;
 
@@ -18,20 +19,20 @@ namespace Microsoft.Azure.ServiceBus
         public static MessagingEventSource Log { get; } = new MessagingEventSource();
 
         [Event(1, Level = EventLevel.Informational, Message = "Creating QueueClient (Namespace '{0}'; Queue '{1}'; ReceiveMode '{2}').")]
-        public void QueueClientCreateStart(string namespaceName, string queueName, string receiveMode)
+        public void QueueClientCreateStart(string namespaceName, string queuename, string receiveMode)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(1, namespaceName ?? string.Empty, queueName, receiveMode);
+                this.WriteEvent(1, namespaceName ?? string.Empty, queuename, receiveMode);
             }
         }
 
         [Event(2, Level = EventLevel.Informational, Message = "QueueClient (Namespace '{0}'; Queue '{1}'; ClientId: '{2}' created).")]
-        public void QueueClientCreateStop(string namespaceName, string queueName, string clientId)
+        public void QueueClientCreateStop(string namespaceName, string queuename, string clientId)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(2, namespaceName, queueName, clientId);
+                this.WriteEvent(2, namespaceName, queuename, clientId);
             }
         }
 
@@ -142,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                var formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
+                string formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
                 this.MessageCompleteStart(clientId, messageCount, formattedLockTokens);
             }
         }
@@ -314,8 +315,8 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                this.MessageReceiveDeferredMessageStart(clientId, messageCount, formattedSequenceNumbers);
+                string formattedsequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
+                this.MessageReceiveDeferredMessageStart(clientId, messageCount, formattedsequenceNumbers);
             }
         }
 
@@ -350,7 +351,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         // Unused - 31;32;33
-
+        
         [NonEvent]
         public void AmqpSendLinkCreateStart(string clientId, MessagingEntityType? entityType, string entityPath)
         {
@@ -418,22 +419,22 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void AmqpSendAuthenticationTokenStart(Uri address, string audience, string resource, string[] claims)
+        public void AmqpSendAuthenticanTokenStart(Uri address, string audience, string resource, string[] claims)
         {
             if (this.IsEnabled())
             {
-                this.AmqpSendAuthenticationTokenStart(address.ToString(), audience, resource, claims.ToString());
+                this.AmqpSendAuthenticanTokenStart(address.ToString(), audience, resource, claims.ToString());
             }
         }
 
         [Event(40, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken started. Address: {0}, Audience: {1}, Resource: {2}, Claims: {3}")]
-        void AmqpSendAuthenticationTokenStart(string address, string audience, string resource, string claims)
+        void AmqpSendAuthenticanTokenStart(string address, string audience, string resource, string claims)
         {
             this.WriteEvent(40, address, audience, resource, claims);
         }
 
         [Event(41, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken done.")]
-        public void AmqpSendAuthenticationTokenStop()
+        public void AmqpSendAuthenticanTokenStop()
         {
             if (this.IsEnabled())
             {
@@ -710,7 +711,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(67, clientId, currentSemaphoreCount);
+                this.WriteEvent(67, clientId, currentSemaphoreCount); 
             }
         }
 
@@ -976,16 +977,16 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void SessionReceivePumpSessionRenewLockException(string clientId, string sessionId, Exception exception)
+        public void SessionReceivePumpSessionRenewLockExeption(string clientId, string sessionId, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.SessionReceivePumpSessionRenewLockException(clientId, sessionId, exception.ToString());
+                this.SessionReceivePumpSessionRenewLockExeption(clientId, sessionId, exception.ToString());
             }
         }
 
         [Event(87, Level = EventLevel.Error, Message = "{0}: Exception while renewing session lock: SessionId: {1}, Exception: {2}")]
-        void SessionReceivePumpSessionRenewLockException(string clientId, string sessionId, string exception)
+        void SessionReceivePumpSessionRenewLockExeption(string clientId, string sessionId, string exception)
         {
             this.WriteEvent(87, clientId, sessionId, exception);
         }
@@ -1010,7 +1011,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(89, clientId, entityPath, sessionId);
+                this.WriteEvent(89, clientId, entityPath, sessionId); 
             }
         }
 
@@ -1049,7 +1050,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString());
+                this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString()); 
             }
         }
 
@@ -1094,7 +1095,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(95, pluginName, messageId);
+                this.WriteEvent(95, pluginName, messageId); 
             }
         }
 
@@ -1103,7 +1104,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(96, pluginName, messageId);
+                this.WriteEvent(96, pluginName, messageId); 
             }
         }
 
@@ -1119,7 +1120,7 @@ namespace Microsoft.Azure.ServiceBus
         [Event(97, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
         void PluginCallFailed(string pluginName, string messageId, string exception)
         {
-            this.WriteEvent(97, pluginName, messageId, exception);
+            this.WriteEvent(97, pluginName, messageId, exception); 
         }
 
         [NonEvent]
@@ -1172,7 +1173,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                WriteEvent(101, oldClientId, newClientId);
+                WriteEvent(101, oldClientId, newClientId); 
             }
         }
 

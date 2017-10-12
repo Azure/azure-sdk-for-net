@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.IO;
     using System.Threading.Tasks;
     using Core;
 
@@ -15,11 +16,11 @@ namespace Microsoft.Azure.ServiceBus
     /// Service Bus Sessions, also called 'Groups' in the AMQP 1.0 protocol, are unbounded sequences of related messages. ServiceBus guarantees ordering of messages in a session.
     /// </para>
     /// <para>
-    /// Any sender can create a session when submitting messages into a Topic or Queue by setting the <see cref="Message.SessionId"/> property on Message to some
+    /// Any sender can create a session when submitting messages into a Topic or Queue by setting the <see cref="Message.SessionId"/> property on Message to some 
     /// application defined unique identifier. At the AMQP 1.0 protocol level, this value maps to the group-id property.
     /// </para>
     /// <para>
-    /// Sessions come into existence when there is at least one message with the session's SessionId in the Queue or Topic subscription.
+    /// Sessions come into existence when there is at least one message with the session's SessionId in the Queue or Topic subscription. 
     /// Once a Session exists, there is no defined moment or gesture for when the session expires or disappears.
     /// </para>
     /// </remarks>
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
         /// </summary>
         /// <param name="sessionState">A byte array of session state</param>
+        /// <returns>The asynchronous operation</returns>
         /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
         Task SetStateAsync(byte[] sessionState);
 
@@ -54,13 +56,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>
         /// <para>
         /// When you accept a session, the session is locked for this client instance by the service for a duration as specified during the Queue/Subscription creation.
-        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed. 
-        /// For each renewal, it resets the time the session is locked by the LockDuration set on the Entity.
+        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed. For each renewal, the session-lock is renewed by 
+        /// the entity's LockDuration. 
         /// </para>
         /// <para>
         /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
         /// </para>
         /// </remarks>
+        /// <returns>The asynchronous operation.</returns>
         Task RenewSessionLockAsync();
     }
 }

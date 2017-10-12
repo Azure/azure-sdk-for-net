@@ -18,7 +18,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             this.responseMessage = responseMessage;
             this.StatusCode = this.responseMessage.GetResponseStatusCode();
-            if (this.responseMessage.ApplicationProperties.Map.TryGetValue<string>(ManagementConstants.Properties.TrackingId, out var trackingId))
+            string trackingId;
+            if (this.responseMessage.ApplicationProperties.Map.TryGetValue(ManagementConstants.Properties.TrackingId, out trackingId))
             {
                 this.TrackingId = trackingId;
             }
@@ -29,11 +30,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        public AmqpMessage AmqpMessage => this.responseMessage;
+        public AmqpMessage AmqpMessage
+        {
+            get { return this.responseMessage; }
+        }
 
         public AmqpResponseStatusCode StatusCode { get; }
 
-        public string TrackingId { get; }
+        public string TrackingId { get; private set; }
 
         public AmqpMap Map { get; }
 
@@ -70,14 +74,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 throw new ArgumentException(AmqpValue.Name);
             }
 
-            var list = (List<object>)this.Map[key];
+            List<object> list = (List<object>)this.Map[key];
 
             return list.Cast<TValue>();
         }
 
         public AmqpSymbol GetResponseErrorCondition()
         {
-            var condition = this.responseMessage.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
+            object condition = this.responseMessage.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
 
             return condition is AmqpSymbol amqpSymbol ? amqpSymbol : null;
         }

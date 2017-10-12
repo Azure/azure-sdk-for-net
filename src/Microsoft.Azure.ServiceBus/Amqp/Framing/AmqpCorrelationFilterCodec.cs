@@ -42,11 +42,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder("correlation(");
-            var count = 0;
-            this.AddFieldToString(this.CorrelationId != null, stringBuilder, "id", this.CorrelationId, ref count);
-            stringBuilder.Append(')');
-            return stringBuilder.ToString();
+            StringBuilder sb = new StringBuilder("correlation(");
+            int count = 0;
+            this.AddFieldToString(this.CorrelationId != null, sb, "id", this.CorrelationId, ref count);
+            sb.Append(')');
+            return sb.ToString();
         }
 
         protected override void OnEncode(ByteBuffer buffer)
@@ -112,15 +112,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         protected override int OnValueSize()
         {
-            return AmqpCodec.GetStringEncodeSize(this.CorrelationId) +
-                   AmqpCodec.GetStringEncodeSize(this.MessageId) +
-                   AmqpCodec.GetStringEncodeSize(this.To) +
-                   AmqpCodec.GetStringEncodeSize(this.ReplyTo) +
-                   AmqpCodec.GetStringEncodeSize(this.Label) +
-                   AmqpCodec.GetStringEncodeSize(this.SessionId) +
-                   AmqpCodec.GetStringEncodeSize(this.ReplyToSessionId) +
-                   AmqpCodec.GetStringEncodeSize(this.ContentType) +
-                   AmqpCodec.GetMapEncodeSize(this.properties);
+            int valueSize = AmqpCodec.GetStringEncodeSize(this.CorrelationId);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.MessageId);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.To);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.ReplyTo);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.Label);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.SessionId);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.ReplyToSessionId);
+            valueSize += AmqpCodec.GetStringEncodeSize(this.ContentType);
+            valueSize += AmqpCodec.GetMapEncodeSize(this.properties);
+
+            return valueSize;
         }
     }
 }

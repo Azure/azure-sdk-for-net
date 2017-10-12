@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     // WARNING: Consult filter engine owner before modifying this enum.
     // Introducing a new member here has impact to filtering engine in data type precedence and data conversion.
-    // ALWAYS insert new types before Unknown!
+    // ALWASYS insert new types before Unknown!
     enum PropertyValueType
     {
         Null,
@@ -51,9 +51,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 return PropertyValueType.Null;
             }
 
-            if (TypeToIntMap.TryGetValue(value.GetType(), out var propertyValueType))
+            PropertyValueType typeId;
+            if (TypeToIntMap.TryGetValue(value.GetType(), out typeId))
             {
-                return propertyValueType;
+                return typeId;
             }
 
             return PropertyValueType.Unknown;

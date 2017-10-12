@@ -28,25 +28,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
+        async Task OnSessionPeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            await this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
+        async Task OnSessionPeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            await this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Theory]
         [MemberData(nameof(PartitionedNonPartitionedTestPermutations))]
         [DisplayTestMethodName]
-        Task OnSessionReceiveDelete(string queueName, int maxConcurrentCalls)
+        async Task OnSessionReceiveDelete(string queueName, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
+            await this.OnSessionTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         ReceiveMode.PeekLock);
             try
             {
-                var sessionHandlerOptions =
+                SessionHandlerOptions handlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = 5,
@@ -67,14 +67,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         AutoComplete = true
                     };
 
-                var testSessionHandler = new TestSessionHandler(
+                TestSessionHandler testSessionHandler = new TestSessionHandler(
                     queueClient.ReceiveMode,
-                    sessionHandlerOptions,
+                    handlerOptions,
                     queueClient.InnerSender,
                     queueClient.SessionPumpHost);
 
                 // Register handler first without any messages
-                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+                testSessionHandler.RegisterSessionHandler(handlerOptions);
 
                 // Send messages to Session
                 await testSessionHandler.SendSessionMessages();
@@ -99,10 +99,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
         {
-            var exceptionReceivedHandlerCalled = false;
+            bool exceptionReceivedHandlerCalled = false;
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
 
-            var sessionHandlerOptions = new SessionHandlerOptions(
+            SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(
             (eventArgs) =>
             {
                 Assert.NotNull(eventArgs);
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                },
                sessionHandlerOptions);
 
-            var stopwatch = Stopwatch.StartNew();
+            Stopwatch stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed.TotalSeconds <= 10)
             {
                 if (exceptionReceivedHandlerCalled)
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
             try
             {
-                var handlerOptions =
+                SessionHandlerOptions handlerOptions =
                     new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = maxConcurrentCalls,
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         AutoComplete = autoComplete
                     };
 
-                var testSessionHandler = new TestSessionHandler(
+                TestSessionHandler testSessionHandler = new TestSessionHandler(
                     queueClient.ReceiveMode,
                     handlerOptions,
                     queueClient.InnerSender,

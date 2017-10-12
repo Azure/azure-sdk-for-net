@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             System.Net.NetworkCredential networkCredential = null,
             bool forceTokenProvider = true)
         {
-            var amqpSettings = new AmqpSettings();
+            AmqpSettings settings = new AmqpSettings();
             if (useSslStreamSecurity && !useWebSockets && sslStreamUpgrade)
             {
                 var tlsSettings = new TlsTransportSettings
@@ -33,18 +33,18 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 var tlsProvider = new TlsTransportProvider(tlsSettings);
                 tlsProvider.Versions.Add(new AmqpVersion(amqpVersion));
-                amqpSettings.TransportProviders.Add(tlsProvider);
+                settings.TransportProviders.Add(tlsProvider);
             }
 
             if (hasTokenProvider || networkCredential != null)
             {
-                var saslTransportProvider = new SaslTransportProvider();
-                saslTransportProvider.Versions.Add(new AmqpVersion(amqpVersion));
-                amqpSettings.TransportProviders.Add(saslTransportProvider);
+                SaslTransportProvider saslProvider = new SaslTransportProvider();
+                saslProvider.Versions.Add(new AmqpVersion(amqpVersion));
+                settings.TransportProviders.Add(saslProvider);
 
                 if (forceTokenProvider)
                 {
-                    saslTransportProvider.AddHandler(new SaslAnonymousHandler(CbsSaslMechanismName));
+                    saslProvider.AddHandler(new SaslAnonymousHandler(CbsSaslMechanismName));
                 }
                 else if (networkCredential != null)
                 {
@@ -53,20 +53,20 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         AuthenticationIdentity = networkCredential.UserName,
                         Password = networkCredential.Password
                     };
-                    saslTransportProvider.AddHandler(plainHandler);
+                    saslProvider.AddHandler(plainHandler);
                 }
                 else
                 {
                     // old client behavior: keep it for validation only
-                    saslTransportProvider.AddHandler(new SaslExternalHandler());
+                    saslProvider.AddHandler(new SaslExternalHandler());
                 }
             }
 
-            var amqpTransportProvider = new AmqpTransportProvider();
-            amqpTransportProvider.Versions.Add(new AmqpVersion(amqpVersion));
-            amqpSettings.TransportProviders.Add(amqpTransportProvider);
+            AmqpTransportProvider amqpProvider = new AmqpTransportProvider();
+            amqpProvider.Versions.Add(new AmqpVersion(amqpVersion));
+            settings.TransportProviders.Add(amqpProvider);
 
-            return amqpSettings;
+            return settings;
         }
 
         public static TransportSettings CreateTcpTransportSettings(
@@ -75,9 +75,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             int port,
             bool useSslStreamSecurity,
             bool sslStreamUpgrade = false,
-            string sslHostName = null)
+            string sslHostName = null,
+            System.Security.Cryptography.X509Certificates.X509Certificate2 certificate = null)
         {
-            var tcpTransportSettings = new TcpTransportSettings
+            TcpTransportSettings tcpSettings = new TcpTransportSettings
             {
                 Host = networkHost,
                 Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
@@ -85,33 +86,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 SendBufferSize = AmqpConstants.TransportBufferSize
             };
 
-            TransportSettings tpSettings = tcpTransportSettings;
+            TransportSettings tpSettings = tcpSettings;
             if (useSslStreamSecurity && !sslStreamUpgrade)
             {
-                var tlsTransportSettings = new TlsTransportSettings(tcpTransportSettings)
+                TlsTransportSettings tlsSettings = new TlsTransportSettings(tcpSettings)
                 {
                     TargetHost = sslHostName ?? hostName
                 };
-                tpSettings = tlsTransportSettings;
+                tpSettings = tlsSettings;
             }
 
-            return tpSettings;
-        }
-
-        public static TransportSettings CreateWebSocketTransportSettings(
-            string networkHost,
-            string hostName,
-            int port)
-        {
-            var uriBuilder = new UriBuilder(WebSocketConstants.WebSocketSecureScheme, networkHost, port < 0 ? WebSocketConstants.WebSocketSecurePort : port, WebSocketConstants.WebSocketDefaultPath);
-            var webSocketTransportSettings = new WebSocketTransportSettings
-            {
-                Uri = uriBuilder.Uri,
-                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
-            };
-
-            TransportSettings tpSettings = webSocketTransportSettings;
             return tpSettings;
         }
 

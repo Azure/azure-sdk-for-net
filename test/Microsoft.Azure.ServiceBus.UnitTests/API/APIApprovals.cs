@@ -1,4 +1,4 @@
-﻿#if NET461
+﻿#if NET46
 namespace Microsoft.Azure.ServiceBus.UnitTests.API
 {
     using System.Runtime.CompilerServices;
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
     {
         [Fact]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        [UseReporter(typeof(DiffReporter), typeof(ClipboardReporter))]
+        [UseReporter(typeof(DiffReporter))]
         public void ApproveAzureServiceBus()
         {
             var publicApi = ApiGenerator.GeneratePublicApi(typeof(Message).Assembly);

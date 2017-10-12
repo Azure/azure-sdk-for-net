@@ -7,7 +7,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
     static class Ticks
     {
-        public static long Now => DateTime.UtcNow.ToFileTimeUtc();
+        public static long Now
+        {
+            get
+            {
+                long time = DateTime.UtcNow.ToFileTimeUtc();
+                return time;
+            }
+        }
 
         public static long FromMilliseconds(int milliseconds)
         {

@@ -56,9 +56,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             public static readonly MapKey Message = new MapKey("message");
             public static readonly MapKey Messages = new MapKey("messages");
             public static readonly MapKey DispositionStatus = new MapKey("disposition-status");
-            public static readonly MapKey PropertiesToModify = new MapKey("properties-to-modify");
-            public static readonly MapKey DeadLetterReason = new MapKey("deadletter-reason");
-            public static readonly MapKey DeadLetterDescription = new MapKey("deadletter-description");
 
             public static readonly MapKey FromSequenceNumber = new MapKey("from-sequence-number");
             public static readonly MapKey MessageCount = new MapKey("message-count");

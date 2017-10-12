@@ -142,7 +142,7 @@
     <value>The string has an invalid encoding format.</value>
   </data>
   <data name="MessageLockLost" xml:space="preserve">
-    <value>The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue, or was received by a different receiver instance.</value>
+    <value>The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue.</value>
   </data>
   <data name="SessionLockExpiredOnMessageSession" xml:space="preserve">
     <value>The session lock has expired on the MessageSession. Accept a new MessageSession.</value>
@@ -209,8 +209,5 @@
   </data>
   <data name="SessionFilterMissing" xml:space="preserve">
     <value>Session filter is missing on the link. </value>
-  </data>
-  <data name="TimeoutMustBePositiveNonZero" xml:space="preserve">
-    <value>Argument {0} must be a positive non-zero timeout value. The provided value was {1}.</value>
   </data>
 </root>

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     ///     namespaceConnectionString,
     ///     queueName)
     /// </code>
-    ///
+    /// 
     /// Send message
     /// <code>
     /// byte[] data = GetData();

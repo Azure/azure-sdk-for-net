@@ -3,16 +3,21 @@
 
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text;
 
     static class StringUtility
     {
+        public static string GetRandomString()
+        {
+            return Guid.NewGuid().ToString().Substring(0, 6);
+        }
 
         public static string GetFormattedLockTokens(IEnumerable<string> lockTokens)
         {
-            var lockTokenBuilder = new StringBuilder();
+            StringBuilder lockTokenBuilder = new StringBuilder();
             foreach (var lockToken in lockTokens)
             {
                 lockTokenBuilder.AppendFormat(CultureInfo.InvariantCulture, "<LockToken>{0}</LockToken>", lockToken);
@@ -23,8 +28,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public static string GetFormattedSequenceNumbers(IEnumerable<long> sequenceNumbers)
         {
-            var sequenceNumberBuilder = new StringBuilder();
-            foreach (var sequenceNumber in sequenceNumbers)
+            StringBuilder sequenceNumberBuilder = new StringBuilder();
+            foreach (long sequenceNumber in sequenceNumbers)
             {
                 sequenceNumberBuilder.AppendFormat(CultureInfo.InvariantCulture, "<SequenceNumber>{0}</SequenceNumber>", sequenceNumber);
             }

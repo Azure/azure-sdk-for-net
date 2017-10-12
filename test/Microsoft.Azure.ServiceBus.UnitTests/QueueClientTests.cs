@@ -141,7 +141,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
         {
-            var queueName = TestConstants.NonPartitionedQueueName;
+            string queueName = TestConstants.NonPartitionedQueueName;
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
 
             try

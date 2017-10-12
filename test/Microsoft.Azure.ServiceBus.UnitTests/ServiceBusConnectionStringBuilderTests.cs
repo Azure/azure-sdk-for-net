@@ -86,51 +86,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void ConnectionStringBuilderShouldNotFailWhileParsingUnknownProperties()
         {
-            var connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
+            string connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
             var csBuilder = new ServiceBusConnectionStringBuilder(connectionString);
             Assert.Equal("amqps://hello.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal("myQ", csBuilder.EntityPath);
             Assert.Equal(1, csBuilder.ConnectionStringProperties.Count);
             Assert.True(csBuilder.ConnectionStringProperties.ContainsKey("secretmessage"));
             Assert.Equal("h=llo", csBuilder.ConnectionStringProperties["secretmessage"]);
-        }
-
-        [Fact]
-        void ConnectionStringBuilderShouldOutputTransportTypeIfWebSocket()
-        {
-            var csBuilder = new ServiceBusConnectionStringBuilder
-            {
-                Endpoint = "amqps://contoso.servicebus.windows.net",
-                EntityPath = "myQ",
-                SasKeyName = "keyname",
-                SasKey = "key",
-                TransportType = TransportType.AmqpWebSockets
-            };
-
-            Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets;EntityPath=myQ", csBuilder.ToString());
-        }
-
-        [Fact]
-        void ConnectionStringBuilderShouldParseTransportTypeIfWebSocket()
-        {
-            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets");
-            Assert.Equal(TransportType.AmqpWebSockets, csBuilder.TransportType);
-        }
-
-        [Fact]
-        void ConnectionStringBuilderShouldDefaultToAmqp()
-        {
-            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
-            Assert.Equal(TransportType.Amqp, csBuilder.TransportType);
-        }
-
-        [Fact]
-        void ConnectionStringBuilderShouldParseToken()
-        {
-            var token = "SharedAccessSignature sr=https%3a%2f%2fmynamespace.servicebus.windows.net%2fvendor-&sig=AQGQJjSzXxECxcz%2bbT2rasdfasdfasdfa%2bkBq%2bdJZVabU%3d&se=64953734126&skn=PolicyName";
-            var csBuilder = new ServiceBusConnectionStringBuilder("SharedAccessSignature=" + token+";Endpoint=sb://contoso.servicebus.windows.net");
-            Assert.Equal("sb://contoso.servicebus.windows.net", csBuilder.Endpoint);
-            Assert.Equal(token, csBuilder.SasToken);
         }
     }
 }

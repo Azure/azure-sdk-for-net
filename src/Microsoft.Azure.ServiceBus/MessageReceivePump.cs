@@ -18,10 +18,10 @@ namespace Microsoft.Azure.ServiceBus
         readonly CancellationToken pumpCancellationToken;
         readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
 
-        public MessageReceivePump(IMessageReceiver messageReceiver,
-            MessageHandlerOptions registerHandlerOptions,
-            Func<Message, CancellationToken, Task> callback,
-            string endpoint,
+        public MessageReceivePump(IMessageReceiver messageReceiver, 
+            MessageHandlerOptions registerHandlerOptions, 
+            Func<Message, CancellationToken, Task> callback, 
+            string endpoint, 
             CancellationToken pumpCancellationToken)
         {
             this.messageReceiver = messageReceiver ?? throw new ArgumentNullException(nameof(messageReceiver));
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.ServiceBus
                 try
                 {
                     await this.maxConcurrentCallsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-                    message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
+                    message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);                  
 
                     if (message != null)
                     {
@@ -109,11 +109,11 @@ namespace Microsoft.Azure.ServiceBus
             {
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackException(this.messageReceiver.ClientId, message, exception);
                 await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
-
+                
                 // Nothing much to do if UserCallback throws, Abandon message and Release semaphore.
                 if (!(exception is MessageLockLostException))
                 {
-                    await this.AbandonMessageIfNeededAsync(message).ConfigureAwait(false);
+                    await this.AbandonMessageIfNeededAsync(message).ConfigureAwait(false); 
                 }
 
                 // AbandonMessageIfNeededAsync should take care of not throwing exception
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 try
                 {
-                    var amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
+                    TimeSpan amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientId, message, amount);
                     await Task.Delay(amount, renewLockCancellationToken).ConfigureAwait(false);
 

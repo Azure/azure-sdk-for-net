@@ -24,10 +24,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         // This only makes use of 63 bits - because it always returns positives
         public static long NextPositiveLong()
         {
-            var buffer = new byte[8];
+            byte[] buffer = new byte[8];
             GetThreadLocalRandom().NextBytes(buffer);
-            var ulongValue = (long)BitConverter.ToUInt64(buffer, 0);
-            return Math.Abs(ulongValue);
+            long ulongValue = (long)BitConverter.ToUInt64(buffer, 0);
+            return Math.Abs((long)ulongValue);
         }
 
         static Random GetThreadLocalRandom()

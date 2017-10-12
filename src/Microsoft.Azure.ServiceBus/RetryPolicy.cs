@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus
     using Primitives;
 
     /// <summary>
-    /// Represents an abstraction for retrying messaging operations. Users should not
+    /// Represents an abstraction for retrying messaging operations. Users should not 
     /// implement this class, and instead should use one of the provided implementations.
     /// </summary>
     public abstract class RetryPolicy
@@ -27,6 +27,7 @@ namespace Microsoft.Azure.ServiceBus
         // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
         volatile bool encounteredServerBusy;
 
+        /// <summary></summary>
         protected RetryPolicy()
         {
             this.serverBusyResetTimer = new Timer(OnTimerCallback, this, TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
@@ -52,11 +53,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="operation">A <see cref="Func{T, TResult}"/> to be executed.</param>
         /// <param name="operationTimeout">The timeout for the entire operation.</param>
+        /// <returns></returns>
         public async Task RunOperation(Func<Task> operation, TimeSpan operationTimeout)
         {
-            var currentRetryCount = 0;
+            int currentRetryCount = 0;
             List<Exception> exceptions = null;
-            var timeoutHelper = new TimeoutHelper(operationTimeout);
+            TimeoutHelper timeoutHelper = new TimeoutHelper(operationTimeout);
 
             if (this.IsServerBusy && timeoutHelper.RemainingTime() < RetryPolicy.ServerBusyBaseSleepTime)
             {
@@ -83,6 +85,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 catch (Exception exception)
                 {
+                    TimeSpan retryInterval;
                     currentRetryCount++;
                     if (exceptions == null)
                     {
@@ -91,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus
                     exceptions.Add(exception);
 
                     if (this.ShouldRetry(
-                        timeoutHelper.RemainingTime(), currentRetryCount, exception, out var retryInterval)
+                        timeoutHelper.RemainingTime(), currentRetryCount, exception, out retryInterval)
                         && retryInterval < timeoutHelper.RemainingTime())
                     {
                         // Log intermediate exceptions.
@@ -108,6 +111,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Determines whether or not the exception can be retried.
         /// </summary>
+        /// <param name="exception"></param>
         /// <returns>A bool indicating whether or not the operation can be retried.</returns>
         public virtual bool IsRetryableException(Exception exception)
         {
@@ -183,6 +187,11 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary></summary>
+        /// <param name="remainingTime"></param>
+        /// <param name="currentRetryCount"></param>
+        /// <param name="retryInterval"></param>
+        /// <returns></returns>
         protected abstract bool OnShouldRetry(TimeSpan remainingTime, int currentRetryCount, out TimeSpan retryInterval);
 
         static void OnTimerCallback(object state)

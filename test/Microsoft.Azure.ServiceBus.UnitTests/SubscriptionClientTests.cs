@@ -128,7 +128,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
                 Assert.NotNull(messages);
                 Assert.True(messages.Count == 1);
-                Assert.True(messageId2.Equals(messages.First().MessageId));
+                Assert.True(messageId2.Equals(messages.First().MessageId));                
             }
             finally
             {
@@ -219,8 +219,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestConstants.NonPartitionedTopicName,
                 TestConstants.SubscriptionName,
                 ReceiveMode.ReceiveAndDelete);
-            var sqlRuleName = "sqlRule";
-            var correlationRuleName = "correlationRule";
+            string sqlRuleName = "sqlRule";
+            string correlationRuleName = "correlationRule";
 
             try
             {
@@ -230,10 +230,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.Equal(RuleDescription.DefaultRuleName, firstRule.Name);
                 Assert.IsType<SqlFilter>(firstRule.Filter);
                 Assert.Null(firstRule.Action);
-
+                
                 await subscriptionClient.AddRuleAsync(sqlRuleName, new SqlFilter("price > 10"));
-
-                var ruleDescription = new RuleDescription(correlationRuleName)
+                
+                RuleDescription ruleDescription = new RuleDescription(correlationRuleName)
                 {
                     Filter = new CorrelationFilter
                     {

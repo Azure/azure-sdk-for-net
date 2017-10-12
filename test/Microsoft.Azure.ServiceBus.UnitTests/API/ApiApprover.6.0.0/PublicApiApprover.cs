@@ -1,4 +1,4 @@
-﻿#if NET461
+﻿#if NET46
 
 using System.IO;
 using System.Reflection;
@@ -26,7 +26,10 @@ namespace ApiApprover
                 name = Path.GetFileNameWithoutExtension(assemblyPath);
             }
 
-            public override string Name => name;
+            public override string Name
+            {
+                get { return name; }
+            }
         }
     }
 }

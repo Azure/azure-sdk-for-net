@@ -13,11 +13,11 @@ namespace Microsoft.Azure.ServiceBus
     /// <remarks>
     /// <para>
     /// A CorrelationFilter holds a set of conditions that are matched against one of more of an arriving message's user and system properties.
-    /// A common use is a match against the <see cref="Message.CorrelationId"/> property, but the application can also choose to match against
-    /// <see cref="Message.ContentType"/>, <see cref="Message.Label"/>, <see cref="Message.MessageId"/>, <see cref="Message.ReplyTo"/>,
-    /// <see cref="Message.ReplyToSessionId"/>, <see cref="Message.SessionId"/>, <see cref="Message.To"/>, and any user-defined properties.
-    /// A match exists when an arriving message's value for a property is equal to the value specified in the correlation filter. For string expressions,
-    /// the comparison is case-sensitive. When specifying multiple match properties, the filter combines them as a logical AND condition,
+    /// A common use is a match against the <see cref="Message.CorrelationId"/> property, but the application can also choose to match against 
+    /// <see cref="Message.ContentType"/>, <see cref="Message.Label"/>, <see cref="Message.MessageId"/>, <see cref="Message.ReplyTo"/>, 
+    /// <see cref="Message.ReplyToSessionId"/>, <see cref="Message.SessionId"/>, <see cref="Message.To"/>, and any user-defined properties. 
+    /// A match exists when an arriving message's value for a property is equal to the value specified in the correlation filter. For string expressions, 
+    /// the comparison is case-sensitive. When specifying multiple match properties, the filter combines them as a logical AND condition, 
     /// meaning all conditions must match for the filter to match.
     /// </para>
     /// <para>
@@ -143,8 +143,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The application specific properties of the message.</value>
         /// <remarks>
         /// Only following value types are supported:
-        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
+        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal, 
+        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[], 
         /// and IList / IDictionary of supported types
         /// </remarks>
         public IDictionary<string, object> Properties => this.properties ?? (this.properties = new PropertyDictionary());
@@ -155,30 +155,30 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>A string representation of the current instance.</returns>
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
 
-            stringBuilder.Append("CorrelationFilter: ");
+            builder.Append("CorrelationFilter: ");
 
-            var isFirstExpression = true;
+            bool firstExpression = true;
 
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.CorrelationId", this.CorrelationId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.MessageId", this.MessageId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.To", this.To);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyTo", this.ReplyTo);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.Label", this.Label);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.SessionId", this.SessionId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyToSessionId", this.ReplyToSessionId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ContentType", this.ContentType);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.CorrelationId", this.CorrelationId);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.MessageId", this.MessageId);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.To", this.To);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.ReplyTo", this.ReplyTo);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.Label", this.Label);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.SessionId", this.SessionId);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.ReplyToSessionId", this.ReplyToSessionId);
+            this.AppendPropertyExpression(ref firstExpression, builder, "sys.ContentType", this.ContentType);
 
             foreach (var pair in this.Properties)
             {
                 string propertyName = pair.Key;
                 object propertyValue = pair.Value;
 
-                this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, propertyName, propertyValue);
+                this.AppendPropertyExpression(ref firstExpression, builder, propertyName, propertyValue);
             }
 
-            return stringBuilder.ToString();
+            return builder.ToString();
         }
 
         void AppendPropertyExpression(ref bool firstExpression, StringBuilder builder, string propertyName, object value)

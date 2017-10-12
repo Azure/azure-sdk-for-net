@@ -1,4 +1,4 @@
-﻿#if NET461
+﻿#if NET46
 
 using System;
 using System.CodeDom;
@@ -21,10 +21,10 @@ namespace PublicApiGenerator
 {
     public static class ApiGenerator
     {
-        public static string GeneratePublicApi(Assembly assembly, Type[] includeTypes = null, bool shouldIncludeAssemblyAttributes = true)
+        public static string GeneratePublicApi(Assembly assemby, Type[] includeTypes = null, bool shouldIncludeAssemblyAttributes = true)
         {
             var assemblyResolver = new DefaultAssemblyResolver();
-            var assemblyPath = assembly.Location;
+            var assemblyPath = assemby.Location;
             assemblyResolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
 
             var readSymbols = File.Exists(Path.ChangeExtension(assemblyPath, ".pdb"));
@@ -118,7 +118,8 @@ namespace PublicApiGenerator
 
         static void AddMemberToTypeDeclaration(CodeTypeDeclaration typeDeclaration, IMemberDefinition memberInfo)
         {
-            if (memberInfo is MethodDefinition methodDefinition)
+            var methodDefinition = memberInfo as MethodDefinition;
+            if (methodDefinition != null)
             {
                 if (methodDefinition.IsConstructor)
                     AddCtorToTypeDeclaration(typeDeclaration, methodDefinition);
@@ -167,7 +168,7 @@ namespace PublicApiGenerator
             if (IsDelegate(publicType))
                 return CreateDelegateDeclaration(publicType);
 
-            var @static = false;
+            bool @static = false;
             TypeAttributes attributes = 0;
             if (publicType.IsPublic || publicType.IsNestedPublic)
                 attributes |= TypeAttributes.Public;
@@ -322,7 +323,7 @@ namespace PublicApiGenerator
         static void PopulateCustomAttributes(ICustomAttributeProvider type,
             CodeAttributeDeclarationCollection attributes, Func<CodeTypeReference, CodeTypeReference> codeTypeModifier)
         {
-            foreach (var customAttribute in type.CustomAttributes.Where(ShouldIncludeAttribute).OrderBy(a => a.AttributeType.FullName).ThenBy(a => ConvertAttributeToCode(codeTypeModifier, a)))
+            foreach (var customAttribute in type.CustomAttributes.Where(ShouldIncludeAttribute).OrderBy(a => a.AttributeType.FullName).ThenBy(a => ConvertAttrbuteToCode(codeTypeModifier, a)))
             {
                 var attribute = GenerateCodeAttributeDeclaration(codeTypeModifier, customAttribute);
                 attributes.Add(attribute);
@@ -348,7 +349,7 @@ namespace PublicApiGenerator
         }
 
         // Litee: This method is used for additional sorting of custom attributes when multiple values are allowed
-        static object ConvertAttributeToCode(Func<CodeTypeReference, CodeTypeReference> codeTypeModifier, CustomAttribute customAttribute)
+        static object ConvertAttrbuteToCode(Func<CodeTypeReference, CodeTypeReference> codeTypeModifier, CustomAttribute customAttribute)
         {
             using (var provider = new CSharpCodeProvider())
             {
@@ -772,10 +773,8 @@ namespace PublicApiGenerator
 
         static CodeTypeReference[] CreateGenericArguments(TypeReference type)
         {
-            if (!(type is IGenericInstance genericInstance))
-            {
-                return null;
-            }
+            var genericInstance = type as IGenericInstance;
+            if (genericInstance == null) return null;
 
             var genericArguments = new List<CodeTypeReference>();
             foreach (var argument in genericInstance.GenericArguments)

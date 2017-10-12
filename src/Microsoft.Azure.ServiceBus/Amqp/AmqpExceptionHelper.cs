@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     static class AmqpExceptionHelper
     {
-        static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>
+        static readonly Dictionary<string, AmqpResponseStatusCode> ConditionToStatusMap = new Dictionary<string, AmqpResponseStatusCode>()
         {
             { AmqpClientConstants.TimeoutError.Value, AmqpResponseStatusCode.RequestTimeout },
             { AmqpErrorCode.NotFound.Value, AmqpResponseStatusCode.NotFound },
@@ -61,21 +61,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static AmqpResponseStatusCode GetResponseStatusCode(this AmqpMessage responseMessage)
         {
-            var amqpResponseStatusCode = AmqpResponseStatusCode.Unused;
+            AmqpResponseStatusCode responseStatusCode = AmqpResponseStatusCode.Unused;
             object statusCodeValue = responseMessage?.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
             if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
             {
-                amqpResponseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
+                responseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
             }
 
-            return amqpResponseStatusCode;
+            return responseStatusCode;
         }
 
         public static Exception ToMessagingContractException(this AmqpMessage responseMessage, AmqpResponseStatusCode statusCode)
         {
             AmqpSymbol errorCondition = AmqpExceptionHelper.GetResponseErrorCondition(responseMessage, statusCode);
             var statusDescription = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusDescription] as string ?? errorCondition.Value;
-            return AmqpExceptionHelper.ToMessagingContractException(errorCondition.Value, statusDescription);
+            Exception exception = AmqpExceptionHelper.ToMessagingContractException(errorCondition.Value, statusDescription);
+
+            return exception;
         }
 
         public static Exception ToMessagingContractException(this Error error, bool connectionError = false)
@@ -160,26 +162,27 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static Exception GetClientException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
         {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
             if (referenceId != null)
             {
-                stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $"Reference: {referenceId}, {DateTime.UtcNow}");
+                builder.AppendFormat(CultureInfo.InvariantCulture, $"Reference: {referenceId}, {DateTime.UtcNow}");
             }
 
-            var message = stringBuilder.ToString();
+            string message = builder.ToString();
             var aggregateException = innerException == null ? exception : new AggregateException(exception, innerException);
 
             switch (exception)
             {
                 case SocketException _:
-                    message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
+                    message = builder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
                     return new ServiceBusCommunicationException(message, aggregateException);
 
                 case IOException _:
-                    if (exception.InnerException is SocketException socketException)
+                    var socketException = exception.InnerException as SocketException;
+                    if (socketException != null)
                     {
-                        message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
+                        message = builder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
                     }
                     return new ServiceBusCommunicationException(message, aggregateException);
 
@@ -201,8 +204,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static string GetTrackingId(this AmqpLink link)
         {
+            string trackingContext = null;
             if (link.Settings.Properties != null &&
-                link.Settings.Properties.TryGetValue<string>(AmqpClientConstants.TrackingIdName, out var trackingContext))
+                link.Settings.Properties.TryGetValue<string>(AmqpClientConstants.TrackingIdName, out trackingContext))
             {
                 return trackingContext;
             }
@@ -212,7 +216,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static Exception GetInnerException(this AmqpObject amqpObject)
         {
-            var connectionError = false;
+            bool connectionError = false;
             Exception innerException;
             switch (amqpObject)
             {

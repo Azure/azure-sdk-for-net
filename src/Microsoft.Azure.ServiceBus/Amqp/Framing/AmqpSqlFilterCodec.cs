@@ -22,12 +22,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder("sql(");
-            var count = 0;
-            this.AddFieldToString(this.Expression != null, stringBuilder, "expression", this.Expression, ref count);
-            this.AddFieldToString(this.CompatibilityLevel != null, stringBuilder, "level", this.CompatibilityLevel, ref count);
-            stringBuilder.Append(')');
-            return stringBuilder.ToString();
+            StringBuilder sb = new StringBuilder("sql(");
+            int count = 0;
+            this.AddFieldToString(this.Expression != null, sb, "expression", this.Expression, ref count);
+            this.AddFieldToString(this.CompatibilityLevel != null, sb, "level", this.CompatibilityLevel, ref count);
+            sb.Append(')');
+            return sb.ToString();
         }
 
         protected override void OnEncode(ByteBuffer buffer)
@@ -51,8 +51,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         protected override int OnValueSize()
         {
-            return AmqpCodec.GetStringEncodeSize(this.Expression) +
-                   AmqpCodec.GetIntEncodeSize(this.CompatibilityLevel);
+            var valueSize = AmqpCodec.GetStringEncodeSize(this.Expression);
+            valueSize += AmqpCodec.GetIntEncodeSize(this.CompatibilityLevel);
+
+            return valueSize;
         }
     }
 

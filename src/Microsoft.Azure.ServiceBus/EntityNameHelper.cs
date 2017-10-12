@@ -30,6 +30,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Formats the subqueue path for either a queue, or a subscription.
         /// </summary>
         /// <param name="entityPath">The name of the queue, or path of the subscription.</param>
+        /// <param name="subQueueName">The name of the subqueue.</param>
         /// <returns>The path as a string of the subqueue entity.</returns>
         public static string FormatSubQueuePath(string entityPath, string subQueueName)
         {
@@ -40,6 +41,8 @@ namespace Microsoft.Azure.ServiceBus
         /// Formats the subscription path, based on the topic path and subscription name.
         /// </summary>
         /// <param name="topicPath">The name of the topic, including slashes.</param>
+        /// <param name="subscriptionName">The name of the subscription.</param>
+        /// <returns></returns>
         public static string FormatSubscriptionPath(string topicPath, string subscriptionName)
         {
             return string.Concat(topicPath, PathDelimiter, Subscriptions, PathDelimiter, subscriptionName);

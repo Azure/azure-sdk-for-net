@@ -16,18 +16,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         protected override AmqpObject OnCreateAmqpLink(AmqpConnection connection, AmqpLinkSettings linkSettings, AmqpSession amqpSession)
         {
-            AmqpLink amqpLink;
-            if (linkSettings.IsReceiver())
-            {
-                amqpLink = new ReceivingAmqpLink(linkSettings);
-            }
-            else
-            {
-                amqpLink = new SendingAmqpLink(linkSettings);
-            }
-            linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{amqpLink.Identifier}:{linkSettings.Source.ToString()}:{this.ClientId}";
-            amqpLink.AttachTo(amqpSession);
-            return amqpLink;
+            AmqpObject link = (linkSettings.IsReceiver()) ? (AmqpObject)new ReceivingAmqpLink(linkSettings) : (AmqpObject)new SendingAmqpLink(linkSettings);
+            linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}:{this.ClientId}";
+            ((AmqpLink)link).AttachTo(amqpSession);
+            return link;
         }
     }
 }

@@ -22,25 +22,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnMessagePeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
+        async Task OnMessagePeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
         {
-            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnMessagePeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
+        async Task OnMessagePeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
         {
-            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        Task OnMessageReceiveDelete(string queueName, int maxConcurrentCalls)
+        async Task OnMessageReceiveDelete(string queueName, int maxConcurrentCalls)
         {
-            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
+            await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
 
         [Theory]
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnMessageExceptionHandlerCalledTest()
         {
-            var queueName = "nonexistentqueuename";
-            var exceptionReceivedHandlerCalled = false;
+            string queueName = "nonexistentqueuename";
+            bool exceptionReceivedHandlerCalled = false;
 
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
             queueClient.RegisterMessageHandler(
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             try
             {
-                var stopwatch = Stopwatch.StartNew();
+                Stopwatch stopwatch = Stopwatch.StartNew();
                 while (stopwatch.Elapsed.TotalSeconds <= 10)
                 {
                     if (exceptionReceivedHandlerCalled)
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             finally
             {
                 await queueClient.CloseAsync();
-            }
+            }            
         }
 
         async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)

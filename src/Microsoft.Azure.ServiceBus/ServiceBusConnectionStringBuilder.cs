@@ -15,16 +15,13 @@ namespace Microsoft.Azure.ServiceBus
     {
         const char KeyValueSeparator = '=';
         const char KeyValuePairDelimiter = ';';
-        const string EndpointScheme = "amqps";
-        const string EndpointConfigName = "Endpoint";
-        const string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
-        const string SharedAccessKeyConfigName = "SharedAccessKey";
-        const string SharedAccessSignatureConfigName = "SharedAccessSignature";
+        static readonly string EndpointScheme = "amqps";
+        static readonly string EndpointConfigName = "Endpoint";
+        static readonly string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
+        static readonly string SharedAccessKeyConfigName = "SharedAccessKey";
+        static readonly string EntityPathConfigName = "EntityPath";
 
-        const string EntityPathConfigName = "EntityPath";
-        const string TransportTypeConfigName = "TransportType";
-
-        string entityPath, sasKeyName, sasKey, sasToken, endpoint;
+        string entityPath, sasKeyName, sasKey, endpoint;
 
         /// <summary>
         /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>
@@ -34,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
+        /// Instatiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
         /// </summary>
         /// <param name="connectionString">Connection string for namespace or the entity.</param>
         public ServiceBusConnectionStringBuilder(string connectionString)
@@ -59,6 +56,9 @@ namespace Microsoft.Azure.ServiceBus
         /// </code>
         /// </example>
         /// <param name="endpoint">Fully qualified endpoint.</param>
+        /// <param name="entityPath">Path to the entity.</param>
+        /// <param name="sharedAccessKeyName">Shared access key name.</param>
+        /// <param name="sharedAccessKey">Shared access key.</param>
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
@@ -74,76 +74,6 @@ namespace Microsoft.Azure.ServiceBus
             this.EntityPath = entityPath;
             this.SasKeyName = sharedAccessKeyName;
             this.SasKey = sharedAccessKey;
-        }
-
-        /// <summary>
-        /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// var connectionStringBuilder = new ServiceBusConnectionStringBuilder(
-        ///     "contoso.servicebus.windows.net",
-        ///     "myQueue",
-        ///     "{ ... SAS token ... }"
-        /// );
-        /// </code>
-        /// </example>
-        /// <param name="endpoint">Fully qualified endpoint.</param>
-        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature)
-        {
-            if (string.IsNullOrWhiteSpace(endpoint))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(endpoint));
-            }
-            if (string.IsNullOrWhiteSpace(sharedAccessSignature))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(sharedAccessSignature));
-            }
-
-            this.Endpoint = endpoint;
-            this.EntityPath = entityPath;
-            this.SasToken = sharedAccessSignature;
-        }
-
-        /// <summary>
-        /// Instantiates a new <see cref="T:Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder" />.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// var connectionStringBuilder = new ServiceBusConnectionStringBuilder(
-        ///     "contoso.servicebus.windows.net",
-        ///     "myQueue",
-        ///     "RootManageSharedAccessKey",
-        ///     "&amp;lt;sharedAccessKey&amp;gt;,
-        ///     TransportType.Amqp
-        /// );
-        /// </code>
-        /// </example>
-        /// <param name="endpoint">Fully qualified endpoint.</param>
-        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, TransportType transportType)
-            : this(endpoint, entityPath, sharedAccessKeyName, sharedAccessKey)
-        {
-            this.TransportType = transportType;
-        }
-
-        /// <summary>
-        /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// var connectionStringBuilder = new ServiceBusConnectionStringBuilder(
-        ///     "contoso.servicebus.windows.net",
-        ///     "myQueue",
-        ///     "{ ... SAS token ... }",
-        ///     TransportType.Amqp
-        /// );
-        /// </code>
-        /// </example>
-        /// <param name="endpoint">Fully qualified endpoint.</param>
-        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, TransportType transportType)
-            :this(endpoint, entityPath, sharedAccessSignature)
-        {
-            this.TransportType = transportType; 
         }
 
         /// <summary>
@@ -197,21 +127,6 @@ namespace Microsoft.Azure.ServiceBus
             set => this.sasKey = value.Trim();
         }
 
-         /// <summary>
-        /// Get the shared access signature token from the connection string
-        /// </summary>
-        /// <value>Shared Access Signature token</value>
-        public string SasToken
-        {
-            get => this.sasToken;
-            set => this.sasToken = value.Trim();
-        }
-
-        /// <summary>
-        /// Get the transport type from the connection string
-        /// </summary>
-        public TransportType TransportType { get; set; }
-
         internal Dictionary<string, string> ConnectionStringProperties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
@@ -220,7 +135,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>Namespace connection string</returns>
         public string GetNamespaceConnectionString()
         {
-            var connectionStringBuilder = new StringBuilder();
+            StringBuilder connectionStringBuilder = new StringBuilder();
             if (this.Endpoint != null)
             {
                 connectionStringBuilder.Append($"{EndpointConfigName}{KeyValueSeparator}{this.Endpoint}{KeyValuePairDelimiter}");
@@ -233,17 +148,7 @@ namespace Microsoft.Azure.ServiceBus
 
             if (!string.IsNullOrWhiteSpace(this.SasKey))
             {
-                connectionStringBuilder.Append($"{SharedAccessKeyConfigName}{KeyValueSeparator}{this.SasKey}{KeyValuePairDelimiter}");
-            }
-
-            if (!string.IsNullOrWhiteSpace(this.SasToken))
-            {
-                connectionStringBuilder.Append($"{SharedAccessSignatureConfigName}{KeyValueSeparator}{this.SasToken}{KeyValuePairDelimiter}");
-            }
-
-            if (this.TransportType != TransportType.Amqp)
-            {
-                connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}");
+                connectionStringBuilder.Append($"{SharedAccessKeyConfigName}{KeyValueSeparator}{this.SasKey}");
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -280,18 +185,18 @@ namespace Microsoft.Azure.ServiceBus
         void ParseConnectionString(string connectionString)
         {
             // First split based on ';'
-            var keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);
+            string[] keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var keyValuePair in keyValuePairs)
             {
                 // Now split based on the _first_ '='
-                var keyAndValue = keyValuePair.Split(new[] { KeyValueSeparator }, 2);
-                var key = keyAndValue[0];
+                string[] keyAndValue = keyValuePair.Split(new[] { KeyValueSeparator }, 2);
+                string key = keyAndValue[0];
                 if (keyAndValue.Length != 2)
                 {
                     throw Fx.Exception.Argument(nameof(connectionString), $"Value for the connection string parameter name '{key}' was not found.");
                 }
 
-                var value = keyAndValue[1].Trim();
+                string value = keyAndValue[1].Trim();
                 if (key.Equals(EndpointConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     this.Endpoint = value;
@@ -307,17 +212,6 @@ namespace Microsoft.Azure.ServiceBus
                 else if (key.Equals(SharedAccessKeyConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     this.SasKey = value;
-                }
-                else if (key.Equals(SharedAccessSignatureConfigName, StringComparison.OrdinalIgnoreCase))
-                {
-                    this.SasToken = value;
-                }
-                else if (key.Equals(TransportTypeConfigName, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (Enum.TryParse(value, true, out TransportType transportType))
-                    {
-                        this.TransportType = transportType;
-                    }
                 }
                 else
                 {
