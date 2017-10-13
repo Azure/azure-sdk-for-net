@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft Azure Application Insights Library</Description>
-    <VersionPrefix>0.1.0-preview</VersionPrefix>
+    <VersionPrefix>0.1.1-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.ApplicationInsights</AssemblyName>
     <PackageId>Microsoft.Azure.Management.ApplicationInsights</PackageId>
     <PackageTags>Management.ApplicationInsights;</PackageTags>
