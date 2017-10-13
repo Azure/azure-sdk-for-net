@@ -36,13 +36,13 @@
    <PropertyGroup>
 	<NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
 	<NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>
-	<NetSdkBuildTargetsDir Condition=" '$(NetSdkBuildTargetsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildTargetsDir>
+	<!-- <NetSdkBuildTargetsDir Condition=" '$(NetSdkBuildTargetsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildTargetsDir> -->
 	
 	<NetSdkBuildToolsDir Condition="Exists('$(BuildAssetsDir)')">$(BuildAssetsDir)</NetSdkBuildToolsDir>
 	<NetSdkBuildToolsDir Condition="Exists('$(SdkBuildToolsDir)')">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
-	<NetSdkBuildToolsDir Condition=" '$(NetSdkBuildToolsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildToolsDir>
+	<!-- <NetSdkBuildToolsDir Condition=" '$(NetSdkBuildToolsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildToolsDir> -->
   </PropertyGroup>
  
-	<Import Project="$(NetSdkBuildTargetsDir)\common.Build.props"/>
-	<Import Project="$(NetSdkBuildTargetsDir)\common.NugetPackage.props"/>
+	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\common.Build.props')" Project="$(NetSdkBuildTargetsDir)\common.Build.props"/>
+	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\common.NugetPackage.props')" Project="$(NetSdkBuildTargetsDir)\common.NugetPackage.props"/>
 </Project>
