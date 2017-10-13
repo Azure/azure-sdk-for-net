@@ -32,29 +32,29 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ElevationLevelProperty = this.CreatePropertyAccessor<Common.ElevationLevel?>("ElevationLevel", BindingAccess.Read | BindingAccess.Write);
-                this.LinuxUserConfigurationProperty = this.CreatePropertyAccessor<LinuxUserConfiguration>("LinuxUserConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.NameProperty = this.CreatePropertyAccessor<string>("Name", BindingAccess.Read | BindingAccess.Write);
-                this.PasswordProperty = this.CreatePropertyAccessor<string>("Password", BindingAccess.Read | BindingAccess.Write);
+                this.ElevationLevelProperty = this.CreatePropertyAccessor<Common.ElevationLevel?>(nameof(ElevationLevel), BindingAccess.Read | BindingAccess.Write);
+                this.LinuxUserConfigurationProperty = this.CreatePropertyAccessor<LinuxUserConfiguration>(nameof(LinuxUserConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.NameProperty = this.CreatePropertyAccessor<string>(nameof(Name), BindingAccess.Read | BindingAccess.Write);
+                this.PasswordProperty = this.CreatePropertyAccessor<string>(nameof(Password), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.UserAccount protocolObject) : base(BindingState.Bound)
             {
                 this.ElevationLevelProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.ElevationLevel, Common.ElevationLevel>(protocolObject.ElevationLevel),
-                    "ElevationLevel",
+                    nameof(ElevationLevel),
                     BindingAccess.Read);
                 this.LinuxUserConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.LinuxUserConfiguration, o => new LinuxUserConfiguration(o).Freeze()),
-                    "LinuxUserConfiguration",
+                    nameof(LinuxUserConfiguration),
                     BindingAccess.Read);
                 this.NameProperty = this.CreatePropertyAccessor(
                     protocolObject.Name,
-                    "Name",
+                    nameof(Name),
                     BindingAccess.Read);
                 this.PasswordProperty = this.CreatePropertyAccessor(
                     protocolObject.Password,
-                    "Password",
+                    nameof(Password),
                     BindingAccess.Read);
             }
         }

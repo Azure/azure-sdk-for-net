@@ -23,15 +23,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskIdRange : ITransportObjectProvider<Models.TaskIdRange>, IPropertyMetadata
     {
-        private readonly int end;
-        private readonly int start;
-
         #region Constructors
 
         internal TaskIdRange(Models.TaskIdRange protocolObject)
         {
-            this.end = protocolObject.End;
-            this.start = protocolObject.Start;
+            this.End = protocolObject.End;
+            this.Start = protocolObject.Start;
         }
 
         #endregion Constructors
@@ -45,10 +42,7 @@ namespace Microsoft.Azure.Batch
         /// Ranges are inclusive. For example, if a task depends on a range with End 12, then task "12" must complete before 
         /// the task can be scheduled.
         /// </remarks>
-        public int End
-        {
-            get { return this.end; }
-        }
+        public int End { get; }
 
         /// <summary>
         /// Gets the first task id in the range.
@@ -57,10 +51,7 @@ namespace Microsoft.Azure.Batch
         /// Ranges are inclusive. For example, if a task depends on a range with Start 8, then task "8" must complete before 
         /// the task can be scheduled.
         /// </remarks>
-        public int Start
-        {
-            get { return this.start; }
-        }
+        public int Start { get; }
 
         #endregion // TaskIdRange
 

@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Batch
                 throw new ArgumentException(BatchErrorMessages.TaskIdRangeCannotHaveEndLessThanStart);
             }
  
-            this.start = start;
-            this.end = end;
+            this.Start = start;
+            this.End = end;
         }
     }
 }

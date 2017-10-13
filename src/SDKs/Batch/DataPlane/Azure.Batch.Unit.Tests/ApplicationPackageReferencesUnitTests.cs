@@ -51,7 +51,7 @@
                                             }
                                     },
                                     CurrentDedicatedNodes = 4,
-                                    CloudServiceConfiguration = new Models.CloudServiceConfiguration() { CurrentOSVersion = "3" },
+                                    CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", currentOSVersion: "3"),
                                     Id = "pool-id"
                                 },
                             };

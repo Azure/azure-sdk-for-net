@@ -22,15 +22,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class NameValuePair : IPropertyMetadata
     {
-        private readonly string name;
-        private readonly string value;
-
         #region Constructors
 
         internal NameValuePair(Models.NameValuePair protocolObject)
         {
-            this.name = protocolObject.Name;
-            this.value = protocolObject.Value;
+            this.Name = protocolObject.Name;
+            this.Value = protocolObject.Value;
         }
 
         #endregion Constructors
@@ -40,18 +37,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the name in the name-value pair.
         /// </summary>
-        public string Name
-        {
-            get { return this.name; }
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the value in the name-value pair.
         /// </summary>
-        public string Value
-        {
-            get { return this.value; }
-        }
+        public string Value { get; }
 
         #endregion // NameValuePair
 

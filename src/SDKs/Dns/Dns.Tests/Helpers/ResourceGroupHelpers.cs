@@ -1,20 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Dns.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
+using System;
+using System.Linq;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
     using Rest.ClientRuntime.Azure.TestFramework;
-    using SubResource = Models.SubResource;
 
     public static class ResourceGroupHelper
     {
@@ -47,22 +44,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
             handler.IsPassThrough = true;
             var client = context.GetServiceClient<DnsManagementClient>(
                 handlers: handler);
-            return client;
-        }
-
-        /// <summary>
-        /// Default constructor for network clients, 
-        /// using the TestSupport Infrastructure
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="handler"></param>
-        /// <returns>A network management client, created from the current context (environment variables)</returns>
-        public static NetworkManagementClient GetNetworkClient(
-            MockContext context,
-            RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
             return client;
         }
 
@@ -119,47 +100,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
             return response;
         }
 
-        public static VirtualNetwork CreateVirtualNetwork(
-            string resourceGroupName,
-            NetworkManagementClient networkClient)
-        {
-            var virtualNetworkName =
-                TestUtilities.GenerateName("hydratestdnsvn");
-            var subNetworkName =
-                TestUtilities.GenerateName("hydratestdnssn");
-            
-            // DNS resources are in location "global" but resource groups 
-            // can't be in that same location
-            const string location = "Central US";
-            var subnetIndex = new Random();
-            var vnet = new VirtualNetwork()
-            {
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = new List<string>()
-                    {
-                        "10.0.0.0/16"
-                    }
-                },
-                Subnets = new List<Subnet>()
-                {
-                    new Subnet()
-                    {
-                        Name = subNetworkName,
-                        AddressPrefix = "10.0." + subnetIndex.Next(0, 255) + ".0/24"
-                    }
-
-                },
-                Location = location
-            };
-            var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, vnet);
-            Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
-
-            var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroupName, virtualNetworkName);
-
-            return getVnetResponse;
-        }
-
         public static Zone CreateZone(
             DnsManagementClient dnsClient,
             string zoneName,
@@ -171,32 +111,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 zoneName,
                 new Microsoft.Azure.Management.Dns.Models.Zone
                 {
-                    ZoneType = ZoneType.Public,
                     Location = location,
                     Etag = null
-                },
-                null,
-                null);
-        }
-
-        public static Zone CreatePrivateZone(
-            DnsManagementClient dnsClient,
-            string zoneName,
-            string location,
-            IList<SubResource> registrationVnets,
-            IList<SubResource> resolutionVnets,
-            ResourceGroup resourceGroup)
-        {
-            return dnsClient.Zones.CreateOrUpdate(
-                resourceGroup.Name,
-                zoneName,
-                new Zone
-                {
-                    ZoneType = ZoneType.Private,
-                    Location = location,
-                    Etag = null,
-                    RegistrationVirtualNetworks = registrationVnets,
-                    ResolutionVirtualNetworks = resolutionVnets
                 },
                 null,
                 null);

@@ -164,52 +164,50 @@ skip_Rps() {
     echo $retVal
 }
 
+getBuildTools() {
+    copyFromRootDir="https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/"
+    printf "Updating Build tools .....\n"
+    
+    if [ ! -d ./tools/SdkBuildTools ]; then
+        mkdir ./tools/SdkBuildTools
+    fi
+    if [ ! -d ./tools/SdkBuildTools/targets ]; then
+        mkdir ./tools/SdkBuildTools/targets
+    fi
+
+    if [ ! -d ./tools/SdkBuildTools/tasks ]; then
+        mkdir ./tools/SdkBuildTools/tasks
+    fi
+
+    if [ ! -d ./tools/SdkBuildTools/tasks/net46 ]; then
+        mkdir ./tools/SdkBuildTools/tasks/net46
+    fi
+
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/additional.targets > ./tools/SdkBuildTools/targets/additional.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/common.Build.props > ./tools/SdkBuildTools/targets/common.Build.props
+    curl -s  $copyFromRootDir/tools/BuildAssets/targets/common.NugetPackage.props > ./tools/SdkBuildTools/targets/common.NugetPackage.props
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/common.targets > ./tools/SdkBuildTools/targets/common.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/targets/signing.targets > ./tools/SdkBuildTools/targets/signing.targets
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/common.tasks > ./tools/SdkBuildTools/tasks/common.tasks
+    #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.dll
+    #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.dev.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.dev.json
+    #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.json
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll
+    #curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.runtimeconfig.dev.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.runtimeconfig.dev.json
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Framework.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.Framework.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Tasks.Core.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Build.Tasks.Core.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Build.Utilities.Core.dll > ./tools/SdkBuildTools/tasks/net46Microsoft.Build.Utilities.Core.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Collections.Immutable.dll > ./tools/SdkBuildTools/tasks/net46/System.Collections.Immutable.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Reflection.Metadata.dll > ./tools/SdkBuildTools/tasks/net46/System.Reflection.Metadata.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll > ./tools/SdkBuildTools/tasks/net46/System.Runtime.InteropServices.RuntimeInformation.dll
+    curl -s $copyFromRootDir/tools/BuildAssets/tasks/net46/System.Threading.Thread.dll > ./tools/SdkBuildTools/tasks/net46/System.Threading.Thread.dll
+    
+}
+
+getBuildTools
 restoreBuildCR
 restoreBuildRepo
 restoreBuildCog
 restoreBuildKV
 restoreBuildAzStack
-
-: '
-#echo "base: "$base
-#echo "rootedir: "$rootdir
-#echo "netstandard1.4 " $netstd14
-#echo "netCore1.1 " $netcore11
-
-            
-            #if [ -d $sdkdir/$item/Management.* ]
-            #then
-            #    sdkProjFile=($sdkdir/$item/Management.*/*.csproj)
-            #    printf "Build ------ $sdkProjFile for framework $netstd14\n"
-            #    dotnet build $sdkProjFile -f $netstd14
-            #fi
-
-
-else
-            if [ -d $sdkDir/$item/Management ]; then
-                printf "Found mgmt $sdkDir/$item/Management\n"
-            fi
-            if [ -f $sdkDir/$item/Management/*.sln ]; then
-                mgmtSln=($sdkDir/$item/Management/*.sln)
-                printf "Restoring ## $mgmtSln\n"
-                if [ -d $sdkdir/$item/*.Tests ]; then
-                    mgmtTestProj=($sdkdir/$item/*.Tests/*.csproj)
-                    printf "Test ## $mgmtTestProj for framework $netcore11\n"
-                fi #mgmtTestProject
-            fi #mgmgtSln
-        fi #mgmtSln else
-
-
-                #if [[ $("$testProj" =~ "Authorization")  || $( "$testProj" =~ "Gallery" ) || $("$testProj" =~ "Automation") || $( "$testProj" =~ "InTune" ) || $( "$testProj" =~ "DataLake.Store" ) ]]; then
-                #if [[ ("$testProj" =~ "Authorization")  || ( "$testProj" =~ "Gallery" ) || ("$testProj" =~ "Automation") || ( "$testProj" =~ "Intune" ) || ( "$testProj" =~ "DataLake.Store" ) 
-                #|| ( "$testProj" =~ "Monitor" ) || ( "$testProj" =~ "RedisCache" ) ]]; then
-				
-				if [[ "$cogItem" =~ "Tests" ]]; then
-			print "cogItem --- $cogItem\n"
-			cogDataTestProj=($cogItem/*.csproj)
-			printf "Cog TestProjects ... $cogDataTestProj\n"
-			#dotnet restore $cogDataTestProj -r $ubuntu1404
-			#dotnet test $cogDataTestProj -f $netcore11
-		fi
-
-'
