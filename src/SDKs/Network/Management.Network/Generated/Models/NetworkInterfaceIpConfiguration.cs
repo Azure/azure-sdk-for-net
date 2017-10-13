@@ -59,6 +59,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// address on the network interface.</param>
         /// <param name="publicIPAddress">Public IP address bound to the IP
         /// configuration.</param>
+        /// <param name="applicationSecurityGroups">Application security groups
+        /// in which the IP configuration is included.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// network interface IP configuration. Possible values are:
         /// 'Updating', 'Deleting', and 'Failed'.</param>
@@ -67,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterfaceIPConfiguration(string id = default(string), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public NetworkInterfaceIPConfiguration(string id = default(string), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Subnet = subnet;
             Primary = primary;
             PublicIPAddress = publicIPAddress;
+            ApplicationSecurityGroups = applicationSecurityGroups;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -151,6 +154,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddress PublicIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets application security groups in which the IP
+        /// configuration is included.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationSecurityGroups")]
+        public IList<ApplicationSecurityGroup> ApplicationSecurityGroups { get; set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of the network interface IP
