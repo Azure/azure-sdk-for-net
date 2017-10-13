@@ -16,11 +16,10 @@ namespace ApplicationInsights.Tests.Scenarios
 {
     public class TestBase
     {
-        protected bool IsRecording { get; set; }
+        protected string SubscriptionId { get; set; }
 
         public TestBase()
         {
-            this.IsRecording = false;
         }
 
 
@@ -36,10 +35,9 @@ namespace ApplicationInsights.Tests.Scenarios
 
             if (string.Equals(testMode, "record", StringComparison.OrdinalIgnoreCase))
             {
-                this.IsRecording = true;
                 string subId = Environment.GetEnvironmentVariable("AZURE_TEST_SUBSCRIPTIONID");
-
                 subId = string.IsNullOrWhiteSpace(subId) ? "b90b0dec-9b9a-4778-a84e-4ffb73bb17f6" : subId;
+                this.SubscriptionId = subId;
 
                 TestEnvironment env = new TestEnvironment(connectionString: "SubscriptionId=" + subId); 
                 client = context.GetServiceClient<ApplicationInsightsManagementClient>(
@@ -48,6 +46,7 @@ namespace ApplicationInsights.Tests.Scenarios
             }
             else
             {
+                this.SubscriptionId = "b90b0dec-9b9a-4778-a84e-4ffb73bb17f6";
                 client = context.GetServiceClient<ApplicationInsightsManagementClient>(
                     handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
             }

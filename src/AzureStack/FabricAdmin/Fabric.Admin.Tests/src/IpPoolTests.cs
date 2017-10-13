@@ -77,35 +77,62 @@ namespace Fabric.Tests
         }
 
 
-        private IpPool CreateNewIpPool(string ipPoolName) {
+        private IpPool CreateNewIpPool(string ipPoolName, string first = "66" , string second = "66") {
             var ipPool = new IpPool()
             {
-                StartIpAddress = "9.9.9.1",
-                EndIpAddress = "9.9.9.254",
-                AddressPrefix = "9.9.9.0/24"
+                StartIpAddress = first + "." + second + ".9.1",
+                EndIpAddress = first + "." + second + ".9.255",
+                AddressPrefix = first + "." + second + ".9.0/24"
             };
             return ipPool;
         }
 
-        // [BUG:13271901] : [FRP] Attempting to create an IP Pool Results in Service Offline error
-        [Fact(Skip ="RP throws exception")]
+        [Fact]
         public void TestCreateIpPool() {
             RunTest((client) => {
 
-                var ipPoolName = "myippoolwhichcanneverbedeleted";
-                var ipPool = CreateNewIpPool(ipPoolName);
+                var first = "199";
+                var second = "198";
+                var ipPoolName = "TestIpPool" + first + second;
+                var ipPool = CreateNewIpPool(ipPoolName, first, second);
 
                 var retrieved = client.IpPools.Create(Location, ipPoolName, ipPool);
+                Assert.NotNull(retrieved);
+                Assert.Equal("Succeeded", retrieved.ProvisioningState);
+
                 var test = client.IpPools.Get(Location, ipPoolName);
+                Assert.NotNull(test);
+                Assert.NotNull(test.StartIpAddress);
+                Assert.NotNull(test.EndIpAddress);
+                Assert.NotNull(test.EndIpAddress);
 
-                Assert.False(test != null && retrieved == null);
-                Assert.False(retrieved != null && test == null);
+                Assert.Equal(ipPool.StartIpAddress, test.StartIpAddress);
+                Assert.Equal(ipPool.EndIpAddress, test.EndIpAddress);
 
-                Assert.Null(retrieved);
-                Assert.Equal(ipPool.NumberOfIpAddresses, retrieved.NumberOfIpAddresses);
-                Assert.Equal(ipPool.StartIpAddress, retrieved.StartIpAddress);
-                Assert.Equal(ipPool.EndIpAddress, retrieved.EndIpAddress);
+            });
+        }
 
+        [Fact]
+        public void TestUpdateIpPool() {
+            RunTest((client) => {
+
+                var first = "199";
+                var second = "2";
+                var ipPoolName = "TestIpPool" + first + "" + second;
+                var ipPool = CreateNewIpPool(ipPoolName, first, second);
+
+                var retrieved = client.IpPools.Create(Location, ipPoolName, ipPool);
+                Assert.NotNull(retrieved);
+                Assert.Equal("Succeeded", retrieved.ProvisioningState);
+
+                var test = client.IpPools.Get(Location, ipPoolName);
+                Assert.NotNull(test);
+                Assert.NotNull(test.StartIpAddress);
+                Assert.NotNull(test.EndIpAddress);
+                Assert.NotNull(test.EndIpAddress);
+
+                Assert.Equal(ipPool.StartIpAddress, test.StartIpAddress);
+                Assert.Equal(ipPool.EndIpAddress, test.EndIpAddress);
 
             });
         }
