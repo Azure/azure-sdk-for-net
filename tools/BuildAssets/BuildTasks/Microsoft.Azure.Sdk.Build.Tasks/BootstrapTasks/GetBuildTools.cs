@@ -15,95 +15,90 @@
         #region Fields
         const string COPY_TO_RELATIVEPATH = @"tools\SdkBuildTools\";
         const string COPY_FROM_RELATIVEPATH = @"tools\BuildAssets\";
-        const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/";
+        const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/SdkBuildTools/";
 
         private WebClient _webCopier;
-        //private string _destinationRootPath;
         private TaskLogger _buildToolsLogger;
         private string _localBranchCopyToRootDir;
-
-        //const string CURRENT_BRANCH = "SdkBuildTools";
-        //const string tasksDirPath = @"tools\SdkBuildTools\Tasks\net46";
         #endregion
 
         #region Properties
 
         #region Required Properties
-            /// <summary>
-            /// Sets/Gets Local branch Root Directory
-            /// </summary>
-            [Required]
-            public string LocalBranchRootDir { get; set; }
-
-            /// <summary>
-            /// Remote root directory (e.g. http://github.com/azure/azure-sdk-for-net/<branchName>)
-            /// </summary>
-            [Required]
-            public string RemoteRootDir { get; set; }
-
+        /// <summary>
+        /// Sets/Gets Local branch Root Directory
+        /// </summary>
+        [Required]
+        public string LocalBranchRootDir { get; set; }
         #endregion
-            /// <summary>
-            /// Local branch root directory where files need to be copied to
-            /// </summary>
-            public string LocalBranchCopyToRootDir { get; set; }
 
-            /// <summary>
-            /// Remote directory from where files need to be copied from
-            /// </summary>
-            public string RemoteCopyFromRootDir { get; set; }
+        /// <summary>
+        /// Remote root directory (e.g. http://github.com/azure/azure-sdk-for-net/<branchName>)
+        /// </summary>
+        public string RemoteRootDir { get; set; }
 
-            /// <summary>
-            /// Local file path for copied Meta data file
-            /// </summary>
-            public string LocalMetaDataFilePath { get; set; }
+        /// <summary>
+        /// Local branch root directory where files need to be copied to
+        /// </summary>
+        public string LocalBranchCopyToRootDir { get; set; }
 
-            /// <summary>
-            /// Remote file path from where meta data file needs to be copied from
-            /// </summary>
-            public string RemoteMetaDataFilePath { get; internal set; }
+        /// <summary>
+        /// Remote directory from where files need to be copied from
+        /// </summary>
+        public string RemoteCopyFromRootDir { get; set; }
 
-            /// <summary>
-            /// Stores all the file paths that resulted in any exception (either not found on source or unable to copy on destination)
-            /// </summary>
-            public List<string> unableToCopyFilePath;
+        /// <summary>
+        /// Local file path for copied Meta data file
+        /// </summary>
+        public string LocalMetaDataFilePath { get; set; }
 
-            /// <summary>
-            /// Output debug traces during execution of task
-            /// </summary>
-            public bool DebugTrace { get; set; }
+        /// <summary>
+        /// Remote file path from where meta data file needs to be copied from
+        /// </summary>
+        public string RemoteMetaDataFilePath { get; internal set; }
 
-            #region Misc external objects
-            /// <summary>
-            /// Logger
-            /// </summary>
-            internal TaskLogger BuildToolsLogger
+        /// <summary>
+        /// Stores all the file paths that resulted in any exception (either not found on source or unable to copy on destination)
+        /// </summary>
+        public List<string> unableToCopyFilePath;
+
+        /// <summary>
+        /// Output debug traces during execution of task
+        /// </summary>
+        public bool DebugTrace { get; set; }
+
+        #region Misc external objects
+        /// <summary>
+        /// Logger
+        /// </summary>
+        internal TaskLogger BuildToolsLogger
+        {
+            get
             {
-                get
+                if (_buildToolsLogger == null)
                 {
-                    if (_buildToolsLogger == null)
-                    {
-                        _buildToolsLogger = new TaskLogger(DebugTrace);
-                        _buildToolsLogger.BuildEngine = this.BuildEngine;
-                    }
-
-                    return _buildToolsLogger;
+                    _buildToolsLogger = new TaskLogger(DebugTrace);
+                    _buildToolsLogger.BuildEngine = this.BuildEngine;
                 }
-            }
 
-            /// <summary>
-            /// WebClient to copy files
-            /// </summary>
-            internal WebClient WebCopier
+                return _buildToolsLogger;
+            }
+        }
+
+        /// <summary>
+        /// WebClient to copy files
+        /// </summary>
+        internal WebClient WebCopier
+        {
+            get
             {
-                get
+                if (_webCopier == null)
                 {
-                    if (_webCopier == null)
-                    {
-                        _webCopier = new WebClient();
-                    }
-                    return _webCopier;
+                    _webCopier = new WebClient();
                 }
+                return _webCopier;
             }
+        }
 
         #endregion
 
@@ -130,7 +125,7 @@
             {
                 throw new ApplicationException("Cannot have 'LocalBranchRootDir' null or empty");
             }
-            else if(!Directory.Exists(LocalBranchRootDir))
+            else if (!Directory.Exists(LocalBranchRootDir))
             {
                 throw new DirectoryNotFoundException(string.Format("Specified directory '{0}' is either invalid or does not exists", LocalBranchRootDir));
             }
@@ -144,7 +139,7 @@
                 RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
             }
 
-            if(RemoteRootDir.StartsWith("http"))
+            if (RemoteRootDir.StartsWith("http"))
             {
                 RemoteCopyFromRootDir = new Uri(new Uri(RemoteRootDir), COPY_FROM_RELATIVEPATH).ToString();
                 RemoteMetaDataFilePath = new Uri(new Uri(RemoteCopyFromRootDir), "metaData/FilesToCopy.txt").ToString();
@@ -173,7 +168,7 @@
                 string copyFrom = string.Empty;
                 string copyTo = string.Empty;
                 string fileName = string.Empty;
-                
+
                 unableToCopyFilePath = new List<string>();
                 LocalMetaDataFilePath = CopyFile(RemoteMetaDataFilePath);
 
