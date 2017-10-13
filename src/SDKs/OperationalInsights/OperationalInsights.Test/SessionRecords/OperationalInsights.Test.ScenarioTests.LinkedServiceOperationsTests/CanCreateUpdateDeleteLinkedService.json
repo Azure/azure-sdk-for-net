@@ -1,37 +1,54 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/OIHyak7814/providers/Microsoft.OperationalInsights/workspaces/AzTest6856/linkedServices/Automation?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL09JSHlhazc4MTQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0Njg1Ni9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/TestLinkWS/linkedServices/Automation?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvVGVzdExpbmtXUy9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"Automation\",\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/OIHyak7814/providers/Microsoft.Automation/automationAccounts/sdkTestAccount\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/mms-eus/providers/Microsoft.Automation/automationAccounts/TestAccount\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
-          "application/json"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "217"
+          "186"
         ],
         "x-ms-client-request-id": [
-          "5a5a0a4f-c4dc-4a09-a902-e17167e6f84b"
+          "1fb29e2e-0a02-4580-9b03-81ff02be7042"
+        ],
+        "accept-language": [
+          "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.17.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/OIHyak7814/providers/Microsoft.Automation/automationAccounts/sdkTestAccount\"\r\n  },\r\n  \"id\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/oihyak7814/providers/microsoft.operationalinsights/workspaces/aztest6856/linkedservices/automation\",\r\n  \"name\": \"AzTest6856/Automation\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/mms-eus/providers/Microsoft.Automation/automationAccounts/TestAccount\"\r\n  },\r\n  \"id\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/microsoft.operationalinsights/workspaces/testlinkws/linkedservices/automation\",\r\n  \"name\": \"TestLinkWS/Automation\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "476"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Oct 2017 23:22:31 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "X-AMS-APIVersion": [
           "WebAPI1.0"
@@ -40,17 +57,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "19ad9793-5cfc-47c9-8a75-94dc3515cacd"
+          "63df4421-672d-4285-94c7-8e0782f3c983"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5",
-          "Microsoft-IIS/8.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -66,49 +76,63 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "ea8bbed8-6adf-4455-b183-64ebceb21f8a"
+          "25ad0812-1159-4390-a22c-36a56e89b8a9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160922T071710Z:ea8bbed8-6adf-4455-b183-64ebceb21f8a"
-        ],
-        "Date": [
-          "Thu, 22 Sep 2016 07:17:10 GMT"
+          "WESTUS:20171002T232232Z:25ad0812-1159-4390-a22c-36a56e89b8a9"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/OIHyak7814/providers/Microsoft.OperationalInsights/workspaces/AzTest6856/linkedServices/Automation?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL09JSHlhazc4MTQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0Njg1Ni9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/TestLinkWS/linkedServices/Automation?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvVGVzdExpbmtXUy9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"Automation\",\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/OIHyak7814/providers/Microsoft.Automation/automationAccounts/testAcc\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/mms-eus/providers/Microsoft.Automation/automationAccounts/TestAccount2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
-          "application/json"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "210"
+          "187"
         ],
         "x-ms-client-request-id": [
-          "a2d84d67-17ad-4645-9ccf-489ca52b9098"
+          "27708247-3522-4dc6-bce3-8434f6eb3a8d"
+        ],
+        "accept-language": [
+          "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.17.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.18.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/OIHyak7814/providers/Microsoft.Automation/automationAccounts/testAcc\"\r\n  },\r\n  \"id\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/oihyak7814/providers/microsoft.operationalinsights/workspaces/aztest6856/linkedservices/automation\",\r\n  \"name\": \"AzTest6856/Automation\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/mms-eus/providers/Microsoft.Automation/automationAccounts/TestAccount2\"\r\n  },\r\n  \"id\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/microsoft.operationalinsights/workspaces/testlinkws/linkedservices/automation\",\r\n  \"name\": \"TestLinkWS/Automation\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "469"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Oct 2017 23:22:33 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "X-AMS-APIVersion": [
           "WebAPI1.0"
@@ -117,17 +141,238 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "684f6af5-fc98-4640-ae82-7732ca2fa9de"
+          "90a41a8a-9375-4069-8824-4f56820c0702"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "f650d195-3ed6-4cd8-bc1a-dd3a1772668a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20171002T232233Z:f650d195-3ed6-4cd8-bc1a-dd3a1772668a"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/TestLinkWS/linkedServices/Automation?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvVGVzdExpbmtXUy9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "47ace9a2-5fb4-49a7-a4da-6e10d138e2aa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.18.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/mms-eus/providers/Microsoft.Automation/automationAccounts/TestAccount\"\r\n  },\r\n  \"id\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/microsoft.operationalinsights/workspaces/testlinkws/linkedservices/automation\",\r\n  \"name\": \"TestLinkWS/Automation\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Cache-Control": [
+          "no-cache"
+        ],
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Mon, 02 Oct 2017 23:22:31 GMT"
+        ],
+        "Pragma": [
           "no-cache"
         ],
         "Server": [
           "Microsoft-IIS/8.5",
-          "Microsoft-IIS/8.0"
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-AMS-APIVersion": [
+          "WebAPI1.0"
+        ],
+        "CacheControl": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a2ed17d6-ffd3-4bd5-8fcc-141b3974b3c4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14865"
+        ],
+        "x-ms-correlation-request-id": [
+          "3feb745f-a080-4cb5-8f9c-16af50238d48"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20171002T232232Z:3feb745f-a080-4cb5-8f9c-16af50238d48"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/TestLinkWS/linkedServices?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvVGVzdExpbmtXUy9saW5rZWRTZXJ2aWNlcz9hcGktdmVyc2lvbj0yMDE1LTExLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8c2e148d-6f76-49f3-a8a4-ce5b5892aa27"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.18.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"resourceId\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourceGroups/mms-eus/providers/Microsoft.Automation/automationAccounts/TestAccount\"\r\n      },\r\n      \"id\": \"/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/microsoft.operationalinsights/workspaces/testlinkws/linkedservices/automation\",\r\n      \"name\": \"TestLinkWS/Automation\",\r\n      \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Oct 2017 23:22:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-AMS-APIVersion": [
+          "WebAPI1.0"
+        ],
+        "CacheControl": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "30cbe1bc-1bf9-411c-952d-b8b8383a41bd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14887"
+        ],
+        "x-ms-correlation-request-id": [
+          "bf4de03c-adb0-4387-b256-6459da17b181"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20171002T232233Z:bf4de03c-adb0-4387-b256-6459da17b181"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a6383be3-f0e8-4968-93d5-10f2625f5bb5/resourcegroups/mms-eus/providers/Microsoft.OperationalInsights/workspaces/TestLinkWS/linkedServices/Automation?api-version=2015-11-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTYzODNiZTMtZjBlOC00OTY4LTkzZDUtMTBmMjYyNWY1YmI1L3Jlc291cmNlZ3JvdXBzL21tcy1ldXMvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvVGVzdExpbmtXUy9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b08c0285-e980-48dc-88f7-ce1484486356"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.18.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Oct 2017 23:22:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5",
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AMS-APIVersion": [
+          "WebAPI1.0"
+        ],
+        "CacheControl": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "bed6120e-ccdf-4da2-8aac-2ba818254d8b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -143,294 +388,10 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "e8431ab3-9ea1-45e7-a812-3432aebe3e08"
+          "e5e42ba6-4413-45d8-916c-b33ac85afa2f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160922T071738Z:e8431ab3-9ea1-45e7-a812-3432aebe3e08"
-        ],
-        "Date": [
-          "Thu, 22 Sep 2016 07:17:37 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/OIHyak7814/providers/Microsoft.OperationalInsights/workspaces/AzTest6856/linkedServices/Automation?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL09JSHlhazc4MTQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0Njg1Ni9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "09386e1f-abcd-409d-8f37-2e076d94d405"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.17.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"resourceId\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/OIHyak7814/providers/Microsoft.Automation/automationAccounts/sdkTestAccount\"\r\n  },\r\n  \"id\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/oihyak7814/providers/microsoft.operationalinsights/workspaces/aztest6856/linkedservices/automation\",\r\n  \"name\": \"AzTest6856/Automation\",\r\n  \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "476"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AMS-APIVersion": [
-          "WebAPI1.0"
-        ],
-        "CacheControl": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "d4aaa8eb-b5dd-48ad-a88e-73591a9bdbb2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5",
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET",
-          "ASP.NET"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14750"
-        ],
-        "x-ms-correlation-request-id": [
-          "3aef2db4-21f9-4221-981b-a9bcc5536b27"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160922T071715Z:3aef2db4-21f9-4221-981b-a9bcc5536b27"
-        ],
-        "Date": [
-          "Thu, 22 Sep 2016 07:17:14 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/OIHyak7814/providers/Microsoft.OperationalInsights/workspaces/AzTest6856/linkedServices/Automation?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL09JSHlhazc4MTQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0Njg1Ni9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "623ddd10-887d-4c72-a1ae-3a30ecc2f7a9"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.17.0.0"
-        ]
-      },
-      "ResponseBody": "null",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AMS-APIVersion": [
-          "WebAPI1.0"
-        ],
-        "CacheControl": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "d812d42b-73f6-4cb0-b739-43dc51049553"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5",
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET",
-          "ASP.NET"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14747"
-        ],
-        "x-ms-correlation-request-id": [
-          "89c6800e-3f22-4160-98d1-6291167964c6"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160922T071752Z:89c6800e-3f22-4160-98d1-6291167964c6"
-        ],
-        "Date": [
-          "Thu, 22 Sep 2016 07:17:52 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/OIHyak7814/providers/Microsoft.OperationalInsights/workspaces/AzTest6856/linkedServices?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL09JSHlhazc4MTQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0Njg1Ni9saW5rZWRTZXJ2aWNlcz9hcGktdmVyc2lvbj0yMDE1LTExLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "dc139ac3-5d1e-4042-ba13-11822ebe76cf"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.17.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"resourceId\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourceGroups/OIHyak7814/providers/Microsoft.Automation/automationAccounts/sdkTestAccount\"\r\n      },\r\n      \"id\": \"/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/oihyak7814/providers/microsoft.operationalinsights/workspaces/aztest6856/linkedservices/automation\",\r\n      \"name\": \"AzTest6856/Automation\",\r\n      \"type\": \"Microsoft.OperationalInsights/workspaces/linkedServices\"\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "533"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AMS-APIVersion": [
-          "WebAPI1.0"
-        ],
-        "CacheControl": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "e412f85e-7952-4393-8d39-28ea77dd7ff1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5",
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET",
-          "ASP.NET"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14749"
-        ],
-        "x-ms-correlation-request-id": [
-          "bcb9c8e8-d791-40a5-afd3-b030e33be612"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160922T071721Z:bcb9c8e8-d791-40a5-afd3-b030e33be612"
-        ],
-        "Date": [
-          "Thu, 22 Sep 2016 07:17:21 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/df1ec963-d784-4d11-a779-1b3eeb9ecb78/resourcegroups/OIHyak7814/providers/Microsoft.OperationalInsights/workspaces/AzTest6856/linkedServices/Automation?api-version=2015-11-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGYxZWM5NjMtZDc4NC00ZDExLWE3NzktMWIzZWViOWVjYjc4L3Jlc291cmNlZ3JvdXBzL09JSHlhazc4MTQvcHJvdmlkZXJzL01pY3Jvc29mdC5PcGVyYXRpb25hbEluc2lnaHRzL3dvcmtzcGFjZXMvQXpUZXN0Njg1Ni9saW5rZWRTZXJ2aWNlcy9BdXRvbWF0aW9uP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "51e00177-cac7-4d37-97c8-478b2d6ded93"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.OperationalInsights.OperationalInsightsManagementClient/0.17.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AMS-APIVersion": [
-          "WebAPI1.0"
-        ],
-        "CacheControl": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "8ea5e5e8-9ffc-4ba2-96c4-73c1e9c82234"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5",
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET",
-          "ASP.NET"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
-        ],
-        "x-ms-correlation-request-id": [
-          "66ab7453-71f8-4de0-b236-52d4ecd298d0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160922T071746Z:66ab7453-71f8-4de0-b236-52d4ecd298d0"
-        ],
-        "Date": [
-          "Thu, 22 Sep 2016 07:17:46 GMT"
+          "WESTUS:20171002T232234Z:e5e42ba6-4413-45d8-916c-b33ac85afa2f"
         ]
       },
       "StatusCode": 200
@@ -438,6 +399,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df1ec963-d784-4d11-a779-1b3eeb9ecb78"
+    "SubscriptionId": ""
   }
 }

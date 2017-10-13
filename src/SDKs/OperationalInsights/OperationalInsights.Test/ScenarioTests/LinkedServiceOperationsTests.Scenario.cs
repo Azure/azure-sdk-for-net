@@ -25,10 +25,10 @@ namespace OperationalInsights.Test.ScenarioTests
 {
     public class LinkedServiceOperationsTests : TestBase
     {
-        private const string resourceGroupName = "OIHyak7814";
-        private const string automationAccountName = "sdkTestAccount";
-        private const string automationAccountName2 = "testAcc";
-        private const string workspaceName = "AzTest6856";
+        private const string resourceGroupName = "mms-eus";
+        private const string automationAccountName = "TestAccount";
+        private const string automationAccountName2 = "TestAccount2";
+        private const string workspaceName = "TestLinkWS";
 
         [Fact]
         public void CanCreateUpdateDeleteLinkedService()
