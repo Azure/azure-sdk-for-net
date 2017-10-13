@@ -35,7 +35,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         [EnumMember(Value = "Percent")]
         Percent,
         [EnumMember(Value = "MilliSeconds")]
-        MilliSeconds
+        MilliSeconds,
+        [EnumMember(Value = "ByteSeconds")]
+        ByteSeconds,
+        [EnumMember(Value = "Unspecified")]
+        Unspecified
     }
     internal static class UnitEnumExtension
     {
@@ -60,6 +64,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return "Percent";
                 case Unit.MilliSeconds:
                     return "MilliSeconds";
+                case Unit.ByteSeconds:
+                    return "ByteSeconds";
+                case Unit.Unspecified:
+                    return "Unspecified";
             }
             return null;
         }
@@ -82,6 +90,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return Unit.Percent;
                 case "MilliSeconds":
                     return Unit.MilliSeconds;
+                case "ByteSeconds":
+                    return Unit.ByteSeconds;
+                case "Unspecified":
+                    return Unit.Unspecified;
             }
             return null;
         }
