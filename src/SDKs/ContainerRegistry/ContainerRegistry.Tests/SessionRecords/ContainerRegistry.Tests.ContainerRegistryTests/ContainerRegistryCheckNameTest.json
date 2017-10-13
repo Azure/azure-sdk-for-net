@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "45784cfa-c800-4b3c-8b6d-0e60d56b60e9"
+          "3395e6a1-2823-4447-8dfa-460d86145f42"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 19:56:11 GMT"
+          "Fri, 13 Oct 2017 22:23:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14964"
+          "14963"
         ],
         "x-ms-request-id": [
-          "97e31dab-3a6a-45be-bcfd-b8489eb65647"
+          "5451fe40-5bf4-4418-8a89-51df2206e87c"
         ],
         "x-ms-correlation-request-id": [
-          "97e31dab-3a6a-45be-bcfd-b8489eb65647"
+          "5451fe40-5bf4-4418-8a89-51df2206e87c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20171012T195611Z:97e31dab-3a6a-45be-bcfd-b8489eb65647"
+          "WESTUS:20171013T222340Z:5451fe40-5bf4-4418-8a89-51df2206e87c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -56,8 +56,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourcegroups/acr_rg9483?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzk0ODM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourcegroups/acr_rg8019?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzgwMTk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -68,7 +68,7 @@
           "29"
         ],
         "x-ms-client-request-id": [
-          "a61b6146-36b2-44c7-9ca3-b832b0596c86"
+          "9c8e9c1a-9a00-4939-958a-c1144a8f8803"
         ],
         "accept-language": [
           "en-US"
@@ -78,7 +78,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg9483\",\r\n  \"name\": \"acr_rg9483\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg8019\",\r\n  \"name\": \"acr_rg8019\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "173"
@@ -93,22 +93,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 19:56:11 GMT"
+          "Fri, 13 Oct 2017 22:23:41 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1193"
         ],
         "x-ms-request-id": [
-          "dcee87eb-94a9-473d-b825-80d94c3deaf2"
+          "8f422d01-d944-4e67-81f3-148864de4c43"
         ],
         "x-ms-correlation-request-id": [
-          "dcee87eb-94a9-473d-b825-80d94c3deaf2"
+          "8f422d01-d944-4e67-81f3-148864de4c43"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20171012T195612Z:dcee87eb-94a9-473d-b825-80d94c3deaf2"
+          "WESTUS:20171013T222341Z:8f422d01-d944-4e67-81f3-148864de4c43"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
       "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-10-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"acrregistry5623\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"acrregistry4467\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -129,7 +129,7 @@
           "86"
         ],
         "x-ms-client-request-id": [
-          "ef8f93d8-e0bc-4699-b213-998e561146f1"
+          "0582b670-239b-4723-aca9-c59f693fc62b"
         ],
         "accept-language": [
           "en-US"
@@ -151,7 +151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 19:56:12 GMT"
+          "Fri, 13 Oct 2017 22:23:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -169,16 +169,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14963"
+          "14962"
         ],
         "x-ms-request-id": [
-          "d0cee02c-ae39-42ad-8be6-1fe29c15991f"
+          "166bac0d-8196-4036-848d-f622f1f9daaa"
         ],
         "x-ms-correlation-request-id": [
-          "d0cee02c-ae39-42ad-8be6-1fe29c15991f"
+          "166bac0d-8196-4036-848d-f622f1f9daaa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20171012T195613Z:d0cee02c-ae39-42ad-8be6-1fe29c15991f"
+          "WESTUS:20171013T222342Z:166bac0d-8196-4036-848d-f622f1f9daaa"
         ]
       },
       "StatusCode": 200
@@ -196,7 +196,7 @@
           "80"
         ],
         "x-ms-client-request-id": [
-          "f4884010-b283-437b-9e67-8c2138bafb54"
+          "88e4f693-d304-45d4-97b1-f9d2fac4f34d"
         ],
         "accept-language": [
           "en-US"
@@ -218,74 +218,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 19:56:12 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14962"
-        ],
-        "x-ms-request-id": [
-          "8ac0d184-1de1-468b-b160-3ef93a8b4df6"
-        ],
-        "x-ms-correlation-request-id": [
-          "8ac0d184-1de1-468b-b160-3ef93a8b4df6"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20171012T195613Z:8ac0d184-1de1-468b-b160-3ef93a8b4df6"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
-      "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"acrregistry2468\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "86"
-        ],
-        "x-ms-client-request-id": [
-          "bb8e42d3-6741-4f6f-b5bd-a72102ff2538"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.2.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"The registry acrregistry2468 is already in use.\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 12 Oct 2017 19:56:15 GMT"
+          "Fri, 13 Oct 2017 22:23:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -306,31 +239,31 @@
           "14961"
         ],
         "x-ms-request-id": [
-          "166bbf49-938d-4558-95c6-5853ef4ef4bf"
+          "66dbd7ce-3dfb-492c-8fa0-b32f83eeb9ed"
         ],
         "x-ms-correlation-request-id": [
-          "166bbf49-938d-4558-95c6-5853ef4ef4bf"
+          "66dbd7ce-3dfb-492c-8fa0-b32f83eeb9ed"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20171012T195615Z:166bbf49-938d-4558-95c6-5853ef4ef4bf"
+          "WESTUS:20171013T222342Z:66dbd7ce-3dfb-492c-8fa0-b32f83eeb9ed"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg9483/providers/Microsoft.ContainerRegistry/registries/acrregistry2468?api-version=2017-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzk0ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5MjQ2OD9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"acrregistry9265\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "133"
+          "86"
         ],
         "x-ms-client-request-id": [
-          "0694cd26-60ea-4364-a6c7-8a56e3c0212d"
+          "6c7abfce-3175-4d3f-a07d-71a8b603b23a"
         ],
         "accept-language": [
           "en-US"
@@ -340,7 +273,7 @@
           "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"tier\": \"Premium\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg9483/providers/Microsoft.ContainerRegistry/registries/acrregistry2468\",\r\n  \"name\": \"acrregistry2468\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry2468.azurecr.io\",\r\n    \"creationDate\": \"2017-10-12T19:56:14.373673Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"The registry acrregistry9265 is already in use.\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -352,7 +285,74 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 19:56:15 GMT"
+          "Fri, 13 Oct 2017 22:23:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-request-id": [
+          "8c426119-d376-4000-ba67-6c5543a5b503"
+        ],
+        "x-ms-correlation-request-id": [
+          "8c426119-d376-4000-ba67-6c5543a5b503"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20171013T222345Z:8c426119-d376-4000-ba67-6c5543a5b503"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg8019/providers/Microsoft.ContainerRegistry/registries/acrregistry9265?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzgwMTkvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5OTI2NT9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "133"
+        ],
+        "x-ms-client-request-id": [
+          "e72dd44b-f0c1-4df8-8100-70e926821b19"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"tier\": \"Premium\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg8019/providers/Microsoft.ContainerRegistry/registries/acrregistry9265\",\r\n  \"name\": \"acrregistry9265\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry9265.azurecr.io\",\r\n    \"creationDate\": \"2017-10-13T22:23:43.6946399Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Oct 2017 22:23:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -370,16 +370,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1192"
         ],
         "x-ms-request-id": [
-          "e89877de-0633-4d30-aeab-0a5c38d6f706"
+          "cb7ae886-3902-471b-8669-cfa3ff7f1cc1"
         ],
         "x-ms-correlation-request-id": [
-          "e89877de-0633-4d30-aeab-0a5c38d6f706"
+          "cb7ae886-3902-471b-8669-cfa3ff7f1cc1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20171012T195615Z:e89877de-0633-4d30-aeab-0a5c38d6f706"
+          "WESTUS:20171013T222344Z:cb7ae886-3902-471b-8669-cfa3ff7f1cc1"
         ]
       },
       "StatusCode": 200
@@ -387,13 +387,13 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "acr_rg9483"
+      "acr_rg8019"
     ],
     "ContainerRegistryCheckNameTest": [
-      "acrregistry5623"
+      "acrregistry4467"
     ],
     "CreateManagedContainerRegistry": [
-      "acrregistry2468"
+      "acrregistry9265"
     ]
   },
   "Variables": {
