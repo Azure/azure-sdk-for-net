@@ -13,27 +13,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Properties indicating head pose of the face.
-    /// </summary>
-    public partial class HeadPoseProperties
+    public partial class AccessoryPropertiesItem
     {
         /// <summary>
-        /// Initializes a new instance of the HeadPoseProperties class.
+        /// Initializes a new instance of the AccessoryPropertiesItem class.
         /// </summary>
-        public HeadPoseProperties()
+        public AccessoryPropertiesItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HeadPoseProperties class.
+        /// Initializes a new instance of the AccessoryPropertiesItem class.
         /// </summary>
-        public HeadPoseProperties(double? roll = default(double?), double? yaw = default(double?), double? pitch = default(double?))
+        /// <param name="type">Description of an accessory</param>
+        public AccessoryPropertiesItem(string type = default(string), double confidence = default(double))
         {
-            Roll = roll;
-            Yaw = yaw;
-            Pitch = pitch;
+            Type = type;
+            Confidence = confidence;
             CustomInit();
         }
 
@@ -43,19 +40,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets description of an accessory
         /// </summary>
-        [JsonProperty(PropertyName = "roll")]
-        public double? Roll { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "yaw")]
-        public double? Yaw { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "pitch")]
-        public double? Pitch { get; set; }
+        [JsonProperty(PropertyName = "confidence")]
+        public double Confidence { get; set; }
 
     }
 }
