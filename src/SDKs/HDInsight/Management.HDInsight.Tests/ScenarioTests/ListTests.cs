@@ -43,10 +43,12 @@ namespace Management.HDInsight.Tests
                         Assert.False(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
                         Assert.False(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
 
-                        ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+                        // Create one cluster with ADLS so both clusters aren't using the same storage account at the same time
+                        ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+                        ClusterCreateParameters parameters2 = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl();
                         Parallel.Invoke(
-                            () => client.Clusters.Create(rgName, clusterName1, parameters),
-                            () => client.Clusters.Create(rgName, clusterName2, parameters));
+                            () => client.Clusters.Create(rgName, clusterName1, parameters1),
+                            () => client.Clusters.Create(rgName, clusterName2, parameters2));
 
                         list = client.Clusters.ListByResourceGroup(rgName);
                         Assert.True(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
@@ -85,10 +87,12 @@ namespace Management.HDInsight.Tests
                     Assert.False(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));
                     Assert.False(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
 
-                    ClusterCreateParameters parameters = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+                    // Create one cluster with ADLS so both clusters aren't using the same storage account at the same time
+                    ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+                    ClusterCreateParameters parameters2 = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl();
                     Parallel.Invoke(
-                        () => client.Clusters.Create(rgName1, clusterName1, parameters),
-                        () => client.Clusters.Create(rgName2, clusterName2, parameters));
+                        () => client.Clusters.Create(rgName1, clusterName1, parameters1),
+                        () => client.Clusters.Create(rgName2, clusterName2, parameters2));
 
                     list = client.Clusters.List();
                     Assert.True(list.Any(c => c.Name.Equals(clusterName1, StringComparison.OrdinalIgnoreCase)));

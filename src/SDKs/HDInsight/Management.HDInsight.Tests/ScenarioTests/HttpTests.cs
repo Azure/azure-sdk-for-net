@@ -62,14 +62,14 @@ namespace Management.HDInsight.Tests
                 ValidateHttpSettings(httpSettings, createParams.UserName, createParams.Password);
 
                 CloudException ex = Assert.Throws<CloudException>(() => client.Configurations.UpdateHTTPSettings(rgName, clusterName,
-                    new HttpConnectivitySettings { EnabledCredential = false }));
+                    new HttpConnectivitySettings { EnabledCredential = "false" }));
                 Assert.Equal("Linux clusters do not support revoking HTTP credentials.", ex.Message);
 
                 string newPassword = "NewPassword1!";
                 client.Configurations.UpdateHTTPSettings(rgName, clusterName,
                     new HttpConnectivitySettings
                     {
-                        EnabledCredential = true,
+                        EnabledCredential = "true",
                         Username = "admin",
                         Password = newPassword
                     });
@@ -82,7 +82,7 @@ namespace Management.HDInsight.Tests
         {
             Assert.NotNull(httpSettings);
             HttpConnectivitySettings settings = JsonConvert.DeserializeObject<HttpConnectivitySettings>(JsonConvert.SerializeObject(httpSettings));
-            Assert.True(settings.EnabledCredential);
+            Assert.Equal("true", settings.EnabledCredential);
             Assert.Equal(expectedUsername, settings.Username);
             Assert.Equal(expectedPassword, settings.Password);
         }

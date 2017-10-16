@@ -30,7 +30,7 @@ namespace Management.HDInsight.Tests.UnitTests
             HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
 
             client.Clusters.BeginCreating(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetCustomCreateParametersIaas());
-            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec("cluster"));
+            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec("default"));
             
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }
@@ -62,7 +62,7 @@ namespace Management.HDInsight.Tests.UnitTests
             client.Configurations.BeginEnablingHttp(ResourceGroupName, ClusterName, username, password);
             client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, new HttpConnectivitySettings
             {
-                EnabledCredential = true,
+                EnabledCredential = "true",
                 Password = password,
                 Username = username
             });
@@ -78,7 +78,7 @@ namespace Management.HDInsight.Tests.UnitTests
             client.Configurations.BeginDisablingHttp(ResourceGroupName, ClusterName);
             client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, new HttpConnectivitySettings
             {
-                EnabledCredential = false
+                EnabledCredential = "false"
             });
 
             Assert.Equal(handler.Requests[0], handler.Requests[1]);

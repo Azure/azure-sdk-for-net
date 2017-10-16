@@ -43,12 +43,16 @@ namespace Management.HDInsight.Tests
                     WorkspaceId = WorkspaceId,
                     PrimaryKey = PrimaryKey
                 };
+
                 client.Extension.EnableMonitoring(rgName, clusterName, request);
                 ClusterMonitoringResponse monitoringStatus = client.Extension.GetMonitoringStatus(rgName, clusterName);
-                //VALIDATE
+                Assert.True(monitoringStatus.ClusterMonitoringEnabled);
+                Assert.Equal(monitoringStatus.WorkspaceId, WorkspaceId);
+
                 client.Extension.DisableMonitoring(rgName, clusterName);
                 monitoringStatus = client.Extension.GetMonitoringStatus(rgName, clusterName);
-                //VALIDATE
+                Assert.False(monitoringStatus.ClusterMonitoringEnabled);
+                Assert.Null(monitoringStatus.WorkspaceId);
             });
         }
     }

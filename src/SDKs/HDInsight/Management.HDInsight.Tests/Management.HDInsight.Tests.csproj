@@ -5,7 +5,7 @@
     <PackageId>Microsoft.Azure.Management.HDInsight.Tests</PackageId>
     <Description>HDInsight.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.Management.HDInsight.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -67,10 +67,6 @@
     <None Update="TestData\FailingScriptAction.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.4.0" />
   </ItemGroup>
 
 </Project>

@@ -148,14 +148,14 @@ namespace Microsoft.HDInsight
 
         private static HttpConnectivitySettings GetDisableParameters()
         {
-            return new HttpConnectivitySettings { EnabledCredential = false };
+            return new HttpConnectivitySettings { EnabledCredential = false.ToString() };
         }
 
         private static HttpConnectivitySettings GetEnableParameters(string username, string password)
         {
             return new HttpConnectivitySettings
             {
-                EnabledCredential = true,
+                EnabledCredential = "true",
                 Username = username,
                 Password = password
             };

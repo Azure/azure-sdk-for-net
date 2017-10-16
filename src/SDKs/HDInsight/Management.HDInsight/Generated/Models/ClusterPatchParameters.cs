@@ -12,25 +12,25 @@ namespace Microsoft.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The list of SSH public keys.
+    /// The PatchCluster request parameters
     /// </summary>
-    public partial class SshProfile
+    public partial class ClusterPatchParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SshProfile class.
+        /// Initializes a new instance of the ClusterPatchParameters class.
         /// </summary>
-        public SshProfile()
+        public ClusterPatchParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SshProfile class.
+        /// Initializes a new instance of the ClusterPatchParameters class.
         /// </summary>
-        /// <param name="publicKeys">The list of SSH public keys.</param>
-        public SshProfile(IList<SshPublicKey> publicKeys = default(IList<SshPublicKey>))
+        /// <param name="tags">The resource tags.</param>
+        public ClusterPatchParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            PublicKeys = publicKeys;
+            Tags = tags;
             CustomInit();
         }
 
@@ -40,10 +40,10 @@ namespace Microsoft.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of SSH public keys.
+        /// Gets or sets the resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "publicKeys")]
-        public IList<SshPublicKey> PublicKeys { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

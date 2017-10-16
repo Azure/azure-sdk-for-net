@@ -29,7 +29,7 @@ namespace Management.HDInsight.Tests
 
     internal static class HDInsightManagementTestUtilities
     {
-        public static string DefaultLocation = "East US";
+        public static string DefaultLocation = "West US 2";
 
         public static void RunTestInNewResourceGroup(string suiteName, string testName, Action<ResourceManagementClient, HDInsightManagementClient, string> test)
         {

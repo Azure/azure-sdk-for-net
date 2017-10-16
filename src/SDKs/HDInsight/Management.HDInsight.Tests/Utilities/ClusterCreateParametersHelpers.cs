@@ -33,6 +33,7 @@ namespace Management.HDInsight.Tests
         private const string CertificateFile = @"";
         private const string AdlDefaultStorageAccountName = "";
 
+
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
         private const string DefaultContainer = "default";
         private const string SshUser = "sshuser";
@@ -51,7 +52,7 @@ namespace Management.HDInsight.Tests
                 DefaultStorageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(DefaultContainer),
                 UserName = HttpUser,
                 Password = HttpPassword,
-                Location = "East US",
+                Location = "West US 2",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.5"
@@ -95,7 +96,7 @@ namespace Management.HDInsight.Tests
 
         private static StorageInfo GetDefaultDataLakeStorageInfo()
         {
-            string storageAccountName = !HDInsightManagementTestUtilities.IsRecordMode() ? AdlDefaultStorageAccountName : "tmp.azuredatalakestore.net";
+            string storageAccountName = HDInsightManagementTestUtilities.IsRecordMode() ? AdlDefaultStorageAccountName : "tmp.azuredatalakestore.net";
 
             return new AzureDataLakeStoreInfo(storageAccountName, AdlStorageRootPath);
         }
@@ -129,7 +130,7 @@ namespace Management.HDInsight.Tests
             StorageInfo storageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(containerName);
             var cluster = new ClusterCreateParametersExtended
             {
-                Location = "East US",
+                Location = "West US 2",
                 Tags = new Dictionary<string, string>(),
                 Properties = new ClusterCreateProperties
                 {
