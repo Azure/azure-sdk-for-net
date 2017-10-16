@@ -3,7 +3,7 @@
 
 **Notes**
 
-- The JobInnerError object is now recursively defined in order to capture additional error information returned by the service.
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
 
 ### Changes in 3.1.1-preview
 
@@ -49,6 +49,12 @@
 - When retrieving account information, an account id field called "accountId" is now included.
     - accountId's description: The unique identifier associated with this Data Lake Analytics account.
 
+### Changes in 3.0.2
+
+**Notes**
+
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
+	
 ### Changes in 3.0.1
 - Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
 
