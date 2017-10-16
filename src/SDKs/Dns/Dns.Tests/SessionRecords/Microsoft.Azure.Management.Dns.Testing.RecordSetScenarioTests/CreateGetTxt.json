@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e88f454a-e417-46fa-bb5e-c6984a02a9a8"
+          "fa4a0091-1939-454e-90a4-bd493c4b63e8"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:11:59 GMT"
+          "Mon, 16 Oct 2017 21:21:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14994"
         ],
         "x-ms-request-id": [
-          "9f6b0cf0-901c-4a2b-a5a0-6050f8ab44bb"
+          "148264ba-168a-4c2b-810f-0eeccedd2111"
         ],
         "x-ms-correlation-request-id": [
-          "9f6b0cf0-901c-4a2b-a5a0-6050f8ab44bb"
+          "148264ba-168a-4c2b-810f-0eeccedd2111"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181159Z:9f6b0cf0-901c-4a2b-a5a0-6050f8ab44bb"
+          "NORTHEUROPE:20171016T212150Z:148264ba-168a-4c2b-810f-0eeccedd2111"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -56,8 +56,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourcegroups/hydratestdnsrg8338?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlZ3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourcegroups/hydratestdnsrg5427?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlZ3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -68,7 +68,7 @@
           "32"
         ],
         "x-ms-client-request-id": [
-          "3c3462dc-af1c-40ba-ae8a-ab37cc826069"
+          "e562d3e0-557e-4518-b145-b1a440e99d5b"
         ],
         "accept-language": [
           "en-US"
@@ -78,7 +78,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338\",\r\n  \"name\": \"hydratestdnsrg8338\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427\",\r\n  \"name\": \"hydratestdnsrg5427\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "192"
@@ -93,22 +93,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:02 GMT"
+          "Mon, 16 Oct 2017 21:21:52 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
+          "1188"
         ],
         "x-ms-request-id": [
-          "69c4da53-acc4-4ef2-be36-cfe85ec132c7"
+          "3195b91b-7b6d-41dd-8e82-94ab7c5aaae1"
         ],
         "x-ms-correlation-request-id": [
-          "69c4da53-acc4-4ef2-be36-cfe85ec132c7"
+          "3195b91b-7b6d-41dd-8e82-94ab7c5aaae1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181202Z:69c4da53-acc4-4ef2-be36-cfe85ec132c7"
+          "NORTHEUROPE:20171016T212152Z:3195b91b-7b6d-41dd-8e82-94ab7c5aaae1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,8 +117,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com4967?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNDk2Nz9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com9007?api-version=2017-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tOTAwNz9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {
@@ -129,17 +129,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "b6a43a3e-6d7b-4661-9de5-23bb60f7ad8b"
+          "f12de8b1-d48e-4a13-a5da-d453078dd956"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0.0"
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnszones/hydratest.dnszone.com4967\",\r\n  \"name\": \"hydratest.dnszone.com4967\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000002-0000-0000-fd25-ed73053ed301\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 10000000,\r\n    \"nameServers\": [\r\n      \"ns1-02.daily.azure-dns.com.\",\r\n      \"ns2-02.daily.azure-dns.net.\",\r\n      \"ns3-02.daily.azure-dns.org.\",\r\n      \"ns4-02.daily.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 2,\r\n    \"zoneType\": \"Public\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnszones/hydratest.dnszone.com9007\",\r\n  \"name\": \"hydratest.dnszone.com9007\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000002-0000-0000-5b78-e7c9c446d301\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 10000000,\r\n    \"nameServers\": [\r\n      \"ns1-09.daily.azure-dns.com.\",\r\n      \"ns2-09.daily.azure-dns.net.\",\r\n      \"ns3-09.daily.azure-dns.org.\",\r\n      \"ns4-09.daily.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 2,\r\n    \"zoneType\": \"Public\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "541"
@@ -151,10 +151,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:06 GMT"
+          "Mon, 16 Oct 2017 21:21:55 GMT"
         ],
         "ETag": [
-          "00000002-0000-0000-fd25-ed73053ed301"
+          "00000002-0000-0000-5b78-e7c9c446d301"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -166,7 +166,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b6a43a3e-6d7b-4661-9de5-23bb60f7ad8b"
+          "f12de8b1-d48e-4a13-a5da-d453078dd956"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -175,20 +175,20 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "5999"
+          "5998"
         ],
         "x-ms-correlation-request-id": [
-          "d03aabe9-e4ed-4ec3-bdc1-bc73fb348894"
+          "ca479140-99f2-4c8b-9ad0-2bf36c36cae0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181206Z:d03aabe9-e4ed-4ec3-bdc1-bc73fb348894"
+          "NORTHEUROPE:20171016T212155Z:ca479140-99f2-4c8b-9ad0-2bf36c36cae0"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com4967/TXT/hydratestdnsrec5504?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNDk2Ny9UWFQvaHlkcmF0ZXN0ZG5zcmVjNTUwND9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com9007/TXT/hydratestdnsrec2274?api-version=2017-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tOTAwNy9UWFQvaHlkcmF0ZXN0ZG5zcmVjMjI3ND9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"lorem\"\r\n        ]\r\n      },\r\n      {\r\n        \"value\": [\r\n          \"ipsum\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -199,17 +199,17 @@
           "209"
         ],
         "x-ms-client-request-id": [
-          "c66ae02a-7234-4a5e-9cfa-c90663ad6db7"
+          "b428a317-8a98-46de-ac02-79713fe80413"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0.0"
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnszones/hydratest.dnszone.com4967/TXT/hydratestdnsrec5504\",\r\n  \"name\": \"hydratestdnsrec5504\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"c1baa68c-7e37-4f35-b08c-a43761b7e535\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestdnsrec5504.hydratest.dnszone.com4967.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"lorem\"\r\n        ]\r\n      },\r\n      {\r\n        \"value\": [\r\n          \"ipsum\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnszones/hydratest.dnszone.com9007/TXT/hydratestdnsrec2274\",\r\n  \"name\": \"hydratestdnsrec2274\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"9184eb8e-c7e4-41e5-a2f1-6e70a565aaef\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestdnsrec2274.hydratest.dnszone.com9007.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"lorem\"\r\n        ]\r\n      },\r\n      {\r\n        \"value\": [\r\n          \"ipsum\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "443"
@@ -221,10 +221,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:06 GMT"
+          "Mon, 16 Oct 2017 21:21:56 GMT"
         ],
         "ETag": [
-          "c1baa68c-7e37-4f35-b08c-a43761b7e535"
+          "9184eb8e-c7e4-41e5-a2f1-6e70a565aaef"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -236,7 +236,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c66ae02a-7234-4a5e-9cfa-c90663ad6db7"
+          "b428a317-8a98-46de-ac02-79713fe80413"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -245,35 +245,35 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "5999"
+          "5997"
         ],
         "x-ms-correlation-request-id": [
-          "3b78f29d-49be-4179-a157-0c9f55995050"
+          "0ac989eb-f3d8-4eef-9a6a-ff87d7e451c7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181207Z:3b78f29d-49be-4179-a157-0c9f55995050"
+          "NORTHEUROPE:20171016T212156Z:0ac989eb-f3d8-4eef-9a6a-ff87d7e451c7"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com4967/TXT/hydratestdnsrec5504?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNDk2Ny9UWFQvaHlkcmF0ZXN0ZG5zcmVjNTUwND9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com9007/TXT/hydratestdnsrec2274?api-version=2017-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tOTAwNy9UWFQvaHlkcmF0ZXN0ZG5zcmVjMjI3ND9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "05ddcbfa-7ee0-4d7a-806f-db827a5b45b0"
+          "d12a2a27-d08b-437b-b466-bc9c748f344b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0.0"
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnszones/hydratest.dnszone.com4967/TXT/hydratestdnsrec5504\",\r\n  \"name\": \"hydratestdnsrec5504\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"c1baa68c-7e37-4f35-b08c-a43761b7e535\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestdnsrec5504.hydratest.dnszone.com4967.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"lorem\"\r\n        ]\r\n      },\r\n      {\r\n        \"value\": [\r\n          \"ipsum\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnszones/hydratest.dnszone.com9007/TXT/hydratestdnsrec2274\",\r\n  \"name\": \"hydratestdnsrec2274\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"9184eb8e-c7e4-41e5-a2f1-6e70a565aaef\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestdnsrec2274.hydratest.dnszone.com9007.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"lorem\"\r\n        ]\r\n      },\r\n      {\r\n        \"value\": [\r\n          \"ipsum\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -282,13 +282,13 @@
           "private"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:06 GMT"
+          "Mon, 16 Oct 2017 21:21:57 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
         ],
         "ETag": [
-          "c1baa68c-7e37-4f35-b08c-a43761b7e535"
+          "9184eb8e-c7e4-41e5-a2f1-6e70a565aaef"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -303,7 +303,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "05ddcbfa-7ee0-4d7a-806f-db827a5b45b0"
+          "d12a2a27-d08b-437b-b466-bc9c748f344b"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -315,29 +315,29 @@
           "5999"
         ],
         "x-ms-correlation-request-id": [
-          "b1b4c50f-917f-4d80-ac42-453371972a45"
+          "ca6f5e32-7e96-4d12-99ed-73ec5a028762"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181207Z:b1b4c50f-917f-4d80-ac42-453371972a45"
+          "NORTHEUROPE:20171016T212157Z:ca6f5e32-7e96-4d12-99ed-73ec5a028762"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com4967/TXT/hydratestdnsrec5504?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNDk2Ny9UWFQvaHlkcmF0ZXN0ZG5zcmVjNTUwND9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com9007/TXT/hydratestdnsrec2274?api-version=2017-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tOTAwNy9UWFQvaHlkcmF0ZXN0ZG5zcmVjMjI3ND9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1bf8488c-c2b4-4698-ae24-383d7d5c4a83"
+          "6d9f47c9-e25f-41d8-96eb-21161d80d6d0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0.0"
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -349,7 +349,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:07 GMT"
+          "Mon, 16 Oct 2017 21:21:57 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -361,7 +361,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1bf8488c-c2b4-4698-ae24-383d7d5c4a83"
+          "6d9f47c9-e25f-41d8-96eb-21161d80d6d0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -370,32 +370,32 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "5999"
+          "5997"
         ],
         "x-ms-correlation-request-id": [
-          "74559520-c825-4252-9818-8cb43fa23fb5"
+          "41c426dd-3af5-4426-a8f1-69f3d5e63a24"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181207Z:74559520-c825-4252-9818-8cb43fa23fb5"
+          "NORTHEUROPE:20171016T212158Z:41c426dd-3af5-4426-a8f1-69f3d5e63a24"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com4967?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNDk2Nz9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com9007?api-version=2017-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tOTAwNz9hcGktdmVyc2lvbj0yMDE3LTA5LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "62bb6eec-5454-40a4-b805-1966a452c919"
+          "48e5afd9-2b1f-4f9d-8381-79ec0f0b89fe"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0.0"
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -407,10 +407,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:07 GMT"
+          "Mon, 16 Oct 2017 21:21:59 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsOperationResults/delzone6364282392811170340afe8d81?api-version=2017-09-01"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsOperationResults/delzone6364378571864989692ae9c559?api-version=2017-09-01"
         ],
         "Retry-After": [
           "3"
@@ -425,10 +425,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net:443/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsOperationStatuses/delzone6364282392811170340afe8d81?api-version=2017-09-01"
+          "https://api-dogfood.resources.windows-int.net:443/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsOperationStatuses/delzone6364378571864989692ae9c559?api-version=2017-09-01"
         ],
         "x-ms-request-id": [
-          "62bb6eec-5454-40a4-b805-1966a452c919"
+          "48e5afd9-2b1f-4f9d-8381-79ec0f0b89fe"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -437,26 +437,26 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "5999"
+          "5998"
         ],
         "x-ms-correlation-request-id": [
-          "96379854-bc51-4055-abf0-172d2fe78367"
+          "f3a710c2-aa29-459a-8376-0a5fda79248d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181208Z:96379854-bc51-4055-abf0-172d2fe78367"
+          "NORTHEUROPE:20171016T212159Z:f3a710c2-aa29-459a-8376-0a5fda79248d"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg8338/providers/Microsoft.Network/dnsOperationStatuses/delzone6364282392811170340afe8d81?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnODMzOC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zT3BlcmF0aW9uU3RhdHVzZXMvZGVsem9uZTYzNjQyODIzOTI4MTExNzAzNDBhZmU4ZDgxP2FwaS12ZXJzaW9uPTIwMTctMDktMDE=",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg5427/providers/Microsoft.Network/dnsOperationStatuses/delzone6364378571864989692ae9c559?api-version=2017-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNTQyNy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zT3BlcmF0aW9uU3RhdHVzZXMvZGVsem9uZTYzNjQzNzg1NzE4NjQ5ODk2OTJhZTljNTU5P2FwaS12ZXJzaW9uPTIwMTctMDktMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0.0"
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -468,7 +468,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 18:12:18 GMT"
+          "Mon, 16 Oct 2017 21:22:08 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -486,7 +486,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d454bbe5-69db-41f5-a591-36c798b8037a"
+          "8df78a84-7e11-4434-b1b4-06255a0afe16"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -495,13 +495,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "5999"
+          "5998"
         ],
         "x-ms-correlation-request-id": [
-          "90cf0a44-98eb-4de8-95f0-02055839cfe6"
+          "84dd0d92-1700-4633-b3e0-a187b47371e1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T181218Z:90cf0a44-98eb-4de8-95f0-02055839cfe6"
+          "NORTHEUROPE:20171016T212209Z:84dd0d92-1700-4633-b3e0-a187b47371e1"
         ]
       },
       "StatusCode": 200
@@ -509,11 +509,11 @@
   ],
   "Names": {
     "SetupSingleRecordSetTest": [
-      "hydratest.dnszone.com4967",
-      "hydratestdnsrec5504"
+      "hydratest.dnszone.com9007",
+      "hydratestdnsrec2274"
     ],
     "CreateResourceGroup": [
-      "hydratestdnsrg8338"
+      "hydratestdnsrg5427"
     ]
   },
   "Variables": {
