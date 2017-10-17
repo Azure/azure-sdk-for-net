@@ -8,26 +8,29 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Net;
+	using System.Net.Http;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Models;
+    using Newtonsoft.Json;
 
-    /// <summary>
-    /// </summary>
-    public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient, IAzureClient
+	/// <summary>
+	/// Role based access control provides you a way to apply granular level
+	/// policy administration down to individual resources or resource groups.
+	/// These operations enable you to manage role definitions and role
+	/// assignments. A role definition describes the set of actions that can be
+	/// performed on resources. A role assignment grants access to Azure Active
+	/// Directory users.
+	/// </summary>
+	public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -42,22 +45,20 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public JsonSerializerSettings DeserializationSettings { get; private set; }        
+        public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -78,14 +79,29 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
+        /// <summary>
+        /// Gets the IClassicAdministratorsOperations.
+        /// </summary>
         public virtual IClassicAdministratorsOperations ClassicAdministrators { get; private set; }
 
+        /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
         public virtual IPermissionsOperations Permissions { get; private set; }
 
+        /// <summary>
+        /// Gets the IProviderOperationsMetadataOperations.
+        /// </summary>
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
 
+        /// <summary>
+        /// Gets the IRoleAssignmentsOperations.
+        /// </summary>
         public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
 
+        /// <summary>
+        /// Gets the IRoleDefinitionsOperations.
+        /// </summary>
         public virtual IRoleDefinitionsOperations RoleDefinitions { get; private set; }
 
         /// <summary>
@@ -96,7 +112,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         protected AuthorizationManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
-            this.Initialize();
+            Initialize();
         }
 
         /// <summary>
@@ -110,7 +126,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         protected AuthorizationManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
-            this.Initialize();
+			this.Initialize();
         }
 
         /// <summary>
@@ -128,7 +144,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this.BaseUri = baseUri;
+			this.BaseUri = baseUri;
         }
 
         /// <summary>
@@ -149,14 +165,14 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this.BaseUri = baseUri;
+			this.BaseUri = baseUri;
         }
 
         /// <summary>
         /// Initializes a new instance of the AuthorizationManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -167,10 +183,10 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ArgumentNullException("credentials");
             }
-            this.Credentials = credentials;
+			this.Credentials = credentials;
             if (this.Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+				this.Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -178,7 +194,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Initializes a new instance of the AuthorizationManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -192,10 +208,10 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ArgumentNullException("credentials");
             }
-            this.Credentials = credentials;
+			this.Credentials = credentials;
             if (this.Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+				this.Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -206,7 +222,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -221,11 +237,11 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ArgumentNullException("credentials");
             }
-            this.BaseUri = baseUri;
-            this.Credentials = credentials;
+			this.BaseUri = baseUri;
+			this.Credentials = credentials;
             if (this.Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+				this.Credentials.InitializeServiceClient(this);
             }
         }
 
@@ -236,7 +252,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -254,29 +270,33 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ArgumentNullException("credentials");
             }
-            this.BaseUri = baseUri;
-            this.Credentials = credentials;
+			this.BaseUri = baseUri;
+			this.Credentials = credentials;
             if (this.Credentials != null)
             {
-                this.Credentials.InitializeServiceClient(this);
+				this.Credentials.InitializeServiceClient(this);
             }
         }
 
+        /// <summary>
+        /// An optional partial-method to perform custom initialization.
+        /// </summary>
+        partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
         /// </summary>
         private void Initialize()
         {
-            this.ClassicAdministrators = new ClassicAdministratorsOperations(this);
-            this.Permissions = new PermissionsOperations(this);
-            this.ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
-            this.RoleAssignments = new RoleAssignmentsOperations(this);
-            this.RoleDefinitions = new RoleDefinitionsOperations(this);
-            this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-07-01";
-            this.AcceptLanguage = "en-US";
-            this.LongRunningOperationRetryTimeout = 30;
-            this.GenerateClientRequestId = true;
+			this.ClassicAdministrators = new ClassicAdministratorsOperations(this);
+			this.Permissions = new PermissionsOperations(this);
+			this.ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
+			this.RoleAssignments = new RoleAssignmentsOperations(this);
+			this.RoleDefinitions = new RoleDefinitionsOperations(this);
+			this.BaseUri = new Uri("https://management.azure.com");
+			this.ApiVersion = "2015-07-01";
+			this.AcceptLanguage = "en-US";
+			this.LongRunningOperationRetryTimeout = 30;
+			this.GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -290,8 +310,8 @@ namespace Microsoft.Azure.Management.Authorization
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings = new JsonSerializerSettings
+			SerializationSettings.Converters.Add(new ResourceJsonConverter());
+			DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
@@ -303,8 +323,9 @@ namespace Microsoft.Azure.Management.Authorization
                         new Iso8601TimeSpanConverter()
                     }
             };
-            DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
-        }    
+            CustomInitialize();
+			DeserializationSettings.Converters.Add(new ResourceJsonConverter());
+			DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
+        }
     }
 }

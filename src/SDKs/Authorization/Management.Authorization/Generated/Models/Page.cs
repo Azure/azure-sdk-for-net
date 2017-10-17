@@ -8,10 +8,15 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Newtonsoft.Json;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines a page in Azure responses.
@@ -35,14 +40,14 @@ namespace Microsoft.Azure.Management.Authorization.Models
          /// <returns>A an enumerator that can be used to iterate through the collection.</returns>
          public IEnumerator<T> GetEnumerator()
          {
-              return (Items == null) ? Enumerable.Empty<T>().GetEnumerator() : Items.GetEnumerator();
+              return Items == null ? Enumerable.Empty<T>().GetEnumerator() : Items.GetEnumerator();
          }
 
          /// <summary>
          /// Returns an enumerator that iterates through the collection.
          /// </summary>
          /// <returns>A an enumerator that can be used to iterate through the collection.</returns>
-         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+         IEnumerator IEnumerable.GetEnumerator()
          {
              return GetEnumerator();
          }

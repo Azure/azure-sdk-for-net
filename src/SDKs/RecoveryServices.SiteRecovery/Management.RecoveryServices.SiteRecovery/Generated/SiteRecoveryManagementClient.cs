@@ -83,6 +83,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IReplicationVaultHealthOperations.
+        /// </summary>
+        public virtual IReplicationVaultHealthOperations ReplicationVaultHealth { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationProtectedItemsOperations.
         /// </summary>
         public virtual IReplicationProtectedItemsOperations ReplicationProtectedItems { get; private set; }
@@ -378,6 +383,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         private void Initialize()
         {
+            ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
             ReplicationProtectedItems = new ReplicationProtectedItemsOperations(this);
             ReplicationNetworkMappings = new ReplicationNetworkMappingsOperations(this);
             ReplicationFabrics = new ReplicationFabricsOperations(this);

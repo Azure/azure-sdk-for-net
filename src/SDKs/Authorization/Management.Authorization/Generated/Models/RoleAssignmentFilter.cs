@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role Assignments filter
@@ -24,18 +22,29 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentFilter class.
         /// </summary>
-        public RoleAssignmentFilter() { }
+        public RoleAssignmentFilter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentFilter class.
         /// </summary>
+        /// <param name="principalId">Returns role assignment of the specific
+        /// principal.</param>
         public RoleAssignmentFilter(string principalId = default(string))
         {
             PrincipalId = principalId;
+            CustomInit();
         }
 
         /// <summary>
-        /// Returns role assignment of the specific principal.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets returns role assignment of the specific principal.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; set; }

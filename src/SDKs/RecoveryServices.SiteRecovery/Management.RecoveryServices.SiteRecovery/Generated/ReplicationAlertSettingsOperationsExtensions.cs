@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of configured email notification(alert) configurations.
             /// </summary>
             /// <remarks>
-            /// Gets the list of email notification(alert) configurations for the vault. .
+            /// Gets the list of email notification(alert) configurations for the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of configured email notification(alert) configurations.
             /// </summary>
             /// <remarks>
-            /// Gets the list of email notification(alert) configurations for the vault. .
+            /// Gets the list of email notification(alert) configurations for the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of configured email notification(alert) configurations.
             /// </summary>
             /// <remarks>
-            /// Gets the list of email notification(alert) configurations for the vault. .
+            /// Gets the list of email notification(alert) configurations for the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of configured email notification(alert) configurations.
             /// </summary>
             /// <remarks>
-            /// Gets the list of email notification(alert) configurations for the vault. .
+            /// Gets the list of email notification(alert) configurations for the vault.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

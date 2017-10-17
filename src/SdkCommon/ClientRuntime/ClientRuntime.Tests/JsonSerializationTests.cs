@@ -25,8 +25,26 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         public void PolymorphicSerializeWorks()
         {
             Zoo zoo = new Zoo() { Id = 1 };
-            zoo.Animals.Add(new Dog() { Name = "Fido", LikesDogfood = true });
-            zoo.Animals.Add(new Cat() { Name = "Felix", LikesMice = false, Dislikes = new Dog() { Name = "Angry", LikesDogfood = true } });
+            zoo.Animals.Add(new Dog() {
+                Name = "Fido",
+                LikesDogfood = true
+            });
+            zoo.Animals.Add(new Cat() {
+                Name = "Felix",
+                LikesMice = false,
+                Dislikes = new Dog() {
+                    Name = "Angry",
+                    LikesDogfood = true
+                },
+                BestFriend = new Animal() {
+                    Name = "Rudy the Rabbit",
+                    BestFriend = new Cat()
+                    {
+                        Name = "Jango",
+                        LikesMice = true
+                    }
+                }
+            });
             var serializeSettings = new JsonSerializerSettings();
             serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
             serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
@@ -41,6 +59,8 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(zoo.Animals[0].GetType(), zoo2.Animals[0].GetType());
             Assert.Equal(zoo.Animals[1].GetType(), zoo2.Animals[1].GetType());
             Assert.Equal(((Cat)zoo.Animals[1]).Dislikes.GetType(), ((Cat)zoo2.Animals[1]).Dislikes.GetType());
+            Assert.Equal(zoo.Animals[1].BestFriend.GetType(), zoo2.Animals[1].BestFriend.GetType());
+            Assert.Equal(zoo.Animals[1].BestFriend.BestFriend.GetType(), zoo2.Animals[1].BestFriend.BestFriend.GetType());
             Assert.Contains("dType", serializedJson);
         }
 
@@ -393,6 +413,118 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             var zooReserialized = JsonConvert.SerializeObject(zoo2, serializeSettings);
 
             Assert.Equal(zooReserialized, zooWithPrivateSetHalf1 + zooWithPrivateSetHalf2);
+        }
+
+        [Fact]
+        public void PolymorphicDeserializationConsidersAdditionalPropertiesBaseline()
+        {
+            // non-polymorhpic version of PolymorphicDeserializationConsidersAdditionalProperties,
+            // to validate that behavior tested for there actually matches non-polymorphic behavior
+
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            deserializeSettings.NullValueHandling = NullValueHandling.Ignore;
+
+            string animalsWithAdditionalProperties = @"[
+    {
+      ""dType"": ""dog"",
+      ""likesDogfood"": true,
+      ""name"": ""Fido"",
+      ""favoriteDogfood"": ""cats""
+    },
+    {
+      ""dType"": ""cat"",
+      ""likesMice"": false,
+      ""dislikes"": {
+        ""dType"": ""dog"",
+        ""likesDogfood"": true,
+        ""name"": ""Angry""
+      },
+      ""name"": ""Felix"",
+      ""likesSquirrels"": false,
+      ""likesCowbell"": 42
+    },
+    {
+      ""dType"": ""siamese"",
+      ""color"": ""grey"",
+      ""likesMice"": false,
+      ""name"": ""Felix"",
+      ""likesSquirrels"": true
+    }
+  ]";
+
+            // see if it round trips
+            var tmpAnimals = JsonConvert.DeserializeObject<Animal[]>(animalsWithAdditionalProperties, deserializeSettings);
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.NullValueHandling = NullValueHandling.Ignore;
+            serializeSettings.Formatting = Formatting.Indented;
+            animalsWithAdditionalProperties = JsonConvert.SerializeObject(tmpAnimals, serializeSettings);
+
+            // deserialize and check
+            var animals = JsonConvert.DeserializeObject<Animal[]>(animalsWithAdditionalProperties, deserializeSettings);
+
+            Assert.Equal("cats", animals[0].AdditionalProperties["favoriteDogfood"]);
+            Assert.Equal(false, animals[1].AdditionalProperties["likesSquirrels"]);
+            Assert.Equal(true, animals[2].AdditionalProperties["likesSquirrels"]);
+        }
+
+        [Fact]
+        public void PolymorphicDeserializationConsidersAdditionalProperties()
+        {
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            deserializeSettings.NullValueHandling = NullValueHandling.Ignore;
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Animal>("dType"));
+
+            string animalsWithAdditionalProperties = @"[
+    {
+      ""dType"": ""dog"",
+      ""likesDogfood"": true,
+      ""name"": ""Fido"",
+      ""favoriteDogfood"": ""cats""
+    },
+    {
+      ""dType"": ""cat"",
+      ""likesMice"": false,
+      ""dislikes"": {
+        ""dType"": ""dog"",
+        ""likesDogfood"": true,
+        ""name"": ""Angry""
+      },
+      ""name"": ""Felix"",
+      ""likesSquirrels"": false,
+      ""likesCowbell"": 42
+    },
+    {
+      ""dType"": ""siamese"",
+      ""color"": ""grey"",
+      ""likesMice"": false,
+      ""name"": ""Felix"",
+      ""likesSquirrels"": true
+    }
+  ]";
+
+            // see if it round trips
+            var tmpAnimals = JsonConvert.DeserializeObject<Animal[]>(animalsWithAdditionalProperties, deserializeSettings);
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.NullValueHandling = NullValueHandling.Ignore;
+            serializeSettings.Formatting = Formatting.Indented;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+            animalsWithAdditionalProperties = JsonConvert.SerializeObject(tmpAnimals, serializeSettings);
+
+            // deserialize and check
+            var animals = JsonConvert.DeserializeObject<Animal[]>(animalsWithAdditionalProperties, deserializeSettings);
+
+            Assert.Equal("cats", animals[0].AdditionalProperties["favoriteDogfood"]);
+            Assert.Equal(false, animals[1].AdditionalProperties["likesSquirrels"]);
+            Assert.Equal(true, animals[2].AdditionalProperties["likesSquirrels"]);
+            Assert.Equal(true, (animals[2] as Siamese).AdditionalProperties2["likesSquirrels"]);
+            Assert.Equal(1, animals[0].AdditionalProperties.Count);
+            Assert.Equal(2, animals[1].AdditionalProperties.Count);
+            Assert.Equal(1, animals[2].AdditionalProperties.Count);
+            Assert.Equal(1, (animals[2] as Siamese).AdditionalProperties2.Count);
         }
 
         private static void TestWithBadJsonSerializerSettings(Action callback)

@@ -4,16 +4,16 @@
       "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourcegroups/TestVaultGetBackupSecurityPinRg?api-version=2017-05-10",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlZ3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westcentralus\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "28"
+          "35"
         ],
         "x-ms-client-request-id": [
-          "74b60ea5-d5c1-488d-8d10-20e4b05725b6"
+          "8baf0379-db9f-44c0-afe8-86a23c9a0550"
         ],
         "accept-language": [
           "en-US"
@@ -23,10 +23,10 @@
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg\",\r\n  \"name\": \"TestVaultGetBackupSecurityPinRg\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg\",\r\n  \"name\": \"TestVaultGetBackupSecurityPinRg\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "215"
+          "222"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Jun 2017 08:33:25 GMT"
+          "Thu, 03 Aug 2017 05:29:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-request-id": [
-          "1cc0e46b-0235-4182-b536-fcbe79870077"
+          "b0481316-3584-440a-9893-7c48a1c227b3"
         ],
         "x-ms-correlation-request-id": [
-          "1cc0e46b-0235-4182-b536-fcbe79870077"
+          "b0481316-3584-440a-9893-7c48a1c227b3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170609T083326Z:1cc0e46b-0235-4182-b536-fcbe79870077"
+          "CENTRALINDIA:20170803T052935Z:b0481316-3584-440a-9893-7c48a1c227b3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -65,16 +65,16 @@
       "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westcentralus\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "91"
+          "98"
         ],
         "x-ms-client-request-id": [
-          "c6c8a5d8-7ae2-4d37-8336-8c738e32dbe8"
+          "64e77c35-484b-4a01-888a-4236e0aab095"
         ],
         "accept-language": [
           "en-US"
@@ -84,10 +84,10 @@
           "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"name\": \"TestVaultGetBackupSecurityPin\",\r\n  \"etag\": \"W/\\\"datetime'2017-06-09T08%3A33%3A32.7900654Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"name\": \"TestVaultGetBackupSecurityPin\",\r\n  \"etag\": \"W/\\\"datetime'2017-08-03T05%3A29%3A41.3890401Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "414"
+          "421"
         ],
         "Content-Type": [
           "application/json"
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Jun 2017 08:33:33 GMT"
+          "Thu, 03 Aug 2017 05:29:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -108,22 +108,22 @@
           "Microsoft-IIS/8.0"
         ],
         "x-ms-request-id": [
-          "4eddc920-e794-4b35-9f52-797f0d8d89d9"
+          "5799ef81-226c-4f94-9d7d-917b94ced122"
         ],
         "x-ms-client-request-id": [
-          "c6c8a5d8-7ae2-4d37-8336-8c738e32dbe8"
+          "64e77c35-484b-4a01-888a-4236e0aab095"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "4eddc920-e794-4b35-9f52-797f0d8d89d9"
+          "5799ef81-226c-4f94-9d7d-917b94ced122"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170609T083333Z:4eddc920-e794-4b35-9f52-797f0d8d89d9"
+          "CENTRALINDIA:20170803T052943Z:5799ef81-226c-4f94-9d7d-917b94ced122"
         ]
       },
       "StatusCode": 201
@@ -135,7 +135,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "65f3e51a-1792-4b8c-8fcf-c66eb9841ed0"
+          "033fc28d-746c-4ab5-ad40-f03d44a794af"
         ],
         "accept-language": [
           "en-US"
@@ -145,7 +145,7 @@
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"expiryTimeInUtcTicks\": 636325943144177708,\r\n  \"securityPIN\": \"355446\"\r\n}",
+      "ResponseBody": "{\r\n  \"token\": \"965452\",\r\n  \"expiryTimeInUtcTicks\": 636373352852634576,\r\n  \"securityPIN\": \"965452\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -157,7 +157,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Jun 2017 08:33:35 GMT"
+          "Thu, 03 Aug 2017 05:29:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -172,11 +172,11 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c1401c2f-8d93-4209-a273-22d409622e8e"
+          "bb28fb23-ab7c-476c-ad1d-8c41b4e3232c"
         ],
         "x-ms-client-request-id": [
-          "65f3e51a-1792-4b8c-8fcf-c66eb9841ed0",
-          "65f3e51a-1792-4b8c-8fcf-c66eb9841ed0"
+          "033fc28d-746c-4ab5-ad40-f03d44a794af",
+          "033fc28d-746c-4ab5-ad40-f03d44a794af"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -185,13 +185,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "c1401c2f-8d93-4209-a273-22d409622e8e"
+          "bb28fb23-ab7c-476c-ad1d-8c41b4e3232c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170609T083335Z:c1401c2f-8d93-4209-a273-22d409622e8e"
+          "CENTRALINDIA:20170803T052945Z:bb28fb23-ab7c-476c-ad1d-8c41b4e3232c"
         ]
       },
       "StatusCode": 200
@@ -203,7 +203,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0818faa5-4a5d-45ee-b6df-f0b70a71b8f4"
+          "746016c5-0fd4-416c-8cd1-09df5ad66a2d"
         ],
         "accept-language": [
           "en-US"
@@ -213,7 +213,7 @@
           "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus\",\r\n      \"name\": \"TestVaultGetBackupSecurityPin\",\r\n      \"etag\": \"W/\\\"datetime'2017-06-09T08%3A33%3A32.7900654Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"name\": \"TestVaultGetBackupSecurityPin\",\r\n      \"etag\": \"W/\\\"datetime'2017-08-03T05%3A29%3A41.3890401Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Jun 2017 08:33:35 GMT"
+          "Thu, 03 Aug 2017 05:30:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -240,22 +240,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "a2029c3d-13a3-4c11-99e1-ab50ade6d488"
+          "e73a1d9e-c51e-46e0-a4dc-959fde2b9202"
         ],
         "x-ms-client-request-id": [
-          "0818faa5-4a5d-45ee-b6df-f0b70a71b8f4"
+          "746016c5-0fd4-416c-8cd1-09df5ad66a2d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14896"
+          "14951"
         ],
         "x-ms-correlation-request-id": [
-          "a2029c3d-13a3-4c11-99e1-ab50ade6d488"
+          "e73a1d9e-c51e-46e0-a4dc-959fde2b9202"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170609T083335Z:a2029c3d-13a3-4c11-99e1-ab50ade6d488"
+          "CENTRALINDIA:20170803T053007Z:e73a1d9e-c51e-46e0-a4dc-959fde2b9202"
         ]
       },
       "StatusCode": 200
@@ -267,7 +267,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e710b8c3-b873-4294-96e6-72271630737a"
+          "fe9d0ab8-c141-4f9d-b78b-be7a11d400f1"
         ],
         "accept-language": [
           "en-US"
@@ -289,28 +289,28 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Jun 2017 08:33:39 GMT"
+          "Thu, 03 Aug 2017 05:30:10 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c72cfed4-57d7-473b-a796-8a42504ec1d3"
+          "4af41a11-4e88-4f0f-a217-26c076dab683"
         ],
         "x-ms-client-request-id": [
-          "e710b8c3-b873-4294-96e6-72271630737a"
+          "fe9d0ab8-c141-4f9d-b78b-be7a11d400f1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "c72cfed4-57d7-473b-a796-8a42504ec1d3"
+          "4af41a11-4e88-4f0f-a217-26c076dab683"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20170609T083339Z:c72cfed4-57d7-473b-a796-8a42504ec1d3"
+          "CENTRALINDIA:20170803T053010Z:4af41a11-4e88-4f0f-a217-26c076dab683"
         ]
       },
       "StatusCode": 200

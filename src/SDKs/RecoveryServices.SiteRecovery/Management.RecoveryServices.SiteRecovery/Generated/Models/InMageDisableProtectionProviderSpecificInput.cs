@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// InMageDisableProtectionProviderSpecificInput class.
         /// </summary>
         /// <param name="replicaVmDeletionStatus">A value indicating whether
-        /// the replica VM should be destroyed or retained.
-        /// Values from Delete and Retain.</param>
+        /// the replica VM should be destroyed or retained. Values from Delete
+        /// and Retain.</param>
         public InMageDisableProtectionProviderSpecificInput(string replicaVmDeletionStatus = default(string))
         {
             ReplicaVmDeletionStatus = replicaVmDeletionStatus;
@@ -50,8 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the replica VM should be
-        /// destroyed or retained.
-        /// Values from Delete and Retain.
+        /// destroyed or retained. Values from Delete and Retain.
         /// </summary>
         [JsonProperty(PropertyName = "replicaVmDeletionStatus")]
         public string ReplicaVmDeletionStatus { get; set; }

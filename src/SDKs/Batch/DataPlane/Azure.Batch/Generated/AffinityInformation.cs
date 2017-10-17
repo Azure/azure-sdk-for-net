@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class AffinityInformation : ITransportObjectProvider<Models.AffinityInformation>, IPropertyMetadata
     {
-        private readonly string affinityId;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="AffinityInformation"/> class.
@@ -32,12 +30,12 @@ namespace Microsoft.Azure.Batch
         public AffinityInformation(
             string affinityId)
         {
-            this.affinityId = affinityId;
+            this.AffinityId = affinityId;
         }
 
         internal AffinityInformation(Models.AffinityInformation protocolObject)
         {
-            this.affinityId = protocolObject.AffinityId;
+            this.AffinityId = protocolObject.AffinityId;
         }
 
         #endregion Constructors
@@ -47,10 +45,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets an opaque string that represents a previously run task or compute node.
         /// </summary>
-        public string AffinityId
-        {
-            get { return this.affinityId; }
-        }
+        public string AffinityId { get; }
 
         #endregion // AffinityInformation
 

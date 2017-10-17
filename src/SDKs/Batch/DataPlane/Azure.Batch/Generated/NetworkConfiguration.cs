@@ -24,18 +24,24 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<PoolEndpointConfiguration> EndpointConfigurationProperty;
             public readonly PropertyAccessor<string> SubnetIdProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.SubnetIdProperty = this.CreatePropertyAccessor<string>("SubnetId", BindingAccess.Read | BindingAccess.Write);
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>(nameof(EndpointConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.NetworkConfiguration protocolObject) : base(BindingState.Bound)
             {
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
+                    nameof(EndpointConfiguration),
+                    BindingAccess.Read);
                 this.SubnetIdProperty = this.CreatePropertyAccessor(
                     protocolObject.SubnetId,
-                    "SubnetId",
+                    nameof(SubnetId),
                     BindingAccess.Read);
             }
         }
@@ -62,13 +68,37 @@ namespace Microsoft.Azure.Batch
         #region NetworkConfiguration
 
         /// <summary>
+        /// Gets or sets the configuration for endpoints on compute nodes in the Batch pool.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified for pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>.
+        /// </remarks>
+        public PoolEndpointConfiguration EndpointConfiguration
+        {
+            get { return this.propertyContainer.EndpointConfigurationProperty.Value; }
+            set { this.propertyContainer.EndpointConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the ARM resource identifier of the virtual network subnet which the compute nodes of the pool will 
         /// join.
         /// </summary>
         /// <remarks>
-        /// The virtual network must be in the same region and subscription as the Azure Batch account, and the specified 
-        /// subnet should have enough spare IP addresses to accommodate the number of nodes in the pool. This property can 
-        /// only be specified for pools created with a <see cref="CloudPool.CloudServiceConfiguration"/>.
+        /// The virtual network must be in the same region and subscription as the Azure Batch account. The specified subnet 
+        /// should have enough free IP addresses to accommodate the number of nodes in the pool. If the subnet doesn't have 
+        /// enough free IP addresses, the pool will partially allocate compute nodes, and a resize error will occur. The 
+        /// 'MicrosoftAzureBatch' service principal must have the 'Classic Virtual Machine Contributor' Role-Based Access 
+        /// Control (RBAC) role for the specified VNet. The specified subnet must allow communication from the Azure Batch 
+        /// service to be able to schedule tasks on the compute nodes. This can be verified by checking if the specified 
+        /// VNet has any associated Network Security Groups (NSG). If communication to the compute nodes in the specified 
+        /// subnet is denied by an NSG, then the Batch service will set the state of the compute nodes to unusable. For pools 
+        /// created via <see cref="CloudPool.VirtualMachineConfiguration"/> only  only ARM virtual networks ('Microsoft.Network/virtualNetworks') 
+        /// are supported, but for pools created with <see cref="CloudPool.CloudServiceConfiguration"/> both ARM and classic 
+        /// virtual networks are supported. If the specified VNet has any associated Network Security Groups (NSG), then 
+        /// a few reserved system ports must be enabled for inbound communication. For pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>, 
+        /// enable ports 29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. For pools created with 
+        /// a <see cref="CloudPool.CloudServiceConfiguration"/>, enable ports 10100, 20100, and 30100. Also enable outbound 
+        /// connections to Azure Storage on port 443. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         public string SubnetId
         {
@@ -102,6 +132,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.NetworkConfiguration result = new Models.NetworkConfiguration()
             {
+                EndpointConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.EndpointConfiguration, (o) => o.GetTransportObject()),
                 SubnetId = this.SubnetId,
             };
 

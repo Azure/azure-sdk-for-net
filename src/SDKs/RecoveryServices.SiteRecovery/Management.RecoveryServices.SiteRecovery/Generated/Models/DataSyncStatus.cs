@@ -28,4 +28,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "ForSynchronization")]
         ForSynchronization
     }
+    internal static class DataSyncStatusEnumExtension
+    {
+        internal static string ToSerializedValue(this DataSyncStatus? value)  =>
+            value == null ? null : ((DataSyncStatus)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this DataSyncStatus value)
+        {
+            switch( value )
+            {
+                case DataSyncStatus.ForDownTime:
+                    return "ForDownTime";
+                case DataSyncStatus.ForSynchronization:
+                    return "ForSynchronization";
+            }
+            return null;
+        }
+
+        internal static DataSyncStatus? ParseDataSyncStatus(this string value)
+        {
+            switch( value )
+            {
+                case "ForDownTime":
+                    return DataSyncStatus.ForDownTime;
+                case "ForSynchronization":
+                    return DataSyncStatus.ForSynchronization;
+            }
+            return null;
+        }
+    }
 }

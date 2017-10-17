@@ -114,6 +114,8 @@ namespace Compute.Tests
         /// Create Network Resources
         /// Create VMScaleSet
         /// Start VMScaleSet Instances
+        /// Reimage VMScaleSet Instances
+        /// ReimageAll VMScaleSet Instances
         /// Stop VMScaleSet Instance
         /// ManualUpgrade VMScaleSet Instance
         /// Restart VMScaleSet Instance
@@ -146,14 +148,18 @@ namespace Compute.Tests
                         vmssName: vmssName,
                         storageAccount: storageAccountOutput, 
                         imageRef: imageRef, 
-                        inputVMScaleSet: out inputVMScaleSet, 
+                        inputVMScaleSet: out inputVMScaleSet,
+                        createWithManagedDisks: true,
                         vmScaleSetCustomizer: 
-                            (virtualMachineScaleSet) => virtualMachineScaleSet.UpgradePolicy = new UpgradePolicy { Mode = UpgradeMode.Manual });
+                            (virtualMachineScaleSet) => virtualMachineScaleSet.UpgradePolicy = new UpgradePolicy { Mode = UpgradeMode.Manual }
+                    );
 
                     var virtualMachineScaleSetInstanceIDs = new List<string>() {"0", "1"};
 
                     m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "0" };
+                    m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.UpdateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "1" };

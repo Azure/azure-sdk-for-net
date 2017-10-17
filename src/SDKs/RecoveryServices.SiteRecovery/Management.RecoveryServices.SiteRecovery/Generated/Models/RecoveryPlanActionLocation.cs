@@ -28,4 +28,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "Recovery")]
         Recovery
     }
+    internal static class RecoveryPlanActionLocationEnumExtension
+    {
+        internal static string ToSerializedValue(this RecoveryPlanActionLocation? value)  =>
+            value == null ? null : ((RecoveryPlanActionLocation)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this RecoveryPlanActionLocation value)
+        {
+            switch( value )
+            {
+                case RecoveryPlanActionLocation.Primary:
+                    return "Primary";
+                case RecoveryPlanActionLocation.Recovery:
+                    return "Recovery";
+            }
+            return null;
+        }
+
+        internal static RecoveryPlanActionLocation? ParseRecoveryPlanActionLocation(this string value)
+        {
+            switch( value )
+            {
+                case "Primary":
+                    return RecoveryPlanActionLocation.Primary;
+                case "Recovery":
+                    return RecoveryPlanActionLocation.Recovery;
+            }
+            return null;
+        }
+    }
 }
