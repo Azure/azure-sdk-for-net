@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             ProcessNotFound, // When requested program is not installed
             Success,
             Failure,
-            NoToken
+            NoToken,
+            VisualStudioSuccess
         }
 
         internal MockProcessManager(MockProcessManagerRequestType requestType)
@@ -41,13 +42,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             HitCount++;
                                    
-            // This token will expire after 1 hour.
-            // This is used to test the cache.
-            var tokenResult = TokenHelper.GetUserTokenResponse(60*60);
-
             switch (_requestType)
             {
                 case MockProcessManagerRequestType.Success:
+                case MockProcessManagerRequestType.VisualStudioSuccess:
+
+                    // This token will expire after 1 hour.
+                    // This is used to test the cache.
+                    var tokenResult = TokenHelper.GetUserTokenResponse(60 * 60, _requestType == MockProcessManagerRequestType.VisualStudioSuccess);
+
                     return Task.FromResult(new Tuple<bool, string>(true, tokenResult));
 
                 case MockProcessManagerRequestType.ProcessNotFound:

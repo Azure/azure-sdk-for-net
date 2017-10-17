@@ -22,6 +22,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal const string AzureCliUsed = "Tried to get token using Azure CLI.";
 
+        internal const string VisualStudioUsed = "Tried to get token using Visual Studio.";
+
         internal const string CertificateNotFound = "Specified certificate was not found. ";
 
         internal const string MissingResource = "Resouce must be specified.";
