@@ -46,12 +46,19 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USIsImtpZCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USJ9" + "." + midPart + "." + "gGo1wCH2k8kqt6JUdjBMavZX9Sq2L_tKLvVDPUJv3NurZT5JGYyS7gJ11RMrVaxyG48dnlWat1vEBcB-YLOkpL-2gR_sSAoAStPuz8yXAFHxluw-WOqiWxlm2leENqwMmCrMYinm8ohkrScpfRFm6-4fzgczdhNi0vjkTHaycYnrPrH9cZHSL9Qyzt6MH6pEyGct4zmgASI1Vlrga5_x_x8xj-FscIRYorrvx61fThaor8M4FjzglNgum4j5yecn1pIcp75CK43xb7e4jdsfL2nl6wgn5mZj_59b_aKNa3_VA-NmZTlxjvjlL_AHdDkYPlku_B75-0EbfKN2IR5eLw";
         }
 
-        internal static string GetUserTokenResponse(long secondsFromCurrent)
+        internal static string GetUserTokenResponse(long secondsFromCurrent, bool formatForVisualStudio = false)
         {
             string tokenResult =
                 "{  \"accessToken\": \"{accesstoken}\",  \"expiresOn\": \"2017-08-19 18:52:40.624222\",  \"subscription\": \"1135bf8c-f190-46f2-bfd6-d57c57852c04\",  \"tenant\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",  \"tokenType\": \"Bearer\"}";
 
-            return tokenResult.Replace("{accesstoken}", GetUserToken(secondsFromCurrent));
+            tokenResult = tokenResult.Replace("{accesstoken}", GetUserToken(secondsFromCurrent));
+
+            if (formatForVisualStudio)
+            {
+                tokenResult = tokenResult.Replace("accessToken", "access_token");
+            }
+
+            return tokenResult;
         }
 
         /// <summary>

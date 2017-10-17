@@ -87,5 +87,13 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         // End to end test cert url environment variable. 
         // The AppAuthenticationTestCertUrl environment variable should point to a cert in key vault. 
         public static readonly string TestCertUrlEnv = "AppAuthenticationTestCertUrl";
+
+        // Visual Studio related constants
+        public static readonly string TokenProviderPath = "C:\\Users\\johndoe\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_5b4bdc86\\Extensions\\lyzwtlta.zzj\\TokenService\\Microsoft.Asal.TokenService.exe";
+        public static readonly string ServiceConfigFileArgument = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json";
+        public static readonly string ServiceConfigFileArgumentName = "--serviceConfigFile";
+
+        // Test files path
+        public static readonly string TestFilesPath = "TestFiles";
     }
 }
