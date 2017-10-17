@@ -26,9 +26,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// </summary>
         /// <param name="process"></param>
         /// <returns>Tuple of bool and string. Bool is if the process returned output in standard output or error stream. string has the actual output.</returns>
-        public Task<Tuple<bool, string>> ExecuteAsync(Process process)
+        public Task<string> ExecuteAsync(Process process)
         {
-            var tcs = new TaskCompletionSource<Tuple<bool, string>>();
+            var tcs = new TaskCompletionSource<string>();
             StringBuilder output = new StringBuilder();
             StringBuilder error = new StringBuilder();
 
@@ -55,10 +55,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
             // If process exits, set the result
             process.Exited += (sender, args) =>
             {
-                // If we got something on the standard output stream, we assume the process succeeded. 
-                bool success = output.Length > 0;
+                bool success = process.ExitCode == 0;
 
-                tcs.TrySetResult(new Tuple<bool, string>(success, success ? output.ToString() : error.ToString()));
+                if (success)
+                {
+                    tcs.TrySetResult(output.ToString());
+                }
+                else
+                {
+                    tcs.TrySetException(new Exception(error.ToString()));
+                }
             };
 
             // Used to kill the process if it doesn not respond for the given duration. 

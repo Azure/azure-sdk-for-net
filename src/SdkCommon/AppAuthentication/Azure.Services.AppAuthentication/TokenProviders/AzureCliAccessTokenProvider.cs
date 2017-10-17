@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using Microsoft.Azure.Services.AppAuthentication.Helpers;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -44,12 +45,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         private ProcessStartInfo GetProcessStartInfo(string resource)
         {
-            // Validate resource, since it gets sent as a command line argument to Azure CLI
-            if (!Regex.IsMatch(resource, @"^[0-9a-zA-Z-.:/]+$"))
-            {
-               throw new ArgumentException($"Resource {resource} is not in expected format. Only alphanumeric characters, [dot], [colon], [hyphen], and [forward slash] are allowed.");
-            }
-
             ProcessStartInfo startInfo;
 
 #if FullNetFx
@@ -90,34 +85,26 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
             try
             {
-                string accessToken;
+                // Validate resource, since it gets sent as a command line argument to Azure CLI
+                ValidationHelper.ValidateResource(resource);
 
                 // Execute Azure CLI to get token
-                Tuple<bool, string> response = await _processManager.ExecuteAsync(new Process { StartInfo = GetProcessStartInfo(resource)}).ConfigureAwait(false);
+                string response = await _processManager.ExecuteAsync(new Process { StartInfo = GetProcessStartInfo(resource)}).ConfigureAwait(false);
 
-                // If the response was successful
-                if (response.Item1)
+                // Parse the response
+                TokenResponse tokenResponse = TokenResponse.Parse(response);
+
+                var accessToken = tokenResponse.AccessToken2;
+
+                AccessToken token = AccessToken.Parse(accessToken);
+
+                PrincipalUsed.IsAuthenticated = true;
+
+                if (token != null)
                 {
-                    // Parse the response
-                    TokenResponse tokenResponse = TokenResponse.Parse(response.Item2);
-
-                    accessToken = tokenResponse.AccessToken2;
-
-                    AccessToken token = AccessToken.Parse(accessToken);
-
-                    PrincipalUsed.IsAuthenticated = true;
-
-                    if (token != null)
-                    {
-                        // Set principal used based on the claims in the access token. 
-                        PrincipalUsed.UserPrincipalName = !string.IsNullOrEmpty(token.Upn) ? token.Upn : token.Email;
-                        PrincipalUsed.TenantId = token.TenantId;
-                    }
-
-                }
-                else
-                {
-                    throw new Exception(response.Item2);
+                    // Set principal used based on the claims in the access token. 
+                    PrincipalUsed.UserPrincipalName = !string.IsNullOrEmpty(token.Upn) ? token.Upn : token.Email;
+                    PrincipalUsed.TenantId = token.TenantId;
                 }
 
                 return accessToken;

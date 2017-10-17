@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Azure.Services.AppAuthentication.Helpers;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -22,13 +22,34 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
-        private readonly string _tokenProviderFilePath = Path.Combine(Environment.GetEnvironmentVariable("LOCALAPPDATA"), ".IdentityService/AzureServiceAuth/tokenprovider.json");
+        private const string LocalAppDataPathEnv = "LOCALAPPDATA";
+        private const string NoAppDataEnvironmentVariableError = "Environment variable LOCALAPPDATA not set";
+        private const string TokenProviderFilePath = ".IdentityService/AzureServiceAuth/tokenprovider.json";
+        private const string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
 
         internal VisualStudioAccessTokenProvider(VisualStudioTokenProviderFile visualStudioTokenProviderFile, IProcessManager processManager)
         {
-            _visualStudioTokenProviderFile = visualStudioTokenProviderFile;
+            _visualStudioTokenProviderFile = visualStudioTokenProviderFile ?? GetTokenProviderFile();
             _processManager = processManager;
             PrincipalUsed = new Principal { Type = "User" };
+        }
+
+        private VisualStudioTokenProviderFile GetTokenProviderFile()
+        {
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(LocalAppDataPathEnv)))
+            {
+                throw new Exception(NoAppDataEnvironmentVariableError);    
+            }
+
+            string tokenProviderPath = Path.Combine(Environment.GetEnvironmentVariable(LocalAppDataPathEnv),
+                TokenProviderFilePath);
+
+            if (!File.Exists(tokenProviderPath))
+            {
+                throw new Exception($"{TokenProviderFileNotFound} {tokenProviderPath}");
+            }
+
+            return VisualStudioTokenProviderFile.Parse(File.ReadAllText(tokenProviderPath));
         }
 
         private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProviderFile visualStudioTokenProviderFile, 
@@ -69,39 +90,25 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
             try
             {
-                VisualStudioTokenProviderFile visualStudioTokenProviderFile;
-
-                if (_visualStudioTokenProviderFile == null)
-                {
-                    if (!File.Exists(_tokenProviderFilePath))
-                    {
-                        throw new Exception($"Visual Studio Token provider file not found at {_tokenProviderFilePath}");
-                    }
-
-                    visualStudioTokenProviderFile = VisualStudioTokenProviderFile.Parse(File.ReadAllText(_tokenProviderFilePath));
-                }
-                else
-                {
-                    visualStudioTokenProviderFile = _visualStudioTokenProviderFile;
-                }
+                // Validate resource, since it gets sent as a command line argument to Azure CLI
+                ValidationHelper.ValidateResource(resource);
 
                 // Get process start infos based on Visual Studio token providers
-                var processStartInfos = GetProcessStartInfos(visualStudioTokenProviderFile, resource);
+                var processStartInfos = GetProcessStartInfos(_visualStudioTokenProviderFile, resource);
 
                 // To hold reason why token could not be acquired per token provider tried. 
                 Dictionary<string, string> exceptionDictionary = new Dictionary<string, string>();
 
                 foreach (var startInfo in processStartInfos)
                 {
-                    // For each of them, try to get token
-                    Tuple<bool, string> response = await _processManager
-                        .ExecuteAsync(new Process {StartInfo = startInfo})
-                        .ConfigureAwait(false);
-
-                    // If the response was successful
-                    if (response.Item1)
+                    try
                     {
-                        TokenResponse tokenResponse = TokenResponse.Parse(response.Item2);
+                        // For each of them, try to get token
+                        string response = await _processManager
+                            .ExecuteAsync(new Process {StartInfo = startInfo})
+                            .ConfigureAwait(false);
+
+                        TokenResponse tokenResponse = TokenResponse.Parse(response);
 
                         AccessToken token = AccessToken.Parse(tokenResponse.AccessToken);
 
@@ -112,14 +119,18 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             // Set principal used based on the claims in the access token. 
                             PrincipalUsed.UserPrincipalName =
                                 !string.IsNullOrEmpty(token.Upn) ? token.Upn : token.Email;
+
                             PrincipalUsed.TenantId = token.TenantId;
                         }
 
                         return tokenResponse.AccessToken;
+
                     }
-                    
-                    // If token cannot be acquired using a token provider, try the next one
-                    exceptionDictionary[Path.GetFileName(startInfo.FileName)] = response.Item2;
+                    catch (Exception exp)
+                    {
+                        // If token cannot be acquired using a token provider, try the next one
+                        exceptionDictionary[Path.GetFileName(startInfo.FileName)] = exp.Message;
+                    }
                 }
 
                 // Could not acquire access token, throw exception
@@ -129,7 +140,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 foreach (string key in exceptionDictionary.Keys)
                 {
                     message += Environment.NewLine +
-                               $"Exception for Visual Studio token provider {key} : {exceptionDictionary[key]}";
+                               $"Exception for Visual Studio token provider {key} : {exceptionDictionary[key]} ";
                 }
 
                 // Throw exception if none of the token providers worked
