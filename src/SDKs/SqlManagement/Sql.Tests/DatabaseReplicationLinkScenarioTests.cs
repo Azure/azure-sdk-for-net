@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -15,15 +16,16 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateDeleteReplicationLinks()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCreateDeleteReplicationLinks", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 string databaseName = "testdb";
                 Dictionary<string, string> tags = new Dictionary<string, string>();
 
                 //Create a server and a database
-                var v12Server = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var v12Server = context.CreateServer(resourceGroup);
 
                 var dbInput = new Database()
                 {
@@ -32,7 +34,7 @@ namespace Sql.Tests
                 var database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, v12Server.Name, databaseName, dbInput);
 
                 // Create another server
-                var v12Server2 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var v12Server2 = context.CreateServer(resourceGroup);
 
                 // Create another database as an online secondary of the first database
                 var dbInput2 = new Database()
@@ -44,28 +46,29 @@ namespace Sql.Tests
                 var database2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, v12Server2.Name, databaseName, dbInput2);
 
                 // Get replication link name
-                var replicationLinks = sqlClient.Databases.ListReplicationLinks(resourceGroup.Name, v12Server2.Name, databaseName);
+                var replicationLinks = sqlClient.ReplicationLinks.ListByDatabase(resourceGroup.Name, v12Server2.Name, databaseName);
                 string replicationLinkId = replicationLinks.First().Name;
                 
                 // Delete replication link and verify that no more links are returned
-                sqlClient.Databases.DeleteReplicationLink(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId); replicationLinks = sqlClient.Databases.ListReplicationLinks(resourceGroup.Name, v12Server2.Name, databaseName);
-                replicationLinks = sqlClient.Databases.ListReplicationLinks(resourceGroup.Name, v12Server2.Name, databaseName);
+                sqlClient.ReplicationLinks.Delete(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId); replicationLinks = sqlClient.ReplicationLinks.ListByDatabase(resourceGroup.Name, v12Server2.Name, databaseName);
+                replicationLinks = sqlClient.ReplicationLinks.ListByDatabase(resourceGroup.Name, v12Server2.Name, databaseName);
                 Assert.True(replicationLinks.Count() == 0);
-            });
+            }
         }
 
         [Fact]
         public void TestGetListFailoverReplicationLink()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestGetListFailoverReplicationLink", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 string databaseName = "testdb";
                 Dictionary<string, string> tags = new Dictionary<string, string>();
 
                 //Create a server and a database
-                var v12Server = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var v12Server = context.CreateServer(resourceGroup);
 
                 var dbInput = new Database()
                 {
@@ -74,7 +77,7 @@ namespace Sql.Tests
                 var database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, v12Server.Name, databaseName, dbInput);
 
                 // Create another server
-                var v12Server2 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var v12Server2 = context.CreateServer(resourceGroup);
 
                 // Create another database as an online secondary of the first database
                 var dbInput2 = new Database()
@@ -86,12 +89,12 @@ namespace Sql.Tests
                 var database2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, v12Server2.Name, databaseName, dbInput2);
 
                 // Verify there is one Link, get replication link id
-                var replicationLinks = sqlClient.Databases.ListReplicationLinks(resourceGroup.Name, v12Server2.Name, databaseName);
+                var replicationLinks = sqlClient.ReplicationLinks.ListByDatabase(resourceGroup.Name, v12Server2.Name, databaseName);
                 Assert.True(replicationLinks.Count() == 1);
                 string replicationLinkId = replicationLinks.First().Name;
 
                 // Verify Get replication link
-                var replicationLink = sqlClient.Databases.GetReplicationLink(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
+                var replicationLink = sqlClient.ReplicationLinks.Get(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
 
                 // Verify that the second database has a replicationLink to the first, with the first being the primary and the second being the secondary
                 Assert.True(replicationLink.PartnerServer == v12Server.Name);
@@ -100,15 +103,15 @@ namespace Sql.Tests
                 Assert.True(replicationLink.Role == ReplicationRole.Secondary);
 
                 // Failover Replication Link
-                sqlClient.Databases.FailoverReplicationLink(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
+                sqlClient.ReplicationLinks.Failover(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
 
                 // Verify Replication Link after Failover
-                replicationLink = sqlClient.Databases.GetReplicationLink(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
+                replicationLink = sqlClient.ReplicationLinks.Get(resourceGroup.Name, v12Server2.Name, databaseName, replicationLinkId);
 
                 // Verify that Primary and Secondary have switched
                 Assert.True(replicationLink.PartnerRole == ReplicationRole.Secondary);
                 Assert.True(replicationLink.Role == ReplicationRole.Primary);
-            });
+            }
         }
     }
 }

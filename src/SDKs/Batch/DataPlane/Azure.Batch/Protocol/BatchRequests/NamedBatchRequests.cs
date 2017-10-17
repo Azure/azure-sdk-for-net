@@ -743,6 +743,25 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     }
 
     /// <summary>
+    /// An <see cref="IBatchRequest"/> for the JobGet operation.
+    /// </summary>
+    public class JobGetTaskCountsBatchRequest : Protocol.BatchRequest<
+        JobGetTaskCountsOptions,
+        AzureOperationResponse<TaskCounts, JobGetTaskCountsHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobGetTaskCountsBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public JobGetTaskCountsBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
     /// An <see cref="IBatchRequest"/> for the JobPatch operation.
     /// </summary>
     public class JobPatchBatchRequest : Protocol.BatchRequest<

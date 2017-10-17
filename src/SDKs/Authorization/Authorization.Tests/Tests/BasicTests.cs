@@ -19,16 +19,19 @@ using Microsoft.Rest.Azure.OData;
 using System.Reflection;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using Microsoft.Rest;
 
 namespace Authorization.Tests
 {
     public class BasicTests : TestBase, IClassFixture<TestExecutionContext>
     {
+        public const string ResourceGroup = "resourcegroups/AzureAuthzSDK";
         private readonly ITestOutputHelper _output;
         private TestExecutionContext testContext;
         private const int RoleAssignmentPageSize = 20;
         private const string RESOURCE_TEST_LOCATION = "westus";
         private const string WEBSITE_RP_VERSION = "2014-04-01";
+        private const string API_VERSION = "2015-07-01";
 
         public BasicTests(TestExecutionContext context, ITestOutputHelper output)
         {
@@ -79,10 +82,10 @@ namespace Authorization.Tests
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
-                
-                var principalId = testContext.Users.ElementAt(4);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
                 var newRoleAssignment = new RoleAssignmentProperties()
                 {
@@ -90,7 +93,7 @@ namespace Authorization.Tests
                     PrincipalId = principalId.ToString()
                 };
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
 
                 var assignmentId = string.Format(
                     "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
@@ -109,7 +112,7 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                
+
                 //Delete
                 var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
@@ -134,10 +137,10 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestListGet");
 
-                var scope = "subscriptions/" + client.SubscriptionId;
-                var principalId = testContext.Users.ElementAt(5);
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var principalId = new Guid(testContext.Users.ElementAt(5).ObjectId);
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
@@ -151,23 +154,26 @@ namespace Authorization.Tests
 
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 Assert.NotNull(createResult);
-                
+
                 var allRoleAssignments = client.RoleAssignments.List(null);
 
                 Assert.NotNull(allRoleAssignments);
 
                 foreach (var assignment in allRoleAssignments)
                 {
-                    var singleAssignment = client.RoleAssignments.Get(assignment.Properties.Scope, assignment.Name);
+                    if (assignment.Properties.Scope.Contains(ResourceGroup))
+                    {
+                        var singleAssignment = client.RoleAssignments.Get(assignment.Properties.Scope, assignment.Name);
 
-                    Assert.NotNull(singleAssignment);
-                    Assert.NotNull(singleAssignment.Id);
-                    Assert.NotNull(singleAssignment.Name);
-                    Assert.NotNull(singleAssignment.Type);
-                    Assert.NotNull(singleAssignment.Properties);
-                    Assert.NotNull(singleAssignment.Properties.PrincipalId);
-                    Assert.NotNull(singleAssignment.Properties.RoleDefinitionId);
-                    Assert.NotNull(singleAssignment.Properties.Scope);
+                        Assert.NotNull(singleAssignment);
+                        Assert.NotNull(singleAssignment.Id);
+                        Assert.NotNull(singleAssignment.Name);
+                        Assert.NotNull(singleAssignment.Type);
+                        Assert.NotNull(singleAssignment.Properties);
+                        Assert.NotNull(singleAssignment.Properties.PrincipalId);
+                        Assert.NotNull(singleAssignment.Properties.RoleDefinitionId);
+                        Assert.NotNull(singleAssignment.Properties.Scope);
+                    }
                 }
 
                 var deleteResult = client.RoleAssignments.Delete(scope, assignmentName.ToString());
@@ -184,10 +190,10 @@ namespace Authorization.Tests
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameCreateDeleteTest");
 
-                var scope = "subscriptions/" + client.SubscriptionId;
-                var principalId = testContext.Users.ElementAt(3);
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup; ;
+                var principalId = new Guid(testContext.Users.ElementAt(3).ObjectId);
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
@@ -201,7 +207,7 @@ namespace Authorization.Tests
 
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 Assert.NotNull(createResult);
-                
+
                 var deleteResult = client.RoleAssignments.Delete(scope, assignmentName.ToString());
                 Assert.NotNull(deleteResult);
                 var deletedRoleAssignment = deleteResult;
@@ -260,14 +266,14 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 // Read/write the PrincipalId from Testcontext to enable Playback mode test execution
-                var principalId = GetValueFromTestContext(() => testContext.Users.ElementAt(1), Guid.Parse, "PrincipalId").ToString(); 
+                var principalId = GetValueFromTestContext(() => new Guid(testContext.Users.ElementAt(1).ObjectId), Guid.Parse, "PrincipalId").ToString();
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope).First();
 
-                for(int i=0; i<testContext.Users.Count; i++)
+                for (int i = 0; i < testContext.Users.Count; i++)
                 {
-                    var pId = testContext.Users.ElementAt(i);
+                    var pId = new Guid(testContext.Users.ElementAt(i).ObjectId);
                     var newRoleAssignment = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
@@ -294,7 +300,7 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Properties.Scope);
 
                     Assert.Equal(principalId.ToString(), assignment.Properties.PrincipalId);
-               }
+                }
             }
         }
 
@@ -309,12 +315,12 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var allBuiltInRoles = client.RoleDefinitions.List(scope).Where(r => r.Properties.Type.Equals("BuiltInRole", StringComparison.OrdinalIgnoreCase));
                 var allBuiltInRolesList = allBuiltInRoles as IList<RoleDefinition> ?? allBuiltInRoles.ToList();
                 int roleCount = allBuiltInRolesList.Count();
                 int userCount = testContext.Users.Count();
-                
+
                 List<RoleAssignment> createdAssignments = new List<RoleAssignment>();
 
                 try
@@ -344,8 +350,8 @@ namespace Authorization.Tests
                         try
                         {
                             createResult = client.RoleAssignments.Create(
-                                scope, 
-                                assignmentName.ToString(), 
+                                scope,
+                                assignmentName.ToString(),
                                 newRoleAssignment.Properties);
                         }
                         catch (CloudException e)
@@ -362,7 +368,7 @@ namespace Authorization.Tests
                     }
 
                     // Validate
-                 
+
                     // Get the first page of assignments
                     var firstPage = client.RoleAssignments.List(null);
                     Assert.NotNull(firstPage);
@@ -370,7 +376,7 @@ namespace Authorization.Tests
 
                     // Get the next page of assignments
                     var nextPage = client.RoleAssignments.ListNext(firstPage.NextPageLink);
-                    
+
                     Assert.NotNull(nextPage);
                     Assert.NotEqual(0, nextPage.Count());
 
@@ -410,7 +416,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var allRoleAssignments = client.RoleAssignments.ListForScope(
-                    "subscriptions/" + client.SubscriptionId,
+                    "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup,
                     new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
 
 
@@ -430,7 +436,7 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Graph issue when adding user to group, needs investigation")]        
+        [Fact(Skip = "Graph issue when adding user to group, needs investigation")]
         public void RoleAssignmentListWithAssignedToFilterTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -441,13 +447,13 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope).First();
-                
+
                 // Get user and group and add the user to the group
-                var userId = testContext.Users.First();
-                var groupId = testContext.Groups.First();
-                testContext.AddMemberToGroup(groupId, userId.ToString());
+                var user = testContext.Users.First();
+                var group = testContext.Groups.First();
+                testContext.AddMemberToGroup(context, group, user);
 
                 // create assignment to group
                 var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
@@ -455,13 +461,13 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = groupId
+                        PrincipalId = group.ObjectId
                     }
                 };
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_Group");
                 var assignmentToGroup = client.RoleAssignments.Create(
-                    scope, 
-                    assignmentName.ToString(), 
+                    scope,
+                    assignmentName.ToString(),
                     newRoleAssignmentToGroupParams.Properties);
 
                 // create assignment to user
@@ -470,18 +476,18 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = userId.ToString()
+                        PrincipalId = user.ObjectId
                     }
                 };
-                
+
                 assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_User");
-                var assignmentToUser = client.RoleAssignments.Create(scope, 
-                    assignmentName.ToString(), 
+                var assignmentToUser = client.RoleAssignments.Create(scope,
+                    assignmentName.ToString(),
                     newRoleAssignmentToUserParams.Properties);
 
                 // List role assignments with AssignedTo filter = user id
                 var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId.ToString())));
+                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(user.ObjectId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 2);
@@ -499,7 +505,7 @@ namespace Authorization.Tests
                 }
 
                 // Returned assignments contain assignment to group
-                Assert.True(allRoleAssignments.Count(a => a.Properties.PrincipalId.ToString() == groupId) >= 1);
+                Assert.True(allRoleAssignments.Count(a => a.Properties.PrincipalId.ToString() == group.ObjectId) >= 1);
             }
         }
 
@@ -516,15 +522,15 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var allRoleDefinitions = client.RoleDefinitions.List(scope);
-                
+
                 Assert.NotNull(allRoleDefinitions);
 
                 foreach (var roleDefinition in allRoleDefinitions)
                 {
                     var singleRole = client.RoleDefinitions.Get(scope, roleDefinition.Name);
-                    
+
                     Assert.NotNull(singleRole);
 
                     if (singleRole.Properties.Type == "BuiltInRole")
@@ -538,18 +544,18 @@ namespace Authorization.Tests
                         Assert.NotNull(singleRole.Properties.RoleName);
                         Assert.NotNull(singleRole.Properties.Type);
                         Assert.NotNull(singleRole.Properties.Permissions);
-                   
-                        foreach(var assignableScope in singleRole.Properties.AssignableScopes)
+
+                        foreach (var assignableScope in singleRole.Properties.AssignableScopes)
                         {
                             Assert.True(!string.IsNullOrWhiteSpace(assignableScope));
                         }
 
-                        foreach(var permission in singleRole.Properties.Permissions) 
-                        { 
-                            Assert.NotNull(permission.Actions); 
-                            Assert.NotNull(permission.NotActions); 
-                            Assert.False(permission.Actions.Count() == 0 && 
-                            permission.NotActions.Count() == 0); 
+                        foreach (var permission in singleRole.Properties.Permissions)
+                        {
+                            Assert.NotNull(permission.Actions);
+                            Assert.NotNull(permission.NotActions);
+                            Assert.False(permission.Actions.Count() == 0 &&
+                            permission.NotActions.Count() == 0);
                         }
                     }
                 }
@@ -607,7 +613,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var allRoleDefinitions = client.RoleDefinitions.List(scope);
 
                 Assert.NotNull(allRoleDefinitions);
@@ -643,42 +649,42 @@ namespace Authorization.Tests
 
                 RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
-                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId;
+                string scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
                 // Create a custom role definition
                 try
                 {
                     createOrUpdateParams = new RoleDefinition()
+                    {
+                        // Name = roleDefinitionId,
+                        Properties = new RoleDefinitionProperties()
                         {
-                            // Name = roleDefinitionId,
-                            Properties = new RoleDefinitionProperties()
-                            {
-                                RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
-                                Description = "New Test Custom Role",
-                                Permissions = new List<Permission>()
+                            RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
+                            Description = "New Test Custom Role",
+                            Permissions = new List<Permission>()
                                 {
                                     new Permission()
                                     {
                                         Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
                                     }
                                 },
-                                AssignableScopes = new List<string>() { currentSubscriptionId },
-                            },
+                            AssignableScopes = new List<string>() { scope },
+                        },
                     };
 
                     var roleDefinition = client.RoleDefinitions.CreateOrUpdate(
-                        currentSubscriptionId, 
-                        roleDefinitionId.ToString(), 
+                        scope,
+                        roleDefinitionId.ToString(),
                         createOrUpdateParams);
 
                     // Update role name, permissions for the custom role
                     createOrUpdateParams.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
                     createOrUpdateParams.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
 
-                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
+                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(scope,
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
-                   
+
                     // Validate the updated roleDefinition properties.
                     Assert.NotNull(updatedRoleDefinition);
                     Assert.Equal(updatedRoleDefinition.Id, roleDefinition.Id);
@@ -690,14 +696,14 @@ namespace Authorization.Tests
                     Assert.Equal("Microsoft.Support/*/read", updatedRoleDefinition.Properties.Permissions.Single().Actions.Last());
                     // Same assignable scopes
                     Assert.NotEmpty(updatedRoleDefinition.Properties.AssignableScopes);
-                    Assert.Equal(currentSubscriptionId.ToLower(), updatedRoleDefinition.Properties.AssignableScopes.Single().ToLower());
-                
+                    Assert.Equal(scope.ToLower(), updatedRoleDefinition.Properties.AssignableScopes.Single().ToLower());
+
                     // Negative test: Update the role with an empty RoleName 
                     createOrUpdateParams.Properties.RoleName = null;
 
                     try
                     {
-                        client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
+                        client.RoleDefinitions.CreateOrUpdate(scope,
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                     }
@@ -709,7 +715,7 @@ namespace Authorization.Tests
                 finally
                 {
                     var deleteResult = client.RoleDefinitions.Delete(
-                        currentSubscriptionId, 
+                        scope,
                         roleDefinitionId.ToString());
                     Assert.NotNull(deleteResult);
                 }
@@ -729,31 +735,42 @@ namespace Authorization.Tests
 
                 RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
-                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId;
-                string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
+                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                string fullRoleId = "/subscriptions/" + client.SubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
-                Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2"); 
-                var resourceGroup = "newtestrg";   
-                string resourceGroupScope = currentSubscriptionId + "/resourceGroups/" + resourceGroup;
+                Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
+                string resourceGroupScope = currentSubscriptionId;
+
+                // create resource group,This works only if logged in using Username/Password method
+                var resourceClient = PermissionsTests.GetResourceManagementClient(context);
+                try
+                {
+                    resourceClient.ResourceGroups.CreateOrUpdate(
+                        "AzureAuthzSDK1",
+                        new ResourceGroup
+                        { Location = "westus" });
+                }
+                catch
+                { }
 
                 // Create a custom role definition
                 try
                 {
                     createOrUpdateParams = new RoleDefinition()
+                    {
+                        Properties = new RoleDefinitionProperties()
                         {
-                            Properties = new RoleDefinitionProperties()
-                            {
-                                RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
-                                Description = "New Test Custom Role",
-                                Permissions = new List<Permission>()
+                            RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
+                            Description = "New Test Custom Role",
+                            Permissions = new List<Permission>()
                                 {
                                     new Permission()
                                     {
                                         Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
                                     }
                                 },
-                                AssignableScopes = new List<string>() { currentSubscriptionId },
-                            },
+                            AssignableScopes = new List<string>() { currentSubscriptionId },
+                        },
                     };
 
                     var roleDefinition = client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
@@ -772,18 +789,12 @@ namespace Authorization.Tests
                     Assert.NotEmpty(roleDefinition.Properties.Permissions);
                     Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.Properties.Permissions.Single().Actions.Single());
 
-                    // create resource group
-                    var resourceClient = PermissionsTests.GetResourceManagementClient(context);                    
-                    resourceClient.ResourceGroups.CreateOrUpdate(
-                        resourceGroup, 
-                        new ResourceGroup
-                        { Location = "westus"});
                     createOrUpdateParams.Properties.AssignableScopes = new List<string> { resourceGroupScope };
                     createOrUpdateParams.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
 
                     roleDefinition = client.RoleDefinitions.CreateOrUpdate(
                         resourceGroupScope,
-                        newRoleId.ToString(), 
+                        newRoleId.ToString(),
                         createOrUpdateParams);
                     Assert.NotNull(roleDefinition);
 
@@ -797,7 +808,7 @@ namespace Authorization.Tests
                     Assert.NotNull(deleteResult);
                 }
 
-                
+
                 TestUtilities.Wait(1000 * 15);
 
                 // Negative test - create a roledefinition with same name (but different id) as an already existing custom role
@@ -837,7 +848,7 @@ namespace Authorization.Tests
                 {
                     Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
                 }
-              
+
                 // Negative test - create a roledefinition with type=BuiltInRole
                 createOrUpdateParams.Properties.Type = "BuiltInRole";
 
@@ -847,11 +858,11 @@ namespace Authorization.Tests
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                 }
-                catch(CloudException ce)
+                catch (CloudException ce)
                 {
                     Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
-                
+
                 // Negative Test - create a custom role with empty role name
                 // reset the role type
                 createOrUpdateParams.Properties.Type = null;
@@ -917,6 +928,76 @@ namespace Authorization.Tests
                 ////    Assert.Equal("AssignableScopeNotUnderSubscriptionScope", ce.Error.Code);
                 ////    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 ////}
+            }
+        }
+
+        [Fact]
+        public void ProviderOperationsMetadataListGetTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+                var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List(API_VERSION);
+
+                Assert.NotNull(allProviderOperationsMetadatas);
+
+                foreach (var operationsMetadata in allProviderOperationsMetadatas)
+                {
+                    Assert.NotNull(operationsMetadata);
+                    Assert.NotNull(operationsMetadata.Id);
+                    Assert.NotNull(operationsMetadata.Name);
+                    Assert.NotNull(operationsMetadata.Operations);
+                    Assert.NotNull(operationsMetadata.ResourceTypes);
+                    Assert.NotNull(operationsMetadata.Type);
+                }
+
+                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", API_VERSION);
+                Assert.NotNull(providerOperationsMetadata);
+                Assert.NotNull(providerOperationsMetadata.DisplayName);
+                Assert.NotNull(providerOperationsMetadata.Id);
+                Assert.NotNull(providerOperationsMetadata.Name);
+                Assert.NotNull(providerOperationsMetadata.Operations);
+                Assert.NotNull(providerOperationsMetadata.ResourceTypes);
+                Assert.NotNull(providerOperationsMetadata.Type);
+            }
+        }
+
+        [Fact]
+        public void GetProviderOperationsMetadataListWithInvalidAPIVersion()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+				try
+				{
+					var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List("0001-07-01");
+				}catch(CloudException ex)
+				{
+					Assert.Equal(ex.Message, "The resource type 'providerOperations' could not be found in the namespace 'Microsoft.Authorization' for api version '0001-07-01'. The supported api-versions are '2015-07-01-preview,2015-07-01,2016-07-01'.");
+				}
+            }
+        }
+
+        [Fact]
+        public void GetProviderOperationsMetadataListWithInvalidProvider()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+				try
+				{
+					var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("InvalidProvider", API_VERSION);
+				}catch(CloudException ex)
+				{
+					Assert.Equal(ex.Message, "Provider 'InvalidProvider' not found.");
+				}
             }
         }
 

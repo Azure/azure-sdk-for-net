@@ -56,7 +56,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// MB.</param>
         /// <param name="diskResized">A value indicating whether disk is
         /// resized.</param>
-        public InMageAzureV2ProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string protectionStage = default(string), string healthErrorCode = default(string), long? rpoInSeconds = default(long?), string resyncRequired = default(string), int? resyncProgressPercentage = default(int?), long? resyncDurationInSeconds = default(long?), long? diskCapacityInBytes = default(long?), long? fileSystemCapacityInBytes = default(long?), double? sourceDataInMegaBytes = default(double?), double? psDataInMegaBytes = default(double?), double? targetDataInMegaBytes = default(double?), string diskResized = default(string))
+        /// <param name="lastRpoCalculatedTime">The last RPO calculated
+        /// time.</param>
+        public InMageAzureV2ProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string protectionStage = default(string), string healthErrorCode = default(string), long? rpoInSeconds = default(long?), string resyncRequired = default(string), int? resyncProgressPercentage = default(int?), long? resyncDurationInSeconds = default(long?), long? diskCapacityInBytes = default(long?), long? fileSystemCapacityInBytes = default(long?), double? sourceDataInMegaBytes = default(double?), double? psDataInMegaBytes = default(double?), double? targetDataInMegaBytes = default(double?), string diskResized = default(string), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?))
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             PsDataInMegaBytes = psDataInMegaBytes;
             TargetDataInMegaBytes = targetDataInMegaBytes;
             DiskResized = diskResized;
+            LastRpoCalculatedTime = lastRpoCalculatedTime;
             CustomInit();
         }
 
@@ -164,6 +167,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskResized")]
         public string DiskResized { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last RPO calculated time.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastRpoCalculatedTime")]
+        public System.DateTime? LastRpoCalculatedTime { get; set; }
 
     }
 }

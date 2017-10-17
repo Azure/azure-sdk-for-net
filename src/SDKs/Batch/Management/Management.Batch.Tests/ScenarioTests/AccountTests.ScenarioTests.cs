@@ -30,9 +30,19 @@ namespace Batch.Tests.ScenarioTests
 
                 try
                 {
+                    // Check if the account exists
+                    var checkAvailabilityResult = await this.BatchManagementClient.Location.CheckNameAvailabilityAsync(this.Location, batchAccountName);
+                    Assert.True(checkAvailabilityResult.NameAvailable);
+
                     // Create an account
                     BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(this.Location);
                     await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
+
+                    // Check if the account exists now
+                    checkAvailabilityResult = await this.BatchManagementClient.Location.CheckNameAvailabilityAsync(this.Location, batchAccountName);
+                    Assert.False(checkAvailabilityResult.NameAvailable);
+                    Assert.NotNull(checkAvailabilityResult.Message);
+                    Assert.NotNull(checkAvailabilityResult.Reason);
 
                     // Get the account and verify some properties
                     BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateUpdateGetDropServer()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCreateUpdateGetDropServer", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                string serverNameV12 = SqlManagementTestUtilities.GenerateName();
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 string version12 = "12.0";
@@ -35,38 +37,46 @@ namespace Sql.Tests
                     AdministratorLoginPassword = password,
                     Version = version12,
                     Tags = tags,
-                    Location = SqlManagementTestUtilities.DefaultLocationId,
+                    Location = TestEnvironmentUtilities.DefaultLocationId,
                 });
-                SqlManagementTestUtilities.ValidateServer(server1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateServer(server1, serverNameV12, login, version12, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Create second server
-                string server2 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string server2 = SqlManagementTestUtilities.GenerateName();
                 var v2Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, server2, new Server()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
                     Tags = tags,
-                    Location = SqlManagementTestUtilities.DefaultLocationId,
+                    Location = TestEnvironmentUtilities.DefaultLocationId,
                 });
-                SqlManagementTestUtilities.ValidateServer(v2Server, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateServer(v2Server, server2, login, version12, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Get first server
                 var getServer1 = sqlClient.Servers.Get(resourceGroup.Name, serverNameV12);
-                SqlManagementTestUtilities.ValidateServer(getServer1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateServer(getServer1, serverNameV12, login, version12, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Get second server
                 var getServer2 = sqlClient.Servers.Get(resourceGroup.Name, server2);
-                SqlManagementTestUtilities.ValidateServer(getServer2, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
+                SqlManagementTestUtilities.ValidateServer(getServer2, server2, login, version12, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 var listServers = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listServers.Count());
+
+                // Update first server
+                Dictionary<string, string> newTags = new Dictionary<string, string>()
+                    {
+                        { "asdf", "zxcv" }
+                    };
+                var updateServer1 = sqlClient.Servers.Update(resourceGroup.Name, serverNameV12, new ServerUpdate { Tags = newTags });
+                SqlManagementTestUtilities.ValidateServer(updateServer1, serverNameV12, login, version12, newTags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Drop server, update count
                 sqlClient.Servers.Delete(resourceGroup.Name, serverNameV12);
 
                 var listServers2 = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(1, listServers2.Count());
-            });
+            }
         }
     }
 }

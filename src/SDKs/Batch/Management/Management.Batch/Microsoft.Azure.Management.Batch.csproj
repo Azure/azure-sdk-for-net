@@ -5,9 +5,9 @@
     <Description>Provides management capabilities for Azure Batch service accounts.</Description>
     <AssemblyTitle>Microsoft Azure Batch Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Batch</AssemblyName>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <VersionPrefix>5.1.0</VersionPrefix>
     <PackageTags>Microsoft Azure batch management</PackageTags>
-    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/Batch/Management/changelog.md</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-management-changelog</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>

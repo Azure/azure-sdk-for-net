@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Authorization/providerOperations/InvalidProvider?api-version=2015-07-01&$expand=resourceTypes",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnMvSW52YWxpZFByb3ZpZGVyP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEmJGV4cGFuZD1yZXNvdXJjZVR5cGVz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4074ccf0-ec81-4824-b468-8f188d855775"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "87"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 26 Jul 2017 07:22:10 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
+        ],
+        "x-ms-request-id": [
+          "1230792d-66c5-4c16-b777-833798722c4b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "410ec018-d64f-4c28-9b1a-53b6c61864ce"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170726T072211Z:410ec018-d64f-4c28-9b1a-53b6c61864ce"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f"
+  }
+}

@@ -19,6 +19,7 @@ namespace Monitor.Tests.BasicTests
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
         
         [Fact]
+        [Trait("Category", "Mock")]
         public void GetMetricDefinitionsTest()
         {
             IList<MetricDefinition> expectedMetricDefinitionCollection = GetMetricDefinitionCollection(ResourceUri);
@@ -30,62 +31,104 @@ namespace Monitor.Tests.BasicTests
             RecordedDelegatingHandler handler = new RecordedDelegatingHandler(response);
             var insightsClient = GetMonitorClient(handler);
 
-            var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<MetricDefinition>("names eq 'CpuPercentage'");
-            var actualMetricDefinitions = insightsClient.MetricDefinitions.ListAsync(resourceUri: ResourceUri, odataQuery: filterString, cancellationToken: new CancellationToken()).Result;
+            var actualMetricDefinitions = insightsClient.MetricDefinitions.ListAsync(resourceUri: ResourceUri, cancellationToken: new CancellationToken()).Result;
 
             AreEqual(expectedMetricDefinitionCollection, actualMetricDefinitions.ToList<MetricDefinition>());
         }
 
         [Fact]
+        [Trait("Category", "Mock")]
         public void GetMetricsTest()
         {
-            IList<Metric> expectedMetricCollection = GetMetricCollection(ResourceUri);
+            Response expectedMetricCollection = GetMetricCollection(ResourceUri);
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Concat("{ \"value\":", expectedMetricCollection.ToJson(), "}"))
+                Content = new StringContent(expectedMetricCollection.ToJson())
             };
 
             RecordedDelegatingHandler handler = new RecordedDelegatingHandler(response);
             var insightsClient = GetMonitorClient(handler);
 
-            var filterString = new Microsoft.Rest.Azure.OData.ODataQuery<Metric>("timeGrain eq duration'PT1M' and startTime eq 2014-01-01T06:00:00Z and endTime eq 2014-01-10T06:00:00Z");
-            var actualMetrics = insightsClient.Metrics.ListAsync(resourceUri: ResourceUri, odataQuery: filterString, cancellationToken: CancellationToken.None).Result;
+            var actualMetrics = insightsClient.Metrics.ListAsync(
+                resourceUri: ResourceUri,
+                timespan: "2017-08-10T22:19:35Z/2017-08-10T23:19:35Z",
+                resultType: ResultType.Data,
+                cancellationToken: CancellationToken.None).Result;
 
-            AreEqual(expectedMetricCollection, actualMetrics.ToList<Metric>());
+            // TODO: check the other values too
+            AreEqual(expectedMetricCollection, actualMetrics);
         }
 
-        private IList<Metric> GetMetricCollection(string resourceId)
+        private Response GetMetricCollection(string resourceId)
         {
-            return new List<Metric>
+            return new Response
             {
-                new Metric
+                Timespan = "2017-08-10T22:19:35Z/2017-08-10T23:19:35Z",
+                Cost = 0,
+                Interval = TimeSpan.FromMinutes(1),
+                Value = new List<Metric>
                 {
-                    Name = new LocalizableString {LocalizedValue = "CPU Percentage", Value = "CpuPercentage"},
-                    Unit = Unit.Percent,
-                    Data = new List<MetricValue>
+                    new Metric
                     {
-                        new MetricValue
+                        Id = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/Microsoft.Insights/metrics/CpuTime",
+                        Type = "Microsoft.Insights/metrics",
+                        Name = new LocalizableString {LocalizedValue = "CPU Time", Value = "CpuTime"},
+                        Unit = Unit.Seconds,
+                        Timeseries = new List<TimeSeriesElement>
                         {
-                            Average = 10.0,
-                            Count = 1,
-                            Maximum = 10.0,
-                            Minimum = 10.0,
-                            TimeStamp = DateTime.Parse("2014-08-20T12:15:23.00Z"),
-                            Total = 10.0
+                            new TimeSeriesElement
+                            {
+                                Data = new List<MetricValue>
+                                {
+                                    new MetricValue
+                                    {
+                                        TimeStamp = DateTime.Parse("2017-08-10T22:19:00Z"),
+                                        Total = 0.0
+                                    },
+                                    new MetricValue
+                                    {
+                                        TimeStamp = DateTime.Parse("2017-08-10T22:20:00Z"),
+                                        Total = 0.0
+                                    },
+                                    new MetricValue
+                                    {
+                                        TimeStamp = DateTime.Parse("2017-08-10T22:21:00Z"),
+                                        Total = 0.0
+                                    }
+                                },
+                                Metadatavalues = new List<MetadataValue>()
+                            }
                         }
                     }
-                }
+                } 
             };
+        }
+
+        private void AreEqual(Response exp, Response act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Timespan, act.Timespan);
+                Assert.Equal(exp.Interval, act.Interval);
+                Assert.Equal(exp.Cost, act.Cost);
+                AreEqual(exp.Value, act.Value);
+            }
         }
 
         private void AreEqual(IList<Metric> exp, IList<Metric> act)
         {
             if (exp != null)
             {
+                Assert.NotNull(act);
+
                 for (int i = 0; i < exp.Count; i++)
                 {
                     AreEqual(exp[i], act[i]);
                 }
+            }
+            else
+            {
+                Assert.Null(act);
             }
         }
 
@@ -93,16 +136,62 @@ namespace Monitor.Tests.BasicTests
         {
             if (exp != null)
             {
-                AreEqual(exp.Name, act.Name);
+                Assert.Equal(exp.Id, act.Id);
+                Assert.Equal(exp.Type, act.Type);
+                Utilities.AreEqual(exp.Name, act.Name);
                 Assert.Equal(exp.Unit, act.Unit);
+                AreEqual(exp.Timeseries, act.Timeseries);
+            }
+        }
 
-                if (exp.Data != null)
+        private void AreEqual(IList<TimeSeriesElement> exp, IList<TimeSeriesElement> act)
+        {
+            if (exp != null)
+            {
+                Assert.NotNull(act);
+                Assert.Equal(exp.Count, act.Count);
+
+                for (int i = 0; i < exp.Count; i++)
                 {
-                    for (int i = 0; i < exp.Data.Count; i++)
-                    {
-                        AreEqual(exp.Data[i], act.Data[i]);
-                    }
+                    AreEqual(exp[i], act[i]);
                 }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        private void AreEqual(TimeSeriesElement exp, TimeSeriesElement act)
+        {
+            if (exp != null)
+            {
+                Assert.NotNull(act);
+
+                AreEqual(exp.Data, act.Data);
+                AreEqual(exp.Metadatavalues, act.Metadatavalues);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        private void AreEqual(IList<MetricValue> exp, IList<MetricValue> act)
+        {
+            if (exp != null)
+            {
+                Assert.NotNull(act);
+                Assert.Equal(exp.Count, act.Count);
+
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
             }
         }
 
@@ -118,7 +207,40 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.Total, act.Total);
             }
         }
-        
+
+        private void AreEqual(IList<MetadataValue> exp, IList<MetadataValue> act)
+        {
+            if (exp != null)
+            {
+                Assert.NotNull(act);
+                Assert.Equal(exp.Count, act.Count);
+
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        private void AreEqual(MetadataValue exp, MetadataValue act)
+        {
+            if (exp != null)
+            {
+                Assert.NotNull(act);
+
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.Value, act.Value);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
         #region MetricDefinition helpers
 
         private static void AreEqual(IList<MetricDefinition> exp, IList<MetricDefinition> act)
@@ -136,7 +258,7 @@ namespace Monitor.Tests.BasicTests
         {
             if (exp != null)
             {
-                AreEqual(exp.Name, act.Name);
+                Utilities.AreEqual(exp.Name, act.Name);
                 Assert.Equal(exp.ResourceId, act.ResourceId);
                 Assert.Equal(exp.Unit, act.Unit);
                 Assert.Equal(exp.PrimaryAggregationType, act.PrimaryAggregationType);

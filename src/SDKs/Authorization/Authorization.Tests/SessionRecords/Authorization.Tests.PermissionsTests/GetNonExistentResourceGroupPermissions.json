@@ -6,29 +6,48 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4d83b220-ef88-4dda-8a20-79f92088fa95"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": []\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": []\r\n    },\r\n    {\r\n      \"actions\": [\r\n        \"*/read\"\r\n      ],\r\n      \"notActions\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "61"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 25 May 2017 07:12:51 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-request-id": [
-          "ad65e89f-06e6-4282-aceb-4d7adaec4201"
+        "Transfer-Encoding": [
+          "chunked"
         ],
-        "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_0"
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=productionb; path=/"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "bb01e7ed-4338-44d6-90fc-5d89424ba8fc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -36,29 +55,17 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
-        ],
-        "x-ms-correlation-request-id": [
-          "9696f0d5-3ac7-4bc9-a88a-8984b0b0b4e2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20150902T220611Z:9696f0d5-3ac7-4bc9-a88a-8984b0b0b4e2"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 02 Sep 2015 22:06:10 GMT"
-        ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "56dca62e-362f-4d9f-9932-62e1699b5f25"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20170525T071251Z:56dca62e-362f-4d9f-9932-62e1699b5f25"
         ]
       },
       "StatusCode": 200

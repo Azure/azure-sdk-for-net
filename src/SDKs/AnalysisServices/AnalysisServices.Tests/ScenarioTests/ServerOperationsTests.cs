@@ -42,13 +42,13 @@ namespace AnalysisServices.Tests.ScenarioTests
                             AnalysisServicesTestUtilities.DefaultServerName,
                             analysisServicesServer);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
                 }
 
-                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
-                Assert.Equal(resultCreate.State, "Succeeded");
+                Assert.Equal("Succeeded", resultCreate.ProvisioningState);
+                Assert.Equal("Succeeded", resultCreate.State);
 
                 // get the server and ensure that all the values are properly set.
                 var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
@@ -57,16 +57,46 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
                 Assert.NotEmpty(resultGet.ServerFullName);
-                Assert.Equal(resultGet.Tags.Count, 2);
+                Assert.Equal(2, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
-                Assert.Equal(resultGet.AsAdministrators.Members.Count, 2);
-                Assert.Equal(AnalysisServicesTestUtilities.DefaultBakcupStorageAccount, resultGet.BackupConfiguration.StorageAccount);
-                Assert.Equal(AnalysisServicesTestUtilities.DefaultBackupBlobContainer, resultGet.BackupConfiguration.BlobContainer);
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
                 // Confirm that the server creation did succeed
                 Assert.True(resultGet.ProvisioningState == "Succeeded");
                 Assert.True(resultGet.State == "Succeeded");
+
+                // List gateway status of the provisioned server will return error since no gateway is configured on the server.
+                try
+                {
+                    var listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName);
+                }
+                catch (GatewayListStatusErrorException gatewayException)
+                {
+                    Assert.Equal(HttpStatusCode.BadRequest, gatewayException.Response.StatusCode);
+                    var errorResponse = gatewayException.Body.Error;
+                    var expectedMessage = string.Format("A unified gateway is not associated with server {0}.", AnalysisServicesTestUtilities.DefaultServerName);
+                    Assert.Equal("GatewayNotAssociated", errorResponse.Code);
+                    Assert.Equal(expectedMessage, errorResponse.Message); 
+                }
+                
+                // List gateway status of non-existing server will return error since resource not found.
+                const string notexistingServerName = "notexistingserver";
+                try
+                {
+                    var listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup, notexistingServerName);
+                }
+                catch (GatewayListStatusErrorException gatewayException)
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, gatewayException.Response.StatusCode);
+                    var errorResponse = gatewayException.Body.Error;
+                    var expectedMessage = string.Format("The Resource 'Microsoft.AnalysisServices/servers/{0}' under resource group '{1}' was not found.",
+                        notexistingServerName, AnalysisServicesTestUtilities.DefaultResourceGroup);
+                    Assert.Equal("ResourceNotFound", errorResponse.Code);
+                    Assert.Equal(expectedMessage, errorResponse.Message);
+                }
 
                 // Update the server and confirm the updates make it in.
                 Dictionary<string, string> updatedTags = new Dictionary<string, string>
@@ -75,23 +105,29 @@ namespace AnalysisServices.Tests.ScenarioTests
                     };
 
                 var updatedAdministrators = AnalysisServicesTestUtilities.DefaultAdministrators;
-                updatedAdministrators.Add("aztest2@aspaas.ccsctp.net");
-                string secondBackupStorageAccountAccessKey = Environment.GetEnvironmentVariable("AAS_SECOND_BACKUP_STORAGE_ACCESS_KEY");
-                BackupConfiguration updatedBackupConfiguration = new BackupConfiguration("FT_Permanent_Group_A/stabletestbackupsa2", "backups", secondBackupStorageAccountAccessKey);
+                updatedAdministrators.Add("aztest2@stabletest.ccsctp.net");
 
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
-                    {
-                        Sku = resultGet.Sku,
-                        Tags = updatedTags,
-                        AsAdministrators = new ServerAdministrators(updatedAdministrators),
-                        BackupConfiguration = updatedBackupConfiguration
+                {
+                    Sku = resultGet.Sku,
+                    Tags = updatedTags,
+                    AsAdministrators = new ServerAdministrators(updatedAdministrators),
+                    BackupBlobContainerUri = AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri
                 };
 
-                var resultUpdate = client.Servers.Update(
+                AnalysisServicesServer resultUpdate = null;
+                try
+                {
+                    resultUpdate =
+                        client.Servers.Update(
                                 AnalysisServicesTestUtilities.DefaultResourceGroup,
                                 AnalysisServicesTestUtilities.DefaultServerName,
-                                updateParameters
-                                );
+                                updateParameters);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
 
                 Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
                 Assert.Equal("Succeeded", resultUpdate.State);
@@ -102,20 +138,19 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // validate the server creation process
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
-                Assert.Equal(resultGet.Tags.Count, 1);
+                Assert.Equal(1, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("updated1"));
-                Assert.Equal(resultGet.AsAdministrators.Members.Count, 3);
-                Assert.Equal("FT_Permanent_Group_A/stabletestbackupsa2", resultGet.BackupConfiguration.StorageAccount);
-                Assert.Equal("backups", resultGet.BackupConfiguration.BlobContainer);
+                Assert.Equal(3, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal(AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
 
                 // Create another server and ensure that list account returns both
                 var secondServer = AnalysisServicesTestUtilities.DefaultServerName + '2';
-                resultCreate =  client.Servers.Create(
+                resultCreate = client.Servers.Create(
                                     AnalysisServicesTestUtilities.DefaultResourceGroup,
                                     secondServer,
                                     analysisServicesServer);
 
-                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
                 var listResponse = client.Servers.List();
 
@@ -175,11 +210,9 @@ namespace AnalysisServices.Tests.ScenarioTests
                 var client = this.GetAnalysisServicesClient(context);
 
                 AnalysisServicesServer analysisServicesServer = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
-                analysisServicesServer.Sku = new ResourceSku
-                {
-                    Name = SkuName.B1.ToString(),
-                    Tier = SkuTier.Basic.ToString()
-                };
+
+                SkuEnumerationForNewResourceResult skusListForNew = client.Servers.ListSkusForNew();
+                analysisServicesServer.Sku = skusListForNew.Value.First();
 
                 AnalysisServicesServer resultCreate = null;
                 try
@@ -206,11 +239,10 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
                 Assert.NotEmpty(resultGet.ServerFullName);
-                Assert.Equal(resultGet.Sku.Name, analysisServicesServer.Sku.Name);
-                Assert.Equal(resultGet.Sku.Tier, analysisServicesServer.Sku.Tier);
-                Assert.Equal(resultGet.Tags.Count, 2);
+                Assert.Equal(analysisServicesServer.Sku.Name, resultGet.Sku.Name);
+                Assert.Equal(2, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
-                Assert.Equal(resultGet.AsAdministrators.Members.Count, 2);
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
                 // Confirm that the server creation did succeed
@@ -218,12 +250,9 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.True(resultGet.State == "Succeeded");
 
                 // Scale up the server and verify
-                ResourceSku newSku = new ResourceSku
-                {
-                    Name = SkuName.S0.ToString(),
-                    Tier = SkuTier.Standard.ToString()
-                };
-                
+                SkuEnumerationForExistingResourceResult skusListForExisting = client.Servers.ListSkusForExisting(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+                ResourceSku newSku = skusListForExisting.Value.Where(detail => detail.Sku.Name != analysisServicesServer.Sku.Name).First().Sku;
+
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
                 {
                     Sku = newSku
@@ -244,11 +273,11 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
                 Assert.NotEmpty(resultGet.ServerFullName);
-                Assert.Equal(resultGet.Sku.Name, newSku.Name);
-                Assert.Equal(resultGet.Sku.Tier, newSku.Tier);
-                Assert.Equal(resultGet.Tags.Count, 2);
+                Assert.Equal(newSku.Name, resultGet.Sku.Name);
+                Assert.Equal(newSku.Tier, resultGet.Sku.Tier);
+                Assert.Equal(2, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
-                Assert.Equal(resultGet.AsAdministrators.Members.Count, 2);
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
                 // delete the server with its old name, which should also succeed.
@@ -256,6 +285,86 @@ namespace AnalysisServices.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        public void CreateServerWithGatewayTest()
+        {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = this.GetAnalysisServicesClient(context);
+
+                AnalysisServicesServer analysisServicesServer = AnalysisServicesTestUtilities.GetAnalysisServicesResourceWithGateway();
+                AnalysisServicesServer resultCreate = null;
+                try
+                {
+                    // Create a test server
+                    resultCreate =
+                        client.Servers.Create(
+                            AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName,
+                            analysisServicesServer);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                Assert.Equal("Succeeded", resultCreate.ProvisioningState);
+                Assert.Equal("Succeeded", resultCreate.State);
+
+                // get the server and ensure that all the values are properly set.
+                var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(2, resultGet.Tags.Count);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(1, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+
+                // Confirm that the server creation did succeed
+                Assert.True(resultGet.ProvisioningState == "Succeeded");
+                Assert.True(resultGet.State == "Succeeded");
+
+                // List gateway status.
+                var listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName);
+
+                Assert.Equal(listGatewayStatus.Status, Status.Live);
+
+                // Dissociate gateway.
+                client.Servers.DissociateGateway(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // List gateway status again.
+                try
+                {
+                    listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName);
+                }
+                catch (GatewayListStatusErrorException gatewayException)
+                {
+                    Assert.Equal(HttpStatusCode.BadRequest, gatewayException.Response.StatusCode);
+                    var errorResponse = gatewayException.Body.Error;
+                    var expectedMessage = string.Format("A unified gateway is not associated with server {0}.", AnalysisServicesTestUtilities.DefaultServerName);
+                    Assert.Equal("GatewayNotAssociated", errorResponse.Code);
+                    Assert.Equal(expectedMessage, errorResponse.Message);
+                }
+
+                // delete the server with its old name, which should also succeed.
+                client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // test that the server is gone
+                // now list by resource group:
+                var listResponse = client.Servers.ListByResourceGroup(AnalysisServicesTestUtilities.DefaultResourceGroup);
+
+                // Assert that there are at least two accounts in the list
+                Assert.True(listResponse.Count() >= 0);
+            }
+        }
     }
 }

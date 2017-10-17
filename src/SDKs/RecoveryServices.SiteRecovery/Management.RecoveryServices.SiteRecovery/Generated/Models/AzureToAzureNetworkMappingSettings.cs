@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// A2A  Network Mapping fabric specific settings.
+    /// A2A Network Mapping fabric specific settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AzureToAzure")]
     public partial class AzureToAzureNetworkMappingSettings : NetworkMappingFabricSpecificSettings

@@ -24,7 +24,7 @@ namespace Network.Tests.Tests
             HttpMockServer.RecordsDirectory = "SessionRecords";
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void EmptyRouteTableTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -80,7 +80,7 @@ namespace Network.Tests.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void RouteTableApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -190,7 +190,7 @@ namespace Network.Tests.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void SubnetRouteTableTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
