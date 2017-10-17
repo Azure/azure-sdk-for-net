@@ -52,7 +52,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="source">the ultimate source of the failure (usually
         /// either SYSTEM or USER).</param>
         /// <param name="description">the error message description</param>
-        public JobInnerError(int? diagnosticCode = default(int?), SeverityTypes? severity = default(SeverityTypes?), string details = default(string), string component = default(string), string errorId = default(string), string helpLink = default(string), string internalDiagnostics = default(string), string message = default(string), string resolution = default(string), string source = default(string), string description = default(string))
+        /// <param name="innerError">the inner error of this specific job error
+        /// message, if any.</param>
+        public JobInnerError(int? diagnosticCode = default(int?), SeverityTypes? severity = default(SeverityTypes?), string details = default(string), string component = default(string), string errorId = default(string), string helpLink = default(string), string internalDiagnostics = default(string), string message = default(string), string resolution = default(string), string source = default(string), string description = default(string), JobInnerError innerError = default(JobInnerError))
         {
             DiagnosticCode = diagnosticCode;
             Severity = severity;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             Resolution = resolution;
             Source = source;
             Description = description;
+            InnerError = innerError;
             CustomInit();
         }
 
@@ -144,6 +147,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets the inner error of this specific job error message, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "innerError")]
+        public JobInnerError InnerError { get; private set; }
 
     }
 }
