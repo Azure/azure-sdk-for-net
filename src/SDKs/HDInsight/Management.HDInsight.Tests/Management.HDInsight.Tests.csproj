@@ -25,6 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CapabilitiesTests\TestGetCapabilities.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.ConfigurationsTests\TestGetConfigurations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -38,6 +44,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateLinuxSparkClusterWithComponentVersion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithDataLakeStorage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyExtendedParameters.json">
@@ -56,6 +65,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SessionRecords\Management.HDInsight.Tests.ListTests\TestListClustersInSubscription.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.OMSTests\TestOMSOnRunningCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SessionRecords\Management.HDInsight.Tests.ResizeTests\TestResizeCluster.json">
