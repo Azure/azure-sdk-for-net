@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataLake.Store</PackageId>
     <Description>Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.</Description>
-    <VersionPrefix>2.2.1</VersionPrefix>
+    <VersionPrefix>2.3.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
     <PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management</PackageTags>
     <PackageReleaseNotes>See https://aka.ms/adlsdotnetsdkchangelog for release notes.</PackageReleaseNotes>

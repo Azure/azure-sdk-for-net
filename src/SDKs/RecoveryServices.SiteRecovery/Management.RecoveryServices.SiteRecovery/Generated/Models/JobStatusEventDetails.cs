@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="jobId">Job arm id for the event.</param>
         /// <param name="jobFriendlyName">JobName for the Event.</param>
-        /// <param name="jobStatus">JobStatus for the  Event.</param>
+        /// <param name="jobStatus">JobStatus for the Event.</param>
         /// <param name="affectedObjectType">AffectedObjectType for the
         /// event.</param>
         public JobStatusEventDetails(string jobId = default(string), string jobFriendlyName = default(string), string jobStatus = default(string), string affectedObjectType = default(string))
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string JobFriendlyName { get; set; }
 
         /// <summary>
-        /// Gets or sets jobStatus for the  Event.
+        /// Gets or sets jobStatus for the Event.
         /// </summary>
         [JsonProperty(PropertyName = "jobStatus")]
         public string JobStatus { get; set; }

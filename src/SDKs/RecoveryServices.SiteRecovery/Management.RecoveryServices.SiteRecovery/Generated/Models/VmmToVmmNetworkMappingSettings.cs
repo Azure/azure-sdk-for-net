@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// E2E  Network Mapping fabric specific settings.
+    /// E2E Network Mapping fabric specific settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VmmToVmm")]
     public partial class VmmToVmmNetworkMappingSettings : NetworkMappingFabricSpecificSettings

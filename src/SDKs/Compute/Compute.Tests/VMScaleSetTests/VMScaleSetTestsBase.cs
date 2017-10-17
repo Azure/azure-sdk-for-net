@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,46 @@ namespace Compute.Tests
 
             return vmExtension;
         }
+
+        protected VirtualMachineScaleSetExtension GetAzureDiskEncryptionExtension()
+        {
+            // NOTE: Replace dummy values for AAD credentials and KeyVault urls below by running DiskEncryptionPreRequisites.ps1.
+            // There is no ARM client implemented for key-vault in swagger test framework yet. These changes need to go sooner to
+            // unblock powershell cmdlets/API for disk encryption on scale set. So recorded this test by creating required resources
+            // in prod and replaced them with dummy value before check-in.
+            //
+            // Follow below steps to run this test again:
+            //   Step 1: Execute DiskEncryptionPreRequisites.ps1. Use same subscription and region as you are running test in.
+            //   Step 2: Replace aadClientId, aadClientSecret, keyVaultUrl, and keyVaultId values below with the values returned
+            //           by above PS script
+            //   Step 3: Run test and record session
+            //   Step 4: Delete KeyVault, AAD app created by above PS script
+            //   Step 5: Replace values for AAD credentials and KeyVault urls by dummy values before check-in
+            string aadClientId = Guid.NewGuid().ToString();
+            string aadClientSecret = Guid.NewGuid().ToString();
+            string keyVaultUrl = "https://adetestkv1.vault.azure.net/";
+            string keyVaultId =
+                "/subscriptions/d0d8594d-65c5-481c-9a58-fea6f203f1e2/resourceGroups/adetest/providers/Microsoft.KeyVault/vaults/adetestkv1";
+
+            string settings =
+                string.Format("\"AADClientID\": \"{0}\", \"KeyVaultURL\": \"{1}\", \"KeyEncryptionKeyURL\": \"\", \"KeyVaultResourceId\":\"{2}\", \"KekVaultResourceId\": \"\", \"KeyEncryptionAlgorithm\": \"{3}\", \"VolumeType\": \"{4}\", \"EncryptionOperation\": \"{5}\"",
+                                aadClientId, keyVaultUrl, keyVaultId, "", "All", "DisableEncryption");
+
+            string protectedSettings = string.Format("\"AADClientSecret\": \"{0}\"", aadClientSecret);
+
+            var vmExtension = new VirtualMachineScaleSetExtension
+            {
+                Name = "adeext1",
+                Publisher = "Microsoft.Azure.Security",
+                Type = "ADETest",
+                TypeHandlerVersion = "2.0",
+                Settings = new JRaw("{ " + settings + " }"),
+                ProtectedSettings = new JRaw("{ " + protectedSettings + " }")
+            };
+
+            return vmExtension;
+        }
+
         protected VirtualMachineScaleSet CreateDefaultVMScaleSetInput(
             string rgName,
             string storageAccountName,

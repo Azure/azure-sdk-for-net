@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Sql.Tests
@@ -15,10 +13,27 @@ namespace Sql.Tests
         [Fact]
         public void TestUpdateEncryptionProtector()
         {
-            string testPrefix = "sqlencprotest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestWithTdeByokSetup(suiteName, "TestUpdateEncryptionProtector", testPrefix, (resClient, sqlClient, resourceGroup, server, keyBundle) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = sqlClient.Servers.CreateOrUpdate(
+                    resourceGroup.Name, 
+                    serverName: SqlManagementTestUtilities.GenerateName(),
+                    parameters: new Server
+                {
+                    AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
+                    AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
+                    Location = resourceGroup.Location,
+                    Identity = new ResourceIdentity()
+                    {
+                        Type = IdentityType.SystemAssigned
+                    }
+                });
+
+                var keyBundle = SqlManagementTestUtilities.CreateKeyVaultKeyWithServerAccess(context, resourceGroup, server);
+
                 // Create server key
                 string serverKeyName = SqlManagementTestUtilities.GetServerKeyNameFromKeyBundle(keyBundle);
                 string serverKeyUri = keyBundle.Key.Kid;
@@ -30,27 +45,27 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateServerKey(serverKey, serverKeyName, "AzureKeyVault", serverKeyUri);
 
                 // Update to Key Vault
-                sqlClient.Servers.CreateOrUpdateEncryptionProtector(resourceGroup.Name, server.Name, new EncryptionProtector()
+                sqlClient.EncryptionProtectors.CreateOrUpdate(resourceGroup.Name, server.Name, new EncryptionProtector()
                 {
                     ServerKeyName = serverKeyName,
                     ServerKeyType = "AzureKeyVault"
                 });
 
-                EncryptionProtector encProtector1 = sqlClient.Servers.GetEncryptionProtector(resourceGroup.Name, server.Name);
+                EncryptionProtector encProtector1 = sqlClient.EncryptionProtectors.Get(resourceGroup.Name, server.Name);
                 Assert.Equal("AzureKeyVault", encProtector1.ServerKeyType);
                 Assert.Equal(serverKeyName, encProtector1.ServerKeyName);
 
                 // Update to Service Managed
-                sqlClient.Servers.CreateOrUpdateEncryptionProtector(resourceGroup.Name, server.Name, new EncryptionProtector()
+                sqlClient.EncryptionProtectors.CreateOrUpdate(resourceGroup.Name, server.Name, new EncryptionProtector()
                 {
                     ServerKeyName = "ServiceManaged",
                     ServerKeyType = "ServiceManaged"
                 });
 
-                EncryptionProtector encProtector2 = sqlClient.Servers.GetEncryptionProtector(resourceGroup.Name, server.Name);
+                EncryptionProtector encProtector2 = sqlClient.EncryptionProtectors.Get(resourceGroup.Name, server.Name);
                 Assert.Equal("ServiceManaged", encProtector2.ServerKeyType);
                 Assert.Equal("ServiceManaged", encProtector2.ServerKeyName);
-            });
+            }
         }
     }
 }

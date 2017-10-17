@@ -38,6 +38,7 @@
     public partial class JobEnableOptions : ITimeoutOptions { }
     public partial class JobGetAllLifetimeStatisticsOptions : ITimeoutOptions { }
     public partial class JobGetOptions : ITimeoutOptions, IODataSelect, IODataExpand { }
+    public partial class JobGetTaskCountsOptions : ITimeoutOptions { }
     public partial class JobListFromJobScheduleOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }
     public partial class JobListFromJobScheduleNextOptions : IOptions { }
     public partial class JobListOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }

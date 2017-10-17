@@ -21,89 +21,32 @@ using Sql.Tests.Utilities;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Rest.Azure;
+using System.Threading;
+using System.Net.Http;
 
 namespace Sql.Tests
 {
     public class SqlManagementTestUtilities
     {
-        public const string DefaultLocationId = "japaneast";
-
-        public const string DefaultLocation =  "Japan East";
-
-        public const string DefaultSecondaryLocationId = "centralus";
-
-        public const string DefaultSecondaryLocation = "Central US";
-
-        public const string DefaultStagePrimaryLocation = "North Europe";
-
-        public const string DefaultStageSecondaryLocation = "SouthEast Asia";
-
-        public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
-        {
-            if (handler != null)
-            {
-                handler.IsPassThrough = true;
-            }
-
-            var client = context.GetServiceClient<SqlManagementClient>(handlers:
-                handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-            return client;
-        }
-
-        public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
-            return client;
-        }
-
-        public static KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = context.GetServiceClient<KeyVaultManagementClient>(handlers: handler);
-            return client;
-        }
-
-        public static KeyVaultClient GetKeyVaultClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), handlers: handler);
-            return client;
-        }
-
-        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
-        {
-            var context = new AuthenticationContext(authority);
-            string authClientId = TryGetEnvironmentOrAppSetting("AuthClientId");
-            string authSecret = TryGetEnvironmentOrAppSetting("AuthClientSecret");
-            var clientCredential = new ClientCredential(authClientId, authSecret);
-            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
-
-            return result.AccessToken;
-        }
-
-        public static string TryGetEnvironmentOrAppSetting(string settingName, string defaultValue = null)
-        {
-            var value = Environment.GetEnvironmentVariable(settingName);
-
-            // We don't use IsNullOrEmpty because an empty setting overrides what's on AppSettings.
-            if (value == null)
-            {
-                var config = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile("appsettings.json").Build();
-                value = config.GetSection("AppSettings:" + settingName).Value;
-            }
-
-            return value ?? defaultValue;
-        }
+        public const string DefaultLogin = "dummylogin";
+        public const string DefaultPassword = "Un53cuRE!";
+        
+        public const string TestPrefix = "sqlcrudtest-";
 
         public static string GenerateName(
-            string prefix = null,
+            string prefix = TestPrefix,
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName="GenerateName_failed")
         {
-            return HttpMockServer.GetAssetName(methodName, prefix);
+            try
+            {
+                return HttpMockServer.GetAssetName(methodName, prefix);
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw new KeyNotFoundException(string.Format("Generated name not found for calling method: {0}", methodName), e);
+            }
         }
 
         public static string GenerateIpAddress()
@@ -114,6 +57,11 @@ namespace Sql.Tests
 
         public static void AssertCollection<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
+            if (Equals(expected, actual))
+            {
+                return;
+            }
+
             Assert.Equal(expected.Count(), actual.Count());
 
             foreach (var elem in expected)
@@ -139,7 +87,7 @@ namespace Sql.Tests
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
 
-        public static void ValidateDatabase(Database expected, Database actual, string name)
+        public static void ValidateDatabase(dynamic expected, Database actual, string name)
         {
             Assert.Equal(name, actual.Name);
             Assert.Equal(expected.ElasticPoolName, actual.ElasticPoolName);
@@ -269,7 +217,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void ValidateElasticPool(ElasticPool expected, ElasticPool actual, string name)
+        public static void ValidateElasticPool(dynamic expected, ElasticPool actual, string name)
         {
             Assert.Equal(name, actual.Name);
 
@@ -316,6 +264,7 @@ namespace Sql.Tests
 
             AssertCollection(expected.Databases, actual.Databases);
             AssertCollection(expected.PartnerServers.Select(s => s.Id), actual.PartnerServers.Select(s => s.Id));
+            AssertCollection(expected.Tags, actual.Tags);
         }
 
         public static void ValidateFirewallRule(FirewallRule expected, FirewallRule actual, string name)
@@ -333,55 +282,10 @@ namespace Sql.Tests
             Assert.Equal(expectedUri, actual.Uri);
         }
 
-        public static void RunTest(string suiteName, string testName, Action<ResourceManagementClient, SqlManagementClient> test)
+        public static void ValidateVirtualNetworkRule(VirtualNetworkRule expected, VirtualNetworkRule actual, string name)
         {
-            using (MockContext context = MockContext.Start(suiteName, testName))
-            {
-                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-                var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
-
-                test(resourceClient, sqlClient);
-            }
-        }
-
-        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test)
-        {
-            RunTest(suiteName, testName, (resourceClient, sqlClient) =>
-            {
-                ResourceGroup resourceGroup = null;
-
-                try
-                {
-                    string rgName = SqlManagementTestUtilities.GenerateName(resourcePrefix);
-                    resourceGroup = resourceClient.ResourceGroups.CreateOrUpdate(
-                        rgName,
-                        new ResourceGroup
-                        {
-                            Location = SqlManagementTestUtilities.DefaultLocation,
-                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
-                        });
-
-
-                    test(resourceClient, sqlClient, resourceGroup);
-                }
-                finally
-                {
-                    if (resourceGroup != null)
-                    {
-                        resourceClient.ResourceGroups.BeginDelete(resourceGroup.Name);
-                    }
-                }
-            });
-        }
-
-        internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test)
-        {
-            RunTestInNewResourceGroup(suiteName, testName, testPrefix, (resClient, sqlClient, resGroup) =>
-            {
-                var v12Server = CreateServer(sqlClient, resGroup, testPrefix);
-                test(resClient, sqlClient, resGroup, v12Server);
-            });
+            Assert.NotNull(actual.Id);
+            Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
         }
 
         internal static Task<Database[]> CreateDatabasesAsync(
@@ -394,7 +298,7 @@ namespace Sql.Tests
             List<Task<Database>> createDbTasks = new List<Task<Database>>();
             for (int i = 0; i < count; i++)
             {
-                string name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string name = SqlManagementTestUtilities.GenerateName();
                 createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(
                     resourceGroupName,
                     server.Name,
@@ -409,135 +313,99 @@ namespace Sql.Tests
             return Task.WhenAll(createDbTasks);
         }
 
-        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string serverPrefix, string location = DefaultLocationId)
+        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string location, string testPrefix = TestPrefix)
         {
-            string login = "dummylogin";
-            string password = "Un53cuRE!";
             string version12 = "12.0";
-            string serverName = GenerateName(serverPrefix);
+            string serverName = GenerateName(testPrefix);
             Dictionary<string, string> tags = new Dictionary<string, string>();
 
             var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
             {
-                AdministratorLogin = login,
-                AdministratorLoginPassword = password,
+                AdministratorLogin = DefaultLogin,
+                AdministratorLoginPassword = DefaultPassword,
                 Version = version12,
                 Tags = tags,
                 Location = location,
             });
-            ValidateServer(v12Server, serverName, login, version12, tags, location);
+            ValidateServer(v12Server, serverName, DefaultLogin, version12, tags, location);
             return v12Server;
         }
 
-        internal static void RunTestWithTdeByokSetup(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server, KeyBundle> test)
+        /// <summary>
+        /// Creates a key vault, grants the server and current user access to that vault,
+        /// and creates a key in the vault.
+        /// </summary>
+        internal static KeyBundle CreateKeyVaultKeyWithServerAccess(
+            SqlManagementTestContext context,
+            ResourceGroup resourceGroup,
+            Server server)
         {
-            using (MockContext context = MockContext.Start(suiteName, testName))
+            if (server.Identity == null)
             {
-                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-                var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
-                var keyVaultManagementClient = SqlManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
-                var keyVaultClient = SqlManagementTestUtilities.GetKeyVaultClient(context, handler);
-
-                ResourceGroup resourceGroup = null;
-
-                try
-                {
-                    string rgName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    resourceGroup = resourceClient.ResourceGroups.CreateOrUpdate(
-                        rgName,
-                        new ResourceGroup
-                        {
-                            Location = SqlManagementTestUtilities.DefaultLocation,
-                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
-                        });
-
-                    string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    string login = "dummylogin";
-                    string password = "Un53cuRE!";
-                    string version12 = "12.0";
-                    string location = "northeurope";
-                    Dictionary<string, string> tags = new Dictionary<string, string>()
-                    {
-                        { "tagKey1", "TagValue1" }
-                    };
-
-                    // Create server
-                    var server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Server()
-                    {
-                        AdministratorLogin = login,
-                        AdministratorLoginPassword = password,
-                        Version = version12,
-                        Tags = tags,
-                        Location = location,
-                        Identity = new ResourceIdentity()
-                        {
-                            Type = "SystemAssigned"
-                        }
-                    });
-                    SqlManagementTestUtilities.ValidateServer(server, serverNameV12, login, version12, tags, location);
-
-                    // Create database
-                    string databaseName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    var database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, databaseName, new Database()
-                    {
-                        Location = location
-                    });
-
-                    // Validate TDE is on by default
-                    TransparentDataEncryption tde = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, database.Name);
-                    Assert.Equal(TransparentDataEncryptionStatus.Enabled, tde.Status);
-
-                    // Prepare vault permissions for the server
-                    var serverPermissions = new Permissions()
-                    {
-                        Keys = new List<string>() { KeyPermissions.WrapKey, KeyPermissions.UnwrapKey, KeyPermissions.Get, KeyPermissions.List }
-                    };
-                    var aclEntryServer = new AccessPolicyEntry(server.Identity.TenantId.Value, server.Identity.PrincipalId.Value.ToString(), serverPermissions);
-
-                    // Prepare vault permissions for the app used in this test
-                    var appPermissions = new Permissions()
-                    {
-                        Keys = new List<string>() { KeyPermissions.Create, KeyPermissions.Delete, KeyPermissions.Get, KeyPermissions.List }
-                    };
-                    string authObjectId = TryGetEnvironmentOrAppSetting("AuthObjectId");
-                    var aclEntryUser = new AccessPolicyEntry(server.Identity.TenantId.Value, authObjectId, appPermissions);
-
-                    // Create a vault
-                    var accessPolicy = new List<AccessPolicyEntry>() { aclEntryServer, aclEntryUser };
-                    string vaultName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    string vaultLocation = "centralus";
-                    var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName, new VaultCreateOrUpdateParameters()
-                    {
-                        Location = vaultLocation,
-                        Properties = new VaultProperties()
-                        {
-                            AccessPolicies = accessPolicy,
-                            TenantId = server.Identity.TenantId.Value
-                        }
-                    });
-
-                    // Create a key
-                    string keyName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                    var key = keyVaultClient.CreateKeyAsync(vault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa,
-                        keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
-
-                    test(resourceClient, sqlClient, resourceGroup, server, key);
-                }
-                finally
-                {
-                    if (resourceGroup != null)
-                    {
-                        resourceClient.ResourceGroups.Delete(resourceGroup.Name);
-                    }
-                }
+                throw new InvalidOperationException("Server has no identity");
             }
+
+            var sqlClient = context.GetClient<SqlManagementClient>();
+            var keyVaultManagementClient = context.GetClient<KeyVaultManagementClient>();
+            var keyVaultClient = TestEnvironmentUtilities.GetKeyVaultClient();
+
+            // Prepare vault permissions for the server
+            var serverPermissions = new Permissions()
+            {
+                Keys = new List<string>() { KeyPermissions.WrapKey, KeyPermissions.UnwrapKey, KeyPermissions.Get, KeyPermissions.List }
+            };
+            var aclEntryServer = new AccessPolicyEntry(server.Identity.TenantId.Value, server.Identity.PrincipalId.Value.ToString(), serverPermissions);
+
+            // Prepare vault permissions for the app used in this test
+            var appPermissions = new Permissions()
+            {
+                Keys = new List<string>() { KeyPermissions.Create, KeyPermissions.Delete, KeyPermissions.Get, KeyPermissions.List }
+            };
+            string authObjectId = TestEnvironmentUtilities.GetUserObjectId();
+            var aclEntryUser = new AccessPolicyEntry(server.Identity.TenantId.Value, authObjectId, appPermissions);
+
+            // Create a vault
+            var accessPolicy = new List<AccessPolicyEntry>() { aclEntryServer, aclEntryUser };
+            string vaultName = SqlManagementTestUtilities.GenerateName();
+            string vaultLocation = "centralus";
+            var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName, new VaultCreateOrUpdateParameters()
+            {
+                Location = vaultLocation,
+                Properties = new VaultProperties()
+                {
+                    AccessPolicies = accessPolicy,
+                    TenantId = server.Identity.TenantId.Value
+                }
+            });
+
+            // Create a key
+            string keyName = SqlManagementTestUtilities.GenerateName();
+            return keyVaultClient.CreateKeyAsync(vault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa,
+                keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
         }
 
         internal static string GetServerKeyNameFromKeyBundle(KeyBundle keyBundle)
         {
             string vaultName = keyBundle.KeyIdentifier.VaultWithoutScheme.Split('.').First();
             return $"{vaultName}_{keyBundle.KeyIdentifier.Name}_{keyBundle.KeyIdentifier.Version}";
+        }
+
+        public static void ExecuteWithRetry(System.Action action, TimeSpan timeout, TimeSpan retryDelay, Func<CloudException, bool> acceptedErrorFunction)
+        {
+            DateTime timeoutTime = DateTime.Now.Add(timeout);
+            bool passed = false;
+            while (DateTime.Now < timeoutTime && !passed)
+            {
+                try
+                {
+                    action();
+                    passed = true;
+                }
+                catch (CloudException e) when (acceptedErrorFunction(e))
+                {
+                    TestUtilities.Wait(retryDelay);
+                }
+            }
         }
     }
 }

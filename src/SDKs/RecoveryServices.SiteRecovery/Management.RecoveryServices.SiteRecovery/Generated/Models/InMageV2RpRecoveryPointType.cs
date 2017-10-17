@@ -32,4 +32,41 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "LatestProcessed")]
         LatestProcessed
     }
+    internal static class InMageV2RpRecoveryPointTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this InMageV2RpRecoveryPointType? value)  =>
+            value == null ? null : ((InMageV2RpRecoveryPointType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this InMageV2RpRecoveryPointType value)
+        {
+            switch( value )
+            {
+                case InMageV2RpRecoveryPointType.Latest:
+                    return "Latest";
+                case InMageV2RpRecoveryPointType.LatestApplicationConsistent:
+                    return "LatestApplicationConsistent";
+                case InMageV2RpRecoveryPointType.LatestCrashConsistent:
+                    return "LatestCrashConsistent";
+                case InMageV2RpRecoveryPointType.LatestProcessed:
+                    return "LatestProcessed";
+            }
+            return null;
+        }
+
+        internal static InMageV2RpRecoveryPointType? ParseInMageV2RpRecoveryPointType(this string value)
+        {
+            switch( value )
+            {
+                case "Latest":
+                    return InMageV2RpRecoveryPointType.Latest;
+                case "LatestApplicationConsistent":
+                    return InMageV2RpRecoveryPointType.LatestApplicationConsistent;
+                case "LatestCrashConsistent":
+                    return InMageV2RpRecoveryPointType.LatestCrashConsistent;
+                case "LatestProcessed":
+                    return InMageV2RpRecoveryPointType.LatestProcessed;
+            }
+            return null;
+        }
+    }
 }

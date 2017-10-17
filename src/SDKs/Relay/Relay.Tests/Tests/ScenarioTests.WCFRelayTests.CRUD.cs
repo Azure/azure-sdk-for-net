@@ -56,17 +56,17 @@ namespace Relay.Tests.ScenarioTests
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
                 Assert.Equal(createNamespaceResponse.Tags.Count, 2);
-                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/namespaces");
+                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/Namespaces");
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Get the created namespace
                 var getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
+                if (string.Compare(getNamespaceResponse.ProvisioningState.ToString(), "Succeeded", true) != 0)
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
-                Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);                
+                Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState.ToString(), StringComparer.CurrentCultureIgnoreCase);                
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 
                 // Get all namespaces created within a resourceGroup
@@ -82,7 +82,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
                 Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
-
+                                
                 // Create WCF Relay  - 
                 var wcfRelayName = TestUtilities.GenerateName(RelayManagementHelper.WcfPrefix);
                 var createdWCFRelayResponse = RelayManagementClient.WCFRelays.CreateOrUpdate(resourceGroup, namespaceName, wcfRelayName, new WcfRelay()

@@ -302,11 +302,11 @@ namespace StreamAnalytics.Tests
                 Assert.Equal(1, inputListResponse.Count());
                 var inputFromList = inputListResponse.Single();
                 Assert.NotNull(inputFromList.Properties.Diagnostics);
-                Assert.Equal(1, inputFromList.Properties.Diagnostics.Conditions.Count());
+                Assert.Equal(2, inputFromList.Properties.Diagnostics.Conditions.Count());
                 Assert.NotNull(inputFromList.Properties.Diagnostics.Conditions[0].Since);
                 DateTime.Parse(inputFromList.Properties.Diagnostics.Conditions[0].Since);
                 Assert.Equal(@"INP-3", inputFromList.Properties.Diagnostics.Conditions[0].Code);
-                Assert.Equal(@"Could not deserialize the input event as Json. Some possible reasons: 1) Malformed events 2) Input source configured with incorrect serialization format", inputFromList.Properties.Diagnostics.Conditions[0].Message);
+                Assert.Equal(@"Could not deserialize the input event(s) from resource 'https://$testAccountName$.blob.core.windows.net/state/states1.csv' as Json. Some possible reasons: 1) Malformed events 2) Input source configured with incorrect serialization format", inputFromList.Properties.Diagnostics.Conditions[0].Message);
 
                 // Stop job
                 streamAnalyticsManagementClient.StreamingJobs.Stop(resourceGroupName, jobName);

@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class AutoScaleRun : IPropertyMetadata
     {
-        private readonly AutoScaleRunError error;
-        private readonly string results;
-        private readonly DateTime timestamp;
-
         #region Constructors
 
         internal AutoScaleRun(Models.AutoScaleRun protocolObject)
         {
-            this.error = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Error, o => new AutoScaleRunError(o).Freeze());
-            this.results = protocolObject.Results;
-            this.timestamp = protocolObject.Timestamp;
+            this.Error = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Error, o => new AutoScaleRunError(o).Freeze());
+            this.Results = protocolObject.Results;
+            this.Timestamp = protocolObject.Timestamp;
         }
 
         #endregion Constructors
@@ -42,27 +38,18 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets details of the error encountered evaluating the autoscale formula on the pool, if the evaluation was unsuccessful.
         /// </summary>
-        public AutoScaleRunError Error
-        {
-            get { return this.error; }
-        }
+        public AutoScaleRunError Error { get; }
 
         /// <summary>
         /// Gets the final values of all variables used in the evaluation of the autoscale formula. Each variable value is 
         /// returned in the form $variable=value, and variables are separated by semicolons.
         /// </summary>
-        public string Results
-        {
-            get { return this.results; }
-        }
+        public string Results { get; }
 
         /// <summary>
         /// Gets the time at which the autoscale formula was last evaluated.
         /// </summary>
-        public DateTime Timestamp
-        {
-            get { return this.timestamp; }
-        }
+        public DateTime Timestamp { get; }
 
         #endregion // AutoScaleRun
 

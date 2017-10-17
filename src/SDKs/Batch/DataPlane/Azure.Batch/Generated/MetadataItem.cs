@@ -23,9 +23,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class MetadataItem : ITransportObjectProvider<Models.MetadataItem>, IPropertyMetadata
     {
-        private readonly string name;
-        private readonly string value;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="MetadataItem"/> class.
@@ -36,14 +33,14 @@ namespace Microsoft.Azure.Batch
             string name,
             string value)
         {
-            this.name = name;
-            this.value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         internal MetadataItem(Models.MetadataItem protocolObject)
         {
-            this.name = protocolObject.Name;
-            this.value = protocolObject.Value;
+            this.Name = protocolObject.Name;
+            this.Value = protocolObject.Value;
         }
 
         #endregion Constructors
@@ -53,18 +50,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the name of the <see cref="MetadataItem"/>.
         /// </summary>
-        public string Name
-        {
-            get { return this.name; }
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the value of the <see cref="MetadataItem"/>.
         /// </summary>
-        public string Value
-        {
-            get { return this.value; }
-        }
+        public string Value { get; }
 
         #endregion // MetadataItem
 
