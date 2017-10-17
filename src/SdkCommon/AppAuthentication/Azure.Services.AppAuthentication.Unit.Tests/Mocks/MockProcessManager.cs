@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         /// </summary>
         /// <param name="process"></param>
         /// <returns></returns>
-        public Task<Tuple<bool, string>> ExecuteAsync(Process process)
+        public Task<string> ExecuteAsync(Process process)
         {
             HitCount++;
                                    
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     // This is used to test the cache.
                     var tokenResult = TokenHelper.GetUserTokenResponse(60 * 60, _requestType == MockProcessManagerRequestType.VisualStudioSuccess);
 
-                    return Task.FromResult(new Tuple<bool, string>(true, tokenResult));
+                    return Task.FromResult(tokenResult);
 
                 case MockProcessManagerRequestType.ProcessNotFound:
                     throw new Exception(Constants.ProgramNotFoundError);
 
                 case MockProcessManagerRequestType.Failure:
-                    return Task.FromResult(new Tuple<bool, string>(false, Constants.AzureCliError));
+                    throw new Exception(Constants.AzureCliError);
 
             }
 

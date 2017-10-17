@@ -12,6 +12,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// </summary>
     interface IProcessManager
     {
-        Task<Tuple<bool, string>> ExecuteAsync(Process process);
+        Task<string> ExecuteAsync(Process process);
     }
 }
