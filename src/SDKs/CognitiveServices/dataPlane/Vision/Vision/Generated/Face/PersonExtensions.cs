@@ -13,6 +13,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -412,6 +413,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='personId'>
             /// Target person that the face is added to.
             /// </param>
+            /// <param name='url'>
+            /// </param>
             /// <param name='userData'>
             /// User-specified data about the target face to add for any purpose. The
             /// maximum length is 1KB.
@@ -423,9 +426,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// targetFace is required to specify which face to add. No targetFace means
             /// there is only one face detected in the entire image.
             /// </param>
-            public static void AddFace(this IPerson operations, string personGroupId, string personId, string userData = default(string), string targetFace = default(string))
+            public static void AddPersonFace(this IPerson operations, string personGroupId, string personId, string url, string userData = default(string), IList<int?> targetFace = default(IList<int?>))
             {
-                operations.AddFaceAsync(personGroupId, personId, userData, targetFace).GetAwaiter().GetResult();
+                operations.AddPersonFaceAsync(personGroupId, personId, url, userData, targetFace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -440,6 +443,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             /// <param name='personId'>
             /// Target person that the face is added to.
+            /// </param>
+            /// <param name='url'>
             /// </param>
             /// <param name='userData'>
             /// User-specified data about the target face to add for any purpose. The
@@ -455,9 +460,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddFaceAsync(this IPerson operations, string personGroupId, string personId, string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddPersonFaceAsync(this IPerson operations, string personGroupId, string personId, string url, string userData = default(string), IList<int?> targetFace = default(IList<int?>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AddFaceWithHttpMessagesAsync(personGroupId, personId, userData, targetFace, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.AddPersonFaceWithHttpMessagesAsync(personGroupId, personId, url, userData, targetFace, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -472,6 +477,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             /// <param name='personId'>
             /// Target person that the face is added to.
+            /// </param>
+            /// <param name='image'>
+            /// An image stream.
             /// </param>
             /// <param name='userData'>
             /// User-specified data about the target face to add for any purpose. The
@@ -484,9 +492,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// targetFace is required to specify which face to add. No targetFace means
             /// there is only one face detected in the entire image.
             /// </param>
-            public static void AddFaceFromStream(this IPerson operations, string personGroupId, string personId, string userData = default(string), string targetFace = default(string))
+            public static void AddPersonFaceFromStream(this IPerson operations, string personGroupId, string personId, Stream image, string userData = default(string), string targetFace = default(string))
             {
-                operations.AddFaceFromStreamAsync(personGroupId, personId, userData, targetFace).GetAwaiter().GetResult();
+                operations.AddPersonFaceFromStreamAsync(personGroupId, personId, image, userData, targetFace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -501,6 +509,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             /// <param name='personId'>
             /// Target person that the face is added to.
+            /// </param>
+            /// <param name='image'>
+            /// An image stream.
             /// </param>
             /// <param name='userData'>
             /// User-specified data about the target face to add for any purpose. The
@@ -516,9 +527,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddFaceFromStreamAsync(this IPerson operations, string personGroupId, string personId, string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddPersonFaceFromStreamAsync(this IPerson operations, string personGroupId, string personId, Stream image, string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AddFaceFromStreamWithHttpMessagesAsync(personGroupId, personId, userData, targetFace, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.AddPersonFaceFromStreamWithHttpMessagesAsync(personGroupId, personId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

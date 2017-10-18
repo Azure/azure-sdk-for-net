@@ -123,8 +123,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         Task<HttpOperationResponse<IList<IdentifyResultItem>>> IdentifyWithHttpMessagesAsync(string personGroupId, IList<string> faceIds, int? maxNumOfCandidatesReturned = 1, double confidenceThreshold = default(double), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Verify whether two faces belong to a same person or whether one
-        /// face belongs to a person.
+        /// Verify whether two faces belong to a same person. Compares a face
+        /// Id with a Person Id
         /// </summary>
         /// <param name='faceId'>
         /// faceId the face, comes from Face - Detect
@@ -152,7 +152,33 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<VerifyResult>> VerifyWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<VerifyResult>> VerifyWithPersonGroupWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Verify whether two faces belong to a same person. Compares two
+        /// different face Ids.
+        /// </summary>
+        /// <param name='faceId1'>
+        /// faceId of the first face, comes from Face - Detect
+        /// </param>
+        /// <param name='faceId2'>
+        /// faceId of the second face, comes from Face - Detect
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<VerifyResult>> VerifyWithHttpMessagesAsync(string faceId1, string faceId2, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Detect human faces in an image and returns face locations, and
         /// optionally with faceIds, landmarks, and attributes.
@@ -212,13 +238,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// facialHair, glasses and emotion. Note that each face attribute
         /// analysis has additional computational and time cost.
         /// </param>
-        /// <param name='returnFaceAttributes1'>
-        /// Analyze and return the one or more specified face attributes in the
-        /// comma-separated string like "returnFaceAttributes=age,gender".
-        /// Supported face attributes include age, gender, headPose, smile,
-        /// facialHair, glasses and emotion. Note that each face attribute
-        /// analysis has additional computational and time cost.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -234,6 +253,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<DetectedFace>>> DetectInStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), IList<FaceAttributeTypes> returnFaceAttributes1 = default(IList<FaceAttributeTypes>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<DetectedFace>>> DetectInStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeTypes> returnFaceAttributes = default(IList<FaceAttributeTypes>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

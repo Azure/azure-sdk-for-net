@@ -1425,6 +1425,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='personId'>
         /// Target person that the face is added to.
         /// </param>
+        /// <param name='url'>
+        /// </param>
         /// <param name='userData'>
         /// User-specified data about the target face to add for any purpose. The
         /// maximum length is 1KB.
@@ -1454,7 +1456,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> AddFaceWithHttpMessagesAsync(string personGroupId, string personId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> AddPersonFaceWithHttpMessagesAsync(string personGroupId, string personId, string url, string userData = default(string), IList<int?> targetFace = default(IList<int?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (personGroupId == null)
             {
@@ -1468,6 +1470,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
             }
+            if (url == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "url");
+            }
+            ImageUrl imageUrl = new ImageUrl();
+            if (url != null)
+            {
+                imageUrl.Url = url;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1479,8 +1490,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("personId", personId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
+                tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddFace", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddPersonFace", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
@@ -1495,7 +1507,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             if (targetFace != null)
             {
-                _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(targetFace)));
+                _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(string.Join(",", targetFace))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1531,6 +1543,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            if(imageUrl != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(imageUrl, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1595,6 +1613,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='personId'>
         /// Target person that the face is added to.
         /// </param>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
         /// <param name='userData'>
         /// User-specified data about the target face to add for any purpose. The
         /// maximum length is 1KB.
@@ -1624,7 +1645,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> AddFaceFromStreamWithHttpMessagesAsync(string personGroupId, string personId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> AddPersonFaceFromStreamWithHttpMessagesAsync(string personGroupId, string personId, Stream image, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (personGroupId == null)
             {
@@ -1633,6 +1654,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             if (personId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personId");
+            }
+            if (image == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "image");
             }
             if (Client.SubscriptionKey == null)
             {
@@ -1649,8 +1674,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("personId", personId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
+                tracingParameters.Add("image", image);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromStream", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddPersonFaceFromStream", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
@@ -1701,6 +1727,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            if(image == null)
+            {
+              throw new System.ArgumentNullException("image");
+            }
+            if (image != null && image != Stream.Null)
+            {
+              _httpRequest.Content = new StreamContent(image);
+              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+            }
             // Send Request
             if (_shouldTrace)
             {

@@ -33,15 +33,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Initializes a new instance of the FaceAttributes class.
         /// </summary>
         /// <param name="age">Age in years</param>
-        /// <param name="gender">Gender: male or female. Possible values
+        /// <param name="gender">Possible gender of the face. Possible values
         /// include: 'male', 'female'</param>
         /// <param name="smile">Smile intensity, a number between [0,1]
         /// </param>
-        /// <param name="glasses">Glasses type. Possible values are
-        /// 'noGlasses', 'readingGlasses', 'sunglasses', 'swimmingGoggles'.
-        /// Possible values include: 'noGlasses', 'readingGlasses',
-        /// 'sunglasses', 'swimmingGoggles'</param>
-        public FaceAttributes(double? age = default(double?), string gender = default(string), double? smile = default(double?), string glasses = default(string), FacialHairProperties facialHair = default(FacialHairProperties), HeadPoseProperties headPose = default(HeadPoseProperties), EmotionProperties emotion = default(EmotionProperties), HairProperties hair = default(HairProperties), MakeupProperties makeup = default(MakeupProperties), OcclusionProperties occlusion = default(OcclusionProperties), IList<AccessoryPropertiesItem> accessories = default(IList<AccessoryPropertiesItem>), BlurProperties blur = default(BlurProperties), ExposureProperties exposure = default(ExposureProperties), NoiseProperties noise = default(NoiseProperties))
+        /// <param name="glasses">Glasses type if any of the face. Possible
+        /// values include: 'noGlasses', 'readingGlasses', 'sunglasses',
+        /// 'swimmingGoggles'</param>
+        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), GlassesTypes? glasses = default(GlassesTypes?), FacialHairProperties facialHair = default(FacialHairProperties), HeadPoseProperties headPose = default(HeadPoseProperties), EmotionProperties emotion = default(EmotionProperties), HairProperties hair = default(HairProperties), MakeupProperties makeup = default(MakeupProperties), OcclusionProperties occlusion = default(OcclusionProperties), IList<AccessoryPropertiesItem> accessories = default(IList<AccessoryPropertiesItem>), BlurProperties blur = default(BlurProperties), ExposureProperties exposure = default(ExposureProperties), NoiseProperties noise = default(NoiseProperties))
         {
             Age = age;
             Gender = gender;
@@ -72,11 +71,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public double? Age { get; set; }
 
         /// <summary>
-        /// Gets or sets gender: male or female. Possible values include:
+        /// Gets or sets possible gender of the face. Possible values include:
         /// 'male', 'female'
         /// </summary>
         [JsonProperty(PropertyName = "gender")]
-        public string Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         /// <summary>
         /// Gets or sets smile intensity, a number between [0,1]
@@ -85,13 +84,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public double? Smile { get; set; }
 
         /// <summary>
-        /// Gets or sets glasses type. Possible values are 'noGlasses',
-        /// 'readingGlasses', 'sunglasses', 'swimmingGoggles'. Possible values
+        /// Gets or sets glasses type if any of the face. Possible values
         /// include: 'noGlasses', 'readingGlasses', 'sunglasses',
         /// 'swimmingGoggles'
         /// </summary>
         [JsonProperty(PropertyName = "glasses")]
-        public string Glasses { get; set; }
+        public GlassesTypes? Glasses { get; set; }
 
         /// <summary>
         /// </summary>

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -256,6 +257,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='personId'>
         /// Target person that the face is added to.
         /// </param>
+        /// <param name='url'>
+        /// </param>
         /// <param name='userData'>
         /// User-specified data about the target face to add for any purpose.
         /// The maximum length is 1KB.
@@ -280,7 +283,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AddFaceWithHttpMessagesAsync(string personGroupId, string personId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> AddPersonFaceWithHttpMessagesAsync(string personGroupId, string personId, string url, string userData = default(string), IList<int?> targetFace = default(IList<int?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a representative face to a person for identification. The input
         /// face is specified as an image with a targetFace rectangle.
@@ -290,6 +293,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='personId'>
         /// Target person that the face is added to.
+        /// </param>
+        /// <param name='image'>
+        /// An image stream.
         /// </param>
         /// <param name='userData'>
         /// User-specified data about the target face to add for any purpose.
@@ -315,6 +321,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AddFaceFromStreamWithHttpMessagesAsync(string personGroupId, string personId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> AddPersonFaceFromStreamWithHttpMessagesAsync(string personGroupId, string personId, Stream image, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

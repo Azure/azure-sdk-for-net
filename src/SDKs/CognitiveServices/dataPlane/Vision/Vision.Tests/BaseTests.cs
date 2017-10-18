@@ -13,8 +13,8 @@ namespace FaceSDK.Tests
         static BaseTests()
         {
             // Retrieve the configuration information.
-            SubscriptionKey = "";
-            // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            SubscriptionKey = "af58da55ad394379a505100550da8fbe";
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
         }
 
         protected IFaceAPI GetClient(DelegatingHandler handler)

@@ -30,11 +30,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the DetectedFace class.
         /// </summary>
-        public DetectedFace(FaceRectangle faceRectangle, string faceId = default(string), FaceLandmarks faceLandmarks = default(FaceLandmarks))
+        public DetectedFace(FaceRectangle faceRectangle, string faceId = default(string), FaceLandmarks faceLandmarks = default(FaceLandmarks), FaceAttributes faceAttributes = default(FaceAttributes))
         {
             FaceId = faceId;
             FaceRectangle = faceRectangle;
             FaceLandmarks = faceLandmarks;
+            FaceAttributes = faceAttributes;
             CustomInit();
         }
 
@@ -57,6 +58,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         [JsonProperty(PropertyName = "faceLandmarks")]
         public FaceLandmarks FaceLandmarks { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "faceAttributes")]
+        public FaceAttributes FaceAttributes { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -84,6 +90,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             if (FaceLandmarks != null)
             {
                 FaceLandmarks.Validate();
+            }
+            if (FaceAttributes != null)
+            {
+                FaceAttributes.Validate();
             }
         }
     }

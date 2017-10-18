@@ -183,8 +183,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Verify whether two faces belong to a same person or whether one face
-            /// belongs to a person.
+            /// Verify whether two faces belong to a same person. Compares a face Id with a
+            /// Person Id
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,14 +200,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// Using existing personGroupId and personId for fast loading a specified
             /// person. personGroupId is created in Person Groups.Create.
             /// </param>
-            public static VerifyResult Verify(this IFaceOperations operations, string faceId, string personId, string personGroupId)
+            public static VerifyResult VerifyWithPersonGroup(this IFaceOperations operations, string faceId, string personId, string personGroupId)
             {
-                return operations.VerifyAsync(faceId, personId, personGroupId).GetAwaiter().GetResult();
+                return operations.VerifyWithPersonGroupAsync(faceId, personId, personGroupId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Verify whether two faces belong to a same person or whether one face
-            /// belongs to a person.
+            /// Verify whether two faces belong to a same person. Compares a face Id with a
+            /// Person Id
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -226,9 +226,51 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VerifyResult> VerifyAsync(this IFaceOperations operations, string faceId, string personId, string personGroupId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VerifyResult> VerifyWithPersonGroupAsync(this IFaceOperations operations, string faceId, string personId, string personGroupId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.VerifyWithHttpMessagesAsync(faceId, personId, personGroupId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.VerifyWithPersonGroupWithHttpMessagesAsync(faceId, personId, personGroupId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Verify whether two faces belong to a same person. Compares two different
+            /// face Ids.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='faceId1'>
+            /// faceId of the first face, comes from Face - Detect
+            /// </param>
+            /// <param name='faceId2'>
+            /// faceId of the second face, comes from Face - Detect
+            /// </param>
+            public static VerifyResult Verify(this IFaceOperations operations, string faceId1, string faceId2)
+            {
+                return operations.VerifyAsync(faceId1, faceId2).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Verify whether two faces belong to a same person. Compares two different
+            /// face Ids.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='faceId1'>
+            /// faceId of the first face, comes from Face - Detect
+            /// </param>
+            /// <param name='faceId2'>
+            /// faceId of the second face, comes from Face - Detect
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VerifyResult> VerifyAsync(this IFaceOperations operations, string faceId1, string faceId2, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.VerifyWithHttpMessagesAsync(faceId1, faceId2, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -323,16 +365,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// and emotion. Note that each face attribute analysis has additional
             /// computational and time cost.
             /// </param>
-            /// <param name='returnFaceAttributes1'>
-            /// Analyze and return the one or more specified face attributes in the
-            /// comma-separated string like "returnFaceAttributes=age,gender". Supported
-            /// face attributes include age, gender, headPose, smile, facialHair, glasses
-            /// and emotion. Note that each face attribute analysis has additional
-            /// computational and time cost.
-            /// </param>
-            public static IList<DetectedFace> DetectInStream(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), IList<FaceAttributeTypes> returnFaceAttributes1 = default(IList<FaceAttributeTypes>))
+            public static IList<DetectedFace> DetectInStream(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeTypes> returnFaceAttributes = default(IList<FaceAttributeTypes>))
             {
-                return operations.DetectInStreamAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, returnFaceAttributes1).GetAwaiter().GetResult();
+                return operations.DetectInStreamAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -360,19 +395,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// and emotion. Note that each face attribute analysis has additional
             /// computational and time cost.
             /// </param>
-            /// <param name='returnFaceAttributes1'>
-            /// Analyze and return the one or more specified face attributes in the
-            /// comma-separated string like "returnFaceAttributes=age,gender". Supported
-            /// face attributes include age, gender, headPose, smile, facialHair, glasses
-            /// and emotion. Note that each face attribute analysis has additional
-            /// computational and time cost.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectInStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, string returnFaceAttributes = default(string), IList<FaceAttributeTypes> returnFaceAttributes1 = default(IList<FaceAttributeTypes>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectInStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeTypes> returnFaceAttributes = default(IList<FaceAttributeTypes>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectInStreamWithHttpMessagesAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, returnFaceAttributes1, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DetectInStreamWithHttpMessagesAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
