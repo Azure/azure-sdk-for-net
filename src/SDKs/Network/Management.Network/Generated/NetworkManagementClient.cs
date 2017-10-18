@@ -78,6 +78,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
 
         /// <summary>
+        /// Gets the IApplicationSecurityGroupsOperations.
+        /// </summary>
+        public virtual IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; private set; }
+
+        /// <summary>
         /// Gets the IAvailableEndpointServicesOperations.
         /// </summary>
         public virtual IAvailableEndpointServicesOperations AvailableEndpointServices { get; private set; }
@@ -444,6 +449,7 @@ namespace Microsoft.Azure.Management.Network
         private void Initialize()
         {
             ApplicationGateways = new ApplicationGatewaysOperations(this);
+            ApplicationSecurityGroups = new ApplicationSecurityGroupsOperations(this);
             AvailableEndpointServices = new AvailableEndpointServicesOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
@@ -557,7 +563,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2017-08-01";
+            string apiVersion = "2017-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
