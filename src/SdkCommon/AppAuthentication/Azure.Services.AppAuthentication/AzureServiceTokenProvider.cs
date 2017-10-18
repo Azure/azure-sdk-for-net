@@ -89,6 +89,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 _potentialAccessTokenProviders = new List<NonInteractiveAzureServiceTokenProviderBase>
                 {
                     new MsiAccessTokenProvider(),
+                    new VisualStudioAccessTokenProvider(null, new ProcessManager()),
 #if FullNetFx
                     new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance),
 #endif
