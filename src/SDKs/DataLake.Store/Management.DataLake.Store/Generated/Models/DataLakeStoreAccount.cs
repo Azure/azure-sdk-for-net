@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="provisioningState">the status of the Data Lake Store
         /// account while being provisioned. Possible values include: 'Failed',
         /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
-        /// 'Resuming', 'Deleting', 'Deleted'</param>
+        /// 'Resuming', 'Deleting', 'Deleted', 'Undeleting', 'Canceled'</param>
         /// <param name="state">the status of the Data Lake Store account after
         /// provisioning has completed. Possible values include: 'Active',
         /// 'Suspended'</param>
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Gets the status of the Data Lake Store account while being
         /// provisioned. Possible values include: 'Failed', 'Creating',
         /// 'Running', 'Succeeded', 'Patching', 'Suspending', 'Resuming',
-        /// 'Deleting', 'Deleted'
+        /// 'Deleting', 'Deleted', 'Undeleting', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public DataLakeStoreAccountStatus? ProvisioningState { get; private set; }
