@@ -53,7 +53,9 @@
 
 **Notes**
 
-- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
+- This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class (addressed in version 3.1.2-preview)
+- Add two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled` (to be addressed in an upcoming preview release)
 	
 ### Changes in 3.0.1
 - Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
