@@ -169,9 +169,12 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static OperationalizationClustersDeleteHeaders Delete(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName)
+            /// <param name='deleteAll'>
+            /// If true, deletes all resources associated with this cluster.
+            /// </param>
+            public static OperationalizationClustersDeleteHeaders Delete(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName, bool? deleteAll = default(bool?))
             {
-                return operations.DeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, clusterName, deleteAll).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -186,12 +189,15 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
+            /// <param name='deleteAll'>
+            /// If true, deletes all resources associated with this cluster.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationalizationClustersDeleteHeaders> DeleteAsync(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationalizationClustersDeleteHeaders> DeleteAsync(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName, bool? deleteAll = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterName, deleteAll, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -453,9 +459,12 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            public static OperationalizationClustersDeleteHeaders BeginDelete(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName)
+            /// <param name='deleteAll'>
+            /// If true, deletes all resources associated with this cluster.
+            /// </param>
+            public static OperationalizationClustersDeleteHeaders BeginDelete(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName, bool? deleteAll = default(bool?))
             {
-                return operations.BeginDeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, clusterName, deleteAll).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -470,12 +479,15 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
+            /// <param name='deleteAll'>
+            /// If true, deletes all resources associated with this cluster.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationalizationClustersDeleteHeaders> BeginDeleteAsync(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationalizationClustersDeleteHeaders> BeginDeleteAsync(this IOperationalizationClustersOperations operations, string resourceGroupName, string clusterName, bool? deleteAll = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, deleteAll, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

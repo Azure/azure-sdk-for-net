@@ -32,11 +32,10 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
         /// </summary>
         /// <param name="status">SSL status. Allowed values are Enabled and
         /// Disabled. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="cert">The SSL cert data in PEM format encoded as
-        /// base64 string</param>
-        /// <param name="key">The SSL key data in PEM format encoded as base64
-        /// string. This is not returned in response of GET/PUT on the
-        /// resource. To see this please call listKeys API.</param>
+        /// <param name="cert">The SSL cert data in PEM format.</param>
+        /// <param name="key">The SSL key data in PEM format. This is not
+        /// returned in response of GET/PUT on the resource. To see this please
+        /// call listKeys API.</param>
         /// <param name="cname">The CName of the certificate.</param>
         public SslConfiguration(string status = default(string), string cert = default(string), string key = default(string), string cname = default(string))
         {
@@ -60,16 +59,15 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the SSL cert data in PEM format encoded as base64
-        /// string
+        /// Gets or sets the SSL cert data in PEM format.
         /// </summary>
         [JsonProperty(PropertyName = "cert")]
         public string Cert { get; set; }
 
         /// <summary>
-        /// Gets or sets the SSL key data in PEM format encoded as base64
-        /// string. This is not returned in response of GET/PUT on the
-        /// resource. To see this please call listKeys API.
+        /// Gets or sets the SSL key data in PEM format. This is not returned
+        /// in response of GET/PUT on the resource. To see this please call
+        /// listKeys API.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
