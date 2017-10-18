@@ -22,21 +22,15 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobPreparationAndReleaseTaskExecutionInformation : IPropertyMetadata
     {
-        private readonly string computeNodeId;
-        private readonly string computeNodeUrl;
-        private readonly JobPreparationTaskExecutionInformation jobPreparationTaskExecutionInformation;
-        private readonly JobReleaseTaskExecutionInformation jobReleaseTaskExecutionInformation;
-        private readonly string poolId;
-
         #region Constructors
 
         internal JobPreparationAndReleaseTaskExecutionInformation(Models.JobPreparationAndReleaseTaskExecutionInformation protocolObject)
         {
-            this.computeNodeId = protocolObject.NodeId;
-            this.computeNodeUrl = protocolObject.NodeUrl;
-            this.jobPreparationTaskExecutionInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobPreparationTaskExecutionInfo, o => new JobPreparationTaskExecutionInformation(o).Freeze());
-            this.jobReleaseTaskExecutionInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobReleaseTaskExecutionInfo, o => new JobReleaseTaskExecutionInformation(o).Freeze());
-            this.poolId = protocolObject.PoolId;
+            this.ComputeNodeId = protocolObject.NodeId;
+            this.ComputeNodeUrl = protocolObject.NodeUrl;
+            this.JobPreparationTaskExecutionInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobPreparationTaskExecutionInfo, o => new JobPreparationTaskExecutionInformation(o).Freeze());
+            this.JobReleaseTaskExecutionInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobReleaseTaskExecutionInfo, o => new JobReleaseTaskExecutionInformation(o).Freeze());
+            this.PoolId = protocolObject.PoolId;
         }
 
         #endregion Constructors
@@ -46,42 +40,27 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the id of the compute node.
         /// </summary>
-        public string ComputeNodeId
-        {
-            get { return this.computeNodeId; }
-        }
+        public string ComputeNodeId { get; }
 
         /// <summary>
         /// Gets the URL of the compute node.
         /// </summary>
-        public string ComputeNodeUrl
-        {
-            get { return this.computeNodeUrl; }
-        }
+        public string ComputeNodeUrl { get; }
 
         /// <summary>
         /// Gets details of the <see cref="CloudJob.JobPreparationTask">Job Preparation task</see> on this compute node.
         /// </summary>
-        public JobPreparationTaskExecutionInformation JobPreparationTaskExecutionInformation
-        {
-            get { return this.jobPreparationTaskExecutionInformation; }
-        }
+        public JobPreparationTaskExecutionInformation JobPreparationTaskExecutionInformation { get; }
 
         /// <summary>
         /// Gets details of the <see cref="CloudJob.JobReleaseTask">Job Release task</see> on this compute node.
         /// </summary>
-        public JobReleaseTaskExecutionInformation JobReleaseTaskExecutionInformation
-        {
-            get { return this.jobReleaseTaskExecutionInformation; }
-        }
+        public JobReleaseTaskExecutionInformation JobReleaseTaskExecutionInformation { get; }
 
         /// <summary>
         /// Gets the id of the pool containing the compute node.
         /// </summary>
-        public string PoolId
-        {
-            get { return this.poolId; }
-        }
+        public string PoolId { get; }
 
         #endregion // JobPreparationAndReleaseTaskExecutionInformation
 

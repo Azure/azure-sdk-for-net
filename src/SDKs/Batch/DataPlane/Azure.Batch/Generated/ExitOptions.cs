@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.DependencyActionProperty = this.CreatePropertyAccessor<Common.DependencyAction?>("DependencyAction", BindingAccess.Read | BindingAccess.Write);
-                this.JobActionProperty = this.CreatePropertyAccessor<Common.JobAction?>("JobAction", BindingAccess.Read | BindingAccess.Write);
+                this.DependencyActionProperty = this.CreatePropertyAccessor<Common.DependencyAction?>(nameof(DependencyAction), BindingAccess.Read | BindingAccess.Write);
+                this.JobActionProperty = this.CreatePropertyAccessor<Common.JobAction?>(nameof(JobAction), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ExitOptions protocolObject) : base(BindingState.Bound)
             {
                 this.DependencyActionProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.DependencyAction, Common.DependencyAction>(protocolObject.DependencyAction),
-                    "DependencyAction",
+                    nameof(DependencyAction),
                     BindingAccess.Read);
                 this.JobActionProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.JobAction, Common.JobAction>(protocolObject.JobAction),
-                    "JobAction",
+                    nameof(JobAction),
                     BindingAccess.Read);
             }
         }

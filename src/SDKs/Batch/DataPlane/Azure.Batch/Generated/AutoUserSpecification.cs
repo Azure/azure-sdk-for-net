@@ -22,9 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class AutoUserSpecification : ITransportObjectProvider<Models.AutoUserSpecification>, IPropertyMetadata
     {
-        private readonly Common.ElevationLevel? elevationLevel;
-        private readonly Common.AutoUserScope? scope;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoUserSpecification"/> class.
@@ -35,14 +32,14 @@ namespace Microsoft.Azure.Batch
             Common.AutoUserScope? scope = default(Common.AutoUserScope?),
             Common.ElevationLevel? elevationLevel = default(Common.ElevationLevel?))
         {
-            this.scope = scope;
-            this.elevationLevel = elevationLevel;
+            this.Scope = scope;
+            this.ElevationLevel = elevationLevel;
         }
 
         internal AutoUserSpecification(Models.AutoUserSpecification protocolObject)
         {
-            this.elevationLevel = UtilitiesInternal.MapNullableEnum<Models.ElevationLevel, Common.ElevationLevel>(protocolObject.ElevationLevel);
-            this.scope = UtilitiesInternal.MapNullableEnum<Models.AutoUserScope, Common.AutoUserScope>(protocolObject.Scope);
+            this.ElevationLevel = UtilitiesInternal.MapNullableEnum<Models.ElevationLevel, Common.ElevationLevel>(protocolObject.ElevationLevel);
+            this.Scope = UtilitiesInternal.MapNullableEnum<Models.AutoUserScope, Common.AutoUserScope>(protocolObject.Scope);
         }
 
         #endregion Constructors
@@ -52,18 +49,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the elevation level of the auto user. If omitted, the default is <see cref="Common.ElevationLevel.NonAdmin"/>.
         /// </summary>
-        public Common.ElevationLevel? ElevationLevel
-        {
-            get { return this.elevationLevel; }
-        }
+        public Common.ElevationLevel? ElevationLevel { get; }
 
         /// <summary>
         /// Gets the scope for the auto user. If omitted, the default is <see cref="Common.AutoUserScope.Task"/>.
         /// </summary>
-        public Common.AutoUserScope? Scope
-        {
-            get { return this.scope; }
-        }
+        public Common.AutoUserScope? Scope { get; }
 
         #endregion // AutoUserSpecification
 

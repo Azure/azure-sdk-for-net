@@ -77,7 +77,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IpPool>> CreateWithHttpMessagesAsync(string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationStatus>> CreateWithHttpMessagesAsync(string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all ip pools at a certain location.
         /// </summary>
@@ -103,6 +103,34 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<IpPool>>> ListWithHttpMessagesAsync(string location, ODataQuery<IpPool> odataQuery = default(ODataQuery<IpPool>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create an ip pool.
+        /// </summary>
+        /// <param name='location'>
+        /// Location of the resource.
+        /// </param>
+        /// <param name='ipPool'>
+        /// Ip pool name.
+        /// </param>
+        /// <param name='pool'>
+        /// Ip pool object to send.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationStatus>> BeginCreateWithHttpMessagesAsync(string location, string ipPool, IpPool pool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all ip pools at a certain location.
         /// </summary>
