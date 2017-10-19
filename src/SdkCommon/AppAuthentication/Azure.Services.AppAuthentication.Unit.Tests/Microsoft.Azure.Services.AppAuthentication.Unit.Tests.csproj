@@ -1,65 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  
-	<PropertyGroup>
-    
-		<TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
-    
-		<SignAssembly>True</SignAssembly>
-    
-		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    
-		<DelaySign>True</DelaySign>
-  
-	</PropertyGroup>
-
-
-
-	<ItemGroup>
-    
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    
-		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    
-		<PackageReference Include="xunit" Version="2.2.0" />
-    
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-  
-	</ItemGroup>
-
-  
-	
-	<ItemGroup>
-    
-		<ProjectReference Include="..\Azure.Services.AppAuthentication.TestCommon\Microsoft.Azure.Services.AppAuthentication.TestCommon.csproj" />
-    
-		<ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />
-  
-	</ItemGroup>
-
-
-
-	<PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
-    
-		<DefineConstants>FullNetFx</DefineConstants>
-  
-	</PropertyGroup>
-
-
-	<ItemGroup>
-    
-		<Reference Include="System.Net.Http" />
-  
-	</ItemGroup>
-
-
-  
-
-	<ItemGroup>
-    
-		<Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  
-	</ItemGroup>
-  
-
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>True</DelaySign>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+        <PackageReference Include="xunit" Version="2.2.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Azure.Services.AppAuthentication.TestCommon\Microsoft.Azure.Services.AppAuthentication.TestCommon.csproj" />
+        <ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />
+    </ItemGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+        <DefineConstants>FullNetFx</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+    <ItemGroup>
+        <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    </ItemGroup>
 </Project>
