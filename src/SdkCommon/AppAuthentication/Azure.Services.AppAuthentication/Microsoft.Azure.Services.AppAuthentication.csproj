@@ -8,7 +8,7 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
         <Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
-        <Version>1.0.0-preview</Version>
+        <Version>1.1.0-preview</Version>
         <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
