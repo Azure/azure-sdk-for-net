@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public void UnspecifiedConnectionStringTest()
         {
             // Set environment variable AzureServicesAuthConnectionString
-            Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, Constants.AzureCliConnectionString);
+            Environment.SetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariableName, Constants.AzureCliConnectionString);
            
             var provider = new AzureServiceTokenProvider();
 
