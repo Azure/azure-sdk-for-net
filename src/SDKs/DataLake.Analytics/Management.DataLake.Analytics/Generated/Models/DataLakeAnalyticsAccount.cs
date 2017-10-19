@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="provisioningState">the provisioning status of the Data
         /// Lake Analytics account. Possible values include: 'Failed',
         /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
-        /// 'Resuming', 'Deleting', 'Deleted'</param>
+        /// 'Resuming', 'Deleting', 'Deleted', 'Undeleting', 'Canceled'</param>
         /// <param name="state">the state of the Data Lake Analytics account.
         /// Possible values include: 'Active', 'Suspended'</param>
         /// <param name="maxDegreeOfParallelism">the maximum supported degree
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets the provisioning status of the Data Lake Analytics account.
         /// Possible values include: 'Failed', 'Creating', 'Running',
         /// 'Succeeded', 'Patching', 'Suspending', 'Resuming', 'Deleting',
-        /// 'Deleted'
+        /// 'Deleted', 'Undeleting', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public DataLakeAnalyticsAccountStatus? ProvisioningState { get; private set; }
