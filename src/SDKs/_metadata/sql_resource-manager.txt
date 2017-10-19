@@ -7,5 +7,3 @@ Commit:      7887c455ed73f02299e1585c3549ad28aeab8b54
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\maboja\AppData\Roaming\npm `-- autorest@2.0.4166  
-Latest installed version:    2.0.4168
