@@ -20,7 +20,7 @@
 - When retrieving account information, an account id field called "accountId" is now included.
     - accountId's description: The unique identifier associated with this Data Lake Analytics account.
 
-### Changes in 2.2.2
+### Changes in 2.2.1
 
 **Notes**
 
