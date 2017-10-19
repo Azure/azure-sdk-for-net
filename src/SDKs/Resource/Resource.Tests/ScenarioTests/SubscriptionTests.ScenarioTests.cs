@@ -1,27 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Linq;
-using System.IO;
 using System.Net;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
-
 using Xunit;
 
 namespace ResourceGroups.Tests
 {
     public class LiveSubscriptionTests : TestBase
     {
-        public LiveSubscriptionTests ()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-        }
-
         public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -76,11 +67,6 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(subscriptionDetails.DisplayName);
                 Assert.NotNull(subscriptionDetails.State);
             }
-        }
-
-        private static string GetSessionsDirectoryPath()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
         }
     }
 }

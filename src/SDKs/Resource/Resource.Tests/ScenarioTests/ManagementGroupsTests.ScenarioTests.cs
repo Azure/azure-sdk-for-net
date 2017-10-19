@@ -13,17 +13,12 @@ namespace ResourceGroups.Tests
     public class LiveManagementGroupsTests : TestBase
     {
 
-
-        public LiveManagementGroupsTests()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-        }
 #if FullNetFx
 
         [Fact]
         public void ListGroups()
         {
-            
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
