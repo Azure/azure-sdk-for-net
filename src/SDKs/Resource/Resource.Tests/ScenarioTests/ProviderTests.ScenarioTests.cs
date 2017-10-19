@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -18,6 +20,11 @@ namespace ResourceGroups.Tests
     public class LiveProviderTests : TestBase
     {
         private const string ProviderName = "microsoft.insights";
+
+        public LiveProviderTests()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+        }
         public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -168,6 +175,11 @@ namespace ResourceGroups.Tests
                             "RegistrationState is expected NotRegistered or Unregistering. Actual value " +
                             provider.RegistrationState);
             }
+        }
+
+        private static string GetSessionsDirectoryPath()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
         }
     }
 }
