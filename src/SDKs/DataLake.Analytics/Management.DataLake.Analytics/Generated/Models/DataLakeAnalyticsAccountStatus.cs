@@ -40,6 +40,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [EnumMember(Value = "Deleting")]
         Deleting,
         [EnumMember(Value = "Deleted")]
-        Deleted
+        Deleted,
+        [EnumMember(Value = "Undeleting")]
+        Undeleting,
+        [EnumMember(Value = "Canceled")]
+        Canceled
     }
 }
