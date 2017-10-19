@@ -32,7 +32,7 @@ namespace Sql.Tests
                 // Create server dns alias pointing to sourceServer
                 //
                 var serverDnsAlias = sqlClient.ServerDnsAliases.CreateOrUpdate(resourceGroup.Name, sourceServer.Name, serverDnsAliasName);
-                ValidateServerDnsAlias(serverDnsAlias, serverDnsAliasName);
+                SqlManagementTestUtilities.ValidateServerDnsAlias(serverDnsAlias, serverDnsAliasName);
 
                 // List server dns aliases on source server and verify
                 //
@@ -43,12 +43,7 @@ namespace Sql.Tests
 
                 // Update server to which alias is pointing
                 //
-                var serverDnsAliasAcquisitonParams = new ServerDnsAliasAcquisition(String.Format(
-                    "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}/dnsAliases/{3}", 
-                    sqlClient.SubscriptionId, 
-                    resourceGroup.Name, 
-                    sourceServer.Name, 
-                    serverDnsAliasName));
+                var serverDnsAliasAcquisitonParams = new ServerDnsAliasAcquisition(String.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}/dnsAliases/{3}", sqlClient.SubscriptionId, resourceGroup.Name, sourceServer.Name, serverDnsAliasName));
 
                 sqlClient.ServerDnsAliases.Acquire(resourceGroup.Name, targetServer.Name, serverDnsAliasName, serverDnsAliasAcquisitonParams);
 
@@ -60,13 +55,6 @@ namespace Sql.Tests
                 Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.ServerDnsAliases.Get(resourceGroup.Name, targetServer.Name, serverDnsAliasName));
 
             }
-        }
-
-        private void ValidateServerDnsAlias(ServerDnsAlias actual, string name)
-        {
-            Assert.NotNull(actual);
-            Assert.NotNull(actual.Id);
-            Assert.Equal(name, actual.Name);
         }
     }
 }
