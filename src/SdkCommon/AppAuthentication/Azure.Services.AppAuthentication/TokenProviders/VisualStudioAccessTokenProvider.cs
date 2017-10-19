@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// </summary>
     internal class VisualStudioAccessTokenProvider : NonInteractiveAzureServiceTokenProviderBase
     {
-        private readonly VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
+        private VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
         
         // Allows for unit testing, by mocking IProcessManager
         private readonly IProcessManager _processManager;
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal VisualStudioAccessTokenProvider(VisualStudioTokenProviderFile visualStudioTokenProviderFile, IProcessManager processManager)
         {
-            _visualStudioTokenProviderFile = visualStudioTokenProviderFile ?? GetTokenProviderFile();
+            _visualStudioTokenProviderFile = visualStudioTokenProviderFile;
             _processManager = processManager;
             PrincipalUsed = new Principal { Type = "User" };
         }
@@ -92,6 +92,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 // Validate resource, since it gets sent as a command line argument to Azure CLI
                 ValidationHelper.ValidateResource(resource);
+
+                _visualStudioTokenProviderFile = _visualStudioTokenProviderFile ?? GetTokenProviderFile();
 
                 // Get process start infos based on Visual Studio token providers
                 var processStartInfos = GetProcessStartInfos(_visualStudioTokenProviderFile, resource);
