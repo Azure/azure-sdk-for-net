@@ -288,14 +288,7 @@ namespace Sql.Tests
             Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
         }
         
-        public static void ValidateServerDnsAlias(ServerDnsAlias actual, string name)
-        {
-            Assert.NotNull(actual);
-            Assert.NotNull(actual.Id);
-            Assert.Equal(name, actual.Name);
-        }
-
-		internal static Task<Database[]> CreateDatabasesAsync(
+        internal static Task<Database[]> CreateDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,
             Server server,
