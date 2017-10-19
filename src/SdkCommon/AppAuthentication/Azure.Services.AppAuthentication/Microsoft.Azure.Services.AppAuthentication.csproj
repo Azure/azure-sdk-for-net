@@ -1,91 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-
-
-   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-
-   <PropertyGroup>
-    
-	<Copyright>Copyright (c) Microsoft Corporation</Copyright>
-    
-	<Authors>Microsoft</Authors>
-    
-	<PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
-    
-	<PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
-  
-	<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    
-	<PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
-    
-	<Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
-    
-	<Version>1.0.0-preview</Version>
-    
-	<DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
-    
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    
-	<AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
-    
-	<PackageTags>Azure;Authentication</PackageTags>
-    
-	<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  
-   </PropertyGroup>
-
-
-
-   <PropertyGroup>
-     
-	<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-     
-	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <PropertyGroup>
+        <Copyright>Copyright (c) Microsoft Corporation</Copyright>
+        <Authors>Microsoft</Authors>
+        <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
+        <Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
+        <Version>1.0.0-preview</Version>
+        <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
+        <PackageTags>Azure;Authentication</PackageTags>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
-
-
-
-   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
-    
- 	<DefineConstants>FullNetFx</DefineConstants>
-  
-   </PropertyGroup>
-
-
-   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    
-	<DefineConstants>netstandard14</DefineConstants>
-  
-   </PropertyGroup>
-
-  
-
-   <ItemGroup>
-    
-	<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.2" />
-  
-   </ItemGroup>
-
-
-   <ItemGroup>
-    
-	<Reference Include="System.Net.Http" />
-  
-   </ItemGroup>
-
-  
-
-   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
-    
-  	<PackageReference Include="System.Diagnostics.Process">
-      
-		<Version>4.3.0</Version>
-    
-	</PackageReference>
-  
-   </ItemGroup>
-
-
-
+    <ItemGroup>
+        <Content Include="build\*.targets" PackagePath="build\" />
+    </ItemGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+        <DefineConstants>FullNetFx</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+        <DefineConstants>netstandard14</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
+        <PackageReference Include="System.Diagnostics.Process">
+            <Version>4.3.0</Version>
+        </PackageReference>
+    </ItemGroup>
 </Project>
