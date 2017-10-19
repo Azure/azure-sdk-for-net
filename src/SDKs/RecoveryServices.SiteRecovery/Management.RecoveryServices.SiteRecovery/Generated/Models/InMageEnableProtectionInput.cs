@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.RecoveryServices;
     using Microsoft.Azure.Management.RecoveryServices.SiteRecovery;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -36,19 +37,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the InMageEnableProtectionInput
         /// class.
         /// </summary>
-        /// <param name="vmFriendlyName">The Vm Name.</param>
         /// <param name="masterTargetId">The Master Target Id.</param>
         /// <param name="processServerId">The Process Server Id.</param>
         /// <param name="retentionDrive">The retention drive to use on the
         /// MT.</param>
-        /// <param name="runAsAccountId">The CS account Id.</param>
         /// <param name="multiVmGroupId">The multi vm group Id.</param>
         /// <param name="multiVmGroupName">The multi vm group name.</param>
+        /// <param name="vmFriendlyName">The Vm Name.</param>
+        /// <param name="runAsAccountId">The CS account Id.</param>
         /// <param name="datastoreName">The target datastore name.</param>
         /// <param name="diskExclusionInput">The enable disk exclusion
         /// input.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
-        public InMageEnableProtectionInput(string vmFriendlyName = default(string), string masterTargetId = default(string), string processServerId = default(string), string retentionDrive = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string datastoreName = default(string), InMageDiskExclusionInput diskExclusionInput = default(InMageDiskExclusionInput), IList<string> disksToInclude = default(IList<string>))
+        public InMageEnableProtectionInput(string masterTargetId, string processServerId, string retentionDrive, string multiVmGroupId, string multiVmGroupName, string vmFriendlyName = default(string), string runAsAccountId = default(string), string datastoreName = default(string), InMageDiskExclusionInput diskExclusionInput = default(InMageDiskExclusionInput), IList<string> disksToInclude = default(IList<string>))
         {
             VmFriendlyName = vmFriendlyName;
             MasterTargetId = masterTargetId;
@@ -128,5 +129,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "disksToInclude")]
         public IList<string> DisksToInclude { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MasterTargetId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MasterTargetId");
+            }
+            if (ProcessServerId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProcessServerId");
+            }
+            if (RetentionDrive == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RetentionDrive");
+            }
+            if (MultiVmGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MultiVmGroupId");
+            }
+            if (MultiVmGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MultiVmGroupName");
+            }
+        }
     }
 }

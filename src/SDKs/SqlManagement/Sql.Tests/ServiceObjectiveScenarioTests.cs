@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Management.Sql;
 using Xunit;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace Sql.Tests
 {
@@ -12,12 +13,13 @@ namespace Sql.Tests
         [Fact]
         public void TestGetListServiceObjectives()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetListServiceObjectives", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                var serviceObjectives = sqlClient.Servers.ListServiceObjectives(resourceGroup.Name, server.Name);
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                var serviceObjectives = sqlClient.ServiceObjectives.ListByServer(resourceGroup.Name, server.Name);
 
                 foreach(ServiceObjective objective in serviceObjectives)
                 {
@@ -27,9 +29,9 @@ namespace Sql.Tests
                     Assert.NotNull(objective.Enabled);
 
                     // Assert Get finds the service objective from List
-                    Assert.NotNull(sqlClient.Servers.GetServiceObjective(resourceGroup.Name, server.Name, objective.Name));
+                    Assert.NotNull(sqlClient.ServiceObjectives.Get(resourceGroup.Name, server.Name, objective.Name));
                 }
-            });
+            }
         }
     }
 }

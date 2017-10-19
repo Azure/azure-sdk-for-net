@@ -5,7 +5,7 @@ Param(
   [Parameter(Mandatory=$false)] [string]$keyVaultName      = "pslibtestkeyvault"
 )
 $PfxCertifcate = ""
-$PfxCertifcatePassword = "CRP-Core"
+$PfxCertifcatePassword = "[PLACEHOLDER]"
 
 Switch-AzureMode AzureResourceManager
 Select-AzureSubscription -SubscriptionId $subscriptionId

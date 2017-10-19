@@ -1,0 +1,31 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "pipelineName": "examplePipeline",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 18:04:27 GMT",
+        "x-ms-request-id": "74ec3492-79c4-4028-9db1-fe7054e794d4",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1185",
+        "x-ms-correlation-request-id": "332e562a-b3f8-4f5d-852d-8bb1bfc6a798"
+      },
+      "body": null
+    },
+    "204": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 18:04:27 GMT",
+        "x-ms-request-id": "86b4c1f6-9944-4cef-8147-170c856da5ec",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1184",
+        "x-ms-correlation-request-id": "5ba4c3d0-6e6a-465d-8ffd-592c38380527"
+      },
+      "body": null
+    }
+  }
+}

@@ -8,26 +8,26 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Net;
+	using System.Net.Http;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
-    using Models;
+	using Microsoft.Rest.Serialization;
+	using Models;
+    using Newtonsoft.Json;
 
-    /// <summary>
-    /// PermissionsOperations operations.
-    /// </summary>
-    internal partial class PermissionsOperations : IServiceOperations<AuthorizationManagementClient>, IPermissionsOperations
+	/// <summary>
+	/// PermissionsOperations operations.
+	/// </summary>
+	internal partial class PermissionsOperations : IServiceOperations<AuthorizationManagementClient>, IPermissionsOperations
     {
         /// <summary>
         /// Initializes a new instance of the PermissionsOperations class.
@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// </param>
         internal PermissionsOperations(AuthorizationManagementClient client)
         {
-            if (client == null) 
+            if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
-            this.Client = client;
+			this.Client = client;
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Authorization
         public AuthorizationManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a resource group permissions.
+        /// Gets all permissions the caller has for a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group to get the permissions for.The name is case
+        /// The name of the resource group to get the permissions for. The name is case
         /// insensitive.
         /// </param>
         /// <param name='customHeaders'>
@@ -62,6 +62,21 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<Permission>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -99,10 +114,10 @@ namespace Microsoft.Azure.Management.Authorization
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
@@ -118,8 +133,8 @@ namespace Microsoft.Azure.Management.Authorization
                     _httpRequest.Headers.Remove("accept-language");
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
+			}
+			if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
                 {
@@ -221,22 +236,22 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Gets a resource permissions.
+        /// Gets all permissions the caller has for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group containing the resource. The name is case insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource
+        /// The resource type of the resource.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource
+        /// The name of the resource to get the permissions for.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -244,6 +259,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<Permission>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
@@ -305,10 +332,10 @@ namespace Microsoft.Azure.Management.Authorization
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
@@ -427,7 +454,7 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Gets a resource group permissions.
+        /// Gets all permissions the caller has for a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -438,6 +465,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<Permission>>> ListForResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
@@ -461,10 +500,10 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
@@ -583,7 +622,7 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Gets a resource permissions.
+        /// Gets all permissions the caller has for a resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -594,6 +633,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<Permission>>> ListForResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
@@ -617,10 +668,10 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+			// Create HTTP transport objects
+			HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);

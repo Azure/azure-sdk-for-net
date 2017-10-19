@@ -8,11 +8,13 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
@@ -23,9 +25,10 @@ namespace Microsoft.Azure.Management.Authorization
     public partial interface IClassicAdministratorsOperations
     {
         /// <summary>
-        /// Gets a list of classic administrators for the subscription.
+        /// Gets service administrator, account administrator, and co-administrators for the subscription.
         /// </summary>
         /// <param name='apiVersion'>
+        /// The API version to use for this operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -33,9 +36,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<IPage<ClassicAdministrator>>> ListWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of classic administrators for the subscription.
+        /// Gets service administrator, account administrator, and co-administrators for the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -46,6 +58,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<IPage<ClassicAdministrator>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

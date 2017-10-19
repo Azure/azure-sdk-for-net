@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> AffinityIdProperty;
             public readonly PropertyAccessor<DateTime?> AllocationTimeProperty;
             public readonly PropertyAccessor<IReadOnlyList<CertificateReference>> CertificateReferencesProperty;
+            public readonly PropertyAccessor<ComputeNodeEndpointConfiguration> EndpointConfigurationProperty;
             public readonly PropertyAccessor<IReadOnlyList<ComputeNodeError>> ErrorsProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<string> IPAddressProperty;
@@ -47,79 +48,83 @@ namespace Microsoft.Azure.Batch
             {
                 this.AffinityIdProperty = this.CreatePropertyAccessor(
                     protocolObject.AffinityId,
-                    "AffinityId",
+                    nameof(AffinityId),
                     BindingAccess.Read);
                 this.AllocationTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.AllocationTime,
-                    "AllocationTime",
+                    nameof(AllocationTime),
                     BindingAccess.Read);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor(
                     CertificateReference.ConvertFromProtocolCollectionReadOnly(protocolObject.CertificateReferences),
-                    "CertificateReferences",
+                    nameof(CertificateReferences),
+                    BindingAccess.Read);
+                this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new ComputeNodeEndpointConfiguration(o).Freeze()),
+                    nameof(EndpointConfiguration),
                     BindingAccess.Read);
                 this.ErrorsProperty = this.CreatePropertyAccessor(
                     ComputeNodeError.ConvertFromProtocolCollectionReadOnly(protocolObject.Errors),
-                    "Errors",
+                    nameof(Errors),
                     BindingAccess.Read);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read);
                 this.IPAddressProperty = this.CreatePropertyAccessor(
                     protocolObject.IpAddress,
-                    "IPAddress",
+                    nameof(IPAddress),
                     BindingAccess.Read);
                 this.IsDedicatedProperty = this.CreatePropertyAccessor(
                     protocolObject.IsDedicated,
-                    "IsDedicated",
+                    nameof(IsDedicated),
                     BindingAccess.Read);
                 this.LastBootTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.LastBootTime,
-                    "LastBootTime",
+                    nameof(LastBootTime),
                     BindingAccess.Read);
                 this.RecentTasksProperty = this.CreatePropertyAccessor(
                     TaskInformation.ConvertFromProtocolCollectionReadOnly(protocolObject.RecentTasks),
-                    "RecentTasks",
+                    nameof(RecentTasks),
                     BindingAccess.Read);
                 this.RunningTasksCountProperty = this.CreatePropertyAccessor(
                     protocolObject.RunningTasksCount,
-                    "RunningTasksCount",
+                    nameof(RunningTasksCount),
                     BindingAccess.Read);
                 this.SchedulingStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.SchedulingState, Common.SchedulingState>(protocolObject.SchedulingState),
-                    "SchedulingState",
+                    nameof(SchedulingState),
                     BindingAccess.Read);
                 this.StartTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.StartTask, o => new StartTask(o).Freeze()),
-                    "StartTask",
+                    nameof(StartTask),
                     BindingAccess.Read);
                 this.StartTaskInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.StartTaskInfo, o => new StartTaskInformation(o).Freeze()),
-                    "StartTaskInformation",
+                    nameof(StartTaskInformation),
                     BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.ComputeNodeState, Common.ComputeNodeState>(protocolObject.State),
-                    "State",
+                    nameof(State),
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.StateTransitionTime,
-                    "StateTransitionTime",
+                    nameof(StateTransitionTime),
                     BindingAccess.Read);
                 this.TotalTasksRunProperty = this.CreatePropertyAccessor(
                     protocolObject.TotalTasksRun,
-                    "TotalTasksRun",
+                    nameof(TotalTasksRun),
                     BindingAccess.Read);
                 this.TotalTasksSucceededProperty = this.CreatePropertyAccessor(
                     protocolObject.TotalTasksSucceeded,
-                    "TotalTasksSucceeded",
+                    nameof(TotalTasksSucceeded),
                     BindingAccess.Read);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
-                    "Url",
+                    nameof(Url),
                     BindingAccess.Read);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor(
                     protocolObject.VmSize,
-                    "VirtualMachineSize",
+                    nameof(VirtualMachineSize),
                     BindingAccess.Read);
             }
         }
@@ -191,6 +196,14 @@ namespace Microsoft.Azure.Batch
         public IReadOnlyList<CertificateReference> CertificateReferences
         {
             get { return this.propertyContainer.CertificateReferencesProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets the endpoint configuration for the compute node.
+        /// </summary>
+        public ComputeNodeEndpointConfiguration EndpointConfiguration
+        {
+            get { return this.propertyContainer.EndpointConfigurationProperty.Value; }
         }
 
         /// <summary>

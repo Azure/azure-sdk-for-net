@@ -1,0 +1,18 @@
+2017-10-06 17:49:12 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: Azure
+Branch:      current
+Commit:      2e7f146efc780927192db6b6445c1a5891f11b7b
+
+2) AutoRest information
+Requested version: latest
+You cannot call a method on a null-valued expression.
+At 
+C:\stefva-azure-rest-api-specs\azure-sdk-for-net\tools\generateMetadata.ps1:19 
+char:1
++ Write-Host "Latest version:   " (autorest --list-installed | Where {$ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+ 

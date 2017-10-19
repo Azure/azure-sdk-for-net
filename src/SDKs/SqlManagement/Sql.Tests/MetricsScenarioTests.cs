@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -19,10 +20,12 @@ namespace Sql.Tests
         [Fact]
         public void TestGetDatabaseMetrics()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetDatabaseMetrics", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create a database and get metrics
                 string dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInput = new Database()
@@ -75,16 +78,18 @@ namespace Sql.Tests
                         Assert.NotNull(value.Total);
                     }
                 }
-            });
+            }
         }
 
         [Fact]
         public void TestGetElasticPoolMetrics()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetElasticPoolMetrics", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create a database and get metrics
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
@@ -137,7 +142,7 @@ namespace Sql.Tests
                         Assert.NotNull(value.Total);
                     }
                 }
-            });
+            }
         }
     }
 }

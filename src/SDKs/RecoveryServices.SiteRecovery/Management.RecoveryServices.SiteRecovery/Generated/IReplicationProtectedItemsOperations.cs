@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='skipToken'>
-        /// The pagination token.
-        /// Possible values: "FabricId" or "FabricId_CloudId" or null
+        /// The pagination token. Possible values: "FabricId" or
+        /// "FabricId_CloudId" or null
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -123,8 +123,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to start resynchronize/repair replication for a
-        /// replication protected item
-        /// requiring resynchronization.
+        /// replication protected item requiring resynchronization.
         /// </remarks>
         /// <param name='fabricName'>
         /// The name of the fabric.
@@ -156,23 +155,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to update(push update) the installed mobility service
-        /// software on a
-        /// replication protected item to the latest available version.
+        /// software on a replication protected item to the latest available
+        /// version.
         /// </remarks>
         /// <param name='fabricName'>
         /// The name of the fabric containing the protected item.
         /// </param>
         /// <param name='protectionContainerName'>
-        /// The name of the container containing the
-        /// protected item.
+        /// The name of the container containing the protected item.
         /// </param>
         /// <param name='replicationProtectedItemName'>
-        /// The name of the protected item on which the
-        /// agent is to be updated.
+        /// The name of the protected item on which the agent is to be updated.
         /// </param>
         /// <param name='updateMobilityServiceRequest'>
-        /// Request to update the mobility
-        /// service on the protected item.
+        /// Request to update the mobility service on the protected item.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -400,8 +396,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to disable replication on a replication protected
-        /// item. This will also
-        /// remove the item.
+        /// item. This will also remove the item.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -499,11 +494,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to delete or purge a replication protected item. This
-        /// operation will
-        /// force delete the replication protected item. Use the remove
-        /// operation on
-        /// replication protected item to perform a clean disable replication
-        /// for the item.
+        /// operation will force delete the replication protected item. Use the
+        /// remove operation on replication protected item to perform a clean
+        /// disable replication for the item.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -602,8 +595,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to start resynchronize/repair replication for a
-        /// replication protected item
-        /// requiring resynchronization.
+        /// replication protected item requiring resynchronization.
         /// </remarks>
         /// <param name='fabricName'>
         /// The name of the fabric.
@@ -635,23 +627,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to update(push update) the installed mobility service
-        /// software on a
-        /// replication protected item to the latest available version.
+        /// software on a replication protected item to the latest available
+        /// version.
         /// </remarks>
         /// <param name='fabricName'>
         /// The name of the fabric containing the protected item.
         /// </param>
         /// <param name='protectionContainerName'>
-        /// The name of the container containing the
-        /// protected item.
+        /// The name of the container containing the protected item.
         /// </param>
         /// <param name='replicationProtectedItemName'>
-        /// The name of the protected item on which the
-        /// agent is to be updated.
+        /// The name of the protected item on which the agent is to be updated.
         /// </param>
         /// <param name='updateMobilityServiceRequest'>
-        /// Request to update the mobility
-        /// service on the protected item.
+        /// Request to update the mobility service on the protected item.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -879,8 +868,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to disable replication on a replication protected
-        /// item. This will also
-        /// remove the item.
+        /// item. This will also remove the item.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -947,11 +935,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to delete or purge a replication protected item. This
-        /// operation will
-        /// force delete the replication protected item. Use the remove
-        /// operation on
-        /// replication protected item to perform a clean disable replication
-        /// for the item.
+        /// operation will force delete the replication protected item. Use the
+        /// remove operation on replication protected item to perform a clean
+        /// disable replication for the item.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.

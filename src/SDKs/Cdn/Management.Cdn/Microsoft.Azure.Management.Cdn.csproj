@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft Azure CDN Management Library</Description>
-    <VersionPrefix>3.1.0-preview</VersionPrefix>
+    <VersionPrefix>4.0.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Cdn</AssemblyName>    
     <PackageId>Microsoft.Azure.Management.Cdn</PackageId>
     <PackageTags>Microsoft Azure CDN management;CDN;Cdn management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>

@@ -47,20 +47,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetAzureSubnetId">The selected target Azure subnet
         /// Id.</param>
         /// <param name="enableRDPOnTargetOption">The selected option to enable
-        /// RDP\SSH on target vm after failover.
-        /// String value of {SrsDataContract.EnableRDPOnTargetOption}
-        /// enum.</param>
+        /// RDP\SSH on target vm after failover. String value of
+        /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
         /// <param name="targetAzureVmName">The target azure Vm Name.</param>
         /// <param name="logStorageAccountId">The storage account to be used
         /// for logging during replication.</param>
         /// <param name="disksToInclude">The list of VHD IDs of disks to be
         /// protected.</param>
         /// <param name="targetAzureV1ResourceGroupId">The Id of the target
-        /// resource group (for classic deployment) in which the
-        /// failover VM is to be created.</param>
+        /// resource group (for classic deployment) in which the failover VM is
+        /// to be created.</param>
         /// <param name="targetAzureV2ResourceGroupId">The Id of the target
-        /// resource group (for resource manager deployment) in
-        /// which the failover VM is to be created.</param>
+        /// resource group (for resource manager deployment) in which the
+        /// failover VM is to be created.</param>
         /// <param name="useManagedDisks">A value indicating whether managed
         /// disks should be used during failover.</param>
         public HyperVReplicaAzureEnableProtectionInput(string hvHostVmId = default(string), string vmName = default(string), string osType = default(string), string vhdId = default(string), string targetStorageAccountId = default(string), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRDPOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
@@ -131,8 +130,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the selected option to enable RDP\SSH on target vm
-        /// after failover.
-        /// String value of {SrsDataContract.EnableRDPOnTargetOption} enum.
+        /// after failover. String value of
+        /// {SrsDataContract.EnableRDPOnTargetOption} enum.
         /// </summary>
         [JsonProperty(PropertyName = "enableRDPOnTargetOption")]
         public string EnableRDPOnTargetOption { get; set; }
@@ -158,16 +157,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the Id of the target resource group (for classic
-        /// deployment) in which the
-        /// failover VM is to be created.
+        /// deployment) in which the failover VM is to be created.
         /// </summary>
         [JsonProperty(PropertyName = "targetAzureV1ResourceGroupId")]
         public string TargetAzureV1ResourceGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the Id of the target resource group (for resource
-        /// manager deployment) in
-        /// which the failover VM is to be created.
+        /// manager deployment) in which the failover VM is to be created.
         /// </summary>
         [JsonProperty(PropertyName = "targetAzureV2ResourceGroupId")]
         public string TargetAzureV2ResourceGroupId { get; set; }

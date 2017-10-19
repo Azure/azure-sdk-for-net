@@ -1,6 +1,63 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
-### Changes in 3.0.1
+### Changes in 3.1.2-preview
+
+**Notes**
+
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
+
+### Changes in 3.1.1-preview
+
+**Notes**
+
+- Reverted the fields "statistics" and "debugData" of the USqlJobProperties object to be read-only.
+
+### Changes in 3.1.0-preview
+
+**Breaking changes**
+
+- Revised the inheritance structure for objects dealing with job creation, building, and retrieving.
+    - NOTE: Only U-SQL is supported in this change; therefore, Hive is not supported.
+    - When submitting jobs, change JobInformation objects to CreateJobParameters.
+        - When setting the properties for the CreateJobParameters object, be sure to change the USqlJobProperties object to a CreateUSqlJobProperties object.
+    - When building jobs, change JobInformation objects to BuildJobParameters objects.
+        - When setting the properties for the BuildJobParameters object, be sure to change the USqlJobProperties object to a CreateUSqlJobProperties object.
+        - NOTE: The following fields are not a part of the BuildJobParameters object:
+            - degreeOfParallelism
+            - priority
+            - related
+    - When getting a list of jobs, the object type that is returned is JobInformationBasic and not JobInformation (more information on the difference is below in the Notes section)
+- When getting a list of accounts, the object type that is returned is DataLakeAnalyticsAccountBasic and not DataLakeAnalyticsAccount (more information on the difference is below in the Notes section)
+
+**Notes**
+	  
+- When getting a list of jobs, the job information for each job now includes a strict subset of the job information that is returned when getting a single job
+    - The following fields are included in the job information when getting a single job but are not included in the job information when getting a list of jobs:
+        - errorMessage
+        - stateAuditRecords
+        - properties
+            - runtimeVersion
+            - script
+            - type  
+- When getting a list of accounts, the account information for each account now includes a strict subset of the account information that is returned when getting a single account 
+    - There are two ways to get a list of accounts: List and ListByResource methods
+    - The following fields are included in the account information when getting a list of accounts, which is less than the account information retrieved for a single account:
+        - provisioningState
+        - state
+        - creationTime
+        - lastModifiedTime
+        - endpoint
+- When retrieving account information, an account id field called "accountId" is now included.
+    - accountId's description: The unique identifier associated with this Data Lake Analytics account.
 - Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
+
+### Changes in 3.0.1
+
+**Notes**
+
+- This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required. (this is addressed in version 3.1.0-preview)
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class (this is addressed in version 3.1.2-preview)
+- Add two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled` (this will be addressed in an upcoming preview release)
 
 ### Changes in 3.0.0
 - All previous preview changes (below) are now stable and part of the official release

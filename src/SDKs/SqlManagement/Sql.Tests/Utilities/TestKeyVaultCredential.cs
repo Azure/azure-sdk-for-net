@@ -3,10 +3,7 @@
 
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Test.HttpRecorder;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +15,8 @@ namespace Sql.Tests.Utilities
         {
         }
 
-        public override Task ProcessHttpRequestAsync(HttpRequestMessage request,
+        public override Task ProcessHttpRequestAsync(
+            HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -27,7 +25,7 @@ namespace Sql.Tests.Utilities
             }
             else
             {
-                return Task.Run(() => { return; });
+                return Task.CompletedTask;
             }
         }
     }

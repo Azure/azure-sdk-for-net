@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointTime">The recovery point time.</param>
         /// <param name="recoveryPointType">The recovery point type:
         /// ApplicationConsistent, CrashConsistent.</param>
-        public RecoveryPointProperties(System.DateTime? recoveryPointTime = default(System.DateTime?), string recoveryPointType = default(string))
+        /// <param name="providerSpecificDetails">The provider specific details
+        /// for the recovery point.</param>
+        public RecoveryPointProperties(System.DateTime? recoveryPointTime = default(System.DateTime?), string recoveryPointType = default(string), ProviderSpecificRecoveryPointDetails providerSpecificDetails = default(ProviderSpecificRecoveryPointDetails))
         {
             RecoveryPointTime = recoveryPointTime;
             RecoveryPointType = recoveryPointType;
+            ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
         public string RecoveryPointType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provider specific details for the recovery point.
+        /// </summary>
+        [JsonProperty(PropertyName = "providerSpecificDetails")]
+        public ProviderSpecificRecoveryPointDetails ProviderSpecificDetails { get; set; }
 
     }
 }
