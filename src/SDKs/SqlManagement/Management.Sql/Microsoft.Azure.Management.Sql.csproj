@@ -13,6 +13,7 @@
       <![CDATA[
 New features:
 - Added support for state and migration flag properties for SQL Vnet rules
+- Added support for Server DNS Aliases
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
