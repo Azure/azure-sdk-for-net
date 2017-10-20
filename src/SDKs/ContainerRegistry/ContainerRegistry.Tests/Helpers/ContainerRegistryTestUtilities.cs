@@ -3,8 +3,8 @@
 
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -12,11 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using RegistrySku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
-using RegistrySkuName = Microsoft.Azure.Management.ContainerRegistry.Models.SkuName;
 using Resource = Microsoft.Azure.Management.ContainerRegistry.Models.Resource;
-using StorageSku = Microsoft.Azure.Management.Storage.Models.Sku;
-using StorageSkuName = Microsoft.Azure.Management.Storage.Models.SkuName;
+using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
+using SkuName = Microsoft.Azure.Management.ContainerRegistry.Models.SkuName;
 
 namespace ContainerRegistry.Tests
 {
@@ -95,9 +93,9 @@ namespace ContainerRegistry.Tests
                 new StorageAccountCreateParameters
                 {
                     Location = resourceGroup.Location,
-                    Sku = new StorageSku
+                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
                     {
-                        Name = StorageSkuName.StandardLRS
+                        Name = Microsoft.Azure.Management.Storage.Models.SkuName.StandardLRS
                     },
                     Kind = Kind.Storage
                 });
@@ -111,9 +109,9 @@ namespace ContainerRegistry.Tests
                 new Registry
                 {
                     Location = resourceGroup.Location,
-                    Sku = new RegistrySku
+                    Sku = new Sku
                     {
-                        Name = RegistrySkuName.Classic
+                        Name = SkuName.Classic
                     },
                     StorageAccount = new StorageAccountProperties
                     {
@@ -123,42 +121,42 @@ namespace ContainerRegistry.Tests
                 });
         }
 
-        public static Registry CreateManagedContainerRegistry(ContainerRegistryManagementClient client, ResourceGroup resourceGroup)
+        public static Registry CreateManagedContainerRegistry(ContainerRegistryManagementClient client, string resourceGroupName, string location)
         {
             return client.Registries.Create(
-                resourceGroup.Name,
+                resourceGroupName,
                 TestUtilities.GenerateName("acrregistry"),
                 new Registry
                 {
-                    Location = resourceGroup.Location,
-                    Sku = new RegistrySku
+                    Location = location,
+                    Sku = new Sku
                     {
-                        Name = RegistrySkuName.Premium
+                        Name = SkuName.Premium
                     },
                     Tags = DefaultTags
                 });
         }
 
-        public static Webhook CreatedContainerRegistryWebhook(ContainerRegistryManagementClient client, ResourceGroup resourceGroup, Registry registry)
+        public static Webhook CreatedContainerRegistryWebhook(ContainerRegistryManagementClient client, string resourceGroupName, string registryName, string location)
         {
             return client.Webhooks.Create(
-                resourceGroup.Name,
-                registry.Name,
+                resourceGroupName,
+                registryName,
                 TestUtilities.GenerateName("acrwebhook"),
                 new WebhookCreateParameters
                 {
-                    Location = registry.Location,
+                    Location = location,
                     ServiceUri = DefaultWebhookServiceUri,
                     Actions = new List<string>() { WebhookAction.Push },
                     Tags = DefaultTags
                 });
         }
 
-        public static Replication CreatedContainerRegistryReplication(ContainerRegistryManagementClient client, ResourceGroup resourceGroup, Registry registry, string location)
+        public static Replication CreatedContainerRegistryReplication(ContainerRegistryManagementClient client, string resourceGroupName, string registryName, string location)
         {
             return client.Replications.Create(
-                resourceGroup.Name,
-                registry.Name,
+                resourceGroupName,
+                registryName,
                 NormalizeLocation(location),
                 location,
                 DefaultTags);

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
     <Description>Provides management capabilities for Azure Container Registry.</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
     <PackageTags>Microsoft Azure Container Registry;Container Registry;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
     <PackageReleaseNotes>

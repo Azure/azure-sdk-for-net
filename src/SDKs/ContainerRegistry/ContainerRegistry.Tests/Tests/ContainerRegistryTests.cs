@@ -3,8 +3,8 @@
 
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -12,7 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
+using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 
 namespace ContainerRegistry.Tests
 {
@@ -28,7 +30,7 @@ namespace ContainerRegistry.Tests
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group and storage account
+                // Create resource group
                 var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
 
                 // Check valid name
@@ -46,7 +48,7 @@ namespace ContainerRegistry.Tests
                 Assert.Equal("The specified resource name is disallowed", checkNameRequest.Message);
 
                 // Check name of container registry that already exists
-                registryName = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup).Name;
+                registryName = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location).Name;
                 checkNameRequest = registryClient.Registries.CheckNameAvailability(registryName);
                 Assert.False(checkNameRequest.NameAvailable);
                 Assert.Equal("AlreadyExists", checkNameRequest.Reason);
@@ -86,11 +88,11 @@ namespace ContainerRegistry.Tests
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group and storage account
+                // Create resource group
                 var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
 
                 // Create container registry
-                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup);
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
 
                 ContainerRegistryCoreScenario(registryClient, resourceGroup, registry, true);
             }
@@ -228,12 +230,12 @@ namespace ContainerRegistry.Tests
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group and storage account
+                // Create resource group
                 var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
 
                 // Create container registry and webhook
-                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup);
-                var webhook = ContainerRegistryTestUtilities.CreatedContainerRegistryWebhook(registryClient, resourceGroup, registry);
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+                var webhook = ContainerRegistryTestUtilities.CreatedContainerRegistryWebhook(registryClient, resourceGroup.Name, registry.Name, resourceGroup.Location);
 
                 // Validate the created webhook
                 ContainerRegistryTestUtilities.ValidateResourceDefaultTags(webhook);
@@ -315,13 +317,13 @@ namespace ContainerRegistry.Tests
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group and storage account
+                // Create resource group
                 var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var nonDefaultLocation = ContainerRegistryTestUtilities.GetNonDefaultRegistryLocation(resourceClient, resourceGroup.Location);
 
                 // Create container registry and replication
-                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup);
-                var replicationLocation = ContainerRegistryTestUtilities.GetNonDefaultRegistryLocation(resourceClient, registry.Location);
-                var replication = ContainerRegistryTestUtilities.CreatedContainerRegistryReplication(registryClient, resourceGroup, registry, replicationLocation);
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, nonDefaultLocation);
+                var replication = ContainerRegistryTestUtilities.CreatedContainerRegistryReplication(registryClient, resourceGroup.Name, registry.Name, resourceGroup.Location);
 
                 // Validate the created replication
                 ContainerRegistryTestUtilities.ValidateResourceDefaultTags(replication);
