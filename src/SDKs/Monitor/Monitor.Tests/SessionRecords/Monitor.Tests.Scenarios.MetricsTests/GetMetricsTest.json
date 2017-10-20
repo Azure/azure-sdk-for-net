@@ -7,19 +7,19 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1fb41c18-47dd-46a4-9c44-182512f7ec02"
+          "93094991-2973-43de-860b-f4c90fa64635"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2053.0",
+          "FxVersion/4.7.2114.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.MonitorClient/0.17.0.0"
+          "Microsoft.Azure.Management.Monitor.MonitorClient/0.18.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"cost\": 0,\r\n  \"timespan\": \"2017-08-10T22:19:35Z/2017-08-10T23:19:35Z\",\r\n  \"interval\": \"PT1M\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/Microsoft.Insights/metrics/CpuTime\",\r\n      \"type\": \"Microsoft.Insights/metrics\",\r\n      \"name\": {\r\n        \"value\": \"CpuTime\",\r\n        \"localizedValue\": \"CPU Time\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"timeseries\": [\r\n        {\r\n          \"metadatavalues\": [],\r\n          \"data\": [\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:19:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:20:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:21:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:22:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:23:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:24:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:25:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:26:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:27:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:28:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:29:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:30:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:31:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:32:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:33:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:34:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:35:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:36:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:37:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:38:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:39:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:40:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:41:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:42:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:43:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:44:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:45:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:46:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:47:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:48:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:49:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:50:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:51:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:52:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:53:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:54:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:55:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:56:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:57:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:58:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T22:59:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:00:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:01:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:02:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:03:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:04:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:05:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:06:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:07:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:08:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:09:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:10:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:11:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:12:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:13:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:14:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:15:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:16:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:17:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-08-10T23:18:00Z\",\r\n              \"total\": 0.0\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"cost\": 0,\r\n  \"timespan\": \"2017-10-06T17:11:47Z/2017-10-06T18:11:47Z\",\r\n  \"interval\": \"PT1M\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/resourceGroups/Rac46PostSwapRG/providers/Microsoft.Web/sites/alertruleTest/providers/Microsoft.Insights/metrics/CpuTime\",\r\n      \"type\": \"Microsoft.Insights/metrics\",\r\n      \"name\": {\r\n        \"value\": \"CpuTime\",\r\n        \"localizedValue\": \"CPU Time\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"timeseries\": [\r\n        {\r\n          \"metadatavalues\": [],\r\n          \"data\": [\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:11:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:12:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:13:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:14:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:15:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:16:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:17:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:18:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:19:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:20:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:21:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:22:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:23:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:24:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:25:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:26:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:27:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:28:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:29:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:30:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:31:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:32:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:33:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:34:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:35:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:36:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:37:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:38:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:39:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:40:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:41:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:42:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:43:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:44:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:45:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:46:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:47:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:48:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:49:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:50:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:51:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:52:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:53:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:54:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:55:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:56:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:57:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:58:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T17:59:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:00:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:01:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:02:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:03:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:04:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:05:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:06:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:07:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:08:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:09:00Z\",\r\n              \"total\": 0.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-10-06T18:10:00Z\",\r\n              \"total\": 0.0\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "3368"
@@ -31,19 +31,19 @@
           "Accept-Encoding"
         ],
         "__HandlingServerId__": [
-          "shoeboxproxyprod_shoeboxproxyprod-black_MetricsMP_IN_6"
+          "shoeboxproxyprod_shoeboxproxyprod-black_MetricsMP_IN_13"
         ],
         "x-ms-request-id": [
-          "{f682ef7a-4502-4b74-b785-0fef1c9e4322}"
+          "{1736e8c6-ff5c-40e9-bb45-fd855156ee6b}"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "f682ef7a-4502-4b74-b785-0fef1c9e4322"
+          "1736e8c6-ff5c-40e9-bb45-fd855156ee6b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170810T231935Z:f682ef7a-4502-4b74-b785-0fef1c9e4322"
+          "WESTUS2:20171006T181148Z:1736e8c6-ff5c-40e9-bb45-fd855156ee6b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -52,7 +52,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 10 Aug 2017 23:19:35 GMT"
+          "Fri, 06 Oct 2017 18:11:47 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -70,16 +70,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8c1eb38e-1839-4d1b-8dc9-30d1d99b4d1a"
+          "a15e2b1f-a60b-4523-a68b-1d9488c6b5a0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2053.0",
+          "FxVersion/4.7.2114.0",
           "OSName/WindowsServer2012R2Standard",
           "OSVersion/6.3.9600",
-          "Microsoft.Azure.Management.Monitor.MonitorClient/0.17.0.0"
+          "Microsoft.Azure.Management.Monitor.MonitorClient/0.18.1.0"
         ]
       },
       "ResponseBody": "{\r\n  \"code\": \"BadRequest\",\r\n  \"message\": \"Metadata path requires at least one dimension to be set\"\r\n}",
@@ -91,19 +91,19 @@
           "application/json"
         ],
         "__HandlingServerId__": [
-          "shoeboxproxyprod_shoeboxproxyprod-black_MetricsMP_IN_6"
+          "shoeboxproxyprod_shoeboxproxyprod-black_MetricsMP_IN_11"
         ],
         "x-ms-request-id": [
-          "{77fa485b-cede-4057-9de4-5160997f4583}"
+          "{c9190ca2-0be8-4060-ba33-14d866aa9e4e}"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "77fa485b-cede-4057-9de4-5160997f4583"
+          "c9190ca2-0be8-4060-ba33-14d866aa9e4e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170810T231935Z:77fa485b-cede-4057-9de4-5160997f4583"
+          "WESTUS2:20171006T181149Z:c9190ca2-0be8-4060-ba33-14d866aa9e4e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -112,7 +112,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 10 Aug 2017 23:19:35 GMT"
+          "Fri, 06 Oct 2017 18:11:48 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -125,6 +125,132 @@
         ]
       },
       "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/56bb45c9-5c14-4914-885e-c6fd6f130f7c/resourceGroups/contoso-data/providers/Microsoft.Storage/storageAccounts/contosodatadiag1/providers/microsoft.insights/metrics?$filter=APIName%20eq%20'GetBlobProperties'&timespan=2017-09-19T02:00:00Z%2F2017-09-19T02:25:00Z&interval=PT1M&metric=Transactions&aggregation=Count&resultType=Data&api-version=2017-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTZiYjQ1YzktNWMxNC00OTE0LTg4NWUtYzZmZDZmMTMwZjdjL3Jlc291cmNlR3JvdXBzL2NvbnRvc28tZGF0YS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2NvbnRvc29kYXRhZGlhZzEvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9tZXRyaWNzPyRmaWx0ZXI9QVBJTmFtZSUyMGVxJTIwJ0dldEJsb2JQcm9wZXJ0aWVzJyZ0aW1lc3Bhbj0yMDE3LTA5LTE5VDAyJTNBMDAlM0EwMFolMkYyMDE3LTA5LTE5VDAyJTNBMjUlM0EwMFomaW50ZXJ2YWw9UFQxTSZtZXRyaWM9VHJhbnNhY3Rpb25zJmFnZ3JlZ2F0aW9uPUNvdW50JnJlc3VsdFR5cGU9RGF0YSZhcGktdmVyc2lvbj0yMDE3LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bde1ba74-bf18-45ad-ad8c-add908f5342f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2114.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.MonitorClient/0.18.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"cost\": 0,\r\n  \"timespan\": \"2017-09-19T02:00:00Z/2017-09-19T02:25:00Z\",\r\n  \"interval\": \"PT1M\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/56bb45c9-5c14-4914-885e-c6fd6f130f7c/resourceGroups/contoso-data/providers/Microsoft.Storage/storageAccounts/contosodatadiag1/providers/Microsoft.Insights/metrics/Transactions\",\r\n      \"type\": \"Microsoft.Insights/metrics\",\r\n      \"name\": {\r\n        \"value\": \"Transactions\",\r\n        \"localizedValue\": \"Transactions\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeseries\": [\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetBlobProperties\"\r\n            }\r\n          ],\r\n          \"data\": [\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:00:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:01:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:02:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:03:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:04:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:05:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:06:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:07:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:08:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:09:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:10:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:11:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:12:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:13:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:14:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:15:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:16:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:17:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:18:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:19:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:20:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:21:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:22:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:23:00Z\",\r\n              \"count\": 2.0\r\n            },\r\n            {\r\n              \"timeStamp\": \"2017-09-19T02:24:00Z\",\r\n              \"count\": 2.0\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1762"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "__HandlingServerId__": [
+          "shoeboxproxyprod_shoeboxproxyprod-black_MetricsMP_IN_14"
+        ],
+        "x-ms-request-id": [
+          "{d660068f-53c6-447f-be5c-2fe943995945}"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14916"
+        ],
+        "x-ms-correlation-request-id": [
+          "d660068f-53c6-447f-be5c-2fe943995945"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171006T181153Z:d660068f-53c6-447f-be5c-2fe943995945"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Oct 2017 18:11:52 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/56bb45c9-5c14-4914-885e-c6fd6f130f7c/resourceGroups/contoso-data/providers/Microsoft.Storage/storageAccounts/contosodatadiag1/providers/microsoft.insights/metrics?$filter=APIName%20eq%20'*'&timespan=2017-09-19T02:00:00Z%2F2017-09-19T02:25:00Z&interval=PT1M&metric=Transactions&aggregation=Count&resultType=Metadata&api-version=2017-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTZiYjQ1YzktNWMxNC00OTE0LTg4NWUtYzZmZDZmMTMwZjdjL3Jlc291cmNlR3JvdXBzL2NvbnRvc28tZGF0YS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2NvbnRvc29kYXRhZGlhZzEvcHJvdmlkZXJzL21pY3Jvc29mdC5pbnNpZ2h0cy9tZXRyaWNzPyRmaWx0ZXI9QVBJTmFtZSUyMGVxJTIwJyonJnRpbWVzcGFuPTIwMTctMDktMTlUMDIlM0EwMCUzQTAwWiUyRjIwMTctMDktMTlUMDIlM0EyNSUzQTAwWiZpbnRlcnZhbD1QVDFNJm1ldHJpYz1UcmFuc2FjdGlvbnMmYWdncmVnYXRpb249Q291bnQmcmVzdWx0VHlwZT1NZXRhZGF0YSZhcGktdmVyc2lvbj0yMDE3LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "64428079-6bc9-4db9-bc35-03283a45ab66"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2114.0",
+          "OSName/WindowsServer2012R2Standard",
+          "OSVersion/6.3.9600",
+          "Microsoft.Azure.Management.Monitor.MonitorClient/0.18.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"timespan\": \"2017-09-19T02:00:00Z/2017-09-19T02:25:00Z\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/56bb45c9-5c14-4914-885e-c6fd6f130f7c/resourceGroups/contoso-data/providers/Microsoft.Storage/storageAccounts/contosodatadiag1/providers/Microsoft.Insights/metrics/Transactions\",\r\n      \"type\": \"Microsoft.Insights/metrics\",\r\n      \"name\": {\r\n        \"value\": \"Transactions\",\r\n        \"localizedValue\": \"Transactions\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"timeseries\": [\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetBlobServiceProperties\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetQueueServiceProperties\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"DeleteBlob\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"SetBlobProperties\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"QueryEntities\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetFileServiceProperties\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"PutPage\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"QueryTables\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetBlobProperties\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetPageRegions\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetTableServiceProperties\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"EntityGroupTransaction\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"GetBlob\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"metadatavalues\": [\r\n            {\r\n              \"name\": {\r\n                \"value\": \"apiname\",\r\n                \"localizedValue\": \"apiname\"\r\n              },\r\n              \"value\": \"PutBlob\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1851"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "__HandlingServerId__": [
+          "shoeboxproxyprod_shoeboxproxyprod-black_MetricsMP_IN_14"
+        ],
+        "x-ms-request-id": [
+          "{e6686159-2eaf-4e3f-83f6-62ddf30620ba}"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14914"
+        ],
+        "x-ms-correlation-request-id": [
+          "e6686159-2eaf-4e3f-83f6-62ddf30620ba"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171006T181221Z:e6686159-2eaf-4e3f-83f6-62ddf30620ba"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 06 Oct 2017 18:12:20 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {},
