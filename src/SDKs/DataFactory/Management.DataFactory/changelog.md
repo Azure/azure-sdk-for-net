@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.2.1-preview 
+### Feature Additions 
+ * Adding a property for managed dedicated integration runtime to support custom setup script.
+ 
+
 ## Version 0.2.0-preview
 
 ### Feature Additions
