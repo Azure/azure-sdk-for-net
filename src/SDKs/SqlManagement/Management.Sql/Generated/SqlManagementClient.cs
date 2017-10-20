@@ -257,6 +257,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseOperations DatabaseOperations { get; private set; }
 
         /// <summary>
+        /// Gets the IServerDnsAliasesOperations.
+        /// </summary>
+        public virtual IServerDnsAliasesOperations ServerDnsAliases { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -494,6 +499,7 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
+            ServerDnsAliases = new ServerDnsAliasesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

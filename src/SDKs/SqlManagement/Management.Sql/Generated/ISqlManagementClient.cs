@@ -251,5 +251,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IDatabaseOperations DatabaseOperations { get; }
 
+        /// <summary>
+        /// Gets the IServerDnsAliasesOperations.
+        /// </summary>
+        IServerDnsAliasesOperations ServerDnsAliases { get; }
+
     }
 }
