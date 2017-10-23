@@ -5,7 +5,7 @@
     <Description>Microsoft Azure Key Vault WebKey Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault WebKey</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey</AssemblyName>
-    <VersionPrefix>2.1.0</VersionPrefix>
+    <VersionPrefix>2.1.0-prerelease</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault WebKey</PackageTags>
   </PropertyGroup>
 
