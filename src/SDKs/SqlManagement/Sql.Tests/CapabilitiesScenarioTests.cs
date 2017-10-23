@@ -40,12 +40,6 @@ namespace Sql.Tests
                                 Assert.NotNull(m.Unit);
                             }
                         }
-                        Assert.Null(e.ZoneRedundant);
-                    }
-
-                    foreach (ElasticPoolEditionCapability e in s.SupportedElasticPoolEditions)
-                    {
-                        Assert.Null(e.ZoneRedundant);
                     }
                 }
             }
