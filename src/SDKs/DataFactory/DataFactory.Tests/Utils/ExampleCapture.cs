@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.DataFactory.Models;
 using Rm = Microsoft.Azure.Management.Resources;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.Serialization;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace DataFactory.Tests.Utils
                 EnsureResourceGroupExists();
                 EnsureFactoryDoesNotExist();
                 ServiceClientTracing.IsEnabled = true;
-                
+
                 // Start Factories operations, leaving factory available
                 CaptureFactories_CreateOrUpdate(); // 200
                 CaptureFactories_Update(); // 200
@@ -73,6 +74,13 @@ namespace DataFactory.Tests.Utils
                 CaptureIntegrationRuntimes_ListAuthKeys(); // 200
                 CaptureIntegrationRuntimes_RegenerateAuthKey(); // 200
                 CaptureIntegrationRuntimes_GetStatus(); // 200
+                CaptureIntegrationRuntimes_Patch(); // 200
+
+                // The following 3 methods invovling a mannual step as prerequisites. We need to install an integration runtime node and register it.
+                // After the integration runtime node is online, we can run methods.
+                CaptureIntegrationRuntimeNodes_Patch(); // 200
+                CaptureIntegrationRuntimeNodes_Delete(); // 200
+                CaptureIntegrationRuntimeNodes_Delete(); // 204
 
                 // Start LinkedServices operations, leaving linked service available
                 CaptureLinkedServices_Create(); // 200
@@ -354,6 +362,36 @@ namespace DataFactory.Tests.Utils
             ServiceClientTracing.IsEnabled = false;
             client.IntegrationRuntimes.Delete(secrets.ResourceGroupName, secrets.FactoryName, managedIntegrationRuntimeName);
             ServiceClientTracing.IsEnabled = true;
+        }
+
+        private void CaptureIntegrationRuntimes_Patch()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_Patch";
+
+            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Patch(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
+                new IntegrationRuntimePatchRequest
+                {
+                    AutoUpdate = IntegrationRuntimeAutoUpdate.On,
+                    UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                });
+        }
+
+        private void CaptureIntegrationRuntimeNodes_Patch()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Patch";
+
+            SelfHostedIntegrationRuntimeNode response = client.IntegrationRuntimeNodes.Patch(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "Node_1",
+                new IntegrationRuntimeNodePatchRequest
+                {
+                    ConcurrentJobsLimit = 2
+                });
+        }
+
+        private void CaptureIntegrationRuntimeNodes_Delete()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Delete";
+
+            client.IntegrationRuntimeNodes.Delete(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "Node_1");
         }
 
         private LinkedServiceResource GetLinkedServiceResource(string description)

@@ -202,6 +202,42 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void IntegrationRuntimes_Patch()
+        {
+            RunAyncApiTest("IntegrationRuntimes_Patch", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.Patch(RGN(example), FN(example), IRN(example),
+                new IntegrationRuntimePatchRequest
+                {
+                    AutoUpdate = IntegrationRuntimeAutoUpdate.On,
+                    UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Patch()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Patch", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Patch(RGN(example), FN(example), IRN(example), "Node_1",
+                new IntegrationRuntimeNodePatchRequest
+                {
+                    ConcurrentJobsLimit = 2
+                });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Delete()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Delete", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
+            });
+        }
+
+        [Fact]
         public void LinkedServices_Create()
         {
             RunTest("LinkedServices_Create", (example, client, responseCode) =>
