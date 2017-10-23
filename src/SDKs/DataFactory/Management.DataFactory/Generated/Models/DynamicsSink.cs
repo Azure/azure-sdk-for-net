@@ -14,20 +14,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Azure Search Index sink.
+    /// A copy activity Dynamics sink.
     /// </summary>
-    public partial class AzureSearchIndexSink : CopySink
+    public partial class DynamicsSink : CopySink
     {
         /// <summary>
-        /// Initializes a new instance of the AzureSearchIndexSink class.
+        /// Initializes a new instance of the DynamicsSink class.
         /// </summary>
-        public AzureSearchIndexSink()
+        public DynamicsSink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureSearchIndexSink class.
+        /// Initializes a new instance of the DynamicsSink class.
         /// </summary>
         /// <param name="writeBatchSize">Write batch size. Type: integer (or
         /// Expression with resultType integer), minimum: 0.</param>
@@ -39,14 +39,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sinkRetryWait">Sink retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        /// <param name="writeBehavior">Specify the write behavior when
-        /// upserting documents into Azure Search Index. Possible values
-        /// include: 'Merge', 'Upload'</param>
-        public AzureSearchIndexSink(object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), string writeBehavior = default(string))
+        /// <param name="ignoreNullValues">The flag indicating whether ignore
+        /// null values from input dataset (except key fields) during write
+        /// operation. Default is false. Type: boolean (or Expression with
+        /// resultType boolean).</param>
+        public DynamicsSink(object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object ignoreNullValues = default(object))
             : base(writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait)
         {
-            WriteBehavior = writeBehavior;
+            IgnoreNullValues = ignoreNullValues;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for DynamicsSink class.
+        /// </summary>
+        static DynamicsSink()
+        {
+            WriteBehavior = "Upsert";
         }
 
         /// <summary>
@@ -55,11 +63,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specify the write behavior when upserting documents
-        /// into Azure Search Index. Possible values include: 'Merge', 'Upload'
+        /// Gets or sets the flag indicating whether ignore null values from
+        /// input dataset (except key fields) during write operation. Default
+        /// is false. Type: boolean (or Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "ignoreNullValues")]
+        public object IgnoreNullValues { get; set; }
+
+        /// <summary>
+        /// The write behavior for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "writeBehavior")]
-        public string WriteBehavior { get; set; }
+        public static string WriteBehavior { get; private set; }
 
     }
 }
