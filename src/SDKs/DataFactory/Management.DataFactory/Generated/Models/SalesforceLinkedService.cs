@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public SalesforceLinkedService()
         {
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SalesforceLinkedService(IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object environmentUrl = default(object), object username = default(object), SecureString password = default(SecureString), SecureString securityToken = default(SecureString), object encryptedCredential = default(object))
+        public SalesforceLinkedService(IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object environmentUrl = default(object), object username = default(object), SecretBase password = default(SecretBase), SecretBase securityToken = default(SecretBase), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
             EnvironmentUrl = environmentUrl;
@@ -92,14 +92,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Salesforce source.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the security token is required to remotely access
         /// Salesforce source.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.securityToken")]
-        public SecureString SecurityToken { get; set; }
+        public SecretBase SecurityToken { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -118,14 +118,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Password != null)
-            {
-                Password.Validate();
-            }
-            if (SecurityToken != null)
-            {
-                SecurityToken.Validate();
-            }
         }
     }
 }

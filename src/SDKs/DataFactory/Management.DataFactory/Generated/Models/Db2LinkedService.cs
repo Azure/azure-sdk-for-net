@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public Db2LinkedService()
         {
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>

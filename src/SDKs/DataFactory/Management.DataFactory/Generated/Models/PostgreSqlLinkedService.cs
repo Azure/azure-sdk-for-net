@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public PostgreSqlLinkedService()
         {
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>

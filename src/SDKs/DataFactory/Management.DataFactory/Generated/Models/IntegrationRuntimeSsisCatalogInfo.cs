@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public IntegrationRuntimeSsisCatalogInfo()
         {
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>

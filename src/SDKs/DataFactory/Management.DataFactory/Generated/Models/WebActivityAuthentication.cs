@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public WebActivityAuthentication()
         {
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>

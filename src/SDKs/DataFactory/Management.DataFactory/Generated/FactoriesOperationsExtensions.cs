@@ -253,6 +253,49 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Cancel a pipeline run by its run ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='runId'>
+            /// The pipeline run identifier.
+            /// </param>
+            public static void CancelPipelineRun(this IFactoriesOperations operations, string resourceGroupName, string factoryName, string runId)
+            {
+                operations.CancelPipelineRunAsync(resourceGroupName, factoryName, runId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancel a pipeline run by its run ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='runId'>
+            /// The pipeline run identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CancelPipelineRunAsync(this IFactoriesOperations operations, string resourceGroupName, string factoryName, string runId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CancelPipelineRunWithHttpMessagesAsync(resourceGroupName, factoryName, runId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists factories under the specified subscription.
             /// </summary>
             /// <param name='operations'>
