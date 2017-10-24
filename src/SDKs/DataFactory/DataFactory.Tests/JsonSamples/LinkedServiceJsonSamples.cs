@@ -597,6 +597,7 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
         [JsonSample]
         public const string SalesforceLinkedServiceWithAkv = @"
 {
