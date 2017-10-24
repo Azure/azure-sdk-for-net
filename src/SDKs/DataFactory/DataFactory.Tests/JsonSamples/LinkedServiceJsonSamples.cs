@@ -547,6 +547,34 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string DynamicsLinkedService = @"
+{
+    name: ""Test-Dynamics-LinkedService"",
+    properties:
+    {
+        type : ""Dynamics"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""Office365"", 
+            username : ""fakeuser@contoso.com"",
+            password : { 
+                        type : ""AzureKeyVaultSecret"", 
+                        secretName : ""fakeSecretName"", 
+                        store: { 
+                            type : ""LinkedServiceReference"", 
+                            referenceName : ""AKVLinkedService"" 
+                        } 
+                    }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string SalesforceLinkedService = @"
 {
     name: ""SalesforceLinkedService"",
@@ -565,6 +593,37 @@ namespace DataFactory.Tests.JsonSamples
             securityToken: {
                 value : ""fakeToken"",
                 type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
+        public const string SalesforceLinkedServiceWithAkv = @"
+{
+    name: ""SalesforceLinkedServiceWithAkv"",
+    properties:
+    {
+        type: ""Salesforce"",
+        description: ""test description"",
+        typeProperties:
+        {
+            environmentUrl: ""url"",
+            username: ""admin"",
+            password : {
+                type : ""AzureKeyVaultSecret"",
+                secretName : ""fakeSecretName1"",
+                store : {
+                    type : ""LinkedServiceReference"",
+                    referenceName : ""fakeAKVLinkedService""
+                }
+            },
+            securityToken: {
+                type : ""AzureKeyVaultSecret"",
+                secretName : ""fakeSecretName2"",
+                store : {
+                    type : ""LinkedServiceReference"",
+                    referenceName : ""fakeAKVLinkedService""
+                }
             }
         }
     }

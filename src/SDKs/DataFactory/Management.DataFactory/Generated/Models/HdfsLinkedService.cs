@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public HdfsLinkedService()
         {
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>

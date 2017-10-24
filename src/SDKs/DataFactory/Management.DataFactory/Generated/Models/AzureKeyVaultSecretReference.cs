@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure Key Vault Secret properties.
+    /// Azure Key Vault secret referece.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AzureKeyVaultSecret")]
-    public partial class AzureKeyVaultSecretReference : AzureKeyVaultReference
+    public partial class AzureKeyVaultSecretReference : SecretBase
     {
         /// <summary>
         /// Initializes a new instance of the AzureKeyVaultSecretReference
@@ -27,23 +27,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public AzureKeyVaultSecretReference()
         {
-          CustomInit();
+            Store = new LinkedServiceReference();
+            CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the AzureKeyVaultSecretReference
         /// class.
         /// </summary>
-        /// <param name="store">The Azure Key Vault LinkedService.</param>
-        /// <param name="secretName">The name of secret in Azure Key Vault.
+        /// <param name="store">The Azure Key Vault linked service
+        /// reference.</param>
+        /// <param name="secretName">The name of the secret in Azure Key Vault.
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="secretVersion">The version of the secret in Azure Key
         /// Vault. The default value is the latest version of the secret. Type:
         /// string (or Expression with resultType string).</param>
         public AzureKeyVaultSecretReference(LinkedServiceReference store, object secretName, object secretVersion = default(object))
-            : base(store)
         {
             Store = new LinkedServiceReference();
+            Store = store;
             SecretName = secretName;
             SecretVersion = secretVersion;
             CustomInit();
@@ -55,8 +57,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of secret in Azure Key Vault. Type: string
-        /// (or Expression with resultType string).
+        /// Gets or sets the Azure Key Vault linked service reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "store")]
+        public LinkedServiceReference Store { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the secret in Azure Key Vault. Type:
+        /// string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "secretName")]
         public object SecretName { get; set; }
@@ -75,12 +83,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Store == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Store");
+            }
             if (SecretName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SecretName");
+            }
+            if (Store != null)
+            {
+                Store.Validate();
             }
         }
     }

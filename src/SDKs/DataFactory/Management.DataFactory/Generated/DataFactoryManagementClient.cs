@@ -360,6 +360,8 @@ namespace Microsoft.Azure.Management.DataFactory
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretBase>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretBase>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntime>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<IntegrationRuntime>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntimeStatus>("type"));
@@ -374,8 +376,6 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AzureKeyVaultReference>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AzureKeyVaultReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));

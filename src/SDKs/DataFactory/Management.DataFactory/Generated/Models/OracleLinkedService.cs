@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public OracleLinkedService()
         {
-            ConnectionString = new SecureString();
-            CustomInit();
+          CustomInit();
         }
 
         /// <summary>
@@ -45,7 +44,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public OracleLinkedService(SecureString connectionString, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
-            ConnectionString = new SecureString();
             ConnectionString = connectionString;
             EncryptedCredential = encryptedCredential;
             CustomInit();
