@@ -301,6 +301,108 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
+        public void KeyVaultEcKeyCreateSignVerifyP256()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var curve = JsonWebKeyCurveName.P256;
+                var digestSize = 256;
+                var algorithm = JsonWebKeySignatureAlgorithm.ES256;
+
+                TestEcKeyCreateSignVerify(curve, digestSize, algorithm);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultEcKeyCreateSignVerifyP384()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var curve = JsonWebKeyCurveName.P384;
+                var digestSize = 384;
+                var algorithm = JsonWebKeySignatureAlgorithm.ES384;
+
+                TestEcKeyCreateSignVerify(curve, digestSize, algorithm);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultEcKeyCreateSignVerifyP521()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var curve = JsonWebKeyCurveName.P521;
+                var digestSize = 512;
+                var algorithm = JsonWebKeySignatureAlgorithm.ES512;
+
+                TestEcKeyCreateSignVerify(curve, digestSize, algorithm);
+            }
+        }
+
+        [Fact]
+        public void KeyVaultEcKeyCreateSignVerifySECP256K1()
+        {
+            using (MockContext context = MockContext.Start(GetType().FullName))
+            {
+                var curve = JsonWebKeyCurveName.SECP256K1;
+                var digestSize = 256;
+                var algorithm = JsonWebKeySignatureAlgorithm.ECDSA256;
+
+                TestEcKeyCreateSignVerify(curve, digestSize, algorithm);
+            }
+        }
+
+        private void TestEcKeyCreateSignVerify(string curve, int digestSize, string algorithm)
+        {
+            var client = GetKeyVaultClient();
+
+            var keyParameters = new NewKeyParameters();
+
+            keyParameters.Kty = JsonWebKeyType.EllipticCurve;
+            keyParameters.CurveName = curve;
+            keyParameters.KeyOps = new[] { JsonWebKeyOperation.Sign, JsonWebKeyOperation.Verify };
+
+            // Create an EC software key.
+            var keyBundle = client.CreateKeyAsync(_vaultAddress, _keyName, keyParameters).Result;
+
+            TestSignVerify(client, keyBundle, digestSize, algorithm);
+        }
+
+        private static void TestSignVerify(KeyVaultClient client, KeyBundle keyBundle, int digestSize, string algorithm)
+        {
+            var key = keyBundle.Key;
+            var kid = key.Kid;
+            var ecdsa = key.ToECDsa(false);
+
+            // Sign.
+            var digest = RandomBytes(digestSize / 8);
+            Assert.True(digest.Length * 8 == digestSize);
+
+            var signatureResult = client.SignAsync(kid, algorithm, digest).Result;
+            var signature = signatureResult.Result;
+            Assert.Equal(kid, signatureResult.Kid);
+
+            // Verify - positive test.
+            var verified = client.VerifyAsync(kid, algorithm, digest, signature).Result;
+            Assert.True(verified);
+
+#if FullNetFx
+            verified = ecdsa.VerifyData(digest, signature);
+            Assert.True(verified);
+#endif
+
+            // Verify - negative test.
+            signature[signature.Length - 1] ^= 1;
+            verified = client.VerifyAsync(kid, algorithm, digest, signature).Result;
+            Assert.False(verified);
+
+#if FullNetFx
+            verified = ecdsa.VerifyData(digest, signature);
+            Assert.False(verified);
+#endif
+        }
+
+        [Fact]
         public void KeyVaultCreateGetDeleteKeyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -341,7 +443,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     if (_softDeleteEnabled)
@@ -819,9 +921,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-        #endregion
+#endregion
 
-        #region Deleted Key Operations
+#region Deleted Key Operations
 
         [Fact]
         public void KeyVaultGetDeletedKeyTest()
@@ -901,7 +1003,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
@@ -941,7 +1043,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     this.fixture.WaitOnDeletedKey(client, _vaultAddress, keyName);
@@ -957,7 +1059,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
                 }
 
@@ -1052,9 +1154,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-        #endregion
+#endregion
 
-        #region Secret Operations
+#region Secret Operations
 
         [Fact]
         public void KeyVaultSecretCreateUpdateDeleteTest()
@@ -1124,7 +1226,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     Assert.True(recoveryLevelAttributeIsConsistent, "The recoveryLevel attribute did not return consistently the expected value");
@@ -1372,7 +1474,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                                 .GetAwaiter()
                                 .GetResult();
                         }
-                        catch (KeyVaultErrorException ex)
+                        catch (KeyVaultErrorException)
                         {
                             Assert.False(false, "failed to re-enable disabled secret in soft-delete-enabled vault; cleanup will fail");
                         }
@@ -1396,9 +1498,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        #endregion
+#endregion
 
-        #region Deleted Secret Operations
+#region Deleted Secret Operations
 
         [Fact]
         public void KeyVaultGetDeletedSecretTest()
@@ -1478,7 +1580,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
@@ -1521,7 +1623,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
@@ -1537,7 +1639,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
                 }
 
@@ -1632,9 +1734,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        #endregion
+#endregion
 
-        #region Certificate Operations
+#region Certificate Operations
         [Fact]
         public void KeyVaultCertificateImportTest()
         {
@@ -2592,7 +2694,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
                 }
             }
@@ -3004,9 +3106,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        #endregion
+#endregion
 
-        #region Deleted Certificate Operations
+#region Deleted Certificate Operations
 
         [Fact]
         public void KeyVaultGetDeletedCertificateTest()
@@ -3171,7 +3273,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     this.fixture.WaitOnDeletedCertificate(client, _vaultAddress, name);
@@ -3208,7 +3310,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
 
                     this.fixture.WaitOnDeletedCertificate(client, _vaultAddress, name);
@@ -3224,7 +3326,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     catch (KeyVaultErrorException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
-                            throw ex;
+                            throw;
                     }
                 }
 
@@ -3348,9 +3450,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        #endregion
+#endregion
 
-        #region Storage Operations
+#region Storage Operations
 
         [Fact]
         public void KeyVaultStorageCreateTest()
@@ -3735,9 +3837,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        #endregion
+#endregion
 
-        #region Helper Methods
+#region Helper Methods
 
         private static SecretAttributes NewSecretAttributes(bool enabled, bool active, bool expired)
         {
@@ -4169,6 +4271,6 @@ namespace Microsoft.Azure.KeyVault.Tests
                 && attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Purgeable.ToLowerInvariant())
                 && !(isSoftDeleteEnabledVault ^ attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Recoverable.ToLowerInvariant()));
         }
-        #endregion
+#endregion
     }
 }

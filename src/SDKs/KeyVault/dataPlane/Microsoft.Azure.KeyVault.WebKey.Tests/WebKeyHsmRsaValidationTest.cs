@@ -4,11 +4,6 @@
 // 
 
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
 using Xunit;
 
 namespace Microsoft.Azure.KeyVault.WebKey.Tests
@@ -16,7 +11,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
     public class WebKeyHsmRsaValidationTest
     {
         string keyWithoutT = "{\"kid\":\"key_id\",\"kty\":\"RSA-HSM\",\"key_ops\":[\"encrypt\",\"decrypt\"],\"n\":\"1_6ZtP288hEkKML-L6nFyZh1PD1rmAgwbbwjEvTSDK_008BYWhjp_6ULy9BhWtRIytNkPkm9gzaBTrCpp-vyDXPGa836Htp-w8u5JmxoUZchJh576m3m-8ZYWTmZSAp5SpruyKAmLSxPJHEWPXQntnmuTMjb9HBT9Ltrwc0ZDk-jsMLYunDJrNmrRUxQgb0zQ_Tl5fJjj8j-0KVx2RXtbfWFvf5fRdBYyP3m0aUpoopQPwtXszD2LcSKMJ_TnmnvMWr8MOA5aRlBaGdBk7zBgRafvDPam3Q2AvFA9mfcAVncpfZ3JFm73VARw6MofXtRqOHtZ7y4oNbY95xXwU2r6w\",\"e\":\"AQAB\"}";
-        string keyWithT = "{\"kid\":\"key_id\",\"kty\":\"RSA-HSM\",\"key_ops\":[\"encrypt\",\"decrypt\"],\"key_hsm\":\"T-TOKEN\"}";
+        string keyWithT =    "{\"kid\":\"key_id\",\"kty\":\"RSA-HSM\",\"key_ops\":[\"encrypt\",\"decrypt\"],\"n\":\"1_6ZtP288hEkKML-L6nFyZh1PD1rmAgwbbwjEvTSDK_008BYWhjp_6ULy9BhWtRIytNkPkm9gzaBTrCpp-vyDXPGa836Htp-w8u5JmxoUZchJh576m3m-8ZYWTmZSAp5SpruyKAmLSxPJHEWPXQntnmuTMjb9HBT9Ltrwc0ZDk-jsMLYunDJrNmrRUxQgb0zQ_Tl5fJjj8j-0KVx2RXtbfWFvf5fRdBYyP3m0aUpoopQPwtXszD2LcSKMJ_TnmnvMWr8MOA5aRlBaGdBk7zBgRafvDPam3Q2AvFA9mfcAVncpfZ3JFm73VARw6MofXtRqOHtZ7y4oNbY95xXwU2r6w\",\"e\":\"AQAB\",\"key_hsm\":\"T-TOKEN\"}";
 
         [Fact]
         public void RsaHsmValidation()
@@ -24,7 +19,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             var keyNoT = JsonConvert.DeserializeObject<JsonWebKey>(keyWithoutT);
             var keyT = JsonConvert.DeserializeObject<JsonWebKey>(keyWithT);
 
-            Assert.True(keyNoT.IsValid());
+            Assert.True(!keyNoT.IsValid());
             Assert.False(keyNoT.HasPrivateKey());
 
             Assert.True(keyT.IsValid());
