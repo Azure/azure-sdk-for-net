@@ -5,11 +5,12 @@
 namespace Microsoft.Rest
 {
     using System.Collections.Concurrent;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Abstract base class for types that act like enums, but can be extended with arbitrary string values.
     /// </summary>
-    public abstract class ExtensibleEnum<T, V> 
+    public abstract class ExtensibleEnum<T, V> where T : ExtensibleEnum<T, V>
     {
         protected static readonly ConcurrentDictionary<V, T> _valueMap = new ConcurrentDictionary<V, T>();
 
@@ -23,7 +24,12 @@ namespace Microsoft.Rest
         {
             _value = value;
         }
-        
+
+        /// <summary>
+        /// Static map to store allowed values for enums        
+        /// ///</summary>
+        public static Dictionary<T, V> AllowedValuesMap { get; protected set; }
+
         /// <summary>
         /// Defines explicit conversion from ExtensibleEnum to string.
         /// </summary>

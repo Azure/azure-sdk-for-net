@@ -4,6 +4,7 @@
 
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Microsoft.Rest.ClientRuntime.Tests.Resources
 {
@@ -31,7 +32,44 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
 
     }
 
-    internal class MovieTicket
+    public sealed class IntEnum : Microsoft.Rest.ExtensibleEnum<IntEnum, string>
+    {
+        private IntEnum(string value) : base(value)
+        {
+        }
+        public static readonly IntEnum One = "1";
+        public static readonly IntEnum Two = "2";
+        public static readonly IntEnum Three = "3";
+        /*
+        static
+        {
+            AllowedValuesMap = new Dictionary<string, IntEnum>();
+            AllowedValuesMap.Add("1.1", One);
+            AllowedValuesMap.Add("1.2", One);
+            AllowedValuesMap.Add("1.3", One);
+            AllowedValuesMap.Add("2.1", Two);
+            AllowedValuesMap.Add("2.2", Two);
+            AllowedValuesMap.Add("3.1", Three);
+            AllowedValuesMap.Add("3.3", Three);
+        }
+        */
+    /// <summary>
+    /// Defines ctor/explicit conversion from value type to IntEnum.
+    /// </summary>
+    /// <param name="value">string to convert.</param>
+    public static implicit operator IntEnum(string value)
+    {
+        if (AllowedValuesMap.ContainsKey(value))
+        {
+            return AllowedValuesMap[value];
+        }
+
+        return _valueMap.GetOrAdd(value, (v) => new IntEnum(v));
+    }
+
+}
+
+internal class MovieTicket
     {
         public double Price { get; set; }
 
