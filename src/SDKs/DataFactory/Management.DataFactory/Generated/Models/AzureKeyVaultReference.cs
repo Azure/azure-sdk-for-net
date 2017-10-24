@@ -16,34 +16,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure Data Factory secure string definition. The string value will be
-    /// masked with asterisks '*' during Get or List API calls.
+    /// A reference to an object in Azure Key Vault.
     /// </summary>
-    public partial class SecureString
+    public partial class AzureKeyVaultReference
     {
         /// <summary>
-        /// Initializes a new instance of the SecureString class.
+        /// Initializes a new instance of the AzureKeyVaultReference class.
         /// </summary>
-        public SecureString()
+        public AzureKeyVaultReference()
         {
-          CustomInit();
+            Store = new LinkedServiceReference();
+            CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SecureString class.
+        /// Initializes a new instance of the AzureKeyVaultReference class.
         /// </summary>
-        /// <param name="value">Value of secure string.</param>
-        public SecureString(string value)
+        /// <param name="store">The Azure Key Vault LinkedService.</param>
+        public AzureKeyVaultReference(LinkedServiceReference store)
         {
-            Value = value;
+            Store = new LinkedServiceReference();
+            Store = store;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for SecureString class.
-        /// </summary>
-        static SecureString()
-        {
-            Type = "SecureString";
         }
 
         /// <summary>
@@ -52,16 +46,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets value of secure string.
+        /// Gets or sets the Azure Key Vault LinkedService.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
-
-        /// <summary>
-        /// SecureString type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        [JsonProperty(PropertyName = "store")]
+        public LinkedServiceReference Store { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -71,9 +59,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Value == null)
+            if (Store == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Store");
+            }
+            if (Store != null)
+            {
+                Store.Validate();
             }
         }
     }

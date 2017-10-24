@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public AzureDataLakeStoreLinkedService()
         {
-          CustomInit();
+            CustomInit();
         }
 
         /// <summary>

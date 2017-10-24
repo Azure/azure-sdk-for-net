@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public SapHanaLinkedService()
         {
-          CustomInit();
+            CustomInit();
         }
 
         /// <summary>

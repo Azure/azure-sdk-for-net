@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public SqlServerLinkedService()
         {
-          CustomInit();
+            ConnectionString = new SecureString();
+            CustomInit();
         }
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SqlServerLinkedService(SecureString connectionString, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
+            ConnectionString = new SecureString();
             ConnectionString = connectionString;
             UserName = userName;
             Password = password;

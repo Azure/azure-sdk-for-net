@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public WebBasicAuthentication()
         {
-          CustomInit();
+            Password = new SecureString();
+            CustomInit();
         }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public WebBasicAuthentication(object url, object username, SecureString password)
             : base(url)
         {
+            Password = new SecureString();
             Username = username;
             Password = password;
             CustomInit();

@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public OdbcLinkedService()
         {
-          CustomInit();
+            ConnectionString = new SecureString();
+            CustomInit();
         }
 
         /// <summary>
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public OdbcLinkedService(SecureString connectionString, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object authenticationType = default(object), SecureString credential = default(SecureString), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
+            ConnectionString = new SecureString();
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
             Credential = credential;

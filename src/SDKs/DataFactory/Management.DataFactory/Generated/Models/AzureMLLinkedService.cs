@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public AzureMLLinkedService()
         {
-          CustomInit();
+            ApiKey = new SecureString();
+            CustomInit();
         }
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureMLLinkedService(object mlEndpoint, SecureString apiKey, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object tenant = default(object), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
+            ApiKey = new SecureString();
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;
             UpdateResourceEndpoint = updateResourceEndpoint;
