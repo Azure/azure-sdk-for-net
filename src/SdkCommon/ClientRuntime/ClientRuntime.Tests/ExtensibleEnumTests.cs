@@ -14,9 +14,11 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         public void ExtensibleEnumsTests()
         {
             // Serialization test
-            var serializeSettings = new JsonSerializerSettings();
-            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-            serializeSettings.ContractResolver = new ReadOnlyJsonContractResolver();
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
             var movieTic = new MovieTicket() { Day = DaysOfWeekExtensibleEnum.Friday, MovieName = "ABC", Price = 13.50 };
             var serialObj = JsonConvert.SerializeObject(movieTic);
             Assert.NotNull(serialObj);
@@ -24,9 +26,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests
 
             // Deserialization test
             var serializedMovieTic = "{\"Price\":11.5,\"Day\":\"Weekday\",\"MovieName\":\"DEF\"}";
-            var deserializeSettings = new JsonSerializerSettings();
-            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-            deserializeSettings.NullValueHandling = NullValueHandling.Ignore;
+            var deserializeSettings = new JsonSerializerSettings() {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                NullValueHandling = NullValueHandling.Ignore
+            };
             var deserialized = JsonConvert.DeserializeObject<MovieTicket>(serializedMovieTic);
             Assert.Equal(deserialized.Price, 11.50);
             Assert.Equal(deserialized.MovieName, "DEF");
