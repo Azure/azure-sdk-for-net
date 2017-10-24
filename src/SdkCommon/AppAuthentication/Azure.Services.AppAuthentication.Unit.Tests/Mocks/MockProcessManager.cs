@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     throw new Exception(Constants.ProgramNotFoundError);
 
                 case MockProcessManagerRequestType.Failure:
-                    throw new Exception(Constants.AzureCliError);
+                    throw new Exception(Constants.DeveloperToolError);
 
             }
 

@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
         private const string LocalAppDataPathEnv = "LOCALAPPDATA";
-        private const string NoAppDataEnvironmentVariableError = "Environment variable LOCALAPPDATA not set";
-        private const string TokenProviderFilePath = ".IdentityService/AzureServiceAuth/tokenprovider.json";
+        private const string NoAppDataEnvironmentVariableError = "Environment variable LOCALAPPDATA not set.";
+        private const string TokenProviderFilePath = ".IdentityService\\AzureServiceAuth\\tokenprovider.json";
         private const string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
 
         internal VisualStudioAccessTokenProvider(VisualStudioTokenProviderFile visualStudioTokenProviderFile, IProcessManager processManager)
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
             try
             {
-                // Validate resource, since it gets sent as a command line argument to Azure CLI
+                // Validate resource, since it gets sent as a command line argument to Visual Studio
                 ValidationHelper.ValidateResource(resource);
 
                 _visualStudioTokenProviderFile = _visualStudioTokenProviderFile ?? GetTokenProviderFile();
