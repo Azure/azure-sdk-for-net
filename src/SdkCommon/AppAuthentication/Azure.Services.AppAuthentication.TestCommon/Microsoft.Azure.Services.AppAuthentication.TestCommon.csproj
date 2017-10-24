@@ -30,5 +30,8 @@
         <None Update="TestFiles\VisualStudioSingleTokenProvider.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="TestFiles\VisualStudioTokenProviderMissingPreference.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 </Project>

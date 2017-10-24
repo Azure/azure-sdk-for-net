@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using Xunit;
 
@@ -40,6 +37,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.Equal(Constants.ServiceConfigFileArgumentName, visualStudioTokenProviderFile.TokenProviders[0].Arguments[0]);
             Assert.Equal(Constants.ServiceConfigFileArgument, visualStudioTokenProviderFile.TokenProviders[0].Arguments[1]);
+        }
+
+        [Fact]
+        public void ParseFileError()
+        {
+            Exception exception = Assert.Throws<FormatException>(() => VisualStudioTokenProviderFile.Parse(File.ReadAllText(Path.Combine(Constants.TestFilesPath, "VisualStudioTokenProviderMissingPreference.json"))));
+
+            Assert.Contains(Constants.TokenProviderFileFormatExceptionMessage, exception.Message);
+            Assert.Contains(Constants.PreferenceNotFound, exception.Message);
         }
     }
 }

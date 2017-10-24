@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string InvalidResource = "invalid_resource";
         public static readonly string TokenFormatExceptionMessage = "Access token is not in the expected format.";
         public static readonly string TokenResponseFormatExceptionMessage = "Token response is not in the expected format.";
-        public static readonly string AzureCliError = "You are not logged into to Azure CLI.";
+        public static readonly string DeveloperToolError = "You are not logged in.";
         public static readonly string JsonParseErrorException = "There was an error deserializing the object of type";
         public static readonly string TokenNotInExpectedFormatError = "Index was outside the bounds of the array";
 
@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string TokenProviderPath = "C:\\Users\\johndoe\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_5b4bdc86\\Extensions\\lyzwtlta.zzj\\TokenService\\Microsoft.Asal.TokenService.exe";
         public static readonly string ServiceConfigFileArgument = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json";
         public static readonly string ServiceConfigFileArgumentName = "--serviceConfigFile";
+        public static readonly string LocalAppDataEnv = "LOCALAPPDATA";
+        public static readonly string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
+        public static readonly string TokenProviderExceptionMessage = "Exception for Visual Studio token provider";
+        public static readonly string PreferenceNotFound= "'Preference' was not found";
+        public static readonly string TokenProviderFileFormatExceptionMessage = "VisualStudio Token Provider File is not in the expected format.";
 
         // Test files path
         public static readonly string TestFilesPath = "TestFiles";
