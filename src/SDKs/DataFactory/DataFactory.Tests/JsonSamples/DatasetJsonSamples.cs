@@ -402,5 +402,24 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string AzureMySqlTable = @"
+{
+    name: ""AzureMySqlTable"",
+    properties:
+    {
+        type: ""AzureMySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
     }
 }
