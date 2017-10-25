@@ -4,3 +4,4 @@
 
 ### Feature Additions
   * Initial public release of the Azure Data Factory V2 .NET SDK.
+  * Add a new AzureMySql connector for Azure MySQL data source.
