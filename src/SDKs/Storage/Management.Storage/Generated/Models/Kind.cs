@@ -23,6 +23,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     {
         [EnumMember(Value = "Storage")]
         Storage,
+        [EnumMember(Value = "StorageV2")]
+        StorageV2,
         [EnumMember(Value = "BlobStorage")]
         BlobStorage
     }
@@ -39,6 +41,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 case Kind.Storage:
                     return "Storage";
+                case Kind.StorageV2:
+                    return "StorageV2";
                 case Kind.BlobStorage:
                     return "BlobStorage";
             }
@@ -51,6 +55,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 case "Storage":
                     return Kind.Storage;
+                case "StorageV2":
+                    return Kind.StorageV2;
                 case "BlobStorage":
                     return Kind.BlobStorage;
             }
