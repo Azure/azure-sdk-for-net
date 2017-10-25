@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using Microsoft.Azure.Services.AppAuthentication.Helpers;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Azure.Services.AppAuthentication.Helpers;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -27,7 +26,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string TokenProviderFilePath = ".IdentityService\\AzureServiceAuth\\tokenprovider.json";
         private const string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
 
-        internal VisualStudioAccessTokenProvider(VisualStudioTokenProviderFile visualStudioTokenProviderFile, IProcessManager processManager)
+        internal VisualStudioAccessTokenProvider(IProcessManager processManager, VisualStudioTokenProviderFile visualStudioTokenProviderFile = null)
         {
             _visualStudioTokenProviderFile = visualStudioTokenProviderFile;
             _processManager = processManager;
@@ -96,7 +95,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 _visualStudioTokenProviderFile = _visualStudioTokenProviderFile ?? GetTokenProviderFile();
 
                 // Get process start infos based on Visual Studio token providers
-                var processStartInfos = GetProcessStartInfos(_visualStudioTokenProviderFile, resource);
+                var processStartInfos = GetProcessStartInfos(_visualStudioTokenProviderFile, resource, UriHelper.GetTenantByAuthority(authority));
 
                 // To hold reason why token could not be acquired per token provider tried. 
                 Dictionary<string, string> exceptionDictionary = new Dictionary<string, string>();

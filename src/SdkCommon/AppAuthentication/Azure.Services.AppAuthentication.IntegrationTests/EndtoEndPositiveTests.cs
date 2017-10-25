@@ -41,12 +41,16 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         }
 
         /// <summary>
-        /// Test cases where tokens are fetched using Azure CLI for local development. 
+        /// Test cases where tokens are fetched using Azure CLI or Visual Studio for local development. 
         /// </summary>
         /// <returns></returns>
-        private async Task GetTokenUsingDeveloperTool()
+        private async Task GetTokenUsingDeveloperTool(bool isAzureCli)
         {
-            AzureServiceTokenProvider astp1 = new AzureServiceTokenProvider(Constants.AzureCliConnectionString);
+            string connectionString = isAzureCli
+                ? Constants.AzureCliConnectionString
+                : Constants.VisualStudioConnectionString;
+
+            AzureServiceTokenProvider astp1 = new AzureServiceTokenProvider(connectionString);
             
             List<Task<string>> tasks = new List<Task<string>>();
 
@@ -57,7 +61,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 
             await Task.WhenAll(tasks);
             
-            AzureServiceTokenProvider astp = new AzureServiceTokenProvider(Constants.AzureCliConnectionString);
+            AzureServiceTokenProvider astp = new AzureServiceTokenProvider(connectionString);
 
             List<string> resourceIdList = new List<string>
             {
@@ -90,9 +94,14 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         [Fact]
         public async Task GetTokenUsingAzCliTest()
         {
-            await GetTokenUsingDeveloperTool();
+            await GetTokenUsingDeveloperTool(true);
         }
 
+        [Fact]
+        public async Task GetTokenUsingVisualStudio()
+        {
+            await GetTokenUsingDeveloperTool(false);
+        }
 
 #if FullNetFx
         /// <summary>
