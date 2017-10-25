@@ -7,7 +7,7 @@
   * Add SalesforceObject Dataset
   * Add Salesforce Sink
   * Add jsonNodeReference and jsonPathDefinition to JSONFormat
-  * Add SecretBase and let SecureString and AzureKeyVaultSecretReference derive from it. Use SecretBase in Salesforce linked service
+  * Support providing Salesforce passwords and security tokens as SecureStrings or as secrets in Azure Key Vault.
 
 ## Version 0.2.0-preview
 

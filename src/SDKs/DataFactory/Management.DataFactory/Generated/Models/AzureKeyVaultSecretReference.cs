@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure Key Vault secret referece.
+    /// Azure Key Vault secret reference.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AzureKeyVaultSecret")]
     public partial class AzureKeyVaultSecretReference : SecretBase
