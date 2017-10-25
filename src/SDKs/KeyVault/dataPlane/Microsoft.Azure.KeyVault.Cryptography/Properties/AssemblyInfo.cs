@@ -5,11 +5,11 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Microsoft Azure key vault cryptography")]
+[assembly: AssemblyTitle("Microsoft Azure Key Vault cryptography")]
 [assembly: AssemblyDescription("Microsoft Azure Key Vault Cryptography Class Library.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.5.0")]
+[assembly: AssemblyFileVersion("2.0.6.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
