@@ -13,6 +13,7 @@
       <![CDATA[
 New features:
 - Added support for state and migration flag properties for SQL Vnet rules
+- Added zone redundancy property for databases, elastic pools and capability editions
 - Added support for Server DNS Aliases
       ]]>
     </PackageReleaseNotes>
