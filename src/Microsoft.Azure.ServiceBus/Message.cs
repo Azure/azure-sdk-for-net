@@ -404,8 +404,8 @@ namespace Microsoft.Azure.ServiceBus
             /// <remarks>
             ///     The sequence number is a unique 64-bit integer assigned to a message as it is accepted 
             ///     and stored by the broker and functions as its true identifier. For partitioned entities, 
-            ///     the topmost 16 bits reflect the partition identifier. Sequence numbers monotonically increase 
-            ///     and are gapless. They roll over to 0 when the 48-64 bit range is exhausted. This property is read-only.
+            ///     the topmost 16 bits reflect the partition identifier. Sequence numbers monotonically increase. 
+            ///     They roll over to 0 when the 48-64 bit range is exhausted. This property is read-only.
             /// </remarks>
             public long SequenceNumber
             {
