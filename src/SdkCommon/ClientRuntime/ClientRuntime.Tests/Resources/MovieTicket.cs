@@ -11,7 +11,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
 
     internal class DaysOfWeekExtensibleEnum : Microsoft.Rest.ExtensibleEnum<DaysOfWeekExtensibleEnum, string>
     {
-        private DaysOfWeekExtensibleEnum(string value):base(value)
+        private DaysOfWeekExtensibleEnum(string value) : base(value)
         {
         }
 
@@ -28,22 +28,38 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
         /// DaysOfWeekExtensibleEnum.
         /// </summary>
         /// <param name="value">string to convert.</param>
-        public static implicit operator DaysOfWeekExtensibleEnum(string value) => _valueMap.GetOrAdd(value, (v) => new DaysOfWeekExtensibleEnum(v));
+        public static implicit operator DaysOfWeekExtensibleEnum(string value) => Create(value);
+
+        public static DaysOfWeekExtensibleEnum Create(string value) => _valueMap.GetOrAdd(value, (v) => new DaysOfWeekExtensibleEnum(v));
 
     }
 
-    public sealed class IntEnum : Microsoft.Rest.ExtensibleEnum<IntEnum, string>
+    public sealed class TaxAmount : Microsoft.Rest.ExtensibleEnum<TaxAmount, string>
     {
-        private IntEnum(string value) : base(value)
+        private TaxAmount(string value) : base(value)
         {
         }
-        public static readonly IntEnum One = "1";
-        public static readonly IntEnum Two = "2";
-        public static readonly IntEnum Three = "3";
-        /*
-        static
+
+        public static readonly TaxAmount One = "1";
+        public static readonly TaxAmount Two = "2";
+        public static readonly TaxAmount Three = "3";
+
+        public static implicit operator TaxAmount(string value) => Create(value);
+
+        public static TaxAmount Create(string value)
         {
-            AllowedValuesMap = new Dictionary<string, IntEnum>();
+            System.Console.Error.WriteLine("we're trying to deserialize "+value);
+            if (AllowedValuesMap.ContainsKey(value))
+            {
+                return AllowedValuesMap[value];
+            }
+
+            return _valueMap.GetOrAdd(value, (v) => new TaxAmount(v));
+        }
+
+        static TaxAmount()
+        {
+            AllowedValuesMap = new Dictionary<string, TaxAmount>();
             AllowedValuesMap.Add("1.1", One);
             AllowedValuesMap.Add("1.2", One);
             AllowedValuesMap.Add("1.3", One);
@@ -52,24 +68,10 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
             AllowedValuesMap.Add("3.1", Three);
             AllowedValuesMap.Add("3.3", Three);
         }
-        */
-    /// <summary>
-    /// Defines ctor/explicit conversion from value type to IntEnum.
-    /// </summary>
-    /// <param name="value">string to convert.</param>
-    public static implicit operator IntEnum(string value)
-    {
-        if (AllowedValuesMap.ContainsKey(value))
-        {
-            return AllowedValuesMap[value];
-        }
-
-        return _valueMap.GetOrAdd(value, (v) => new IntEnum(v));
+        
     }
 
-}
-
-internal class MovieTicket
+    internal class MovieTicket
     {
         public double Price { get; set; }
 
@@ -77,6 +79,8 @@ internal class MovieTicket
         public DaysOfWeekExtensibleEnum Day { get; set; }
 
         public string MovieName { get; set; }
+
+        public TaxAmount Tax { get; set; }
 
     }
 }

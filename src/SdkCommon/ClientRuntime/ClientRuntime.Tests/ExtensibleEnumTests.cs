@@ -25,15 +25,17 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.True(serialObj.Contains("Friday"));
 
             // Deserialization test
-            var serializedMovieTic = "{\"Price\":11.5,\"Day\":\"Weekday\",\"MovieName\":\"DEF\"}";
+            var serializedMovieTic = "{\"Price\":11.5,\"Day\":\"Weekday\",\"MovieName\":\"DEF\", \"Tax\":\"1.1\"}";
             var deserializeSettings = new JsonSerializerSettings() {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 NullValueHandling = NullValueHandling.Ignore
             };
+            System.Console.WriteLine(TaxAmount.One);
             var deserialized = JsonConvert.DeserializeObject<MovieTicket>(serializedMovieTic);
             Assert.Equal(deserialized.Price, 11.50);
             Assert.Equal(deserialized.MovieName, "DEF");
             Assert.Equal(deserialized.Day, (DaysOfWeekExtensibleEnum)"Weekday");
+            Assert.Equal(deserialized.Tax, "1");
 
             var day1 = DaysOfWeekExtensibleEnum.Saturday;
             DaysOfWeekExtensibleEnum day2 = "Monday";
@@ -42,6 +44,14 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             DaysOfWeekExtensibleEnum day3 = "Weekday";
             DaysOfWeekExtensibleEnum day4 = "Weekday";
             Assert.True(day4 == day3);
+
+            TaxAmount tax1 = "2.2";
+            Assert.Equal(TaxAmount.Two, tax1);
+
+            TaxAmount tax2 = "3.5";
+            Assert.NotEqual(TaxAmount.Three, tax2);
+
+            Assert.Equal(TaxAmount.Two, (TaxAmount)"2");
         }
 
         [Fact]

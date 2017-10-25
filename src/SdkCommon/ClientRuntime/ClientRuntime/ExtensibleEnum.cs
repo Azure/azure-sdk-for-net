@@ -27,15 +27,15 @@ namespace Microsoft.Rest
 
         /// <summary>
         /// Static map to store allowed values for enums        
-        /// ///</summary>
-        public static Dictionary<T, V> AllowedValuesMap { get; protected set; }
-
+        ///</summary>
+        public static Dictionary<V, T> AllowedValuesMap { get; protected set; } = new Dictionary<V, T>();
+        
         /// <summary>
         /// Defines explicit conversion from ExtensibleEnum to string.
         /// </summary>
         /// <param val="val">ExtensibleEnum to convert.</param>
         /// <returns>The ExtensibleEnum as a string.</returns>
-        public static explicit operator V(ExtensibleEnum<T, V> val) => val._value;
+        public static implicit operator V(ExtensibleEnum<T, V> val) => val._value;
 
         /// <inheritdoc />
         public override int GetHashCode()
