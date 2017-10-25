@@ -10,14 +10,26 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using System.Linq;
 
     /// <summary>
-    /// Defines values for CopyBehaviorType.
+    /// The base definition of a secret type.
     /// </summary>
-    public static class CopyBehaviorType
+    public partial class SecretBase
     {
-        public const string PreserveHierarchy = "PreserveHierarchy";
-        public const string FlattenHierarchy = "FlattenHierarchy";
-        public const string MergeFiles = "MergeFiles";
+        /// <summary>
+        /// Initializes a new instance of the SecretBase class.
+        /// </summary>
+        public SecretBase()
+        {
+            CustomInit();
+        }
+
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
     }
 }
