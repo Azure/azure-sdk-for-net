@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.Azure.Services.AppAuthentication.Helpers
+namespace Microsoft.Azure.Services.AppAuthentication
 {
     internal class ValidationHelper
     {

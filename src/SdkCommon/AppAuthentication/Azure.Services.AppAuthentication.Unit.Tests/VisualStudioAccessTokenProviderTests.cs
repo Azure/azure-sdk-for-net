@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 {
     public class VisualStudioAccessTokenProviderTests
     {
-        private VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
+        private readonly VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
 
         public VisualStudioAccessTokenProviderTests()
         {
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.VisualStudioSuccess);
 
             // VisualStudioAccessTokenProvider has in internal only constructor to allow for unit testing. 
-            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(_visualStudioTokenProviderFile, mockProcessManager);
+            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(mockProcessManager, _visualStudioTokenProviderFile);
 
             // Get token and validate it
             var token = await visualStudioAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         [Fact]
         public async Task TokenProviderNotFoundTest()
         {
-            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(null, new ProcessManager());
+            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(new ProcessManager());
 
             // This will ensure that the localappdata folder doesnt exist on the machine. Since VS token provider file path is added to this, the file will not exist either.
             string path = Guid.NewGuid().ToString();
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Failure);
 
             // VisualStudioAccessTokenProvider has in internal only constructor to allow for unit testing. 
-            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(_visualStudioTokenProviderFile, mockProcessManager);
+            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(mockProcessManager, _visualStudioTokenProviderFile);
             
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
 
             // VisualStudioAccessTokenProvider has in internal only constructor to allow for unit testing. 
-            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(_visualStudioTokenProviderFile, mockProcessManager);
+            VisualStudioAccessTokenProvider visualStudioAccessTokenProvider = new VisualStudioAccessTokenProvider(mockProcessManager, _visualStudioTokenProviderFile);
 
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => visualStudioAccessTokenProvider.GetTokenAsync("https://test^", Constants.TenantId)));
 

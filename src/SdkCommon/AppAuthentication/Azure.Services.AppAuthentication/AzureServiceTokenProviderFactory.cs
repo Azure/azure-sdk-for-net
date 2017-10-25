@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string RunAs = "RunAs";
         private const string Developer = "Developer";
         private const string AzureCli = "AzureCLI";
+        private const string VisualStudio = "VisualStudio";
         private const string DeveloperTool = "DeveloperTool";
         private const string CurrentUser = "CurrentUser";
         private const string App = "App";
@@ -46,16 +47,21 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 ValidateAttribute(connectionSettings, DeveloperTool, connectionString);
 
-                // And Dev Tool equals Azure CLI
+                // And Dev Tool equals AzureCLI or VisualStudio
                 if (string.Equals(connectionSettings[DeveloperTool], AzureCli,
                     StringComparison.OrdinalIgnoreCase))
                 {
                     azureServiceTokenProvider = new AzureCliAccessTokenProvider(new ProcessManager());
                 }
+                else if (string.Equals(connectionSettings[DeveloperTool], VisualStudio,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    azureServiceTokenProvider = new VisualStudioAccessTokenProvider(new ProcessManager());
+                }
                 else
                 {
                     throw new ArgumentException($"Connection string {connectionString} is not valid. {DeveloperTool} '{connectionSettings[DeveloperTool]}' is not valid. " +
-                                                $"Allowed value is {AzureCli}");
+                                                $"Allowed values are {AzureCli} or {VisualStudio}");
                 }
             }
             else if (string.Equals(runAs, CurrentUser, StringComparison.OrdinalIgnoreCase))
