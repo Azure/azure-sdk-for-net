@@ -16,43 +16,37 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for HostType.
+    /// Defines values for ManagedServiceIdentityType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum HostType
+    public enum ManagedServiceIdentityType
     {
-        [EnumMember(Value = "Standard")]
-        Standard,
-        [EnumMember(Value = "Repository")]
-        Repository
+        [EnumMember(Value = "SystemAssigned")]
+        SystemAssigned
     }
-    internal static class HostTypeEnumExtension
+    internal static class ManagedServiceIdentityTypeEnumExtension
     {
-        internal static string ToSerializedValue(this HostType? value)
+        internal static string ToSerializedValue(this ManagedServiceIdentityType? value)
         {
-            return value == null ? null : ((HostType)value).ToSerializedValue();
+            return value == null ? null : ((ManagedServiceIdentityType)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this HostType value)
+        internal static string ToSerializedValue(this ManagedServiceIdentityType value)
         {
             switch( value )
             {
-                case HostType.Standard:
-                    return "Standard";
-                case HostType.Repository:
-                    return "Repository";
+                case ManagedServiceIdentityType.SystemAssigned:
+                    return "SystemAssigned";
             }
             return null;
         }
 
-        internal static HostType? ParseHostType(this string value)
+        internal static ManagedServiceIdentityType? ParseManagedServiceIdentityType(this string value)
         {
             switch( value )
             {
-                case "Standard":
-                    return HostType.Standard;
-                case "Repository":
-                    return HostType.Repository;
+                case "SystemAssigned":
+                    return ManagedServiceIdentityType.SystemAssigned;
             }
             return null;
         }
