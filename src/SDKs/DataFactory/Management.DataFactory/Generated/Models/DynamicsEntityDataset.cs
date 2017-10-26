@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DynamicsEntityDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object entityName = default(object))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             EntityName = entityName;
             CustomInit();
         }

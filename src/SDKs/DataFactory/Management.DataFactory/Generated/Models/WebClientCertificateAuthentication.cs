@@ -46,8 +46,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public WebClientCertificateAuthentication(object url, SecureString pfx, SecureString password)
             : base(url)
         {
-            Pfx = new SecureString();
-            Password = new SecureString();
             Pfx = pfx;
             Password = password;
             CustomInit();

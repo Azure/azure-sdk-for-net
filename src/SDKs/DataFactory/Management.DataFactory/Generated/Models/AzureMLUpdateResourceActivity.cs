@@ -56,7 +56,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureMLUpdateResourceActivity(string name, object trainedModelName, LinkedServiceReference trainedModelLinkedServiceName, object trainedModelFilePath, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy))
             : base(name, description, dependsOn, linkedServiceName, policy)
         {
-            TrainedModelLinkedServiceName = new LinkedServiceReference();
             TrainedModelName = trainedModelName;
             TrainedModelLinkedServiceName = trainedModelLinkedServiceName;
             TrainedModelFilePath = trainedModelFilePath;

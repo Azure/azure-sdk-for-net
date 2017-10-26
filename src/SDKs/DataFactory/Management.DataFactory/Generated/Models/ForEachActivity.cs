@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public ForEachActivity(string name, Expression items, IList<Activity> activities, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), bool? isSequential = default(bool?))
             : base(name, description, dependsOn)
         {
-            Items = new Expression();
             IsSequential = isSequential;
             Items = items;
             Activities = activities;

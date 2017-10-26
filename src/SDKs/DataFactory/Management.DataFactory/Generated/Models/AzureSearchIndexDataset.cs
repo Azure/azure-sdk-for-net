@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, object indexName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             IndexName = indexName;
             CustomInit();
         }

@@ -48,7 +48,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public OracleTableDataset(LinkedServiceReference linkedServiceName, object tableName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             TableName = tableName;
             CustomInit();
         }

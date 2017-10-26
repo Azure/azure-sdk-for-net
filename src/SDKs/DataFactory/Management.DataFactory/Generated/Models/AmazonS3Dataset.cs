@@ -57,7 +57,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object key = default(object), object prefix = default(object), object version = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             BucketName = bucketName;
             Key = key;
             Prefix = prefix;

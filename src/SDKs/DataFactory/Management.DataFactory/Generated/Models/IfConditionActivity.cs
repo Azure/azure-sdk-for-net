@@ -54,7 +54,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IfConditionActivity(string name, Expression expression, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
             : base(name, description, dependsOn)
         {
-            Expression = new Expression();
             Expression = expression;
             IfTrueActivities = ifTrueActivities;
             IfFalseActivities = ifFalseActivities;

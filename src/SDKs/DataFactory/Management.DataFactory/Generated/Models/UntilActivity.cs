@@ -54,7 +54,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public UntilActivity(string name, Expression expression, IList<Activity> activities, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), object timeout = default(object))
             : base(name, description, dependsOn)
         {
-            Expression = new Expression();
             Expression = expression;
             Timeout = timeout;
             Activities = activities;

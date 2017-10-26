@@ -48,7 +48,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public MongoDbCollectionDataset(LinkedServiceReference linkedServiceName, object collectionName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             CollectionName = collectionName;
             CustomInit();
         }

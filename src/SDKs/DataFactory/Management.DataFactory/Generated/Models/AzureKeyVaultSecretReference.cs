@@ -43,7 +43,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureKeyVaultSecretReference(LinkedServiceReference store, object secretName, object secretVersion = default(object))
             : base(store)
         {
-            Store = new LinkedServiceReference();
             SecretName = secretName;
             SecretVersion = secretVersion;
             CustomInit();

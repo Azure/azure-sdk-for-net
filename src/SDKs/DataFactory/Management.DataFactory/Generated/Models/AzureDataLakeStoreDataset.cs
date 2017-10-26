@@ -54,7 +54,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureDataLakeStoreDataset(LinkedServiceReference linkedServiceName, object folderPath, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression), IList<DatasetPartition> partitionedBy = default(IList<DatasetPartition>))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             FolderPath = folderPath;
             FileName = fileName;
             Format = format;

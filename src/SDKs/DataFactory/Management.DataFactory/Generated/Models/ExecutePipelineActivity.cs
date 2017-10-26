@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public ExecutePipelineActivity(string name, PipelineReference pipeline, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, object> parameters = default(IDictionary<string, object>), bool? waitOnCompletion = default(bool?))
             : base(name, description, dependsOn)
         {
-            Pipeline = new PipelineReference();
             Pipeline = pipeline;
             Parameters = parameters;
             WaitOnCompletion = waitOnCompletion;

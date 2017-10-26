@@ -505,10 +505,6 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "factory");
             }
-            if (factory == null)
-            {
-                factory = new Factory();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -743,10 +739,6 @@ namespace Microsoft.Azure.Management.DataFactory
             if (factoryUpdateParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "factoryUpdateParameters");
-            }
-            if (factoryUpdateParameters == null)
-            {
-                factoryUpdateParameters = new FactoryUpdateParameters();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

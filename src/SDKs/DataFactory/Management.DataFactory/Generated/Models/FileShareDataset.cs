@@ -55,7 +55,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public FileShareDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object folderPath = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), object fileFilter = default(object), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             FolderPath = folderPath;
             FileName = fileName;
             Format = format;

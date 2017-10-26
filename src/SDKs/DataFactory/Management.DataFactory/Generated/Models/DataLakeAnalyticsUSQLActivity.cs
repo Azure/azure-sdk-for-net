@@ -65,7 +65,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DataLakeAnalyticsUSQLActivity(string name, object scriptPath, LinkedServiceReference scriptLinkedService, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object degreeOfParallelism = default(object), object priority = default(object), IDictionary<string, object> parameters = default(IDictionary<string, object>), object runtimeVersion = default(object), object compilationMode = default(object))
             : base(name, description, dependsOn, linkedServiceName, policy)
         {
-            ScriptLinkedService = new LinkedServiceReference();
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
             DegreeOfParallelism = degreeOfParallelism;

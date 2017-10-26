@@ -62,7 +62,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public HttpDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object relativeUrl = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), DatasetPartition partitionedBy = default(DatasetPartition), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             RelativeUrl = relativeUrl;
             RequestMethod = requestMethod;
             RequestBody = requestBody;

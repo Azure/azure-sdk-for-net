@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public ODataResourceDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object path = default(object))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             Path = path;
             CustomInit();
         }

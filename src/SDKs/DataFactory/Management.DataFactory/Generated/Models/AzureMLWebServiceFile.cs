@@ -39,7 +39,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// located.</param>
         public AzureMLWebServiceFile(object filePath, LinkedServiceReference linkedServiceName)
         {
-            LinkedServiceName = new LinkedServiceReference();
             FilePath = filePath;
             LinkedServiceName = linkedServiceName;
             CustomInit();

@@ -50,7 +50,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public LookupActivity(string name, CopySource source, DatasetReference dataset, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object firstRowOnly = default(object))
             : base(name, description, dependsOn, linkedServiceName, policy)
         {
-            Dataset = new DatasetReference();
             Source = source;
             Dataset = dataset;
             FirstRowOnly = firstRowOnly;

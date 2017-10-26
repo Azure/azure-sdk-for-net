@@ -386,10 +386,6 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 linkedService.Validate();
             }
-            if (linkedService == null)
-            {
-                linkedService = new LinkedServiceResource();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

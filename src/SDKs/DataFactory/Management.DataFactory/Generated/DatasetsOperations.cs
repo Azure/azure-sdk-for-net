@@ -386,10 +386,6 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 dataset.Validate();
             }
-            if (dataset == null)
-            {
-                dataset = new DatasetResource();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

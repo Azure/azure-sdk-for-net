@@ -42,7 +42,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for dataset.</param>
         public Dataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
         {
-            LinkedServiceName = new LinkedServiceReference();
             Description = description;
             Structure = structure;
             LinkedServiceName = linkedServiceName;

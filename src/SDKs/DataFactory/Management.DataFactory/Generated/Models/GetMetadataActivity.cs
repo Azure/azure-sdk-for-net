@@ -48,7 +48,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public GetMetadataActivity(string name, DatasetReference dataset, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> fieldList = default(IList<object>))
             : base(name, description, dependsOn, linkedServiceName, policy)
         {
-            Dataset = new DatasetReference();
             Dataset = dataset;
             FieldList = fieldList;
             CustomInit();

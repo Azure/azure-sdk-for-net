@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="store">The Azure Key Vault LinkedService.</param>
         public AzureKeyVaultReference(LinkedServiceReference store)
         {
-            Store = new LinkedServiceReference();
             Store = store;
             CustomInit();
         }

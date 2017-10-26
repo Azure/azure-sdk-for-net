@@ -51,7 +51,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public WebTableDataset(LinkedServiceReference linkedServiceName, object index, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object path = default(object))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             Index = index;
             Path = path;
             CustomInit();

@@ -44,7 +44,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string).</param>
         public RedshiftUnloadSettings(LinkedServiceReference s3LinkedServiceName, object bucketName)
         {
-            S3LinkedServiceName = new LinkedServiceReference();
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;
             CustomInit();

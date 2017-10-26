@@ -54,7 +54,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureBlobDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;
             FileName = fileName;

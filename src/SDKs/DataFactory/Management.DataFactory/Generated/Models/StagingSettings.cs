@@ -41,7 +41,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// boolean).</param>
         public StagingSettings(LinkedServiceReference linkedServiceName, object path = default(object), object enableCompression = default(object))
         {
-            LinkedServiceName = new LinkedServiceReference();
             LinkedServiceName = linkedServiceName;
             Path = path;
             EnableCompression = enableCompression;

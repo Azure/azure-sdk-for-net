@@ -49,7 +49,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public CassandraTableDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object tableName = default(object), object keyspace = default(object))
             : base(linkedServiceName, description, structure, parameters)
         {
-            LinkedServiceName = new LinkedServiceReference();
             TableName = tableName;
             Keyspace = keyspace;
             CustomInit();

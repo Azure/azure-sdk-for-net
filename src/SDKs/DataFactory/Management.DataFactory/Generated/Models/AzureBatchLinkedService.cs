@@ -52,7 +52,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public AzureBatchLinkedService(object accountName, object batchUri, object poolName, LinkedServiceReference linkedServiceName, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecureString accessKey = default(SecureString), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
-            LinkedServiceName = new LinkedServiceReference();
             AccountName = accountName;
             AccessKey = accessKey;
             BatchUri = batchUri;

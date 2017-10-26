@@ -39,7 +39,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public LinkedServiceResource(LinkedService properties, string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
             : base(id, name, type, etag)
         {
-            Properties = new LinkedService();
             Properties = properties;
             CustomInit();
         }
