@@ -8,13 +8,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-/*
+
 [assembly: AssemblyTitle("PowerBIDedicated.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MSIT")]
+[assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("PowerBIDedicated.Tests")]
-[assembly: AssemblyCopyright("Copyright © MSIT 2013")]
+[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-*/
-    [assembly: ComVisible(false)]
-    // The following GUID is for the ID of the typelib if this project is exposed to COM
-    [assembly: Guid("bc70f362-fd99-4b13-8807-ff93fe06eff8")]
+
+[assembly: ComVisible(false)]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("bc70f362-fd99-4b13-8807-ff93fe06eff8")]
