@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>DataMigration.Tests</PackageId>
+    <Description>DataMigration.Tests Class Library</Description>
+    <AssemblyName>DataMigration.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.DataMigration\Microsoft.Azure.Management.DataMigration.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDServiceTests\CreateResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDServiceTests\DeleteResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDServiceTests\GetResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDProjectTests\CreateResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDProjectTests\DeleteResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDProjectTests\GetResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDTaskTests\CreateResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDTaskTests\DeleteResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\DataMigration.Tests.ScenarioTests.CRUDTaskTests\GetResourceSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
+  </ItemGroup>
+</Project>
