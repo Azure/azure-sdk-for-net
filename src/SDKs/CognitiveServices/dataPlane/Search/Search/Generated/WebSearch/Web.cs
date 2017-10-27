@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
+namespace Microsoft.Azure.CognitiveServices.Search.WebSearch
 {
     using Microsoft.Rest;
     using Models;
@@ -19,12 +19,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EntitiesOperations operations.
+    /// Web operations.
     /// </summary>
-    public partial class EntitiesOperations : IServiceOperations<EntitySearchAPI>, IEntitiesOperations
+    public partial class Web : IServiceOperations<WebSearchAPI>, IWeb
     {
         /// <summary>
-        /// Initializes a new instance of the EntitiesOperations class.
+        /// Initializes a new instance of the Web class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public EntitiesOperations(EntitySearchAPI client)
+        public Web(WebSearchAPI client)
         {
             if (client == null)
             {
@@ -42,21 +42,18 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         }
 
         /// <summary>
-        /// Gets a reference to the EntitySearchAPI
+        /// Gets a reference to the WebSearchAPI
         /// </summary>
-        public EntitySearchAPI Client { get; private set; }
+        public WebSearchAPI Client { get; private set; }
 
         /// <summary>
-        /// The Entity Search API lets you send a search query to Bing and get back
-        /// search results that include entities and places. Place results include
-        /// restaurants, hotel, or other local businesses. For places, the query can
-        /// specify the name of the local business or it can ask for a list (for
-        /// example, restaurants near me). Entity results include persons, places, or
-        /// things. Place in this context is tourist attractions, states, countries,
-        /// etc.
+        /// The Web Search API lets you send a search query to Bing and get back search
+        /// results that include links to webpages, images, and more.
         /// </summary>
         /// <param name='query'>
-        /// The user's search term.
+        /// The user's search query term. The term may not be empty. The term may
+        /// contain Bing Advanced Operators. For example, to limit results to a
+        /// specific domain, use the site: operator.
         /// </param>
         /// <param name='acceptLanguage'>
         /// A comma-delimited list of one or more languages to use for user interface
@@ -168,6 +165,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// should include this header and the X-MSEdge-ClientIP header, but at a
         /// minimum, you should include this header.
         /// </param>
+        /// <param name='answerCount'>
+        /// The number of answers that you want the response to include. The answers
+        /// that Bing returns are based on ranking. For example, if Bing returns
+        /// webpages, images, videos, and relatedSearches for a request and you set
+        /// this parameter to two (2), the response includes webpages and images.If you
+        /// included the responseFilter query parameter in the same request and set it
+        /// to webpages and news, the response would include only webpages.
+        /// </param>
         /// <param name='countryCode'>
         /// A 2-character country code of the country where the results come from. This
         /// API supports only the United States market. If you specify this query
@@ -183,22 +188,75 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// the mkt and setLang query parameters. This parameter and the mkt query
         /// parameter are mutually exclusive—do not specify both.
         /// </param>
+        /// <param name='count'>
+        /// The number of search results to return in the response. The default is 10
+        /// and the maximum value is 50. The actual number delivered may be less than
+        /// requested.Use this parameter along with the offset parameter to page
+        /// results.For example, if your user interface displays 10 search results per
+        /// page, set count to 10 and offset to 0 to get the first page of results. For
+        /// each subsequent page, increment offset by 10 (for example, 0, 10, 20). It
+        /// is possible for multiple pages to include some overlap in results.
+        /// </param>
+        /// <param name='freshness'>
+        /// Filter search results by the following age values: Day—Return webpages that
+        /// Bing discovered within the last 24 hours. Week—Return webpages that Bing
+        /// discovered within the last 7 days. Month—Return webpages that discovered
+        /// within the last 30 days. This filter applies only to webpage results and
+        /// not to the other results such as news and images. Possible values include:
+        /// 'Day', 'Week', 'Month'
+        /// </param>
         /// <param name='market'>
-        /// The market where the results come from. You are strongly encouraged to
-        /// always specify the market, if known. Specifying the market helps Bing route
-        /// the request and return an appropriate and optimal response. This parameter
-        /// and the cc query parameter are mutually exclusive—do not specify both.
+        /// The market where the results come from. Typically, mkt is the country where
+        /// the user is making the request from. However, it could be a different
+        /// country if the user is not located in a country where Bing delivers
+        /// results. The market must be in the form &lt;language code&gt;-&lt;country
+        /// code&gt;. For example, en-US. The string is case insensitive. If known, you
+        /// are encouraged to always specify the market. Specifying the market helps
+        /// Bing route the request and return an appropriate and optimal response. If
+        /// you specify a market that is not listed in Market Codes, Bing uses a best
+        /// fit market code based on an internal mapping that is subject to change.
+        /// This parameter and the cc query parameter are mutually exclusive—do not
+        /// specify both.
+        /// </param>
+        /// <param name='offset'>
+        /// The zero-based offset that indicates the number of search results to skip
+        /// before returning results. The default is 0. The offset should be less than
+        /// (totalEstimatedMatches - count). Use this parameter along with the count
+        /// parameter to page results. For example, if your user interface displays 10
+        /// search results per page, set count to 10 and offset to 0 to get the first
+        /// page of results. For each subsequent page, increment offset by 10 (for
+        /// example, 0, 10, 20). it is possible for multiple pages to include some
+        /// overlap in results.
+        /// </param>
+        /// <param name='promote'>
+        /// A comma-delimited list of answers that you want the response to include
+        /// regardless of their ranking. For example, if you set answerCount) to two
+        /// (2) so Bing returns the top two ranked answers, but you also want the
+        /// response to include news, you'd set promote to news. If the top ranked
+        /// answers are webpages, images, videos, and relatedSearches, the response
+        /// includes webpages and images because news is not a ranked answer. But if
+        /// you set promote to video, Bing would promote the video answer into the
+        /// response and return webpages, images, and videos. The answers that you want
+        /// to promote do not count against the answerCount limit. For example, if the
+        /// ranked answers are news, images, and videos, and you set answerCount to 1
+        /// and promote to news, the response contains news and images. Or, if the
+        /// ranked answers are videos, images, and news, the response contains videos
+        /// and news. Possible values are Computation, Images, News, RelatedSearches,
+        /// SpellSuggestions, TimeZone, Videos, Webpages. Use only if you specify
+        /// answerCount.
         /// </param>
         /// <param name='responseFilter'>
         /// A comma-delimited list of answers to include in the response. If you do not
         /// specify this parameter, the response includes all search answers for which
-        /// there's relevant data.
-        /// </param>
-        /// <param name='responseFormat'>
-        /// The media type to use for the response. The following are the possible
-        /// case-insensitive values: JSON, JSONLD. The default is JSON. If you specify
-        /// JSONLD, the response body includes JSON-LD objects that contain the search
-        /// results.
+        /// there's relevant data. Possible filter values are Computation, Images,
+        /// News, RelatedSearches, SpellSuggestions, TimeZone, Videos, Webpages.
+        /// Although you may use this filter to get a single answer, you should instead
+        /// use the answer-specific endpoint in order to get richer results. For
+        /// example, to receive only images, send the request to one of the Image
+        /// Search API endpoints. The RelatedSearches and SpellSuggestions answers do
+        /// not support a separate endpoint like the Image Search API does (only the
+        /// Web Search API returns them). To include answers that would otherwise be
+        /// excluded because of ranking, see the promote query parameter.
         /// </param>
         /// <param name='safeSearch'>
         /// A filter used to filter adult content. Off: Return webpages with adult
@@ -225,6 +283,26 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// interface strings in the JSON response objects. Also, any links to Bing.com
         /// properties in the response objects apply the specified language.
         /// </param>
+        /// <param name='textDecorations'>
+        /// A Boolean value that determines whether display strings should contain
+        /// decoration markers such as hit highlighting characters. If true, the
+        /// strings may include markers. The default is false. To specify whether to
+        /// use Unicode characters or HTML tags as the markers, see the textFormat
+        /// query parameter.
+        /// </param>
+        /// <param name='textFormat'>
+        /// The type of markers to use for text decorations (see the textDecorations
+        /// query parameter). Possible values are Raw—Use Unicode characters to mark
+        /// content that needs special formatting. The Unicode characters are in the
+        /// range E000 through E019. For example, Bing uses E000 and E001 to mark the
+        /// beginning and end of query terms for hit highlighting. HTML—Use HTML tags
+        /// to mark content that needs special formatting. For example, use &lt;b&gt;
+        /// tags to highlight query terms in display strings. The default is Raw. For
+        /// display strings that contain escapable HTML characters such as &lt;, &gt;,
+        /// and &amp;, if textFormat is set to HTML, Bing escapes the characters as
+        /// appropriate (for example, &lt; is escaped to &amp;lt;). Possible values
+        /// include: 'Raw', 'Html'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -246,7 +324,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = default(string), IList<AnswerType?> responseFilter = default(IList<AnswerType?>), IList<ResponseFormat?> responseFormat = default(IList<ResponseFormat?>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), int? answerCount = default(int?), string countryCode = default(string), int? count = default(int?), Freshness? freshness = default(Freshness?), string market = default(string), int? offset = default(int?), IList<string> promote = default(IList<string>), IList<string> responseFilter = default(IList<string>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string), bool? textDecorations = default(bool?), TextFormat? textFormat = default(TextFormat?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (query == null)
             {
@@ -267,27 +345,53 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
                 tracingParameters.Add("clientId", clientId);
                 tracingParameters.Add("clientIp", clientIp);
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("answerCount", answerCount);
                 tracingParameters.Add("countryCode", countryCode);
+                tracingParameters.Add("count", count);
+                tracingParameters.Add("freshness", freshness);
                 tracingParameters.Add("market", market);
+                tracingParameters.Add("offset", offset);
+                tracingParameters.Add("promote", promote);
                 tracingParameters.Add("query", query);
                 tracingParameters.Add("responseFilter", responseFilter);
-                tracingParameters.Add("responseFormat", responseFormat);
                 tracingParameters.Add("safeSearch", safeSearch);
                 tracingParameters.Add("setLang", setLang);
+                tracingParameters.Add("textDecorations", textDecorations);
+                tracingParameters.Add("textFormat", textFormat);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Search", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "entities").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "search").ToString();
             List<string> _queryParameters = new List<string>();
+            if (answerCount != null)
+            {
+                _queryParameters.Add(string.Format("answerCount={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(answerCount, Client.SerializationSettings).Trim('"'))));
+            }
             if (countryCode != null)
             {
                 _queryParameters.Add(string.Format("cc={0}", System.Uri.EscapeDataString(countryCode)));
             }
+            if (count != null)
+            {
+                _queryParameters.Add(string.Format("count={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(count, Client.SerializationSettings).Trim('"'))));
+            }
+            if (freshness != null)
+            {
+                _queryParameters.Add(string.Format("freshness={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(freshness, Client.SerializationSettings).Trim('"'))));
+            }
             if (market != null)
             {
                 _queryParameters.Add(string.Format("mkt={0}", System.Uri.EscapeDataString(market)));
+            }
+            if (offset != null)
+            {
+                _queryParameters.Add(string.Format("offset={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(offset, Client.SerializationSettings).Trim('"'))));
+            }
+            if (promote != null)
+            {
+                _queryParameters.Add(string.Format("promote={0}", System.Uri.EscapeDataString(string.Join(",", promote))));
             }
             if (query != null)
             {
@@ -295,19 +399,23 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             }
             if (responseFilter != null)
             {
-                _queryParameters.Add(string.Format("ResponseFilter={0}", System.Uri.EscapeDataString(string.Join(",", responseFilter))));
-            }
-            if (responseFormat != null)
-            {
-                _queryParameters.Add(string.Format("ResponseFormat={0}", System.Uri.EscapeDataString(string.Join(",", responseFormat))));
+                _queryParameters.Add(string.Format("responseFilter={0}", System.Uri.EscapeDataString(string.Join(",", responseFilter))));
             }
             if (safeSearch != null)
             {
-                _queryParameters.Add(string.Format("SafeSearch={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(safeSearch, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("safeSearch={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(safeSearch, Client.SerializationSettings).Trim('"'))));
             }
             if (setLang != null)
             {
-                _queryParameters.Add(string.Format("SetLang={0}", System.Uri.EscapeDataString(setLang)));
+                _queryParameters.Add(string.Format("setLang={0}", System.Uri.EscapeDataString(setLang)));
+            }
+            if (textDecorations != null)
+            {
+                _queryParameters.Add(string.Format("textDecorations={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(textDecorations, Client.SerializationSettings).Trim('"'))));
+            }
+            if (textFormat != null)
+            {
+                _queryParameters.Add(string.Format("textFormat={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(textFormat, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

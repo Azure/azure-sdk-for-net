@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
+namespace Microsoft.Azure.CognitiveServices.Search
 {
     using System;
     using System.Net.Http;
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
     public class ApiKeyServiceClientCredentials : ServiceClientCredentials
     {
         private readonly string subscriptionKey;
-        private const string SDKIdentifier = "EntitySearch.CSharp.1.0";
+        private const string SDKIdentifier = "Search.CSharp.1.0";
 
         /// <summary>
         /// Creates a new instance of the ApiKeyServiceClientCredentails class

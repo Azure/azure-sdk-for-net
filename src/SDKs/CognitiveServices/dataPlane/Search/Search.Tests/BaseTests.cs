@@ -1,7 +1,9 @@
-﻿using Microsoft.Azure.CognitiveServices.Search.EntitySearch;
+﻿using Microsoft.Azure.CognitiveServices.Search;
+using Microsoft.Azure.CognitiveServices.Search.EntitySearch;
+using Microsoft.Azure.CognitiveServices.Search.WebSearch;
 using System.Net.Http;
 
-namespace EntitySearchSDK.Tests
+namespace SearchSDK.Tests
 {
     public abstract class BaseTests
     {
@@ -15,9 +17,17 @@ namespace EntitySearchSDK.Tests
             // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
         }
 
-        protected IEntitySearchAPI GetClient(DelegatingHandler handler)
+        protected dynamic GetClient(DelegatingHandler handler, SearchTypes searchType)
         {
-            return new EntitySearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handler);
+            switch (searchType)
+            {
+                case SearchTypes.EntitySearch:
+                    return new EntitySearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handler);
+                case SearchTypes.WebSearch:
+                    return new WebSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handler);
+                default:
+                    return null;
+            }
         }
     }
 }
