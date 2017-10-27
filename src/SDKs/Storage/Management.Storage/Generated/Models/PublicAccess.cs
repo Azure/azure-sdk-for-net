@@ -16,43 +16,43 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Kind.
+    /// Defines values for PublicAccess.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Kind
+    public enum PublicAccess
     {
-        [EnumMember(Value = "Storage")]
-        Storage,
-        [EnumMember(Value = "BlobStorage")]
-        BlobStorage
+        [EnumMember(Value = "container")]
+        Container,
+        [EnumMember(Value = "blob")]
+        Blob
     }
-    internal static class KindEnumExtension
+    internal static class PublicAccessEnumExtension
     {
-        internal static string ToSerializedValue(this Kind? value)
+        internal static string ToSerializedValue(this PublicAccess? value)
         {
-            return value == null ? null : ((Kind)value).ToSerializedValue();
+            return value == null ? null : ((PublicAccess)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Kind value)
+        internal static string ToSerializedValue(this PublicAccess value)
         {
             switch( value )
             {
-                case Kind.Storage:
-                    return "Storage";
-                case Kind.BlobStorage:
-                    return "BlobStorage";
+                case PublicAccess.Container:
+                    return "container";
+                case PublicAccess.Blob:
+                    return "blob";
             }
             return null;
         }
 
-        internal static Kind? ParseKind(this string value)
+        internal static PublicAccess? ParsePublicAccess(this string value)
         {
             switch( value )
             {
-                case "Storage":
-                    return Kind.Storage;
-                case "BlobStorage":
-                    return Kind.BlobStorage;
+                case "container":
+                    return PublicAccess.Container;
+                case "blob":
+                    return PublicAccess.Blob;
             }
             return null;
         }

@@ -16,43 +16,43 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Kind.
+    /// Defines values for LeaseDuration.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Kind
+    public enum LeaseDuration
     {
-        [EnumMember(Value = "Storage")]
-        Storage,
-        [EnumMember(Value = "BlobStorage")]
-        BlobStorage
+        [EnumMember(Value = "infinite")]
+        Infinite,
+        [EnumMember(Value = "fixed")]
+        Fixed
     }
-    internal static class KindEnumExtension
+    internal static class LeaseDurationEnumExtension
     {
-        internal static string ToSerializedValue(this Kind? value)
+        internal static string ToSerializedValue(this LeaseDuration? value)
         {
-            return value == null ? null : ((Kind)value).ToSerializedValue();
+            return value == null ? null : ((LeaseDuration)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Kind value)
+        internal static string ToSerializedValue(this LeaseDuration value)
         {
             switch( value )
             {
-                case Kind.Storage:
-                    return "Storage";
-                case Kind.BlobStorage:
-                    return "BlobStorage";
+                case LeaseDuration.Infinite:
+                    return "infinite";
+                case LeaseDuration.Fixed:
+                    return "fixed";
             }
             return null;
         }
 
-        internal static Kind? ParseKind(this string value)
+        internal static LeaseDuration? ParseLeaseDuration(this string value)
         {
             switch( value )
             {
-                case "Storage":
-                    return Kind.Storage;
-                case "BlobStorage":
-                    return Kind.BlobStorage;
+                case "infinite":
+                    return LeaseDuration.Infinite;
+                case "fixed":
+                    return LeaseDuration.Fixed;
             }
             return null;
         }

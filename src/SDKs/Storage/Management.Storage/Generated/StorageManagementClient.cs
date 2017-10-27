@@ -96,6 +96,16 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IUsageOperations Usage { get; private set; }
 
         /// <summary>
+        /// Gets the IBlobServiceOperations.
+        /// </summary>
+        public virtual IBlobServiceOperations BlobService { get; private set; }
+
+        /// <summary>
+        /// Gets the IBlobContainersOperations.
+        /// </summary>
+        public virtual IBlobContainersOperations BlobContainers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -300,6 +310,8 @@ namespace Microsoft.Azure.Management.Storage
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Usage = new UsageOperations(this);
+            BlobService = new BlobServiceOperations(this);
+            BlobContainers = new BlobContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-10-01";
             AcceptLanguage = "en-US";

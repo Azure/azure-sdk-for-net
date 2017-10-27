@@ -16,43 +16,43 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Kind.
+    /// Defines values for LeaseStatus.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Kind
+    public enum LeaseStatus
     {
-        [EnumMember(Value = "Storage")]
-        Storage,
-        [EnumMember(Value = "BlobStorage")]
-        BlobStorage
+        [EnumMember(Value = "locked")]
+        Locked,
+        [EnumMember(Value = "unlocked")]
+        Unlocked
     }
-    internal static class KindEnumExtension
+    internal static class LeaseStatusEnumExtension
     {
-        internal static string ToSerializedValue(this Kind? value)
+        internal static string ToSerializedValue(this LeaseStatus? value)
         {
-            return value == null ? null : ((Kind)value).ToSerializedValue();
+            return value == null ? null : ((LeaseStatus)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Kind value)
+        internal static string ToSerializedValue(this LeaseStatus value)
         {
             switch( value )
             {
-                case Kind.Storage:
-                    return "Storage";
-                case Kind.BlobStorage:
-                    return "BlobStorage";
+                case LeaseStatus.Locked:
+                    return "locked";
+                case LeaseStatus.Unlocked:
+                    return "unlocked";
             }
             return null;
         }
 
-        internal static Kind? ParseKind(this string value)
+        internal static LeaseStatus? ParseLeaseStatus(this string value)
         {
             switch( value )
             {
-                case "Storage":
-                    return Kind.Storage;
-                case "BlobStorage":
-                    return Kind.BlobStorage;
+                case "locked":
+                    return LeaseStatus.Locked;
+                case "unlocked":
+                    return LeaseStatus.Unlocked;
             }
             return null;
         }
