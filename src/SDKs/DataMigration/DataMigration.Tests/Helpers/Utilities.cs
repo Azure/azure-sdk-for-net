@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Net.Http;
+using System.Threading;
 using Microsoft.Azure.Management.DataMigration;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Net.Http;
-using System.Threading;
 
 namespace DataMigration.Tests.Helpers
 {
@@ -65,16 +65,6 @@ namespace DataMigration.Tests.Helpers
 
         private static HttpClientHandler GetHandler()
         {
-#if DNX451
-            if (Handler == null)
-            {
-                //talk to yugangw-msft, if the code doesn't work under dnx451 (same with net451)
-                X509Certificate2 cert = new X509Certificate2(certName, certPassword);
-                Handler = new System.Net.Http.WebRequestHandler();
-                ((WebRequestHandler)Handler).ClientCertificates.Add(cert);
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
-            }
-#endif
             return Handler;
         }
 
