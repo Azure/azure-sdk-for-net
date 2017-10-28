@@ -3,6 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.PowerBIDedicated</PackageId>
     <Description>Provides management capabilities for Azure PowerBI Dedicated accounts.</Description>
+    <AssemblyTitle>Microsoft Azure PowerBI Dedicated Management Library</AssemblyTitle>
     <VersionPrefix>0.9.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.PowerBIDedicated</AssemblyName>
     <PackageTags>Microsoft Azure resource management;PowerBIDedicated;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>

@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-
 [assembly: AssemblyTitle("Microsoft Azure PowerBI Dedicated Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for PowerBI Dedicated Resources.")]
 
