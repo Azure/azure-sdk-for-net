@@ -108,6 +108,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <param name='serviceName'>
         /// Name of the service
         /// </param>
+        /// <param name='deleteRunningTasks'>
+        /// Delete the resource even if it contains running tasks
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -120,7 +123,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, bool? deleteRunningTasks = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update DMS Service Instance
         /// </summary>
@@ -435,6 +438,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <param name='serviceName'>
         /// Name of the service
         /// </param>
+        /// <param name='deleteRunningTasks'>
+        /// Delete the resource even if it contains running tasks
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -447,7 +453,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string groupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string groupName, string serviceName, bool? deleteRunningTasks = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update DMS Service Instance
         /// </summary>

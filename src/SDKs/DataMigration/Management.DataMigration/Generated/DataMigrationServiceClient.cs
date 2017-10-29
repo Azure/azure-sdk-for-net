@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.DataMigration
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Delete the resource even if it contains running tasks
-        /// </summary>
-        public bool? DeleteRunningTasks { get; set; }
-
-        /// <summary>
         /// Identifier of the subscription
         /// </summary>
         public string SubscriptionId { get; set; }

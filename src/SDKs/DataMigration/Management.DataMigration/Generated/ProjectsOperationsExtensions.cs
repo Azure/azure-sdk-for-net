@@ -204,9 +204,12 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='projectName'>
             /// Name of the project
             /// </param>
-            public static void Delete(this IProjectsOperations operations, string groupName, string serviceName, string projectName)
+            /// <param name='deleteRunningTasks'>
+            /// Delete the resource even if it contains running tasks
+            /// </param>
+            public static void Delete(this IProjectsOperations operations, string groupName, string serviceName, string projectName, bool? deleteRunningTasks = default(bool?))
             {
-                operations.DeleteAsync(groupName, serviceName, projectName).GetAwaiter().GetResult();
+                operations.DeleteAsync(groupName, serviceName, projectName, deleteRunningTasks).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -228,12 +231,15 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='projectName'>
             /// Name of the project
             /// </param>
+            /// <param name='deleteRunningTasks'>
+            /// Delete the resource even if it contains running tasks
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IProjectsOperations operations, string groupName, string serviceName, string projectName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IProjectsOperations operations, string groupName, string serviceName, string projectName, bool? deleteRunningTasks = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(groupName, serviceName, projectName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(groupName, serviceName, projectName, deleteRunningTasks, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

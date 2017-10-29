@@ -158,9 +158,12 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='serviceName'>
             /// Name of the service
             /// </param>
-            public static void Delete(this IServicesOperations operations, string groupName, string serviceName)
+            /// <param name='deleteRunningTasks'>
+            /// Delete the resource even if it contains running tasks
+            /// </param>
+            public static void Delete(this IServicesOperations operations, string groupName, string serviceName, bool? deleteRunningTasks = default(bool?))
             {
-                operations.DeleteAsync(groupName, serviceName).GetAwaiter().GetResult();
+                operations.DeleteAsync(groupName, serviceName, deleteRunningTasks).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -180,12 +183,15 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='serviceName'>
             /// Name of the service
             /// </param>
+            /// <param name='deleteRunningTasks'>
+            /// Delete the resource even if it contains running tasks
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IServicesOperations operations, string groupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IServicesOperations operations, string groupName, string serviceName, bool? deleteRunningTasks = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(groupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(groupName, serviceName, deleteRunningTasks, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -709,9 +715,12 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='serviceName'>
             /// Name of the service
             /// </param>
-            public static void BeginDelete(this IServicesOperations operations, string groupName, string serviceName)
+            /// <param name='deleteRunningTasks'>
+            /// Delete the resource even if it contains running tasks
+            /// </param>
+            public static void BeginDelete(this IServicesOperations operations, string groupName, string serviceName, bool? deleteRunningTasks = default(bool?))
             {
-                operations.BeginDeleteAsync(groupName, serviceName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(groupName, serviceName, deleteRunningTasks).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -731,12 +740,15 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='serviceName'>
             /// Name of the service
             /// </param>
+            /// <param name='deleteRunningTasks'>
+            /// Delete the resource even if it contains running tasks
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IServicesOperations operations, string groupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IServicesOperations operations, string groupName, string serviceName, bool? deleteRunningTasks = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(groupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(groupName, serviceName, deleteRunningTasks, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

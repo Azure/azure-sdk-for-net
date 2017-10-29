@@ -346,10 +346,6 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (Client.DeleteRunningTasks != null)
-            {
-                _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.DeleteRunningTasks, Client.SerializationSettings).Trim('"'))));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -578,10 +574,6 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (Client.DeleteRunningTasks != null)
-            {
-                _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.DeleteRunningTasks, Client.SerializationSettings).Trim('"'))));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -718,6 +710,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <param name='projectName'>
         /// Name of the project
         /// </param>
+        /// <param name='deleteRunningTasks'>
+        /// Delete the resource even if it contains running tasks
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -736,7 +731,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, string projectName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, string projectName, bool? deleteRunningTasks = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -765,6 +760,7 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deleteRunningTasks", deleteRunningTasks);
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
@@ -779,13 +775,13 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             List<string> _queryParameters = new List<string>();
+            if (deleteRunningTasks != null)
+            {
+                _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(deleteRunningTasks, Client.SerializationSettings).Trim('"'))));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (Client.DeleteRunningTasks != null)
-            {
-                _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.DeleteRunningTasks, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -984,10 +980,6 @@ namespace Microsoft.Azure.Management.DataMigration
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (Client.DeleteRunningTasks != null)
-            {
-                _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.DeleteRunningTasks, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
