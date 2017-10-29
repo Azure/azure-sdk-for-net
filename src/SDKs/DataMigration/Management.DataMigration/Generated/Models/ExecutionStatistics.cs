@@ -37,11 +37,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// execution</param>
         /// <param name="elapsedTimeMs">Time taken in millisecond(s) for
         /// executing the query</param>
-        /// <param name="waitStats">List of wait statistics</param>
+        /// <param name="waitStats">Dictionary of sql query execution wait
+        /// types and the respective statistics</param>
         /// <param name="hasErrors">Indicates whether the query resulted in an
         /// error</param>
         /// <param name="sqlErrors">List of sql Errors</param>
-        public ExecutionStatistics(long? executionCount = default(long?), double? cpuTimeMs = default(double?), double? elapsedTimeMs = default(double?), WaitStatistics waitStats = default(WaitStatistics), bool? hasErrors = default(bool?), IList<string> sqlErrors = default(IList<string>))
+        public ExecutionStatistics(long? executionCount = default(long?), double? cpuTimeMs = default(double?), double? elapsedTimeMs = default(double?), IDictionary<string, WaitStatistics> waitStats = default(IDictionary<string, WaitStatistics>), bool? hasErrors = default(bool?), IList<string> sqlErrors = default(IList<string>))
         {
             ExecutionCount = executionCount;
             CpuTimeMs = cpuTimeMs;
@@ -76,10 +77,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public double? ElapsedTimeMs { get; set; }
 
         /// <summary>
-        /// Gets or sets list of wait statistics
+        /// Gets or sets dictionary of sql query execution wait types and the
+        /// respective statistics
         /// </summary>
         [JsonProperty(PropertyName = "waitStats")]
-        public WaitStatistics WaitStats { get; set; }
+        public IDictionary<string, WaitStatistics> WaitStats { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether the query resulted in an error

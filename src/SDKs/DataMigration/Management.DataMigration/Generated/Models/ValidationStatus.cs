@@ -21,6 +21,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ValidationStatus
     {
+        [EnumMember(Value = "Default")]
+        Default,
         [EnumMember(Value = "NotStarted")]
         NotStarted,
         [EnumMember(Value = "Initialized")]
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         InProgress,
         [EnumMember(Value = "Completed")]
         Completed,
+        [EnumMember(Value = "PartiallyCompleted")]
+        PartiallyCompleted,
         [EnumMember(Value = "Failed")]
         Failed
     }
@@ -43,6 +47,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         {
             switch( value )
             {
+                case ValidationStatus.Default:
+                    return "Default";
                 case ValidationStatus.NotStarted:
                     return "NotStarted";
                 case ValidationStatus.Initialized:
@@ -51,6 +57,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
                     return "InProgress";
                 case ValidationStatus.Completed:
                     return "Completed";
+                case ValidationStatus.PartiallyCompleted:
+                    return "PartiallyCompleted";
                 case ValidationStatus.Failed:
                     return "Failed";
             }
@@ -61,6 +69,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         {
             switch( value )
             {
+                case "Default":
+                    return ValidationStatus.Default;
                 case "NotStarted":
                     return ValidationStatus.NotStarted;
                 case "Initialized":
@@ -69,6 +79,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
                     return ValidationStatus.InProgress;
                 case "Completed":
                     return ValidationStatus.Completed;
+                case "PartiallyCompleted":
+                    return ValidationStatus.PartiallyCompleted;
                 case "Failed":
                     return ValidationStatus.Failed;
             }

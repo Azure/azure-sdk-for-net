@@ -46,8 +46,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// result between source and target database</param>
         /// <param name="queryAnalysisValidationResult">Results of some of the
         /// query execution result between source and target database</param>
-        /// <param name="status">Current status of migration. Possible values
-        /// include: 'NotStarted', 'Initialized', 'InProgress', 'Completed',
+        /// <param name="status">Current status of validation at the database
+        /// level. Possible values include: 'Default', 'NotStarted',
+        /// 'Initialized', 'InProgress', 'Completed', 'PartiallyCompleted',
         /// 'Failed'</param>
         public MigrationValidationDatabaseLevelResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), ValidationStatus? status = default(ValidationStatus?))
         {
@@ -127,8 +128,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public QueryAnalysisValidationResult QueryAnalysisValidationResult { get; private set; }
 
         /// <summary>
-        /// Gets current status of migration. Possible values include:
-        /// 'NotStarted', 'Initialized', 'InProgress', 'Completed', 'Failed'
+        /// Gets current status of validation at the database level. Possible
+        /// values include: 'Default', 'NotStarted', 'Initialized',
+        /// 'InProgress', 'Completed', 'PartiallyCompleted', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public ValidationStatus? Status { get; private set; }

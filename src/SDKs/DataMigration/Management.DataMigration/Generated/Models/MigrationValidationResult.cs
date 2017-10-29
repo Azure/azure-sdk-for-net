@@ -35,11 +35,17 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="migrationId">Migration Identifier</param>
         /// <param name="databaseLevelValidationResults">Validation results for
         /// each database</param>
-        public MigrationValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseLevelResult> databaseLevelValidationResults = default(IDictionary<string, MigrationValidationDatabaseLevelResult>))
+        /// <param name="status">Current status of validation at the migration
+        /// level. Status from the database validation result status will be
+        /// aggregated here. Possible values include: 'Default', 'NotStarted',
+        /// 'Initialized', 'InProgress', 'Completed', 'PartiallyCompleted',
+        /// 'Failed'</param>
+        public MigrationValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseLevelResult> databaseLevelValidationResults = default(IDictionary<string, MigrationValidationDatabaseLevelResult>), ValidationStatus? status = default(ValidationStatus?))
         {
             Id = id;
             MigrationId = migrationId;
             DatabaseLevelValidationResults = databaseLevelValidationResults;
+            Status = status;
             CustomInit();
         }
 
@@ -65,6 +71,15 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "databaseLevelValidationResults")]
         public IDictionary<string, MigrationValidationDatabaseLevelResult> DatabaseLevelValidationResults { get; set; }
+
+        /// <summary>
+        /// Gets current status of validation at the migration level. Status
+        /// from the database validation result status will be aggregated here.
+        /// Possible values include: 'Default', 'NotStarted', 'Initialized',
+        /// 'InProgress', 'Completed', 'PartiallyCompleted', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public ValidationStatus? Status { get; private set; }
 
     }
 }
