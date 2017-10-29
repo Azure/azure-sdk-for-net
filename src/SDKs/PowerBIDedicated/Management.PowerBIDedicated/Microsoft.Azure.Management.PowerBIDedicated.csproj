@@ -1,44 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.PowerBIDedicated</PackageId>
     <Description>Provides management capabilities for Azure PowerBI Dedicated accounts.</Description>
     <AssemblyTitle>Microsoft Azure PowerBI Dedicated Management Library</AssemblyTitle>
-    <VersionPrefix>2.0.1</VersionPrefix>
+    <VersionPrefix>0.9.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.PowerBIDedicated</AssemblyName>
-    <PackageId>Microsoft.Azure.Management.PowerBIDedicated</PackageId>
-    <PackageTags>Microsoft Azure resource management;asazure;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+    <PackageTags>Microsoft Azure resource management;PowerBIDedicated;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure PowerBIDedicated SDK. Included with this release is support for all cluster, job and file server related APIs.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
+
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
-    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.0.1" />
-    <PackageReference Include="System.Threading.Thread" Version="4.0.0" />
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.0.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
 </Project>

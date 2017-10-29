@@ -29,7 +29,6 @@ namespace DedicatedServices.Tests.Helpers
     public static class PowerBIDedicatedTestUtilities
     {
         private static HttpClientHandler Handler = null;
-        private static string testSubscription = "00000000-0000-0000-0000-000000000000";
         private static Uri testUri = new Uri("https://api-dogfood.resources.windows-int.net/");
 
         // These should be filled in only if test tenant is true
