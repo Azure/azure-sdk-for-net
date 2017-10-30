@@ -12,7 +12,6 @@ namespace Microsoft.Azure.CognitiveServices.Search
     public class ApiKeyServiceClientCredentials : ServiceClientCredentials
     {
         private readonly string subscriptionKey;
-        private const string SDKIdentifier = "Search.CSharp.1.0";
 
         /// <summary>
         /// Creates a new instance of the ApiKeyServiceClientCredentails class
@@ -37,7 +36,6 @@ namespace Microsoft.Azure.CognitiveServices.Search
                 throw new ArgumentNullException("request");
 
             request.Headers.Add("Ocp-Apim-Subscription-Key", this.subscriptionKey);
-            request.Headers.Add("X-BingApis-SDK", SDKIdentifier);
 
             return Task.FromResult<object>(null);
         }
