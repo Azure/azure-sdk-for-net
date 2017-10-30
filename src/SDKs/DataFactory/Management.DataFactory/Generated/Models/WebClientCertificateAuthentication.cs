@@ -29,8 +29,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public WebClientCertificateAuthentication()
         {
-            Pfx = new SecureString();
-            Password = new SecureString();
             CustomInit();
         }
 

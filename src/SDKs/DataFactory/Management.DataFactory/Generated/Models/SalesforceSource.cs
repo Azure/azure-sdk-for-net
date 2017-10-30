@@ -14,30 +14,29 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Dynamics source.
+    /// A copy activity Salesforce source.
     /// </summary>
-    public partial class DynamicsSource : CopySource
+    public partial class SalesforceSource : CopySource
     {
         /// <summary>
-        /// Initializes a new instance of the DynamicsSource class.
+        /// Initializes a new instance of the SalesforceSource class.
         /// </summary>
-        public DynamicsSource()
+        public SalesforceSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DynamicsSource class.
+        /// Initializes a new instance of the SalesforceSource class.
         /// </summary>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        /// <param name="query">FetchXML is a proprietary query language that
-        /// is used in Microsoft Dynamics (online &amp; on-premises). Type:
-        /// string (or Expression with resultType string).</param>
-        public DynamicsSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object))
+        /// <param name="query">Database query. Type: string (or Expression
+        /// with resultType string).</param>
+        public SalesforceSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object))
             : base(sourceRetryCount, sourceRetryWait)
         {
             Query = query;
@@ -50,9 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets fetchXML is a proprietary query language that is used
-        /// in Microsoft Dynamics (online &amp;amp; on-premises). Type: string
-        /// (or Expression with resultType string).
+        /// Gets or sets database query. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public object Query { get; set; }
