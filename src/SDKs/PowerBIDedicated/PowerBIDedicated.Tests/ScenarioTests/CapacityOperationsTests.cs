@@ -7,7 +7,7 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.PowerBIDedicated;
 using Microsoft.Azure.Management.PowerBIDedicated.Models;
 using Microsoft.Azure.Test;
- using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
