@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// Initializes a new instance of the RuleEmailAction class.
         /// </summary>
         /// <param name="sendToServiceOwners">Whether the administrators
-        /// (service and co-adiminstrators) of the service should be notified
+        /// (service and co-administrators) of the service should be notified
         /// when the alert is activated.</param>
         /// <param name="customEmails">the list of administrator's custom email
-        /// addresses notifiy of the activation of the alert.</param>
+        /// addresses to notify of the activation of the alert.</param>
         public RuleEmailAction(bool? sendToServiceOwners = default(bool?), IList<string> customEmails = default(IList<string>))
         {
             SendToServiceOwners = sendToServiceOwners;
@@ -54,15 +54,15 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
 
         /// <summary>
         /// Gets or sets whether the administrators (service and
-        /// co-adiminstrators) of the service should be notified when the alert
+        /// co-administrators) of the service should be notified when the alert
         /// is activated.
         /// </summary>
         [JsonProperty(PropertyName = "sendToServiceOwners")]
         public bool? SendToServiceOwners { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of administrator's custom email addresses
-        /// notifiy of the activation of the alert.
+        /// Gets or sets the list of administrator's custom email addresses to
+        /// notify of the activation of the alert.
         /// </summary>
         [JsonProperty(PropertyName = "customEmails")]
         public IList<string> CustomEmails { get; set; }
