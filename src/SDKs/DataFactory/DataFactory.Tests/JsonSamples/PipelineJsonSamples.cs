@@ -2055,5 +2055,39 @@ namespace DataFactory.Tests.JsonSamples
   }
 }";
 
+        [JsonSample(version: "Copy")]
+        public const string CopyAzureMySqlToBlob = @"{
+    name: ""AzureMySqlToBlobPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""CopyFromAzureMySqlToBlob"",
+                type: ""Copy"",
+                inputs: [
+                    {
+                        referenceName: ""AzureMySQLDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""AzureBlobOut"", type: ""DatasetReference""
+                    }
+                ],
+                policy: {
+                },
+                typeProperties: {
+                    source: {
+                        type: ""AzureMySqlSource"",
+                        query:""select * from azuremysqltable""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                }
+            }
+        ]
+    }
+}
+";
     }
 }

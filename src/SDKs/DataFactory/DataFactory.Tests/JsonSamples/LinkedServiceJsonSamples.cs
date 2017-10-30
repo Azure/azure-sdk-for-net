@@ -810,5 +810,21 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureMySqlLinkedService = @"
+{
+    name: ""LinkedService-AzureMySQLDB"",
+    properties:
+    {
+        type: ""AzureMySql"",
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
     }
 }

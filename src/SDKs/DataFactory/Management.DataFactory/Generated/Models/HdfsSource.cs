@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity source for HDFS source.
+    /// A copy activity HDFS source.
     /// </summary>
     public partial class HdfsSource : CopySource
     {
