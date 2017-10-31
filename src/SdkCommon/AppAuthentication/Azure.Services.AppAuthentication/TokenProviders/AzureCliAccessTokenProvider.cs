@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // Constants related to command to execute to get token using Azure CLI
         private const string Cmd = "cmd.exe";
         private const string Bash = "/bin/bash";
-        private const string GetTokenCommand = "az account get-access-token";
+        private const string GetTokenCommand = "az account get-access-token -o json";
         private const string ResourceArgumentName = "--resource";
 
         // This is the path that a develop can set to tell this class what the install path for Azure CLI is. 
