@@ -90,10 +90,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     new MsiAccessTokenProvider(),
                     new VisualStudioAccessTokenProvider(new ProcessManager()),
+                    new AzureCliAccessTokenProvider(new ProcessManager()),
 #if FullNetFx
-                    new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance),
+                    new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance)
 #endif
-                    new AzureCliAccessTokenProvider(new ProcessManager())
                 };
             }
             
