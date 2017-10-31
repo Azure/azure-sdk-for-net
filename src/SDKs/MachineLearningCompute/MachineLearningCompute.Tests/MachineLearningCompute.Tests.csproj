@@ -4,7 +4,7 @@
         <PackageId>MachineLearningCompute.Tests</PackageId>
         <Description>MachineLearningCompute.Tests Class Library</Description>
         <AssemblyName>MachineLearningCompute.Tests</AssemblyName>
-        <Version>0.2.0</Version>
+        <Version>0.1.0</Version>
     </PropertyGroup>
 
     <PropertyGroup>

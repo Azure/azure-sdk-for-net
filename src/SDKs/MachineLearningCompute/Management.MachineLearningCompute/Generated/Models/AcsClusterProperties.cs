@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
         /// <param name="orchestratorType">Type of orchestrator. It cannot be
         /// changed once the cluster is created. Possible values include:
         /// 'Kubernetes', 'None'</param>
+        /// <param name="clusterFqdn">The FQDN of the cluster. </param>
         /// <param name="orchestratorProperties">Orchestrator specific
         /// properties</param>
-        /// <param name="clusterFqdn">The FQDN of the cluster. </param>
         /// <param name="systemServices">The system services deployed to the
         /// cluster</param>
         /// <param name="masterCount">The number of master nodes in the
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
         /// 'Standard_DS12', 'Standard_DS13', 'Standard_DS14', 'Standard_GS1',
         /// 'Standard_GS2', 'Standard_GS3', 'Standard_GS4',
         /// 'Standard_GS5'</param>
-        public AcsClusterProperties(string orchestratorType, KubernetesClusterProperties orchestratorProperties, string clusterFqdn = default(string), IList<SystemService> systemServices = default(IList<SystemService>), int? masterCount = default(int?), int? agentCount = default(int?), string agentVmSize = default(string))
+        public AcsClusterProperties(string orchestratorType, string clusterFqdn = default(string), KubernetesClusterProperties orchestratorProperties = default(KubernetesClusterProperties), IList<SystemService> systemServices = default(IList<SystemService>), int? masterCount = default(int?), int? agentCount = default(int?), string agentVmSize = default(string))
         {
             ClusterFqdn = clusterFqdn;
             OrchestratorType = orchestratorType;
@@ -150,10 +150,6 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
             if (OrchestratorType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorType");
-            }
-            if (OrchestratorProperties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorProperties");
             }
             if (OrchestratorProperties != null)
             {
