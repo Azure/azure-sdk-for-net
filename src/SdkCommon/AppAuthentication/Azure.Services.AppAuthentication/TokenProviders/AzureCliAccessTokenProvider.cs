@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         ;
 
         // Default path for non-Windows. 
-        private const string AzureCliDefaultPath = "/usr/bin";
+        private const string AzureCliDefaultPath = "/usr/bin:/usr/local/bin";
 
         internal AzureCliAccessTokenProvider(IProcessManager processManager)
         {
