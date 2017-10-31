@@ -13,7 +13,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "ccc12cc7-9c24-457d-8c23-f6f0a67a11d1"
+          "89e695dc-61ed-4bf9-8158-822c8c7a20d7"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"loggingStorageAccountKey\": \"**********\",\r\n    \"createTime\": \"2017-10-11T18:05:17.8196041Z\",\r\n    \"version\": \"2017-09-01-preview\"\r\n  },\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"location\": \"East US 2\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"loggingStorageAccountKey\": \"**********\",\r\n    \"createTime\": \"2017-10-18T17:20:05.4558261Z\",\r\n    \"version\": \"2017-09-01-preview\"\r\n  },\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"location\": \"East US 2\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -35,7 +35,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 11 Oct 2017 18:05:26 GMT"
+          "Wed, 18 Oct 2017 17:20:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -50,7 +50,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "4aff2f3a-da68-47c8-bf58-09bbd1fb0147"
+          "89e695dc-61ed-4bf9-8158-822c8c7a20d7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,13 +62,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1134"
+          "1105"
         ],
         "x-ms-correlation-request-id": [
-          "7a17a3b9-ef1c-4c93-8eae-f398d85a78d2"
+          "83784228-fe6f-44d8-9a07-a4d42da62c92"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171011T180526Z:7a17a3b9-ef1c-4c93-8eae-f398d85a78d2"
+          "NORTHEUROPE:20171018T172004Z:83784228-fe6f-44d8-9a07-a4d42da62c92"
         ]
       },
       "StatusCode": 200
@@ -80,7 +80,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a61d9ce4-8db6-414e-abf2-56b6d92c48cd"
+          "567de79a-1dee-44ce-b9ce-6be90c2e9669"
         ],
         "accept-language": [
           "en-US"
@@ -90,7 +90,7 @@
           "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"loggingStorageAccountKey\": \"**********\",\r\n    \"createTime\": \"2017-10-11T18:05:17.8196041Z\",\r\n    \"version\": \"2017-09-01-preview\"\r\n  },\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"location\": \"East US 2\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"loggingStorageAccountKey\": \"**********\",\r\n    \"createTime\": \"2017-10-18T17:20:05.4558261Z\",\r\n    \"version\": \"2017-09-01-preview\"\r\n  },\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"location\": \"East US 2\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -102,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 11 Oct 2017 18:05:29 GMT"
+          "Wed, 18 Oct 2017 17:20:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -117,7 +117,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "2a201819-702c-4230-9f02-6b55725f891a"
+          "567de79a-1dee-44ce-b9ce-6be90c2e9669"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -129,13 +129,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14740"
+          "14613"
         ],
         "x-ms-correlation-request-id": [
-          "6bad86c9-4ceb-4bd8-953f-d4708be7a264"
+          "695e8eff-3415-4e44-ae4e-005447f3080a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171011T180530Z:6bad86c9-4ceb-4bd8-953f-d4708be7a264"
+          "NORTHEUROPE:20171018T172004Z:695e8eff-3415-4e44-ae4e-005447f3080a"
         ]
       },
       "StatusCode": 200
@@ -147,7 +147,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12eb2527-80ac-4266-8114-33389f4862f9"
+          "143acece-2241-417e-8f35-0ce41fdae9b4"
         ],
         "accept-language": [
           "en-US"
@@ -157,7 +157,7 @@
           "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"sdktestingfactory\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"loggingStorageAccountKey\": \"**********\",\r\n        \"createTime\": \"2017-10-11T18:05:17.8196041Z\",\r\n        \"version\": \"2017-09-01-preview\"\r\n      },\r\n      \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory\",\r\n      \"type\": \"Microsoft.DataFactory/factories\",\r\n      \"location\": \"East US 2\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"sdktestingfactory\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"loggingStorageAccountKey\": \"**********\",\r\n        \"createTime\": \"2017-10-18T17:20:05.4558261Z\",\r\n        \"version\": \"2017-09-01-preview\"\r\n      },\r\n      \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory\",\r\n      \"type\": \"Microsoft.DataFactory/factories\",\r\n      \"location\": \"East US 2\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -169,7 +169,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 11 Oct 2017 18:05:29 GMT"
+          "Wed, 18 Oct 2017 17:20:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -184,7 +184,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "b2858e9d-e52b-47b2-b3fc-e6b276b2f59e"
+          "143acece-2241-417e-8f35-0ce41fdae9b4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -196,13 +196,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14739"
+          "14612"
         ],
         "x-ms-correlation-request-id": [
-          "f4667a02-1925-4eb4-9a3e-c53bd8bd1f13"
+          "ade0054b-0ccd-4e0f-a100-4383cd5e520d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171011T180530Z:f4667a02-1925-4eb4-9a3e-c53bd8bd1f13"
+          "NORTHEUROPE:20171018T172004Z:ade0054b-0ccd-4e0f-a100-4383cd5e520d"
         ]
       },
       "StatusCode": 200
@@ -214,7 +214,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bf2f6c61-8a27-486a-9439-4124cf50b1c9"
+          "3d947086-6019-4f45-bd92-149007bfed98"
         ],
         "accept-language": [
           "en-US"
@@ -236,7 +236,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 11 Oct 2017 18:05:34 GMT"
+          "Wed, 18 Oct 2017 17:20:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -245,7 +245,7 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "dec4559d-6f11-490f-9b98-70817ec6dc4c"
+          "3d947086-6019-4f45-bd92-149007bfed98"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -257,16 +257,65 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1131"
+          "1104"
         ],
         "x-ms-correlation-request-id": [
-          "06d8f20a-0a2e-4ab2-87f5-895545f25e0a"
+          "78fd5e2a-b409-4f34-a03d-55c1a518627e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171011T180534Z:06d8f20a-0a2e-4ab2-87f5-895545f25e0a"
+          "NORTHEUROPE:20171018T172005Z:78fd5e2a-b409-4f34-a03d-55c1a518627e"
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktesting/providers/Microsoft.DataFactory/factories/sdktestingfactory?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk/YXBpLXZlcnNpb249MjAxNy0wOS0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6efde5aa-c7bd-4694-9228-e51b158f836e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 18 Oct 2017 17:20:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1103"
+        ],
+        "x-ms-request-id": [
+          "efd118eb-e05a-4e7d-89a2-392c52eb2399"
+        ],
+        "x-ms-correlation-request-id": [
+          "efd118eb-e05a-4e7d-89a2-392c52eb2399"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20171018T172006Z:efd118eb-e05a-4e7d-89a2-392c52eb2399"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 204
     }
   ],
   "Names": {},
