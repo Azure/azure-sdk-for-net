@@ -16,22 +16,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure SQL Data Warehouse linked service.
+    /// Azure MySQL database linked service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureSqlDW")]
+    [Newtonsoft.Json.JsonObject("AzureMySql")]
     [Rest.Serialization.JsonTransformation]
-    public partial class AzureSqlDWLinkedService : LinkedService
+    public partial class AzureMySqlLinkedService : LinkedService
     {
         /// <summary>
-        /// Initializes a new instance of the AzureSqlDWLinkedService class.
+        /// Initializes a new instance of the AzureMySqlLinkedService class.
         /// </summary>
-        public AzureSqlDWLinkedService()
+        public AzureMySqlLinkedService()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureSqlDWLinkedService class.
+        /// Initializes a new instance of the AzureMySqlLinkedService class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSqlDWLinkedService(SecureString connectionString, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
+        public AzureMySqlLinkedService(SecureString connectionString, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
             ConnectionString = connectionString;
