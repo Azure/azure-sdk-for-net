@@ -32,7 +32,7 @@ namespace DataMigration.Tests.ScenarioTests
             string dmsProjectName)
         {
             return client.Projects.CreateOrUpdate(
-                new Project(TestConfiguration.Location),
+                new Project(TestConfiguration.Location, ProjectSourcePlatform.SQL, ProjectTargetPlatform.SQLDB),
                 resourceGroup.Name,
                 dmsInstanceName,
                 dmsProjectName);
