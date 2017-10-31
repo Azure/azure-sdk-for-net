@@ -35,9 +35,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         /// <param name="sourceConnectionInfo">Connection information for
         /// Source SQL Server</param>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo)
+        /// <param name="checkPermissionsGroup">Permission group for
+        /// validations. Possible values include: 'Default',
+        /// 'MigrationFromSqlServerToAzureDB'</param>
+        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
+            CheckPermissionsGroup = checkPermissionsGroup;
             CustomInit();
         }
 
@@ -51,6 +55,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceConnectionInfo")]
         public SqlConnectionInfo SourceConnectionInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets permission group for validations. Possible values
+        /// include: 'Default', 'MigrationFromSqlServerToAzureDB'
+        /// </summary>
+        [JsonProperty(PropertyName = "checkPermissionsGroup")]
+        public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
 
         /// <summary>
         /// Validate the object.

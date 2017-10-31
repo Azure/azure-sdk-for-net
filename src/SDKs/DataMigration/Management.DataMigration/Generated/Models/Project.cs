@@ -35,6 +35,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the Project class.
         /// </summary>
         /// <param name="location">Resource location.</param>
+        /// <param name="sourcePlatform">Source platform for the project.
+        /// Possible values include: 'SQL', 'Unknown'</param>
+        /// <param name="targetPlatform">Target platform for the project.
+        /// Possible values include: 'SQLDB', 'Unknown'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -46,28 +50,36 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="targetConnectionInfo">Information for connecting to
         /// target</param>
         /// <param name="databasesInfo">List of DatabaseInfo</param>
-        public Project(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>))
+        public Project(string location, ProjectSourcePlatform sourcePlatform, ProjectTargetPlatform targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>))
             : base(location, id, name, type, tags)
         {
+            SourcePlatform = sourcePlatform;
+            TargetPlatform = targetPlatform;
             CreationTime = creationTime;
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             DatabasesInfo = databasesInfo;
             CustomInit();
         }
-        /// <summary>
-        /// Static constructor for Project class.
-        /// </summary>
-        static Project()
-        {
-            SourcePlatform = "SQL";
-            TargetPlatform = "SQLDB";
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets source platform for the project. Possible values
+        /// include: 'SQL', 'Unknown'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourcePlatform")]
+        public ProjectSourcePlatform SourcePlatform { get; set; }
+
+        /// <summary>
+        /// Gets or sets target platform for the project. Possible values
+        /// include: 'SQLDB', 'Unknown'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetPlatform")]
+        public ProjectTargetPlatform TargetPlatform { get; set; }
 
         /// <summary>
         /// Gets UTC Date and time when project was created
@@ -92,18 +104,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.databasesInfo")]
         public IList<DatabaseInfo> DatabasesInfo { get; set; }
-
-        /// <summary>
-        /// Source platform for the project
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.sourcePlatform")]
-        public static string SourcePlatform { get; private set; }
-
-        /// <summary>
-        /// Target platform for the project
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.targetPlatform")]
-        public static string TargetPlatform { get; private set; }
 
         /// <summary>
         /// Validate the object.

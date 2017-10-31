@@ -160,6 +160,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <param name='taskName'>
         /// Name of the Task
         /// </param>
+        /// <param name='deleteRunningTasks'>
+        /// Delete the resource even if it contains running tasks
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -172,7 +175,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, string projectName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update task
         /// </summary>

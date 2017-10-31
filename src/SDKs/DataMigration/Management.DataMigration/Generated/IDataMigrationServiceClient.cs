@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.DataMigration
 
 
         /// <summary>
+        /// Gets the IResourceSkusOperations.
+        /// </summary>
+        IResourceSkusOperations ResourceSkus { get; }
+
+        /// <summary>
         /// Gets the IServicesOperations.
         /// </summary>
         IServicesOperations Services { get; }

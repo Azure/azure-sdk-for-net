@@ -74,6 +74,11 @@ namespace Microsoft.Azure.Management.DataMigration
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IResourceSkusOperations.
+        /// </summary>
+        public virtual IResourceSkusOperations ResourceSkus { get; private set; }
+
+        /// <summary>
         /// Gets the IServicesOperations.
         /// </summary>
         public virtual IServicesOperations Services { get; private set; }
@@ -294,6 +299,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// </summary>
         private void Initialize()
         {
+            ResourceSkus = new ResourceSkusOperations(this);
             Services = new ServicesOperations(this);
             Tasks = new TasksOperations(this);
             Projects = new ProjectsOperations(this);

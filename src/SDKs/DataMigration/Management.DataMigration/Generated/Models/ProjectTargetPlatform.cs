@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     public enum ProjectTargetPlatform
     {
         [EnumMember(Value = "SQLDB")]
-        SQLDB
+        SQLDB,
+        [EnumMember(Value = "Unknown")]
+        Unknown
     }
     internal static class ProjectTargetPlatformEnumExtension
     {
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             {
                 case ProjectTargetPlatform.SQLDB:
                     return "SQLDB";
+                case ProjectTargetPlatform.Unknown:
+                    return "Unknown";
             }
             return null;
         }
@@ -47,6 +51,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             {
                 case "SQLDB":
                     return ProjectTargetPlatform.SQLDB;
+                case "Unknown":
+                    return ProjectTargetPlatform.Unknown;
             }
             return null;
         }

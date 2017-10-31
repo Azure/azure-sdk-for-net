@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     public enum ProjectSourcePlatform
     {
         [EnumMember(Value = "SQL")]
-        SQL
+        SQL,
+        [EnumMember(Value = "Unknown")]
+        Unknown
     }
     internal static class ProjectSourcePlatformEnumExtension
     {
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             {
                 case ProjectSourcePlatform.SQL:
                     return "SQL";
+                case ProjectSourcePlatform.Unknown:
+                    return "Unknown";
             }
             return null;
         }
@@ -47,6 +51,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             {
                 case "SQL":
                     return ProjectSourcePlatform.SQL;
+                case "Unknown":
+                    return ProjectSourcePlatform.Unknown;
             }
             return null;
         }

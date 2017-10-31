@@ -753,6 +753,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <param name='taskName'>
         /// Name of the Task
         /// </param>
+        /// <param name='deleteRunningTasks'>
+        /// Delete the resource even if it contains running tasks
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -771,7 +774,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, string projectName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, string serviceName, string projectName, string taskName, bool? deleteRunningTasks = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -804,6 +807,7 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deleteRunningTasks", deleteRunningTasks);
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
@@ -820,6 +824,10 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
             List<string> _queryParameters = new List<string>();
+            if (deleteRunningTasks != null)
+            {
+                _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(deleteRunningTasks, Client.SerializationSettings).Trim('"'))));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));

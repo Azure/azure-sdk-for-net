@@ -316,10 +316,6 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (parameters == null)
-            {
-                parameters = new Project();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -950,10 +946,6 @@ namespace Microsoft.Azure.Management.DataMigration
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (parameters == null)
-            {
-                parameters = new Project();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
