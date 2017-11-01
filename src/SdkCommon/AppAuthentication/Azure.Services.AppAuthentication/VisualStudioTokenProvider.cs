@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
+    /// <summary>
+    /// Used to de-serialize the Visual Studio token provider file. 
+    /// </summary>
     [DataContract]
     internal class VisualStudioTokenProvider
     {

@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 var visualStudioTokenProviderFile = JsonHelper.Deserialize<VisualStudioTokenProviderFile>(Encoding.UTF8.GetBytes(fileContents));
 
+                // Order the providers, so that the latest one is tried first.
                 visualStudioTokenProviderFile.TokenProviders =
                     visualStudioTokenProviderFile.TokenProviders.OrderByDescending(p => p.Preference).ToList();
 

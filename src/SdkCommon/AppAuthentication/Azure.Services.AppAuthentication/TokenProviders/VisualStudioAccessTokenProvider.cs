@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// </summary>
     internal class VisualStudioAccessTokenProvider : NonInteractiveAzureServiceTokenProviderBase
     {
+        // Represents the token provider file, which has information about executable to call to get token.
         private VisualStudioTokenProviderFile _visualStudioTokenProviderFile;
         
         // Allows for unit testing, by mocking IProcessManager
@@ -33,6 +34,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
             PrincipalUsed = new Principal { Type = "User" };
         }
 
+        /// <summary>
+        /// Gets the token provider file from user's local appdata folder.
+        /// </summary>
+        /// <returns></returns>
         private VisualStudioTokenProviderFile GetTokenProviderFile()
         {
             if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(LocalAppDataPathEnv)))
@@ -51,6 +56,13 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return VisualStudioTokenProviderFile.Parse(File.ReadAllText(tokenProviderPath));
         }
 
+        /// <summary>
+        /// Gets a list of token provider executables to call to get token.
+        /// </summary>
+        /// <param name="visualStudioTokenProviderFile">Visual Studio Token provider file</param>
+        /// <param name="resource"></param>
+        /// <param name="tenant"></param>
+        /// <returns></returns>
         private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProviderFile visualStudioTokenProviderFile, 
             string resource, string tenant = default(string))
         {
@@ -58,6 +70,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             foreach (var tokenProvider in visualStudioTokenProviderFile.TokenProviders)
             {
+                // If file does not exist, the version of Visual Studio that set the token provider may be uninstalled. 
                 if (File.Exists(tokenProvider.Path))
                 {
                     string arguments = $"{ResourceArgumentName} {resource} ";
@@ -67,6 +80,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         arguments += $"{TenantArgumentName} {tenant} ";
                     }
 
+                    // Add the arguments set in the token provider file.
                     if (tokenProvider.Arguments?.Count > 0)
                     {
                         arguments += string.Join(" ", tokenProvider.Arguments);
@@ -89,7 +103,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
             try
             {
-                // Validate resource, since it gets sent as a command line argument to Visual Studio
+                // Validate resource, since it gets sent as a command line argument to Visual Studio token provider.
                 ValidationHelper.ValidateResource(resource);
 
                 _visualStudioTokenProviderFile = _visualStudioTokenProviderFile ?? GetTokenProviderFile();

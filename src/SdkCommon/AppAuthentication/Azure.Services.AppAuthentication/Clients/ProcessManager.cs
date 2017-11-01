@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <summary>
         /// Execute the given process and return the result. 
         /// </summary>
-        /// <param name="process"></param>
-        /// <returns>Tuple of bool and string. Bool is if the process returned output in standard output or error stream. string has the actual output.</returns>
+        /// <param name="process">The process to execute</param>
+        /// <returns>Returns the process output from the standard output stream.</returns>
         public Task<string> ExecuteAsync(Process process)
         {
             var tcs = new TaskCompletionSource<string>();

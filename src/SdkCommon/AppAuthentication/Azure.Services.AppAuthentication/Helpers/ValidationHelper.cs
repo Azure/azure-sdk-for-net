@@ -5,6 +5,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
 {
     internal class ValidationHelper
     {
+        /// <summary>
+        /// Validates a resource identifier. 
+        /// </summary>
+        /// <param name="resource">The resource to validate.</param>
         public static void ValidateResource(string resource)
         {
             if (!Regex.IsMatch(resource, @"^[0-9a-zA-Z-.:/]+$"))
