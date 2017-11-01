@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         /// <summary>
         /// Creates an instance of the AzureServiceTokenProvider class.
-        /// If no connection string is specified, Managed Service Identity, Integrated Windows Authentication, and Azure CLI are tried to get a token.
+        /// If no connection string is specified, Managed Service Identity, Visual Studio, Azure CLI, and Integrated Windows Authentication are tried to get a token.
         /// Even If no connection string is specified in code, one can be specified in the AzureServicesAuthConnectionString environment variable. 
         /// </summary>
         /// <param name="connectionString">Connection string to specify which option to use to get the token.</param>
