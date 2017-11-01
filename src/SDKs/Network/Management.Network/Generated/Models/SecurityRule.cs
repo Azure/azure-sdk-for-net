@@ -65,8 +65,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// to match all ports.</param>
         /// <param name="sourceAddressPrefixes">The CIDR or source IP
         /// ranges.</param>
+        /// <param name="sourceApplicationSecurityGroups">The application
+        /// security group specified as source.</param>
         /// <param name="destinationAddressPrefixes">The destination address
         /// prefixes. CIDR or destination IP ranges.</param>
+        /// <param name="destinationApplicationSecurityGroups">The application
+        /// security group specified as destination.</param>
         /// <param name="sourcePortRanges">The source port ranges.</param>
         /// <param name="destinationPortRanges">The destination port
         /// ranges.</param>
@@ -82,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public SecurityRule(string protocol, string sourceAddressPrefix, string destinationAddressPrefix, string access, string direction, string id = default(string), string description = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), IList<string> sourceAddressPrefixes = default(IList<string>), IList<string> destinationAddressPrefixes = default(IList<string>), IList<string> sourcePortRanges = default(IList<string>), IList<string> destinationPortRanges = default(IList<string>), int? priority = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public SecurityRule(string protocol, string sourceAddressPrefix, string destinationAddressPrefix, string access, string direction, string id = default(string), string description = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), IList<string> sourceAddressPrefixes = default(IList<string>), IList<ApplicationSecurityGroup> sourceApplicationSecurityGroups = default(IList<ApplicationSecurityGroup>), IList<string> destinationAddressPrefixes = default(IList<string>), IList<ApplicationSecurityGroup> destinationApplicationSecurityGroups = default(IList<ApplicationSecurityGroup>), IList<string> sourcePortRanges = default(IList<string>), IList<string> destinationPortRanges = default(IList<string>), int? priority = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Description = description;
@@ -91,8 +95,10 @@ namespace Microsoft.Azure.Management.Network.Models
             DestinationPortRange = destinationPortRange;
             SourceAddressPrefix = sourceAddressPrefix;
             SourceAddressPrefixes = sourceAddressPrefixes;
+            SourceApplicationSecurityGroups = sourceApplicationSecurityGroups;
             DestinationAddressPrefix = destinationAddressPrefix;
             DestinationAddressPrefixes = destinationAddressPrefixes;
+            DestinationApplicationSecurityGroups = destinationApplicationSecurityGroups;
             SourcePortRanges = sourcePortRanges;
             DestinationPortRanges = destinationPortRanges;
             Access = access;
@@ -155,6 +161,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> SourceAddressPrefixes { get; set; }
 
         /// <summary>
+        /// Gets or sets the application security group specified as source.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceApplicationSecurityGroups")]
+        public IList<ApplicationSecurityGroup> SourceApplicationSecurityGroups { get; set; }
+
+        /// <summary>
         /// Gets or sets the destination address prefix. CIDR or destination IP
         /// range. Asterix '*' can also be used to match all source IPs.
         /// Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and
@@ -169,6 +181,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationAddressPrefixes")]
         public IList<string> DestinationAddressPrefixes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application security group specified as
+        /// destination.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.destinationApplicationSecurityGroups")]
+        public IList<ApplicationSecurityGroup> DestinationApplicationSecurityGroups { get; set; }
 
         /// <summary>
         /// Gets or sets the source port ranges.

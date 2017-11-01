@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 string recordSetName,
                 uint ttl = 42)
             {
-                return new RecordSet
+                return new RecordSet(name: recordSetName)
                 {
-                    Name = recordSetName,
                     Etag = null,
                     TTL = ttl,
                 };
@@ -221,7 +220,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ifMatch: null);
 
                 // Delete the zone
-                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     ifMatch: null);
@@ -357,6 +356,23 @@ namespace Microsoft.Azure.Management.Dns.Testing
             };
 
             this.RecordSetCreateGet(RecordType.TXT, setTestRecords);
+        }
+
+        [Fact]
+        public void CreateGetCaa()
+        {
+            Action<RecordSet> setTestRecords = createParams =>
+            {
+                createParams.CaaRecords = new List<CaaRecord>
+                {
+                    new CaaRecord() { Flags = 0, Tag = "issue", Value = "contoso.com" },
+                    new CaaRecord() { Flags = 0, Tag = "issue", Value = "fabrikam.com" },
+                };
+
+                return;
+            };
+
+            this.RecordSetCreateGet(RecordType.CAA, setTestRecords);
         }
 
         [Fact]
@@ -832,7 +848,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     recordType,
                     ifMatch: null);
 
-                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     ifMatch: null);
