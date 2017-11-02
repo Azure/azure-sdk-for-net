@@ -12,6 +12,8 @@
   * Add Salesforce Sink
   * Add jsonNodeReference and jsonPathDefinition to JSONFormat
   * Support providing Salesforce passwords and security tokens as SecureStrings or as secrets in Azure Key Vault.
+  * Add SAP Cloud For Customer Source
+  * Add SAP Cloud For Customer Dataset
 
 ## Version 0.2.0-preview
 
