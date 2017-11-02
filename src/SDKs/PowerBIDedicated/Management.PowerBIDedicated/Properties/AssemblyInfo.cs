@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure PowerBI Dedicated Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for PowerBI Dedicated Resources.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.9.0-preview")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
