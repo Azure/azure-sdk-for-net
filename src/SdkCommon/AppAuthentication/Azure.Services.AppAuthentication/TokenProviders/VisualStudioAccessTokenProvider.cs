@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string LocalAppDataPathEnv = "LOCALAPPDATA";
         private const string NoAppDataEnvironmentVariableError = "Environment variable LOCALAPPDATA not set.";
         private const string TokenProviderFilePath = ".IdentityService\\AzureServiceAuth\\tokenprovider.json";
-        private const string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
+        private const string TokenProviderFileNotFound = "Visual Studio Token provider file not found at";
 
         internal VisualStudioAccessTokenProvider(IProcessManager processManager, VisualStudioTokenProviderFile visualStudioTokenProviderFile = null)
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             if (!File.Exists(tokenProviderPath))
             {
-                throw new Exception($"{TokenProviderFileNotFound} {tokenProviderPath}");
+                throw new Exception($"{TokenProviderFileNotFound} \"{tokenProviderPath}\"");
             }
 
             return VisualStudioTokenProviderFile.Parse(File.ReadAllText(tokenProviderPath));
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             catch (Exception exp)
             {
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    $"{AzureServiceTokenProviderException.VisualStudioUsed} {AzureServiceTokenProviderException.GenericErrorMessage}  {exp.Message}");
+                    $"{AzureServiceTokenProviderException.VisualStudioUsed} {AzureServiceTokenProviderException.GenericErrorMessage} {exp.Message}");
             }
         }
     }

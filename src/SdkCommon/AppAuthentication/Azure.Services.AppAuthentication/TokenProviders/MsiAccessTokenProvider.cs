@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             catch (Exception exp)
             {
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.GenericErrorMessage}  {exp.Message}");
+                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.GenericErrorMessage} {exp.Message}");
             }
         }
     }
