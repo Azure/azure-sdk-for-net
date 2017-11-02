@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
+namespace Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
 {
     using Microsoft.Rest;
 
