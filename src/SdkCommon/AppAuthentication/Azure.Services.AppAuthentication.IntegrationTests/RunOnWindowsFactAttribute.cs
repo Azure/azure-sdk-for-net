@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
     {
         public RunOnWindowsFactAttribute()
         {
-#if netstandard14
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+#if !FullNetFx
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 Skip = "Ignored if not run on Windows";
             }
