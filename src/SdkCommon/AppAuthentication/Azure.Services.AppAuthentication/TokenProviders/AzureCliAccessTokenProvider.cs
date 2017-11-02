@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             catch (Exception exp)
             {
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    $"{AzureServiceTokenProviderException.AzureCliUsed} {AzureServiceTokenProviderException.GenericErrorMessage}  {exp.Message}");
+                    $"{AzureServiceTokenProviderException.AzureCliUsed} {AzureServiceTokenProviderException.GenericErrorMessage} {exp.Message}");
             }
         }
     }
