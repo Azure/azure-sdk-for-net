@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
             await GetTokenUsingDeveloperTool(true);
         }
 
-        [Fact]
+        [RunOnWindowsFact]
         public async Task GetTokenUsingVisualStudio()
         {
             await GetTokenUsingDeveloperTool(false);
