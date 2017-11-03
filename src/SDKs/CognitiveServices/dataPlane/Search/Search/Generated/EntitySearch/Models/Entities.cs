@@ -29,6 +29,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// Initializes a new instance of the Entities class.
         /// </summary>
         /// <param name="value">A list of entities.</param>
+        /// <param name="id">A String identifier.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
         /// to if you display the item.</param>
         /// <param name="webSearchUrl">The URL To Bing's search result for this
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// be DominantEntity. Possible values include: 'DominantEntity',
         /// 'DominantEntityWithDisambiguation', 'Disambiguation', 'List',
         /// 'ListWithPivot'</param>
-        public Entities(IList<Thing> value, string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), QueryContext queryContext = default(QueryContext), EntityQueryScenario? queryScenario = default(EntityQueryScenario?))
+        public Entities(IList<Thing> value, string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), QueryContext queryContext = default(QueryContext), string queryScenario = default(string))
             : base(id, contractualRules, webSearchUrl, queryContext)
         {
             QueryScenario = queryScenario;
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// 'ListWithPivot'
         /// </summary>
         [JsonProperty(PropertyName = "queryScenario")]
-        public EntityQueryScenario? QueryScenario { get; private set; }
+        public string QueryScenario { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of entities.

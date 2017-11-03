@@ -11,22 +11,18 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Defines information about a local entity, such as a restaurant or
-    /// hotel.
-    /// </summary>
-    public partial class Place : Thing
+    public partial class Restaurant : FoodEstablishment
     {
         /// <summary>
-        /// Initializes a new instance of the Place class.
+        /// Initializes a new instance of the Restaurant class.
         /// </summary>
-        public Place()
+        public Restaurant()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Place class.
+        /// Initializes a new instance of the Restaurant class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
@@ -47,11 +43,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// <param name="address">The postal address of where the entity is
         /// located</param>
         /// <param name="telephone">The entity's telephone number</param>
-        public Place(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string), PostalAddress address = default(PostalAddress), string telephone = default(string))
-            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId)
+        /// <param name="priceRange">$$.</param>
+        public Restaurant(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string), PostalAddress address = default(PostalAddress), string telephone = default(string), string priceRange = default(string), IList<ImageObject> panoramas = default(IList<ImageObject>), bool? isPermanentlyClosed = default(bool?), string tagLine = default(string), bool? acceptsReservations = default(bool?), string reservationUrl = default(string), IList<string> servesCuisine = default(IList<string>), string menuUrl = default(string))
+            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId, address, telephone, priceRange, panoramas, isPermanentlyClosed, tagLine)
         {
-            Address = address;
-            Telephone = telephone;
+            AcceptsReservations = acceptsReservations;
+            ReservationUrl = reservationUrl;
+            ServesCuisine = servesCuisine;
+            MenuUrl = menuUrl;
             CustomInit();
         }
 
@@ -61,16 +60,24 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the postal address of where the entity is located
         /// </summary>
-        [JsonProperty(PropertyName = "address")]
-        public PostalAddress Address { get; private set; }
+        [JsonProperty(PropertyName = "acceptsReservations")]
+        public bool? AcceptsReservations { get; private set; }
 
         /// <summary>
-        /// Gets the entity's telephone number
         /// </summary>
-        [JsonProperty(PropertyName = "telephone")]
-        public string Telephone { get; private set; }
+        [JsonProperty(PropertyName = "reservationUrl")]
+        public string ReservationUrl { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "servesCuisine")]
+        public IList<string> ServesCuisine { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "menuUrl")]
+        public string MenuUrl { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -81,10 +88,6 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         public override void Validate()
         {
             base.Validate();
-            if (Address != null)
-            {
-                Address.Validate();
-            }
         }
     }
 }

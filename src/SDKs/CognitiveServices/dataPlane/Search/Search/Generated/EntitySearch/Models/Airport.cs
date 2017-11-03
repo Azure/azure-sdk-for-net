@@ -6,22 +6,23 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Intangible : Thing
+    public partial class Airport : CivicStructure
     {
         /// <summary>
-        /// Initializes a new instance of the Intangible class.
+        /// Initializes a new instance of the Airport class.
         /// </summary>
-        public Intangible()
+        public Airport()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Intangible class.
+        /// Initializes a new instance of the Airport class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
@@ -39,9 +40,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// entityTypeHint fields.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
-        public Intangible(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string))
-            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId)
+        /// <param name="address">The postal address of where the entity is
+        /// located</param>
+        /// <param name="telephone">The entity's telephone number</param>
+        public Airport(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string), PostalAddress address = default(PostalAddress), string telephone = default(string), string iataCode = default(string), string icaoCode = default(string))
+            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId, address, telephone)
         {
+            IataCode = iataCode;
+            IcaoCode = icaoCode;
             CustomInit();
         }
 
@@ -49,6 +55,16 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "iataCode")]
+        public string IataCode { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "icaoCode")]
+        public string IcaoCode { get; private set; }
 
         /// <summary>
         /// Validate the object.

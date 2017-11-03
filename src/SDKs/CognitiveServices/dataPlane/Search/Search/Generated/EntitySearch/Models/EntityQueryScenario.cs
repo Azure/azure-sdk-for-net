@@ -6,69 +6,16 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EntityQueryScenario.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EntityQueryScenario
+    public static class EntityQueryScenario
     {
-        [EnumMember(Value = "DominantEntity")]
-        DominantEntity,
-        [EnumMember(Value = "DominantEntityWithDisambiguation")]
-        DominantEntityWithDisambiguation,
-        [EnumMember(Value = "Disambiguation")]
-        Disambiguation,
-        [EnumMember(Value = "List")]
-        List,
-        [EnumMember(Value = "ListWithPivot")]
-        ListWithPivot
-    }
-    internal static class EntityQueryScenarioEnumExtension
-    {
-        internal static string ToSerializedValue(this EntityQueryScenario? value)
-        {
-            return value == null ? null : ((EntityQueryScenario)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this EntityQueryScenario value)
-        {
-            switch( value )
-            {
-                case EntityQueryScenario.DominantEntity:
-                    return "DominantEntity";
-                case EntityQueryScenario.DominantEntityWithDisambiguation:
-                    return "DominantEntityWithDisambiguation";
-                case EntityQueryScenario.Disambiguation:
-                    return "Disambiguation";
-                case EntityQueryScenario.List:
-                    return "List";
-                case EntityQueryScenario.ListWithPivot:
-                    return "ListWithPivot";
-            }
-            return null;
-        }
-
-        internal static EntityQueryScenario? ParseEntityQueryScenario(this string value)
-        {
-            switch( value )
-            {
-                case "DominantEntity":
-                    return EntityQueryScenario.DominantEntity;
-                case "DominantEntityWithDisambiguation":
-                    return EntityQueryScenario.DominantEntityWithDisambiguation;
-                case "Disambiguation":
-                    return EntityQueryScenario.Disambiguation;
-                case "List":
-                    return EntityQueryScenario.List;
-                case "ListWithPivot":
-                    return EntityQueryScenario.ListWithPivot;
-            }
-            return null;
-        }
+        public const string DominantEntity = "DominantEntity";
+        public const string DominantEntityWithDisambiguation = "DominantEntityWithDisambiguation";
+        public const string Disambiguation = "Disambiguation";
+        public const string List = "List";
+        public const string ListWithPivot = "ListWithPivot";
     }
 }

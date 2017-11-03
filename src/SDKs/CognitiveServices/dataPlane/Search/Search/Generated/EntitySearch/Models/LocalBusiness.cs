@@ -11,22 +11,18 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Defines information about a local entity, such as a restaurant or
-    /// hotel.
-    /// </summary>
-    public partial class Place : Thing
+    public partial class LocalBusiness : Place
     {
         /// <summary>
-        /// Initializes a new instance of the Place class.
+        /// Initializes a new instance of the LocalBusiness class.
         /// </summary>
-        public Place()
+        public LocalBusiness()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Place class.
+        /// Initializes a new instance of the LocalBusiness class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
@@ -47,11 +43,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// <param name="address">The postal address of where the entity is
         /// located</param>
         /// <param name="telephone">The entity's telephone number</param>
-        public Place(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string), PostalAddress address = default(PostalAddress), string telephone = default(string))
-            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId)
+        /// <param name="priceRange">$$.</param>
+        public LocalBusiness(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string), PostalAddress address = default(PostalAddress), string telephone = default(string), string priceRange = default(string), IList<ImageObject> panoramas = default(IList<ImageObject>), bool? isPermanentlyClosed = default(bool?), string tagLine = default(string))
+            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId, address, telephone)
         {
-            Address = address;
-            Telephone = telephone;
+            PriceRange = priceRange;
+            Panoramas = panoramas;
+            IsPermanentlyClosed = isPermanentlyClosed;
+            TagLine = tagLine;
             CustomInit();
         }
 
@@ -61,16 +60,25 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the postal address of where the entity is located
+        /// Gets $$.
         /// </summary>
-        [JsonProperty(PropertyName = "address")]
-        public PostalAddress Address { get; private set; }
+        [JsonProperty(PropertyName = "priceRange")]
+        public string PriceRange { get; private set; }
 
         /// <summary>
-        /// Gets the entity's telephone number
         /// </summary>
-        [JsonProperty(PropertyName = "telephone")]
-        public string Telephone { get; private set; }
+        [JsonProperty(PropertyName = "panoramas")]
+        public IList<ImageObject> Panoramas { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isPermanentlyClosed")]
+        public bool? IsPermanentlyClosed { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "tagLine")]
+        public string TagLine { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -81,9 +89,15 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         public override void Validate()
         {
             base.Validate();
-            if (Address != null)
+            if (Panoramas != null)
             {
-                Address.Validate();
+                foreach (var element in Panoramas)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

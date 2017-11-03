@@ -6,75 +6,17 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ErrorCode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ErrorCode
+    public static class ErrorCode
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "ServerError")]
-        ServerError,
-        [EnumMember(Value = "InvalidRequest")]
-        InvalidRequest,
-        [EnumMember(Value = "RateLimitExceeded")]
-        RateLimitExceeded,
-        [EnumMember(Value = "InvalidAuthorization")]
-        InvalidAuthorization,
-        [EnumMember(Value = "InsufficientAuthorization")]
-        InsufficientAuthorization
-    }
-    internal static class ErrorCodeEnumExtension
-    {
-        internal static string ToSerializedValue(this ErrorCode? value)
-        {
-            return value == null ? null : ((ErrorCode)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ErrorCode value)
-        {
-            switch( value )
-            {
-                case ErrorCode.None:
-                    return "None";
-                case ErrorCode.ServerError:
-                    return "ServerError";
-                case ErrorCode.InvalidRequest:
-                    return "InvalidRequest";
-                case ErrorCode.RateLimitExceeded:
-                    return "RateLimitExceeded";
-                case ErrorCode.InvalidAuthorization:
-                    return "InvalidAuthorization";
-                case ErrorCode.InsufficientAuthorization:
-                    return "InsufficientAuthorization";
-            }
-            return null;
-        }
-
-        internal static ErrorCode? ParseErrorCode(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return ErrorCode.None;
-                case "ServerError":
-                    return ErrorCode.ServerError;
-                case "InvalidRequest":
-                    return ErrorCode.InvalidRequest;
-                case "RateLimitExceeded":
-                    return ErrorCode.RateLimitExceeded;
-                case "InvalidAuthorization":
-                    return ErrorCode.InvalidAuthorization;
-                case "InsufficientAuthorization":
-                    return ErrorCode.InsufficientAuthorization;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string ServerError = "ServerError";
+        public const string InvalidRequest = "InvalidRequest";
+        public const string RateLimitExceeded = "RateLimitExceeded";
+        public const string InvalidAuthorization = "InvalidAuthorization";
+        public const string InsufficientAuthorization = "InsufficientAuthorization";
     }
 }

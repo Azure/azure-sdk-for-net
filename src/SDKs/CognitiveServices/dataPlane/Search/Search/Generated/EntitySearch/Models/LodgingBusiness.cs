@@ -10,18 +10,18 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Intangible : Thing
+    public partial class LodgingBusiness : LocalBusiness
     {
         /// <summary>
-        /// Initializes a new instance of the Intangible class.
+        /// Initializes a new instance of the LodgingBusiness class.
         /// </summary>
-        public Intangible()
+        public LodgingBusiness()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Intangible class.
+        /// Initializes a new instance of the LodgingBusiness class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
@@ -39,8 +39,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// entityTypeHint fields.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
-        public Intangible(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string))
-            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId)
+        /// <param name="address">The postal address of where the entity is
+        /// located</param>
+        /// <param name="telephone">The entity's telephone number</param>
+        /// <param name="priceRange">$$.</param>
+        public LodgingBusiness(string id = default(string), IList<ContractualRulesContractualRule> contractualRules = default(IList<ContractualRulesContractualRule>), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), EntitiesEntityPresentationInfo entityPresentationInfo = default(EntitiesEntityPresentationInfo), string bingId = default(string), PostalAddress address = default(PostalAddress), string telephone = default(string), string priceRange = default(string), IList<ImageObject> panoramas = default(IList<ImageObject>), bool? isPermanentlyClosed = default(bool?), string tagLine = default(string))
+            : base(id, contractualRules, webSearchUrl, name, url, image, description, entityPresentationInfo, bingId, address, telephone, priceRange, panoramas, isPermanentlyClosed, tagLine)
         {
             CustomInit();
         }
