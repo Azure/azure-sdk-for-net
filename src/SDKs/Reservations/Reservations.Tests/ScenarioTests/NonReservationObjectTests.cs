@@ -24,22 +24,6 @@ namespace Reservations.Tests.ScenarioTests
         string SubscriptionId = Common.SubscriptionId;
 
         [Fact]
-        public void TestRegisterSubscription()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var provider = reservationsClient.RegisterSubscription(SubscriptionId);
-                Assert.NotNull(provider.Id);
-                Assert.NotNull(provider.NamespaceProperty);
-                Assert.NotNull(provider.Authorization);
-                Assert.NotNull(provider.RegistrationState);
-                Assert.NotNull(provider.ResourceTypes);
-            }
-        }
-
-        [Fact]
         public void TestGetCatalog()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();

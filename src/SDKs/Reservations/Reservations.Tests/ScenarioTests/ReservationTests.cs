@@ -49,8 +49,7 @@ namespace Reservations.Tests.ScenarioTests
                 while (enumerator1.MoveNext())
                 {
                     var currentReservation = enumerator1.Current;
-                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded") &&
-                        String.Equals(currentReservation.Properties.ProvisioningSubState, "Active"))
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
                     {
                         validReservation = currentReservation;
                         break;
@@ -75,8 +74,7 @@ namespace Reservations.Tests.ScenarioTests
                 while (enumerator2.MoveNext())
                 {
                     var currentReservation = enumerator2.Current;
-                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded") &&
-                        String.Equals(currentReservation.Properties.ProvisioningSubState, "Active"))
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
                     {
                         if (splitReservation1 == null)
                         {
@@ -108,8 +106,7 @@ namespace Reservations.Tests.ScenarioTests
                 while (enumerator3.MoveNext())
                 {
                     var currentReservation = enumerator3.Current;
-                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded") &&
-                        String.Equals(currentReservation.Properties.ProvisioningSubState, "Active"))
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
                     {
                         mergedReservation = currentReservation;
                     }
@@ -121,47 +118,6 @@ namespace Reservations.Tests.ScenarioTests
 
             }
         }
-
-        /*
-        [Fact]
-        public void TestSplitReservation()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                SplitRequest Split = new SplitRequest(
-                        new List<int?>() { 2, 3 },
-                        CreateResourceId(ReservationOrderId, ReservationId)
-                );
-                splitItems = reservationsClient.Reservation.Split(ReservationOrderId, Split);
-                Assert.NotNull(splitItems);
-                Assert.True(splitItems.Any());
-                ValidateReservation(splitItems[0]);
-            }
-        }
-        
-        [Fact]
-        public void TestMergeReservations()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                MergeRequest Merge = new MergeRequest(
-                        new List<string>()
-                        {
-                            CreateResourceId(ReservationOrderId, SplitReservationId1),
-                            CreateResourceId(ReservationOrderId, SplitReservationId2)
-                        }
-                );
-                var reservation = reservationsClient.Reservation.Merge(ReservationOrderId, Merge);
-                Assert.NotNull(reservation);
-                Assert.True(reservation.Any());
-                ValidateReservation(reservation[0]);
-            }
-        }
-        */
         
         [Fact]
         public void TestGetReservation()
@@ -188,8 +144,7 @@ namespace Reservations.Tests.ScenarioTests
                 while (enumerator1.MoveNext())
                 {
                     var currentReservation = enumerator1.Current;
-                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded") &&
-                        String.Equals(currentReservation.Properties.ProvisioningSubState, "Active"))
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
                     {
                         validReservation = currentReservation;
                         break;
@@ -217,8 +172,7 @@ namespace Reservations.Tests.ScenarioTests
                 while (enumerator1.MoveNext())
                 {
                     var currentReservation = enumerator1.Current;
-                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded") &&
-                        String.Equals(currentReservation.Properties.ProvisioningSubState, "Active"))
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
                     {
                         validReservation = currentReservation;
                         break;

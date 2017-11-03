@@ -20,46 +20,6 @@ namespace Microsoft.Azure.Management.Reservations
     public static partial class AzureReservationAPIClientExtensions
     {
             /// <summary>
-            /// Registers Microsoft.Capacity to access an Azure Subscription
-            /// </summary>
-            /// <remarks>
-            /// This operation registers Microsoft.Capacity to access an Azure Subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            public static Provider RegisterSubscription(this IAzureReservationAPIClient operations, string subscriptionId)
-            {
-                return operations.RegisterSubscriptionAsync(subscriptionId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Registers Microsoft.Capacity to access an Azure Subscription
-            /// </summary>
-            /// <remarks>
-            /// This operation registers Microsoft.Capacity to access an Azure Subscription
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Provider> RegisterSubscriptionAsync(this IAzureReservationAPIClient operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.RegisterSubscriptionWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get the regions and skus that are available for RI purchase for the
             /// specified Azure subscription.
             /// </summary>

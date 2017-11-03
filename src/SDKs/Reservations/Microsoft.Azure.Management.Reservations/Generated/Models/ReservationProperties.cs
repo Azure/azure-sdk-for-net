@@ -38,22 +38,19 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'PendingBilling', 'ConfirmedBilling', 'Created', 'Succeeded',
         /// 'Cancelled', 'Expired', 'BillingFailed', 'Failed', 'Split',
         /// 'Merged'</param>
-        /// <param name="provisioningSubState">Possible values include:
-        /// 'AppliedBenefits', 'Active', 'Pending'</param>
         /// <param name="effectiveDateTime">DateTime of the Reservation
         /// starting when this version is effective from.</param>
         /// <param name="lastUpdatedDateTime">DateTime of the last time the
         /// Reservation was updated.</param>
         /// <param name="expiryDate">This is the date when the Reservation will
         /// expire.</param>
-        public ReservationProperties(string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), string provisioningSubState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties))
+        public ReservationProperties(string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties))
         {
             DisplayName = displayName;
             AppliedScopes = appliedScopes;
             AppliedScopeType = appliedScopeType;
             Quantity = quantity;
             ProvisioningState = provisioningState;
-            ProvisioningSubState = provisioningSubState;
             EffectiveDateTime = effectiveDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             ExpiryDate = expiryDate;
@@ -100,13 +97,6 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'AppliedBenefits', 'Active',
-        /// 'Pending'
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningSubState")]
-        public string ProvisioningSubState { get; set; }
 
         /// <summary>
         /// Gets or sets dateTime of the Reservation starting when this version

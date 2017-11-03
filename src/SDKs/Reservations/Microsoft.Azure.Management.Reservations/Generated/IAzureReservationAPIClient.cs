@@ -79,24 +79,6 @@ namespace Microsoft.Azure.Management.Reservations
         IOperationOperations Operation { get; }
 
         /// <summary>
-        /// Registers Microsoft.Capacity to access an Azure Subscription
-        /// </summary>
-        /// <remarks>
-        /// This operation registers Microsoft.Capacity to access an Azure
-        /// Subscription
-        /// </remarks>
-        /// <param name='subscriptionId'>
-        /// Id of the subscription
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Provider>> RegisterSubscriptionWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Get the regions and skus that are available for RI purchase for the
         /// specified Azure subscription.
         /// </summary>
