@@ -50,7 +50,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="targetConnectionInfo">Information for connecting to
         /// target</param>
         /// <param name="databasesInfo">List of DatabaseInfo</param>
-        public Project(string location, ProjectSourcePlatform sourcePlatform, ProjectTargetPlatform targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>))
+        /// <param name="provisioningState">The project's provisioning state.
+        /// Possible values include: 'Deleting', 'Succeeded'</param>
+        public Project(string location, ProjectSourcePlatform sourcePlatform, ProjectTargetPlatform targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>), ProjectProvisioningState? provisioningState = default(ProjectProvisioningState?))
             : base(location, id, name, type, tags)
         {
             SourcePlatform = sourcePlatform;
@@ -59,6 +61,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             DatabasesInfo = databasesInfo;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -104,6 +107,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.databasesInfo")]
         public IList<DatabaseInfo> DatabasesInfo { get; set; }
+
+        /// <summary>
+        /// Gets the project's provisioning state. Possible values include:
+        /// 'Deleting', 'Succeeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public ProjectProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

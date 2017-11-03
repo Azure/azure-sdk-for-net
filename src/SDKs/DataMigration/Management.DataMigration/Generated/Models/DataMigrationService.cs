@@ -84,13 +84,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string Kind { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource's provisioning state. Possible values
-        /// include: 'Accepted', 'Deleting', 'Deploying', 'Stopped',
-        /// 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop',
-        /// 'Succeeded', 'Failed'
+        /// Gets the resource's provisioning state. Possible values include:
+        /// 'Accepted', 'Deleting', 'Deploying', 'Stopped', 'Stopping',
+        /// 'Starting', 'FailedToStart', 'FailedToStop', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ServiceProvisioningState? ProvisioningState { get; set; }
+        public ServiceProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the public key of the service, used to encrypt secrets

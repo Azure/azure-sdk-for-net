@@ -5,8 +5,8 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using Microsoft.Azure.Management.DataMigration;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -93,7 +93,7 @@ namespace DataMigration.Tests.Helpers
             }
         }
 
-        public static void WaitIfNotInPlaybackMode(int minutesToWait = 1)
+        public static void WaitIfNotInPlaybackMode(int minutesToWait = 5)
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {

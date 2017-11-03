@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Exception thrown for an invalid response with ApiError information.
     /// </summary>
-    public class ApiErrorException : RestException
+    public partial class ApiErrorException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.

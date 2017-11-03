@@ -4,8 +4,8 @@
 using DataMigration.Tests.Helpers;
 using Microsoft.Azure.Management.DataMigration;
 using Microsoft.Azure.Management.DataMigration.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace DataMigration.Tests.ScenarioTests
@@ -19,10 +19,10 @@ namespace DataMigration.Tests.ScenarioTests
 
         public CRUDDMSTestsBase()
         {
-            ResourceGroupName = "dmssdkrg";
-            DmsDeploymentName = "dmssdkservice";
-            DmsProjectName = "dmssdkproject";
-            DmsTaskName = "dmssdktask";
+            ResourceGroupName = "DmsSdkRg";
+            DmsDeploymentName = "DmsSdkService";
+            DmsProjectName = "DmsSdkProject";
+            DmsTaskName = "DmsSdkTask";
         }
 
         protected Project CreateDMSProject(MockContext context,
@@ -47,7 +47,7 @@ namespace DataMigration.Tests.ScenarioTests
                 type: "Microsoft.DataMigration/services",
                 location: resourceGroup.Location,
                 virtualSubnetId: TestConfiguration.VirtualSubnetId,
-                sku: new ServiceSku("Small")),
+                sku: new ServiceSku("Basic_1vCore")),
                     resourceGroup.Name,
                     dmsInstanceName);
         }

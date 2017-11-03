@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Net;
 using DataMigration.Tests.Helpers;
 using Microsoft.Azure.Management.DataMigration;
 using Microsoft.Azure.Management.DataMigration.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Net;
 using Xunit;
 
 namespace DataMigration.Tests.ScenarioTests
@@ -26,6 +26,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
                 var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
             }
+            // Wait for resource group deletion to complete.
+            Utilities.WaitIfNotInPlaybackMode();
         }
 
         [Fact]
@@ -42,6 +44,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var project = CreateDMSProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
                 var getResult = dmsClient.Projects.Get(resourceGroup.Name, service.Name, project.Name);
             }
+            // Wait for resource group deletion to complete.
+            Utilities.WaitIfNotInPlaybackMode();
         }
 
         [Fact]
@@ -62,6 +66,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var x = Assert.Throws<ApiErrorException>(() => dmsClient.Projects.Get(resourceGroup.Name, service.Name, project.Name));
                 Assert.Equal(HttpStatusCode.NotFound, x.Response.StatusCode);
             }
+            // Wait for resource group deletion to complete.
+            Utilities.WaitIfNotInPlaybackMode();
         }
     }
 }

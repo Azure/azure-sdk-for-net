@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     [Newtonsoft.Json.JsonObject("DatabaseLevelOutput")]
@@ -36,26 +38,40 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="state">Current state of migration. Possible values
         /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
         /// 'Skipped'</param>
+        /// <param name="stage">Migration stage that this database is in.
+        /// Possible values include: 'None', 'Initialize', 'Backup',
+        /// 'FileCopy', 'Restore', 'Completed'</param>
         /// <param name="statusMessage">Status message</param>
-        /// <param name="itemsCount">Number of items</param>
-        /// <param name="itemsCompletedCount">Number of successfully completed
-        /// items</param>
+        /// <param name="message">Migration progress message</param>
+        /// <param name="numberOfObjects">Number of objects</param>
+        /// <param name="numberOfObjectsCompleted">Number of successfully
+        /// completed objects</param>
+        /// <param name="errorCount">Number of database/object errors.</param>
         /// <param name="errorPrefix">Wildcard string prefix to use for
         /// querying all errors of the item</param>
         /// <param name="resultPrefix">Wildcard string prefix to use for
         /// querying all sub-tem results of the item</param>
-        public MigrateSqlServerSqlDbTaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), MigrationState? state = default(MigrationState?), string statusMessage = default(string), long? itemsCount = default(long?), long? itemsCompletedCount = default(long?), string errorPrefix = default(string), string resultPrefix = default(string))
+        /// <param name="exceptionsAndWarnings">Migration exceptions and
+        /// warnings.</param>
+        /// <param name="objectSummary">Summary of object results in the
+        /// migration</param>
+        public MigrateSqlServerSqlDbTaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), MigrationState? state = default(MigrationState?), DatabaseMigrationStage? stage = default(DatabaseMigrationStage?), string statusMessage = default(string), string message = default(string), long? numberOfObjects = default(long?), long? numberOfObjectsCompleted = default(long?), long? errorCount = default(long?), string errorPrefix = default(string), string resultPrefix = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>), IDictionary<string, DataItemMigrationSummaryResult> objectSummary = default(IDictionary<string, DataItemMigrationSummaryResult>))
             : base(id)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
             EndedOn = endedOn;
             State = state;
+            Stage = stage;
             StatusMessage = statusMessage;
-            ItemsCount = itemsCount;
-            ItemsCompletedCount = itemsCompletedCount;
+            Message = message;
+            NumberOfObjects = numberOfObjects;
+            NumberOfObjectsCompleted = numberOfObjectsCompleted;
+            ErrorCount = errorCount;
             ErrorPrefix = errorPrefix;
             ResultPrefix = resultPrefix;
+            ExceptionsAndWarnings = exceptionsAndWarnings;
+            ObjectSummary = objectSummary;
             CustomInit();
         }
 
@@ -90,22 +106,42 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public MigrationState? State { get; private set; }
 
         /// <summary>
+        /// Gets migration stage that this database is in. Possible values
+        /// include: 'None', 'Initialize', 'Backup', 'FileCopy', 'Restore',
+        /// 'Completed'
+        /// </summary>
+        [JsonProperty(PropertyName = "stage")]
+        public DatabaseMigrationStage? Stage { get; private set; }
+
+        /// <summary>
         /// Gets status message
         /// </summary>
         [JsonProperty(PropertyName = "statusMessage")]
         public string StatusMessage { get; private set; }
 
         /// <summary>
-        /// Gets number of items
+        /// Gets migration progress message
         /// </summary>
-        [JsonProperty(PropertyName = "itemsCount")]
-        public long? ItemsCount { get; private set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets number of successfully completed items
+        /// Gets number of objects
         /// </summary>
-        [JsonProperty(PropertyName = "itemsCompletedCount")]
-        public long? ItemsCompletedCount { get; private set; }
+        [JsonProperty(PropertyName = "numberOfObjects")]
+        public long? NumberOfObjects { get; private set; }
+
+        /// <summary>
+        /// Gets number of successfully completed objects
+        /// </summary>
+        [JsonProperty(PropertyName = "numberOfObjectsCompleted")]
+        public long? NumberOfObjectsCompleted { get; private set; }
+
+        /// <summary>
+        /// Gets number of database/object errors.
+        /// </summary>
+        [JsonProperty(PropertyName = "errorCount")]
+        public long? ErrorCount { get; private set; }
 
         /// <summary>
         /// Gets wildcard string prefix to use for querying all errors of the
@@ -120,6 +156,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "resultPrefix")]
         public string ResultPrefix { get; private set; }
+
+        /// <summary>
+        /// Gets migration exceptions and warnings.
+        /// </summary>
+        [JsonProperty(PropertyName = "exceptionsAndWarnings")]
+        public IList<ReportableException> ExceptionsAndWarnings { get; private set; }
+
+        /// <summary>
+        /// Gets summary of object results in the migration
+        /// </summary>
+        [JsonProperty(PropertyName = "objectSummary")]
+        public IDictionary<string, DataItemMigrationSummaryResult> ObjectSummary { get; private set; }
 
     }
 }
