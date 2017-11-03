@@ -65,7 +65,8 @@ namespace DataMigration.Tests.ScenarioTests
                 var task = CreateDMSTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
                 var getResult = dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name);
 
-                dmsClient.Tasks.Delete(resourceGroup.Name, service.Name, project.Name, task.Name, true);
+                dmsClient.Tasks.Cancel(resourceGroup.Name, service.Name, project.Name, task.Name);
+                dmsClient.Tasks.Delete(resourceGroup.Name, service.Name, project.Name, task.Name);
 
                 var x = Assert.Throws<ApiErrorException>(() => dmsClient.Tasks.Get(resourceGroup.Name, service.Name, project.Name, task.Name));
                 Assert.Equal(HttpStatusCode.NotFound, x.Response.StatusCode);
