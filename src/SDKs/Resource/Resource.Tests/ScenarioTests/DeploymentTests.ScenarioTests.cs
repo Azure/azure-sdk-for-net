@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Net;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure.OData;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
@@ -29,6 +31,17 @@ namespace ResourceGroups.Tests
             handler.IsPassThrough = true;
             return this.GetResourceManagementClientWithHandler(context, handler);
         }
+
+        public LiveDeploymentTests()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+        }
+
+        private static string GetSessionsDirectoryPath()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
+        }
+
 
         // TODO: Fix
         [Fact (Skip = "TODO: Re-record test")]
@@ -265,6 +278,7 @@ namespace ResourceGroups.Tests
             }
         }
 
+
         // TODO: Fix
         [Fact(Skip = "TODO: Re-record test")]
         public void CreateDummyDeploymentProducesOperations()
@@ -404,5 +418,6 @@ namespace ResourceGroups.Tests
                 Assert.True(operations.Any());
             }
         }
+
     }
 }
