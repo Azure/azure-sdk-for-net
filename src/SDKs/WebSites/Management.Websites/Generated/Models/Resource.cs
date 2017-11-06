@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">Identity for the resource.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity))
+        public Resource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -48,7 +47,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Location = location;
             Type = type;
             Tags = tags;
-            Identity = identity;
             CustomInit();
         }
 
@@ -92,12 +90,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets identity for the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

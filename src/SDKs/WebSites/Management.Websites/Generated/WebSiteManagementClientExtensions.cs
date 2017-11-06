@@ -130,6 +130,46 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets source control token
+            /// </summary>
+            /// <remarks>
+            /// Gets source control token
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sourceControlType'>
+            /// Type of source control
+            /// </param>
+            public static SourceControl GetSourceControl(this IWebSiteManagementClient operations, string sourceControlType)
+            {
+                return operations.GetSourceControlAsync(sourceControlType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets source control token
+            /// </summary>
+            /// <remarks>
+            /// Gets source control token
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sourceControlType'>
+            /// Type of source control
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SourceControl> GetSourceControlAsync(this IWebSiteManagementClient operations, string sourceControlType, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSourceControlWithHttpMessagesAsync(sourceControlType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates source control token
             /// </summary>
             /// <remarks>
@@ -224,6 +264,40 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync(this IWebSiteManagementClient operations, string name, string type, bool? isFqdn = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, type, isFqdn, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets list of available geo regions plus ministamps
+            /// </summary>
+            /// <remarks>
+            /// Gets list of available geo regions plus ministamps
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static DeploymentLocations GetSubscriptionDeploymentLocations(this IWebSiteManagementClient operations)
+            {
+                return operations.GetSubscriptionDeploymentLocationsAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets list of available geo regions plus ministamps
+            /// </summary>
+            /// <remarks>
+            /// Gets list of available geo regions plus ministamps
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentLocations> GetSubscriptionDeploymentLocationsAsync(this IWebSiteManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionDeploymentLocationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -350,7 +424,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Verifies if this VNET is compatible with an App Service Environment.
+            /// Verifies if this VNET is compatible with an App Service Environment by
+            /// analyzing the Network Security Group rules.
             /// </summary>
             /// <remarks>
             /// Verifies if this VNET is compatible with an App Service Environment by
@@ -368,7 +443,8 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Verifies if this VNET is compatible with an App Service Environment.
+            /// Verifies if this VNET is compatible with an App Service Environment by
+            /// analyzing the Network Security Group rules.
             /// </summary>
             /// <remarks>
             /// Verifies if this VNET is compatible with an App Service Environment by

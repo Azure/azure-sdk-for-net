@@ -33,15 +33,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         /// <param name="name">Name of the resource SKU.</param>
         /// <param name="tier">Service Tier of the resource SKU.</param>
+        /// <param name="size">Size specifier of the resource SKU.</param>
+        /// <param name="family">Family code of the resource SKU.</param>
         /// <param name="capacity">Min, max, and default scale values of the
         /// SKU.</param>
         /// <param name="locations">Locations of the SKU.</param>
         /// <param name="capabilities">Capabilities of the SKU, e.g., is
         /// traffic manager enabled?</param>
-        public GlobalCsmSkuDescription(string name = default(string), string tier = default(string), SkuCapacity capacity = default(SkuCapacity), IList<string> locations = default(IList<string>), IList<Capability> capabilities = default(IList<Capability>))
+        public GlobalCsmSkuDescription(string name = default(string), string tier = default(string), string size = default(string), string family = default(string), SkuCapacity capacity = default(SkuCapacity), IList<string> locations = default(IList<string>), IList<Capability> capabilities = default(IList<Capability>))
         {
             Name = name;
             Tier = tier;
+            Size = size;
+            Family = family;
             Capacity = capacity;
             Locations = locations;
             Capabilities = capabilities;
@@ -64,6 +68,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets size specifier of the resource SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// Gets or sets family code of the resource SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "family")]
+        public string Family { get; set; }
 
         /// <summary>
         /// Gets or sets min, max, and default scale values of the SKU.

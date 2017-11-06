@@ -276,6 +276,58 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Create or update a certificate purchase order.
+            /// </summary>
+            /// <remarks>
+            /// Create or update a certificate purchase order.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='certificateOrderName'>
+            /// Name of the certificate order.
+            /// </param>
+            /// <param name='certificateDistinguishedName'>
+            /// Distinguished name to to use for the certificate order.
+            /// </param>
+            public static AppServiceCertificateOrder Update(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatchResource certificateDistinguishedName)
+            {
+                return operations.UpdateAsync(resourceGroupName, certificateOrderName, certificateDistinguishedName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a certificate purchase order.
+            /// </summary>
+            /// <remarks>
+            /// Create or update a certificate purchase order.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='certificateOrderName'>
+            /// Name of the certificate order.
+            /// </param>
+            /// <param name='certificateDistinguishedName'>
+            /// Distinguished name to to use for the certificate order.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppServiceCertificateOrder> UpdateAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatchResource certificateDistinguishedName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, certificateOrderName, certificateDistinguishedName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List all certificates associated with a certificate order.
             /// </summary>
             /// <remarks>
@@ -478,6 +530,64 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task DeleteCertificateAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteCertificateWithHttpMessagesAsync(resourceGroupName, certificateOrderName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates or updates a certificate and associates with key vault secret.
+            /// </summary>
+            /// <remarks>
+            /// Creates or updates a certificate and associates with key vault secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='certificateOrderName'>
+            /// Name of the certificate order.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the certificate.
+            /// </param>
+            /// <param name='keyVaultCertificate'>
+            /// Key vault certificate resource Id.
+            /// </param>
+            public static AppServiceCertificateResource UpdateCertificate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatchResource keyVaultCertificate)
+            {
+                return operations.UpdateCertificateAsync(resourceGroupName, certificateOrderName, name, keyVaultCertificate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a certificate and associates with key vault secret.
+            /// </summary>
+            /// <remarks>
+            /// Creates or updates a certificate and associates with key vault secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='certificateOrderName'>
+            /// Name of the certificate order.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the certificate.
+            /// </param>
+            /// <param name='keyVaultCertificate'>
+            /// Key vault certificate resource Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppServiceCertificateResource> UpdateCertificateAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatchResource keyVaultCertificate, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(resourceGroupName, certificateOrderName, name, keyVaultCertificate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

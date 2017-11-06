@@ -45,6 +45,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<object>> GetAvailableStacksWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all available operations for the Microsoft.Web resource
+        /// provider. Also exposes resource metric definitions
+        /// </summary>
+        /// <remarks>
+        /// Gets all available operations for the Microsoft.Web resource
+        /// provider. Also exposes resource metric definitions
+        /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -83,6 +91,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<object>> GetAvailableStacksOnPremWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all available operations for the Microsoft.Web resource
+        /// provider. Also exposes resource metric definitions
+        /// </summary>
+        /// <remarks>
+        /// Gets all available operations for the Microsoft.Web resource
+        /// provider. Also exposes resource metric definitions
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

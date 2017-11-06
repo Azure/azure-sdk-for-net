@@ -29,8 +29,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteSealRequest class.
         /// </summary>
-        /// <param name="lightTheme">Theme</param>
-        /// <param name="locale">Locale</param>
+        /// <param name="lightTheme">If &lt;code&gt;true&lt;/code&gt; use the
+        /// light color theme for site seal; otherwise, use the default color
+        /// theme.</param>
+        /// <param name="locale">Locale of site seal.</param>
         public SiteSealRequest(bool? lightTheme = default(bool?), string locale = default(string))
         {
             LightTheme = lightTheme;
@@ -44,13 +46,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets theme
+        /// Gets or sets if &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; use
+        /// the light color theme for site seal; otherwise, use the default
+        /// color theme.
         /// </summary>
         [JsonProperty(PropertyName = "lightTheme")]
         public bool? LightTheme { get; set; }
 
         /// <summary>
-        /// Gets or sets locale
+        /// Gets or sets locale of site seal.
         /// </summary>
         [JsonProperty(PropertyName = "locale")]
         public string Locale { get; set; }

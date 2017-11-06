@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Definition of a single resource metric.
+    /// </summary>
     public partial class MetricSpecification
     {
         /// <summary>

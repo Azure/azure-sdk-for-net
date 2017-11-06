@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Properties available for a Microsoft.Web resource provider operation.
+    /// </summary>
     public partial class CsmOperationDescriptionProperties
     {
         /// <summary>

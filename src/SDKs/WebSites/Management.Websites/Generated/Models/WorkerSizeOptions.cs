@@ -28,7 +28,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "Medium")]
         Medium,
         [EnumMember(Value = "Large")]
-        Large
+        Large,
+        [EnumMember(Value = "D1")]
+        D1,
+        [EnumMember(Value = "D2")]
+        D2,
+        [EnumMember(Value = "D3")]
+        D3
     }
     internal static class WorkerSizeOptionsEnumExtension
     {
@@ -49,6 +55,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "Medium";
                 case WorkerSizeOptions.Large:
                     return "Large";
+                case WorkerSizeOptions.D1:
+                    return "D1";
+                case WorkerSizeOptions.D2:
+                    return "D2";
+                case WorkerSizeOptions.D3:
+                    return "D3";
             }
             return null;
         }
@@ -65,6 +77,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return WorkerSizeOptions.Medium;
                 case "Large":
                     return WorkerSizeOptions.Large;
+                case "D1":
+                    return WorkerSizeOptions.D1;
+                case "D2":
+                    return WorkerSizeOptions.D2;
+                case "D3":
+                    return WorkerSizeOptions.D3;
             }
             return null;
         }

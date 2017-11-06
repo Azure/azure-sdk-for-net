@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Meta data about operation used for display in portal.
+    /// </summary>
     public partial class CsmOperationDisplay
     {
         /// <summary>

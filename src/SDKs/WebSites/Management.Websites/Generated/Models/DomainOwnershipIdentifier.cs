@@ -13,15 +13,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Domain ownership Identifier.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DomainOwnershipIdentifier : Resource
+    public partial class DomainOwnershipIdentifier : ProxyOnlyResource
     {
         /// <summary>
         /// Initializes a new instance of the DomainOwnershipIdentifier class.
@@ -34,16 +32,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the DomainOwnershipIdentifier class.
         /// </summary>
-        /// <param name="location">Resource Location.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">Identity for the resource.</param>
         /// <param name="ownershipId">Ownership Id.</param>
-        public DomainOwnershipIdentifier(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string ownershipId = default(string))
-            : base(location, id, name, kind, type, tags, identity)
+        public DomainOwnershipIdentifier(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string ownershipId = default(string))
+            : base(id, name, kind, type)
         {
             OwnershipId = ownershipId;
             CustomInit();
@@ -60,15 +55,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.ownershipId")]
         public string OwnershipId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

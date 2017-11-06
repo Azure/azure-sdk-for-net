@@ -18,28 +18,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// A web app, a mobile app backend, or an API app.
+    /// ARM resource for a site.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Site : Resource
+    public partial class SitePatchResource : ProxyOnlyResource
     {
         /// <summary>
-        /// Initializes a new instance of the Site class.
+        /// Initializes a new instance of the SitePatchResource class.
         /// </summary>
-        public Site()
+        public SitePatchResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Site class.
+        /// Initializes a new instance of the SitePatchResource class.
         /// </summary>
-        /// <param name="location">Resource Location.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="state">Current state of the app.</param>
         /// <param name="hostNames">Hostnames associated with the app.</param>
         /// <param name="repositorySiteName">Name of the repository
@@ -121,8 +119,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="httpsOnly">HttpsOnly: configures a web site to accept
         /// only https requests. Issues redirect for
         /// http requests</param>
-        public Site(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), string possibleOutboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTime? suspendedTill = default(System.DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), SnapshotRecoveryRequest snapshotInfo = default(SnapshotRecoveryRequest), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string), SlotSwapStatus slotSwapStatus = default(SlotSwapStatus), bool? httpsOnly = default(bool?), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
-            : base(location, id, name, kind, type, tags)
+        public SitePatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), System.DateTime? lastModifiedTimeUtc = default(System.DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), string possibleOutboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTime? suspendedTill = default(System.DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), SnapshotRecoveryRequest snapshotInfo = default(SnapshotRecoveryRequest), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string), SlotSwapStatus slotSwapStatus = default(SlotSwapStatus), bool? httpsOnly = default(bool?))
+            : base(id, name, kind, type)
         {
             State = state;
             HostNames = hostNames;
@@ -156,7 +154,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             DefaultHostName = defaultHostName;
             SlotSwapStatus = slotSwapStatus;
             HttpsOnly = httpsOnly;
-            Identity = identity;
             CustomInit();
         }
 
@@ -401,19 +398,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? HttpsOnly { get; set; }
 
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (CloningInfo != null)
             {
                 CloningInfo.Validate();

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -49,7 +51,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="error">Error information.</param>
         /// <param name="usingSdk">Using SDK?</param>
         /// <param name="settings">Job settings.</param>
-        public TriggeredWebJob(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), TriggeredJobRun latestRun = default(TriggeredJobRun), string historyUrl = default(string), string schedulerLogsUrl = default(string), string triggeredWebJobName = default(string), string runCommand = default(string), string url = default(string), string extraInfoUrl = default(string), WebJobType? jobType = default(WebJobType?), string error = default(string), bool? usingSdk = default(bool?), object settings = default(object))
+        public TriggeredWebJob(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), TriggeredJobRun latestRun = default(TriggeredJobRun), string historyUrl = default(string), string schedulerLogsUrl = default(string), string triggeredWebJobName = default(string), string runCommand = default(string), string url = default(string), string extraInfoUrl = default(string), WebJobType? jobType = default(WebJobType?), string error = default(string), bool? usingSdk = default(bool?), IDictionary<string, object> settings = default(IDictionary<string, object>))
             : base(id, name, kind, type)
         {
             LatestRun = latestRun;
@@ -136,7 +138,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets job settings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.settings")]
-        public object Settings { get; set; }
+        public IDictionary<string, object> Settings { get; set; }
 
     }
 }

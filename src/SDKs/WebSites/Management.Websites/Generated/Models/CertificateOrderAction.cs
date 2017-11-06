@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">Identity for the resource.</param>
         /// <param name="certificateOrderActionType">Action type. Possible
         /// values include: 'CertificateIssued', 'CertificateOrderCanceled',
         /// 'CertificateOrderCreated', 'CertificateRevoked',
@@ -50,8 +49,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'FraudDocumentationRequired', 'Unknown'</param>
         /// <param name="createdAt">Time at which the certificate action was
         /// performed.</param>
-        public CertificateOrderAction(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), CertificateOrderActionType? certificateOrderActionType = default(CertificateOrderActionType?), System.DateTime? createdAt = default(System.DateTime?))
-            : base(location, id, name, kind, type, tags, identity)
+        public CertificateOrderAction(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CertificateOrderActionType? certificateOrderActionType = default(CertificateOrderActionType?), System.DateTime? createdAt = default(System.DateTime?))
+            : base(location, id, name, kind, type, tags)
         {
             CertificateOrderActionType = certificateOrderActionType;
             CreatedAt = createdAt;

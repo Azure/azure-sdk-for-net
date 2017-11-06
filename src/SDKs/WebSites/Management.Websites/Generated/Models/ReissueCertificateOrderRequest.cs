@@ -42,7 +42,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">Identity for the resource.</param>
         /// <param name="keySize">Certificate Key Size.</param>
         /// <param name="delayExistingRevokeInHours">Delay in hours to revoke
         /// existing certificate after the new certificate is issued.</param>
@@ -50,8 +49,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="isPrivateKeyExternal">Should we change the ASC type
         /// (from managed private key to external private key and vice
         /// versa).</param>
-        public ReissueCertificateOrderRequest(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), int? keySize = default(int?), int? delayExistingRevokeInHours = default(int?), string csr = default(string), bool? isPrivateKeyExternal = default(bool?))
-            : base(location, id, name, kind, type, tags, identity)
+        public ReissueCertificateOrderRequest(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? keySize = default(int?), int? delayExistingRevokeInHours = default(int?), string csr = default(string), bool? isPrivateKeyExternal = default(bool?))
+            : base(location, id, name, kind, type, tags)
         {
             KeySize = keySize;
             DelayExistingRevokeInHours = delayExistingRevokeInHours;

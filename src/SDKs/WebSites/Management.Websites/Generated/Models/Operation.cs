@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// expire.</param>
         /// <param name="geoMasterOperationId">Applicable only for stamp
         /// operation ids.</param>
-        public Operation(string id = default(string), string name = default(string), OperationStatus? status = default(OperationStatus?), IList<ErrorEntity> errors = default(IList<ErrorEntity>), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? modifiedTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), string geoMasterOperationId = default(string))
+        public Operation(string id = default(string), string name = default(string), OperationStatus? status = default(OperationStatus?), IList<ErrorEntity> errors = default(IList<ErrorEntity>), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? modifiedTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), System.Guid? geoMasterOperationId = default(System.Guid?))
         {
             Id = id;
             Name = name;
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets applicable only for stamp operation ids.
         /// </summary>
         [JsonProperty(PropertyName = "geoMasterOperationId")]
-        public string GeoMasterOperationId { get; set; }
+        public System.Guid? GeoMasterOperationId { get; set; }
 
     }
 }

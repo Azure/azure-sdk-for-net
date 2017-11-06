@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="identity">Identity for the resource.</param>
         /// <param name="sku">SKU.</param>
         /// <param name="product">Product.</param>
         /// <param name="vendor">Vendor.</param>
@@ -49,8 +48,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="premierAddOnTags">Tags.</param>
         /// <param name="marketplacePublisher">Marketplace publisher.</param>
         /// <param name="marketplaceOffer">Marketplace offer.</param>
-        public PremierAddOn(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), string sku = default(string), string product = default(string), string vendor = default(string), string premierAddOnName = default(string), string premierAddOnLocation = default(string), IDictionary<string, string> premierAddOnTags = default(IDictionary<string, string>), string marketplacePublisher = default(string), string marketplaceOffer = default(string))
-            : base(location, id, name, kind, type, tags, identity)
+        public PremierAddOn(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string sku = default(string), string product = default(string), string vendor = default(string), string premierAddOnName = default(string), string premierAddOnLocation = default(string), IDictionary<string, string> premierAddOnTags = default(IDictionary<string, string>), string marketplacePublisher = default(string), string marketplaceOffer = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             Sku = sku;
             Product = product;

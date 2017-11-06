@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Description of an operation available for Microsoft.Web resource
+    /// provider.
+    /// </summary>
     public partial class CsmOperationDescription
     {
         /// <summary>

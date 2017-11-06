@@ -13,6 +13,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Dimension of a resource metric. For e.g. instance specific HTTP
+    /// requests for a web app,
+    /// where instance name is dimension of the metric HTTP request
+    /// </summary>
     public partial class Dimension
     {
         /// <summary>

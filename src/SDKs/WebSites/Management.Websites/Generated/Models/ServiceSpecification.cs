@@ -15,6 +15,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Resource metrics service provided by Microsoft.Insights resource
+    /// provider.
+    /// </summary>
     public partial class ServiceSpecification
     {
         /// <summary>

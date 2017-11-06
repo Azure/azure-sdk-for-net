@@ -55,6 +55,14 @@ namespace Microsoft.Azure.Management.WebSites
                 }
             }
 
+            /// <summary>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </summary>
+            /// <remarks>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -63,6 +71,14 @@ namespace Microsoft.Azure.Management.WebSites
                 return operations.ListOperationsAsync().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </summary>
+            /// <remarks>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -111,6 +127,14 @@ namespace Microsoft.Azure.Management.WebSites
                 }
             }
 
+            /// <summary>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </summary>
+            /// <remarks>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -122,6 +146,14 @@ namespace Microsoft.Azure.Management.WebSites
                 return operations.ListOperationsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </summary>
+            /// <remarks>
+            /// Gets all available operations for the Microsoft.Web resource provider. Also
+            /// exposes resource metric definitions
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

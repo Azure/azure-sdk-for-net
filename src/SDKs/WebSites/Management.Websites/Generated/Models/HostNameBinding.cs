@@ -36,7 +36,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="hostNameBindingName">Hostname.</param>
         /// <param name="siteName">App Service app name.</param>
         /// <param name="domainId">Fully qualified ARM domain resource
         /// URI.</param>
@@ -52,10 +51,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="thumbprint">SSL certificate thumbprint</param>
         /// <param name="virtualIP">Virtual IP address assigned to the hostname
         /// if IP based SSL is enabled.</param>
-        public HostNameBinding(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string hostNameBindingName = default(string), string siteName = default(string), string domainId = default(string), string azureResourceName = default(string), AzureResourceType? azureResourceType = default(AzureResourceType?), CustomHostNameDnsRecordType? customHostNameDnsRecordType = default(CustomHostNameDnsRecordType?), HostNameType? hostNameType = default(HostNameType?), SslState? sslState = default(SslState?), string thumbprint = default(string), string virtualIP = default(string))
+        public HostNameBinding(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string siteName = default(string), string domainId = default(string), string azureResourceName = default(string), AzureResourceType? azureResourceType = default(AzureResourceType?), CustomHostNameDnsRecordType? customHostNameDnsRecordType = default(CustomHostNameDnsRecordType?), HostNameType? hostNameType = default(HostNameType?), SslState? sslState = default(SslState?), string thumbprint = default(string), string virtualIP = default(string))
             : base(id, name, kind, type)
         {
-            HostNameBindingName = hostNameBindingName;
             SiteName = siteName;
             DomainId = domainId;
             AzureResourceName = azureResourceName;
@@ -72,12 +70,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets hostname.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.name")]
-        public string HostNameBindingName { get; set; }
 
         /// <summary>
         /// Gets or sets app Service app name.

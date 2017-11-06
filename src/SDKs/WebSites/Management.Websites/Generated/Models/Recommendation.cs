@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="bladeName">Deep link to a blade on the portal.</param>
         /// <param name="forwardLink">Forward link to an external document
         /// associated with the rule.</param>
-        public Recommendation(System.DateTime? creationTime = default(System.DateTime?), string recommendationId = default(string), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), string actionName = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? nextNotificationTime = default(System.DateTime?), System.DateTime? notificationExpirationTime = default(System.DateTime?), System.DateTime? notifiedTime = default(System.DateTime?), double? score = default(double?), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
+        public Recommendation(System.DateTime? creationTime = default(System.DateTime?), System.Guid? recommendationId = default(System.Guid?), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), string actionName = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? nextNotificationTime = default(System.DateTime?), System.DateTime? notificationExpirationTime = default(System.DateTime?), System.DateTime? notifiedTime = default(System.DateTime?), double? score = default(double?), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
         {
             CreationTime = creationTime;
             RecommendationId = recommendationId;
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// associated with.
         /// </summary>
         [JsonProperty(PropertyName = "recommendationId")]
-        public string RecommendationId { get; set; }
+        public System.Guid? RecommendationId { get; set; }
 
         /// <summary>
         /// Gets or sets full ARM resource ID string that this recommendation

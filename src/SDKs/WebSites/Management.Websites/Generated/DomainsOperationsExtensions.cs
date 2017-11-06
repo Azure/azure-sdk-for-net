@@ -361,6 +361,58 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Creates or updates a domain.
+            /// </summary>
+            /// <remarks>
+            /// Creates or updates a domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the domain.
+            /// </param>
+            /// <param name='domain'>
+            /// Domain registration information.
+            /// </param>
+            public static Domain Update(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainPatchResource domain)
+            {
+                return operations.UpdateAsync(resourceGroupName, domainName, domain).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a domain.
+            /// </summary>
+            /// <remarks>
+            /// Creates or updates a domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the domain.
+            /// </param>
+            /// <param name='domain'>
+            /// Domain registration information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Domain> UpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, DomainPatchResource domain, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, domainName, domain, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists domain ownership identifiers.
             /// </summary>
             /// <remarks>

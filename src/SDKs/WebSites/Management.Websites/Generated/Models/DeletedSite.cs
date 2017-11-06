@@ -37,13 +37,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="resourceGroup">ResourceGroup that contained the
         /// deleted site</param>
         /// <param name="name">Name of the deleted site</param>
-        public DeletedSite(int? id = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string name = default(string))
+        /// <param name="slot">Slot of the deleted site</param>
+        public DeletedSite(int? id = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string name = default(string), string slot = default(string))
         {
             Id = id;
             DeletedTimestamp = deletedTimestamp;
             Subscription = subscription;
             ResourceGroup = resourceGroup;
             Name = name;
+            Slot = slot;
             CustomInit();
         }
 
@@ -81,6 +83,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets slot of the deleted site
+        /// </summary>
+        [JsonProperty(PropertyName = "slot")]
+        public string Slot { get; private set; }
 
     }
 }

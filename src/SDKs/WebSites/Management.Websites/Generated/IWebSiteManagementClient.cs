@@ -164,6 +164,23 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse<IPage<SourceControl>>> ListSourceControlsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Gets source control token
+        /// </summary>
+        /// <remarks>
+        /// Gets source control token
+        /// </remarks>
+        /// <param name='sourceControlType'>
+        /// Type of source control
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SourceControl>> GetSourceControlWithHttpMessagesAsync(string sourceControlType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Updates source control token
         /// </summary>
         /// <remarks>
@@ -206,6 +223,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string name, string type, bool? isFqdn = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets list of available geo regions plus ministamps
+        /// </summary>
+        /// <remarks>
+        /// Gets list of available geo regions plus ministamps
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<DeploymentLocations>> GetSubscriptionDeploymentLocationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a list of available geographical regions.
@@ -259,8 +290,8 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse<SkuInfos>> ListSkusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Verifies if this VNET is compatible with an App Service
-        /// Environment.
+        /// Verifies if this VNET is compatible with an App Service Environment
+        /// by analyzing the Network Security Group rules.
         /// </summary>
         /// <remarks>
         /// Verifies if this VNET is compatible with an App Service Environment

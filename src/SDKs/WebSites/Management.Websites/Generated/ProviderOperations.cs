@@ -218,6 +218,14 @@ namespace Microsoft.Azure.Management.WebSites
             return _result;
         }
 
+        /// <summary>
+        /// Gets all available operations for the Microsoft.Web resource provider. Also
+        /// exposes resource metric definitions
+        /// </summary>
+        /// <remarks>
+        /// Gets all available operations for the Microsoft.Web resource provider. Also
+        /// exposes resource metric definitions
+        /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -559,6 +567,14 @@ namespace Microsoft.Azure.Management.WebSites
             return _result;
         }
 
+        /// <summary>
+        /// Gets all available operations for the Microsoft.Web resource provider. Also
+        /// exposes resource metric definitions
+        /// </summary>
+        /// <remarks>
+        /// Gets all available operations for the Microsoft.Web resource provider. Also
+        /// exposes resource metric definitions
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

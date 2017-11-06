@@ -43,11 +43,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="needLinuxWorkers">&lt;code&gt;true&lt;/code&gt; if App
         /// Service plan is for Linux workers; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isSpot">&lt;code&gt;true&lt;/code&gt; if App Service
+        /// plan is for Spot instances; otherwise,
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
         /// <param name="capacity">Target capacity of the App Service plan
         /// (number of VM's).</param>
         /// <param name="hostingEnvironment">Name of App Service Environment
         /// where app or App Service plan should be created.</param>
-        public ValidateRequest(string name, string type, string location, string serverFarmId = default(string), string skuName = default(string), bool? needLinuxWorkers = default(bool?), int? capacity = default(int?), string hostingEnvironment = default(string))
+        public ValidateRequest(string name, string type, string location, string serverFarmId = default(string), string skuName = default(string), bool? needLinuxWorkers = default(bool?), bool? isSpot = default(bool?), int? capacity = default(int?), string hostingEnvironment = default(string))
         {
             Name = name;
             Type = type;
@@ -55,6 +58,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ServerFarmId = serverFarmId;
             SkuName = skuName;
             NeedLinuxWorkers = needLinuxWorkers;
+            IsSpot = isSpot;
             Capacity = capacity;
             HostingEnvironment = hostingEnvironment;
             CustomInit();
@@ -104,6 +108,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.needLinuxWorkers")]
         public bool? NeedLinuxWorkers { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if App
+        /// Service plan is for Spot instances; otherwise,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isSpot")]
+        public bool? IsSpot { get; set; }
 
         /// <summary>
         /// Gets or sets target capacity of the App Service plan (number of

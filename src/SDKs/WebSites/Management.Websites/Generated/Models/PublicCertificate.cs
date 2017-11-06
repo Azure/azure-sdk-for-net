@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Location. Possible values include: 'CurrentUserMy',
         /// 'LocalMachineMy', 'Unknown'</param>
         /// <param name="thumbprint">Certificate Thumbprint</param>
-        public PublicCertificate(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string blob = default(string), PublicCertificateLocation? publicCertificateLocation = default(PublicCertificateLocation?), string thumbprint = default(string))
+        public PublicCertificate(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), byte[] blob = default(byte[]), PublicCertificateLocation? publicCertificateLocation = default(PublicCertificateLocation?), string thumbprint = default(string))
             : base(id, name, kind, type)
         {
             Blob = blob;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets public Certificate byte array
         /// </summary>
         [JsonProperty(PropertyName = "properties.blob")]
-        public string Blob { get; set; }
+        public byte[] Blob { get; set; }
 
         /// <summary>
         /// Gets or sets public Certificate Location. Possible values include:

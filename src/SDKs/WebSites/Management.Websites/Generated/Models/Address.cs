@@ -30,12 +30,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Address class.
         /// </summary>
-        /// <param name="address1">Address 1.</param>
-        /// <param name="city">City.</param>
-        /// <param name="country">Country.</param>
-        /// <param name="postalCode">Postal code.</param>
-        /// <param name="state">State.</param>
-        /// <param name="address2">Address 2.</param>
+        /// <param name="address1">First line of an Address.</param>
+        /// <param name="city">The city for the address.</param>
+        /// <param name="country">The country for the address.</param>
+        /// <param name="postalCode">The postal code for the address.</param>
+        /// <param name="state">The state or province for the address.</param>
+        /// <param name="address2">The second line of the Address.
+        /// Optional.</param>
         public Address(string address1, string city, string country, string postalCode, string state, string address2 = default(string))
         {
             Address1 = address1;
@@ -53,37 +54,37 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets address 1.
+        /// Gets or sets first line of an Address.
         /// </summary>
         [JsonProperty(PropertyName = "address1")]
         public string Address1 { get; set; }
 
         /// <summary>
-        /// Gets or sets address 2.
+        /// Gets or sets the second line of the Address. Optional.
         /// </summary>
         [JsonProperty(PropertyName = "address2")]
         public string Address2 { get; set; }
 
         /// <summary>
-        /// Gets or sets city.
+        /// Gets or sets the city for the address.
         /// </summary>
         [JsonProperty(PropertyName = "city")]
         public string City { get; set; }
 
         /// <summary>
-        /// Gets or sets country.
+        /// Gets or sets the country for the address.
         /// </summary>
         [JsonProperty(PropertyName = "country")]
         public string Country { get; set; }
 
         /// <summary>
-        /// Gets or sets postal code.
+        /// Gets or sets the postal code for the address.
         /// </summary>
         [JsonProperty(PropertyName = "postalCode")]
         public string PostalCode { get; set; }
 
         /// <summary>
-        /// Gets or sets state.
+        /// Gets or sets the state or province for the address.
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

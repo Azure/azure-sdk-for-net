@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='certificateEnvelope'>
             /// Details of certificate, if it exists already.
             /// </param>
-            public static Certificate Update(this ICertificatesOperations operations, string resourceGroupName, string name, Certificate certificateEnvelope)
+            public static Certificate Update(this ICertificatesOperations operations, string resourceGroupName, string name, CertificatePatchResource certificateEnvelope)
             {
                 return operations.UpdateAsync(resourceGroupName, name, certificateEnvelope).GetAwaiter().GetResult();
             }
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Certificate> UpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string name, Certificate certificateEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Certificate> UpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string name, CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, certificateEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {

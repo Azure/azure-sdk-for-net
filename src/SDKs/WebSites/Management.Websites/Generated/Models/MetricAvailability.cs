@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Retention policy of a resource metric.
+    /// </summary>
     public partial class MetricAvailability
     {
         /// <summary>

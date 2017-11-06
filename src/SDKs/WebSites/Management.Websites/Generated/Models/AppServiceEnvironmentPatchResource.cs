@@ -18,29 +18,28 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// App Service Environment ARM resource.
+    /// ARM resource for a app service enviroment.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServiceEnvironmentResource : Resource
+    public partial class AppServiceEnvironmentPatchResource : ProxyOnlyResource
     {
         /// <summary>
-        /// Initializes a new instance of the AppServiceEnvironmentResource
-        /// class.
+        /// Initializes a new instance of the
+        /// AppServiceEnvironmentPatchResource class.
         /// </summary>
-        public AppServiceEnvironmentResource()
+        public AppServiceEnvironmentPatchResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppServiceEnvironmentResource
-        /// class.
+        /// Initializes a new instance of the
+        /// AppServiceEnvironmentPatchResource class.
         /// </summary>
-        /// <param name="location">Resource Location.</param>
-        /// <param name="appServiceEnvironmentResourceName">Name of the App
-        /// Service Environment.</param>
-        /// <param name="appServiceEnvironmentResourceLocation">Location of the
-        /// App Service Environment, e.g. "West US".</param>
+        /// <param name="appServiceEnvironmentPatchResourceName">Name of the
+        /// App Service Environment.</param>
+        /// <param name="location">Location of the App Service Environment,
+        /// e.g. "West US".</param>
         /// <param name="virtualNetwork">Description of the Virtual
         /// Network.</param>
         /// <param name="workerPools">Description of worker pools with worker
@@ -49,7 +48,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="provisioningState">Provisioning state of the App
         /// Service Environment. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
@@ -122,11 +120,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// behavior of the App Service Environment.</param>
         /// <param name="userWhitelistedIpRanges">User added ip ranges to
         /// whitelist on ASE db</param>
-        public AppServiceEnvironmentResource(string location, string appServiceEnvironmentResourceName, string appServiceEnvironmentResourceLocation, VirtualNetworkProfile virtualNetwork, IList<WorkerPool> workerPools, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), int? defaultFrontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), bool? dynamicCacheEnabled = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>), IList<string> userWhitelistedIpRanges = default(IList<string>))
-            : base(location, id, name, kind, type, tags)
+        public AppServiceEnvironmentPatchResource(string appServiceEnvironmentPatchResourceName, string location, VirtualNetworkProfile virtualNetwork, IList<WorkerPool> workerPools, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), int? defaultFrontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), bool? dynamicCacheEnabled = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>), IList<string> userWhitelistedIpRanges = default(IList<string>))
+            : base(id, name, kind, type)
         {
-            AppServiceEnvironmentResourceName = appServiceEnvironmentResourceName;
-            AppServiceEnvironmentResourceLocation = appServiceEnvironmentResourceLocation;
+            AppServiceEnvironmentPatchResourceName = appServiceEnvironmentPatchResourceName;
+            Location = location;
             ProvisioningState = provisioningState;
             Status = status;
             VnetName = vnetName;
@@ -173,14 +171,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets name of the App Service Environment.
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
-        public string AppServiceEnvironmentResourceName { get; set; }
+        public string AppServiceEnvironmentPatchResourceName { get; set; }
 
         /// <summary>
         /// Gets or sets location of the App Service Environment, e.g. "West
         /// US".
         /// </summary>
         [JsonProperty(PropertyName = "properties.location")]
-        public string AppServiceEnvironmentResourceLocation { get; set; }
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the App Service Environment. Possible
@@ -418,16 +416,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (AppServiceEnvironmentResourceName == null)
+            if (AppServiceEnvironmentPatchResourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AppServiceEnvironmentResourceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "AppServiceEnvironmentPatchResourceName");
             }
-            if (AppServiceEnvironmentResourceLocation == null)
+            if (Location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AppServiceEnvironmentResourceLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
             if (VirtualNetwork == null)
             {

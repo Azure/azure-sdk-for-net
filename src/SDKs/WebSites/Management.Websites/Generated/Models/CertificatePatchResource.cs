@@ -18,28 +18,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// SSL certificate for an app.
+    /// ARM resource for a certificate.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Certificate : Resource
+    public partial class CertificatePatchResource : ProxyOnlyResource
     {
         /// <summary>
-        /// Initializes a new instance of the Certificate class.
+        /// Initializes a new instance of the CertificatePatchResource class.
         /// </summary>
-        public Certificate()
+        public CertificatePatchResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Certificate class.
+        /// Initializes a new instance of the CertificatePatchResource class.
         /// </summary>
-        /// <param name="location">Resource Location.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="friendlyName">Friendly name of the
         /// certificate.</param>
         /// <param name="subjectName">Subject name of the certificate.</param>
@@ -71,8 +69,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="serverFarmId">Resource ID of the associated App
         /// Service plan, formatted as:
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".</param>
-        public Certificate(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string geoRegion = default(string), string serverFarmId = default(string))
-            : base(location, id, name, kind, type, tags)
+        public CertificatePatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string geoRegion = default(string), string serverFarmId = default(string))
+            : base(id, name, kind, type)
         {
             FriendlyName = friendlyName;
             SubjectName = subjectName;
@@ -230,15 +228,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.serverFarmId")]
         public string ServerFarmId { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

@@ -13,35 +13,33 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// App Service plan.
+    /// ARM resource for a app service plan.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServicePlan : Resource
+    public partial class AppServicePlanPatchResource : ProxyOnlyResource
     {
         /// <summary>
-        /// Initializes a new instance of the AppServicePlan class.
+        /// Initializes a new instance of the AppServicePlanPatchResource
+        /// class.
         /// </summary>
-        public AppServicePlan()
+        public AppServicePlanPatchResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppServicePlan class.
+        /// Initializes a new instance of the AppServicePlanPatchResource
+        /// class.
         /// </summary>
-        /// <param name="location">Resource Location.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
-        /// <param name="appServicePlanName">Name for the App Service
-        /// plan.</param>
+        /// <param name="appServicePlanPatchResourceName">Name for the App
+        /// Service plan.</param>
         /// <param name="workerTierName">Target worker tier assigned to the App
         /// Service plan.</param>
         /// <param name="status">App Service plan status. Possible values
@@ -73,10 +71,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="provisioningState">Provisioning state of the App
         /// Service Environment. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
-        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string appServicePlanName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
-            : base(location, id, name, kind, type, tags)
+        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string appServicePlanPatchResourceName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?))
+            : base(id, name, kind, type)
         {
-            AppServicePlanName = appServicePlanName;
+            AppServicePlanPatchResourceName = appServicePlanPatchResourceName;
             WorkerTierName = workerTierName;
             Status = status;
             Subscription = subscription;
@@ -93,7 +91,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TargetWorkerCount = targetWorkerCount;
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
-            Sku = sku;
             CustomInit();
         }
 
@@ -106,7 +103,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets name for the App Service plan.
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
-        public string AppServicePlanName { get; set; }
+        public string AppServicePlanPatchResourceName { get; set; }
 
         /// <summary>
         /// Gets or sets target worker tier assigned to the App Service plan.
@@ -214,20 +211,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
