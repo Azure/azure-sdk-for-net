@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd compute/resource-manager %*
+call %~dp0..\..\..\..\tools\generate.cmd reservations/resource-manager %*

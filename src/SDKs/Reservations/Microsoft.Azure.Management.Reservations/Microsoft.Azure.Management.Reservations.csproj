@@ -10,12 +10,4 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-  
-  <!--
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.9" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.9" />
-  </ItemGroup>
-  -->
-  
 </Project>
