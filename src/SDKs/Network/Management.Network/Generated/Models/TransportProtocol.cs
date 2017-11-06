@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string Udp = "Udp";
         public const string Tcp = "Tcp";
+        public const string All = "All";
     }
 }
