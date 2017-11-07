@@ -32,7 +32,7 @@ namespace DedicatedServices.Tests.Helpers
         private static Uri testUri = new Uri("https://api-dogfood.resources.windows-int.net/");
 
         // These should be filled in only if test tenant is true
-#if DNX451
+#if FullNetFx
         private static string certName = null;
         private static string certPassword = null;
 #endif
@@ -84,10 +84,9 @@ namespace DedicatedServices.Tests.Helpers
 
         private static HttpClientHandler GetHandler()
         {
-#if DNX451
+#if FullNetFx
             if (Handler == null)
             {
-                //talk to yugangw-msft, if the code doesn't work under dnx451 (same with net451)
                 X509Certificate2 cert = new X509Certificate2(certName, certPassword);
                 Handler = new System.Net.Http.WebRequestHandler();
                 ((WebRequestHandler)Handler).ClientCertificates.Add(cert);
