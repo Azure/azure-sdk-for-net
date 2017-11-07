@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='locationName'>
         /// The name of the region where the resource is located.
         /// </param>
-        /// <param name='usagesName'>
+        /// <param name='usageName'>
         /// Name of usage metric to return.
         /// </param>
         /// <param name='customHeaders'>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionUsage>> GetWithHttpMessagesAsync(string locationName, string usagesName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionUsage>> GetWithHttpMessagesAsync(string locationName, string usageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all subscription usage metrics in a given location.
         /// </summary>

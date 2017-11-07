@@ -64,12 +64,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='locationName'>
             /// The name of the region where the resource is located.
             /// </param>
-            /// <param name='usagesName'>
+            /// <param name='usageName'>
             /// Name of usage metric to return.
             /// </param>
-            public static SubscriptionUsage Get(this ISubscriptionUsagesOperations operations, string locationName, string usagesName)
+            public static SubscriptionUsage Get(this ISubscriptionUsagesOperations operations, string locationName, string usageName)
             {
-                return operations.GetAsync(locationName, usagesName).GetAwaiter().GetResult();
+                return operations.GetAsync(locationName, usageName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,15 +81,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='locationName'>
             /// The name of the region where the resource is located.
             /// </param>
-            /// <param name='usagesName'>
+            /// <param name='usageName'>
             /// Name of usage metric to return.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionUsage> GetAsync(this ISubscriptionUsagesOperations operations, string locationName, string usagesName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionUsage> GetAsync(this ISubscriptionUsagesOperations operations, string locationName, string usageName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(locationName, usagesName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(locationName, usageName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

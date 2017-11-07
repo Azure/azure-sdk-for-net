@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='locationName'>
         /// The name of the region where the resource is located.
         /// </param>
-        /// <param name='usagesName'>
+        /// <param name='usageName'>
         /// Name of usage metric to return.
         /// </param>
         /// <param name='customHeaders'>
@@ -265,15 +265,15 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionUsage>> GetWithHttpMessagesAsync(string locationName, string usagesName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionUsage>> GetWithHttpMessagesAsync(string locationName, string usageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (locationName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
             }
-            if (usagesName == null)
+            if (usageName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "usagesName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "usageName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -288,16 +288,16 @@ namespace Microsoft.Azure.Management.Sql
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("locationName", locationName);
-                tracingParameters.Add("usagesName", usagesName);
+                tracingParameters.Add("usageName", usageName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usagesName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}").ToString();
             _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
-            _url = _url.Replace("{usagesName}", System.Uri.EscapeDataString(usagesName));
+            _url = _url.Replace("{usageName}", System.Uri.EscapeDataString(usageName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
