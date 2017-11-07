@@ -129,6 +129,17 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultIotHubName,
                     IotHubTestUtilities.EventsEndpointName,
                     "testConsumerGroup");
+
+                // Get all of the available IoT Hub REST API operations
+                var operationList = this.iotHubClient.Operations.List();
+                Assert.True(operationList.Count() > 0);
+                Assert.True(operationList.Any(e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase)));
+
+                // Get IoT Hub REST API read operation
+                var hubReadOperation = operationList.Where(e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase));
+                Assert.True(hubReadOperation.Count().Equals(1));
+                Assert.True(hubReadOperation.First().Display.Provider.Equals("Microsoft Devices", StringComparison.OrdinalIgnoreCase));
+                Assert.True(hubReadOperation.First().Display.Operation.Equals("Get IotHub(s)", StringComparison.OrdinalIgnoreCase));
             }
         }
 
