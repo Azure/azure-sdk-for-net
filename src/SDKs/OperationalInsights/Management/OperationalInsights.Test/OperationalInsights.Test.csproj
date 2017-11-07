@@ -15,7 +15,7 @@
     
     <ProjectReference Include="..\Management.OperationalInsights\Microsoft.Azure.Management.OperationalInsights.csproj" />  
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
