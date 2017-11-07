@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
 
     /// <summary>
-    /// Defines values for ContainerGroupNetworkProtocol.
+    /// Defines values for ContainerNetworkProtocol.
     /// </summary>
-    public static class ContainerGroupNetworkProtocol
+    public static class ContainerNetworkProtocol
     {
         public const string TCP = "TCP";
         public const string UDP = "UDP";

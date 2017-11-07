@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
 
     /// <summary>
-    /// Defines values for ContainerGroupNetworkProtocol.
+    /// Defines values for ContainerGroupRestartPolicy.
     /// </summary>
-    public static class ContainerGroupNetworkProtocol
+    public static class ContainerGroupRestartPolicy
     {
-        public const string TCP = "TCP";
-        public const string UDP = "UDP";
+        public const string Always = "Always";
+        public const string OnFailure = "OnFailure";
+        public const string Never = "Never";
     }
 }

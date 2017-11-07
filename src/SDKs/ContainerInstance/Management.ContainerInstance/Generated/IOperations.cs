@@ -19,30 +19,13 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ContainerLogsOperations operations.
+    /// Operations operations.
     /// </summary>
-    public partial interface IContainerLogsOperations
+    public partial interface IOperations
     {
         /// <summary>
-        /// Get the logs for a specified container instance.
+        /// List the operations for Azure Container Instance service.
         /// </summary>
-        /// <remarks>
-        /// Get the logs for a specified container instance in a specified
-        /// resource group and container group.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='containerGroupName'>
-        /// The name of the container group.
-        /// </param>
-        /// <param name='containerName'>
-        /// The name of the container instance.
-        /// </param>
-        /// <param name='tail'>
-        /// The number of lines to show from the tail of the container instance
-        /// log. If not provided, all available logs are shown up to 4mb.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -58,6 +41,6 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Logs>> ListWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
