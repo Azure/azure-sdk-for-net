@@ -11,6 +11,10 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="1.2.0" />
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" Version="0.2.0-preview" />

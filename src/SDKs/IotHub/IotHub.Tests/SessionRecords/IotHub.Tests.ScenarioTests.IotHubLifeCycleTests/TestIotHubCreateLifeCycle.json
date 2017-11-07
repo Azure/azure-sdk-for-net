@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourcegroups/DotNetHubRG?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlZ3JvdXBzL0RvdE5ldEh1YlJHP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourcegroups/DotNetHubRG?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlZ3JvdXBzL0RvdE5ldEh1YlJHP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "cb2731f5-c924-4268-a76e-e82d1b15cbd2"
+          "5da98b59-40b5-4379-96ba-d0d83abf03a9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG\",\r\n  \"name\": \"DotNetHubRG\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG\",\r\n  \"name\": \"DotNetHubRG\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "175"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:42:21 GMT"
+          "Tue, 07 Nov 2017 02:49:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1199"
         ],
         "x-ms-request-id": [
-          "3f11a8a7-3d0a-4704-a858-49eca25342d5"
+          "4a2656dc-27fd-4f2b-aa0c-920c9d204e4d"
         ],
         "x-ms-correlation-request-id": [
-          "3f11a8a7-3d0a-4704-a858-49eca25342d5"
+          "4a2656dc-27fd-4f2b-aa0c-920c9d204e4d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204222Z:3f11a8a7-3d0a-4704-a858-49eca25342d5"
+          "WESTUS2:20171107T024919Z:4a2656dc-27fd-4f2b-aa0c-920c9d204e4d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/providers/Microsoft.Devices/checkNameAvailability?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxNy0wMS0xOQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/providers/Microsoft.Devices/checkNameAvailability?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"Name\": \"DotNetHub\"\r\n}",
       "RequestHeaders": {
@@ -74,14 +74,14 @@
           "27"
         ],
         "x-ms-client-request-id": [
-          "d3343b50-d7eb-431c-8018-0b3ddf05ff44"
+          "f6d48c03-fcc6-4c3d-9346-ec3f356f0054"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nameAvailable\": true,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": null\r\n}",
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:42:22 GMT"
+          "Tue, 07 Nov 2017 02:49:19 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -111,16 +111,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1199"
         ],
         "x-ms-request-id": [
-          "3c66473b-f563-4f26-814e-52852cb5a156"
+          "79e25a36-9032-40f6-b77c-c17648d55718"
         ],
         "x-ms-correlation-request-id": [
-          "3c66473b-f563-4f26-814e-52852cb5a156"
+          "79e25a36-9032-40f6-b77c-c17648d55718"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204222Z:3c66473b-f563-4f26-814e-52852cb5a156"
+          "WESTUS2:20171107T024919Z:79e25a36-9032-40f6-b77c-c17648d55718"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -129,8 +129,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3Q/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3Q/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -141,17 +141,17 @@
           "95"
         ],
         "x-ms-client-request-id": [
-          "71e07713-257d-4bc0-a1a0-0f1283c25f42"
+          "07f155f0-9caf-45eb-9e53-6b0c885f9698"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/0.0.1-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest\",\r\n  \"name\": \"iothubcsharpsdkehnamespacetest\",\r\n  \"type\": \"Microsoft.EventHub/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"EventHub\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": \"91d12660-3dec-467a-be2a-213b5544ddc0:iothubcsharpsdkehnamespacetest\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"EventHub\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest\",\r\n  \"name\": \"iothubcsharpsdkehnamespacetest\",\r\n  \"type\": \"Microsoft.EventHub/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"EventHub\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdkehnamespacetest\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"EventHub\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -163,7 +163,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:42:24 GMT"
+          "Tue, 07 Nov 2017 02:49:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -179,7 +179,864 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "59f2c175-74d8-4100-b50f-30fc366ede18_M0_M0"
+          "38ff23f7-3465-450c-9568-aff580f14558_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "eb2ec395-dad4-4e84-9b2c-6ea310c879f4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T024921Z:eb2ec395-dad4-4e84-9b2c-6ea310c879f4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3Q/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/1.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest\",\r\n  \"name\": \"iothubcsharpsdkehnamespacetest\",\r\n  \"type\": \"Microsoft.EventHub/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"EventHub\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdkehnamespacetest\",\r\n    \"status\": \"Created\",\r\n    \"createdAt\": \"2017-11-07T02:49:19.69Z\",\r\n    \"serviceBusEndpoint\": \"https://iothubcsharpsdkehnamespacetest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-11-07T02:49:19.69Z\",\r\n    \"eventHubEnabled\": true,\r\n    \"namespaceType\": \"EventHub\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:49:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "af40a685-8f3c-473a-b720-d40eb679472d_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14977"
+        ],
+        "x-ms-correlation-request-id": [
+          "81a4093f-03ec-49dd-a791-24c26124073d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T024951Z:81a4093f-03ec-49dd-a791-24c26124073d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3Q/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/1.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest\",\r\n  \"name\": \"iothubcsharpsdkehnamespacetest\",\r\n  \"type\": \"Microsoft.EventHub/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"EventHub\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdkehnamespacetest\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-11-07T02:49:19.69Z\",\r\n    \"serviceBusEndpoint\": \"https://iothubcsharpsdkehnamespacetest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-11-07T02:50:17.873Z\",\r\n    \"eventHubEnabled\": true,\r\n    \"namespaceType\": \"EventHub\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:50:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "7712fcdf-4180-4664-b14f-e1ce42f38996_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "b1ce0e7d-2043-4797-83d0-b434371f15a5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025021Z:b1ce0e7d-2043-4797-83d0-b434371f15a5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3QvZXZlbnRodWJzL2lvdGh1YmNzaGFycHNka2VodGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "97517024-d8a0-4414-a4c0-926de1071540"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/1.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest\",\r\n  \"name\": \"iothubcsharpsdkehtest\",\r\n  \"type\": \"Microsoft.EventHub/EventHubs\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"path\": \"iothubcsharpsdkehtest\",\r\n    \"messageRetentionInDays\": 7,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-11-07T02:50:25.593Z\",\r\n    \"updatedAt\": \"2017-11-07T02:50:31.233Z\",\r\n    \"partitionCount\": 4,\r\n    \"partitionIds\": [\r\n      \"0\",\r\n      \"1\",\r\n      \"2\",\r\n      \"3\"\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:50:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "fb4aa1b2-1546-4c74-9ede-c2fe8748c791_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c4d58c6-2fe7-4d4d-a940-6d1156608b92"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025034Z:7c4d58c6-2fe7-4d4d-a940-6d1156608b92"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest/authorizationRules/iothubcsharpsdkehtestrule?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3QvZXZlbnRodWJzL2lvdGh1YmNzaGFycHNka2VodGVzdC9hdXRob3JpemF0aW9uUnVsZXMvaW90aHViY3NoYXJwc2RrZWh0ZXN0cnVsZT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "108"
+        ],
+        "x-ms-client-request-id": [
+          "c341d9c0-9a77-4d39-bb54-4ba90be9c31d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/1.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest/authorizationRules/iothubcsharpsdkehtestrule\",\r\n  \"name\": \"iothubcsharpsdkehtestrule\",\r\n  \"type\": \"Microsoft.EventHub/AuthorizationRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:50:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "c98b2b3e-3735-497c-aa4c-9e95840c3880_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "a353c8d6-3496-4124-9b29-7eb613d2a8a2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025040Z:a353c8d6-3496-4124-9b29-7eb613d2a8a2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest/authorizationRules/iothubcsharpsdkehtestrule/ListKeys?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3QvZXZlbnRodWJzL2lvdGh1YmNzaGFycHNka2VodGVzdC9hdXRob3JpemF0aW9uUnVsZXMvaW90aHViY3NoYXJwc2RrZWh0ZXN0cnVsZS9MaXN0S2V5cz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f5409a6a-ab2d-476c-9cc4-fb4e7f839b94"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/1.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=hCs2+9nfp+WFCByrUnYkDdbPQ0TGNZzjyAJpmSv6QPA=;EntityPath=iothubcsharpsdkehtest\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=iNbpGEcdcJnfqtx0JineYaVbFXhYRuxKyOdeioj10Ug=;EntityPath=iothubcsharpsdkehtest\",\r\n  \"primaryKey\": \"hCs2+9nfp+WFCByrUnYkDdbPQ0TGNZzjyAJpmSv6QPA=\",\r\n  \"secondaryKey\": \"iNbpGEcdcJnfqtx0JineYaVbFXhYRuxKyOdeioj10Ug=\",\r\n  \"keyName\": \"iothubcsharpsdkehtestrule\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:50:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "ea16cedf-adab-4a3a-8b28-1928c1ed22c9_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "81b5f401-e00e-4e50-be86-1519dbfcac45"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025040Z:81b5f401-e00e-4e50-be86-1519dbfcac45"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "95"
+        ],
+        "x-ms-client-request-id": [
+          "e78ba4f6-eae3-4a09-bffc-f27fe6bbc11c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest\",\r\n  \"name\": \"iotHubCSharpSDKSBNamespaceTest\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdksbnamespacetest\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:50:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "1c5c574b-e74b-4be7-a701-b5a2d153a9cd_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "a37c6bb3-2c69-4e9c-b462-0a6d977d57a6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025041Z:a37c6bb3-2c69-4e9c-b462-0a6d977d57a6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest\",\r\n  \"name\": \"iotHubCSharpSDKSBNamespaceTest\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdksbnamespacetest\",\r\n    \"status\": \"Created\",\r\n    \"createdAt\": \"2017-11-07T02:50:40.1Z\",\r\n    \"serviceBusEndpoint\": \"https://iotHubCSharpSDKSBNamespaceTest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-11-07T02:50:40.1Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:51:10 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "67bd4bef-4f4d-4954-8611-ffabcd4ae393_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14904"
+        ],
+        "x-ms-correlation-request-id": [
+          "75fd759f-b520-46d8-8f96-a31c50323aa9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025111Z:75fd759f-b520-46d8-8f96-a31c50323aa9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest\",\r\n  \"name\": \"iotHubCSharpSDKSBNamespaceTest\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdksbnamespacetest\",\r\n    \"status\": \"Created\",\r\n    \"createdAt\": \"2017-11-07T02:50:40.1Z\",\r\n    \"serviceBusEndpoint\": \"https://iotHubCSharpSDKSBNamespaceTest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-11-07T02:50:40.1Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:51:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "5941f99c-5a74-44e1-bf3a-76f62b9f1ae4_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14901"
+        ],
+        "x-ms-correlation-request-id": [
+          "76ee2ba9-0e2b-4448-ad36-1da5ce9f87f2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025141Z:76ee2ba9-0e2b-4448-ad36-1da5ce9f87f2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest\",\r\n  \"name\": \"iotHubCSharpSDKSBNamespaceTest\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"377c3343-75bb-4244-98a3-0fb84a830c4b:iothubcsharpsdksbnamespacetest\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-11-07T02:50:40.1Z\",\r\n    \"serviceBusEndpoint\": \"https://iotHubCSharpSDKSBNamespaceTest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-11-07T02:52:11.283Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:52:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "928c1acf-3b48-4abf-b953-e6b5dfdda65b_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14898"
+        ],
+        "x-ms-correlation-request-id": [
+          "b54c600f-d756-49af-ae7e-a2018230b5c5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025211Z:b54c600f-d756-49af-ae7e-a2018230b5c5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLU0JUZXN0P2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "da1b6264-f313-42cc-9ee8-9b8f7c35b27a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest\",\r\n  \"name\": \"iotHubCSharpSDKSBTest\",\r\n  \"type\": \"Microsoft.ServiceBus/Queues\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"path\": \"iotHubCSharpSDKSBTest\",\r\n    \"lockDuration\": \"00:01:00\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"requiresSession\": false,\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"deadLetteringOnMessageExpiration\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"maxDeliveryCount\": 10,\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"messageCount\": 0,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-11-07T02:52:13.66Z\",\r\n    \"updatedAt\": \"2017-11-07T02:52:13.737Z\",\r\n    \"supportOrdering\": true,\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableExpress\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:52:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "f49f8916-ac43-471f-8b6d-e915e60e0f74_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "96d825ec-c0e1-4206-a46c-922b400535f0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025214Z:96d825ec-c0e1-4206-a46c-922b400535f0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC90b3BpY3MvaW90SHViQ1NoYXJwU0RLVG9waWNUZXN0P2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "00a53a03-ffb0-49af-8b7a-d0db0ac2814d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest\",\r\n  \"name\": \"iotHubCSharpSDKTopicTest\",\r\n  \"type\": \"Microsoft.ServiceBus/Topic\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"path\": \"iotHubCSharpSDKTopicTest\",\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"filteringMessagesBeforePublishing\": false,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-11-07T02:52:15.813Z\",\r\n    \"updatedAt\": \"2017-11-07T02:52:15.847Z\",\r\n    \"supportOrdering\": true,\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"isExpress\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableSubscriptionPartitioning\": false,\r\n    \"enableExpress\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:52:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "fb55ff56-dd06-4c4d-8b60-3c298a683e0e_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "724afb45-e899-480f-be0d-0267d57cf20d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025216Z:724afb45-e899-480f-be0d-0267d57cf20d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLU0JUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "108"
+        ],
+        "x-ms-client-request-id": [
+          "b9d0ef9d-78c5-4eaf-a55f-ba128628de88"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule\",\r\n  \"name\": \"iotHubCSharpSDKSBTopicTestRule\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:52:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "4a6e0f69-808c-4229-bf20-75057cb15e3d_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "8777c494-1435-4259-868a-f153b12b51e2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171107T025221Z:8777c494-1435-4259-868a-f153b12b51e2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC90b3BpY3MvaW90SHViQ1NoYXJwU0RLVG9waWNUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "108"
+        ],
+        "x-ms-client-request-id": [
+          "81fa37ba-6c60-4203-967c-ffe9758ac36b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule\",\r\n  \"name\": \"iotHubCSharpSDKSBTopicTestRule\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 07 Nov 2017 02:52:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "b0566065-001f-4176-965e-7bcbb73a7b46_M1_M1"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -188,10 +1045,10 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "5243f182-77bf-4e0e-b773-90d73d966531"
+          "4dcd1aef-a5dc-4456-bec3-566d9411fe21"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204224Z:5243f182-77bf-4e0e-b773-90d73d966531"
+          "WESTUS2:20171107T025227Z:4dcd1aef-a5dc-4456-bec3-566d9411fe21"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -200,88 +1057,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3Q/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
-      "RequestMethod": "GET",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule/ListKeys?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLU0JUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGUvTGlzdEtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/0.0.1-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest\",\r\n  \"name\": \"iothubcsharpsdkehnamespacetest\",\r\n  \"type\": \"Microsoft.EventHub/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"EventHub\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"91d12660-3dec-467a-be2a-213b5544ddc0:iothubcsharpsdkehnamespacetest\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-05-02T20:42:24.653Z\",\r\n    \"serviceBusEndpoint\": \"https://iothubcsharpsdkehnamespacetest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"scaleUnit\": \"BY3-506\",\r\n    \"dataCenter\": \"BY3\",\r\n    \"updatedAt\": \"2017-05-02T20:42:44.877Z\",\r\n    \"eventHubEnabled\": true,\r\n    \"namespaceType\": \"EventHub\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:42:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "e10b967b-893f-463c-a3fa-6b7e0dd8a724_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14966"
-        ],
-        "x-ms-correlation-request-id": [
-          "8e0fafcb-55d0-43d3-a178-2370e2cda67c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204255Z:8e0fafcb-55d0-43d3-a178-2370e2cda67c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3QvZXZlbnRodWJzL2lvdGh1YmNzaGFycHNka2VodGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ],
         "x-ms-client-request-id": [
-          "26227a6c-88e4-4f0d-b7df-ddd56eccd04c"
+          "80104cd2-ccfb-48dc-a5e2-82ebb6742f23"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/0.0.1-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest\",\r\n  \"name\": \"iothubcsharpsdkehtest\",\r\n  \"type\": \"Microsoft.EventHub/EventHubs\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"messageRetentionInDays\": 7,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-05-02T20:42:54.84Z\",\r\n    \"updatedAt\": \"2017-05-02T20:43:00.56Z\",\r\n    \"partitionCount\": 4,\r\n    \"partitionIds\": [\r\n      \"0\",\r\n      \"1\",\r\n      \"2\",\r\n      \"3\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=hUfDo5A/1V0Pk22lOltQJmBSGAVxI8LLLqIbh8BRfbI=;EntityPath=iotHubCSharpSDKSBTest\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=jAICsLpvgIq6sStuqyhwhicJlNTGRhZRT9+GLwjT74c=;EntityPath=iotHubCSharpSDKSBTest\",\r\n  \"primaryKey\": \"hUfDo5A/1V0Pk22lOltQJmBSGAVxI8LLLqIbh8BRfbI=\",\r\n  \"secondaryKey\": \"jAICsLpvgIq6sStuqyhwhicJlNTGRhZRT9+GLwjT74c=\",\r\n  \"keyName\": \"iotHubCSharpSDKSBTopicTestRule\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -293,7 +1085,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:43:07 GMT"
+          "Tue, 07 Nov 2017 02:52:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -309,7 +1101,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "75edb115-231a-438e-9a44-64305324d9c4_M0_M0"
+          "19a7fc08-c495-47ec-b1c3-80b47d9c57d6_M1_M1"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -318,10 +1110,10 @@
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "db2c8613-b625-499b-b8de-1241be6ca5da"
+          "f7eba6b5-518f-48e3-9cb6-6c918024f3c1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204308Z:db2c8613-b625-499b-b8de-1241be6ca5da"
+          "WESTUS2:20171107T025227Z:f7eba6b5-518f-48e3-9cb6-6c918024f3c1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -330,29 +1122,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest/authorizationRules/iothubcsharpsdkehtestrule?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3QvZXZlbnRodWJzL2lvdGh1YmNzaGFycHNka2VodGVzdC9hdXRob3JpemF0aW9uUnVsZXMvaW90aHViY3NoYXJwc2RrZWh0ZXN0cnVsZT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKTopicTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule/ListKeys?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLVG9waWNUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGUvTGlzdEtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "108"
-        ],
         "x-ms-client-request-id": [
-          "1be1fd02-dfae-45dc-97e8-e464bbcdbe9c"
+          "1ef9c441-e2a9-4d25-8c54-c7f5accaefdb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/0.0.1-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest/authorizationRules/iothubcsharpsdkehtestrule\",\r\n  \"name\": \"iothubcsharpsdkehtestrule\",\r\n  \"type\": \"Microsoft.EventHub/AuthorizationRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=nFxA5pOXq3ZBhFVwZPZl9UUFpP3KMwuxOf0XaTE1qjA=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=W/BrqEYOPOKh2qiLtpBTA7V+sgbeTWaikoHQGlGdj0E=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n  \"primaryKey\": \"nFxA5pOXq3ZBhFVwZPZl9UUFpP3KMwuxOf0XaTE1qjA=\",\r\n  \"secondaryKey\": \"W/BrqEYOPOKh2qiLtpBTA7V+sgbeTWaikoHQGlGdj0E=\",\r\n  \"keyName\": \"iotHubCSharpSDKSBTopicTestRule\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -364,7 +1150,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:43:12 GMT"
+          "Tue, 07 Nov 2017 02:52:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -380,7 +1166,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "95cf9f6b-24bb-4acb-a50c-871350332687_M0_M0"
+          "7891e986-0ab0-473d-ac80-4cff1f0181bd_M1_M1"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -389,10 +1175,10 @@
           "1193"
         ],
         "x-ms-correlation-request-id": [
-          "aa75af96-b4bc-4813-bfe7-879a3f1ac4d0"
+          "04abac54-1619-4ed6-beda-c3cc420b150e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204313Z:aa75af96-b4bc-4813-bfe7-879a3f1ac4d0"
+          "WESTUS2:20171107T025227Z:04abac54-1619-4ed6-beda-c3cc420b150e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -401,619 +1187,10 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.EventHub/namespaces/iothubcsharpsdkehnamespacetest/eventhubs/iothubcsharpsdkehtest/authorizationRules/iothubcsharpsdkehtestrule/ListKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pb3RodWJjc2hhcnBzZGtlaG5hbWVzcGFjZXRlc3QvZXZlbnRodWJzL2lvdGh1YmNzaGFycHNka2VodGVzdC9hdXRob3JpemF0aW9uUnVsZXMvaW90aHViY3NoYXJwc2RrZWh0ZXN0cnVsZS9MaXN0S2V5cz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "8a97d9a9-f9fc-4189-a1fc-b3215fb3da70"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/0.0.1-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=Bx3JHw9KjQ6Vfr7cDvIw/klp/Ji+COyNnZwfRfgqW8k=;EntityPath=iothubcsharpsdkehtest\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=RSlJEpGeTcSt1VjOJw0aLcM1X4jSfx7MnKkjjCgGKWw=;EntityPath=iothubcsharpsdkehtest\",\r\n  \"primaryKey\": \"Bx3JHw9KjQ6Vfr7cDvIw/klp/Ji+COyNnZwfRfgqW8k=\",\r\n  \"secondaryKey\": \"RSlJEpGeTcSt1VjOJw0aLcM1X4jSfx7MnKkjjCgGKWw=\",\r\n  \"keyName\": \"iothubcsharpsdkehtestrule\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:43:13 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "7b301afb-cc36-4e3c-ba67-2eac718d91a2_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
-        ],
-        "x-ms-correlation-request-id": [
-          "5d2092dc-0b6b-4424-9079-c8038dd54fc1"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204313Z:5d2092dc-0b6b-4424-9079-c8038dd54fc1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yj9hcGktdmVyc2lvbj0yMDE3LTA3LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "95"
-        ],
-        "x-ms-client-request-id": [
-          "e83afc6a-cb4d-4a3a-a78f-3bccef0cee46"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest\",\r\n  \"name\": \"iotHubCSharpSDKSBNamespaceTest\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": \"91d12660-3dec-467a-be2a-213b5544ddc0:iothubcsharpsdksbnamespacetest\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:43:14 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "7db51147-1a5d-4b02-902d-c934e6ec707f_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
-        ],
-        "x-ms-correlation-request-id": [
-          "4c7e8448-6e87-4da8-8d91-6ae7ab7655f0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204315Z:4c7e8448-6e87-4da8-8d91-6ae7ab7655f0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest\",\r\n  \"name\": \"iotHubCSharpSDKSBNamespaceTest\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"West US\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"91d12660-3dec-467a-be2a-213b5544ddc0:iothubcsharpsdksbnamespacetest\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-05-02T20:43:15.78Z\",\r\n    \"serviceBusEndpoint\": \"https://iotHubCSharpSDKSBNamespaceTest.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"scaleUnit\": \"BY3-008\",\r\n    \"dataCenter\": \"BY3\",\r\n    \"updatedAt\": \"2017-05-02T20:43:40.577Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:43:44 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "a3f6662d-590a-42e9-91e5-00be37aaeb70_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14950"
-        ],
-        "x-ms-correlation-request-id": [
-          "1ebff666-dd06-4ccf-9936-a74acda8b75b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204345Z:1ebff666-dd06-4ccf-9936-a74acda8b75b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLU0JUZXN0P2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ],
-        "x-ms-client-request-id": [
-          "d90feaf9-00d9-40ba-b8ab-309cada096ba"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest\",\r\n  \"name\": \"iotHubCSharpSDKSBTest\",\r\n  \"type\": \"Microsoft.ServiceBus/Queues\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"lockDuration\": \"00:01:00\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"requiresSession\": false,\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"deadLetteringOnMessageExpiration\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"maxDeliveryCount\": 10,\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"messageCount\": 0,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-05-02T20:43:45.63Z\",\r\n    \"updatedAt\": \"2017-05-02T20:43:45.77Z\",\r\n    \"supportOrdering\": true,\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableExpress\": false\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:43:46 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "17038d4f-7ccf-4350-900c-6b10c0462103_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
-        ],
-        "x-ms-correlation-request-id": [
-          "d5d252e1-b401-45c9-b58d-abe42d18a2f2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204347Z:d5d252e1-b401-45c9-b58d-abe42d18a2f2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC90b3BpY3MvaW90SHViQ1NoYXJwU0RLVG9waWNUZXN0P2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ],
-        "x-ms-client-request-id": [
-          "5efbcda0-ccd8-44d6-93db-4738962d2eaa"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest\",\r\n  \"name\": \"iotHubCSharpSDKTopicTest\",\r\n  \"type\": \"Microsoft.ServiceBus/Topic\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"filteringMessagesBeforePublishing\": false,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-05-02T20:43:47.897Z\",\r\n    \"updatedAt\": \"2017-05-02T20:43:47.927Z\",\r\n    \"supportOrdering\": true,\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"isExpress\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableSubscriptionPartitioning\": false,\r\n    \"enableExpress\": false\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:43:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "1ebefd28-6e60-48c1-a406-6e34a062d2ae_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
-        ],
-        "x-ms-correlation-request-id": [
-          "8609fbfb-556c-4707-9a6b-518ec2beca1e"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204349Z:8609fbfb-556c-4707-9a6b-518ec2beca1e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLU0JUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "108"
-        ],
-        "x-ms-client-request-id": [
-          "7b61a420-1988-4b50-bf34-bdf06778cf12"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule\",\r\n  \"name\": \"iotHubCSharpSDKSBTopicTestRule\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:43:53 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "74a0fd6b-6f9e-4fa7-91b0-2ab0d3fe1f27_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
-        ],
-        "x-ms-correlation-request-id": [
-          "5ab77d6a-7a42-4023-8f3e-4174ef1cd393"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204354Z:5ab77d6a-7a42-4023-8f3e-4174ef1cd393"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC90b3BpY3MvaW90SHViQ1NoYXJwU0RLVG9waWNUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGU/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"WestUS\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "108"
-        ],
-        "x-ms-client-request-id": [
-          "a34c6787-8d89-4be5-bffa-f4de2e2fef0c"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/topics/iotHubCSharpSDKTopicTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule\",\r\n  \"name\": \"iotHubCSharpSDKSBTopicTestRule\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"West US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Send\",\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:44:00 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "3ea58ff9-399b-418c-ae62-034a11caec75_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1187"
-        ],
-        "x-ms-correlation-request-id": [
-          "c7acc14a-9d1d-4aae-b0e2-215ef1789713"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204400Z:c7acc14a-9d1d-4aae-b0e2-215ef1789713"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKSBTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule/ListKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLU0JUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGUvTGlzdEtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "53dd7eb2-5a0c-43ae-971f-93e39d83022b"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=WrE24PkIL0JjKoYC8mzKRWqVGUq8BPOoOZTxTedJ6PM=;EntityPath=iotHubCSharpSDKSBTest\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=aI5Ax676IBrpX6gOoc6WPcqpzidcEa/OQTBMod+W8kY=;EntityPath=iotHubCSharpSDKSBTest\",\r\n  \"primaryKey\": \"WrE24PkIL0JjKoYC8mzKRWqVGUq8BPOoOZTxTedJ6PM=\",\r\n  \"secondaryKey\": \"aI5Ax676IBrpX6gOoc6WPcqpzidcEa/OQTBMod+W8kY=\",\r\n  \"keyName\": \"iotHubCSharpSDKSBTopicTestRule\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:44:00 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "d89cd383-88eb-46b9-b711-c449a8d5c03f_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
-        ],
-        "x-ms-correlation-request-id": [
-          "a104827a-d30b-4c64-9295-f67ee6db46aa"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204400Z:a104827a-d30b-4c64-9295-f67ee6db46aa"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.ServiceBus/namespaces/iotHubCSharpSDKSBNamespaceTest/queues/iotHubCSharpSDKTopicTest/authorizationRules/iotHubCSharpSDKSBTopicTestRule/ListKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL2lvdEh1YkNTaGFycFNES1NCTmFtZXNwYWNlVGVzdC9xdWV1ZXMvaW90SHViQ1NoYXJwU0RLVG9waWNUZXN0L2F1dGhvcml6YXRpb25SdWxlcy9pb3RIdWJDU2hhcnBTREtTQlRvcGljVGVzdFJ1bGUvTGlzdEtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "88ef2082-8299-48ee-b578-ca2316713b32"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=5s04XbxU1gL8Y5MYQ45mktspzgt8hQ+VobCLN7DMDV0=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=y8QwMeNho7iCqSR7BcCWgVwpPCNW+kiiFpSoxkxaUkU=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n  \"primaryKey\": \"5s04XbxU1gL8Y5MYQ45mktspzgt8hQ+VobCLN7DMDV0=\",\r\n  \"secondaryKey\": \"y8QwMeNho7iCqSR7BcCWgVwpPCNW+kiiFpSoxkxaUkU=\",\r\n  \"keyName\": \"iotHubCSharpSDKSBTopicTestRule\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:44:00 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "ec398d7c-3269-4158-853f-4f87ec0b8ecd_M0_M0"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
-        ],
-        "x-ms-correlation-request-id": [
-          "d6f48f6e-c718-4dac-bceb-fb14f9739212"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204401Z:d6f48f6e-c718-4dac-bceb-fb14f9739212"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yj9hcGktdmVyc2lvbj0yMDE3LTAxLTE5",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"subscriptionid\": \"91d12660-3dec-467a-be2a-213b5544ddc0\",\r\n  \"resourcegroup\": \"DotNetHubRG\",\r\n  \"properties\": {\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=WrE24PkIL0JjKoYC8mzKRWqVGUq8BPOoOZTxTedJ6PM=;EntityPath=iotHubCSharpSDKSBTest\",\r\n            \"name\": \"sb1\"\r\n          }\r\n        ],\r\n        \"serviceBusTopics\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=5s04XbxU1gL8Y5MYQ45mktspzgt8hQ+VobCLN7DMDV0=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n            \"name\": \"tp1\"\r\n          }\r\n        ],\r\n        \"eventHubs\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=Bx3JHw9KjQ6Vfr7cDvIw/klp/Ji+COyNnZwfRfgqW8k=;EntityPath=iothubcsharpsdkehtest\",\r\n            \"name\": \"eh1\"\r\n          }\r\n        ]\r\n      },\r\n      \"routes\": [\r\n        {\r\n          \"name\": \"route1\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"events\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route2\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"eh1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route3\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"sb1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route4\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"tp1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestBody": "{\r\n  \"subscriptionid\": \"377c3343-75bb-4244-98a3-0fb84a830c4b\",\r\n  \"resourcegroup\": \"DotNetHubRG\",\r\n  \"properties\": {\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=hUfDo5A/1V0Pk22lOltQJmBSGAVxI8LLLqIbh8BRfbI=;EntityPath=iotHubCSharpSDKSBTest\",\r\n            \"name\": \"sb1\"\r\n          }\r\n        ],\r\n        \"serviceBusTopics\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=nFxA5pOXq3ZBhFVwZPZl9UUFpP3KMwuxOf0XaTE1qjA=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n            \"name\": \"tp1\"\r\n          }\r\n        ],\r\n        \"eventHubs\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=hCs2+9nfp+WFCByrUnYkDdbPQ0TGNZzjyAJpmSv6QPA=;EntityPath=iothubcsharpsdkehtest\",\r\n            \"name\": \"eh1\"\r\n          }\r\n        ]\r\n      },\r\n      \"routes\": [\r\n        {\r\n          \"name\": \"route1\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"events\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route2\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"eh1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route3\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"sb1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route4\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"tp1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1022,20 +1199,20 @@
           "2180"
         ],
         "x-ms-client-request-id": [
-          "4121ef69-7194-4787-acd3-c486cbb83efa"
+          "810056d4-288b-4e97-9cea-9cc82b687223"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"DotNetHub\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"WestUS\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"91d12660-3dec-467a-be2a-213b5544ddc0\",\r\n  \"resourcegroup\": \"DotNetHubRG\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=WrE24PkIL0JjKoYC8mzKRWqVGUq8BPOoOZTxTedJ6PM=;EntityPath=iotHubCSharpSDKSBTest\",\r\n            \"name\": \"sb1\",\r\n            \"id\": \"f9ff1d08-4f43-4fe6-bd23-168a8bc4f47c\"\r\n          }\r\n        ],\r\n        \"serviceBusTopics\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=5s04XbxU1gL8Y5MYQ45mktspzgt8hQ+VobCLN7DMDV0=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n            \"name\": \"tp1\",\r\n            \"id\": \"8f05f087-c932-49cb-8b51-c21b5d2d0218\"\r\n          }\r\n        ],\r\n        \"eventHubs\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=Bx3JHw9KjQ6Vfr7cDvIw/klp/Ji+COyNnZwfRfgqW8k=;EntityPath=iothubcsharpsdkehtest\",\r\n            \"name\": \"eh1\",\r\n            \"id\": \"87939828-abe5-47e3-9e09-6068af2d2d8a\"\r\n          }\r\n        ]\r\n      },\r\n      \"routes\": [\r\n        {\r\n          \"name\": \"route1\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"events\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route2\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"eh1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route3\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"sb1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route4\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"tp1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        }\r\n      ],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\",\r\n    \"generationNumber\": 0\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"DotNetHub\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"WestUS\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"377c3343-75bb-4244-98a3-0fb84a830c4b\",\r\n  \"resourcegroup\": \"DotNetHubRG\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=hUfDo5A/1V0Pk22lOltQJmBSGAVxI8LLLqIbh8BRfbI=;EntityPath=iotHubCSharpSDKSBTest\",\r\n            \"name\": \"sb1\",\r\n            \"id\": \"c0514fa2-2763-406c-b109-39f8b2ba1e05\"\r\n          }\r\n        ],\r\n        \"serviceBusTopics\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=nFxA5pOXq3ZBhFVwZPZl9UUFpP3KMwuxOf0XaTE1qjA=;EntityPath=iotHubCSharpSDKTopicTest\",\r\n            \"name\": \"tp1\",\r\n            \"id\": \"04bdfbde-b6ca-4127-8169-f9fd98f3fded\"\r\n          }\r\n        ],\r\n        \"eventHubs\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=hCs2+9nfp+WFCByrUnYkDdbPQ0TGNZzjyAJpmSv6QPA=;EntityPath=iothubcsharpsdkehtest\",\r\n            \"name\": \"eh1\",\r\n            \"id\": \"c5df8d2c-fb69-4af4-91df-7af69d49c945\"\r\n          }\r\n        ],\r\n        \"storageContainers\": []\r\n      },\r\n      \"routes\": [\r\n        {\r\n          \"name\": \"route1\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"events\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route2\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"eh1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route3\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"sb1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route4\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"tp1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        }\r\n      ],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2174"
+          "2176"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1047,7 +1224,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:44:03 GMT"
+          "Tue, 07 Nov 2017 02:52:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1056,19 +1233,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo"
+          "https://management.azure.com/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "4999"
         ],
         "x-ms-request-id": [
-          "c4922da0-c761-4daa-a0cf-fe2945e239c5"
+          "a9291efb-6b22-4fda-bee4-ef6c4425ece4"
         ],
         "x-ms-correlation-request-id": [
-          "c4922da0-c761-4daa-a0cf-fe2945e239c5"
+          "a9291efb-6b22-4fda-bee4-ef6c4425ece4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204404Z:c4922da0-c761-4daa-a0cf-fe2945e239c5"
+          "WESTUS2:20171107T025232Z:a9291efb-6b22-4fda-bee4-ef6c4425ece4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1077,14 +1254,14 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1099,7 +1276,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:44:34 GMT"
+          "Tue, 07 Nov 2017 02:53:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1114,16 +1291,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14949"
+          "14983"
         ],
         "x-ms-request-id": [
-          "722e0e13-c817-48c8-a13c-d6df30db30c7"
+          "54c17960-c5c7-4aeb-afd9-668a56fbf980"
         ],
         "x-ms-correlation-request-id": [
-          "722e0e13-c817-48c8-a13c-d6df30db30c7"
+          "54c17960-c5c7-4aeb-afd9-668a56fbf980"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204434Z:722e0e13-c817-48c8-a13c-d6df30db30c7"
+          "WESTUS2:20171107T025302Z:54c17960-c5c7-4aeb-afd9-668a56fbf980"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1132,14 +1309,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1154,7 +1331,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:45:04 GMT"
+          "Tue, 07 Nov 2017 02:53:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1169,16 +1346,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14950"
+          "14982"
         ],
         "x-ms-request-id": [
-          "560ac6ae-308c-4652-bdcc-2d8a74733005"
+          "db2c5318-7471-4304-b2a3-72bc8228c8bc"
         ],
         "x-ms-correlation-request-id": [
-          "560ac6ae-308c-4652-bdcc-2d8a74733005"
+          "db2c5318-7471-4304-b2a3-72bc8228c8bc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204504Z:560ac6ae-308c-4652-bdcc-2d8a74733005"
+          "WESTUS2:20171107T025332Z:db2c5318-7471-4304-b2a3-72bc8228c8bc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1187,14 +1364,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1209,7 +1386,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:45:34 GMT"
+          "Tue, 07 Nov 2017 02:54:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1224,16 +1401,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14949"
+          "14981"
         ],
         "x-ms-request-id": [
-          "cfcf8af6-7840-459e-b7d8-9630ee8376e1"
+          "8104a639-8d6e-4aaf-b4de-178c1c1b3e3f"
         ],
         "x-ms-correlation-request-id": [
-          "cfcf8af6-7840-459e-b7d8-9630ee8376e1"
+          "8104a639-8d6e-4aaf-b4de-178c1c1b3e3f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204534Z:cfcf8af6-7840-459e-b7d8-9630ee8376e1"
+          "WESTUS2:20171107T025403Z:8104a639-8d6e-4aaf-b4de-178c1c1b3e3f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1242,14 +1419,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1264,7 +1441,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:46:04 GMT"
+          "Tue, 07 Nov 2017 02:54:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1279,16 +1456,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14947"
+          "14980"
         ],
         "x-ms-request-id": [
-          "13d2d199-e064-4242-822d-7e24f71d49ff"
+          "957c0169-6920-438d-aa22-5ba448eaeef2"
         ],
         "x-ms-correlation-request-id": [
-          "13d2d199-e064-4242-822d-7e24f71d49ff"
+          "957c0169-6920-438d-aa22-5ba448eaeef2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204604Z:13d2d199-e064-4242-822d-7e24f71d49ff"
+          "WESTUS2:20171107T025433Z:957c0169-6920-438d-aa22-5ba448eaeef2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1297,14 +1474,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1319,7 +1496,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:46:34 GMT"
+          "Tue, 07 Nov 2017 02:55:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1334,16 +1511,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14946"
+          "14981"
         ],
         "x-ms-request-id": [
-          "0655f343-d9f0-461a-a801-d5894021d012"
+          "bf73c00d-a21d-4487-a5a1-d1246a0f8cff"
         ],
         "x-ms-correlation-request-id": [
-          "0655f343-d9f0-461a-a801-d5894021d012"
+          "bf73c00d-a21d-4487-a5a1-d1246a0f8cff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204634Z:0655f343-d9f0-461a-a801-d5894021d012"
+          "WESTUS2:20171107T025503Z:bf73c00d-a21d-4487-a5a1-d1246a0f8cff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1352,14 +1529,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1374,7 +1551,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:47:04 GMT"
+          "Tue, 07 Nov 2017 02:55:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1389,16 +1566,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14944"
+          "14980"
         ],
         "x-ms-request-id": [
-          "7e48059c-11f0-4d74-9a28-32de07af15e9"
+          "4a9dd6b4-4423-4b44-a4de-4aa06641fc17"
         ],
         "x-ms-correlation-request-id": [
-          "7e48059c-11f0-4d74-9a28-32de07af15e9"
+          "4a9dd6b4-4423-4b44-a4de-4aa06641fc17"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204705Z:7e48059c-11f0-4d74-9a28-32de07af15e9"
+          "WESTUS2:20171107T025533Z:4a9dd6b4-4423-4b44-a4de-4aa06641fc17"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1407,14 +1584,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
@@ -1429,7 +1606,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:47:35 GMT"
+          "Tue, 07 Nov 2017 02:56:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1444,16 +1621,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14943"
+          "14979"
         ],
         "x-ms-request-id": [
-          "ad14830e-fe60-431e-8ed5-0a4bbfd62c6b"
+          "cb092727-da4a-4864-90f7-361465a73626"
         ],
         "x-ms-correlation-request-id": [
-          "ad14830e-fe60-431e-8ed5-0a4bbfd62c6b"
+          "cb092727-da4a-4864-90f7-361465a73626"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204735Z:ad14830e-fe60-431e-8ed5-0a4bbfd62c6b"
+          "WESTUS2:20171107T025603Z:cb092727-da4a-4864-90f7-361465a73626"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1462,124 +1639,14 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/b3NfaWhfMzg1YzBjM2YtYjUwYi00OGE1LTg0ZGItYTk1ZjViZjliYzUy?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL2IzTmZhV2hmTXpnMVl6QmpNMll0WWpVd1lpMDBPR0UxTFRnMFpHSXRZVGsxWmpWaVpqbGlZelV5P2FwaS12ZXJzaW9uPTIwMTctMDctMDEmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:48:05 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14942"
-        ],
-        "x-ms-request-id": [
-          "c17c0b28-a0e3-428c-a17e-64f7300a2e5f"
-        ],
-        "x-ms-correlation-request-id": [
-          "c17c0b28-a0e3-428c-a17e-64f7300a2e5f"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204805Z:c17c0b28-a0e3-428c-a17e-64f7300a2e5f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 02 May 2017 20:48:35 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14941"
-        ],
-        "x-ms-request-id": [
-          "e96569d7-185b-46c7-85e8-aefe835c2866"
-        ],
-        "x-ms-correlation-request-id": [
-          "e96569d7-185b-46c7-85e8-aefe835c2866"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204835Z:e96569d7-185b-46c7-85e8-aefe835c2866"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/operationResults/MWYwNzc5MzktYmVhMy00ODk4LThmNjYtMTFjNWJhNTc1ZTAz?api-version=2017-01-19&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9vcGVyYXRpb25SZXN1bHRzL01XWXdOemM1TXprdFltVmhNeTAwT0RrNExUaG1Oall0TVRGak5XSmhOVGMxWlRBej9hcGktdmVyc2lvbj0yMDE3LTAxLTE5JmFzeW5jaW5mbw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -1594,7 +1661,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:05 GMT"
+          "Tue, 07 Nov 2017 02:56:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1609,16 +1676,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14939"
+          "14978"
         ],
         "x-ms-request-id": [
-          "a6a2a2e4-cee8-4ca1-bbcc-b5bf970ae750"
+          "f8a9e343-574b-4e49-a051-9fcc57bfbf56"
         ],
         "x-ms-correlation-request-id": [
-          "a6a2a2e4-cee8-4ca1-bbcc-b5bf970ae750"
+          "f8a9e343-574b-4e49-a051-9fcc57bfbf56"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204905Z:a6a2a2e4-cee8-4ca1-bbcc-b5bf970ae750"
+          "WESTUS2:20171107T025633Z:f8a9e343-574b-4e49-a051-9fcc57bfbf56"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1627,17 +1694,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yj9hcGktdmVyc2lvbj0yMDE3LTAxLTE5",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yj9hcGktdmVyc2lvbj0yMDE3LTA3LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"DotNetHub\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"WestUS\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"91d12660-3dec-467a-be2a-213b5544ddc0\",\r\n  \"resourcegroup\": \"DotNetHubRG\",\r\n  \"etag\": \"AAAAAADqa4g=\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipFilterRules\": [],\r\n    \"hostName\": \"DotNetHub.azure-devices.net\",\r\n    \"eventHubEndpoints\": {\r\n      \"events\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"dotnethub\",\r\n        \"endpoint\": \"sb://iothub-ns-dotnethub-155813-ce05581c0c.servicebus.windows.net/\"\r\n      },\r\n      \"operationsMonitoringEvents\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"dotnethub-operationmonitoring\",\r\n        \"endpoint\": \"sb://iothub-ns-dotnethub-155813-ce05581c0c.servicebus.windows.net/\"\r\n      }\r\n    },\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKSBTest\",\r\n            \"name\": \"sb1\",\r\n            \"id\": \"f9ff1d08-4f43-4fe6-bd23-168a8bc4f47c\"\r\n          }\r\n        ],\r\n        \"serviceBusTopics\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKTopicTest\",\r\n            \"name\": \"tp1\",\r\n            \"id\": \"8f05f087-c932-49cb-8b51-c21b5d2d0218\"\r\n          }\r\n        ],\r\n        \"eventHubs\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=****;EntityPath=iothubcsharpsdkehtest\",\r\n            \"name\": \"eh1\",\r\n            \"id\": \"87939828-abe5-47e3-9e09-6068af2d2d8a\"\r\n          }\r\n        ]\r\n      },\r\n      \"routes\": [\r\n        {\r\n          \"name\": \"route1\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"events\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route2\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"eh1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route3\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"sb1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route4\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"tp1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        }\r\n      ],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    \"storageEndpoints\": {\r\n      \"$default\": {\r\n        \"sasTtlAsIso8601\": \"PT1H\",\r\n        \"connectionString\": \"\",\r\n        \"containerName\": \"\"\r\n      }\r\n    },\r\n    \"messagingEndpoints\": {\r\n      \"fileNotifications\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"operationsMonitoringProperties\": {\r\n      \"events\": {\r\n        \"None\": \"None\",\r\n        \"Connections\": \"None\",\r\n        \"DeviceTelemetry\": \"None\",\r\n        \"C2DCommands\": \"None\",\r\n        \"DeviceIdentityOperations\": \"None\",\r\n        \"FileUploadOperations\": \"None\",\r\n        \"Routes\": \"None\"\r\n      }\r\n    },\r\n    \"features\": \"None\",\r\n    \"generationNumber\": 0\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"DotNetHub\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"WestUS\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"377c3343-75bb-4244-98a3-0fb84a830c4b\",\r\n  \"resourcegroup\": \"DotNetHubRG\",\r\n  \"etag\": \"AAAAAAE/kAU=\",\r\n  \"properties\": {\r\n    \"operationsMonitoringProperties\": {\r\n      \"events\": {\r\n        \"None\": \"None\",\r\n        \"Connections\": \"None\",\r\n        \"DeviceTelemetry\": \"None\",\r\n        \"C2DCommands\": \"None\",\r\n        \"DeviceIdentityOperations\": \"None\",\r\n        \"FileUploadOperations\": \"None\",\r\n        \"Routes\": \"None\"\r\n      }\r\n    },\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipFilterRules\": [],\r\n    \"hostName\": \"DotNetHub.azure-devices.net\",\r\n    \"eventHubEndpoints\": {\r\n      \"events\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"dotnethub\",\r\n        \"endpoint\": \"sb://iothub-ns-dotnethub-255879-99fb4c8160.servicebus.windows.net/\"\r\n      },\r\n      \"operationsMonitoringEvents\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"dotnethub-operationmonitoring\",\r\n        \"endpoint\": \"sb://iothub-ns-dotnethub-255879-99fb4c8160.servicebus.windows.net/\"\r\n      }\r\n    },\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKSBTest\",\r\n            \"name\": \"sb1\",\r\n            \"id\": \"c0514fa2-2763-406c-b109-39f8b2ba1e05\"\r\n          }\r\n        ],\r\n        \"serviceBusTopics\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKTopicTest\",\r\n            \"name\": \"tp1\",\r\n            \"id\": \"04bdfbde-b6ca-4127-8169-f9fd98f3fded\"\r\n          }\r\n        ],\r\n        \"eventHubs\": [\r\n          {\r\n            \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=****;EntityPath=iothubcsharpsdkehtest\",\r\n            \"name\": \"eh1\",\r\n            \"id\": \"c5df8d2c-fb69-4af4-91df-7af69d49c945\"\r\n          }\r\n        ],\r\n        \"storageContainers\": []\r\n      },\r\n      \"routes\": [\r\n        {\r\n          \"name\": \"route1\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"events\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route2\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"eh1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route3\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"sb1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        },\r\n        {\r\n          \"name\": \"route4\",\r\n          \"source\": \"DeviceMessages\",\r\n          \"condition\": \"true\",\r\n          \"endpointNames\": [\r\n            \"tp1\"\r\n          ],\r\n          \"isEnabled\": true\r\n        }\r\n      ],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    \"storageEndpoints\": {\r\n      \"$default\": {\r\n        \"sasTtlAsIso8601\": \"PT1H\",\r\n        \"connectionString\": \"\",\r\n        \"containerName\": \"\"\r\n      }\r\n    },\r\n    \"messagingEndpoints\": {\r\n      \"fileNotifications\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1649,7 +1716,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:05 GMT"
+          "Tue, 07 Nov 2017 02:56:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1664,16 +1731,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14938"
+          "14977"
         ],
         "x-ms-request-id": [
-          "13de6bfc-724a-4254-bee8-3a110ff78c4f"
+          "031ba936-5e18-46d0-a17e-0001ea3b1e30"
         ],
         "x-ms-correlation-request-id": [
-          "13de6bfc-724a-4254-bee8-3a110ff78c4f"
+          "031ba936-5e18-46d0-a17e-0001ea3b1e30"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204905Z:13de6bfc-724a-4254-bee8-3a110ff78c4f"
+          "WESTUS2:20171107T025633Z:031ba936-5e18-46d0-a17e-0001ea3b1e30"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1682,20 +1749,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/quotaMetrics?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9xdW90YU1ldHJpY3M/YXBpLXZlcnNpb249MjAxNy0wMS0xOQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/quotaMetrics?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9xdW90YU1ldHJpY3M/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "096f850d-1e1c-412b-b0d1-e1e7a46b8365"
+          "c7534211-cfd7-4e6e-bc42-cf8ce524dec0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"Name\": \"TotalMessages\",\r\n      \"CurrentValue\": 0,\r\n      \"MaxValue\": 400000\r\n    },\r\n    {\r\n      \"Name\": \"TotalDeviceCount\",\r\n      \"CurrentValue\": 0,\r\n      \"MaxValue\": 500000\r\n    }\r\n  ]\r\n}",
@@ -1710,7 +1777,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:06 GMT"
+          "Tue, 07 Nov 2017 02:56:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1725,16 +1792,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14937"
+          "14976"
         ],
         "x-ms-request-id": [
-          "8f9eee28-a274-4fcb-b298-75b1cd21cb4d"
+          "19e5e22f-2abe-49ff-8fb9-43fe79909df1"
         ],
         "x-ms-correlation-request-id": [
-          "8f9eee28-a274-4fcb-b298-75b1cd21cb4d"
+          "19e5e22f-2abe-49ff-8fb9-43fe79909df1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204906Z:8f9eee28-a274-4fcb-b298-75b1cd21cb4d"
+          "WESTUS2:20171107T025634Z:19e5e22f-2abe-49ff-8fb9-43fe79909df1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1743,23 +1810,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzP2FwaS12ZXJzaW9uPTIwMTctMDEtMTk=",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzP2FwaS12ZXJzaW9uPTIwMTctMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "022e2bfb-c165-4ebd-ad92-766203a44266"
+          "6e37efdf-ade3-4d91-9da1-68c8cc268439"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n      \"name\": \"DotNetHub\",\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"location\": \"WestUS\",\r\n      \"tags\": {},\r\n      \"subscriptionid\": \"91d12660-3dec-467a-be2a-213b5544ddc0\",\r\n      \"resourcegroup\": \"DotNetHubRG\",\r\n      \"etag\": \"AAAAAADqa4g=\",\r\n      \"properties\": {\r\n        \"state\": \"Active\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"ipFilterRules\": [],\r\n        \"hostName\": \"DotNetHub.azure-devices.net\",\r\n        \"eventHubEndpoints\": {\r\n          \"events\": {\r\n            \"retentionTimeInDays\": 1,\r\n            \"partitionCount\": 4,\r\n            \"partitionIds\": [\r\n              \"0\",\r\n              \"1\",\r\n              \"2\",\r\n              \"3\"\r\n            ],\r\n            \"path\": \"dotnethub\",\r\n            \"endpoint\": \"sb://iothub-ns-dotnethub-155813-ce05581c0c.servicebus.windows.net/\"\r\n          },\r\n          \"operationsMonitoringEvents\": {\r\n            \"retentionTimeInDays\": 1,\r\n            \"partitionCount\": 4,\r\n            \"partitionIds\": [\r\n              \"0\",\r\n              \"1\",\r\n              \"2\",\r\n              \"3\"\r\n            ],\r\n            \"path\": \"dotnethub-operationmonitoring\",\r\n            \"endpoint\": \"sb://iothub-ns-dotnethub-155813-ce05581c0c.servicebus.windows.net/\"\r\n          }\r\n        },\r\n        \"routing\": {\r\n          \"endpoints\": {\r\n            \"serviceBusQueues\": [\r\n              {\r\n                \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKSBTest\",\r\n                \"name\": \"sb1\",\r\n                \"id\": \"f9ff1d08-4f43-4fe6-bd23-168a8bc4f47c\"\r\n              }\r\n            ],\r\n            \"serviceBusTopics\": [\r\n              {\r\n                \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKTopicTest\",\r\n                \"name\": \"tp1\",\r\n                \"id\": \"8f05f087-c932-49cb-8b51-c21b5d2d0218\"\r\n              }\r\n            ],\r\n            \"eventHubs\": [\r\n              {\r\n                \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=****;EntityPath=iothubcsharpsdkehtest\",\r\n                \"name\": \"eh1\",\r\n                \"id\": \"87939828-abe5-47e3-9e09-6068af2d2d8a\"\r\n              }\r\n            ]\r\n          },\r\n          \"routes\": [\r\n            {\r\n              \"name\": \"route1\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"events\"\r\n              ],\r\n              \"isEnabled\": true\r\n            },\r\n            {\r\n              \"name\": \"route2\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"eh1\"\r\n              ],\r\n              \"isEnabled\": true\r\n            },\r\n            {\r\n              \"name\": \"route3\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"sb1\"\r\n              ],\r\n              \"isEnabled\": true\r\n            },\r\n            {\r\n              \"name\": \"route4\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"tp1\"\r\n              ],\r\n              \"isEnabled\": true\r\n            }\r\n          ],\r\n          \"fallbackRoute\": {\r\n            \"name\": \"$fallback\",\r\n            \"source\": \"DeviceMessages\",\r\n            \"condition\": \"true\",\r\n            \"endpointNames\": [\r\n              \"events\"\r\n            ],\r\n            \"isEnabled\": false\r\n          }\r\n        },\r\n        \"storageEndpoints\": {\r\n          \"$default\": {\r\n            \"sasTtlAsIso8601\": \"PT1H\",\r\n            \"connectionString\": \"\",\r\n            \"containerName\": \"\"\r\n          }\r\n        },\r\n        \"messagingEndpoints\": {\r\n          \"fileNotifications\": {\r\n            \"lockDurationAsIso8601\": \"PT1M\",\r\n            \"ttlAsIso8601\": \"PT1H\",\r\n            \"maxDeliveryCount\": 10\r\n          }\r\n        },\r\n        \"enableFileUploadNotifications\": false,\r\n        \"cloudToDevice\": {\r\n          \"maxDeliveryCount\": 10,\r\n          \"defaultTtlAsIso8601\": \"PT1H\",\r\n          \"feedback\": {\r\n            \"lockDurationAsIso8601\": \"PT1M\",\r\n            \"ttlAsIso8601\": \"PT1H\",\r\n            \"maxDeliveryCount\": 10\r\n          }\r\n        },\r\n        \"operationsMonitoringProperties\": {\r\n          \"events\": {\r\n            \"None\": \"None\",\r\n            \"Connections\": \"None\",\r\n            \"DeviceTelemetry\": \"None\",\r\n            \"C2DCommands\": \"None\",\r\n            \"DeviceIdentityOperations\": \"None\",\r\n            \"FileUploadOperations\": \"None\",\r\n            \"Routes\": \"None\"\r\n          }\r\n        },\r\n        \"features\": \"None\",\r\n        \"generationNumber\": 0\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n      \"name\": \"DotNetHub\",\r\n      \"type\": \"Microsoft.Devices/IotHubs\",\r\n      \"location\": \"WestUS\",\r\n      \"tags\": {},\r\n      \"subscriptionid\": \"377c3343-75bb-4244-98a3-0fb84a830c4b\",\r\n      \"resourcegroup\": \"DotNetHubRG\",\r\n      \"etag\": \"AAAAAAE/kAU=\",\r\n      \"properties\": {\r\n        \"operationsMonitoringProperties\": {\r\n          \"events\": {\r\n            \"None\": \"None\",\r\n            \"Connections\": \"None\",\r\n            \"DeviceTelemetry\": \"None\",\r\n            \"C2DCommands\": \"None\",\r\n            \"DeviceIdentityOperations\": \"None\",\r\n            \"FileUploadOperations\": \"None\",\r\n            \"Routes\": \"None\"\r\n          }\r\n        },\r\n        \"state\": \"Active\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"ipFilterRules\": [],\r\n        \"hostName\": \"DotNetHub.azure-devices.net\",\r\n        \"eventHubEndpoints\": {\r\n          \"events\": {\r\n            \"retentionTimeInDays\": 1,\r\n            \"partitionCount\": 4,\r\n            \"partitionIds\": [\r\n              \"0\",\r\n              \"1\",\r\n              \"2\",\r\n              \"3\"\r\n            ],\r\n            \"path\": \"dotnethub\",\r\n            \"endpoint\": \"sb://iothub-ns-dotnethub-255879-99fb4c8160.servicebus.windows.net/\"\r\n          },\r\n          \"operationsMonitoringEvents\": {\r\n            \"retentionTimeInDays\": 1,\r\n            \"partitionCount\": 4,\r\n            \"partitionIds\": [\r\n              \"0\",\r\n              \"1\",\r\n              \"2\",\r\n              \"3\"\r\n            ],\r\n            \"path\": \"dotnethub-operationmonitoring\",\r\n            \"endpoint\": \"sb://iothub-ns-dotnethub-255879-99fb4c8160.servicebus.windows.net/\"\r\n          }\r\n        },\r\n        \"routing\": {\r\n          \"endpoints\": {\r\n            \"serviceBusQueues\": [\r\n              {\r\n                \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKSBTest\",\r\n                \"name\": \"sb1\",\r\n                \"id\": \"c0514fa2-2763-406c-b109-39f8b2ba1e05\"\r\n              }\r\n            ],\r\n            \"serviceBusTopics\": [\r\n              {\r\n                \"connectionString\": \"Endpoint=sb://iothubcsharpsdksbnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iotHubCSharpSDKSBTopicTestRule;SharedAccessKey=****;EntityPath=iotHubCSharpSDKTopicTest\",\r\n                \"name\": \"tp1\",\r\n                \"id\": \"04bdfbde-b6ca-4127-8169-f9fd98f3fded\"\r\n              }\r\n            ],\r\n            \"eventHubs\": [\r\n              {\r\n                \"connectionString\": \"Endpoint=sb://iothubcsharpsdkehnamespacetest.servicebus.windows.net:5671/;SharedAccessKeyName=iothubcsharpsdkehtestrule;SharedAccessKey=****;EntityPath=iothubcsharpsdkehtest\",\r\n                \"name\": \"eh1\",\r\n                \"id\": \"c5df8d2c-fb69-4af4-91df-7af69d49c945\"\r\n              }\r\n            ],\r\n            \"storageContainers\": []\r\n          },\r\n          \"routes\": [\r\n            {\r\n              \"name\": \"route1\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"events\"\r\n              ],\r\n              \"isEnabled\": true\r\n            },\r\n            {\r\n              \"name\": \"route2\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"eh1\"\r\n              ],\r\n              \"isEnabled\": true\r\n            },\r\n            {\r\n              \"name\": \"route3\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"sb1\"\r\n              ],\r\n              \"isEnabled\": true\r\n            },\r\n            {\r\n              \"name\": \"route4\",\r\n              \"source\": \"DeviceMessages\",\r\n              \"condition\": \"true\",\r\n              \"endpointNames\": [\r\n                \"tp1\"\r\n              ],\r\n              \"isEnabled\": true\r\n            }\r\n          ],\r\n          \"fallbackRoute\": {\r\n            \"name\": \"$fallback\",\r\n            \"source\": \"DeviceMessages\",\r\n            \"condition\": \"true\",\r\n            \"endpointNames\": [\r\n              \"events\"\r\n            ],\r\n            \"isEnabled\": false\r\n          }\r\n        },\r\n        \"storageEndpoints\": {\r\n          \"$default\": {\r\n            \"sasTtlAsIso8601\": \"PT1H\",\r\n            \"connectionString\": \"\",\r\n            \"containerName\": \"\"\r\n          }\r\n        },\r\n        \"messagingEndpoints\": {\r\n          \"fileNotifications\": {\r\n            \"lockDurationAsIso8601\": \"PT1M\",\r\n            \"ttlAsIso8601\": \"PT1H\",\r\n            \"maxDeliveryCount\": 10\r\n          }\r\n        },\r\n        \"enableFileUploadNotifications\": false,\r\n        \"cloudToDevice\": {\r\n          \"maxDeliveryCount\": 10,\r\n          \"defaultTtlAsIso8601\": \"PT1H\",\r\n          \"feedback\": {\r\n            \"lockDurationAsIso8601\": \"PT1M\",\r\n            \"ttlAsIso8601\": \"PT1H\",\r\n            \"maxDeliveryCount\": 10\r\n          }\r\n        },\r\n        \"features\": \"None\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1771,7 +1838,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:06 GMT"
+          "Tue, 07 Nov 2017 02:56:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1786,16 +1853,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14936"
+          "14975"
         ],
         "x-ms-request-id": [
-          "21e1b6e4-0811-4233-bca1-e9a1ef9651cc"
+          "9dc8ea07-2d4d-40d4-aec2-8a86ce8bf6f9"
         ],
         "x-ms-correlation-request-id": [
-          "21e1b6e4-0811-4233-bca1-e9a1ef9651cc"
+          "9dc8ea07-2d4d-40d4-aec2-8a86ce8bf6f9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204906Z:21e1b6e4-0811-4233-bca1-e9a1ef9651cc"
+          "WESTUS2:20171107T025634Z:9dc8ea07-2d4d-40d4-aec2-8a86ce8bf6f9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1804,20 +1871,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/skus?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9za3VzP2FwaS12ZXJzaW9uPTIwMTctMDEtMTk=",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/skus?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9za3VzP2FwaS12ZXJzaW9uPTIwMTctMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "414ba3aa-8f93-41db-a153-2c0c10c580e0"
+          "cc2613d3-ce04-4d45-be46-15ee34957e48"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceType\": \"Microsoft.Devices/IotHubs\",\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"capacity\": {\r\n        \"minimum\": 1,\r\n        \"maximum\": 200,\r\n        \"default\": 1,\r\n        \"scaleType\": \"Manual\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.Devices/IotHubs\",\r\n      \"sku\": {\r\n        \"name\": \"S2\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"capacity\": {\r\n        \"minimum\": 1,\r\n        \"maximum\": 200,\r\n        \"default\": 1,\r\n        \"scaleType\": \"Manual\"\r\n      }\r\n    },\r\n    {\r\n      \"resourceType\": \"Microsoft.Devices/IotHubs\",\r\n      \"sku\": {\r\n        \"name\": \"S3\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"capacity\": {\r\n        \"minimum\": 1,\r\n        \"maximum\": 10,\r\n        \"default\": 1,\r\n        \"scaleType\": \"Manual\"\r\n      }\r\n    }\r\n  ]\r\n}",
@@ -1832,7 +1899,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:06 GMT"
+          "Tue, 07 Nov 2017 02:56:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1847,16 +1914,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14935"
+          "14974"
         ],
         "x-ms-request-id": [
-          "25f992b1-c7eb-4303-ad90-d15ea24db0dc"
+          "4d1fb83d-49f0-4e0f-91b6-8fd1f30b25dc"
         ],
         "x-ms-correlation-request-id": [
-          "25f992b1-c7eb-4303-ad90-d15ea24db0dc"
+          "4d1fb83d-49f0-4e0f-91b6-8fd1f30b25dc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204906Z:25f992b1-c7eb-4303-ad90-d15ea24db0dc"
+          "WESTUS2:20171107T025634Z:4d1fb83d-49f0-4e0f-91b6-8fd1f30b25dc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1865,23 +1932,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/listkeys?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9saXN0a2V5cz9hcGktdmVyc2lvbj0yMDE3LTAxLTE5",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/listkeys?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9saXN0a2V5cz9hcGktdmVyc2lvbj0yMDE3LTA3LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24244876-90a1-4e07-9721-0b801066d759"
+          "56959352-12a7-4bd3-a5b5-2d779c77d583"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"keyName\": \"iothubowner\",\r\n      \"primaryKey\": \"avpeXiFNvLmeYZyVnjlXzJBrWUsh/tN6FmXJzGeagOA=\",\r\n      \"secondaryKey\": \"2IAZMVYyjsxr6hf9S9s+ed3YwU+LoF3nTnwBTJo7KUM=\",\r\n      \"rights\": \"RegistryWrite, ServiceConnect, DeviceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"service\",\r\n      \"primaryKey\": \"5UIGpFCSu2IaEBd7I7T04U7t95RNQa/GpIzLF3zGf6I=\",\r\n      \"secondaryKey\": \"BJEjDAJ81iM8N8+3wckFCtd2WhcXhr+s0SN8Wk6KIZo=\",\r\n      \"rights\": \"ServiceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"device\",\r\n      \"primaryKey\": \"T0inxPpSgmn0c+XVNamL4Lr7737HDnqbspXAUts3iEw=\",\r\n      \"secondaryKey\": \"b70yRdwufEaliBHtvNroVN2oZBW2f4XphHxpC70sARk=\",\r\n      \"rights\": \"DeviceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"registryRead\",\r\n      \"primaryKey\": \"Q3QLIlx/MQetpD8U/U0NDHjGjc1G2IrriL7e9ttk/9c=\",\r\n      \"secondaryKey\": \"N6bVZs9DZJV5hEnG6WxULQzDx2ABoUuc92OP3Qestyo=\",\r\n      \"rights\": \"RegistryRead\"\r\n    },\r\n    {\r\n      \"keyName\": \"registryReadWrite\",\r\n      \"primaryKey\": \"DHZGl8qgK7BG3t46xQpNfDbuQJQqmuLXQIsF4YuEn7o=\",\r\n      \"secondaryKey\": \"TOf8N+eJnXJx56Zk/8jFXrDveKTQApB7UUL2skljWsw=\",\r\n      \"rights\": \"RegistryWrite\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"keyName\": \"iothubowner\",\r\n      \"primaryKey\": \"77/5se2FVWpVX+KdRf890ju4jyzn6nEUUzJ2PscnykA=\",\r\n      \"secondaryKey\": \"3BUx6u/R95PRR6w8gRjyCGmEBIMgmv7tRxSiwy/Aln4=\",\r\n      \"rights\": \"RegistryWrite, ServiceConnect, DeviceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"service\",\r\n      \"primaryKey\": \"q+itcZUD8LOjT7W3QGNwpNG2iKP2SPoJGCYaDom2fco=\",\r\n      \"secondaryKey\": \"yPX/FuP2dGIjA+famgXvhNQFJr4/hXIukFqUsS8qW7w=\",\r\n      \"rights\": \"ServiceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"device\",\r\n      \"primaryKey\": \"JaZldcsLF8Ny+A/+K6mNxojgG2g5HRuu3VhN6XA+H7E=\",\r\n      \"secondaryKey\": \"gKZ2bhep0NBh2O16jM5rTRoM64Y3BFHElZyFlnb6LBQ=\",\r\n      \"rights\": \"DeviceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"registryRead\",\r\n      \"primaryKey\": \"fziLX1B7PpxhXUf2yjzbjuDPBxKDL/dLkQd9kGNZqXA=\",\r\n      \"secondaryKey\": \"3mnjwt9C8M0wgRA27j2pUqFG37uUzNRvvp0+2pG58bU=\",\r\n      \"rights\": \"RegistryRead\"\r\n    },\r\n    {\r\n      \"keyName\": \"registryReadWrite\",\r\n      \"primaryKey\": \"VoLdrMpa6qK7/zWdLN75XdA2kFtXrsOuXrKUvhJQNvE=\",\r\n      \"secondaryKey\": \"fij7fNRt1C/qsBwZDdhYg+9YaAOkT1h9ROBqBYyw5QI=\",\r\n      \"rights\": \"RegistryWrite\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1893,7 +1960,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:07 GMT"
+          "Tue, 07 Nov 2017 02:56:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1908,16 +1975,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+          "1199"
         ],
         "x-ms-request-id": [
-          "36623a95-b08f-47de-9ce2-69baf637eacc"
+          "da2a3489-3ce3-4540-92a1-6177eefbc0f3"
         ],
         "x-ms-correlation-request-id": [
-          "36623a95-b08f-47de-9ce2-69baf637eacc"
+          "da2a3489-3ce3-4540-92a1-6177eefbc0f3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204907Z:36623a95-b08f-47de-9ce2-69baf637eacc"
+          "WESTUS2:20171107T025634Z:da2a3489-3ce3-4540-92a1-6177eefbc0f3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1926,23 +1993,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/IotHubKeys/iothubowner/listkeys?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9Jb3RIdWJLZXlzL2lvdGh1Ym93bmVyL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMTctMDEtMTk=",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/IotHubKeys/iothubowner/listkeys?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9Jb3RIdWJLZXlzL2lvdGh1Ym93bmVyL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMTctMDctMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e3fb4dd3-1c39-4bbe-94a6-cfffedfd2359"
+          "6960c671-05bb-413c-bbf6-bed840028007"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"keyName\": \"iothubowner\",\r\n  \"primaryKey\": \"avpeXiFNvLmeYZyVnjlXzJBrWUsh/tN6FmXJzGeagOA=\",\r\n  \"secondaryKey\": \"2IAZMVYyjsxr6hf9S9s+ed3YwU+LoF3nTnwBTJo7KUM=\",\r\n  \"rights\": \"RegistryWrite, ServiceConnect, DeviceConnect\"\r\n}",
+      "ResponseBody": "{\r\n  \"keyName\": \"iothubowner\",\r\n  \"primaryKey\": \"77/5se2FVWpVX+KdRf890ju4jyzn6nEUUzJ2PscnykA=\",\r\n  \"secondaryKey\": \"3BUx6u/R95PRR6w8gRjyCGmEBIMgmv7tRxSiwy/Aln4=\",\r\n  \"rights\": \"RegistryWrite, ServiceConnect, DeviceConnect\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1954,7 +2021,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:07 GMT"
+          "Tue, 07 Nov 2017 02:56:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1969,16 +2036,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
+          "1198"
         ],
         "x-ms-request-id": [
-          "d1ed8fbe-bffc-46fc-82d2-1563ab19aad0"
+          "6ad6a5b4-3ae9-4b44-a7ab-1ffd188e193e"
         ],
         "x-ms-correlation-request-id": [
-          "d1ed8fbe-bffc-46fc-82d2-1563ab19aad0"
+          "6ad6a5b4-3ae9-4b44-a7ab-1ffd188e193e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204907Z:d1ed8fbe-bffc-46fc-82d2-1563ab19aad0"
+          "WESTUS2:20171107T025635Z:6ad6a5b4-3ae9-4b44-a7ab-1ffd188e193e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1987,20 +2054,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHM/YXBpLXZlcnNpb249MjAxNy0wMS0xOQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHM/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f57cab7e-bbdf-49a4-88ed-6acc1c7b3686"
+          "6837be8e-a015-4492-92ba-d85b47adfeaa"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    \"$Default\"\r\n  ]\r\n}",
@@ -2015,7 +2082,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:07 GMT"
+          "Tue, 07 Nov 2017 02:56:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2030,16 +2097,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14934"
+          "14973"
         ],
         "x-ms-request-id": [
-          "7f67fd8c-9870-4fdb-be45-7e01d894b406"
+          "cf2a2ccf-187d-4f44-8ea3-e81ad3916af9"
         ],
         "x-ms-correlation-request-id": [
-          "7f67fd8c-9870-4fdb-be45-7e01d894b406"
+          "cf2a2ccf-187d-4f44-8ea3-e81ad3916af9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204907Z:7f67fd8c-9870-4fdb-be45-7e01d894b406"
+          "WESTUS2:20171107T025635Z:cf2a2ccf-187d-4f44-8ea3-e81ad3916af9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2048,23 +2115,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups/testConsumerGroup?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHMvdGVzdENvbnN1bWVyR3JvdXA/YXBpLXZlcnNpb249MjAxNy0wMS0xOQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups/testConsumerGroup?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHMvdGVzdENvbnN1bWVyR3JvdXA/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4cff0ba9-9159-4d24-94c4-f671c8617a89"
+          "baf9172c-8d57-47d4-ba8b-940c4093adcd"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"testConsumerGroup\"\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"testConsumerGroup\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2076,7 +2143,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:12 GMT"
+          "Tue, 07 Nov 2017 02:56:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2091,16 +2158,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
+          "1197"
         ],
         "x-ms-request-id": [
-          "bff0031f-1caf-44ec-b1a7-ac18dda8f285"
+          "3023ce4f-d8f8-45af-b4ab-fc9b35acf85f"
         ],
         "x-ms-correlation-request-id": [
-          "bff0031f-1caf-44ec-b1a7-ac18dda8f285"
+          "3023ce4f-d8f8-45af-b4ab-fc9b35acf85f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204912Z:bff0031f-1caf-44ec-b1a7-ac18dda8f285"
+          "WESTUS2:20171107T025637Z:3023ce4f-d8f8-45af-b4ab-fc9b35acf85f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2109,23 +2176,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups/testConsumerGroup?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHMvdGVzdENvbnN1bWVyR3JvdXA/YXBpLXZlcnNpb249MjAxNy0wMS0xOQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups/testConsumerGroup?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHMvdGVzdENvbnN1bWVyR3JvdXA/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f08dd83f-d083-4bc6-b0e8-7891a1a785f7"
+          "130f3a0e-29b8-49d4-b0e8-db709d3679f2"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"testConsumerGroup\"\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub\",\r\n  \"name\": \"testConsumerGroup\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2137,7 +2204,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:12 GMT"
+          "Tue, 07 Nov 2017 02:56:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2152,16 +2219,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14933"
+          "14972"
         ],
         "x-ms-request-id": [
-          "70ecdc36-f86f-4863-a3ff-42beb6b3c400"
+          "4a52121a-48bb-467d-b432-5408e2f6a70c"
         ],
         "x-ms-correlation-request-id": [
-          "70ecdc36-f86f-4863-a3ff-42beb6b3c400"
+          "4a52121a-48bb-467d-b432-5408e2f6a70c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204912Z:70ecdc36-f86f-4863-a3ff-42beb6b3c400"
+          "WESTUS2:20171107T025637Z:4a52121a-48bb-467d-b432-5408e2f6a70c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2170,20 +2237,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups/testConsumerGroup?api-version=2017-01-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHMvdGVzdENvbnN1bWVyR3JvdXA/YXBpLXZlcnNpb249MjAxNy0wMS0xOQ==",
+      "RequestUri": "/subscriptions/377c3343-75bb-4244-98a3-0fb84a830c4b/resourceGroups/DotNetHubRG/providers/Microsoft.Devices/IotHubs/DotNetHub/eventHubEndpoints/events/ConsumerGroups/testConsumerGroup?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzc3YzMzNDMtNzViYi00MjQ0LTk4YTMtMGZiODRhODMwYzRiL3Jlc291cmNlR3JvdXBzL0RvdE5ldEh1YlJHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL0RvdE5ldEh1Yi9ldmVudEh1YkVuZHBvaW50cy9ldmVudHMvQ29uc3VtZXJHcm91cHMvdGVzdENvbnN1bWVyR3JvdXA/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "56d7499f-8119-4e30-ac7c-a237d5b679bf"
+          "705b5706-cf1a-4a3a-a2f7-3a229b037666"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.IotHub.IotHubClient/1.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.2.0"
         ]
       },
       "ResponseBody": "",
@@ -2198,7 +2265,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 02 May 2017 20:49:13 GMT"
+          "Tue, 07 Nov 2017 02:56:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2207,16 +2274,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
+          "1196"
         ],
         "x-ms-request-id": [
-          "55215131-3b58-4bb3-a240-cbfc5e40b8c7"
+          "621f707b-a937-4fbd-b64a-7150a44a8318"
         ],
         "x-ms-correlation-request-id": [
-          "55215131-3b58-4bb3-a240-cbfc5e40b8c7"
+          "621f707b-a937-4fbd-b64a-7150a44a8318"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170502T204913Z:55215131-3b58-4bb3-a240-cbfc5e40b8c7"
+          "WESTUS2:20171107T025638Z:621f707b-a937-4fbd-b64a-7150a44a8318"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2227,6 +2294,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "91d12660-3dec-467a-be2a-213b5544ddc0"
+    "SubscriptionId": "377c3343-75bb-4244-98a3-0fb84a830c4b"
   }
 }

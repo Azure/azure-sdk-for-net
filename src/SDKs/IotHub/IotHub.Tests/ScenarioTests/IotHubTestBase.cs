@@ -183,8 +183,6 @@ namespace IotHub.Tests.ScenarioTests
                 createIotHubDescription);
         }
 
-
-
         protected IotHubDescription UpdateIotHub(ResourceGroup resourceGroup, IotHubDescription iotHubDescription, string iotHubName)
         {
             return this.iotHubClient.IotHubResource.CreateOrUpdate(
@@ -200,6 +198,53 @@ namespace IotHub.Tests.ScenarioTests
                 {
                     Location = IotHubTestUtilities.DefaultLocation
                 });
+        }
+
+        protected CertificateDescription CreateCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateBodyDescriptionContent)
+        {
+            var createCertificateBodyDescription = new CertificateBodyDescription(certificateBodyDescriptionContent);
+
+            return this.iotHubClient.Certificates.CreateOrUpdate(
+                resourceGroup.Name,
+                iotHubName,
+                certificateName,
+                createCertificateBodyDescription);
+        }
+
+        protected CertificateListDescription GetCertificates(ResourceGroup resourceGroup, string iotHubName)
+        {
+            return this.iotHubClient.Certificates.ListByIotHub(resourceGroup.Name, iotHubName);
+        }
+
+        protected CertificateDescription GetCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName)
+        {
+            return this.iotHubClient.Certificates.Get(resourceGroup.Name, iotHubName, certificateName);
+        }
+
+        protected void DeleteCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)
+        {
+            this.iotHubClient.Certificates.Delete(resourceGroup.Name, iotHubName, certificateName, Etag);
+        }
+
+        protected CertificateWithNonceDescription GenerateVerificationCode(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)
+        {
+            return this.iotHubClient.Certificates.GenerateVerificationCode(
+                resourceGroup.Name,
+                iotHubName,
+                certificateName,
+                Etag);
+        }
+
+        protected CertificateDescription Verify(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateVerificationDescriptionBody, string Etag)
+        {
+            var certificateVerificationDescription = new CertificateVerificationDescription(certificateVerificationDescriptionBody);
+
+            return this.iotHubClient.Certificates.Verify(
+                resourceGroup.Name,
+                iotHubName,
+                certificateName,
+                certificateVerificationDescription,
+                Etag);
         }
     }
 }
