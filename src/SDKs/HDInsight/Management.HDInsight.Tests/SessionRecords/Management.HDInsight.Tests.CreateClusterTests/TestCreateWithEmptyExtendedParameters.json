@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk2661?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazI2NjE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk7084?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazcwODQ/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US 2\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "432b8629-92a5-46b2-8b48-45043ece7d8d"
+          "be61e655-1691-4f49-ac73-873ab6367f05"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2661\",\r\n  \"name\": \"hdisdk2661\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk7084\",\r\n  \"name\": \"hdisdk7084\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "174"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 01:40:50 GMT"
+          "Tue, 07 Nov 2017 01:04:09 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1199"
         ],
         "x-ms-request-id": [
-          "4b9b16c9-246d-467a-a20a-480eb8640a5b"
+          "abac4e52-1a13-42a6-a607-171c9ebc5f59"
         ],
         "x-ms-correlation-request-id": [
-          "4b9b16c9-246d-467a-a20a-480eb8640a5b"
+          "abac4e52-1a13-42a6-a607-171c9ebc5f59"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171012T014050Z:4b9b16c9-246d-467a-a20a-480eb8640a5b"
+          "WESTUS2:20171107T010410Z:abac4e52-1a13-42a6-a607-171c9ebc5f59"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2661/providers/Microsoft.HDInsight/clusters/hdisdk-cluster?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk7084/providers/Microsoft.HDInsight/clusters/hdisdk-cluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazcwODQvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXI/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{}",
       "RequestHeaders": {
@@ -74,14 +74,14 @@
           "2"
         ],
         "x-ms-client-request-id": [
-          "f88b777f-9e93-4ad4-a71e-34ea261b9fff"
+          "53cff570-4246-4db8-a479-ba5e91935762"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.0.0.0"
+          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationRequired\",\r\n    \"message\": \"The location property is required for this definition.\"\r\n  }\r\n}",
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 01:40:50 GMT"
+          "Tue, 07 Nov 2017 01:04:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -108,13 +108,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "f2051f43-c9a7-489a-88cb-80818bb24bf0"
+          "2b1212a6-499c-4edc-be0a-c607fc199fa5"
         ],
         "x-ms-correlation-request-id": [
-          "f2051f43-c9a7-489a-88cb-80818bb24bf0"
+          "2b1212a6-499c-4edc-be0a-c607fc199fa5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171012T014051Z:f2051f43-c9a7-489a-88cb-80818bb24bf0"
+          "WESTUS2:20171107T010410Z:2b1212a6-499c-4edc-be0a-c607fc199fa5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,13 +123,13 @@
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk2661?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazI2NjE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk7084?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazcwODQ/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "323f090c-b3d2-45b8-8daa-c8dab0342e57"
+          "56e6a936-9d49-48c7-bde8-bf7baafea273"
         ],
         "accept-language": [
           "en-US"
@@ -151,28 +151,28 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Oct 2017 01:40:51 GMT"
+          "Tue, 07 Nov 2017 01:04:09 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1IRElTREsyNjYxLVdFU1RVUzIiLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1IRElTREs3MDg0LVdFU1RVUzIiLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1197"
         ],
         "x-ms-request-id": [
-          "97f12187-f47e-4653-94fa-5c17ac5bac22"
+          "770032da-17ef-43e7-b5ec-ba186a205fb1"
         ],
         "x-ms-correlation-request-id": [
-          "97f12187-f47e-4653-94fa-5c17ac5bac22"
+          "770032da-17ef-43e7-b5ec-ba186a205fb1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171012T014051Z:97f12187-f47e-4653-94fa-5c17ac5bac22"
+          "WESTUS2:20171107T010410Z:770032da-17ef-43e7-b5ec-ba186a205fb1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,7 +183,7 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "hdisdk2661"
+      "hdisdk7084"
     ]
   },
   "Variables": {
