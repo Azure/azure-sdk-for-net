@@ -39,7 +39,8 @@ namespace Sql.Tests
 
                 VirtualNetworkRule rule1 = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString()
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString(),
+                    IgnoreMissingVnetServiceEndpoint = false
                 };
                 sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName1, rule1);
                 rules.Add(vnetfirewallRuleName1, rule1);
@@ -48,7 +49,8 @@ namespace Sql.Tests
                 string vnetfirewallRuleName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
                 VirtualNetworkRule rule2 = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = getVnetResponse.Subnets[1].Id.ToString()
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[1].Id.ToString(),
+                    IgnoreMissingVnetServiceEndpoint = false
                 };
                 sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName2, rule2);
                 rules.Add(vnetfirewallRuleName2, rule2);
@@ -96,7 +98,8 @@ namespace Sql.Tests
 
                 VirtualNetworkRule rule = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString()
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString(),
+                    IgnoreMissingVnetServiceEndpoint = false
                 };
                 VirtualNetworkRule vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
                 SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
@@ -127,7 +130,8 @@ namespace Sql.Tests
 
                 VirtualNetworkRule rule = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString()
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString(),
+                    IgnoreMissingVnetServiceEndpoint = false
                 };
                 VirtualNetworkRule vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
                 SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
@@ -135,7 +139,8 @@ namespace Sql.Tests
                 // Update Firewall Rule and Validate
                 rule = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = getVnetResponse.Subnets[1].Id.ToString()
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[1].Id.ToString(),
+                    IgnoreMissingVnetServiceEndpoint = false
                 };
                 vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
                 SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
@@ -149,9 +154,9 @@ namespace Sql.Tests
             // Create vnet andinitialize subnets
             string vnetName = SqlManagementTestUtilities.GenerateName();
 
-            List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>()
+            List<ServiceEndpointPropertiesFormat> SqlPrivateAccess = new List<ServiceEndpointPropertiesFormat>()
             {
-                 new PrivateAccessServicePropertiesFormat("Microsoft.Sql")
+                 new ServiceEndpointPropertiesFormat("Microsoft.Sql")
             };
 
             List<Subnet> subnetList = new List<Subnet>();
@@ -163,11 +168,11 @@ namespace Sql.Tests
                 {
                     Name = subnetName,
                     AddressPrefix = addressPrefix,
-                    PrivateAccessServices = SqlPrivateAccess,
+                    ServiceEndpoints = SqlPrivateAccess,
                 };
                 subnetList.Add(subnet);
             }
-            
+
             var vnet = new VirtualNetwork()
             {
                 Location = location,

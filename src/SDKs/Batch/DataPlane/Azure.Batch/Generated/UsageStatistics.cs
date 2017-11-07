@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class UsageStatistics : IPropertyMetadata
     {
-        private readonly TimeSpan dedicatedCoreTime;
-        private readonly DateTime lastUpdateTime;
-        private readonly DateTime startTime;
-
         #region Constructors
 
         internal UsageStatistics(Models.UsageStatistics protocolObject)
         {
-            this.dedicatedCoreTime = protocolObject.DedicatedCoreTime;
-            this.lastUpdateTime = protocolObject.LastUpdateTime;
-            this.startTime = protocolObject.StartTime;
+            this.DedicatedCoreTime = protocolObject.DedicatedCoreTime;
+            this.LastUpdateTime = protocolObject.LastUpdateTime;
+            this.StartTime = protocolObject.StartTime;
         }
 
         #endregion Constructors
@@ -42,27 +38,18 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the aggregated wall-clock time of the dedicated compute nodes being part of the pool.
         /// </summary>
-        public TimeSpan DedicatedCoreTime
-        {
-            get { return this.dedicatedCoreTime; }
-        }
+        public TimeSpan DedicatedCoreTime { get; }
 
         /// <summary>
         /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
         /// cref="StartTime"/> and this value.
         /// </summary>
-        public DateTime LastUpdateTime
-        {
-            get { return this.lastUpdateTime; }
-        }
+        public DateTime LastUpdateTime { get; }
 
         /// <summary>
         /// Gets the start time of the time range covered by the statistics.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         #endregion // UsageStatistics
 

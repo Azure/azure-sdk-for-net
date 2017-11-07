@@ -51,7 +51,7 @@ namespace DataFactory.Tests.Utils
                 EnsureResourceGroupExists();
                 EnsureFactoryDoesNotExist();
                 ServiceClientTracing.IsEnabled = true;
-                
+
                 // Start Factories operations, leaving factory available
                 CaptureFactories_CreateOrUpdate(); // 200
                 CaptureFactories_Update(); // 200
@@ -95,6 +95,7 @@ namespace DataFactory.Tests.Utils
                 string runId = CapturePipelines_CreateRun(); // 202, ISSUE service doesn't follow long-running pattern
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(120)); // Prefer to get succeeded monitoring result on first attempt even if it slows capture
                 DateTime afterEndTime = DateTime.UtcNow.AddMinutes(10); // allow 10 minutes for run time, monitoring latency, and clock skew
+                CaptureFactories_CancelRun();
 
                 CapturePipelineRuns_ListByFactory(runId, beforeStartTime, afterEndTime); // 200, waits until succeeded so ready to get logs
                 CapturePipelineRuns_Get(runId); // 200
@@ -123,7 +124,7 @@ namespace DataFactory.Tests.Utils
                 // Finish LinkedServices operations, deleting linked service
                 CaptureLinkedServices_Delete(); // 200
                 CaptureLinkedServices_Delete(); // 204
-                
+
                 // Finish integration runtime operations, deleting integration runtime
                 CaptureIntegrationRuntimes_Delete(); // 202
                 CaptureIntegrationRuntimes_Delete(); // 204
@@ -557,6 +558,13 @@ namespace DataFactory.Tests.Utils
 
             CreateRunResponse rtr = client.Pipelines.CreateRun(secrets.ResourceGroupName, secrets.FactoryName, pipelineName, arguments);
             return rtr.RunId;
+        }
+
+        private void CaptureFactories_CancelRun()
+        {
+            string runId = this.CapturePipelines_CreateRun();
+            interceptor.CurrentExampleName = "Factories_CancelPipelineRun";
+            client.Factories.CancelPipelineRun(secrets.ResourceGroupName, secrets.FactoryName, runId);
         }
 
         private void CapturePipelines_Delete()

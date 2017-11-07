@@ -287,7 +287,7 @@ namespace Sql.Tests
             Assert.NotNull(actual.Id);
             Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
         }
-
+        
         internal static Task<Database[]> CreateDatabasesAsync(
             SqlManagementClient sqlClient,
             string resourceGroupName,

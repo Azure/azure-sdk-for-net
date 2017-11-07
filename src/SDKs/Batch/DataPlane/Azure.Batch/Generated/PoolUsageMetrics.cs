@@ -22,25 +22,17 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class PoolUsageMetrics : IPropertyMetadata
     {
-        private readonly double dataEgressGiB;
-        private readonly double dataIngressGiB;
-        private readonly DateTime endTime;
-        private readonly string poolId;
-        private readonly DateTime startTime;
-        private readonly double totalCoreHours;
-        private readonly string virtualMachineSize;
-
         #region Constructors
 
         internal PoolUsageMetrics(Models.PoolUsageMetrics protocolObject)
         {
-            this.dataEgressGiB = protocolObject.DataEgressGiB;
-            this.dataIngressGiB = protocolObject.DataIngressGiB;
-            this.endTime = protocolObject.EndTime;
-            this.poolId = protocolObject.PoolId;
-            this.startTime = protocolObject.StartTime;
-            this.totalCoreHours = protocolObject.TotalCoreHours;
-            this.virtualMachineSize = protocolObject.VmSize;
+            this.DataEgressGiB = protocolObject.DataEgressGiB;
+            this.DataIngressGiB = protocolObject.DataIngressGiB;
+            this.EndTime = protocolObject.EndTime;
+            this.PoolId = protocolObject.PoolId;
+            this.StartTime = protocolObject.StartTime;
+            this.TotalCoreHours = protocolObject.TotalCoreHours;
+            this.VirtualMachineSize = protocolObject.VmSize;
         }
 
         #endregion Constructors
@@ -50,50 +42,32 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the cross data center network egress from the pool during this interval, in gibibytes.
         /// </summary>
-        public double DataEgressGiB
-        {
-            get { return this.dataEgressGiB; }
-        }
+        public double DataEgressGiB { get; }
 
         /// <summary>
         /// Gets the cross data center network ingress to the pool during this interval, in gibibytes.
         /// </summary>
-        public double DataIngressGiB
-        {
-            get { return this.dataIngressGiB; }
-        }
+        public double DataIngressGiB { get; }
 
         /// <summary>
         /// Gets the end time of the aggregation interval for this entry.
         /// </summary>
-        public DateTime EndTime
-        {
-            get { return this.endTime; }
-        }
+        public DateTime EndTime { get; }
 
         /// <summary>
         /// Gets the id of the pool whose metrics are aggregated in this entry.
         /// </summary>
-        public string PoolId
-        {
-            get { return this.poolId; }
-        }
+        public string PoolId { get; }
 
         /// <summary>
         /// Gets the start time of the aggregation interval covered by this entry.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         /// <summary>
         /// Gets the total core hours used in the pool during this aggregation interval.
         /// </summary>
-        public double TotalCoreHours
-        {
-            get { return this.totalCoreHours; }
-        }
+        public double TotalCoreHours { get; }
 
         /// <summary>
         /// Gets the size of the virtual machines in the pool.  All virtual machines in a pool are the same size.
@@ -107,10 +81,7 @@ namespace Microsoft.Azure.Batch
         /// Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (for example STANDARD_GS, 
         /// STANDARD_DS, and STANDARD_DSV2 series).</para>
         /// </remarks>
-        public string VirtualMachineSize
-        {
-            get { return this.virtualMachineSize; }
-        }
+        public string VirtualMachineSize { get; }
 
         #endregion // PoolUsageMetrics
 

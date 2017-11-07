@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class BatchError : IPropertyMetadata
     {
-        private readonly string code;
-        private readonly ErrorMessage message;
-        private readonly IReadOnlyList<BatchErrorDetail> values;
-
         #region Constructors
 
         internal BatchError(Models.BatchError protocolObject)
         {
-            this.code = protocolObject.Code;
-            this.message = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Message, o => new ErrorMessage(o).Freeze());
-            this.values = BatchErrorDetail.ConvertFromProtocolCollectionReadOnly(protocolObject.Values);
+            this.Code = protocolObject.Code;
+            this.Message = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Message, o => new ErrorMessage(o).Freeze());
+            this.Values = BatchErrorDetail.ConvertFromProtocolCollectionReadOnly(protocolObject.Values);
         }
 
         #endregion Constructors
@@ -42,26 +38,17 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets a code for the error. See <see cref="Common.BatchErrorCodeStrings"/> for possible values.
         /// </summary>
-        public string Code
-        {
-            get { return this.code; }
-        }
+        public string Code { get; }
 
         /// <summary>
         /// Gets a message describing the error, intended to be suitable for display in a user interface.
         /// </summary>
-        public ErrorMessage Message
-        {
-            get { return this.message; }
-        }
+        public ErrorMessage Message { get; }
 
         /// <summary>
         /// Gets a collection of key-value pairs containing additional details about the error.
         /// </summary>
-        public IReadOnlyList<BatchErrorDetail> Values
-        {
-            get { return this.values; }
-        }
+        public IReadOnlyList<BatchErrorDetail> Values { get; }
 
         #endregion // BatchError
 

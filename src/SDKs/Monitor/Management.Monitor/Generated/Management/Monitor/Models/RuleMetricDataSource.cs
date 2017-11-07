@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// Initializes a new instance of the RuleMetricDataSource class.
         /// </summary>
         /// <param name="resourceUri">the resource identifier of the resource
-        /// the rule monitors.</param>
+        /// the rule monitors. **NOTE**: this property cannot be updated for an
+        /// existing rule.</param>
         /// <param name="metricName">the name of the metric that defines what
         /// the rule monitors.</param>
         public RuleMetricDataSource(string resourceUri = default(string), string metricName = default(string))
