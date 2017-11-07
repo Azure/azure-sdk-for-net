@@ -225,26 +225,5 @@ namespace IotHub.Tests.ScenarioTests
         {
             this.iotHubClient.Certificates.Delete(resourceGroup.Name, iotHubName, certificateName, Etag);
         }
-
-        protected CertificateWithNonceDescription GenerateVerificationCode(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)
-        {
-            return this.iotHubClient.Certificates.GenerateVerificationCode(
-                resourceGroup.Name,
-                iotHubName,
-                certificateName,
-                Etag);
-        }
-
-        protected CertificateDescription Verify(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateVerificationDescriptionBody, string Etag)
-        {
-            var certificateVerificationDescription = new CertificateVerificationDescription(certificateVerificationDescriptionBody);
-
-            return this.iotHubClient.Certificates.Verify(
-                resourceGroup.Name,
-                iotHubName,
-                certificateName,
-                certificateVerificationDescription,
-                Etag);
-        }
     }
 }
