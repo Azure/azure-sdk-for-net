@@ -32,7 +32,7 @@ namespace Management.HDInsight.Tests
         private const string ResourceUri = "";
         private const string CertificateFile = @"";
         private const string AdlDefaultStorageAccountName = "";
-
+        
 
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
         private const string DefaultContainer = "default";
@@ -41,6 +41,7 @@ namespace Management.HDInsight.Tests
         private const string HttpUser = "admin";
         private const string HttpPassword = "Password1!";
         private const string AdlStorageRootPath = "/clusters/hdi";
+        private const string Location = "North Central US";
 
         public static ClusterCreateParameters GetCustomCreateParametersIaas(bool adlStorage = false)
         {
@@ -52,7 +53,7 @@ namespace Management.HDInsight.Tests
                 DefaultStorageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(DefaultContainer),
                 UserName = HttpUser,
                 Password = HttpPassword,
-                Location = "West US 2",
+                Location = Location,
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.5"
@@ -125,12 +126,12 @@ namespace Management.HDInsight.Tests
             return null;
         }
 
-        public static ClusterCreateParametersExtended GetIaasClusterSpec(string containerName, bool adlStorage = false)
+        public static ClusterCreateParametersExtended GetIaasClusterSpec(string containerName = DefaultContainer, bool adlStorage = false)
         {
             StorageInfo storageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(containerName);
             var cluster = new ClusterCreateParametersExtended
             {
-                Location = "West US 2",
+                Location = Location,
                 Tags = new Dictionary<string, string>(),
                 Properties = new ClusterCreateProperties
                 {

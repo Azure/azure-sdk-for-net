@@ -6,6 +6,11 @@
     <AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
     <VersionPrefix>3.1.0-preview</VersionPrefix>
     <PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>    
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure HDInsight SDK. Included with this release is support for OMS diagnostics.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

@@ -25,6 +25,7 @@ namespace Management.HDInsight.Tests
         private const string WorkspaceId = "1d364e89-bb71-4503-aa3d-a23535aea7bd";
         private const string PrimaryKey = "";
 
+
         [Fact]
         public void TestOMSOnRunningCluster()
         {

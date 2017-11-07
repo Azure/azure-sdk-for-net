@@ -30,7 +30,7 @@ namespace Management.HDInsight.Tests.UnitTests
             HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
 
             client.Clusters.BeginCreating(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetCustomCreateParametersIaas());
-            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec("default"));
+            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec());
             
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }

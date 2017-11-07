@@ -20,6 +20,7 @@ namespace Management.HDInsight.Tests
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.HDInsight;
     using Microsoft.HDInsight.Models;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Linq;
@@ -29,7 +30,7 @@ namespace Management.HDInsight.Tests
 
     internal static class HDInsightManagementTestUtilities
     {
-        public static string DefaultLocation = "West US 2";
+        public static string DefaultLocation = "North Central US";
 
         public static void RunTestInNewResourceGroup(string suiteName, string testName, Action<ResourceManagementClient, HDInsightManagementClient, string> test)
         {
@@ -66,7 +67,18 @@ namespace Management.HDInsight.Tests
                 }
                 finally
                 {
-                    client.Clusters.BeginDelete(rgName, clusterName);
+                    try
+                    {
+                        client.Clusters.Get(rgName, clusterName);
+                        client.Clusters.BeginDelete(rgName, clusterName);
+                    }
+                    catch(CloudException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound)
+                        {
+                            throw;
+                        }
+                    }
                 }
             });
         }

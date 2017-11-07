@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,57 +24,9 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-
+    
   <ItemGroup>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CapabilitiesTests\TestGetCapabilities.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.ConfigurationsTests\TestGetConfigurations.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithCustomVMSizes.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithPremiumTier.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateKafkaClusterWithManagedDisks.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateLinuxSparkClusterWithComponentVersion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithDataLakeStorage.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyExtendedParameters.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.HttpTests\CanDisableEnableDisableHttpCustom.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.HttpTests\CanDisableEnableDisableHttpExtended.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.ListTests\TestListClustersInResourceGroup.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.ListTests\TestListClustersInSubscription.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.OMSTests\TestOMSOnRunningCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.ResizeTests\TestResizeCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Management.HDInsight.Tests.ScriptActionsTests\TestScriptActionsOnRunningCluster.json">
+    <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestData\FailingScriptAction.sh">
