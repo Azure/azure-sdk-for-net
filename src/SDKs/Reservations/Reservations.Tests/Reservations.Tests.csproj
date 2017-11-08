@@ -6,12 +6,12 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>Reservations.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Management.Reservations\Microsoft.Azure.Management.Reservations.csproj" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
 
   <ItemGroup>
