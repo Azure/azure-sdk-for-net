@@ -5,6 +5,7 @@
 using DataFactory.Tests.Utils;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,14 +19,12 @@ namespace DataFactory.Tests.ScenarioTests
         [Trait(TraitName.TestType, TestType.Scenario)]
         public async Task CancelPipelineRun()
         {
-            var expectedFactory = new Factory(location: FactoryLocation);
-
             Func<DataFactoryManagementClient, Task> action = async (client) =>
             {
-                Factory createResponse = client.Factories.CreateOrUpdate(ResourceGroupName, DataFactoryName, expectedFactory);
+                Factory createResponse = client.Factories.CreateOrUpdate(this.ResourceGroupName, this.DataFactoryName, new Factory(location: FactoryLocation));
                 ErrorResponseException exception = await Assert.ThrowsAsync<ErrorResponseException>(async () =>
                 {
-                    await client.Factories.CancelPipelineRunWithHttpMessagesAsync(ResourceGroupName, DataFactoryName, "efbe5443-9879-4495-94a6-4d7c394133ad");
+                    await client.Factories.CancelPipelineRunWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName, "efbe5443-9879-4495-94a6-4d7c394133ad");
                 });
 
                 Assert.Equal(exception.Response.StatusCode, HttpStatusCode.BadRequest);
@@ -33,7 +32,7 @@ namespace DataFactory.Tests.ScenarioTests
 
             Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>
             {
-                await client.Factories.DeleteAsync(ResourceGroupName, DataFactoryName);
+                await client.Factories.DeleteAsync(this.ResourceGroupName, this.DataFactoryName);
             };
             await this.RunTest(action, finallyAction);
         }
