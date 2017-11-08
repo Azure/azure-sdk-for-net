@@ -5,7 +5,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
 
-namespace EntitySearchSDK.Tests
+namespace SearchSDK.Tests
 {
     public class EntitySearchTests : BaseTests
     {
@@ -16,7 +16,7 @@ namespace EntitySearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "EntitySearch");
 
-                IEntitySearchAPI client = GetClient(HttpMockServer.CreateInstance());
+                IEntitySearchAPI client = GetClient(HttpMockServer.CreateInstance(), SearchTypes.EntitySearch);
 
                 var resp = client.Entities.Search(query: "tom cruise");
 

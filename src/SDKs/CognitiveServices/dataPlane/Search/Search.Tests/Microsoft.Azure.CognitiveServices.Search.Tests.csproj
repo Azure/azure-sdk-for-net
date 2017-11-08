@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.CognitiveServices.Search.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>1.1.0-preview</VersionPrefix>
   </PropertyGroup>
   
   <PropertyGroup>    
