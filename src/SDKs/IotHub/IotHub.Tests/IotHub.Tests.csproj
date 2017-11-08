@@ -4,7 +4,7 @@
     <PackageId>IotHub.Tests</PackageId>
     <Description>IotHub.Tests Class Library</Description>
     <AssemblyName>IotHub.Tests</AssemblyName>
-    <VersionPrefix>1.0.1-preview</VersionPrefix>    
+    <VersionPrefix>1.0.2-preview</VersionPrefix>    
   </PropertyGroup>
 
   <PropertyGroup>
