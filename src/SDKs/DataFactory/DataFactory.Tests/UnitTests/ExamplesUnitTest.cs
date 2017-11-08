@@ -437,6 +437,15 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void Factories_CancelPipelineRun()
+        {
+            RunTest("Factories_CancelPipelineRun", (example, client, responseCode) =>
+            {
+                client.Factories.CancelPipelineRun(RGN(example), FN(example), new Guid().ToString());
+            });
+        }
+
+        [Fact]
         public void PipelineRuns_ListByFactory()
         {
             RunTest("PipelineRuns_ListByFactory", (example, client, responseCode) =>

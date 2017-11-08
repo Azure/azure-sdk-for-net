@@ -36,8 +36,6 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// Initializes a new instance of the Zone class.
         /// </summary>
         /// <param name="location">Resource location.</param>
-        /// <param name="zoneType">The type of this DNS zone (Public or
-        /// Private). Possible values include: 'Public', 'Private'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -52,22 +50,13 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="nameServers">The name servers for this DNS zone. This
         /// is a read-only property and any attempt to set this value will be
         /// ignored.</param>
-        /// <param name="registrationVirtualNetworks">A list of references to
-        /// virtual networks that register hostnames in this DNS zone. This is
-        /// a only when ZoneType is Private.</param>
-        /// <param name="resolutionVirtualNetworks">A list of references to
-        /// virtual networks that resolve records in this DNS zone. This is a
-        /// only when ZoneType is Private.</param>
-        public Zone(string location, ZoneType zoneType, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>), IList<SubResource> registrationVirtualNetworks = default(IList<SubResource>), IList<SubResource> resolutionVirtualNetworks = default(IList<SubResource>))
+        public Zone(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
             NumberOfRecordSets = numberOfRecordSets;
             NameServers = nameServers;
-            ZoneType = zoneType;
-            RegistrationVirtualNetworks = registrationVirtualNetworks;
-            ResolutionVirtualNetworks = resolutionVirtualNetworks;
             CustomInit();
         }
 
@@ -83,20 +72,20 @@ namespace Microsoft.Azure.Management.Dns.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of record sets that can be created
-        /// in this DNS zone.  This is a read-only property and any attempt to
-        /// set this value will be ignored.
+        /// Gets the maximum number of record sets that can be created in this
+        /// DNS zone.  This is a read-only property and any attempt to set this
+        /// value will be ignored.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxNumberOfRecordSets")]
-        public long? MaxNumberOfRecordSets { get; set; }
+        public long? MaxNumberOfRecordSets { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current number of record sets in this DNS zone.
-        /// This is a read-only property and any attempt to set this value will
-        /// be ignored.
+        /// Gets the current number of record sets in this DNS zone.  This is a
+        /// read-only property and any attempt to set this value will be
+        /// ignored.
         /// </summary>
         [JsonProperty(PropertyName = "properties.numberOfRecordSets")]
-        public long? NumberOfRecordSets { get; set; }
+        public long? NumberOfRecordSets { get; private set; }
 
         /// <summary>
         /// Gets the name servers for this DNS zone. This is a read-only
@@ -104,28 +93,6 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nameServers")]
         public IList<string> NameServers { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the type of this DNS zone (Public or Private).
-        /// Possible values include: 'Public', 'Private'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.zoneType")]
-        public ZoneType ZoneType { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of references to virtual networks that register
-        /// hostnames in this DNS zone. This is a only when ZoneType is
-        /// Private.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.registrationVirtualNetworks")]
-        public IList<SubResource> RegistrationVirtualNetworks { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of references to virtual networks that resolve
-        /// records in this DNS zone. This is a only when ZoneType is Private.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.resolutionVirtualNetworks")]
-        public IList<SubResource> ResolutionVirtualNetworks { get; set; }
 
         /// <summary>
         /// Validate the object.

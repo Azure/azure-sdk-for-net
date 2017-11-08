@@ -26,6 +26,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         A,
         [EnumMember(Value = "AAAA")]
         AAAA,
+        [EnumMember(Value = "CAA")]
+        CAA,
         [EnumMember(Value = "CNAME")]
         CNAME,
         [EnumMember(Value = "MX")]
@@ -54,6 +56,8 @@ namespace Microsoft.Azure.Management.Dns.Models
                     return "A";
                 case RecordType.AAAA:
                     return "AAAA";
+                case RecordType.CAA:
+                    return "CAA";
                 case RecordType.CNAME:
                     return "CNAME";
                 case RecordType.MX:
@@ -80,6 +84,8 @@ namespace Microsoft.Azure.Management.Dns.Models
                     return RecordType.A;
                 case "AAAA":
                     return RecordType.AAAA;
+                case "CAA":
+                    return RecordType.CAA;
                 case "CNAME":
                     return RecordType.CNAME;
                 case "MX":
