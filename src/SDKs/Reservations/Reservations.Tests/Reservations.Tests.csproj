@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.Reservations\Microsoft.Azure.Management.Reservations.csproj" />
+    <ProjectReference Include="..\Management.Reservations\Microsoft.Azure.Management.Reservations.csproj" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
 
