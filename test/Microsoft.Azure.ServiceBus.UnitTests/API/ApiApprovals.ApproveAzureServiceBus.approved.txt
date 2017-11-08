@@ -456,6 +456,14 @@ namespace Microsoft.Azure.ServiceBus.Core
         public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> BeforeMessageSend(Microsoft.Azure.ServiceBus.Message message) { }
     }
 }
+namespace Microsoft.Azure.ServiceBus.Diagnostics
+{
+    
+    public class static MessageExtensions
+    {
+        public static System.Diagnostics.Activity ExtractActivity(this Microsoft.Azure.ServiceBus.Message message, string activityName = null) { }
+    }
+}
 namespace Microsoft.Azure.ServiceBus.InteropExtensions
 {
     

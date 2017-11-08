@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
@@ -17,19 +18,21 @@ namespace Microsoft.Azure.ServiceBus
         readonly IMessageReceiver messageReceiver;
         readonly CancellationToken pumpCancellationToken;
         readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
+        readonly ServiceBusDiagnosticSource diagnosticSource;
 
-        public MessageReceivePump(IMessageReceiver messageReceiver, 
-            MessageHandlerOptions registerHandlerOptions, 
-            Func<Message, CancellationToken, Task> callback, 
-            string endpoint, 
+        public MessageReceivePump(IMessageReceiver messageReceiver,
+            MessageHandlerOptions registerHandlerOptions,
+            Func<Message, CancellationToken, Task> callback,
+            Uri endpoint,
             CancellationToken pumpCancellationToken)
         {
             this.messageReceiver = messageReceiver ?? throw new ArgumentNullException(nameof(messageReceiver));
             this.registerHandlerOptions = registerHandlerOptions;
             this.onMessageCallback = callback;
-            this.endpoint = endpoint;
+            this.endpoint = endpoint.Authority;
             this.pumpCancellationToken = pumpCancellationToken;
             this.maxConcurrentCallsSemaphoreSlim = new SemaphoreSlim(this.registerHandlerOptions.MaxConcurrentCalls);
+            this.diagnosticSource = new ServiceBusDiagnosticSource(messageReceiver.Path, endpoint);
         }
 
         public void StartPump()
@@ -58,12 +61,23 @@ namespace Microsoft.Azure.ServiceBus
                 try
                 {
                     await this.maxConcurrentCallsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-                    message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);                  
+                    message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
 
                     if (message != null)
                     {
                         MessagingEventSource.Log.MessageReceiverPumpTaskStart(this.messageReceiver.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
-                        TaskExtensionHelper.Schedule(() => this.MessageDispatchTask(message));
+
+                        TaskExtensionHelper.Schedule(() =>
+                        {
+                            if (ServiceBusDiagnosticSource.IsEnabled())
+                            {
+                                return this.MessageDispatchTaskInstrumented(message);
+                            }
+                            else
+                            {
+                                return this.MessageDispatchTask(message);
+                            }
+                        });
                     }
                 }
                 catch (Exception exception)
@@ -80,6 +94,26 @@ namespace Microsoft.Azure.ServiceBus
                         MessagingEventSource.Log.MessageReceiverPumpTaskStop(this.messageReceiver.ClientId, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
                     }
                 }
+            }
+        }
+
+        async Task MessageDispatchTaskInstrumented(Message message)
+        {
+            Activity activity = this.diagnosticSource.ProcessStart(message);
+            Task processTask = null;
+            try
+            {
+                processTask = MessageDispatchTask(message);
+                await processTask.ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                this.diagnosticSource.ReportException(e);
+                throw;
+            }
+            finally
+            {
+                this.diagnosticSource.ProcessStop(activity, message, processTask?.Status);
             }
         }
 
@@ -103,21 +137,27 @@ namespace Microsoft.Azure.ServiceBus
             {
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackStart(this.messageReceiver.ClientId, message);
                 await this.onMessageCallback(message, this.pumpCancellationToken).ConfigureAwait(false);
+
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackStop(this.messageReceiver.ClientId, message);
             }
             catch (Exception exception)
             {
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackException(this.messageReceiver.ClientId, message, exception);
                 await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
-                
+
                 // Nothing much to do if UserCallback throws, Abandon message and Release semaphore.
                 if (!(exception is MessageLockLostException))
                 {
-                    await this.AbandonMessageIfNeededAsync(message).ConfigureAwait(false); 
+                    await this.AbandonMessageIfNeededAsync(message).ConfigureAwait(false);
                 }
 
+                if (ServiceBusDiagnosticSource.IsEnabled())
+                {
+                    this.diagnosticSource.ReportException(exception);
+                }
                 // AbandonMessageIfNeededAsync should take care of not throwing exception
                 this.maxConcurrentCallsSemaphoreSlim.Release();
+
                 return;
             }
             finally
@@ -185,7 +225,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 try
                 {
-                    TimeSpan amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
+                    var amount = MessagingUtilities.CalculateRenewAfterDuration(message.SystemProperties.LockedUntilUtc);
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageStart(this.messageReceiver.ClientId, message, amount);
                     await Task.Delay(amount, renewLockCancellationToken).ConfigureAwait(false);
 
