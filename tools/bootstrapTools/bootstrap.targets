@@ -7,6 +7,6 @@
   </Target>
   
   <Target Name="Init" DependsOnTargets="GetLatestBuildTools">
-	<Message Importance="high" Text="Default target only updates build tools. Please execute specific target to complete you build process (e.g. msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute)"/>
+	<Message Importance="high" Text="Build tools update complete. Please execute specific target to complete you build process (e.g. msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute)"/>
   </Target>
 </Project>

@@ -173,6 +173,18 @@ namespace Sql.Tests
             Assert.NotNull(db1);
             SqlManagementTestUtilities.ValidateDatabase(dbInput, db1, dbName);
 
+            // Create zone redundant database
+            //
+            var dbInput2 = new Database()
+            {
+                Location = server.Location,
+                Edition = "Premium",
+                ZoneRedundant = true,
+            };
+            var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput2);
+            Assert.NotNull(db8);
+            SqlManagementTestUtilities.ValidateDatabase(dbInput2, db8, dbName);
+
             // Upgrade Edition + SLO Name
             //
             dynamic updateEditionAndSloInput = createModelFunc();
@@ -224,6 +236,14 @@ namespace Sql.Tests
             updateTags.Tags = new Dictionary<string, string> { { "asdf", "zxcv" } };
             var db7 = updateFunc(resourceGroup.Name, server.Name, dbName, updateTags);
             SqlManagementTestUtilities.ValidateDatabase(updateTags, db7, dbName);
+
+            // Update Zone Redundancy
+            //
+            dynamic updateZoneRedundant = createModelFunc();
+            updateZoneRedundant.Edition = "Premium";
+            updateZoneRedundant.ZoneRedundant = true;
+            var db9 = updateFunc(resourceGroup.Name, server.Name, dbName, updateZoneRedundant);
+            SqlManagementTestUtilities.ValidateDatabase(updateZoneRedundant, db9, dbName);
         }
 
         [Fact]

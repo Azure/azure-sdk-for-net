@@ -2055,5 +2055,116 @@ namespace DataFactory.Tests.JsonSamples
   }
 }";
 
+        [JsonSample(version: "Copy")]
+        public const string CopyAzureMySqlToBlob = @"{
+    name: ""AzureMySqlToBlobPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""CopyFromAzureMySqlToBlob"",
+                type: ""Copy"",
+                inputs: [
+                    {
+                        referenceName: ""AzureMySQLDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""AzureBlobOut"", type: ""DatasetReference""
+                    }
+                ],
+                policy: {
+                },
+                typeProperties: {
+                    source: {
+                        type: ""AzureMySqlSource"",
+                        query:""select * from azuremysqltable""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyFromSalesforceToSalesforce = @"
+{
+  ""name"": ""SalesforceToSalesforce"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""CopyFromSalesforceToSalesforce"",
+        ""type"": ""Copy"",
+        ""inputs"": [
+          {
+            ""referenceName"": ""SalesforceSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SalesforceSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""typeProperties"":
+        {
+          ""source"":
+          {
+            ""type"": ""SalesforceSource"",
+            ""query"":""select Id from table"",
+          },
+          ""sink"":
+          {
+            ""type"": ""SalesforceSink"",
+            ""writeBehavior"": ""Insert"",
+            ""ignoreNullValues"": false
+          }
+        }
+      }
+    ]
+  }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyFromDynamicsToDynamics = @"{
+    name: ""DynamicsToDynamicsPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""CopyFromDynamicsToDynamics"",
+                type: ""Copy"",
+                inputs: [
+                    {
+                        referenceName: ""DynamicsIn"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""DynamicsOut"", type: ""DatasetReference""
+                    }
+                ],
+                policy: {
+                },
+                typeProperties: {
+                    source: {
+                        type: ""DynamicsSource"",
+                        query:""fetchXml query""
+                    },
+                    sink: {
+                        type: ""DynamicsSink"",
+                        writeBehavior: ""Upsert"",
+                        ignoreNullValues: false
+                    }
+                }
+            }
+        ]
+    }
+}
+";
     }
 }
