@@ -44,6 +44,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | KeyVault | Microsoft.Azure.KeyVault, Microsoft.Azure.Management.KeyVault |
 | Logic | Microsoft.Azure.Management.Logic |
 | Machine Learning | Microsoft.Azure.Management.MachineLearning |
+| Machine Learning Compute | Microsoft.Azure.Management.MachineLearningCompute |
 | Network | Microsoft.Azure.Management.Network |
 | NotificationHubs | Microsoft.Azure.Management.NotificationHubs |
 | PowerBI | Microsoft.Azure.Management.PowerBIEmbedded |
