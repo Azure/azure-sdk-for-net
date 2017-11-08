@@ -74,12 +74,19 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(JobPreparationAndReleaseTaskExecutionInformation), typeof(Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation), "JobReleaseTaskExecutionInformation", "JobReleaseTaskExecutionInfo"),
 
                 new ComparerPropertyMapping(typeof(JobPreparationTaskExecutionInformation), typeof(Protocol.Models.JobPreparationTaskExecutionInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(JobPreparationTaskExecutionInformation), typeof(Protocol.Models.JobPreparationTaskExecutionInformation), "ContainerInformation", "ContainerInfo"),
 
                 new ComparerPropertyMapping(typeof(JobReleaseTaskExecutionInformation), typeof(Protocol.Models.JobReleaseTaskExecutionInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(JobReleaseTaskExecutionInformation), typeof(Protocol.Models.JobReleaseTaskExecutionInformation), "ContainerInformation", "ContainerInfo"),
 
                 new ComparerPropertyMapping(typeof(TaskExecutionInformation), typeof(Protocol.Models.TaskExecutionInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(TaskExecutionInformation), typeof(Protocol.Models.TaskExecutionInformation), "ContainerInformation", "ContainerInfo"),
+
                 new ComparerPropertyMapping(typeof(SubtaskInformation), typeof(Protocol.Models.SubtaskInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(SubtaskInformation), typeof(Protocol.Models.SubtaskInformation), "ContainerInformation", "ContainerInfo"),
+
                 new ComparerPropertyMapping(typeof(StartTaskInformation), typeof(Protocol.Models.StartTaskInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(StartTaskInformation), typeof(Protocol.Models.StartTaskInformation), "ContainerInformation", "ContainerInfo"),
 
                 new ComparerPropertyMapping(typeof(PoolStatistics), typeof(Protocol.Models.PoolStatistics), "UsageStatistics", "UsageStats"),
                 new ComparerPropertyMapping(typeof(PoolStatistics), typeof(Protocol.Models.PoolStatistics), "ResourceStatistics", "ResourceStats"),

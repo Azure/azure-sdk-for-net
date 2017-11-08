@@ -1,0 +1,57 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:55:55 GMT",
+        "x-ms-request-id": "624b9e0f-5b8e-4a08-8ff3-ead24e96658f",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14911",
+        "x-ms-correlation-request-id": "babd0c35-621b-4c3e-bc19-7e84ff1153e7"
+      },
+      "body": {
+        "value": [
+          {
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/datasets/exampleDataset",
+            "name": "exampleDataset",
+            "properties": {
+              "type": "AzureBlob",
+              "typeProperties": {
+                "folderPath": {
+                  "value": "@dataset().MyFolderPath",
+                  "type": "Expression"
+                },
+                "fileName": {
+                  "value": "@dataset().MyFileName",
+                  "type": "Expression"
+                },
+                "format": {
+                  "type": "TextFormat"
+                }
+              },
+              "description": "Example description",
+              "linkedServiceName": {
+                "referenceName": "exampleLinkedService",
+                "type": "LinkedServiceReference"
+              },
+              "parameters": {
+                "MyFolderPath": {
+                  "type": "String"
+                },
+                "MyFileName": {
+                  "type": "String"
+                }
+              }
+            },
+            "etag": "280320a7-0000-0000-0000-59b9712a0000"
+          }
+        ]
+      }
+    }
+  }
+}

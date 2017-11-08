@@ -8,7 +8,7 @@ Visit our home page for more detail - http://azure.microsoft.com/services/batch/
 For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
 
 API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</Description>
-    <VersionPrefix>7.0.0</VersionPrefix>
+    <VersionPrefix>8.0.0</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch.FileStaging</AssemblyName>
@@ -34,7 +34,7 @@ API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</De
 
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
-    <PackageReference Include="Azure.Batch" Version="[7.0.1,8.0.0)" />
+    <PackageReference Include="Azure.Batch" Version="[8.0.0,9.0.0)" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Web" />

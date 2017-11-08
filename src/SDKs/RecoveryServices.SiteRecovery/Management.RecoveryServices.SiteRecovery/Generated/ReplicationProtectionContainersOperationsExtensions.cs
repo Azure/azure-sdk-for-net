@@ -24,13 +24,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     {
             /// <summary>
             /// Switches protection from one container to another or one replication
-            /// provider to
-            /// another.
+            /// provider to another.
             /// </summary>
             /// <remarks>
             /// Operation to switch protection from one container to another or one
-            /// replication
-            /// provider to another.
+            /// replication provider to another.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,13 +49,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
             /// <summary>
             /// Switches protection from one container to another or one replication
-            /// provider to
-            /// another.
+            /// provider to another.
             /// </summary>
             /// <remarks>
             /// Operation to switch protection from one container to another or one
-            /// replication
-            /// provider to another.
+            /// replication provider to another.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -142,8 +138,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the protection container.
             /// </param>
             /// <param name='discoverProtectableItemRequest'>
-            /// The request object to add a protectable
-            /// item.
+            /// The request object to add a protectable item.
             /// </param>
             public static ProtectionContainer DiscoverProtectableItem(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, DiscoverProtectableItemRequest discoverProtectableItemRequest)
             {
@@ -167,8 +162,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the protection container.
             /// </param>
             /// <param name='discoverProtectableItemRequest'>
-            /// The request object to add a protectable
-            /// item.
+            /// The request object to add a protectable item.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -355,13 +349,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
             /// <summary>
             /// Switches protection from one container to another or one replication
-            /// provider to
-            /// another.
+            /// provider to another.
             /// </summary>
             /// <remarks>
             /// Operation to switch protection from one container to another or one
-            /// replication
-            /// provider to another.
+            /// replication provider to another.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -382,13 +374,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
             /// <summary>
             /// Switches protection from one container to another or one replication
-            /// provider to
-            /// another.
+            /// provider to another.
             /// </summary>
             /// <remarks>
             /// Operation to switch protection from one container to another or one
-            /// replication
-            /// provider to another.
+            /// replication provider to another.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -473,8 +463,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the protection container.
             /// </param>
             /// <param name='discoverProtectableItemRequest'>
-            /// The request object to add a protectable
-            /// item.
+            /// The request object to add a protectable item.
             /// </param>
             public static ProtectionContainer BeginDiscoverProtectableItem(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, DiscoverProtectableItemRequest discoverProtectableItemRequest)
             {
@@ -498,8 +487,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The name of the protection container.
             /// </param>
             /// <param name='discoverProtectableItemRequest'>
-            /// The request object to add a protectable
-            /// item.
+            /// The request object to add a protectable item.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

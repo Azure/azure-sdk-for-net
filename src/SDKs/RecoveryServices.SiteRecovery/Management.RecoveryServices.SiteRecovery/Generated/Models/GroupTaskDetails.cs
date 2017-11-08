@@ -19,8 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
     /// <summary>
     /// This class represents the group task details when parent child
-    /// relationship exists
-    /// in the drill down.
+    /// relationship exists in the drill down.
     /// </summary>
     public partial class GroupTaskDetails
     {

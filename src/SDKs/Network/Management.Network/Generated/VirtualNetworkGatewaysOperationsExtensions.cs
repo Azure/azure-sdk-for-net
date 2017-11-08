@@ -371,6 +371,50 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets pre-generated VPN profile for P2S client of the virtual network
+            /// gateway in the specified resource group. The profile needs to be generated
+            /// first using generateVpnProfile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static string GetVpnProfilePackageUrl(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return operations.GetVpnProfilePackageUrlAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets pre-generated VPN profile for P2S client of the virtual network
+            /// gateway in the specified resource group. The profile needs to be generated
+            /// first using generateVpnProfile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> GetVpnProfilePackageUrlAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
             /// </summary>
             /// <param name='operations'>
@@ -411,6 +455,46 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<BgpPeerStatusListResult> GetBgpPeerStatusAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetBgpPeerStatusWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for supported vpn devices.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static string SupportedVpnDevices(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return operations.SupportedVpnDevicesAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for supported vpn devices.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> SupportedVpnDevicesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SupportedVpnDevicesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -501,6 +585,54 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<GatewayRouteListResult> GetAdvertisedRoutesAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAdvertisedRoutesWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, peer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for vpn device configuration script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway connection for which the
+            /// configuration script is generated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate vpn device script operation.
+            /// </param>
+            public static string VpnDeviceConfigurationScript(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters)
+            {
+                return operations.VpnDeviceConfigurationScriptAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a xml format representation for vpn device configuration script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway connection for which the
+            /// configuration script is generated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate vpn device script operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> VpnDeviceConfigurationScriptAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.VpnDeviceConfigurationScriptWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -736,6 +868,50 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<string> BeginGenerateVpnProfileAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginGenerateVpnProfileWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets pre-generated VPN profile for P2S client of the virtual network
+            /// gateway in the specified resource group. The profile needs to be generated
+            /// first using generateVpnProfile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static string BeginGetVpnProfilePackageUrl(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return operations.BeginGetVpnProfilePackageUrlAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets pre-generated VPN profile for P2S client of the virtual network
+            /// gateway in the specified resource group. The profile needs to be generated
+            /// first using generateVpnProfile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginGetVpnProfilePackageUrlAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -32,4 +32,41 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "LatestProcessed")]
         LatestProcessed
     }
+    internal static class A2ARpRecoveryPointTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this A2ARpRecoveryPointType? value)  =>
+            value == null ? null : ((A2ARpRecoveryPointType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this A2ARpRecoveryPointType value)
+        {
+            switch( value )
+            {
+                case A2ARpRecoveryPointType.Latest:
+                    return "Latest";
+                case A2ARpRecoveryPointType.LatestApplicationConsistent:
+                    return "LatestApplicationConsistent";
+                case A2ARpRecoveryPointType.LatestCrashConsistent:
+                    return "LatestCrashConsistent";
+                case A2ARpRecoveryPointType.LatestProcessed:
+                    return "LatestProcessed";
+            }
+            return null;
+        }
+
+        internal static A2ARpRecoveryPointType? ParseA2ARpRecoveryPointType(this string value)
+        {
+            switch( value )
+            {
+                case "Latest":
+                    return A2ARpRecoveryPointType.Latest;
+                case "LatestApplicationConsistent":
+                    return A2ARpRecoveryPointType.LatestApplicationConsistent;
+                case "LatestCrashConsistent":
+                    return A2ARpRecoveryPointType.LatestCrashConsistent;
+                case "LatestProcessed":
+                    return A2ARpRecoveryPointType.LatestProcessed;
+            }
+            return null;
+        }
+    }
 }

@@ -22,15 +22,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class BatchErrorDetail : IPropertyMetadata
     {
-        private readonly string key;
-        private readonly string value;
-
         #region Constructors
 
         internal BatchErrorDetail(Models.BatchErrorDetail protocolObject)
         {
-            this.key = protocolObject.Key;
-            this.value = protocolObject.Value;
+            this.Key = protocolObject.Key;
+            this.Value = protocolObject.Value;
         }
 
         #endregion Constructors
@@ -40,18 +37,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets an identifier specifying the meaning of the <see cref="Value"/> property.
         /// </summary>
-        public string Key
-        {
-            get { return this.key; }
-        }
+        public string Key { get; }
 
         /// <summary>
         /// Gets the additional information included with the <see cref="BatchError"/>.
         /// </summary>
-        public string Value
-        {
-            get { return this.value; }
-        }
+        public string Value { get; }
 
         #endregion // BatchErrorDetail
 

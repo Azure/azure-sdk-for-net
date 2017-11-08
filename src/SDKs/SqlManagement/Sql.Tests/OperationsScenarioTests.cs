@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net;
 using Xunit;
@@ -20,9 +21,9 @@ namespace Sql.Tests
             {
                 var sqlClient = context.GetClient<SqlManagementClient>();
 
-                OperationListResult result = sqlClient.Operations.List();
+                IPage<Operation> result = sqlClient.Operations.List();
 
-                foreach(Operation operation in result.Value)
+                foreach(Operation operation in result)
                 {
                     Assert.NotNull(operation.Display);
                     Assert.NotNull(operation.Display.Provider);

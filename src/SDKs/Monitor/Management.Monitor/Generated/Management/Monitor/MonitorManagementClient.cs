@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         public virtual IAutoscaleSettingsOperations AutoscaleSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IAlertRuleIncidentsOperations.
         /// </summary>
         public virtual IAlertRuleIncidentsOperations AlertRuleIncidents { get; private set; }
@@ -90,9 +95,14 @@ namespace Microsoft.Azure.Management.Monitor.Management
         public virtual ILogProfilesOperations LogProfiles { get; private set; }
 
         /// <summary>
-        /// Gets the IServiceDiagnosticSettingsOperations.
+        /// Gets the IDiagnosticSettingsOperations.
         /// </summary>
-        public virtual IServiceDiagnosticSettingsOperations ServiceDiagnosticSettings { get; private set; }
+        public virtual IDiagnosticSettingsOperations DiagnosticSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiagnosticSettingsCategoryOperations.
+        /// </summary>
+        public virtual IDiagnosticSettingsCategoryOperations DiagnosticSettingsCategory { get; private set; }
 
         /// <summary>
         /// Gets the IActionGroupsOperations.
@@ -306,10 +316,12 @@ namespace Microsoft.Azure.Management.Monitor.Management
         private void Initialize()
         {
             AutoscaleSettings = new AutoscaleSettingsOperations(this);
+            Operations = new Operations(this);
             AlertRuleIncidents = new AlertRuleIncidentsOperations(this);
             AlertRules = new AlertRulesOperations(this);
             LogProfiles = new LogProfilesOperations(this);
-            ServiceDiagnosticSettings = new ServiceDiagnosticSettingsOperations(this);
+            DiagnosticSettings = new DiagnosticSettingsOperations(this);
+            DiagnosticSettingsCategory = new DiagnosticSettingsCategoryOperations(this);
             ActionGroups = new ActionGroupsOperations(this);
             ActivityLogAlerts = new ActivityLogAlertsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

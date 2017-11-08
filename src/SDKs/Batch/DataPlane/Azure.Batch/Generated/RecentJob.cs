@@ -22,15 +22,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class RecentJob : IPropertyMetadata
     {
-        private readonly string id;
-        private readonly string url;
-
         #region Constructors
 
         internal RecentJob(Models.RecentJob protocolObject)
         {
-            this.id = protocolObject.Id;
-            this.url = protocolObject.Url;
+            this.Id = protocolObject.Id;
+            this.Url = protocolObject.Url;
         }
 
         #endregion Constructors
@@ -40,18 +37,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the id of the job.
         /// </summary>
-        public string Id
-        {
-            get { return this.id; }
-        }
+        public string Id { get; }
 
         /// <summary>
         /// Gets the URL of the job.
         /// </summary>
-        public string Url
-        {
-            get { return this.url; }
-        }
+        public string Url { get; }
 
         #endregion // RecentJob
 

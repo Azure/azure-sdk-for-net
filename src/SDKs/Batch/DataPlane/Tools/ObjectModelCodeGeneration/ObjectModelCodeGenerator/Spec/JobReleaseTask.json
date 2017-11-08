@@ -86,6 +86,17 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskContainerSettings",
+            "Name": "ContainerSettings",
+            "SummaryComment": "The settings for the container under which the task runs.",
+            "RemarksComment": "When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables are mapped into the container, and the task command line is executed in the container.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         }
       ]
     }

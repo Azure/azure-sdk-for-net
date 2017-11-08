@@ -53,13 +53,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
         /// <summary>
         /// Switches protection from one container to another or one replication
-        /// provider to
-        /// another.
+        /// provider to another.
         /// </summary>
         /// <remarks>
         /// Operation to switch protection from one container to another or one
-        /// replication
-        /// provider to another.
+        /// replication provider to another.
         /// </remarks>
         /// <param name='fabricName'>
         /// Unique fabric name.
@@ -122,8 +120,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The name of the protection container.
         /// </param>
         /// <param name='discoverProtectableItemRequest'>
-        /// The request object to add a protectable
-        /// item.
+        /// The request object to add a protectable item.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -768,13 +765,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
         /// <summary>
         /// Switches protection from one container to another or one replication
-        /// provider to
-        /// another.
+        /// provider to another.
         /// </summary>
         /// <remarks>
         /// Operation to switch protection from one container to another or one
-        /// replication
-        /// provider to another.
+        /// replication provider to another.
         /// </remarks>
         /// <param name='fabricName'>
         /// Unique fabric name.
@@ -1195,8 +1190,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The name of the protection container.
         /// </param>
         /// <param name='discoverProtectableItemRequest'>
-        /// The request object to add a protectable
-        /// item.
+        /// The request object to add a protectable item.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

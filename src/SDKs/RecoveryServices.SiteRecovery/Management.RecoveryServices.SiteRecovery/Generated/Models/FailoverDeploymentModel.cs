@@ -30,4 +30,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "ResourceManager")]
         ResourceManager
     }
+    internal static class FailoverDeploymentModelEnumExtension
+    {
+        internal static string ToSerializedValue(this FailoverDeploymentModel? value)  =>
+            value == null ? null : ((FailoverDeploymentModel)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this FailoverDeploymentModel value)
+        {
+            switch( value )
+            {
+                case FailoverDeploymentModel.NotApplicable:
+                    return "NotApplicable";
+                case FailoverDeploymentModel.Classic:
+                    return "Classic";
+                case FailoverDeploymentModel.ResourceManager:
+                    return "ResourceManager";
+            }
+            return null;
+        }
+
+        internal static FailoverDeploymentModel? ParseFailoverDeploymentModel(this string value)
+        {
+            switch( value )
+            {
+                case "NotApplicable":
+                    return FailoverDeploymentModel.NotApplicable;
+                case "Classic":
+                    return FailoverDeploymentModel.Classic;
+                case "ResourceManager":
+                    return FailoverDeploymentModel.ResourceManager;
+            }
+            return null;
+        }
+    }
 }
