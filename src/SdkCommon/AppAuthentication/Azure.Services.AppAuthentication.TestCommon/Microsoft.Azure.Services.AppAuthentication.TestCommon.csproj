@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>     
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />
+    </ItemGroup>  
+    <ItemGroup>
+        <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="TestFiles\VisualStudioMultiTokenProvider.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="TestFiles\VisualStudioSingleTokenProvider.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="TestFiles\VisualStudioTokenProviderMissingPreference.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+</Project>
