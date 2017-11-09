@@ -242,6 +242,11 @@ namespace Microsoft.Azure.Management.Sql
         ISyncMembersOperations SyncMembers { get; }
 
         /// <summary>
+        /// Gets the ISubscriptionUsagesOperations.
+        /// </summary>
+        ISubscriptionUsagesOperations SubscriptionUsages { get; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
