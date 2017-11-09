@@ -27,7 +27,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public AzureSqlDWLinkedService()
         {
-            ConnectionString = new SecureString();
             CustomInit();
         }
 

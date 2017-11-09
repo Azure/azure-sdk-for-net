@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Dynamics entity source.
+    /// A copy activity Dynamics source.
     /// </summary>
     public partial class DynamicsSource : CopySource
     {

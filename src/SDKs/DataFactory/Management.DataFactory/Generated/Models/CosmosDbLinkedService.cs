@@ -27,7 +27,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public CosmosDbLinkedService()
         {
-            ConnectionString = new SecureString();
             CustomInit();
         }
 

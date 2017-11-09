@@ -12,6 +12,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -251,6 +252,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
             }
+            string xBingApisSDK = "true";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -258,6 +260,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("xBingApisSDK", xBingApisSDK);
                 tracingParameters.Add("acceptLanguage", acceptLanguage);
                 tracingParameters.Add("pragma", pragma);
                 tracingParameters.Add("userAgent", userAgent);
@@ -316,6 +319,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (xBingApisSDK != null)
+            {
+                if (_httpRequest.Headers.Contains("X-BingApis-SDK"))
+                {
+                    _httpRequest.Headers.Remove("X-BingApis-SDK");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("X-BingApis-SDK", xBingApisSDK);
+            }
             if (acceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("Accept-Language"))

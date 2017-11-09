@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders?api-version=2017-11-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnM/YXBpLXZlcnNpb249MjAxNy0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "26c6f9ef-5695-4563-a2cd-aa88e30b33e9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/microsoft.capacity/reservationOrders/1aef1e1b-97a0-4ef6-8224-467c9b533e63\",\r\n      \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n      \"name\": \"1aef1e1b-97a0-4ef6-8224-467c9b533e63\",\r\n      \"etag\": 7,\r\n      \"properties\": {\r\n        \"displayName\": \"Test-20170925140900\",\r\n        \"requestDateTime\": \"2017-09-25T21:09:10.5264972Z\",\r\n        \"createdDateTime\": \"2017-09-25T21:11:23.0182715Z\",\r\n        \"expiryDate\": \"2018-09-25T00:00:00Z\",\r\n        \"term\": \"P1Y\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"items\": [\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/1aef1e1b-97a0-4ef6-8224-467c9b533e63/reservations/bfb6da14-31c9-4add-ae2a-f267f38ea43a\"\r\n          }\r\n        ],\r\n        \"originalQuantity\": 2\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998\",\r\n      \"type\": \"Microsoft.Capacity/reservationOrders\",\r\n      \"name\": \"55793bc2-e5c2-4a98-9d5c-0a0bce6cf998\",\r\n      \"etag\": 29,\r\n      \"properties\": {\r\n        \"displayName\": \"cabri_test\",\r\n        \"requestDateTime\": \"2017-09-26T23:21:16.404934Z\",\r\n        \"createdDateTime\": \"2017-09-26T23:23:27.774657Z\",\r\n        \"expiryDate\": \"2018-09-26T00:00:00Z\",\r\n        \"term\": \"P1Y\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"items\": [\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/3fe33797-691c-4114-a369-8a8bc17f93e4\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/a1c5acec-c516-43a1-b8b4-baf8f48f99b1\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/18923add-7bc3-4824-9fdd-3337da67e1da\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/9df82aae-e7bc-46e0-8f32-d96f085e66d3\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/0f2febf2-e211-454b-a6dd-664e724b82a0\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/8c14ccf4-2f9f-4925-8815-12157f6370da\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/4a0b6982-eea8-4198-b40f-02d96c20f209\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/c32f76e2-1d05-4f56-bc4e-eec9baf33681\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/4eaea430-b8ed-4cb0-96a4-9001575b81d2\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/2de5f7fa-4eb2-444f-8b45-97371f8d999e\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/6e5a8ed8-3aa1-46e6-9418-08f2e53042af\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/39984b0d-043b-48ad-84c1-6e9672669582\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/a09a3f94-54b7-4135-93a8-e8a3bb76e9b9\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/8a8fec15-b4a5-414d-81b9-55c2d9fbabe0\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/d9a86c33-6d40-4499-a6cb-3329d3628a62\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/9e5e7d92-0480-4fbe-8bb3-3e56127583d1\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/0adf5f5e-926f-43d8-a6a9-29df295e3881\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/b4da0f35-fd88-40a5-811b-55b2644e378e\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/5da9e803-791a-4ffe-8192-d0f60f23ef07\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/632f1d23-31b7-49ee-b369-ea1570af4f03\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/1fff43ba-c03a-4264-8a4b-cbb6e4b6c4b6\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/3b8668a2-95a0-4065-9eb9-c421089a5793\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/644516b1-61fb-4855-82f8-c4342dc91d05\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/d0786c8b-dd7e-432f-baa5-ff0391e35205\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/3c933a25-e3ef-4251-a75e-88edce355401\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/0d210b1e-c83b-4f4d-a1d3-c7de616afb68\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/660ba932-f766-4a1b-9438-191481f0854d\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/6fdd18dd-a063-4eb5-a0bd-e62b1d737e4d\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/9237107a-37a7-417b-b07c-a1d9936d04d5\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/d9bac2c7-0aca-48f1-85d4-3485dab7f48b\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/a9d8ad9f-1e52-42db-88c3-a45ae4185609\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/5d12c7dc-6138-4eea-adcd-7785830bc7cf\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/597c5aff-89c5-47b4-8458-f0ab490fb904\"\r\n          },\r\n          {\r\n            \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/2a203acf-9eda-4ce4-815e-953600f1c9fb\"\r\n          }\r\n        ],\r\n        \"originalQuantity\": 5\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 28 Sep 2017 18:47:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "c9d2c8c6-4bc5-4cb2-b03a-e4571f929359"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9d2c8c6-4bc5-4cb2-b03a-e4571f929359"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170928T184758Z:c9d2c8c6-4bc5-4cb2-b03a-e4571f929359"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "98df3792-7962-4f18-8be2-d5576f122de3"
+  }
+}
