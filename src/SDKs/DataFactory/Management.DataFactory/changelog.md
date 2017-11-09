@@ -1,5 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.2.2-preview
+
+### Feature Additions
+  * Add SAP Cloud For Customer Source
+  * Add SAP Cloud For Customer Dataset
+
 ## Version 0.2.1-preview
 
 ### Feature Additions
