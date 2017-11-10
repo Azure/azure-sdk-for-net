@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Rest.Azure
 {
@@ -37,5 +38,10 @@ namespace Microsoft.Rest.Azure
         /// Gets or sets details for the error.
         /// </summary>
         public IList<CloudError> Details { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the inner error.
+        /// </summary>
+        public JObject InnerError { get; set; }
     }
 }
