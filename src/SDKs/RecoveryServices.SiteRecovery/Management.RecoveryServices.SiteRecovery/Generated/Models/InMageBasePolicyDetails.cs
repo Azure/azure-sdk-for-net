@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointThresholdInMinutes">The recovery point
         /// threshold in minutes.</param>
         /// <param name="recoveryPointHistory">The duration in minutes until
-        /// which the recovery points need to be
-        /// stored.</param>
+        /// which the recovery points need to be stored.</param>
         /// <param name="appConsistentFrequencyInMinutes">The app consistent
         /// snapshot frequency in minutes.</param>
         /// <param name="multiVmSyncStatus">A value indicating whether multi-VM
@@ -62,8 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the duration in minutes until which the recovery
-        /// points need to be
-        /// stored.
+        /// points need to be stored.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointHistory")]
         public int? RecoveryPointHistory { get; set; }

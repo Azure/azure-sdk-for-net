@@ -105,5 +105,49 @@ namespace BatchClientIntegrationTests
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
+        public void TestContainerTask()
+        {
+            Action test = () =>
+            {
+                using (BatchClient client = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = "ContainerJob" + TestUtilities.GetMyName();
+
+                    try
+                    {
+                        var job = client.JobOperations.CreateJob(jobId, new PoolInformation()
+                        {
+                            PoolId = this.poolFixture.PoolId
+                        });
+                        job.Commit();
+
+                        var newTask = new CloudTask("a", "cat /etc/centos-release")
+                        {
+                            ContainerSettings = new TaskContainerSettings("centos")
+                        };
+                        client.JobOperations.AddTask(jobId, newTask);
+
+                        var tasks = client.JobOperations.ListTasks(jobId);
+
+                        var monitor = client.Utilities.CreateTaskStateMonitor();
+                        monitor.WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(7));
+
+                        var task = tasks.Single();
+                        task.Refresh();
+
+                        Assert.Equal("ContainerPoolNotSupported", task.ExecutionInformation.FailureInformation.Code);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(client, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TimeSpan.FromMinutes(10));
+        }
     }
 }

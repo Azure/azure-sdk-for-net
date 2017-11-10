@@ -30,4 +30,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "Custom")]
         Custom
     }
+    internal static class RpInMageRecoveryPointTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this RpInMageRecoveryPointType? value)  =>
+            value == null ? null : ((RpInMageRecoveryPointType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this RpInMageRecoveryPointType value)
+        {
+            switch( value )
+            {
+                case RpInMageRecoveryPointType.LatestTime:
+                    return "LatestTime";
+                case RpInMageRecoveryPointType.LatestTag:
+                    return "LatestTag";
+                case RpInMageRecoveryPointType.Custom:
+                    return "Custom";
+            }
+            return null;
+        }
+
+        internal static RpInMageRecoveryPointType? ParseRpInMageRecoveryPointType(this string value)
+        {
+            switch( value )
+            {
+                case "LatestTime":
+                    return RpInMageRecoveryPointType.LatestTime;
+                case "LatestTag":
+                    return RpInMageRecoveryPointType.LatestTag;
+                case "Custom":
+                    return RpInMageRecoveryPointType.Custom;
+            }
+            return null;
+        }
+    }
 }

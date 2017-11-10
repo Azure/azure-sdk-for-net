@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// operations.</param>
         /// <param name="lastPlannedFailoverTime">The start time of the last
         /// planned failover.</param>
+        /// <param name="lastUnplannedFailoverTime">The start time of the last
+        /// unplanned failover.</param>
         /// <param name="lastTestFailoverTime">The start time of the last test
         /// failover.</param>
         /// <param name="currentScenario">The current scenario details.</param>
@@ -56,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="currentScenarioStatusDescription">The recovery plan
         /// status description.</param>
         /// <param name="groups">The recovery plan groups.</param>
-        public RecoveryPlanProperties(string friendlyName = default(string), string primaryFabricId = default(string), string primaryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string recoveryFabricFriendlyName = default(string), string failoverDeploymentModel = default(string), IList<string> replicationProviders = default(IList<string>), IList<string> allowedOperations = default(IList<string>), System.DateTime? lastPlannedFailoverTime = default(System.DateTime?), System.DateTime? lastTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string currentScenarioStatus = default(string), string currentScenarioStatusDescription = default(string), IList<RecoveryPlanGroup> groups = default(IList<RecoveryPlanGroup>))
+        public RecoveryPlanProperties(string friendlyName = default(string), string primaryFabricId = default(string), string primaryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string recoveryFabricFriendlyName = default(string), string failoverDeploymentModel = default(string), IList<string> replicationProviders = default(IList<string>), IList<string> allowedOperations = default(IList<string>), System.DateTime? lastPlannedFailoverTime = default(System.DateTime?), System.DateTime? lastUnplannedFailoverTime = default(System.DateTime?), System.DateTime? lastTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string currentScenarioStatus = default(string), string currentScenarioStatusDescription = default(string), IList<RecoveryPlanGroup> groups = default(IList<RecoveryPlanGroup>))
         {
             FriendlyName = friendlyName;
             PrimaryFabricId = primaryFabricId;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ReplicationProviders = replicationProviders;
             AllowedOperations = allowedOperations;
             LastPlannedFailoverTime = lastPlannedFailoverTime;
+            LastUnplannedFailoverTime = lastUnplannedFailoverTime;
             LastTestFailoverTime = lastTestFailoverTime;
             CurrentScenario = currentScenario;
             CurrentScenarioStatus = currentScenarioStatus;
@@ -133,6 +136,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastPlannedFailoverTime")]
         public System.DateTime? LastPlannedFailoverTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start time of the last unplanned failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastUnplannedFailoverTime")]
+        public System.DateTime? LastUnplannedFailoverTime { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the last test failover.

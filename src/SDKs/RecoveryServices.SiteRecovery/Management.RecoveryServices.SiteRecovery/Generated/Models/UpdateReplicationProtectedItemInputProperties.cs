@@ -41,11 +41,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="selectedRecoveryAzureNetworkId">Target Azure Network
         /// Id.</param>
         /// <param name="enableRDPOnTargetOption">The selected option to enable
-        /// RDP\SSH on target vm after failover.
-        /// String value of {SrsDataContract.EnableRDPOnTargetOption}
-        /// enum.</param>
+        /// RDP\SSH on target vm after failover. String value of
+        /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
         /// <param name="vmNics">The list of vm nic details.</param>
-        /// <param name="licenseType">LicenseType. Possible values include:
+        /// <param name="licenseType">License type. Possible values include:
         /// 'NotSpecified', 'NoLicenseType', 'WindowsServer'</param>
         /// <param name="recoveryAvailabilitySetId">The target availability set
         /// id.</param>
@@ -89,8 +88,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the selected option to enable RDP\SSH on target vm
-        /// after failover.
-        /// String value of {SrsDataContract.EnableRDPOnTargetOption} enum.
+        /// after failover. String value of
+        /// {SrsDataContract.EnableRDPOnTargetOption} enum.
         /// </summary>
         [JsonProperty(PropertyName = "enableRDPOnTargetOption")]
         public string EnableRDPOnTargetOption { get; set; }
@@ -102,7 +101,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public IList<VMNicInputDetails> VmNics { get; set; }
 
         /// <summary>
-        /// Gets or sets licenseType. Possible values include: 'NotSpecified',
+        /// Gets or sets license type. Possible values include: 'NotSpecified',
         /// 'NoLicenseType', 'WindowsServer'
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]

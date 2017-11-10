@@ -315,6 +315,31 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         Task<AzureOperationResponse<GatewayListStatusLive>> ListGatewayStatusWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Dissociates a Unified Gateway associated with the server.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure Resource group of which a given Analysis
+        /// Services server is part. This name must be at least 1 character in
+        /// length, and no more than 90.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Analysis Services server. It must be at least 3
+        /// characters in length, and no more than 63.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DissociateGatewayWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Provisions the specified Analysis Services server based on the
         /// configuration specified in the request.
         /// </summary>

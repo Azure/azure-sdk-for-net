@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the VmNicUpdatesTaskDetails class.
         /// </summary>
-        /// <param name="vmId">VmId.</param>
-        /// <param name="nicId">NicId.</param>
-        /// <param name="name">Name.</param>
+        /// <param name="vmId">Virtual machine Id.</param>
+        /// <param name="nicId">Nic Id.</param>
+        /// <param name="name">Name of the Nic.</param>
         public VmNicUpdatesTaskDetails(string vmId = default(string), string nicId = default(string), string name = default(string))
         {
             VmId = vmId;
@@ -48,19 +48,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets vmId.
+        /// Gets or sets virtual machine Id.
         /// </summary>
         [JsonProperty(PropertyName = "vmId")]
         public string VmId { get; set; }
 
         /// <summary>
-        /// Gets or sets nicId.
+        /// Gets or sets nic Id.
         /// </summary>
         [JsonProperty(PropertyName = "nicId")]
         public string NicId { get; set; }
 
         /// <summary>
-        /// Gets or sets name.
+        /// Gets or sets name of the Nic.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

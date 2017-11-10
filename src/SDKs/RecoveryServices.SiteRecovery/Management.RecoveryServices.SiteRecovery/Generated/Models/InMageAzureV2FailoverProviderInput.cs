@@ -36,9 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="vaultLocation">Location of the vault.</param>
         /// <param name="recoveryPointId">The recovery point id to be passed to
-        /// failover to a particular recovery
-        /// point. In case of latest recovery point, null should be
-        /// passed.</param>
+        /// failover to a particular recovery point. In case of latest recovery
+        /// point, null should be passed.</param>
         public InMageAzureV2FailoverProviderInput(string vaultLocation = default(string), string recoveryPointId = default(string))
         {
             VaultLocation = vaultLocation;
@@ -59,8 +58,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the recovery point id to be passed to failover to a
-        /// particular recovery
-        /// point. In case of latest recovery point, null should be passed.
+        /// particular recovery point. In case of latest recovery point, null
+        /// should be passed.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointId")]
         public string RecoveryPointId { get; set; }

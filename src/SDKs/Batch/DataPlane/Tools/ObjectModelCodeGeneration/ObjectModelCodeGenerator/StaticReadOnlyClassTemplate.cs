@@ -37,20 +37,7 @@ namespace ObjectModelCodeGenerator
             this.Write(this.ToStringHelper.ToStringWithCulture(type.TransportObjectTypeName));
             this.Write(">,");
  } 
-            this.Write(" IPropertyMetadata\r\n    {\r\n");
-
-foreach (var property in type.OrderedPublicProperties.Select(p => p.Key))
-{
-
-            this.Write("        private readonly ");
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            this.Write(" ");
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.CamelName));
-            this.Write(";\r\n");
-
-}
-
-            this.Write("\r\n        #region Constructors\r\n");
+            this.Write(" IPropertyMetadata\r\n    {\r\n        #region Constructors\r\n");
  if (type.ShouldDefineCustomConstructor)
 {
 
@@ -81,7 +68,7 @@ foreach (var property in type.OrderedPublicProperties.Select(p => p.Key))
     {
 
             this.Write("            this.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.CamelName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             this.Write(" = ");
             this.Write(this.ToStringHelper.ToStringWithCulture(property.CamelName));
             this.Write(";\r\n");
@@ -103,7 +90,7 @@ foreach (var kvp in type.BoundProperties)
     var protocolObjectGetter = CodeGenerationUtilities.GetProtocolToObjectModelString(kvp.Key, kvp.Value);
 
             this.Write("            this.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.CamelName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Name));
             this.Write(" = ");
             this.Write(this.ToStringHelper.ToStringWithCulture(protocolObjectGetter));
             this.Write(";\r\n");
@@ -134,9 +121,7 @@ if (!string.IsNullOrEmpty(property.RemarksComment))
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
             this.Write(" ");
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            this.Write("\r\n        {\r\n            get { return this.");
-            this.Write(this.ToStringHelper.ToStringWithCulture(property.CamelName));
-            this.Write("; }\r\n        }\r\n\r\n");
+            this.Write(" { get; }\r\n\r\n");
 
 }
 

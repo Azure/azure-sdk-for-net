@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="protectableItemId">The protectable item Id.</param>
         /// <param name="providerSpecificDetails">The ReplicationProviderInput.
         /// For HyperVReplicaAzure provider, it will be
-        /// AzureEnableProtectionInput object.
-        /// For San provider, it will be SanEnableProtectionInput object.
-        /// For HyperVReplicaAzure provider, it can be null.</param>
+        /// AzureEnableProtectionInput object. For San provider, it will be
+        /// SanEnableProtectionInput object. For HyperVReplicaAzure provider,
+        /// it can be null.</param>
         public EnableProtectionInputProperties(string policyId = default(string), string protectableItemId = default(string), EnableProtectionProviderSpecificInput providerSpecificDetails = default(EnableProtectionProviderSpecificInput))
         {
             PolicyId = policyId;
@@ -66,11 +66,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string ProtectableItemId { get; set; }
 
         /// <summary>
-        /// Gets or sets the ReplicationProviderInput.
-        /// For HyperVReplicaAzure provider, it will be
-        /// AzureEnableProtectionInput object.
-        /// For San provider, it will be SanEnableProtectionInput object.
-        /// For HyperVReplicaAzure provider, it can be null.
+        /// Gets or sets the ReplicationProviderInput. For HyperVReplicaAzure
+        /// provider, it will be AzureEnableProtectionInput object. For San
+        /// provider, it will be SanEnableProtectionInput object. For
+        /// HyperVReplicaAzure provider, it can be null.
         /// </summary>
         [JsonProperty(PropertyName = "providerSpecificDetails")]
         public EnableProtectionProviderSpecificInput ProviderSpecificDetails { get; set; }

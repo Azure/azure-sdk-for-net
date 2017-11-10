@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryContainerId">The recovery container
         /// Id.</param>
         /// <param name="vmDisks">The list of vm disk details.</param>
+        /// <param name="vmManagedDisks">The list of vm managed disk
+        /// details.</param>
         /// <param name="recoveryResourceGroupId">The recovery resource group
         /// Id. Valid for V2 scenarios.</param>
         /// <param name="recoveryCloudServiceId">The recovery cloud service Id.
@@ -44,10 +46,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set.</param>
         /// <param name="policyId">The Policy Id.</param>
-        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string))
+        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string))
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
+            VmManagedDisks = vmManagedDisks;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
@@ -71,6 +74,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmDisks")]
         public IList<A2AVmDiskInputDetails> VmDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of vm managed disk details.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmManagedDisks")]
+        public IList<A2AVmManagedDiskInputDetails> VmManagedDisks { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery resource group Id. Valid for V2

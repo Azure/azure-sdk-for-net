@@ -22,19 +22,14 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobSchedulingError : IPropertyMetadata
     {
-        private readonly Common.ErrorCategory category;
-        private readonly string code;
-        private readonly IReadOnlyList<NameValuePair> details;
-        private readonly string message;
-
         #region Constructors
 
         internal JobSchedulingError(Models.JobSchedulingError protocolObject)
         {
-            this.category = UtilitiesInternal.MapEnum<Models.ErrorCategory, Common.ErrorCategory>(protocolObject.Category);
-            this.code = protocolObject.Code;
-            this.details = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Details);
-            this.message = protocolObject.Message;
+            this.Category = UtilitiesInternal.MapEnum<Models.ErrorCategory, Common.ErrorCategory>(protocolObject.Category);
+            this.Code = protocolObject.Code;
+            this.Details = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Details);
+            this.Message = protocolObject.Message;
         }
 
         #endregion Constructors
@@ -44,34 +39,22 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the category of the job scheduling error.
         /// </summary>
-        public Common.ErrorCategory Category
-        {
-            get { return this.category; }
-        }
+        public Common.ErrorCategory Category { get; }
 
         /// <summary>
         /// Gets a code for the job scheduling error. See <see cref="Common.JobSchedulingErrorCodes"/> for possible values.
         /// </summary>
-        public string Code
-        {
-            get { return this.code; }
-        }
+        public string Code { get; }
 
         /// <summary>
         /// Gets a list of additional error details related to the scheduling error.
         /// </summary>
-        public IReadOnlyList<NameValuePair> Details
-        {
-            get { return this.details; }
-        }
+        public IReadOnlyList<NameValuePair> Details { get; }
 
         /// <summary>
         /// Gets a message describing the job scheduling error, intended to be suitable for display in a user interface.
         /// </summary>
-        public string Message
-        {
-            get { return this.message; }
-        }
+        public string Message { get; }
 
         #endregion // JobSchedulingError
 

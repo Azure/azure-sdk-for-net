@@ -37,12 +37,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="scenarioName">The ScenarioName.</param>
         /// <param name="friendlyName">The DisplayName.</param>
         /// <param name="state">The status of the Job. It is one of these
-        /// values - NotStarted, InProgress,
-        /// Succeeded, Failed, Cancelled, Suspended or Other.</param>
+        /// values - NotStarted, InProgress, Succeeded, Failed, Cancelled,
+        /// Suspended or Other.</param>
         /// <param name="stateDescription">The description of the state of the
-        /// Job. For e.g. - For Succeeded state,
-        /// description can be Completed, PartiallySucceeded,
-        /// CompletedWithInformation or Skipped.</param>
+        /// Job. For e.g. - For Succeeded state, description can be Completed,
+        /// PartiallySucceeded, CompletedWithInformation or Skipped.</param>
         /// <param name="tasks">The tasks.</param>
         /// <param name="errors">The errors.</param>
         /// <param name="startTime">The start time.</param>
@@ -52,8 +51,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetObjectName">The name of the affected
         /// object.</param>
         /// <param name="targetInstanceType">The type of the affected object
-        /// which is
-        /// of {Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType}
+        /// which is of
+        /// {Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType}
         /// class.</param>
         /// <param name="customDetails">The custom job details like test
         /// failover job details.</param>
@@ -101,17 +100,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the status of the Job. It is one of these values -
-        /// NotStarted, InProgress,
-        /// Succeeded, Failed, Cancelled, Suspended or Other.
+        /// NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or
+        /// Other.
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the state of the Job. For e.g. -
-        /// For Succeeded state,
-        /// description can be Completed, PartiallySucceeded,
-        /// CompletedWithInformation or Skipped.
+        /// For Succeeded state, description can be Completed,
+        /// PartiallySucceeded, CompletedWithInformation or Skipped.
         /// </summary>
         [JsonProperty(PropertyName = "stateDescription")]
         public string StateDescription { get; set; }
@@ -159,8 +157,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TargetObjectName { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the affected object which is
-        /// of {Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType}
+        /// Gets or sets the type of the affected object which is of
+        /// {Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType}
         /// class.
         /// </summary>
         [JsonProperty(PropertyName = "targetInstanceType")]

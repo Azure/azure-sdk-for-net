@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Provides management capabilities for Azure Analysis Services accounts.</Description>
     <AssemblyTitle>Microsoft Azure Analysis Services Management Library</AssemblyTitle>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>2.0.1</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Analysis</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Analysis</PackageId>
     <PackageTags>Microsoft Azure resource management;asazure;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>

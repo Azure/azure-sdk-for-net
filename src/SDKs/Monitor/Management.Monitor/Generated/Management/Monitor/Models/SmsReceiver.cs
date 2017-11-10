@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// receiver.</param>
         /// <param name="phoneNumber">The phone number of the SMS
         /// receiver.</param>
-        /// <param name="status">Possible values include: 'NotSpecified',
-        /// 'Enabled', 'Disabled'</param>
+        /// <param name="status">The status of the receiver. Possible values
+        /// include: 'NotSpecified', 'Enabled', 'Disabled'</param>
         public SmsReceiver(string name, string countryCode, string phoneNumber, ReceiverStatus? status = default(ReceiverStatus?))
         {
             Name = name;
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         public string PhoneNumber { get; set; }
 
         /// <summary>
-        /// Gets possible values include: 'NotSpecified', 'Enabled', 'Disabled'
+        /// Gets the status of the receiver. Possible values include:
+        /// 'NotSpecified', 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public ReceiverStatus? Status { get; private set; }
