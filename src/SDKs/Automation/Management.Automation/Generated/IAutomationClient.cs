@@ -41,16 +41,46 @@ namespace Microsoft.Azure.Management.Automation
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft
         /// Azure subscription. The subscription ID forms part of the URI for
         /// every service call.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Identifies this specific client request.
+        /// </summary>
+        string ClientRequestId { get; set; }
+
+        /// <summary>
+        /// The name of the automation account.
+        /// </summary>
+        System.Guid AutomationAccountName { get; set; }
+
+        /// <summary>
+        /// The name of the resource group within user's subscription.
+        /// </summary>
+        string ResourceGroupName1 { get; set; }
+
+        /// <summary>
+        /// subscription id for tenant issuing the request.
+        /// </summary>
+        System.Guid SubscriptionId1 { get; set; }
+
+        /// <summary>
+        /// The name of the software update configuration to be created.
+        /// </summary>
+        string SoftwareUpdateConfigurationName { get; set; }
+
+        /// <summary>
+        /// The Id of the software update configuration run.
+        /// </summary>
+        System.Guid SoftwareUpdateConfigurationRunId { get; set; }
+
+        /// <summary>
+        /// The Id of the software update configuration machine run.
+        /// </summary>
+        System.Guid SoftwareUpdateConfigurationMachineRunId { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -214,6 +244,21 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the IWebhookOperations.
         /// </summary>
         IWebhookOperations Webhook { get; }
+
+        /// <summary>
+        /// Gets the ISoftwareUpdateConfigurationsOperations.
+        /// </summary>
+        ISoftwareUpdateConfigurationsOperations SoftwareUpdateConfigurations { get; }
+
+        /// <summary>
+        /// Gets the ISoftwareUpdateConfigurationRunsOperations.
+        /// </summary>
+        ISoftwareUpdateConfigurationRunsOperations SoftwareUpdateConfigurationRuns { get; }
+
+        /// <summary>
+        /// Gets the ISoftwareUpdateConfigurationMachineRunsOperations.
+        /// </summary>
+        ISoftwareUpdateConfigurationMachineRunsOperations SoftwareUpdateConfigurationMachineRuns { get; }
 
     }
 }

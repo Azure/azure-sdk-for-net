@@ -47,16 +47,46 @@ namespace Microsoft.Azure.Management.Automation
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Identifies this specific client request.
+        /// </summary>
+        public string ClientRequestId { get; set; }
+
+        /// <summary>
+        /// The name of the automation account.
+        /// </summary>
+        public System.Guid AutomationAccountName { get; set; }
+
+        /// <summary>
+        /// The name of the resource group within user's subscription.
+        /// </summary>
+        public string ResourceGroupName1 { get; set; }
+
+        /// <summary>
+        /// subscription id for tenant issuing the request.
+        /// </summary>
+        public System.Guid SubscriptionId1 { get; set; }
+
+        /// <summary>
+        /// The name of the software update configuration to be created.
+        /// </summary>
+        public string SoftwareUpdateConfigurationName { get; set; }
+
+        /// <summary>
+        /// The Id of the software update configuration run.
+        /// </summary>
+        public System.Guid SoftwareUpdateConfigurationRunId { get; set; }
+
+        /// <summary>
+        /// The Id of the software update configuration machine run.
+        /// </summary>
+        public System.Guid SoftwareUpdateConfigurationMachineRunId { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -219,6 +249,21 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the IWebhookOperations.
         /// </summary>
         public virtual IWebhookOperations Webhook { get; private set; }
+
+        /// <summary>
+        /// Gets the ISoftwareUpdateConfigurationsOperations.
+        /// </summary>
+        public virtual ISoftwareUpdateConfigurationsOperations SoftwareUpdateConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the ISoftwareUpdateConfigurationRunsOperations.
+        /// </summary>
+        public virtual ISoftwareUpdateConfigurationRunsOperations SoftwareUpdateConfigurationRuns { get; private set; }
+
+        /// <summary>
+        /// Gets the ISoftwareUpdateConfigurationMachineRunsOperations.
+        /// </summary>
+        public virtual ISoftwareUpdateConfigurationMachineRunsOperations SoftwareUpdateConfigurationMachineRuns { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AutomationClient class.
@@ -450,8 +495,10 @@ namespace Microsoft.Azure.Management.Automation
             Schedule = new ScheduleOperations(this);
             Variable = new VariableOperations(this);
             Webhook = new WebhookOperations(this);
-            BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-10-31";
+            SoftwareUpdateConfigurations = new SoftwareUpdateConfigurationsOperations(this);
+            SoftwareUpdateConfigurationRuns = new SoftwareUpdateConfigurationRunsOperations(this);
+            SoftwareUpdateConfigurationMachineRuns = new SoftwareUpdateConfigurationMachineRunsOperations(this);
+            BaseUri = new System.Uri("https://management.azure.com/");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -481,6 +528,8 @@ namespace Microsoft.Azure.Management.Automation
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateConfiguration>("operatingSystem"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateConfiguration>("operatingSystem"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

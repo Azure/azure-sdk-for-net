@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="status">Gets or sets the status of the node.</param>
         /// <param name="nodeId">Gets or sets the node id.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
-        public DscNode(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? lastSeen = default(System.DateTime?), System.DateTime? registrationTime = default(System.DateTime?), string ip = default(string), string accountId = default(string), DscNodeConfigurationAssociationProperty nodeConfiguration = default(DscNodeConfigurationAssociationProperty), string status = default(string), string nodeId = default(string), string etag = default(string))
+        /// <param name="extensionHandler">Gets or sets the list of
+        /// extensionHandler properties for a Node.</param>
+        public DscNode(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? lastSeen = default(System.DateTime?), System.DateTime? registrationTime = default(System.DateTime?), string ip = default(string), string accountId = default(string), DscNodeConfigurationAssociationProperty nodeConfiguration = default(DscNodeConfigurationAssociationProperty), string status = default(string), string nodeId = default(string), string etag = default(string), IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default(IList<DscNodeExtensionHandlerAssociationProperty>))
             : base(location, id, name, type, tags)
         {
             LastSeen = lastSeen;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             Status = status;
             NodeId = nodeId;
             Etag = etag;
+            ExtensionHandler = extensionHandler;
             CustomInit();
         }
 
@@ -115,6 +118,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of extensionHandler properties for a Node.
+        /// </summary>
+        [JsonProperty(PropertyName = "extensionHandler")]
+        public IList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler { get; set; }
 
         /// <summary>
         /// Validate the object.
