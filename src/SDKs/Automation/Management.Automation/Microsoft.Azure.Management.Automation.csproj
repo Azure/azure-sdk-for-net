@@ -1,27 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  
   <PropertyGroup>
+	<PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</description>
+	<VersionPrefix>3.0.0</VersionPrefix>
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
-    <VersionPrefix>2.0.4</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
-    <PackageId>Microsoft.Azure.Management.Automation</PackageId>
-    <tags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</tags>
+	<AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>    
+    <PackageTags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</PackageTags>
   </PropertyGroup>
+  
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Hyak.Common" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
+    <Compile Remove="toKeep\**" />
+    <EmbeddedResource Remove="toKeep\**" />
+    <None Remove="toKeep\**" />
   </ItemGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
 </Project>
 
 <!--

@@ -3,12 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Microsoft.WindowsAzure.Management.Automation;
 
-namespace Microsoft.WindowsAzure.Management.Automation
+namespace Automation.Tests.Customizations
 {
-    public partial class AutomationManagementClient
+    public class AutomationManagementClient
     {
         public static List<T> ContinuationTokenHandler<T>(Func<string, ResponseWithSkipToken<T>> listFunc)
         {
