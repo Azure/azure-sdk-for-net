@@ -6,51 +6,13 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for TextFormat.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum TextFormat
+    public static class TextFormat
     {
-        [EnumMember(Value = "Raw")]
-        Raw,
-        [EnumMember(Value = "Html")]
-        Html
-    }
-    internal static class TextFormatEnumExtension
-    {
-        internal static string ToSerializedValue(this TextFormat? value)
-        {
-            return value == null ? null : ((TextFormat)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this TextFormat value)
-        {
-            switch( value )
-            {
-                case TextFormat.Raw:
-                    return "Raw";
-                case TextFormat.Html:
-                    return "Html";
-            }
-            return null;
-        }
-
-        internal static TextFormat? ParseTextFormat(this string value)
-        {
-            switch( value )
-            {
-                case "Raw":
-                    return TextFormat.Raw;
-                case "Html":
-                    return TextFormat.Html;
-            }
-            return null;
-        }
+        public const string Raw = "Raw";
+        public const string Html = "Html";
     }
 }

@@ -324,7 +324,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), int? answerCount = default(int?), string countryCode = default(string), int? count = default(int?), Freshness? freshness = default(Freshness?), string market = default(string), int? offset = default(int?), IList<string> promote = default(IList<string>), IList<string> responseFilter = default(IList<string>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string), bool? textDecorations = default(bool?), TextFormat? textFormat = default(TextFormat?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), int? answerCount = default(int?), string countryCode = default(string), int? count = default(int?), string freshness = default(string), string market = "en-us", int? offset = default(int?), IList<string> promote = default(IList<string>), IList<string> responseFilter = default(IList<string>), string safeSearch = default(string), string setLang = default(string), bool? textDecorations = default(bool?), string textFormat = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (query == null)
             {
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch
             }
             if (freshness != null)
             {
-                _queryParameters.Add(string.Format("freshness={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(freshness, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("freshness={0}", System.Uri.EscapeDataString(freshness)));
             }
             if (market != null)
             {
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch
             }
             if (safeSearch != null)
             {
-                _queryParameters.Add(string.Format("safeSearch={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(safeSearch, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("safeSearch={0}", System.Uri.EscapeDataString(safeSearch)));
             }
             if (setLang != null)
             {
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch
             }
             if (textFormat != null)
             {
-                _queryParameters.Add(string.Format("textFormat={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(textFormat, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("textFormat={0}", System.Uri.EscapeDataString(textFormat)));
             }
             if (_queryParameters.Count > 0)
             {

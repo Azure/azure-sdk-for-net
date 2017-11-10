@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
         /// <param name="webSearchUrl">The URL To Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
-        /// object.The name of the thing represented by this object.</param>
+        /// object.</param>
         /// <param name="url">The URL to get more information about the thing
         /// represented by this object.</param>
         /// <param name="description">A short description of the item.</param>

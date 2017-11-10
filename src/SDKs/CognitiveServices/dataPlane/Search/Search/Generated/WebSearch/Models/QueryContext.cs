@@ -54,13 +54,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
         /// this field is set to false. This field is also set to false for
         /// queries that are not location aware, such as "best
         /// sellers".</param>
-        public QueryContext(string originalQuery, string alteredQuery = default(string), string alterationOverrideQuery = default(string), bool? adultIntent = default(bool?), bool? askUserForLocation = default(bool?))
+        public QueryContext(string originalQuery, string alteredQuery = default(string), string alterationOverrideQuery = default(string), bool? adultIntent = default(bool?), bool? askUserForLocation = default(bool?), bool? isTransactional = default(bool?))
         {
             OriginalQuery = originalQuery;
             AlteredQuery = alteredQuery;
             AlterationOverrideQuery = alterationOverrideQuery;
             AdultIntent = adultIntent;
             AskUserForLocation = askUserForLocation;
+            IsTransactional = isTransactional;
             CustomInit();
         }
 
@@ -119,6 +120,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.WebSearch.Models
         /// </summary>
         [JsonProperty(PropertyName = "askUserForLocation")]
         public bool? AskUserForLocation { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isTransactional")]
+        public bool? IsTransactional { get; private set; }
 
         /// <summary>
         /// Validate the object.
