@@ -165,9 +165,21 @@ namespace Microsoft.Azure.ServiceBus
         public System.TimeSpan MaxAutoRenewDuration { get; set; }
         public int MaxConcurrentCalls { get; set; }
     }
-    public sealed class MessageLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException { }
-    public sealed class MessagingEntityDisabledException : Microsoft.Azure.ServiceBus.ServiceBusException { }
-    public sealed class MessagingEntityNotFoundException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class MessageLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public MessageLockLostException(string message) { }
+        public MessageLockLostException(string message, System.Exception innerException) { }
+    }
+    public sealed class MessagingEntityDisabledException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public MessagingEntityDisabledException(string message) { }
+        public MessagingEntityDisabledException(string message, System.Exception innerException) { }
+    }
+    public sealed class MessagingEntityNotFoundException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public MessagingEntityNotFoundException(string message) { }
+        public MessagingEntityNotFoundException(string message, System.Exception innerException) { }
+    }
     public sealed class NoRetry : Microsoft.Azure.ServiceBus.RetryPolicy
     {
         public NoRetry() { }
@@ -198,7 +210,11 @@ namespace Microsoft.Azure.ServiceBus
         public System.Threading.Tasks.Task SendAsync(System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message> messageList) { }
         public override void UnregisterPlugin(string serviceBusPluginName) { }
     }
-    public sealed class QuotaExceededException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class QuotaExceededException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public QuotaExceededException(string message) { }
+        public QuotaExceededException(string message, System.Exception innerException) { }
+    }
     public enum ReceiveMode
     {
         PeekLock = 0,
@@ -235,11 +251,15 @@ namespace Microsoft.Azure.ServiceBus
         public Microsoft.Azure.ServiceBus.Filter Filter { get; set; }
         public string Name { get; set; }
     }
-    public sealed class ServerBusyException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class ServerBusyException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public ServerBusyException(string message) { }
+        public ServerBusyException(string message, System.Exception innerException) { }
+    }
     public class ServiceBusCommunicationException : Microsoft.Azure.ServiceBus.ServiceBusException
     {
-        protected internal ServiceBusCommunicationException(string message) { }
-        protected internal ServiceBusCommunicationException(string message, System.Exception innerException) { }
+        public ServiceBusCommunicationException(string message) { }
+        public ServiceBusCommunicationException(string message, System.Exception innerException) { }
     }
     public class ServiceBusConnectionStringBuilder
     {
@@ -264,7 +284,11 @@ namespace Microsoft.Azure.ServiceBus
         public override string Message { get; }
         public string ServiceBusNamespace { get; }
     }
-    public class ServiceBusTimeoutException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public class ServiceBusTimeoutException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public ServiceBusTimeoutException(string message) { }
+        public ServiceBusTimeoutException(string message, System.Exception innerException) { }
+    }
     public sealed class SessionClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ISessionClient
     {
         public SessionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
@@ -289,7 +313,11 @@ namespace Microsoft.Azure.ServiceBus
         public int MaxConcurrentSessions { get; set; }
         public System.TimeSpan MessageWaitTimeout { get; set; }
     }
-    public sealed class SessionLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class SessionLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public SessionLockLostException(string message) { }
+        public SessionLockLostException(string message, System.Exception innerException) { }
+    }
     public class SqlFilter : Microsoft.Azure.ServiceBus.Filter
     {
         public SqlFilter(string sqlExpression) { }

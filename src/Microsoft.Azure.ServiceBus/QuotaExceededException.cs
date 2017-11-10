@@ -11,12 +11,12 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class QuotaExceededException : ServiceBusException
     {
-        internal QuotaExceededException(string message)
+        public QuotaExceededException(string message)
             : this(message, null)
         {
         }
 
-        internal QuotaExceededException(string message, Exception innerException)
+        public QuotaExceededException(string message, Exception innerException)
             : base(false, message, innerException)
         {
         }

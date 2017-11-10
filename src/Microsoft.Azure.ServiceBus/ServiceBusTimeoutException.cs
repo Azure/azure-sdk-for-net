@@ -10,11 +10,11 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public class ServiceBusTimeoutException : ServiceBusException
     {
-        internal ServiceBusTimeoutException(string message) : this(message, null)
+        public ServiceBusTimeoutException(string message) : this(message, null)
         {
         }
 
-        internal ServiceBusTimeoutException(string message, Exception innerException) : base(true, message, innerException)
+        public ServiceBusTimeoutException(string message, Exception innerException) : base(true, message, innerException)
         {
         }
     }

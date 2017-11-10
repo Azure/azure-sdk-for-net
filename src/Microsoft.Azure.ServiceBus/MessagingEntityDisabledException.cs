@@ -10,12 +10,12 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class MessagingEntityDisabledException : ServiceBusException
     {
-        internal MessagingEntityDisabledException(string message)
+        public MessagingEntityDisabledException(string message)
             : this(message, null)
         {
         }
 
-        internal MessagingEntityDisabledException(string message, Exception innerException)
+        public MessagingEntityDisabledException(string message, Exception innerException)
             : base(false, message, innerException)
         {
         }
