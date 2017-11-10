@@ -199,7 +199,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             /// interface strings in the JSON response objects. Also, any links to Bing.com
             /// properties in the response objects apply the specified language.
             /// </param>
-            public static SearchResponse Search(this IEntitiesOperations operations, string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = default(string), IList<AnswerType?> responseFilter = default(IList<AnswerType?>), IList<ResponseFormat?> responseFormat = default(IList<ResponseFormat?>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string))
+            public static SearchResponse Search(this IEntitiesOperations operations, string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = "en-us", IList<string> responseFilter = default(IList<string>), IList<string> responseFormat = default(IList<string>), string safeSearch = default(string), string setLang = default(string))
             {
                 return operations.SearchAsync(query, acceptLanguage, pragma, userAgent, clientId, clientIp, location, countryCode, market, responseFilter, responseFormat, safeSearch, setLang).GetAwaiter().GetResult();
             }
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SearchResponse> SearchAsync(this IEntitiesOperations operations, string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = default(string), IList<AnswerType?> responseFilter = default(IList<AnswerType?>), IList<ResponseFormat?> responseFormat = default(IList<ResponseFormat?>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SearchResponse> SearchAsync(this IEntitiesOperations operations, string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = "en-us", IList<string> responseFilter = default(IList<string>), IList<string> responseFormat = default(IList<string>), string safeSearch = default(string), string setLang = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.SearchWithHttpMessagesAsync(query, acceptLanguage, pragma, userAgent, clientId, clientIp, location, countryCode, market, responseFilter, responseFormat, safeSearch, setLang, null, cancellationToken).ConfigureAwait(false))
                 {

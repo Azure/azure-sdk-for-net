@@ -30,6 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// </summary>
         /// <param name="value">A list of local entities, such as restaurants
         /// or hotels.</param>
+        /// <param name="id">A String identifier.</param>
         /// <param name="contractualRules">A list of rules that you must adhere
         /// to if you display the item.</param>
         /// <param name="webSearchUrl">The URL To Bing's search result for this
