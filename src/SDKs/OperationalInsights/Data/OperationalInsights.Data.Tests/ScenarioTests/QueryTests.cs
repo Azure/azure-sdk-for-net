@@ -14,7 +14,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
 
         private const int TakeCount = 25;
         private readonly string SimpleQuery = $"union * | take {TakeCount}";
-        private const string PastHourTimespan = "PT1H";
+        private readonly TimeSpan PastHourTimespan = new TimeSpan(1, 0, 0);
 
         private const string DefaultWorkspaceId = "DEMO_WORKSPACE";
         private const string DefaultApiKey = "DEMO_KEY";
@@ -77,7 +77,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
                 client.Preferences.Wait = 1;
 
                 var longQuery = "union *";
-                var longTimespan = "PT24H";
+                var longTimespan = new TimeSpan(24, 0, 0);
 
                 try
                 {

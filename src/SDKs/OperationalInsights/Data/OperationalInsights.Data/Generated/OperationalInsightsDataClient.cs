@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Data
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<QueryResults>> QueryWithHttpMessagesAsync(string query, string timespan = default(string), IList<string> workspaces = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<QueryResults>> QueryWithHttpMessagesAsync(string query, System.TimeSpan? timespan = default(System.TimeSpan?), IList<string> workspaces = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (WorkspaceId == null)
             {
@@ -347,8 +347,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Data
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "workspaces/{workspace-id}/query").ToString();
-            _url = _url.Replace("{workspace-id}", System.Uri.EscapeDataString(WorkspaceId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "workspaces/{workspaceId}/query").ToString();
+            _url = _url.Replace("{workspaceId}", System.Uri.EscapeDataString(WorkspaceId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

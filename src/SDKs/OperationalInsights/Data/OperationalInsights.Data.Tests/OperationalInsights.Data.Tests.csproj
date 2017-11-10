@@ -4,8 +4,8 @@
     <PackageId>Microsoft.Azure.Management.OperationalInsights.Data.Tests</PackageId>
     <Description>Microsoft.Azure.Management.OperationalInsights.Data.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.Management.OperationalInsights.Data.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
-  </PropertyGroup>  
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+  </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>

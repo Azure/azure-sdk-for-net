@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Data.Models
         /// expression.</param>
         /// <param name="workspaces">A list of workspaces that are included in
         /// the query.</param>
-        public QueryBody(string query, string timespan = default(string), IList<string> workspaces = default(IList<string>))
+        public QueryBody(string query, System.TimeSpan? timespan = default(System.TimeSpan?), IList<string> workspaces = default(IList<string>))
         {
             Query = query;
             Timespan = timespan;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Data.Models
         /// addition to any that are specified in the query expression.
         /// </summary>
         [JsonProperty(PropertyName = "timespan")]
-        public string Timespan { get; set; }
+        public System.TimeSpan? Timespan { get; set; }
 
         /// <summary>
         /// Gets or sets a list of workspaces that are included in the query.
