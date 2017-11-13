@@ -7,6 +7,11 @@
     <VersionPrefix>2.0.6-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography</AssemblyName>
     <PackageTags>Microsoft Azure Key Vault Cryptography</PackageTags>    
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure Key Vault SDK. Included in this preview are updates to support eliptical curve keys.  This package should not be used in production. It is subject to breaking changes, and will not be supported once the preview has ended. 
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
