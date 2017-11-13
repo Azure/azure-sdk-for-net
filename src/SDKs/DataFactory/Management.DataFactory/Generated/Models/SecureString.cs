@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Azure Data Factory secure string definition. The string value will be
     /// masked with asterisks '*' during Get or List API calls.
     /// </summary>
-    public partial class SecureString
+    public partial class SecureString : SecretBase
     {
         /// <summary>
         /// Initializes a new instance of the SecureString class.
@@ -37,13 +37,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Value = value;
             CustomInit();
         }
-        /// <summary>
-        /// Static constructor for SecureString class.
-        /// </summary>
-        static SecureString()
-        {
-            Type = "SecureString";
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
@@ -55,12 +48,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
-
-        /// <summary>
-        /// SecureString type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

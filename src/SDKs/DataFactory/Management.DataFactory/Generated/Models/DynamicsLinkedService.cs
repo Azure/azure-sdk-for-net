@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public DynamicsLinkedService()
         {
+            Password = new AzureKeyVaultSecretReference();
             CustomInit();
         }
 

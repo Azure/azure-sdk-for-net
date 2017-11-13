@@ -12,6 +12,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -245,12 +246,13 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = default(string), IList<AnswerType?> responseFilter = default(IList<AnswerType?>), IList<ResponseFormat?> responseFormat = default(IList<ResponseFormat?>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = "en-us", IList<string> responseFilter = default(IList<string>), IList<string> responseFormat = default(IList<string>), string safeSearch = default(string), string setLang = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (query == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
             }
+            string xBingApisSDK = "true";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -258,6 +260,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("xBingApisSDK", xBingApisSDK);
                 tracingParameters.Add("acceptLanguage", acceptLanguage);
                 tracingParameters.Add("pragma", pragma);
                 tracingParameters.Add("userAgent", userAgent);
@@ -300,7 +303,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             }
             if (safeSearch != null)
             {
-                _queryParameters.Add(string.Format("SafeSearch={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(safeSearch, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("SafeSearch={0}", System.Uri.EscapeDataString(safeSearch)));
             }
             if (setLang != null)
             {
@@ -316,6 +319,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (xBingApisSDK != null)
+            {
+                if (_httpRequest.Headers.Contains("X-BingApis-SDK"))
+                {
+                    _httpRequest.Headers.Remove("X-BingApis-SDK");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("X-BingApis-SDK", xBingApisSDK);
+            }
             if (acceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("Accept-Language"))

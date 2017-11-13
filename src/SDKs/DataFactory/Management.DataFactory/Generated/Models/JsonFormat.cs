@@ -45,14 +45,26 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// byte order mark (BOM) denotes another Unicode encoding. The full
         /// list of supported values can be found in the 'Name' column of the
         /// table of encodings in the following reference:
-        /// https://msdn.microsoft.com/library/system.text.encoding.aspx#Anchor_5.
-        /// Type: string (or Expression with resultType string).</param>
-        public JsonFormat(object serializer = default(object), object deserializer = default(object), string filePattern = default(string), object nestingSeparator = default(object), object encodingName = default(object))
+        /// https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="jsonNodeReference">The JSONPath of the JSON array
+        /// element to be flattened. Example: "$.ArrayPath". Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="jsonPathDefinition">The JSONPath definition for each
+        /// column mapping with a customized column name to extract data from
+        /// JSON file. For fields under root object, start with "$"; for fields
+        /// inside the array chosen by jsonNodeReference property, start from
+        /// the array element. Example: {"Column1": "$.Column1Path", "Column2":
+        /// "Column2PathInArray"}. Type: object (or Expression with resultType
+        /// object).</param>
+        public JsonFormat(object serializer = default(object), object deserializer = default(object), string filePattern = default(string), object nestingSeparator = default(object), object encodingName = default(object), object jsonNodeReference = default(object), object jsonPathDefinition = default(object))
             : base(serializer, deserializer)
         {
             FilePattern = filePattern;
             NestingSeparator = nestingSeparator;
             EncodingName = encodingName;
+            JsonNodeReference = jsonNodeReference;
+            JsonPathDefinition = jsonPathDefinition;
             CustomInit();
         }
 
@@ -84,11 +96,31 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// (BOM) denotes another Unicode encoding. The full list of supported
         /// values can be found in the 'Name' column of the table of encodings
         /// in the following reference:
-        /// https://msdn.microsoft.com/library/system.text.encoding.aspx#Anchor_5.
-        /// Type: string (or Expression with resultType string).
+        /// https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "encodingName")]
         public object EncodingName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSONPath of the JSON array element to be
+        /// flattened. Example: "$.ArrayPath". Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "jsonNodeReference")]
+        public object JsonNodeReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSONPath definition for each column mapping with a
+        /// customized column name to extract data from JSON file. For fields
+        /// under root object, start with "$"; for fields inside the array
+        /// chosen by jsonNodeReference property, start from the array element.
+        /// Example: {"Column1": "$.Column1Path", "Column2":
+        /// "Column2PathInArray"}. Type: object (or Expression with resultType
+        /// object).
+        /// </summary>
+        [JsonProperty(PropertyName = "jsonPathDefinition")]
+        public object JsonPathDefinition { get; set; }
 
     }
 }

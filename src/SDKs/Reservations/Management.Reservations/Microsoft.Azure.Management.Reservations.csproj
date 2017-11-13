@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Reservations</PackageId>
+    <Description>Microsoft.Azure.Management.Reservations Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure Reservations SDK. Included with this release is all operation to get/modify existing reservations, but currently creating reservations is available only through portal.
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

@@ -4,7 +4,7 @@
     <PackageId>Microsoft.Azure.Management.Sql</PackageId>
     <Description>Azure SQL Management SDK library</Description>
     <AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-    <VersionPrefix>1.8.0-preview</VersionPrefix>
+    <VersionPrefix>1.9.0-preview</VersionPrefix>
     <PackageTags>Microsoft Azure SQL Management;SQL;SQL Management</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
@@ -12,7 +12,7 @@
     <PackageReleaseNotes>
       <![CDATA[
 New features:
-- Added support for state and migration flag properties for SQL Vnet rules
+- Added support for subscription usages
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

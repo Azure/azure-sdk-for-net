@@ -6,51 +6,13 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResponseFormat.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResponseFormat
+    public static class ResponseFormat
     {
-        [EnumMember(Value = "Json")]
-        Json,
-        [EnumMember(Value = "JsonLd")]
-        JsonLd
-    }
-    internal static class ResponseFormatEnumExtension
-    {
-        internal static string ToSerializedValue(this ResponseFormat? value)
-        {
-            return value == null ? null : ((ResponseFormat)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ResponseFormat value)
-        {
-            switch( value )
-            {
-                case ResponseFormat.Json:
-                    return "Json";
-                case ResponseFormat.JsonLd:
-                    return "JsonLd";
-            }
-            return null;
-        }
-
-        internal static ResponseFormat? ParseResponseFormat(this string value)
-        {
-            switch( value )
-            {
-                case "Json":
-                    return ResponseFormat.Json;
-                case "JsonLd":
-                    return ResponseFormat.JsonLd;
-            }
-            return null;
-        }
+        public const string Json = "Json";
+        public const string JsonLd = "JsonLd";
     }
 }

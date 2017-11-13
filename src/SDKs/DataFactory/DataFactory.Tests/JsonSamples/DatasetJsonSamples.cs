@@ -402,5 +402,92 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string AzureMySqlTable = @"
+{
+    name: ""AzureMySqlTable"",
+    properties:
+    {
+        type: ""AzureMySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SalesforceDataset = @"
+{
+    name: ""SalesforceDataset"",
+    properties:
+    {
+        type: ""SalesforceObject"",
+        typeProperties:
+        {
+            objectApiName: ""fakeObjectApiName""
+        },
+        linkedServiceName:
+        {
+            referenceName: ""SalesforceLinkedService"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string BlobTableWithJsonArray = @"
+{
+    name: ""JsonArrayDataset"",
+    properties:
+    {
+        type: ""AzureBlob"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {        
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time\\{PartitionKey}"",
+            fileName: ""TestBlobName"",
+            format:
+            {
+                type: ""JsonFormat"",
+                nestingSeparator: "","",
+                filePattern: ""setOfObjects"",
+                encodingName: ""utf-8"",
+                jsonNodeReference: ""$.root"",
+                jsonPathDefinition: {PartitionKey:""$.PartitionKey"", RowKey:""$.RowKey"", p1:""p1"", p2:""p2""}
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SapCloudForCustomerResourceDataset = @"
+{
+    name: ""SapCloudForCustomerResourceDataset"",
+    properties:
+    {
+        type: ""SapCloudForCustomerResource"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            path: ""LeadCollection""
+        }
+    }
+}
+";
+
     }
 }
