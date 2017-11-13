@@ -368,8 +368,8 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "IntegrationRuntimes_Patch";
 
-            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Patch(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
-                new IntegrationRuntimePatchRequest
+            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
+                new UpdateIntegrationRuntimeRequest
                 {
                     AutoUpdate = IntegrationRuntimeAutoUpdate.On,
                     UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
@@ -380,8 +380,8 @@ namespace DataFactory.Tests.Utils
         {
             interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Patch";
 
-            SelfHostedIntegrationRuntimeNode response = client.IntegrationRuntimeNodes.Patch(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "Node_1",
-                new IntegrationRuntimeNodePatchRequest
+            SelfHostedIntegrationRuntimeNode response = client.IntegrationRuntimeNodes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "Node_1",
+                new UpdateIntegrationRuntimeNodeRequest
                 {
                     ConcurrentJobsLimit = 2
                 });

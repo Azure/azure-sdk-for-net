@@ -14,29 +14,31 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Integration runtime patch request.
+    /// Update integration runtime request.
     /// </summary>
-    public partial class IntegrationRuntimePatchRequest
+    public partial class UpdateIntegrationRuntimeRequest
     {
         /// <summary>
-        /// Initializes a new instance of the IntegrationRuntimePatchRequest
+        /// Initializes a new instance of the UpdateIntegrationRuntimeRequest
         /// class.
         /// </summary>
-        public IntegrationRuntimePatchRequest()
+        public UpdateIntegrationRuntimeRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IntegrationRuntimePatchRequest
+        /// Initializes a new instance of the UpdateIntegrationRuntimeRequest
         /// class.
         /// </summary>
-        /// <param name="autoUpdate">Turn on or off self-hosted integration
-        /// runtime auto update. Possible values include: 'On', 'Off'</param>
-        /// <param name="updateDelayOffset">The time in the date scheduled by
-        /// service to update the integration runtime, e.g., PT03H is 3
-        /// hours</param>
-        public IntegrationRuntimePatchRequest(string autoUpdate = default(string), string updateDelayOffset = default(string))
+        /// <param name="autoUpdate">Enables or disables auto-update feature of
+        /// the self-hosted integration runtime. See
+        /// https://go.microsoft.com/fwlink/?linkid=854189. Possible values
+        /// include: 'On', 'Off'</param>
+        /// <param name="updateDelayOffset">The time offset (in hour) in the
+        /// date scheduled by service to update the integration runtime, e.g.,
+        /// PT03H is 3 hours</param>
+        public UpdateIntegrationRuntimeRequest(string autoUpdate = default(string), string updateDelayOffset = default(string))
         {
             AutoUpdate = autoUpdate;
             UpdateDelayOffset = updateDelayOffset;
@@ -49,15 +51,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets turn on or off self-hosted integration runtime auto
-        /// update. Possible values include: 'On', 'Off'
+        /// Gets or sets enables or disables auto-update feature of the
+        /// self-hosted integration runtime. See
+        /// https://go.microsoft.com/fwlink/?linkid=854189. Possible values
+        /// include: 'On', 'Off'
         /// </summary>
         [JsonProperty(PropertyName = "autoUpdate")]
         public string AutoUpdate { get; set; }
 
         /// <summary>
-        /// Gets or sets the time in the date scheduled by service to update
-        /// the integration runtime, e.g., PT03H is 3 hours
+        /// Gets or sets the time offset (in hour) in the date scheduled by
+        /// service to update the integration runtime, e.g., PT03H is 3 hours
         /// </summary>
         [JsonProperty(PropertyName = "updateDelayOffset")]
         public string UpdateDelayOffset { get; set; }

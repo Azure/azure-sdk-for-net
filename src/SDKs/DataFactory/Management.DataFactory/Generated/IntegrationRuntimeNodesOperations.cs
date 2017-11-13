@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataFactory
         public DataFactoryManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Deletes an integration runtime node.
+        /// Deletes a self-hosted integration runtime node.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -149,6 +149,21 @@ namespace Microsoft.Azure.Management.DataFactory
             if (nodeName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nodeName");
+            }
+            if (nodeName != null)
+            {
+                if (nodeName.Length > 150)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "nodeName", 150);
+                }
+                if (nodeName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "nodeName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(nodeName, "^[a-z0-9A-Z][a-z0-9A-Z_-]{0,149}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "nodeName", "^[a-z0-9A-Z][a-z0-9A-Z_-]{0,149}$");
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -284,7 +299,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Patches an integration runtime node.
+        /// Updates a self-hosted integration runtime node.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -298,8 +313,8 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='nodeName'>
         /// The integration runtime node name.
         /// </param>
-        /// <param name='integrationRuntimeNodePatchRequest'>
-        /// The parameters for patching an integration runtime node.
+        /// <param name='updateIntegrationRuntimeNodeRequest'>
+        /// The parameters for updating an integration runtime node.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -322,7 +337,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SelfHostedIntegrationRuntimeNode>> PatchWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, IntegrationRuntimeNodePatchRequest integrationRuntimeNodePatchRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SelfHostedIntegrationRuntimeNode>> UpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeRequest updateIntegrationRuntimeNodeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -389,13 +404,28 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nodeName");
             }
+            if (nodeName != null)
+            {
+                if (nodeName.Length > 150)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "nodeName", 150);
+                }
+                if (nodeName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "nodeName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(nodeName, "^[a-z0-9A-Z][a-z0-9A-Z_-]{0,149}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "nodeName", "^[a-z0-9A-Z][a-z0-9A-Z_-]{0,149}$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (integrationRuntimeNodePatchRequest == null)
+            if (updateIntegrationRuntimeNodeRequest == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "integrationRuntimeNodePatchRequest");
+                throw new ValidationException(ValidationRules.CannotBeNull, "updateIntegrationRuntimeNodeRequest");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -408,9 +438,9 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("integrationRuntimeName", integrationRuntimeName);
                 tracingParameters.Add("nodeName", nodeName);
-                tracingParameters.Add("integrationRuntimeNodePatchRequest", integrationRuntimeNodePatchRequest);
+                tracingParameters.Add("updateIntegrationRuntimeNodeRequest", updateIntegrationRuntimeNodeRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Patch", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -463,9 +493,9 @@ namespace Microsoft.Azure.Management.DataFactory
 
             // Serialize Request
             string _requestContent = null;
-            if(integrationRuntimeNodePatchRequest != null)
+            if(updateIntegrationRuntimeNodeRequest != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(integrationRuntimeNodePatchRequest, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(updateIntegrationRuntimeNodeRequest, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

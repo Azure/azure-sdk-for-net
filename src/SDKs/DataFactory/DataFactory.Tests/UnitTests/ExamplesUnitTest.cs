@@ -206,8 +206,8 @@ namespace DataFactory.Tests.UnitTests
         {
             RunAyncApiTest("IntegrationRuntimes_Patch", (example, client, responseCode) =>
             {
-                client.IntegrationRuntimes.Patch(RGN(example), FN(example), IRN(example),
-                new IntegrationRuntimePatchRequest
+                client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
+                new UpdateIntegrationRuntimeRequest
                 {
                     AutoUpdate = IntegrationRuntimeAutoUpdate.On,
                     UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
@@ -220,8 +220,8 @@ namespace DataFactory.Tests.UnitTests
         {
             RunAyncApiTest("IntegrationRuntimeNodes_Patch", (example, client, responseCode) =>
             {
-                client.IntegrationRuntimeNodes.Patch(RGN(example), FN(example), IRN(example), "Node_1",
-                new IntegrationRuntimeNodePatchRequest
+                client.IntegrationRuntimeNodes.Update(RGN(example), FN(example), IRN(example), "Node_1",
+                new UpdateIntegrationRuntimeNodeRequest
                 {
                     ConcurrentJobsLimit = 2
                 });

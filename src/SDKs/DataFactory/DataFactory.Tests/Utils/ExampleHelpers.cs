@@ -167,7 +167,7 @@ namespace DataFactory.Tests.Utils
                 X509Certificate2 cert = store.Certificates.Find(X509FindType.FindByThumbprint, "CF6DCEF6F6EB497A1B2A569319D157F875019A9E", false)[0];
                 CertificateCredentials creds = new CertificateCredentials(cert);
                 client = new DataFactoryManagementClient(creds) { SubscriptionId = secrets.SubId };
-                client.BaseUri = new Uri("https://adfrpnightly.svc.datafactory-test.azure.com");
+                client.BaseUri = new Uri("https://RPWesteuropeYanzhang.svc.datafactory-test.azure.com");
             }
             else
             {

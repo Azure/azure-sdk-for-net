@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactory
     public static partial class IntegrationRuntimeNodesOperationsExtensions
     {
             /// <summary>
-            /// Deletes an integration runtime node.
+            /// Deletes a self-hosted integration runtime node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Deletes an integration runtime node.
+            /// Deletes a self-hosted integration runtime node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Patches an integration runtime node.
+            /// Updates a self-hosted integration runtime node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -88,16 +88,16 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='nodeName'>
             /// The integration runtime node name.
             /// </param>
-            /// <param name='integrationRuntimeNodePatchRequest'>
-            /// The parameters for patching an integration runtime node.
+            /// <param name='updateIntegrationRuntimeNodeRequest'>
+            /// The parameters for updating an integration runtime node.
             /// </param>
-            public static SelfHostedIntegrationRuntimeNode Patch(this IIntegrationRuntimeNodesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, IntegrationRuntimeNodePatchRequest integrationRuntimeNodePatchRequest)
+            public static SelfHostedIntegrationRuntimeNode Update(this IIntegrationRuntimeNodesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeRequest updateIntegrationRuntimeNodeRequest)
             {
-                return operations.PatchAsync(resourceGroupName, factoryName, integrationRuntimeName, nodeName, integrationRuntimeNodePatchRequest).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, factoryName, integrationRuntimeName, nodeName, updateIntegrationRuntimeNodeRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Patches an integration runtime node.
+            /// Updates a self-hosted integration runtime node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -114,15 +114,15 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='nodeName'>
             /// The integration runtime node name.
             /// </param>
-            /// <param name='integrationRuntimeNodePatchRequest'>
-            /// The parameters for patching an integration runtime node.
+            /// <param name='updateIntegrationRuntimeNodeRequest'>
+            /// The parameters for updating an integration runtime node.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SelfHostedIntegrationRuntimeNode> PatchAsync(this IIntegrationRuntimeNodesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, IntegrationRuntimeNodePatchRequest integrationRuntimeNodePatchRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SelfHostedIntegrationRuntimeNode> UpdateAsync(this IIntegrationRuntimeNodesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeRequest updateIntegrationRuntimeNodeRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, nodeName, integrationRuntimeNodePatchRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, nodeName, updateIntegrationRuntimeNodeRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DataFactory
     public partial interface IIntegrationRuntimeNodesOperations
     {
         /// <summary>
-        /// Deletes an integration runtime node.
+        /// Deletes a self-hosted integration runtime node.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patches an integration runtime node.
+        /// Updates a self-hosted integration runtime node.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='nodeName'>
         /// The integration runtime node name.
         /// </param>
-        /// <param name='integrationRuntimeNodePatchRequest'>
-        /// The parameters for patching an integration runtime node.
+        /// <param name='updateIntegrationRuntimeNodeRequest'>
+        /// The parameters for updating an integration runtime node.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -84,6 +84,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SelfHostedIntegrationRuntimeNode>> PatchWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, IntegrationRuntimeNodePatchRequest integrationRuntimeNodePatchRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SelfHostedIntegrationRuntimeNode>> UpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeRequest updateIntegrationRuntimeNodeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

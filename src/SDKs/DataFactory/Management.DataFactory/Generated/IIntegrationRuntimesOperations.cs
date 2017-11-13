@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse<IntegrationRuntimeResource>> GetWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patches an integration runtime.
+        /// Updates an integration runtime.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -124,8 +124,8 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='integrationRuntimeName'>
         /// The integration runtime name.
         /// </param>
-        /// <param name='integrationRuntimePatchRequest'>
-        /// The parameters for patching an integration runtime.
+        /// <param name='updateIntegrationRuntimeRequest'>
+        /// The parameters for updating an integration runtime.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IntegrationRuntimeStatusResponse>> PatchWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimePatchRequest integrationRuntimePatchRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationRuntimeStatusResponse>> UpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an integration runtime.
         /// </summary>

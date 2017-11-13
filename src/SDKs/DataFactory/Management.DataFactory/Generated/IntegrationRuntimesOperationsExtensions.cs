@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Patches an integration runtime.
+            /// Updates an integration runtime.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -184,16 +184,16 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='integrationRuntimeName'>
             /// The integration runtime name.
             /// </param>
-            /// <param name='integrationRuntimePatchRequest'>
-            /// The parameters for patching an integration runtime.
+            /// <param name='updateIntegrationRuntimeRequest'>
+            /// The parameters for updating an integration runtime.
             /// </param>
-            public static IntegrationRuntimeStatusResponse Patch(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimePatchRequest integrationRuntimePatchRequest)
+            public static IntegrationRuntimeStatusResponse Update(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest)
             {
-                return operations.PatchAsync(resourceGroupName, factoryName, integrationRuntimeName, integrationRuntimePatchRequest).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, factoryName, integrationRuntimeName, updateIntegrationRuntimeRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Patches an integration runtime.
+            /// Updates an integration runtime.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -207,15 +207,15 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='integrationRuntimeName'>
             /// The integration runtime name.
             /// </param>
-            /// <param name='integrationRuntimePatchRequest'>
-            /// The parameters for patching an integration runtime.
+            /// <param name='updateIntegrationRuntimeRequest'>
+            /// The parameters for updating an integration runtime.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationRuntimeStatusResponse> PatchAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimePatchRequest integrationRuntimePatchRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationRuntimeStatusResponse> UpdateAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, integrationRuntimePatchRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, updateIntegrationRuntimeRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -794,7 +794,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Patches an integration runtime.
+        /// Updates an integration runtime.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -805,8 +805,8 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='integrationRuntimeName'>
         /// The integration runtime name.
         /// </param>
-        /// <param name='integrationRuntimePatchRequest'>
-        /// The parameters for patching an integration runtime.
+        /// <param name='updateIntegrationRuntimeRequest'>
+        /// The parameters for updating an integration runtime.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -829,7 +829,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IntegrationRuntimeStatusResponse>> PatchWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimePatchRequest integrationRuntimePatchRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IntegrationRuntimeStatusResponse>> UpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -896,9 +896,9 @@ namespace Microsoft.Azure.Management.DataFactory
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (integrationRuntimePatchRequest == null)
+            if (updateIntegrationRuntimeRequest == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "integrationRuntimePatchRequest");
+                throw new ValidationException(ValidationRules.CannotBeNull, "updateIntegrationRuntimeRequest");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -910,9 +910,9 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("integrationRuntimeName", integrationRuntimeName);
-                tracingParameters.Add("integrationRuntimePatchRequest", integrationRuntimePatchRequest);
+                tracingParameters.Add("updateIntegrationRuntimeRequest", updateIntegrationRuntimeRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Patch", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -964,9 +964,9 @@ namespace Microsoft.Azure.Management.DataFactory
 
             // Serialize Request
             string _requestContent = null;
-            if(integrationRuntimePatchRequest != null)
+            if(updateIntegrationRuntimeRequest != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(integrationRuntimePatchRequest, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(updateIntegrationRuntimeRequest, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
