@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk2496?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazI0OTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk5641?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazU2NDE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"West US 2\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"North Central US\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "31"
+          "38"
         ],
         "x-ms-client-request-id": [
-          "e078c7af-34a9-48ae-9eb8-bd04eab57a3b"
+          "98d56d88-c890-478b-8eb8-37fbebe5d200"
         ],
         "accept-language": [
           "en-US"
@@ -23,10 +23,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496\",\r\n  \"name\": \"hdisdk2496\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641\",\r\n  \"name\": \"hdisdk5641\",\r\n  \"location\": \"northcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "174"
+          "181"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:01:29 GMT"
+          "Fri, 10 Nov 2017 06:18:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,13 +47,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "43a83583-3040-4ee1-8906-5f8f08f5686c"
+          "1fceb944-2282-417a-a4a7-145790b1f846"
         ],
         "x-ms-correlation-request-id": [
-          "43a83583-3040-4ee1-8906-5f8f08f5686c"
+          "1fceb944-2282-417a-a4a7-145790b1f846"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230129Z:43a83583-3040-4ee1-8906-5f8f08f5686c"
+          "WESTUS2:20171110T061820Z:1fceb944-2282-417a-a4a7-145790b1f846"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"North Central US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5\",\r\n    \"osType\": \"Linux\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"componentVersion\": {},\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://default@wawonsdkncentralus.blob.core.windows.net\",\r\n          \"fs.azure.account.key.wawonsdkncentralus.blob.core.windows.net\": \"O6DiCjHTKRjCb2NhX0uyMOPtM/BuszPpRqDp86aJd5O3KZI3ce6VHseum/UczvIPHcPMLG+o1qprh343FpewnA==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\",\r\n              \"password\": \"Password1!\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\",\r\n              \"password\": \"Password1!\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Small\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\",\r\n              \"password\": \"Password1!\"\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -74,7 +74,7 @@
           "1873"
         ],
         "x-ms-client-request-id": [
-          "930ccaa1-7da5-4da8-aa6b-8efed0a5b4c9"
+          "9931f4e9-94c0-498b-a363-00627e267e8c"
         ],
         "accept-language": [
           "en-US"
@@ -84,7 +84,7 @@
           "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"1a507399-aefb-4482-a245-8435d4ce8bfd\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2017-11-06T23:01:34.22\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"d578a5f8-b761-481e-a251-00087db6b004\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2017-11-10T06:18:26.327\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:01:32 GMT"
+          "Fri, 10 Nov 2017 06:18:26 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,7 +105,7 @@
           "chunked"
         ],
         "ETag": [
-          "\"1a507399-aefb-4482-a245-8435d4ce8bfd\""
+          "\"d578a5f8-b761-481e-a251-00087db6b004\""
         ],
         "Vary": [
           "Accept-Encoding"
@@ -117,13 +117,13 @@
           "RegionalRp"
         ],
         "x-ms-hdi-clusteruri": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "cccb8223-38f0-419e-94dc-c136e35df9e3"
+          "113dfba2-d51f-482f-993d-34b840934e28"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -135,17 +135,17 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "95b6440a-a37d-44f1-b5c2-6bae5a55a736"
+          "3a8ff3fe-76f5-4e0d-9618-89c7027d947e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230133Z:95b6440a-a37d-44f1-b5c2-6bae5a55a736"
+          "WESTUS2:20171110T061827Z:3a8ff3fe-76f5-4e0d-9618-89c7027d947e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -166,7 +166,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:02:03 GMT"
+          "Fri, 10 Nov 2017 06:18:56 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -184,7 +184,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "88c19c2d-191e-457e-9511-04c421f59c63"
+          "be94efe6-889e-4ebf-ba6f-1fcefcfab282"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -193,20 +193,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14892"
+          "14960"
         ],
         "x-ms-correlation-request-id": [
-          "f0e932d2-bc46-43c0-b72f-6e52afc718e3"
+          "43f6237e-3ba2-4636-8536-33f5bfeafb56"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230203Z:f0e932d2-bc46-43c0-b72f-6e52afc718e3"
+          "WESTUS2:20171110T061857Z:43f6237e-3ba2-4636-8536-33f5bfeafb56"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -227,7 +227,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:02:33 GMT"
+          "Fri, 10 Nov 2017 06:19:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -245,7 +245,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "d394bda1-1205-47d5-81f2-90069c7a09f9"
+          "d8130e89-f6ee-4ded-8f96-3f27bf67dfbe"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -254,20 +254,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14891"
+          "14959"
         ],
         "x-ms-correlation-request-id": [
-          "94f9767a-495d-44e3-9333-41e1c8248cac"
+          "9cf17e50-8c35-4ad5-a26a-31b8a515cf61"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230234Z:94f9767a-495d-44e3-9333-41e1c8248cac"
+          "WESTUS2:20171110T061927Z:9cf17e50-8c35-4ad5-a26a-31b8a515cf61"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -288,7 +288,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:03:03 GMT"
+          "Fri, 10 Nov 2017 06:19:57 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -306,7 +306,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "f105e8f4-0309-4044-bc39-94a246453d77"
+          "82280418-f040-459b-b469-06a01dfda4aa"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -315,20 +315,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14889"
+          "14958"
         ],
         "x-ms-correlation-request-id": [
-          "fce7f698-d105-49f2-bd35-00e83deab8d4"
+          "04095b59-f341-4b7a-ba53-0e8c809c389e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230304Z:fce7f698-d105-49f2-bd35-00e83deab8d4"
+          "WESTUS2:20171110T061958Z:04095b59-f341-4b7a-ba53-0e8c809c389e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -349,7 +349,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:03:34 GMT"
+          "Fri, 10 Nov 2017 06:20:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -367,7 +367,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "17be71b3-1ea0-4259-9baa-cb2698a38b00"
+          "b2e542b0-aaad-485a-974f-8a0fdfa58956"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -376,20 +376,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14888"
+          "14961"
         ],
         "x-ms-correlation-request-id": [
-          "e16e0197-9429-4f39-bca8-ed4260e8d5e1"
+          "862da4bb-af55-4a25-9064-d7a514252f42"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230334Z:e16e0197-9429-4f39-bca8-ed4260e8d5e1"
+          "WESTUS2:20171110T062028Z:862da4bb-af55-4a25-9064-d7a514252f42"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -410,7 +410,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:04:05 GMT"
+          "Fri, 10 Nov 2017 06:20:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -428,7 +428,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "abd37af6-4466-4e1a-8625-c38d5c2877d6"
+          "477f77ba-dda5-4bce-a074-77f02b15c79a"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -437,20 +437,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14886"
+          "14960"
         ],
         "x-ms-correlation-request-id": [
-          "02424489-720d-4181-bb5e-686bd672f182"
+          "e0c5cf3c-fed1-4382-b556-100aeda78cd4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230405Z:02424489-720d-4181-bb5e-686bd672f182"
+          "WESTUS2:20171110T062059Z:e0c5cf3c-fed1-4382-b556-100aeda78cd4"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -471,7 +471,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:04:35 GMT"
+          "Fri, 10 Nov 2017 06:21:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -489,7 +489,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "fa8e24c0-0bd6-4ed9-a3ed-c796562725b1"
+          "4043daae-79c5-47e7-8636-69b5b19bfb46"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -498,20 +498,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14885"
+          "14958"
         ],
         "x-ms-correlation-request-id": [
-          "51596849-7404-4b5c-b269-2fa9cbaa37cb"
+          "6a2be6aa-72d8-45b6-a614-8391e29c37d5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230435Z:51596849-7404-4b5c-b269-2fa9cbaa37cb"
+          "WESTUS2:20171110T062129Z:6a2be6aa-72d8-45b6-a614-8391e29c37d5"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -532,7 +532,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:05:05 GMT"
+          "Fri, 10 Nov 2017 06:21:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -550,7 +550,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "dcd45ab0-b9ad-469c-af38-1ed389125e85"
+          "c95a7438-ad91-4669-9d05-5c23c7d4671a"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -559,20 +559,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14886"
+          "14957"
         ],
         "x-ms-correlation-request-id": [
-          "7fbe582e-3ed7-4f39-8b06-54995f8c6898"
+          "7a3df7e6-3cfb-41e9-a021-a97532ae9526"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230506Z:7fbe582e-3ed7-4f39-8b06-54995f8c6898"
+          "WESTUS2:20171110T062200Z:7a3df7e6-3cfb-41e9-a021-a97532ae9526"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -593,7 +593,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:05:35 GMT"
+          "Fri, 10 Nov 2017 06:22:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -611,7 +611,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "e47ede34-f1ed-4532-87df-83eacc54d7a1"
+          "a8a2e663-dc82-4a63-8cfb-25e724709ca1"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -620,20 +620,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14884"
+          "14956"
         ],
         "x-ms-correlation-request-id": [
-          "301cb869-8c66-4e89-a6f6-5c2376ccb58a"
+          "9811500d-4886-4935-ad19-b9773cafa5a0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230536Z:301cb869-8c66-4e89-a6f6-5c2376ccb58a"
+          "WESTUS2:20171110T062230Z:9811500d-4886-4935-ad19-b9773cafa5a0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -654,7 +654,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:06:06 GMT"
+          "Fri, 10 Nov 2017 06:23:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -672,7 +672,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "705cb319-d731-4fa8-884c-7fc52202baf3"
+          "215519fb-44cf-4c39-961e-e3544c51898f"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -681,20 +681,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14883"
+          "14955"
         ],
         "x-ms-correlation-request-id": [
-          "58118841-9970-4323-93eb-de29f144e04e"
+          "9a02a618-db72-4ffe-b4ac-438f78ae15c7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230606Z:58118841-9970-4323-93eb-de29f144e04e"
+          "WESTUS2:20171110T062301Z:9a02a618-db72-4ffe-b4ac-438f78ae15c7"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -715,7 +715,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:06:37 GMT"
+          "Fri, 10 Nov 2017 06:23:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -733,7 +733,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "994b79e2-27f2-44f0-a20f-6d905ba331c0"
+          "5b812ec4-edc6-4126-b905-b654e7c91cdb"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -742,20 +742,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14882"
+          "14954"
         ],
         "x-ms-correlation-request-id": [
-          "46deb5ba-35bd-47d5-a503-57aeb9bbbdc4"
+          "588f8491-80b6-4c52-911b-bd1b24178bc0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230637Z:46deb5ba-35bd-47d5-a503-57aeb9bbbdc4"
+          "WESTUS2:20171110T062331Z:588f8491-80b6-4c52-911b-bd1b24178bc0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -776,7 +776,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:07:06 GMT"
+          "Fri, 10 Nov 2017 06:24:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -794,7 +794,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "3dd3a3c2-fef6-4f28-9dc5-9b029f86ffd0"
+          "881b97fb-c750-4a0c-bebc-a045bca518bd"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -803,20 +803,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14881"
+          "14953"
         ],
         "x-ms-correlation-request-id": [
-          "ff4abfc4-5c01-4875-a2e4-db4567a70599"
+          "a62785ba-a502-4d75-8879-5083ca196cc6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230707Z:ff4abfc4-5c01-4875-a2e4-db4567a70599"
+          "WESTUS2:20171110T062401Z:a62785ba-a502-4d75-8879-5083ca196cc6"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -837,7 +837,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:07:37 GMT"
+          "Fri, 10 Nov 2017 06:24:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -855,7 +855,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "e7bb4b5c-765e-47a1-a750-15714efe00d3"
+          "47564d45-4225-4018-8ca2-eb116338426d"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -864,20 +864,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14875"
+          "14952"
         ],
         "x-ms-correlation-request-id": [
-          "8b4090f3-8810-481b-83b5-c328329d7a7f"
+          "05c42137-2bc5-4a7e-ae01-8d4f03e4489f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230738Z:8b4090f3-8810-481b-83b5-c328329d7a7f"
+          "WESTUS2:20171110T062432Z:05c42137-2bc5-4a7e-ae01-8d4f03e4489f"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -898,7 +898,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:08:08 GMT"
+          "Fri, 10 Nov 2017 06:25:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -916,7 +916,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "b0723570-7935-49ff-950e-b68110f842cd"
+          "c85f0a2d-629e-4322-a333-d75cbc9dc835"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -925,20 +925,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14868"
+          "14953"
         ],
         "x-ms-correlation-request-id": [
-          "773831a2-e3dc-4816-91f0-b76e237463fa"
+          "21076c35-4c6d-415e-8112-e913eb880a35"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230808Z:773831a2-e3dc-4816-91f0-b76e237463fa"
+          "WESTUS2:20171110T062502Z:21076c35-4c6d-415e-8112-e913eb880a35"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -959,7 +959,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:08:37 GMT"
+          "Fri, 10 Nov 2017 06:25:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -977,7 +977,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "a50e3ff9-0936-423d-be35-4e9dd98a7b7f"
+          "bc07db79-eea2-408a-afa0-3f9d8f553ad5"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -986,20 +986,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14865"
+          "14952"
         ],
         "x-ms-correlation-request-id": [
-          "e324c3d6-675e-4297-ac84-4cc81cfbf5bd"
+          "a92c7fa7-625f-480f-8f89-4e52f881bf26"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230838Z:e324c3d6-675e-4297-ac84-4cc81cfbf5bd"
+          "WESTUS2:20171110T062533Z:a92c7fa7-625f-480f-8f89-4e52f881bf26"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1020,7 +1020,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:09:08 GMT"
+          "Fri, 10 Nov 2017 06:26:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1038,7 +1038,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "6bc5b53d-8869-4a9a-83d7-da1e30286d0a"
+          "7a46635e-8506-4ec3-8ccb-7138a9c75783"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1047,20 +1047,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14857"
+          "14951"
         ],
         "x-ms-correlation-request-id": [
-          "cc71328c-41cb-483a-925e-a21391366cf1"
+          "2a5cfd62-424e-4a68-b229-81e1ea0755b2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230909Z:cc71328c-41cb-483a-925e-a21391366cf1"
+          "WESTUS2:20171110T062603Z:2a5cfd62-424e-4a68-b229-81e1ea0755b2"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1081,7 +1081,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:09:38 GMT"
+          "Fri, 10 Nov 2017 06:26:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1099,7 +1099,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "f1111a06-e7e8-45c7-8a3b-0fdc945605ce"
+          "9e0d3557-0513-462f-a7a6-9d79f1ee390d"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1108,20 +1108,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14851"
+          "14950"
         ],
         "x-ms-correlation-request-id": [
-          "e2b70bc8-febb-404a-aa7e-cdf760ee9a90"
+          "3d96f2b5-5edb-4367-a6a9-c8aefae3ba3d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T230939Z:e2b70bc8-febb-404a-aa7e-cdf760ee9a90"
+          "WESTUS2:20171110T062634Z:3d96f2b5-5edb-4367-a6a9-c8aefae3ba3d"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1142,7 +1142,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:10:09 GMT"
+          "Fri, 10 Nov 2017 06:27:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1160,7 +1160,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "ab5ab284-596b-4a36-bef6-0f29bf2fefa6"
+          "249533c7-a2e9-41ef-a071-022a40f9229d"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1169,20 +1169,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14855"
+          "14949"
         ],
         "x-ms-correlation-request-id": [
-          "402b1b3d-891b-412e-b936-906ec11724c6"
+          "ac6f667a-d39f-4315-a8e2-31399d5f624e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231009Z:402b1b3d-891b-412e-b936-906ec11724c6"
+          "WESTUS2:20171110T062704Z:ac6f667a-d39f-4315-a8e2-31399d5f624e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1203,7 +1203,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:10:40 GMT"
+          "Fri, 10 Nov 2017 06:27:34 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1221,7 +1221,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "918df35c-5c43-497c-9539-a0e9c8912f31"
+          "7c766271-aab8-4055-b166-c1878e60940a"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1230,20 +1230,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14848"
+          "14947"
         ],
         "x-ms-correlation-request-id": [
-          "5968798c-ae54-42e1-90f3-0d7edc31bfe8"
+          "7b7f4d21-7f50-4ca8-a02a-29b5b66b09e6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231040Z:5968798c-ae54-42e1-90f3-0d7edc31bfe8"
+          "WESTUS2:20171110T062734Z:7b7f4d21-7f50-4ca8-a02a-29b5b66b09e6"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1264,7 +1264,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:11:09 GMT"
+          "Fri, 10 Nov 2017 06:28:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1282,7 +1282,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "49c59db7-e47b-4ef8-94be-f69042c00f9c"
+          "397da17a-8cdb-4a35-9200-dfe0646a4b65"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1291,20 +1291,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14845"
+          "14946"
         ],
         "x-ms-correlation-request-id": [
-          "3baa26bb-f3e4-4019-9391-94f270a3667f"
+          "a9c5bde6-f208-4125-b0a2-195810eec07c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231110Z:3baa26bb-f3e4-4019-9391-94f270a3667f"
+          "WESTUS2:20171110T062805Z:a9c5bde6-f208-4125-b0a2-195810eec07c"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1325,7 +1325,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:11:40 GMT"
+          "Fri, 10 Nov 2017 06:28:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1343,7 +1343,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "a9ec5bb8-0dc9-4ab0-8d83-1b3dd3768f35"
+          "42625f22-1b42-4d09-8297-bdebcc7ac404"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1352,20 +1352,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14838"
+          "14945"
         ],
         "x-ms-correlation-request-id": [
-          "28d1247c-237e-4996-8086-3eed967ad501"
+          "837f8578-07b8-4160-bc2e-3a03f1e75e0f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231141Z:28d1247c-237e-4996-8086-3eed967ad501"
+          "WESTUS2:20171110T062835Z:837f8578-07b8-4160-bc2e-3a03f1e75e0f"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1386,7 +1386,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:12:11 GMT"
+          "Fri, 10 Nov 2017 06:29:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1404,7 +1404,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "333749fa-a666-4be6-9632-80f7c652ba6f"
+          "4cf6ee26-e25d-4a58-8d96-681d48867179"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1413,20 +1413,203 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14833"
+          "14944"
         ],
         "x-ms-correlation-request-id": [
-          "c5b514b5-f439-4b3d-9e32-6d9856d23cde"
+          "9f7dbfae-5980-4b1a-adda-31972b817ad5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231211Z:c5b514b5-f439-4b3d-9e32-6d9856d23cde"
+          "WESTUS2:20171110T062906Z:9f7dbfae-5980-4b1a-adda-31972b817ad5"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Nov 2017 06:29:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-hdi-matched-rule": [
+          "ClusterResourcesAndSubResources"
+        ],
+        "x-ms-hdi-routed-to": [
+          "RegionalRp"
+        ],
+        "x-ms-request-id": [
+          "807d89e2-88cd-4521-8b41-32662614bcbf"
+        ],
+        "x-ms-hdi-served-by": [
+          "northcentralus"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14943"
+        ],
+        "x-ms-correlation-request-id": [
+          "45c7c098-cc8c-4dfd-bfb6-c6584ba2fdbd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171110T062936Z:45c7c098-cc8c-4dfd-bfb6-c6584ba2fdbd"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Nov 2017 06:30:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-hdi-matched-rule": [
+          "ClusterResourcesAndSubResources"
+        ],
+        "x-ms-hdi-routed-to": [
+          "RegionalRp"
+        ],
+        "x-ms-request-id": [
+          "d1b51ab7-92eb-4e63-87c9-d7453843f28f"
+        ],
+        "x-ms-hdi-served-by": [
+          "northcentralus"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14944"
+        ],
+        "x-ms-correlation-request-id": [
+          "d6dd4757-ffb2-4a6e-b2ad-1b6b61bc1955"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171110T063006Z:d6dd4757-ffb2-4a6e-b2ad-1b6b61bc1955"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 10 Nov 2017 06:30:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-hdi-matched-rule": [
+          "ClusterResourcesAndSubResources"
+        ],
+        "x-ms-hdi-routed-to": [
+          "RegionalRp"
+        ],
+        "x-ms-request-id": [
+          "b292e6b7-a41d-4c69-bd36-4f2ef6721536"
+        ],
+        "x-ms-hdi-served-by": [
+          "northcentralus"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14943"
+        ],
+        "x-ms-correlation-request-id": [
+          "3b27005e-f6dc-414e-845c-0f89985a084a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171110T063037Z:3b27005e-f6dc-414e-845c-0f89985a084a"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/create?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1447,7 +1630,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:12:41 GMT"
+          "Fri, 10 Nov 2017 06:31:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1465,7 +1648,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "3307d030-9937-49e3-9b96-9ab7ac6537b1"
+          "bd93d873-0812-4949-9014-1fb50b1ea307"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1474,20 +1657,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14825"
+          "14942"
         ],
         "x-ms-correlation-request-id": [
-          "a0d77e50-1676-4846-8ca3-6e8ea63e9780"
+          "3c3e458e-757b-4af0-8f61-ad1e9f9edd21"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231242Z:a0d77e50-1676-4846-8ca3-6e8ea63e9780"
+          "WESTUS2:20171110T063107Z:3c3e458e-757b-4af0-8f61-ad1e9f9edd21"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1496,7 +1679,7 @@
           "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"1a507399-aefb-4482-a245-8435d4ce8bfd\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-06T23:01:34.22\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"d578a5f8-b761-481e-a251-00087db6b004\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-10T06:18:26.327\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1508,7 +1691,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:12:42 GMT"
+          "Fri, 10 Nov 2017 06:31:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1526,7 +1709,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "b8b841bb-16a0-4ac8-aa9c-2783325ef5d6"
+          "dcf3ed1a-4841-472f-a2c6-dcbd67321bc4"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1535,25 +1718,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14824"
+          "14941"
         ],
         "x-ms-correlation-request-id": [
-          "0c384ef7-9d2a-4af6-bc37-b50908dce149"
+          "f0569021-4aaa-469a-85f6-b5a67bffca5c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231242Z:0c384ef7-9d2a-4af6-bc37-b50908dce149"
+          "WESTUS2:20171110T063108Z:f0569021-4aaa-469a-85f6-b5a67bffca5c"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "85d4c607-5cf4-43b4-a853-f0cf123352c1"
+          "80d5eaf1-d145-40a4-a71a-25f0db2eede0"
         ],
         "accept-language": [
           "en-US"
@@ -1563,7 +1746,7 @@
           "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"1a507399-aefb-4482-a245-8435d4ce8bfd\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-06T23:01:34.22\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"d578a5f8-b761-481e-a251-00087db6b004\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-10T06:18:26.327\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 20\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1575,7 +1758,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:12:42 GMT"
+          "Fri, 10 Nov 2017 06:31:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1593,7 +1776,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "3fc66387-ae4f-42ed-baac-a16a9dbe3b41"
+          "5ff165ea-9922-4a52-b372-1484ce4dd0de"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1602,25 +1785,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14823"
+          "14940"
         ],
         "x-ms-correlation-request-id": [
-          "c0546cd8-295b-45f4-bdad-6cc2f15d6407"
+          "91ba2aef-34fc-4935-b22c-a26213b1e209"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231242Z:c0546cd8-295b-45f4-bdad-6cc2f15d6407"
+          "WESTUS2:20171110T063108Z:91ba2aef-34fc-4935-b22c-a26213b1e209"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "84cd84b0-4838-4e05-ba07-11ca8a14e1e1"
+          "82bf1ae4-fa92-4a45-96e5-aa6e56489342"
         ],
         "accept-language": [
           "en-US"
@@ -1630,7 +1813,7 @@
           "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"1a507399-aefb-4482-a245-8435d4ce8bfd\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 4,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-06T23:01:34.22\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 24\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"d578a5f8-b761-481e-a251-00087db6b004\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 4,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-10T06:18:26.327\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 24\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1642,7 +1825,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:19:19 GMT"
+          "Fri, 10 Nov 2017 06:38:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1660,7 +1843,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "bf1ecbee-8f50-46e7-be58-8f5888b6c923"
+          "47831bc3-792d-42fc-a018-d405d0277222"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1669,25 +1852,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14786"
+          "14950"
         ],
         "x-ms-correlation-request-id": [
-          "7c113752-d8fd-402b-86c0-4bffbdcbd606"
+          "98a57e01-e072-479c-af4f-aa57dbd842bf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231920Z:7c113752-d8fd-402b-86c0-4bffbdcbd606"
+          "WESTUS2:20171110T063814Z:98a57e01-e072-479c-af4f-aa57dbd842bf"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "abd2fc30-5cd9-411a-a511-2760d032c010"
+          "3695907e-d23f-45f4-aa2b-11dffd3ba22b"
         ],
         "accept-language": [
           "en-US"
@@ -1697,7 +1880,7 @@
           "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"1a507399-aefb-4482-a245-8435d4ce8bfd\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 4,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-06T23:01:34.22\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 24\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize\",\r\n  \"name\": \"hdisdk-clusterresize\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"North Central US\",\r\n  \"etag\": \"d578a5f8-b761-481e-a251-00087db6b004\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.5.1000.0\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.5.1000.0.11047931.json\",\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Standard_D3\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 4,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        },\r\n        {\r\n          \"name\": \"zookeepernode\",\r\n          \"targetInstanceCount\": 3,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Medium\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"sshuser\"\r\n            }\r\n          },\r\n          \"encryptDataDisks\": false\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2017-11-10T06:18:26.327\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 24\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize-ssh.azurehdinsight.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterresize.azurehdinsight.net\",\r\n        \"port\": 443\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1709,7 +1892,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:19:20 GMT"
+          "Fri, 10 Nov 2017 06:38:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1727,7 +1910,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "191dae7b-a3ab-40d7-9a7e-55d3f1295983"
+          "eeef10c1-b216-46db-b280-791ccc58c9c0"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1736,20 +1919,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14785"
+          "14949"
         ],
         "x-ms-correlation-request-id": [
-          "d1ca58e3-c78e-4759-a6cc-601cd671b01e"
+          "b12b5d36-9ee7-4ad0-99eb-9079f5a7b8aa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231920Z:d1ca58e3-c78e-4759-a6cc-601cd671b01e"
+          "WESTUS2:20171110T063815Z:b12b5d36-9ee7-4ad0-99eb-9079f5a7b8aa"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/roles/workernode/resize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvcm9sZXMvd29ya2Vybm9kZS9yZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/roles/workernode/resize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvcm9sZXMvd29ya2Vybm9kZS9yZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"targetInstanceCount\": 4\r\n}",
       "RequestHeaders": {
@@ -1760,7 +1943,7 @@
           "32"
         ],
         "x-ms-client-request-id": [
-          "6e6f1859-6772-4e0e-8f3a-b12e5c7dfe2d"
+          "bebd377f-b7c2-4387-8c10-414083e75535"
         ],
         "accept-language": [
           "en-US"
@@ -1782,13 +1965,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:12:46 GMT"
+          "Fri, 10 Nov 2017 06:31:09 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/operationresults/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/operationresults/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview"
         ],
         "Retry-After": [
           "60"
@@ -1800,10 +1983,10 @@
           "RegionalRp"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "44b01743-29b5-4fae-9c20-5f6129f02603"
+          "2c02e3a7-9f3f-4d27-8f22-657bca05e1be"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1815,17 +1998,17 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "3b0030cb-f216-410d-a0b7-798e28f52a7d"
+          "64145c90-3c1d-4641-ab3a-ab46f50a6ad4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231247Z:3b0030cb-f216-410d-a0b7-798e28f52a7d"
+          "WESTUS2:20171110T063109Z:64145c90-3c1d-4641-ab3a-ab46f50a6ad4"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1846,7 +2029,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:13:16 GMT"
+          "Fri, 10 Nov 2017 06:32:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1864,7 +2047,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "988c9d5a-3c5c-4971-be55-e0a61d4b7631"
+          "8d98020c-6ec5-4433-bacc-00559cf45a84"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1873,20 +2056,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14818"
+          "14982"
         ],
         "x-ms-correlation-request-id": [
-          "5d4347be-3e01-4e9a-abad-455fce248915"
+          "91736720-edf1-4d52-9f33-685aee2a9850"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231317Z:5d4347be-3e01-4e9a-abad-455fce248915"
+          "WESTUS2:20171110T063210Z:91736720-edf1-4d52-9f33-685aee2a9850"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1907,7 +2090,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:13:47 GMT"
+          "Fri, 10 Nov 2017 06:33:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1925,7 +2108,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "a81740ab-2678-4ab0-8473-7bfdbefea28a"
+          "71436f3e-e29a-4d97-83fd-d2853f432ce7"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1934,20 +2117,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14813"
+          "14835"
         ],
         "x-ms-correlation-request-id": [
-          "9d2c96df-3e2a-4890-b76b-80cacd4d05c8"
+          "dbf4b1e8-cf38-42b0-a7f2-a32d507284ae"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231347Z:9d2c96df-3e2a-4890-b76b-80cacd4d05c8"
+          "WESTUS2:20171110T063311Z:dbf4b1e8-cf38-42b0-a7f2-a32d507284ae"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1968,7 +2151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:14:16 GMT"
+          "Fri, 10 Nov 2017 06:34:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1986,7 +2169,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "c96610fb-2b09-4193-9a0f-029340f79bbc"
+          "8a93cc67-3509-4a45-a073-660871c03186"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -1995,20 +2178,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14810"
+          "14833"
         ],
         "x-ms-correlation-request-id": [
-          "c1d51671-9ba0-4cf5-955b-55b3fc34e537"
+          "5d6e7b39-6871-42ee-9084-a9018916cd51"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231417Z:c1d51671-9ba0-4cf5-955b-55b3fc34e537"
+          "WESTUS2:20171110T063411Z:5d6e7b39-6871-42ee-9084-a9018916cd51"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2029,7 +2212,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:14:47 GMT"
+          "Fri, 10 Nov 2017 06:35:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2047,7 +2230,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "7dbe7bee-f523-4aa1-bc37-3849516d7e72"
+          "a1fa420d-d238-4570-b2df-672b5d41472b"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -2056,20 +2239,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14805"
+          "14882"
         ],
         "x-ms-correlation-request-id": [
-          "5e272f00-b568-42ee-8661-f85971f46b0f"
+          "c2d2c992-dd36-4f98-8aea-d41a09ead982"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231448Z:5e272f00-b568-42ee-8661-f85971f46b0f"
+          "WESTUS2:20171110T063512Z:c2d2c992-dd36-4f98-8aea-d41a09ead982"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2090,7 +2273,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:15:17 GMT"
+          "Fri, 10 Nov 2017 06:36:12 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2108,7 +2291,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "6c874e57-189d-4dcf-857d-a108b60758cf"
+          "ef65833f-88e0-44c1-b621-13cef116369c"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -2117,20 +2300,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14828"
+          "14881"
         ],
         "x-ms-correlation-request-id": [
-          "b9f06961-3159-4812-84bc-1d9ce12c9de5"
+          "198d8629-2c04-4d5b-8728-13308b06c405"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231518Z:b9f06961-3159-4812-84bc-1d9ce12c9de5"
+          "WESTUS2:20171110T063612Z:198d8629-2c04-4d5b-8728-13308b06c405"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2151,7 +2334,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:15:48 GMT"
+          "Fri, 10 Nov 2017 06:37:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2169,7 +2352,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "70449293-61cc-4171-b419-a9cace090942"
+          "8e01e284-2b81-47a1-b39e-189d444c5af8"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -2178,386 +2361,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14823"
+          "14954"
         ],
         "x-ms-correlation-request-id": [
-          "a0e2f55a-36e9-4264-982b-c9cf0304080e"
+          "d370bad7-85e1-4b6c-a03f-16b3b6ec5822"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231548Z:a0e2f55a-36e9-4264-982b-c9cf0304080e"
+          "WESTUS2:20171110T063713Z:d370bad7-85e1-4b6c-a03f-16b3b6ec5822"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 06 Nov 2017 23:16:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-hdi-matched-rule": [
-          "ClusterResourcesAndSubResources"
-        ],
-        "x-ms-hdi-routed-to": [
-          "RegionalRp"
-        ],
-        "x-ms-request-id": [
-          "5eff8a1a-fc1a-430b-b283-e7f8ac0ff9b6"
-        ],
-        "x-ms-hdi-served-by": [
-          "northcentralus"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14818"
-        ],
-        "x-ms-correlation-request-id": [
-          "d7ae7375-704a-4e97-8d8c-fddb9eeac722"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231618Z:d7ae7375-704a-4e97-8d8c-fddb9eeac722"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 06 Nov 2017 23:16:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-hdi-matched-rule": [
-          "ClusterResourcesAndSubResources"
-        ],
-        "x-ms-hdi-routed-to": [
-          "RegionalRp"
-        ],
-        "x-ms-request-id": [
-          "a4deaec5-d2d9-418d-a08a-5b748c7f1131"
-        ],
-        "x-ms-hdi-served-by": [
-          "northcentralus"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14813"
-        ],
-        "x-ms-correlation-request-id": [
-          "4ef0fd19-0c9b-4024-ba16-f0132fba4fc2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231648Z:4ef0fd19-0c9b-4024-ba16-f0132fba4fc2"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 06 Nov 2017 23:17:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-hdi-matched-rule": [
-          "ClusterResourcesAndSubResources"
-        ],
-        "x-ms-hdi-routed-to": [
-          "RegionalRp"
-        ],
-        "x-ms-request-id": [
-          "6657ed6f-d456-4f76-ab5f-0cc9c7c5ac46"
-        ],
-        "x-ms-hdi-served-by": [
-          "northcentralus"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14809"
-        ],
-        "x-ms-correlation-request-id": [
-          "ad1e9fc2-4f25-4e00-bc18-827cfd33ef6d"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231719Z:ad1e9fc2-4f25-4e00-bc18-827cfd33ef6d"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 06 Nov 2017 23:17:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-hdi-matched-rule": [
-          "ClusterResourcesAndSubResources"
-        ],
-        "x-ms-hdi-routed-to": [
-          "RegionalRp"
-        ],
-        "x-ms-request-id": [
-          "91719396-90cf-4022-9806-6974382a8d63"
-        ],
-        "x-ms-hdi-served-by": [
-          "northcentralus"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14804"
-        ],
-        "x-ms-correlation-request-id": [
-          "becc4cbe-39e3-4b61-9379-3b84f6797516"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231749Z:becc4cbe-39e3-4b61-9379-3b84f6797516"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 06 Nov 2017 23:18:18 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-hdi-matched-rule": [
-          "ClusterResourcesAndSubResources"
-        ],
-        "x-ms-hdi-routed-to": [
-          "RegionalRp"
-        ],
-        "x-ms-request-id": [
-          "bde752cd-8bcf-4687-bb0a-ce664576ba08"
-        ],
-        "x-ms-hdi-served-by": [
-          "northcentralus"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14798"
-        ],
-        "x-ms-correlation-request-id": [
-          "156f7b2a-8199-45ee-8fdb-e390062bf5a3"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231819Z:156f7b2a-8199-45ee-8fdb-e390062bf5a3"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.HDInsight.HDInsightManagementClient/3.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 06 Nov 2017 23:18:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-hdi-matched-rule": [
-          "ClusterResourcesAndSubResources"
-        ],
-        "x-ms-hdi-routed-to": [
-          "RegionalRp"
-        ],
-        "x-ms-request-id": [
-          "c24817d5-1daa-4eda-b0a0-a4c5458a6fef"
-        ],
-        "x-ms-hdi-served-by": [
-          "northcentralus"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14795"
-        ],
-        "x-ms-correlation-request-id": [
-          "d0569b6e-47b5-463e-84ed-33467d0147e2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231849Z:d0569b6e-47b5-463e-84ed-33467d0147e2"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/251844aa-4217-4aba-9b70-2e39af206fe3-0-r?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvMjUxODQ0YWEtNDIxNy00YWJhLTliNzAtMmUzOWFmMjA2ZmUzLTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize/azureasyncoperations/df2b15d2-ecb0-48ba-8958-c2543976fa95-0-r?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemUvYXp1cmVhc3luY29wZXJhdGlvbnMvZGYyYjE1ZDItZWNiMC00OGJhLTg5NTgtYzI1NDM5NzZmYTk1LTAtcj9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2578,7 +2395,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:19:19 GMT"
+          "Fri, 10 Nov 2017 06:38:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -2596,7 +2413,7 @@
           "RegionalRp"
         ],
         "x-ms-request-id": [
-          "6b7054fc-94fb-4a05-a2fe-0014d25f2979"
+          "92883465-6508-4510-beb7-1e210d3eb54b"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -2605,25 +2422,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14787"
+          "14951"
         ],
         "x-ms-correlation-request-id": [
-          "2620ee52-5e1d-4005-acee-43ca15e41593"
+          "33ef077d-256f-4d96-a7a5-2589f331d9e8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231919Z:2620ee52-5e1d-4005-acee-43ca15e41593"
+          "WESTUS2:20171110T063814Z:33ef077d-256f-4d96-a7a5-2589f331d9e8"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk2496/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazI0OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk5641/providers/Microsoft.HDInsight/clusters/hdisdk-clusterresize?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaXNkazU2NDEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJyZXNpemU/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f25c53e1-51e2-4010-b47c-63d6dce65499"
+          "4ef7b981-c982-4074-9312-0a7ea8dbdc44"
         ],
         "accept-language": [
           "en-US"
@@ -2645,13 +2462,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:19:21 GMT"
+          "Fri, 10 Nov 2017 06:38:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/North%20Central%20US/operationresults/4bed1bc7-8a2c-420c-8d66-d5fa45bc2636-0-r?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/North%20Central%20US/operationresults/ec60962a-75ec-4150-a4b0-f061e1e3d20e-0-r?api-version=2015-03-01-preview"
         ],
         "Retry-After": [
           "60"
@@ -2663,10 +2480,10 @@
           "RegionalRp"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/North Central US/azureasyncoperations/4bed1bc7-8a2c-420c-8d66-d5fa45bc2636-0-r?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/North Central US/azureasyncoperations/ec60962a-75ec-4150-a4b0-f061e1e3d20e-0-r?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "fa07dea2-6714-4720-9a39-b24ee6b2ef6d"
+          "fc31c6b6-9a92-4053-83fa-5cf699f30589"
         ],
         "x-ms-hdi-served-by": [
           "northcentralus"
@@ -2675,25 +2492,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "ab0cdadd-2981-41bc-82a2-98f2aa28c113"
+          "44fa802c-a991-4fc4-9626-1377ad2fb712"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231921Z:ab0cdadd-2981-41bc-82a2-98f2aa28c113"
+          "WESTUS2:20171110T063817Z:44fa802c-a991-4fc4-9626-1377ad2fb712"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk2496?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazI0OTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdisdk5641?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaXNkazU2NDE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "889c291d-a759-49fa-9ca9-78cb511328fd"
+          "080630e9-13e7-4412-ab26-91ac4320d0de"
         ],
         "accept-language": [
           "en-US"
@@ -2715,28 +2532,28 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 06 Nov 2017 23:19:21 GMT"
+          "Fri, 10 Nov 2017 06:38:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1IRElTREsyNDk2LVdFU1RVUzIiLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2015-11-01"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1IRElTREs1NjQxLU5PUlRIQ0VOVFJBTFVTIiwiam9iTG9jYXRpb24iOiJub3J0aGNlbnRyYWx1cyJ9?api-version=2015-11-01"
         ],
         "Retry-After": [
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1198"
         ],
         "x-ms-request-id": [
-          "f0cc4bcf-73c0-41ce-8128-5faa008cfc9d"
+          "f5e2b4f3-38ed-4592-ae42-6a160f05f426"
         ],
         "x-ms-correlation-request-id": [
-          "f0cc4bcf-73c0-41ce-8128-5faa008cfc9d"
+          "f5e2b4f3-38ed-4592-ae42-6a160f05f426"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171106T231921Z:f0cc4bcf-73c0-41ce-8128-5faa008cfc9d"
+          "WESTUS2:20171110T063818Z:f5e2b4f3-38ed-4592-ae42-6a160f05f426"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2747,7 +2564,7 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "hdisdk2496"
+      "hdisdk5641"
     ]
   },
   "Variables": {
