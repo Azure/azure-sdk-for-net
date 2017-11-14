@@ -5,6 +5,7 @@
 ### Feature Additions
   * Add SAP Cloud For Customer Source
   * Add SAP Cloud For Customer Dataset
+  * Add SAP Cloud For Customer Sink
 
 ## Version 0.2.1-preview
 
