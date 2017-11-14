@@ -18,33 +18,35 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Migration Validation Result
     /// </summary>
-    public partial class MigrationValidationResult
+    public partial class MigrateSqlServerSqlDbTaskOutputValidationResult
     {
         /// <summary>
-        /// Initializes a new instance of the MigrationValidationResult class.
+        /// Initializes a new instance of the
+        /// MigrateSqlServerSqlDbTaskOutputValidationResult class.
         /// </summary>
-        public MigrationValidationResult()
+        public MigrateSqlServerSqlDbTaskOutputValidationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MigrationValidationResult class.
+        /// Initializes a new instance of the
+        /// MigrateSqlServerSqlDbTaskOutputValidationResult class.
         /// </summary>
         /// <param name="id">Migration validation result identifier</param>
         /// <param name="migrationId">Migration Identifier</param>
-        /// <param name="databaseLevelValidationResults">Validation results for
-        /// each database</param>
+        /// <param name="summaryResults">Validation summary results for each
+        /// database</param>
         /// <param name="status">Current status of validation at the migration
         /// level. Status from the database validation result status will be
         /// aggregated here. Possible values include: 'Default', 'NotStarted',
-        /// 'Initialized', 'InProgress', 'Completed', 'PartiallyCompleted',
-        /// 'Failed'</param>
-        public MigrationValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseLevelResult> databaseLevelValidationResults = default(IDictionary<string, MigrationValidationDatabaseLevelResult>), ValidationStatus? status = default(ValidationStatus?))
+        /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
+        /// 'Failed', 'Stopped'</param>
+        public MigrateSqlServerSqlDbTaskOutputValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default(IDictionary<string, MigrationValidationDatabaseSummaryResult>), ValidationStatus? status = default(ValidationStatus?))
         {
             Id = id;
             MigrationId = migrationId;
-            DatabaseLevelValidationResults = databaseLevelValidationResults;
+            SummaryResults = summaryResults;
             Status = status;
             CustomInit();
         }
@@ -55,28 +57,29 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets migration validation result identifier
+        /// Gets migration validation result identifier
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets migration Identifier
+        /// Gets migration Identifier
         /// </summary>
         [JsonProperty(PropertyName = "migrationId")]
-        public string MigrationId { get; set; }
+        public string MigrationId { get; private set; }
 
         /// <summary>
-        /// Gets or sets validation results for each database
+        /// Gets or sets validation summary results for each database
         /// </summary>
-        [JsonProperty(PropertyName = "databaseLevelValidationResults")]
-        public IDictionary<string, MigrationValidationDatabaseLevelResult> DatabaseLevelValidationResults { get; set; }
+        [JsonProperty(PropertyName = "summaryResults")]
+        public IDictionary<string, MigrationValidationDatabaseSummaryResult> SummaryResults { get; set; }
 
         /// <summary>
         /// Gets current status of validation at the migration level. Status
         /// from the database validation result status will be aggregated here.
         /// Possible values include: 'Default', 'NotStarted', 'Initialized',
-        /// 'InProgress', 'Completed', 'PartiallyCompleted', 'Failed'
+        /// 'InProgress', 'Completed', 'CompletedWithIssues', 'Failed',
+        /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public ValidationStatus? Status { get; private set; }

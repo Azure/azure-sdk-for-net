@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Database level validation results
     /// </summary>
-    public partial class MigrationValidationDatabaseLevelResult
+    public partial class MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrationValidationDatabaseLevelResult class.
+        /// MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult class.
         /// </summary>
-        public MigrationValidationDatabaseLevelResult()
+        public MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrationValidationDatabaseLevelResult class.
+        /// MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult class.
         /// </summary>
         /// <param name="id">Result identifier</param>
         /// <param name="migrationId">Migration Identifier</param>
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// query execution result between source and target database</param>
         /// <param name="status">Current status of validation at the database
         /// level. Possible values include: 'Default', 'NotStarted',
-        /// 'Initialized', 'InProgress', 'Completed', 'PartiallyCompleted',
-        /// 'Failed'</param>
-        public MigrationValidationDatabaseLevelResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), ValidationStatus? status = default(ValidationStatus?))
+        /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
+        /// 'Failed', 'Stopped'</param>
+        public MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), ValidationStatus? status = default(ValidationStatus?))
         {
             Id = id;
             MigrationId = migrationId;
@@ -71,28 +71,28 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets result identifier
+        /// Gets result identifier
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets migration Identifier
+        /// Gets migration Identifier
         /// </summary>
         [JsonProperty(PropertyName = "migrationId")]
-        public string MigrationId { get; set; }
+        public string MigrationId { get; private set; }
 
         /// <summary>
-        /// Gets or sets name of the source database
+        /// Gets name of the source database
         /// </summary>
         [JsonProperty(PropertyName = "sourceDatabaseName")]
-        public string SourceDatabaseName { get; set; }
+        public string SourceDatabaseName { get; private set; }
 
         /// <summary>
-        /// Gets or sets name of the target database
+        /// Gets name of the target database
         /// </summary>
         [JsonProperty(PropertyName = "targetDatabaseName")]
-        public string TargetDatabaseName { get; set; }
+        public string TargetDatabaseName { get; private set; }
 
         /// <summary>
         /// Gets validation start time
@@ -130,7 +130,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets current status of validation at the database level. Possible
         /// values include: 'Default', 'NotStarted', 'Initialized',
-        /// 'InProgress', 'Completed', 'PartiallyCompleted', 'Failed'
+        /// 'InProgress', 'Completed', 'CompletedWithIssues', 'Failed',
+        /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public ValidationStatus? Status { get; private set; }

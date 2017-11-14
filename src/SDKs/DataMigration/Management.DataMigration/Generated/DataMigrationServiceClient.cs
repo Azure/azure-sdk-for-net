@@ -94,6 +94,11 @@ namespace Microsoft.Azure.Management.DataMigration
         public virtual IProjectsOperations Projects { get; private set; }
 
         /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -303,6 +308,7 @@ namespace Microsoft.Azure.Management.DataMigration
             Services = new ServicesOperations(this);
             Tasks = new TasksOperations(this);
             Projects = new ProjectsOperations(this);
+            Usages = new UsagesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-11-15-preview";

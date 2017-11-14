@@ -596,12 +596,15 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// The Azure region of the operation
+            /// </param>
             /// <param name='parameters'>
             /// Requested name to validate
             /// </param>
-            public static NameAvailabilityResponse CheckNameAvailability(this IServicesOperations operations, NameAvailabilityRequest parameters)
+            public static NameAvailabilityResponse CheckNameAvailability(this IServicesOperations operations, string location, NameAvailabilityRequest parameters)
             {
-                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(location, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -614,15 +617,18 @@ namespace Microsoft.Azure.Management.DataMigration
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// The Azure region of the operation
+            /// </param>
             /// <param name='parameters'>
             /// Requested name to validate
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NameAvailabilityResponse> CheckNameAvailabilityAsync(this IServicesOperations operations, NameAvailabilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NameAvailabilityResponse> CheckNameAvailabilityAsync(this IServicesOperations operations, string location, NameAvailabilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

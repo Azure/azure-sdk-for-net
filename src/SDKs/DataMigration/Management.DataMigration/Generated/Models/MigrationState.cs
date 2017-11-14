@@ -32,7 +32,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         [EnumMember(Value = "Completed")]
         Completed,
         [EnumMember(Value = "Skipped")]
-        Skipped
+        Skipped,
+        [EnumMember(Value = "Stopped")]
+        Stopped
     }
     internal static class MigrationStateEnumExtension
     {
@@ -57,6 +59,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
                     return "Completed";
                 case MigrationState.Skipped:
                     return "Skipped";
+                case MigrationState.Stopped:
+                    return "Stopped";
             }
             return null;
         }
@@ -77,6 +81,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
                     return MigrationState.Completed;
                 case "Skipped":
                     return MigrationState.Skipped;
+                case "Stopped":
+                    return MigrationState.Stopped;
             }
             return null;
         }

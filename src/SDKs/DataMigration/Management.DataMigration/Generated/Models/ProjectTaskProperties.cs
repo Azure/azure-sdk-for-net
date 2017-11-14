@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="errors">Array of errors. This is ignored if
         /// submitted.</param>
         /// <param name="state">The state of the task. This is ignored if
-        /// submitted. Possible values include: 'Canceled', 'Failed',
-        /// 'FailedValidation', 'Faulted', 'Queued', 'Running', 'Succeeded',
-        /// 'Unknown'</param>
+        /// submitted. Possible values include: 'Unknown', 'Queued', 'Running',
+        /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
+        /// 'Faulted'</param>
         public ProjectTaskProperties(IList<ODataError> errors = default(IList<ODataError>), TaskState? state = default(TaskState?))
         {
             Errors = errors;
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 
         /// <summary>
         /// Gets the state of the task. This is ignored if submitted. Possible
-        /// values include: 'Canceled', 'Failed', 'FailedValidation',
-        /// 'Faulted', 'Queued', 'Running', 'Succeeded', 'Unknown'
+        /// values include: 'Unknown', 'Queued', 'Running', 'Canceled',
+        /// 'Succeeded', 'Failed', 'FailedInputValidation', 'Faulted'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public TaskState? State { get; private set; }

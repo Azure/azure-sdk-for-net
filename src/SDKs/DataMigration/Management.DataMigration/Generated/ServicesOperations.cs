@@ -1373,6 +1373,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// This method checks whether a proposed top-level resource name is valid and
         /// available.
         /// </remarks>
+        /// <param name='location'>
+        /// The Azure region of the operation
+        /// </param>
         /// <param name='parameters'>
         /// Requested name to validate
         /// </param>
@@ -1397,7 +1400,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<NameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(NameAvailabilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string location, NameAvailabilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1406,6 +1409,10 @@ namespace Microsoft.Azure.Management.DataMigration
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (parameters == null)
             {
@@ -1418,14 +1425,16 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/checkNameAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DataMigration/locations/{location}/checkNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

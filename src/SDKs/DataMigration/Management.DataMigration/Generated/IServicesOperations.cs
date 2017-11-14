@@ -364,6 +364,9 @@ namespace Microsoft.Azure.Management.DataMigration
         /// This method checks whether a proposed top-level resource name is
         /// valid and available.
         /// </remarks>
+        /// <param name='location'>
+        /// The Azure region of the operation
+        /// </param>
         /// <param name='parameters'>
         /// Requested name to validate
         /// </param>
@@ -382,7 +385,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(NameAvailabilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string location, NameAvailabilityRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update DMS Instance
         /// </summary>

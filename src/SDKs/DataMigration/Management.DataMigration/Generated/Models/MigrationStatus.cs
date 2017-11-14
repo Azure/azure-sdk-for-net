@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         Running,
         [EnumMember(Value = "Error")]
         Error,
-        [EnumMember(Value = "Cancelled")]
-        Cancelled,
+        [EnumMember(Value = "Stopped")]
+        Stopped,
         [EnumMember(Value = "Completed")]
         Completed,
         [EnumMember(Value = "CompletedWithWarnings")]
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
                     return "Running";
                 case MigrationStatus.Error:
                     return "Error";
-                case MigrationStatus.Cancelled:
-                    return "Cancelled";
+                case MigrationStatus.Stopped:
+                    return "Stopped";
                 case MigrationStatus.Completed:
                     return "Completed";
                 case MigrationStatus.CompletedWithWarnings:
@@ -95,8 +95,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
                     return MigrationStatus.Running;
                 case "Error":
                     return MigrationStatus.Error;
-                case "Cancelled":
-                    return MigrationStatus.Cancelled;
+                case "Stopped":
+                    return MigrationStatus.Stopped;
                 case "Completed":
                     return MigrationStatus.Completed;
                 case "CompletedWithWarnings":

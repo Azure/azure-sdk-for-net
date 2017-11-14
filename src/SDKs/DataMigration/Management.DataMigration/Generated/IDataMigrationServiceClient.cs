@@ -89,6 +89,11 @@ namespace Microsoft.Azure.Management.DataMigration
         IProjectsOperations Projects { get; }
 
         /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

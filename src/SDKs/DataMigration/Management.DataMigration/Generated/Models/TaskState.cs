@@ -21,22 +21,22 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskState
     {
-        [EnumMember(Value = "Canceled")]
-        Canceled,
-        [EnumMember(Value = "Failed")]
-        Failed,
-        [EnumMember(Value = "FailedValidation")]
-        FailedValidation,
-        [EnumMember(Value = "Faulted")]
-        Faulted,
+        [EnumMember(Value = "Unknown")]
+        Unknown,
         [EnumMember(Value = "Queued")]
         Queued,
         [EnumMember(Value = "Running")]
         Running,
+        [EnumMember(Value = "Canceled")]
+        Canceled,
         [EnumMember(Value = "Succeeded")]
         Succeeded,
-        [EnumMember(Value = "Unknown")]
-        Unknown
+        [EnumMember(Value = "Failed")]
+        Failed,
+        [EnumMember(Value = "FailedInputValidation")]
+        FailedInputValidation,
+        [EnumMember(Value = "Faulted")]
+        Faulted
     }
     internal static class TaskStateEnumExtension
     {
@@ -49,22 +49,22 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         {
             switch( value )
             {
-                case TaskState.Canceled:
-                    return "Canceled";
-                case TaskState.Failed:
-                    return "Failed";
-                case TaskState.FailedValidation:
-                    return "FailedValidation";
-                case TaskState.Faulted:
-                    return "Faulted";
+                case TaskState.Unknown:
+                    return "Unknown";
                 case TaskState.Queued:
                     return "Queued";
                 case TaskState.Running:
                     return "Running";
+                case TaskState.Canceled:
+                    return "Canceled";
                 case TaskState.Succeeded:
                     return "Succeeded";
-                case TaskState.Unknown:
-                    return "Unknown";
+                case TaskState.Failed:
+                    return "Failed";
+                case TaskState.FailedInputValidation:
+                    return "FailedInputValidation";
+                case TaskState.Faulted:
+                    return "Faulted";
             }
             return null;
         }
@@ -73,22 +73,22 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         {
             switch( value )
             {
-                case "Canceled":
-                    return TaskState.Canceled;
-                case "Failed":
-                    return TaskState.Failed;
-                case "FailedValidation":
-                    return TaskState.FailedValidation;
-                case "Faulted":
-                    return TaskState.Faulted;
+                case "Unknown":
+                    return TaskState.Unknown;
                 case "Queued":
                     return TaskState.Queued;
                 case "Running":
                     return TaskState.Running;
+                case "Canceled":
+                    return TaskState.Canceled;
                 case "Succeeded":
                     return TaskState.Succeeded;
-                case "Unknown":
-                    return TaskState.Unknown;
+                case "Failed":
+                    return TaskState.Failed;
+                case "FailedInputValidation":
+                    return TaskState.FailedInputValidation;
+                case "Faulted":
+                    return TaskState.Faulted;
             }
             return null;
         }

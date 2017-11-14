@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         /// <param name="agentVersion">The DMS instance agent version</param>
         /// <param name="status">The machine-readable status, such as
-        /// 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped',
-        /// 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop', or
-        /// 'Failed'</param>
+        /// 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting',
+        /// 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop'
+        /// or 'Failed'</param>
         /// <param name="vmSize">The services virtual machine size, such as
         /// 'Standard_D2_v2'</param>
         /// <param name="supportedTaskTypes">The list of supported task
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string AgentVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the machine-readable status, such as 'Offline',
-        /// 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping',
-        /// 'Starting', 'FailedToStart', 'FailedToStop', or 'Failed'
+        /// Gets or sets the machine-readable status, such as 'Initializing',
+        /// 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped',
+        /// 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

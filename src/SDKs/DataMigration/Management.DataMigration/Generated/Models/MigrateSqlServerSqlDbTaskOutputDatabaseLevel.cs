@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="endedOn">Migration end time</param>
         /// <param name="state">Current state of migration. Possible values
         /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
-        /// 'Skipped'</param>
+        /// 'Skipped', 'Stopped'</param>
         /// <param name="stage">Migration stage that this database is in.
         /// Possible values include: 'None', 'Initialize', 'Backup',
         /// 'FileCopy', 'Restore', 'Completed'</param>
@@ -100,7 +100,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 
         /// <summary>
         /// Gets current state of migration. Possible values include: 'None',
-        /// 'InProgress', 'Failed', 'Warning', 'Completed', 'Skipped'
+        /// 'InProgress', 'Failed', 'Warning', 'Completed', 'Skipped',
+        /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public MigrationState? State { get; private set; }

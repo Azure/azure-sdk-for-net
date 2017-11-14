@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="errors">Array of errors. This is ignored if
         /// submitted.</param>
         /// <param name="state">The state of the task. This is ignored if
-        /// submitted. Possible values include: 'Canceled', 'Failed',
-        /// 'FailedValidation', 'Faulted', 'Queued', 'Running', 'Succeeded',
-        /// 'Unknown'</param>
+        /// submitted. Possible values include: 'Unknown', 'Queued', 'Running',
+        /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
+        /// 'Faulted'</param>
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>

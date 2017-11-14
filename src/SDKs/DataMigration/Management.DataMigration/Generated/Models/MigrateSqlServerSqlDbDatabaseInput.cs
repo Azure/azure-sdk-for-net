@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the
         /// MigrateSqlServerSqlDbDatabaseInput class.
         /// </summary>
-        /// <param name="id">Unique identifier for the database</param>
         /// <param name="name">Name of the database</param>
         /// <param name="targetDatabaseName">Name of target database. Note:
         /// Target database will be truncated before starting
@@ -42,9 +41,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="makeSourceDbReadOnly">Whether to set database read
         /// only before migration</param>
         /// <param name="tableMap">Mapping of source to target tables</param>
-        public MigrateSqlServerSqlDbDatabaseInput(string id = default(string), string name = default(string), string targetDatabaseName = default(string), bool? makeSourceDbReadOnly = default(bool?), IDictionary<string, string> tableMap = default(IDictionary<string, string>))
+        public MigrateSqlServerSqlDbDatabaseInput(string name = default(string), string targetDatabaseName = default(string), bool? makeSourceDbReadOnly = default(bool?), IDictionary<string, string> tableMap = default(IDictionary<string, string>))
         {
-            Id = id;
             Name = name;
             TargetDatabaseName = targetDatabaseName;
             MakeSourceDbReadOnly = makeSourceDbReadOnly;
@@ -56,12 +54,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unique identifier for the database
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets name of the database

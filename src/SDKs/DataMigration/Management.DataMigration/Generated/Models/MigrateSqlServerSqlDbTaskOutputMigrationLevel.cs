@@ -38,19 +38,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// seconds.</param>
         /// <param name="status">Current status of migration. Possible values
         /// include: 'Default', 'Connecting', 'SourceAndTargetSelected',
-        /// 'SelectLogins', 'Configured', 'Running', 'Error', 'Cancelled',
+        /// 'SelectLogins', 'Configured', 'Running', 'Error', 'Stopped',
         /// 'Completed', 'CompletedWithWarnings'</param>
-        /// <param name="state">Current state of migration. Possible values
-        /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
-        /// 'Skipped'</param>
         /// <param name="statusMessage">Migration status message</param>
         /// <param name="message">Migration progress message</param>
         /// <param name="databases">Selected databases as a map from database
         /// name to database id</param>
         /// <param name="databaseSummary">Summary of database results in the
         /// migration</param>
-        /// <param name="migrationValidationResult">Migration Validation
-        /// Results</param>
         /// <param name="migrationReportResult">Migration Report Result,
         /// provides unique url for downloading your migration report.</param>
         /// <param name="sourceServerVersion">Source server version</param>
@@ -61,19 +56,17 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// version</param>
         /// <param name="exceptionsAndWarnings">Migration exceptions and
         /// warnings.</param>
-        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), MigrationStatus? status = default(MigrationStatus?), MigrationState? state = default(MigrationState?), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationValidationResult migrationValidationResult = default(MigrationValidationResult), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), MigrationStatus? status = default(MigrationStatus?), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
             DurationInSeconds = durationInSeconds;
             Status = status;
-            State = state;
             StatusMessage = statusMessage;
             Message = message;
             Databases = databases;
             DatabaseSummary = databaseSummary;
-            MigrationValidationResult = migrationValidationResult;
             MigrationReportResult = migrationReportResult;
             SourceServerVersion = sourceServerVersion;
             SourceServerBrandVersion = sourceServerBrandVersion;
@@ -109,18 +102,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets current status of migration. Possible values include:
         /// 'Default', 'Connecting', 'SourceAndTargetSelected', 'SelectLogins',
-        /// 'Configured', 'Running', 'Error', 'Cancelled', 'Completed',
+        /// 'Configured', 'Running', 'Error', 'Stopped', 'Completed',
         /// 'CompletedWithWarnings'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public MigrationStatus? Status { get; private set; }
-
-        /// <summary>
-        /// Gets current state of migration. Possible values include: 'None',
-        /// 'InProgress', 'Failed', 'Warning', 'Completed', 'Skipped'
-        /// </summary>
-        [JsonProperty(PropertyName = "state")]
-        public MigrationState? State { get; private set; }
 
         /// <summary>
         /// Gets migration status message
@@ -145,12 +131,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "databaseSummary")]
         public IDictionary<string, DatabaseSummaryResult> DatabaseSummary { get; private set; }
-
-        /// <summary>
-        /// Gets or sets migration Validation Results
-        /// </summary>
-        [JsonProperty(PropertyName = "migrationValidationResult")]
-        public MigrationValidationResult MigrationValidationResult { get; set; }
 
         /// <summary>
         /// Gets or sets migration Report Result, provides unique url for

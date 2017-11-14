@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Initializes a new instance of the SqlMigrationTaskInput class.
         /// </summary>
-        /// <param name="name">Name of the migration</param>
         /// <param name="sourceConnectionInfo">Information for connecting to
         /// source</param>
         /// <param name="targetConnectionInfo">Information for connecting to
         /// target</param>
-        public SqlMigrationTaskInput(string name, SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo)
+        /// <param name="name">Name of the migration</param>
+        public SqlMigrationTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, string name = default(string))
         {
             Name = name;
             SourceConnectionInfo = sourceConnectionInfo;
@@ -74,10 +74,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
             if (SourceConnectionInfo == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SourceConnectionInfo");

@@ -14,28 +14,29 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the connection properties of a server
+    /// The name of the quota
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Unknown")]
-    public partial class ConnectionInfo
+    public partial class QuotaName
     {
         /// <summary>
-        /// Initializes a new instance of the ConnectionInfo class.
+        /// Initializes a new instance of the QuotaName class.
         /// </summary>
-        public ConnectionInfo()
+        public QuotaName()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ConnectionInfo class.
+        /// Initializes a new instance of the QuotaName class.
         /// </summary>
-        /// <param name="userName">User name</param>
-        /// <param name="password">Password credential.</param>
-        public ConnectionInfo(string userName = default(string), string password = default(string))
+        /// <param name="localizedValue">The localized name of the
+        /// quota</param>
+        /// <param name="value">The unlocalized name (or ID) of the
+        /// quota</param>
+        public QuotaName(string localizedValue = default(string), string value = default(string))
         {
-            UserName = userName;
-            Password = password;
+            LocalizedValue = localizedValue;
+            Value = value;
             CustomInit();
         }
 
@@ -45,16 +46,16 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets user name
+        /// Gets or sets the localized name of the quota
         /// </summary>
-        [JsonProperty(PropertyName = "userName")]
-        public string UserName { get; set; }
+        [JsonProperty(PropertyName = "localizedValue")]
+        public string LocalizedValue { get; set; }
 
         /// <summary>
-        /// Gets or sets password credential.
+        /// Gets or sets the unlocalized name (or ID) of the quota
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }
