@@ -2217,6 +2217,52 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
-
+        [JsonSample]
+        public const string CopyFromBlobToSapC4C = @"{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""CopyBlobToSapC4c"",
+                type: ""Copy"",
+                typeProperties: {
+                  source: {
+                    type: ""BlobSource""
+                  },
+                  sink: {
+                    type: ""SapCloudForCustomerSink"",
+                    writeBehavior: ""Insert"",
+                    writeBatchSize: 50
+                  },
+                  enableSkipIncompatibleRow: true,
+                  parallelCopies: 32,
+                  cloudDataMovementUnits: 16,
+                  enableSkipIncompatibleRow: true,
+                  redirectIncompatibleRowSettings: {
+                      linkedServiceName: {
+                          referenceName: ""AzureBlobLinkedService"",
+                          type: ""LinkedServiceReference""
+                      },
+                      path: ""redirectcontainer/erroroutput""
+                  }
+                },
+                inputs: [
+                  {
+                    referenceName: ""SourceBlobDataset"",
+                    type: ""DatasetReference""
+                  }
+                ],
+                outputs: [
+                  {
+                    referenceName: ""SapC4CDataset"",
+                    type: ""DatasetReference""
+                  }
+                ]
+            }
+        ]
+    }
+}";
     }
 }

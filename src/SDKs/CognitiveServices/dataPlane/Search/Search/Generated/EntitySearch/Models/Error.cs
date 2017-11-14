@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// the error.</param>
         /// <param name="value">The parameter's value in the request that was
         /// not valid.</param>
-        public Error(ErrorCode code, string message, ErrorSubCode? subCode = default(ErrorSubCode?), string moreDetails = default(string), string parameter = default(string), string value = default(string))
+        public Error(string code, string message, string subCode = default(string), string moreDetails = default(string), string parameter = default(string), string value = default(string))
         {
             Code = code;
             SubCode = subCode;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// 'InsufficientAuthorization'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public ErrorCode Code { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Gets the error code that further helps to identify the error.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// 'AuthorizationExpired'
         /// </summary>
         [JsonProperty(PropertyName = "subCode")]
-        public ErrorSubCode? SubCode { get; private set; }
+        public string SubCode { get; private set; }
 
         /// <summary>
         /// Gets or sets a description of the error.
@@ -112,6 +112,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Code == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
+            }
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");

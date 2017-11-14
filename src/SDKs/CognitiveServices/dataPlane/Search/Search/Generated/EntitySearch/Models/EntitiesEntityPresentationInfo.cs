@@ -6,6 +6,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// <param name="entityTypeDisplayHint">A display version of the entity
         /// hint. For example, if entityTypeHints is Artist, this field may be
         /// set to American Singer.</param>
-        public EntitiesEntityPresentationInfo(EntityScenario entityScenario, IList<EntityType?> entityTypeHints = default(IList<EntityType?>), string entityTypeDisplayHint = default(string))
+        public EntitiesEntityPresentationInfo(string entityScenario, IList<string> entityTypeHints = default(IList<string>), string entityTypeDisplayHint = default(string))
         {
             EntityScenario = entityScenario;
             EntityTypeHints = entityTypeHints;
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// 'DominantEntity', 'DisambiguationItem', 'ListItem'
         /// </summary>
         [JsonProperty(PropertyName = "entityScenario")]
-        public EntityScenario EntityScenario { get; set; }
+        public string EntityScenario { get; set; }
 
         /// <summary>
         /// Gets a list of hints that indicate the entity's type. The list
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// array narrows the entity's type.
         /// </summary>
         [JsonProperty(PropertyName = "entityTypeHints")]
-        public IList<EntityType?> EntityTypeHints { get; private set; }
+        public IList<string> EntityTypeHints { get; private set; }
 
         /// <summary>
         /// Gets a display version of the entity hint. For example, if
@@ -79,11 +80,15 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (EntityScenario == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EntityScenario");
+            }
         }
     }
 }

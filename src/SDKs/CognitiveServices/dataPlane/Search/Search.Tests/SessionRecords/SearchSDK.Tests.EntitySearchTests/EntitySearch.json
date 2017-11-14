@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/bing/v7.0/entities?q=tom%20cruise",
+      "RequestUri": "/bing/v7.0/entities?mkt=en-us&q=tom%20cruise",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
