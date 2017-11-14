@@ -34,10 +34,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// source</param>
         /// <param name="targetConnectionInfo">Information for connecting to
         /// target</param>
-        /// <param name="name">Name of the migration</param>
-        public SqlMigrationTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, string name = default(string))
+        public SqlMigrationTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo)
         {
-            Name = name;
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             CustomInit();
@@ -47,12 +45,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets name of the migration
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets information for connecting to source

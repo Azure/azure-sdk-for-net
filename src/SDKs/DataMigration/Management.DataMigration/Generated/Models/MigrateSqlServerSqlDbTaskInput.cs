@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="targetConnectionInfo">Information for connecting to
         /// target</param>
         /// <param name="selectedDatabases">Databases to migrate</param>
-        /// <param name="name">Name of the migration</param>
         /// <param name="validationOptions">Options for enabling various post
         /// migration validations. Available options,
         /// 1.) Data Integrity Check: Performs a checksum based comparison on
@@ -53,8 +52,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// from the Query Plan Cache or Query Store and execute them and
         /// compares the execution time between the source and target
         /// database.</param>
-        public MigrateSqlServerSqlDbTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDbDatabaseInput> selectedDatabases, string name = default(string), MigrationValidationOptions validationOptions = default(MigrationValidationOptions))
-            : base(sourceConnectionInfo, targetConnectionInfo, name)
+        public MigrateSqlServerSqlDbTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDbDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions = default(MigrationValidationOptions))
+            : base(sourceConnectionInfo, targetConnectionInfo)
         {
             SelectedDatabases = selectedDatabases;
             ValidationOptions = validationOptions;
