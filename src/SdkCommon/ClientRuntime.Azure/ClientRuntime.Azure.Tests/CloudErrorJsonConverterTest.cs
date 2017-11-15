@@ -27,7 +27,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                                 ""message"": ""$search query option not supported""
                             }
                         ],
-                        ""innerError"": {
+                        ""innererror"": {
                             ""customKey"": ""customValue""
                         }
                     }
@@ -48,7 +48,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("query", cloudError.Target);
             Assert.Equal(1, cloudError.Details.Count);
             Assert.Equal("301", cloudError.Details[0].Code);
-            Assert.Equal("customValue", cloudError.InnerError["customKey"]);
+            Assert.Equal("customValue", cloudError.Innererror["customKey"]);
         }
 
         [Fact]

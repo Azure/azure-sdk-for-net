@@ -42,6 +42,6 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets the inner error.
         /// </summary>
-        public JObject InnerError { get; set; }
+        public JObject Innererror { get; set; }
     }
 }
