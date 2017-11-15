@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-#if NET45
-
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -21,6 +19,25 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         internal const int BCRYPT_RSAPUBLIC_MAGIC      = 0x31415352;
         internal const int BCRYPT_RSAPRIVATE_MAGIC     = 0x32415352;
         internal const int BCRYPT_RSAFULLPRIVATE_MAGIC = 0x33415352;
+
+        internal const int BCRYPT_ECDSA_PUBLIC_P256_MAGIC = 0x31534345;
+        internal const int BCRYPT_ECDSA_PRIVATE_P256_MAGIC = 0x32534345;
+        internal const int BCRYPT_ECDSA_PUBLIC_P384_MAGIC = 0x33534345;
+        internal const int BCRYPT_ECDSA_PRIVATE_P384_MAGIC = 0x34534345;
+        internal const int BCRYPT_ECDSA_PUBLIC_P521_MAGIC = 0x35534345;
+        internal const int BCRYPT_ECDSA_PRIVATE_P521_MAGIC = 0x36534345;
+        internal const int BCRYPT_ECDSA_PUBLIC_GENERIC_MAGIC = 0x50444345;
+        internal const int BCRYPT_ECDSA_PRIVATE_GENERIC_MAGIC = 0x56444345;
+
+        internal const string BCRYPT_ECCFULLPUBLIC_BLOB = "ECCFULLPUBLICBLOB";
+        internal const string BCRYPT_ECCFULLPRIVATE_BLOB = "ECCFULLPRIVATEBLOB";
+        internal const string BCRYPT_ECC_PARAMETERS = "ECCParameters";
+
+        internal const int BCRYPT_ECC_PRIME_SHORT_WEIERSTRASS_CURVE = 0x1;
+        internal const int BCRYPT_ECC_PRIME_TWISTED_EDWARDS_CURVE = 0x2;
+        internal const int BCRYPT_ECC_PRIME_MONTGOMERY_CURVE = 0x3;
+
+        internal const int BCRYPT_NO_CURVE_GENERATION_ALG_ID = 0x0;
 
         [StructLayout( LayoutKind.Sequential )]
         internal struct NCRYPT_PKCS1_PADDING_INFO
@@ -114,5 +131,3 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         }
     }
 }
-
-#endif

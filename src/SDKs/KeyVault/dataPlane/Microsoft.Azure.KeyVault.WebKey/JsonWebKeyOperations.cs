@@ -5,7 +5,6 @@
 
 namespace Microsoft.Azure.KeyVault.WebKey
 {
-
     /// <summary>
     /// Supported JsonWebKey operations
     /// </summary>
@@ -13,19 +12,24 @@ namespace Microsoft.Azure.KeyVault.WebKey
     {
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
-        public const string Sign    = "sign";
-        public const string Verify  = "verify";
-        public const string Wrap    = "wrapKey";
-        public const string Unwrap  = "unwrapKey";
+        public const string Sign = "sign";
+        public const string Verify = "verify";
+        public const string Wrap = "wrapKey";
+        public const string Unwrap = "unwrapKey";
 
         /// <summary>
-        /// All operations names. Use clone to avoid FxCop violation
+        /// All operations names.
         /// </summary>
-        public static string[] AllOperations
-        {
-            get { return (string[])_allOperations.Clone(); }
-        }
+        public static string[] AllOperations => (string[]) _allOperations.Clone();
 
-        private static readonly string[] _allOperations = new string[] { Encrypt, Decrypt, Sign, Verify, Wrap, Unwrap };
+        private static readonly string[] _allOperations = {Encrypt, Decrypt, Sign, Verify, Wrap, Unwrap};
+
+        public static bool IsValidOperation( string operation )
+        {
+            foreach ( var validOperation in _allOperations )
+                if ( operation == validOperation )
+                    return true;
+            return false;
+        }
     }
 }
