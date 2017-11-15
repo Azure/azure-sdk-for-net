@@ -18,20 +18,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Migration Validation Result
     /// </summary>
-    public partial class MigrateSqlServerSqlDbTaskOutputValidationResult
+    public partial class MigrationValidationResult
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// MigrateSqlServerSqlDbTaskOutputValidationResult class.
+        /// Initializes a new instance of the MigrationValidationResult class.
         /// </summary>
-        public MigrateSqlServerSqlDbTaskOutputValidationResult()
+        public MigrationValidationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// MigrateSqlServerSqlDbTaskOutputValidationResult class.
+        /// Initializes a new instance of the MigrationValidationResult class.
         /// </summary>
         /// <param name="id">Migration validation result identifier</param>
         /// <param name="migrationId">Migration Identifier</param>
@@ -42,7 +40,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// aggregated here. Possible values include: 'Default', 'NotStarted',
         /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
         /// 'Failed', 'Stopped'</param>
-        public MigrateSqlServerSqlDbTaskOutputValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default(IDictionary<string, MigrationValidationDatabaseSummaryResult>), ValidationStatus? status = default(ValidationStatus?))
+        public MigrationValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default(IDictionary<string, MigrationValidationDatabaseSummaryResult>), ValidationStatus? status = default(ValidationStatus?))
         {
             Id = id;
             MigrationId = migrationId;

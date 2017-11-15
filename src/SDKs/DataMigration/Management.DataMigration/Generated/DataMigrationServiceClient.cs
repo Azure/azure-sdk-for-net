@@ -341,14 +341,14 @@ namespace Microsoft.Azure.Management.DataMigration
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProjectTaskProperties>("taskType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProjectTaskProperties>("taskType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectionInfo>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectionInfo>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectToSourceSqlServerTaskOutput>("resultType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectToSourceSqlServerTaskOutput>("resultType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProjectTaskProperties>("taskType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProjectTaskProperties>("taskType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

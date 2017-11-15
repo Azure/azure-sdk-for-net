@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// A task resource
     /// </summary>
-    public partial class ProjectTask : ProxyResource
+    public partial class ProjectTask : Resource
     {
         /// <summary>
         /// Initializes a new instance of the ProjectTask class.

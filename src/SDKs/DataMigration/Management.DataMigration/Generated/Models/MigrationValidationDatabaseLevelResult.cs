@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Database level validation results
     /// </summary>
-    public partial class MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult
+    public partial class MigrationValidationDatabaseLevelResult
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult class.
+        /// MigrationValidationDatabaseLevelResult class.
         /// </summary>
-        public MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult()
+        public MigrationValidationDatabaseLevelResult()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult class.
+        /// MigrationValidationDatabaseLevelResult class.
         /// </summary>
         /// <param name="id">Result identifier</param>
         /// <param name="migrationId">Migration Identifier</param>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// level. Possible values include: 'Default', 'NotStarted',
         /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
         /// 'Failed', 'Stopped'</param>
-        public MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), ValidationStatus? status = default(ValidationStatus?))
+        public MigrationValidationDatabaseLevelResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), ValidationStatus? status = default(ValidationStatus?))
         {
             Id = id;
             MigrationId = migrationId;
