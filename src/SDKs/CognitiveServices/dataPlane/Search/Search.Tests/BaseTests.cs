@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Search;
 using Microsoft.Azure.CognitiveServices.Search.EntitySearch;
+using Microsoft.Azure.CognitiveServices.Search.VideoSearch;
 using Microsoft.Azure.CognitiveServices.Search.WebSearch;
 using System.Net.Http;
 
@@ -23,6 +24,8 @@ namespace SearchSDK.Tests
             {
                 case SearchTypes.EntitySearch:
                     return new EntitySearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handler);
+                case SearchTypes.VideoSearch:
+                    return new VideoSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handler);
                 case SearchTypes.WebSearch:
                     return new WebSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handler);
                 default:
