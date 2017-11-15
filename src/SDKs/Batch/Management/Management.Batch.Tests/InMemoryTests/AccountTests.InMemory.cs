@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Location);
             Assert.NotEmpty(result.AccountEndpoint);
-            Assert.Equal(result.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.Equal(ProvisioningState.Succeeded, result.ProvisioningState);
             Assert.Equal(2, result.Tags.Count);
         }
 

@@ -67,7 +67,7 @@ namespace Batch.Tests.ScenarioTests
                         nextLink = listResponse.NextPageLink;
                     }
 
-                    Assert.Equal(1, accounts.Count);
+                    Assert.Single(accounts);
                     Assert.Equal(batchAccountName, accounts.First().Name);
 
                     // Delete the account
