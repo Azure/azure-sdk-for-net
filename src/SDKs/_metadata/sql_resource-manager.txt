@@ -10,5 +10,5 @@ Commit:      da2604fba3f5f17bb6fc6b37805e4ae6a73912e9
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\jaredmoo\AppData\Roaming\npm `-- autorest@2.0.4166  
+Bootstrapper version:    C:\Users\jaredmoo\AppData\Roaming\npm `-- autorest@2.0.4166
 Latest installed version:    2.0.4168

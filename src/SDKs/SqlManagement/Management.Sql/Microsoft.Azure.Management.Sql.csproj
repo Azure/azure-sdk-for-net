@@ -13,6 +13,7 @@
       <![CDATA[
 New features:
 - Added BackupLongTermRetentionVaults.ListByServer and BackupLongTermRetentionPolicies.ListByDatabase
+- Added support for renaming databases
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
