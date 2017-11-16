@@ -24,8 +24,8 @@ namespace DataFactory.Tests.UnitTests
     /// </summary>
     public class ExamplesUnitTest : BaseUnitTest
     {
-        [Theory]
-        [InlineData(@"D:\code\adfv2sdk\secretsNightly.json", @"D:\code\adfv2sdk\capture", @"D:\code\adfv2sdk\captureworkaround")]
+        //[Theory]
+        //[InlineData(@"secrets.json", @"exampleoutput", @"exampleoutputworkarounds")]
         public void CaptureExamples(string secretsFile, string outputDirectory, string outputDirectoryWorkarounds = null)
         {
             // Uncomment the [Theory] and [InlineData(...)] above and run this method with your favorite locations for secrets and outputs to recapture examples.  It takes about 20-30 minutes.
