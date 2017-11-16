@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
+    <Description>Azure HDInsight Management SDK Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
+    <VersionPrefix>3.0.0-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>    
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure HDInsight SDK. Included with this release is support for OMS diagnostics.
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>
