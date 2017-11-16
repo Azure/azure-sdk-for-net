@@ -224,7 +224,24 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.True(testProduct.Product.Name.Equals(testProductName));
             Assert.True(testProduct.Product.Version.Equals(testProductVersion));
         }
-        
+
+        [Fact]
+        public void AddUserAgentInfoWithIllegalCharacters()
+        {
+            string testProductName = "TestProduct";
+            string testProductVersion = "1.0.0.0 (Microsoft)";
+
+            string expectedProductVersion = "1.0.0.0Microsoft";
+
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+            fakeClient.SetUserAgent(testProductName, testProductVersion);
+            HttpResponseMessage response = fakeClient.DoStuffSync();
+            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+
+            var testProduct = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(testProductName)).FirstOrDefault<ProductInfoHeaderValue>();
+            Assert.Equal(expectedProductVersion, testProduct.Product.Version);
+        }
+
 #if FullNetFx
         [Fact]
         public void VerifyOsInfoInUserAgent()
@@ -247,7 +264,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             string sampleProd = "SampleProdName";
             string newSampleProd = "NewSampleProdName";
             string spChars = "*()!@#$%^&";
-            string sampleVersion = "1.*.0.*";
+            string sampleVersion = "1..0.";
 
             FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
             fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));

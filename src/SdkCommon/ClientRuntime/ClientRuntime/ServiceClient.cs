@@ -472,8 +472,9 @@ namespace Microsoft.Rest
             if (!_disposed && HttpClient != null)
             {
                 MergeUserAgentInfo(DefaultUserAgentInfoList);
-                string cleanedProductName = CleanUserAgentInfoEntry(productName);                
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(cleanedProductName, version));
+                string cleanedProductName = CleanUserAgentInfoEntry(productName);
+                string cleanedVersionString = CleanUserAgentInfoEntry(version);
+                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(cleanedProductName, cleanedVersionString));
                 return true;
             }
 
