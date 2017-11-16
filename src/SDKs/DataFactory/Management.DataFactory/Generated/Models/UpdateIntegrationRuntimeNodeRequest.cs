@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="concurrentJobsLimit">The number of concurrent jobs
         /// permitted to run on the integration runtime node. Values between 1
-        /// and maxConcurrentJobs are allowed.</param>
+        /// and maxConcurrentJobs(inclusive) are allowed.</param>
         public UpdateIntegrationRuntimeNodeRequest(int? concurrentJobsLimit = default(int?))
         {
             ConcurrentJobsLimit = concurrentJobsLimit;
@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the number of concurrent jobs permitted to run on the
-        /// integration runtime node. Values between 1 and maxConcurrentJobs
-        /// are allowed.
+        /// integration runtime node. Values between 1 and
+        /// maxConcurrentJobs(inclusive) are allowed.
         /// </summary>
         [JsonProperty(PropertyName = "concurrentJobsLimit")]
         public int? ConcurrentJobsLimit { get; set; }

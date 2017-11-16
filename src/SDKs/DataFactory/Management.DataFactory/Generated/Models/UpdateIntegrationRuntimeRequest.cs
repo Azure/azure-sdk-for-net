@@ -31,13 +31,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the UpdateIntegrationRuntimeRequest
         /// class.
         /// </summary>
-        /// <param name="autoUpdate">Enables or disables auto-update feature of
-        /// the self-hosted integration runtime. See
+        /// <param name="autoUpdate">Enables or disables the auto-update
+        /// feature of the self-hosted integration runtime. See
         /// https://go.microsoft.com/fwlink/?linkid=854189. Possible values
         /// include: 'On', 'Off'</param>
-        /// <param name="updateDelayOffset">The time offset (in hour) in the
-        /// date scheduled by service to update the integration runtime, e.g.,
-        /// PT03H is 3 hours</param>
+        /// <param name="updateDelayOffset">The time offset (in hours) in the
+        /// day, e.g., PT03H is 3 hours. The integration runtime auto update
+        /// will happen on that time.</param>
         public UpdateIntegrationRuntimeRequest(string autoUpdate = default(string), string updateDelayOffset = default(string))
         {
             AutoUpdate = autoUpdate;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets enables or disables auto-update feature of the
+        /// Gets or sets enables or disables the auto-update feature of the
         /// self-hosted integration runtime. See
         /// https://go.microsoft.com/fwlink/?linkid=854189. Possible values
         /// include: 'On', 'Off'
@@ -60,8 +60,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string AutoUpdate { get; set; }
 
         /// <summary>
-        /// Gets or sets the time offset (in hour) in the date scheduled by
-        /// service to update the integration runtime, e.g., PT03H is 3 hours
+        /// Gets or sets the time offset (in hours) in the day, e.g., PT03H is
+        /// 3 hours. The integration runtime auto update will happen on that
+        /// time.
         /// </summary>
         [JsonProperty(PropertyName = "updateDelayOffset")]
         public string UpdateDelayOffset { get; set; }

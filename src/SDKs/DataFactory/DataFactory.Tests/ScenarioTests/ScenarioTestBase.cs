@@ -39,6 +39,10 @@ namespace DataFactory.Tests.ScenarioTests
                     resourceManagementClient.ResourceGroups.CreateOrUpdate(this.ResourceGroupName, new ResourceGroup() { Location = FactoryLocation });
                     await initialAction(this.Client);
                 }
+                catch(Exception e)
+                {
+                    throw;
+                }
                 finally
                 {
                     if (finallyAction != null)

@@ -49,19 +49,23 @@ namespace DataFactory.Tests.Utils
             try
             {
                 // Delete factory if it exists, before turning on tracing, to give consistent clean state for capture
-                EnsureResourceGroupExists();
-                EnsureFactoryDoesNotExist();
+                //EnsureResourceGroupExists();
+                //EnsureFactoryDoesNotExist();
                 ServiceClientTracing.IsEnabled = true;
 
                 // Start Factories operations, leaving factory available
-                CaptureFactories_CreateOrUpdate(); // 200
-                CaptureFactories_Update(); // 200
-                CaptureFactories_Get(); // 200
-                CaptureFactories_ListByResourceGroup(); // 200
-                CaptureFactories_List();
+                //CaptureFactories_CreateOrUpdate(); // 200
+                //CaptureFactories_Update(); // 200
+                //CaptureFactories_Get(); // 200
+                //CaptureFactories_ListByResourceGroup(); // 200
+                //CaptureFactories_List();
 
                 // All Integration runtime operations, creating/deleting integration runtime
                 CaptureIntegrationRuntimes_Create(); // 200
+                CaptureIntegrationRuntimes_ListAuthKeys(); // 200
+                //CaptureIntegrationRuntimeNodes_GetIpAddress();
+                CaptureIntegrationRuntimes_Upgrade();
+                /*
                 // Before running this method, please make sure the SQL Database "SSISDB" does *NOT* exist in yandongeverest.database.windows.net by SSMS,
                 // otherwise the operation will fail. The connection string for this server could be found in GetIntegrationRuntimeResource().
                 // Note this operation is quite time consuming, normally it will take more than 30 minutes to finish the starting process.
@@ -75,9 +79,11 @@ namespace DataFactory.Tests.Utils
                 CaptureIntegrationRuntimes_RegenerateAuthKey(); // 200
                 CaptureIntegrationRuntimes_GetStatus(); // 200
                 CaptureIntegrationRuntimes_Patch(); // 200
+                CaptureIntegrationRuntimes_Upgrade();
 
                 // The following 3 methods invovling a mannual step as prerequisites. We need to install an integration runtime node and register it.
                 // After the integration runtime node is online, we can run methods.
+                CaptureIntegrationRuntimeNodes_GetIpAddress();
                 CaptureIntegrationRuntimeNodes_Patch(); // 200
                 CaptureIntegrationRuntimeNodes_Delete(); // 200
                 CaptureIntegrationRuntimeNodes_Delete(); // 204
@@ -132,16 +138,16 @@ namespace DataFactory.Tests.Utils
                 // Finish LinkedServices operations, deleting linked service
                 CaptureLinkedServices_Delete(); // 200
                 CaptureLinkedServices_Delete(); // 204
-
+                */
                 // Finish integration runtime operations, deleting integration runtime
                 CaptureIntegrationRuntimes_Delete(); // 202
                 CaptureIntegrationRuntimes_Delete(); // 204
 
                 // Finish Factories operations, deleting factory
-                CaptureFactories_Delete(); // 200
-                CaptureFactories_Delete(); // 204
+                //CaptureFactories_Delete(); // 200
+                //CaptureFactories_Delete(); // 204
 
-                CaptureOperations_List(); // 200
+                //CaptureOperations_List(); // 200
             }
             finally
             {
@@ -377,6 +383,13 @@ namespace DataFactory.Tests.Utils
                 });
         }
 
+        private void CaptureIntegrationRuntimes_Upgrade()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_Upgrade";
+
+            client.IntegrationRuntimes.Upgrade(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+        }
+
         private void CaptureIntegrationRuntimeNodes_Patch()
         {
             interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Patch";
@@ -393,6 +406,13 @@ namespace DataFactory.Tests.Utils
             interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Delete";
 
             client.IntegrationRuntimeNodes.Delete(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "Node_1");
+        }
+
+        private void CaptureIntegrationRuntimeNodes_GetIpAddress()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimeNodes_GetIpAddress";
+
+            client.IntegrationRuntimeNodes.GetIpAddress(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "YANZHANG-02");
         }
 
         private LinkedServiceResource GetLinkedServiceResource(string description)

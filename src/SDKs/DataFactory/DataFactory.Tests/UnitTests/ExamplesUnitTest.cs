@@ -24,8 +24,8 @@ namespace DataFactory.Tests.UnitTests
     /// </summary>
     public class ExamplesUnitTest : BaseUnitTest
     {
-        //[Theory]
-        //[InlineData(@"secrets.json", @"exampleoutput", @"exampleoutputworkarounds")]
+        [Theory]
+        [InlineData(@"D:\code\adfv2sdk\secretsNightly.json", @"D:\code\adfv2sdk\capture", @"D:\code\adfv2sdk\captureworkaround")]
         public void CaptureExamples(string secretsFile, string outputDirectory, string outputDirectoryWorkarounds = null)
         {
             // Uncomment the [Theory] and [InlineData(...)] above and run this method with your favorite locations for secrets and outputs to recapture examples.  It takes about 20-30 minutes.
@@ -216,6 +216,15 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void IntegrationRuntimes_Upgrade()
+        {
+            RunAyncApiTest("IntegrationRuntimes_Upgrade", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.Upgrade(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
         public void IntegrationRuntimeNodes_Patch()
         {
             RunAyncApiTest("IntegrationRuntimeNodes_Patch", (example, client, responseCode) =>
@@ -232,6 +241,15 @@ namespace DataFactory.Tests.UnitTests
         public void IntegrationRuntimeNodes_Delete()
         {
             RunAyncApiTest("IntegrationRuntimeNodes_Delete", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_GetIpAddress()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_GetIpAddress", (example, client, responseCode) =>
             {
                 client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
             });

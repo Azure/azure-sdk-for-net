@@ -32,12 +32,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the RedirectIncompatibleRowSettings
         /// class.
         /// </summary>
-        /// <param name="linkedServiceName">Name of the Azure Storage or
-        /// Storage SAS linked service used for redirecting incompatible row.
-        /// Must be specified if redirectIncompatibleRowSettings is specified.
-        /// Type: string (or Expression with resultType string).</param>
-        /// <param name="path">The path to storage for storing the redirect
-        /// incompatible row data Type: string (or Expression with resultType
+        /// <param name="linkedServiceName">Name of the Azure Storage, Storage
+        /// SAS, or Azure Data Lake Store linked service used for redirecting
+        /// incompatible row. Must be specified if
+        /// redirectIncompatibleRowSettings is specified. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="path">The path for storing the redirect incompatible
+        /// row data. Type: string (or Expression with resultType
         /// string).</param>
         public RedirectIncompatibleRowSettings(object linkedServiceName, object path = default(object))
         {
@@ -52,18 +53,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the Azure Storage or Storage SAS linked
-        /// service used for redirecting incompatible row. Must be specified if
-        /// redirectIncompatibleRowSettings is specified. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets name of the Azure Storage, Storage SAS, or Azure Data
+        /// Lake Store linked service used for redirecting incompatible row.
+        /// Must be specified if redirectIncompatibleRowSettings is specified.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "linkedServiceName")]
         public object LinkedServiceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to storage for storing the redirect
-        /// incompatible row data Type: string (or Expression with resultType
-        /// string).
+        /// Gets or sets the path for storing the redirect incompatible row
+        /// data. Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public object Path { get; set; }

@@ -27,7 +27,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         public DynamicsLinkedService()
         {
-            Password = new AzureKeyVaultSecretReference();
             CustomInit();
         }
 
@@ -44,8 +43,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="username">User name to access the Dynamics instance.
         /// Type: string (or Expression with resultType string).</param>
-        /// <param name="password">Password to access the Dynamics
-        /// instance.</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="hostName">The host name of the on-premises Dynamics
@@ -61,7 +58,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// required for online when there are more than one Dynamics instances
         /// associated with the user. Type: string (or Expression with
         /// resultType string).</param>
-        public DynamicsLinkedService(object deploymentType, object authenticationType, object username, AzureKeyVaultSecretReference password, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object hostName = default(object), object port = default(object), object organizationName = default(object))
+        /// <param name="password">Password to access the Dynamics
+        /// instance.</param>
+        /// <param name="encryptedCredential">The encrypted credential used for
+        /// authentication. Credentials are encrypted using the integration
+        /// runtime credential manager. Type: string (or Expression with
+        /// resultType string).</param>
+        public DynamicsLinkedService(object deploymentType, object authenticationType, object username, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object hostName = default(object), object port = default(object), object organizationName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(connectVia, description)
         {
             DeploymentType = deploymentType;
@@ -71,6 +74,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AuthenticationType = authenticationType;
             Username = username;
             Password = password;
+            EncryptedCredential = encryptedCredential;
             CustomInit();
         }
 
@@ -132,7 +136,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password to access the Dynamics instance.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public AzureKeyVaultSecretReference Password { get; set; }
+        public SecretBase Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encrypted credential used for authentication.
+        /// Credentials are encrypted using the integration runtime credential
+        /// manager. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.encryptedCredential")]
+        public object EncryptedCredential { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -154,14 +166,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Username == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Username");
-            }
-            if (Password == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

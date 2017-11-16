@@ -688,6 +688,49 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Upgrade self-hosted integration runtime to latest version if availably.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            public static void Upgrade(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName)
+            {
+                operations.UpgradeAsync(resourceGroupName, factoryName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade self-hosted integration runtime to latest version if availably.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpgradeAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpgradeWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Starts a ManagedReserved type integration runtime.
             /// </summary>
             /// <param name='operations'>

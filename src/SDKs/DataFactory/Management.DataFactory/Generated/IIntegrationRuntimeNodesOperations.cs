@@ -85,5 +85,36 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SelfHostedIntegrationRuntimeNode>> UpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeRequest updateIntegrationRuntimeNodeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get the IP address of self-hosted integration runtime node.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='factoryName'>
+        /// The factory name.
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// The integration runtime name.
+        /// </param>
+        /// <param name='nodeName'>
+        /// The integration runtime node name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IntegrationRuntimeNodeIpAddress>> GetIpAddressWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
