@@ -5,6 +5,8 @@
 ### Feature Additions
   * Add SAP Cloud For Customer Source
   * Add SAP Cloud For Customer Dataset
+  * Add SAP Cloud For Customer Sink
+  * Support providing a Dynamics password as a SecureString, a secret in Azure Key Vault, or as an encrypted credential.
   * App model for Tumbling Window Trigger
 
 ## Version 0.2.1-preview
