@@ -65,12 +65,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the type of caching to be enabled for the data disks.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// none - The caching mode for the disk is not enabled.
-        /// readOnly - The caching mode for the disk is read only.
-        /// readWrite - The caching mode for the disk is read and write.
-        ///
         /// The default value for caching is none. For information about the
         /// caching options see:
         /// https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
@@ -89,12 +83,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the storage account type to be used for the data disk.
         /// </summary>
         /// <remarks>
-        /// If omitted, the default is "Standard_LRS". Values are:
-        ///
-        /// Standard_LRS - The data disk should use standard locally redundant
-        /// storage.
-        /// Premium_LRS - The data disk should use premium locally redundant
-        /// storage. Possible values include: 'Standard_LRS', 'Premium_LRS'
+        /// If omitted, the default is "standard_lrs". Possible values include:
+        /// 'StandardLRS', 'PremiumLRS'
         /// </remarks>
         [JsonProperty(PropertyName = "storageAccountType")]
         public StorageAccountType? StorageAccountType { get; set; }

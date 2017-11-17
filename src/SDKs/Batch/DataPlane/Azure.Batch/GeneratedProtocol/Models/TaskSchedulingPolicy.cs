@@ -30,13 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the TaskSchedulingPolicy class.
         /// </summary>
         /// <param name="nodeFillType">How tasks are distributed across compute
-        /// nodes in a pool. Values are:
-        ///
-        /// pack - As many tasks as possible (maxTasksPerNode) should be
-        /// assigned to each node in the pool before any tasks are assigned to
-        /// the next node in the pool.
-        /// spread - Tasks should be assigned evenly across all nodes in the
-        /// pool.</param>
+        /// nodes in a pool.</param>
         public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
@@ -50,12 +44,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets how tasks are distributed across compute nodes in a
-        /// pool. Values are:
-        ///
-        /// pack - As many tasks as possible (maxTasksPerNode) should be
-        /// assigned to each node in the pool before any tasks are assigned to
-        /// the next node in the pool.
-        /// spread - Tasks should be assigned evenly across all nodes in the
         /// pool.
         /// </summary>
         /// <remarks>

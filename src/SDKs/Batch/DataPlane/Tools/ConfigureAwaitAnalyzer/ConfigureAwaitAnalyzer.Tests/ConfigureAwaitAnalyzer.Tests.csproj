@@ -8,8 +8,8 @@
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
-    <!-- <SignAssembly>true</SignAssembly> -->
-    <!-- <DelaySign>true</DelaySign> -->
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
