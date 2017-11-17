@@ -89,7 +89,7 @@ namespace DataFactory.Tests.JsonSamples
       interval: 24,
       startTime: ""2017-04-14T13:00:00Z"",
       endTime: ""2018-04-14T13:00:00Z"",
-      delay: 10,
+      delay: ""00:00:01"",
       retryPolicy: {
         count: 3,
         intervalInSeconds: 30
