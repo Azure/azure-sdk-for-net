@@ -21,10 +21,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum PoolState
     {
+        /// <summary>
+        /// The pool is available to run tasks subject to the availability of
+        /// compute nodes.
+        /// </summary>
         [EnumMember(Value = "active")]
         Active,
+        /// <summary>
+        /// The user has requested that the pool be deleted, but the delete
+        /// operation has not yet completed.
+        /// </summary>
         [EnumMember(Value = "deleting")]
         Deleting,
+        /// <summary>
+        /// The user has requested that the operating system of the pool's
+        /// nodes be upgraded, but the upgrade operation has not yet completed
+        /// (that is, some nodes in the pool have not yet been upgraded). While
+        /// upgrading, the pool may be able to run tasks (with reduced
+        /// capacity) but this is not guaranteed.
+        /// </summary>
         [EnumMember(Value = "upgrading")]
         Upgrading
     }

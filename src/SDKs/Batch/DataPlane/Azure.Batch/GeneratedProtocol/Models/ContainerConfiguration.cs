@@ -77,9 +77,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<ContainerRegistry> ContainerRegistries { get; set; }
 
         /// <summary>
-        /// Values are:
-        ///
-        /// docker - Docker will be used to launch the containers.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }
