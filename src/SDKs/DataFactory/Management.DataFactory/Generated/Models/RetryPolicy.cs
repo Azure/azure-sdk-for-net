@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the RetryPolicy class.
         /// </summary>
-        /// <param name="retry">Maximum ordinary retry attempts. Default is 0.
+        /// <param name="count">Maximum ordinary retry attempts. Default is 0.
         /// Type: integer (or Expression with resultType integer), minimum:
         /// 0.</param>
         /// <param name="intervalInSeconds">Interval between retries in
         /// seconds. Default is 30.</param>
-        public RetryPolicy(object retry = default(object), int? intervalInSeconds = default(int?))
+        public RetryPolicy(object count = default(object), int? intervalInSeconds = default(int?))
         {
-            Retry = retry;
+            Count = count;
             IntervalInSeconds = intervalInSeconds;
             CustomInit();
         }
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets maximum ordinary retry attempts. Default is 0. Type:
         /// integer (or Expression with resultType integer), minimum: 0.
         /// </summary>
-        [JsonProperty(PropertyName = "retry")]
-        public object Retry { get; set; }
+        [JsonProperty(PropertyName = "count")]
+        public object Count { get; set; }
 
         /// <summary>
         /// Gets or sets interval between retries in seconds. Default is 30.
