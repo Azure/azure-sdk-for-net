@@ -5,6 +5,7 @@
 ### Feature Additions
   * Add SAP Cloud For Customer Source
   * Add SAP Cloud For Customer Dataset
+  * App model for Tumbling Window Trigger
 
 ## Version 0.2.1-preview
 

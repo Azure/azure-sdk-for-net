@@ -11,33 +11,36 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Azure data factory nested object which contains information about
-    /// creating pipeline run
+    /// Base class for all triggers that support one to many model for trigger
+    /// to pipeline.
     /// </summary>
-    public partial class Trigger
+    public partial class MultiplePipelineTrigger : Trigger
     {
         /// <summary>
-        /// Initializes a new instance of the Trigger class.
+        /// Initializes a new instance of the MultiplePipelineTrigger class.
         /// </summary>
-        public Trigger()
+        public MultiplePipelineTrigger()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Trigger class.
+        /// Initializes a new instance of the MultiplePipelineTrigger class.
         /// </summary>
         /// <param name="description">Trigger description.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
-        public Trigger(string description = default(string), string runtimeState = default(string))
+        /// <param name="pipelines">Pipelines that need to be started.</param>
+        public MultiplePipelineTrigger(string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>))
+            : base(description, runtimeState)
         {
-            Description = description;
-            RuntimeState = runtimeState;
+            Pipelines = pipelines;
             CustomInit();
         }
 
@@ -47,18 +50,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets trigger description.
+        /// Gets or sets pipelines that need to be started.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets indicates if trigger is running or not. Updated when
-        /// Start/Stop APIs are called on the Trigger. Possible values include:
-        /// 'Started', 'Stopped', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "runtimeState")]
-        public string RuntimeState { get; private set; }
+        [JsonProperty(PropertyName = "pipelines")]
+        public IList<TriggerPipelineReference> Pipelines { get; set; }
 
     }
 }

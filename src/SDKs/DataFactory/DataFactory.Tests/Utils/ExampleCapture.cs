@@ -671,7 +671,7 @@ namespace DataFactory.Tests.Utils
 
             triggerPipelineReference.Parameters.Add("OutputBlobNameList", outputBlobNameArray);
 
-            resource.Properties.Pipelines.Add(triggerPipelineReference);
+            (resource.Properties as MultiplePipelineTrigger).Pipelines.Add(triggerPipelineReference);
 
             return resource;
         }
