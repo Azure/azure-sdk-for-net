@@ -679,7 +679,7 @@ namespace DataFactory.Tests.Utils
 
         private TriggerResource GetTWTriggerResource(string description)
         {
-            TriggerResource resource = new TriggerResource()
+            TriggerResource resource = new TriggerResource() 
             {
                 Properties = new TumblingWindowTrigger()
                 {
