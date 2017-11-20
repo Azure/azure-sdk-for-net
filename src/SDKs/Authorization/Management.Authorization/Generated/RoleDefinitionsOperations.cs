@@ -636,7 +636,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets a role definition by ID.
         /// </summary>
         /// <param name='roleDefinitionId'>
-        /// The fully qualified role definition ID to get.
+        /// The fully qualified role definition ID. Use the format,
+        /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+        /// for subscription level role definitions, or
+        /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
+        /// tenant level role definitions.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

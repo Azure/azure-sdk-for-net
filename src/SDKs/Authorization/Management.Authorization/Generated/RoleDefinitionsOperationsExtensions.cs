@@ -155,7 +155,11 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='roleDefinitionId'>
-            /// The fully qualified role definition ID to get.
+            /// The fully qualified role definition ID. Use the format,
+            /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+            /// for subscription level role definitions, or
+            /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
+            /// tenant level role definitions.
             /// </param>
             public static RoleDefinition GetById(this IRoleDefinitionsOperations operations, string roleDefinitionId)
             {
@@ -169,7 +173,11 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='roleDefinitionId'>
-            /// The fully qualified role definition ID to get.
+            /// The fully qualified role definition ID. Use the format,
+            /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+            /// for subscription level role definitions, or
+            /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
+            /// tenant level role definitions.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
