@@ -547,7 +547,7 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
-        public const string DynamicsLinkedService = @"
+        public const string DynamicsLinkedService_AKV = @"
 {
     name: ""Test-Dynamics-LinkedService"",
     properties:
@@ -563,13 +563,36 @@ namespace DataFactory.Tests.JsonSamples
             authenticationType : ""Office365"", 
             username : ""fakeuser@contoso.com"",
             password : { 
-                        type : ""AzureKeyVaultSecret"", 
-                        secretName : ""fakeSecretName"", 
-                        store: { 
-                            type : ""LinkedServiceReference"", 
-                            referenceName : ""AKVLinkedService"" 
-                        } 
-                    }
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsLinkedService = @"
+{
+    name: ""LinkedService-Dynamics"",
+    properties:
+    {
+        type: ""Dynamics"",
+        typeProperties: {
+            deploymentType: ""Online"",
+            authenticationType: ""Office365"",
+            hostName: ""hostname.com"",
+            port: 12345,
+            organizationName: ""contoso"",
+            username: ""fakeuser@contoso.com"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            encryptedCredential : ""fake credential""
         }
     }
 }";
