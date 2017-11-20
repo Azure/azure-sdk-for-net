@@ -246,7 +246,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = default(string), IList<AnswerType?> responseFilter = default(IList<AnswerType?>), IList<ResponseFormat?> responseFormat = default(IList<ResponseFormat?>), SafeSearch? safeSearch = default(SafeSearch?), string setLang = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SearchResponse>> SearchWithHttpMessagesAsync(string query, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string countryCode = default(string), string market = "en-us", IList<string> responseFilter = default(IList<string>), IList<string> responseFormat = default(IList<string>), string safeSearch = default(string), string setLang = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (query == null)
             {
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.EntitySearch
             }
             if (safeSearch != null)
             {
-                _queryParameters.Add(string.Format("SafeSearch={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(safeSearch, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("SafeSearch={0}", System.Uri.EscapeDataString(safeSearch)));
             }
             if (setLang != null)
             {

@@ -54,20 +54,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// onTaskFailed property is 'performExitOptionsJobAction'.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// none - Take no action.
-        /// disable - Disable the job. This is equivalent to calling the
-        /// disable job API, with a disableTasks value of requeue.
-        /// terminate - Terminate the job. The terminateReason in the job's
-        /// executionInfo is set to "TaskFailed". The default is none for exit
-        /// code 0 and terminate for all other exit conditions.
-        ///
-        /// If the job's onTaskFailed property is noAction, then specifying
-        /// this property returns an error and the add task request fails with
-        /// an invalid property value error; if you are calling the REST API
-        /// directly, the HTTP status code is 400 (Bad Request). Possible
-        /// values include: 'none', 'disable', 'terminate'
+        /// The default is none for exit code 0 and terminate for all other
+        /// exit conditions. If the job's onTaskFailed property is noAction,
+        /// then specifying this property returns an error and the add task
+        /// request fails with an invalid property value error; if you are
+        /// calling the REST API directly, the HTTP status code is 400 (Bad
+        /// Request). Possible values include: 'none', 'disable', 'terminate'
         /// </remarks>
         [JsonProperty(PropertyName = "jobAction")]
         public JobAction? JobAction { get; set; }
@@ -77,15 +69,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// that depend on this task.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// satisfy - Satisfy the task's dependencies.
-        /// block - Block the task's dependencies.
-        ///
         /// The default is 'satisfy' for exit code 0, and 'block' for all other
         /// exit conditions. If the job's usesTaskDependencies property is set
         /// to false, then specifying the dependencyAction property returns an
-        /// erro and the add task request fails with an invalid property value
+        /// error and the add task request fails with an invalid property value
         /// error; if you are calling the REST API directly, the HTTP status
         /// code is 400  (Bad Request). Possible values include: 'satisfy',
         /// 'block'

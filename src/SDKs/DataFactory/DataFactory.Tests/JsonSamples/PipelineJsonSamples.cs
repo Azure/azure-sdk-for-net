@@ -2166,5 +2166,103 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapC4CToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SAP Cloud for Customer to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SapCloudForCustomerSource"",
+                        query: ""$select=Column0""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSapC4C"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyFromBlobToSapC4C = @"{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""CopyBlobToSapC4c"",
+                type: ""Copy"",
+                typeProperties: {
+                  source: {
+                    type: ""BlobSource""
+                  },
+                  sink: {
+                    type: ""SapCloudForCustomerSink"",
+                    writeBehavior: ""Insert"",
+                    writeBatchSize: 50
+                  },
+                  enableSkipIncompatibleRow: true,
+                  parallelCopies: 32,
+                  cloudDataMovementUnits: 16,
+                  enableSkipIncompatibleRow: true,
+                  redirectIncompatibleRowSettings: {
+                      linkedServiceName: {
+                          referenceName: ""AzureBlobLinkedService"",
+                          type: ""LinkedServiceReference""
+                      },
+                      path: ""redirectcontainer/erroroutput""
+                  }
+                },
+                inputs: [
+                  {
+                    referenceName: ""SourceBlobDataset"",
+                    type: ""DatasetReference""
+                  }
+                ],
+                outputs: [
+                  {
+                    referenceName: ""SapC4CDataset"",
+                    type: ""DatasetReference""
+                  }
+                ]
+            }
+        ]
+    }
+}";
     }
 }
