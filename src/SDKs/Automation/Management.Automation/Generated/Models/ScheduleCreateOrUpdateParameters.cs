@@ -38,9 +38,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="name">Gets or sets the name of the schedule.</param>
         /// <param name="startTime">Gets or sets the start time of the
         /// schedule.</param>
-        /// <param name="frequency">Gets or sets the frequency of the schedule.
-        /// Possible values include: 'OneTime', 'Day', 'Hour', 'Week',
-        /// 'Month'</param>
+        /// <param name="frequency">Possible values include: 'OneTime', 'Day',
+        /// 'Hour', 'Week', 'Month'</param>
         /// <param name="description">Gets or sets the description of the
         /// schedule.</param>
         /// <param name="expiryTime">Gets or sets the end time of the
@@ -100,8 +99,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         public object Interval { get; set; }
 
         /// <summary>
-        /// Gets or sets the frequency of the schedule. Possible values
-        /// include: 'OneTime', 'Day', 'Hour', 'Week', 'Month'
+        /// Gets or sets possible values include: 'OneTime', 'Day', 'Hour',
+        /// 'Week', 'Month'
         /// </summary>
         [JsonProperty(PropertyName = "properties.frequency")]
         public string Frequency { get; set; }

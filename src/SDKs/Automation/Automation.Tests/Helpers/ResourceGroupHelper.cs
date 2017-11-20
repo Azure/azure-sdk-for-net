@@ -17,15 +17,12 @@ namespace Automation.Tests.Helpers
 
         public static AutomationClient GetAutomationClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            //return TestBase.GetServiceClient<AutomationManagementClient>(new CSMTestEnvironmentFactory());
             return context.GetServiceClient<AutomationClient>(false, handler);
         }
 
         public static ResourceManagementClient GetResourcesClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            
             return context.GetServiceClient<ResourceManagementClient>(false, handler);
-            //return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
         /// <summary>

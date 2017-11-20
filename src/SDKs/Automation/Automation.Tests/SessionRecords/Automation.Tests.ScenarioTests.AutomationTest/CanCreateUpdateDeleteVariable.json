@@ -1,0 +1,895 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourcegroups/automation-sdk-test?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlZ3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3Q/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "31"
+        ],
+        "x-ms-client-request-id": [
+          "e0069af3-a960-4286-a004-1a598addfcf1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test\",\r\n  \"name\": \"automation-sdk-test\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "192"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-request-id": [
+          "2d0232d2-a750-4ae3-b5ba-d30b093508dc"
+        ],
+        "x-ms-correlation-request-id": [
+          "2d0232d2-a750-4ae3-b5ba-d30b093508dc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072626Z:2d0232d2-a750-4ae3-b5ba-d30b093508dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQ/YXBpLXZlcnNpb249MjAxNS0xMC0zMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Free\",\r\n      \"family\": \"Test\",\r\n      \"capacity\": 1\r\n    }\r\n  },\r\n  \"name\": \"automation-sdk-test-account\",\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "188"
+        ],
+        "x-ms-client-request-id": [
+          "31bc11ce-488c-401e-8253-63f5b6d5a277"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"automation-sdk-test-account\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"RegistrationUrl\": \"https://eus2-agentservice-prod-1.azure-automation.net/accounts/9aa1daf3-faf5-4490-8408-ef944dddc282\",\r\n    \"creationTime\": \"2017-11-19T23:26:30.013-08:00\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:26:30.013-08:00\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "623"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account?api-version=2015-10-31"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "31bc11ce-488c-401e-8253-63f5b6d5a277"
+        ],
+        "x-ms-location": [
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account?api-version=2015-10-31"
+        ],
+        "ocp-location": [
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account?api-version=2015-10-31"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "c7c19b08-59b4-459e-90a8-c0c0f743affc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072628Z:c7c19b08-59b4-459e-90a8-c0c0f743affc"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/credentials?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvY3JlZGVudGlhbHM/YXBpLXZlcnNpb249MjAxNS0xMC0zMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "90b12de4-6a06-4dd8-8a1e-9899fe6e072e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "90b12de4-6a06-4dd8-8a1e-9899fe6e072e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14922"
+        ],
+        "x-ms-correlation-request-id": [
+          "01a7f2b1-1874-4fc2-b552-a2a1c493f6da"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072629Z:01a7f2b1-1874-4fc2-b552-a2a1c493f6da"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/runbooks?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvcnVuYm9va3M/YXBpLXZlcnNpb249MjAxNS0xMC0zMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "571fc7d8-a593-46ec-b148-1d84e67be51d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "571fc7d8-a593-46ec-b148-1d84e67be51d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14921"
+        ],
+        "x-ms-correlation-request-id": [
+          "6ee956b0-19d9-45d8-9812-0a4657f0fb62"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072629Z:6ee956b0-19d9-45d8-9812-0a4657f0fb62"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "44a6e9b0-18d3-4455-8e76-3ca82c3aa211"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "44a6e9b0-18d3-4455-8e76-3ca82c3aa211"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14920"
+        ],
+        "x-ms-correlation-request-id": [
+          "5e0f5f96-ecf6-478b-a560-1abd127ffbac"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072629Z:5e0f5f96-ecf6-478b-a560-1abd127ffbac"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "22ab9103-d364-4f01-9ddd-c9abfce696df"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "22ab9103-d364-4f01-9ddd-c9abfce696df"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14919"
+        ],
+        "x-ms-correlation-request-id": [
+          "fce82f5e-8517-404a-8794-6200f9c8879c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072629Z:fce82f5e-8517-404a-8794-6200f9c8879c"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "41843b2e-eb24-4bca-81b0-0975395adc66"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870\",\r\n      \"name\": \"variable5870\",\r\n      \"properties\": {\r\n        \"creationTime\": \"2017-11-19T23:26:32.513-08:00\",\r\n        \"lastModifiedTime\": \"2017-11-19T23:26:33.2-08:00\",\r\n        \"isEncrypted\": false,\r\n        \"value\": \"20\",\r\n        \"description\": \"int typed variable\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "41843b2e-eb24-4bca-81b0-0975395adc66"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14916"
+        ],
+        "x-ms-correlation-request-id": [
+          "f6b21349-2348-433f-815b-3d3a9340dac2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072631Z:f6b21349-2348-433f-815b-3d3a9340dac2"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/webhooks?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvd2ViaG9va3M/YXBpLXZlcnNpb249MjAxNS0xMC0zMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3c5aaf15-1b58-4b7a-b8c4-fe25940acc01"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "3c5aaf15-1b58-4b7a-b8c4-fe25940acc01"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14918"
+        ],
+        "x-ms-correlation-request-id": [
+          "db1c50a1-bc00-4cc8-97e3-51a67d810653"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072630Z:db1c50a1-bc00-4cc8-97e3-51a67d810653"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzL3ZhcmlhYmxlNTg3MD9hcGktdmVyc2lvbj0yMDE1LTEwLTMx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"variable5870\",\r\n  \"properties\": {\r\n    \"value\": \"10\",\r\n    \"isEncrypted\": false\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "101"
+        ],
+        "x-ms-client-request-id": [
+          "da96e208-c7ed-44af-8821-0f4b002d0783"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870\",\r\n  \"name\": \"variable5870\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-11-19T23:26:32.513-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:26:32.513-08:00\",\r\n    \"isEncrypted\": false,\r\n    \"value\": \"10\",\r\n    \"description\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "383"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "da96e208-c7ed-44af-8821-0f4b002d0783"
+        ],
+        "x-ms-location": [
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31"
+        ],
+        "ocp-location": [
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1187"
+        ],
+        "x-ms-correlation-request-id": [
+          "9116e270-646f-4732-8b0b-c0582af34a72"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072631Z:9116e270-646f-4732-8b0b-c0582af34a72"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzL3ZhcmlhYmxlNTg3MD9hcGktdmVyc2lvbj0yMDE1LTEwLTMx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4f93960a-8fcc-47dc-81dd-d9cf2e4d31ac"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870\",\r\n  \"name\": \"variable5870\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-11-19T23:26:32.513-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:26:32.513-08:00\",\r\n    \"isEncrypted\": false,\r\n    \"value\": \"10\",\r\n    \"description\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "4f93960a-8fcc-47dc-81dd-d9cf2e4d31ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14917"
+        ],
+        "x-ms-correlation-request-id": [
+          "dfb9a179-dc46-4262-aff7-85efb6f5520b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072631Z:dfb9a179-dc46-4262-aff7-85efb6f5520b"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzL3ZhcmlhYmxlNTg3MD9hcGktdmVyc2lvbj0yMDE1LTEwLTMx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2d6d9eb4-065f-48c4-a485-7b2679fde48d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Variable not found.\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "2d6d9eb4-065f-48c4-a485-7b2679fde48d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14915"
+        ],
+        "x-ms-correlation-request-id": [
+          "c0d09fd8-e85c-4c8d-a262-01e513d82256"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072632Z:c0d09fd8-e85c-4c8d-a262-01e513d82256"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzL3ZhcmlhYmxlNTg3MD9hcGktdmVyc2lvbj0yMDE1LTEwLTMx",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"name\": \"variable5870\",\r\n  \"properties\": {\r\n    \"value\": \"20\",\r\n    \"description\": \"int typed variable\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "116"
+        ],
+        "x-ms-client-request-id": [
+          "0d597598-af6e-4e8e-9048-cd4a0d2fb52b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870\",\r\n  \"name\": \"variable5870\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-11-19T23:26:32.513-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:26:33.2-08:00\",\r\n    \"isEncrypted\": false,\r\n    \"value\": \"20\",\r\n    \"description\": \"int typed variable\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "0d597598-af6e-4e8e-9048-cd4a0d2fb52b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1186"
+        ],
+        "x-ms-correlation-request-id": [
+          "11610451-4387-45e5-bf73-885016575cfa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072631Z:11610451-4387-45e5-bf73-885016575cfa"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/variables/variable5870?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvdmFyaWFibGVzL3ZhcmlhYmxlNTg3MD9hcGktdmVyc2lvbj0yMDE1LTEwLTMx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "03ced0d2-ed9f-4506-92d4-805432338c7a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 07:26:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "03ced0d2-ed9f-4506-92d4-805432338c7a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1185"
+        ],
+        "x-ms-correlation-request-id": [
+          "84f21119-49f2-405b-a94a-0867f2c33d2e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171120T072632Z:84f21119-49f2-405b-a94a-0867f2c33d2e"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCreateUpdateDeleteVariable": [
+      "variable5870"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "b5e4748c-f69a-467c-8749-e2f9c8cd3db0"
+  }
+}
