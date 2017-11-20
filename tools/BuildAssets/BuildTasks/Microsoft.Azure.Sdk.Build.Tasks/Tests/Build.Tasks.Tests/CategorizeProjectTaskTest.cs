@@ -16,8 +16,8 @@ namespace Build.Tasks.Tests
 {
     public class CategorizeProjectTaskTest
     {
-        string sourceRootDir = string.Empty;
-        string ignoreDir = string.Empty;
+        internal string sourceRootDir = string.Empty;
+        internal string ignoreDir = string.Empty;
         public CategorizeProjectTaskTest()
         {
             sourceRootDir = GetSourceRootDir();
@@ -195,7 +195,7 @@ namespace Build.Tasks.Tests
             }
         }
 
-        private string GetSourceRootDir()
+        internal string GetSourceRootDir()
         {
             string srcRootDir = string.Empty;
             string currDir = Directory.GetCurrentDirectory();

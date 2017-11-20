@@ -9,6 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build.Tasks.Tests", "Tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Build.BootstrapTasks", "BootstrapTasks\Microsoft.Azure.Build.BootstrapTasks.csproj", "{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MsbuildTests", "MsbuildTests", "{27B52FD2-92FC-482C-A3AC-7606F658510F}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\MsbuildTests\BuildTasksTest.BuildProjectTemplates.proj = Tests\MsbuildTests\BuildTasksTest.BuildProjectTemplates.proj
+		Tests\MsbuildTests\PackagingTests.proj = Tests\MsbuildTests\PackagingTests.proj
+		Tests\MsbuildTests\PublishNugetPackageTests.proj = Tests\MsbuildTests\PublishNugetPackageTests.proj
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

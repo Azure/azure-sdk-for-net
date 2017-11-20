@@ -1,0 +1,26 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="PreAzSdkBuild" BeforeTargets="BeforeBuild" Condition=" '$(EnablePreBuildTarget)' == 'true' ">
+	<Message Text="Should run before build" Importance="High" />
+  </Target>
+	
+	<Target Name="PostAzSdkBuild" AfterTargets="AfterBuild" Condition=" '$(EnablePostBuildTarget)' == 'true' ">
+	<!-- Condition=" '$(EnablePostBuildTarget)' == 'true' " -->
+	<Message Text="Should run After build" Importance="High" />
+	<DebugTask />
+	
+	<Message Text="MSBuildProjectFile -- $(MSBuildProjectFullPath)" Importance="High" />
+	<Message Text="SdkProjects -- @(net452SDKProj)" Importance="High" />
+	<Message Text="Scope -- $(Scope)" Importance="High" />
+	<Message Text="EnablePostBuildTarget -- $(EnablePostBuildTarget)" Importance="High" />
+	<Message Text="EnableDebugTrace -- $(EnableDebugTrace)" Importance="High" />
+	<PostBuildTask 		
+		SdkProjects="$(MSBuildProjectFullPath)"
+		BuildScope="$(Scope)"
+		InvokePostBuildTask="$(EnablePostBuildTarget)"
+		EnableDebugTrace="true"
+	/>
+	<!-- 
+	ProjectBeingBuilt="$(MSBuildProjectFile)" 
+	DebugTrace="$(DebugTrace)" -->
+  </Target>
+</Project>

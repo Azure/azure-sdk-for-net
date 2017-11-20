@@ -1,0 +1,9 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- This file and it's contents are updated at build time
+		Moving or editing might result in build failure. Take due deligence while editing this file
+	-->
+  <PropertyGroup>
+    <AzureApiTags>Compute_AvailabilitySets_2017-03-30;Compute_Disks_2017-03-30;Compute_Images_2017-03-30;Compute_ResourceSkus_2017-03-30;Compute_Snapshots_2017-03-30;Compute_Usage_2017-03-30;Compute_VirtualMachineExtensionImages_2017-03-30;Compute_VirtualMachineExtensions_2017-03-30;Compute_VirtualMachineImages_2017-03-30;Compute_VirtualMachineRunCommands_2017-03-30;Compute_VirtualMachineScaleSetExtensions_2017-03-30;Compute_VirtualMachineScaleSetVMs_2017-03-30;Compute_VirtualMachineScaleSets_2017-03-30;Compute_VirtualMachineSizes_2017-03-30;Compute_VirtualMachines_2017-03-30;ContainerService_ContainerServices_2017-01-31;</AzureApiTags>
+    <PackageTags>$(PackageTags);$(CommonTags);$(ApiTags);</PackageTags>
+  </PropertyGroup>
+</Project>

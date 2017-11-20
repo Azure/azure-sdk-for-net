@@ -15,6 +15,7 @@
 		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
 		<NoWarn>1591;1701;1573;CS1591</NoWarn>
 		<DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples AzureBatchFileConventions.IntegrationTests Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests</DefaultPathTokenToIgnore>
+		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 	</PropertyGroup>
 	<PropertyGroup>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>

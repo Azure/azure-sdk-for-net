@@ -81,7 +81,7 @@
 
 
   <Target Name="MyCustomTarget1">
-    <Message Text="Custom 11   1111  111111"/>
+    <Message Text="MsBuildThisFileDirectory -- $(MSBuildThisFileDirectory)"/>
   </Target>
 
   <Target Name="MyCustomTarget2">
@@ -267,6 +267,8 @@
 
 <SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
       <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
+	  
+	  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), AzSdk.reference.props))\buildConfig\sdk.projects.header.props" />
 
 -->
 
