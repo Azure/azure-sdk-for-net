@@ -54,19 +54,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or
         /// Expression with resultType string).</param>
-        /// <param name="partitionedBy">The HTTP method for the HTTP
-        /// request.</param>
         /// <param name="format">The format of files.</param>
         /// <param name="compression">The data compression method used on
         /// files.</param>
-        public HttpDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object relativeUrl = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), DatasetPartition partitionedBy = default(DatasetPartition), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+        public HttpDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object relativeUrl = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, description, structure, parameters)
         {
             RelativeUrl = relativeUrl;
             RequestMethod = requestMethod;
             RequestBody = requestBody;
             AdditionalHeaders = additionalHeaders;
-            PartitionedBy = partitionedBy;
             Format = format;
             Compression = compression;
             CustomInit();
@@ -108,12 +105,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.additionalHeaders")]
         public object AdditionalHeaders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the HTTP method for the HTTP request.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.partitionedBy")]
-        public DatasetPartition PartitionedBy { get; set; }
 
         /// <summary>
         /// Gets or sets the format of files.
