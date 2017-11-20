@@ -3,6 +3,7 @@
     public enum SearchTypes
     {
         EntitySearch,
+        VideoSearch,
         WebSearch
     }
 }
