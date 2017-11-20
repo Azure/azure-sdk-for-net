@@ -8,7 +8,6 @@ using System.Text;
 using Automation.Tests.Helpers;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.Azure.Management.Automation.Testing;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;

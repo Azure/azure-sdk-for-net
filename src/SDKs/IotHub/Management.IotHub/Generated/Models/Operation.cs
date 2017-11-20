@@ -8,34 +8,35 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DataFactory.Models
+namespace Microsoft.Azure.Management.IotHub.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The partition definition.
+    /// IoT Hub REST API operation
     /// </summary>
-    public partial class DatasetPartition
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the DatasetPartition class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public DatasetPartition()
+        public Operation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DatasetPartition class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">Name of the partition. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="value">Value of the partition.</param>
-        public DatasetPartition(object name = default(object), DatasetPartitionValue value = default(DatasetPartitionValue))
+        /// <param name="name">Operation name: {provider}/{resource}/{read |
+        /// write | action | delete}</param>
+        /// <param name="display">The object that represents the
+        /// operation.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
-            Value = value;
+            Display = display;
             CustomInit();
         }
 
@@ -45,17 +46,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the partition. Type: string (or Expression
-        /// with resultType string).
+        /// Gets operation name: {provider}/{resource}/{read | write | action |
+        /// delete}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public object Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets value of the partition.
+        /// Gets or sets the object that represents the operation.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public DatasetPartitionValue Value { get; set; }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; set; }
 
     }
 }

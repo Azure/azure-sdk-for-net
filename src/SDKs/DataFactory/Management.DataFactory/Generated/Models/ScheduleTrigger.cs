@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Trigger that creates pipeline runs periodically, on schedule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ScheduleTrigger : Trigger
+    public partial class ScheduleTrigger : MultiplePipelineTrigger
     {
         /// <summary>
         /// Initializes a new instance of the ScheduleTrigger class.
@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ScheduleTrigger class.
         /// </summary>
         /// <param name="description">Trigger description.</param>
-        /// <param name="pipelines">Pipelines that need to be started.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
+        /// <param name="pipelines">Pipelines that need to be started.</param>
         /// <param name="recurrence">Recurrence schedule configuration.</param>
-        public ScheduleTrigger(string description = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string runtimeState = default(string), ScheduleTriggerRecurrence recurrence = default(ScheduleTriggerRecurrence))
-            : base(description, pipelines, runtimeState)
+        public ScheduleTrigger(string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), ScheduleTriggerRecurrence recurrence = default(ScheduleTriggerRecurrence))
+            : base(description, runtimeState, pipelines)
         {
             Recurrence = recurrence;
             CustomInit();
