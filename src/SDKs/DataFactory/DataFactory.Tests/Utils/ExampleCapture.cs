@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Globalization;
 
 namespace DataFactory.Tests.Utils
 {
@@ -73,7 +74,7 @@ namespace DataFactory.Tests.Utils
                 CaptureIntegrationRuntimes_ListAuthKeys(); // 200
                 CaptureIntegrationRuntimes_RegenerateAuthKey(); // 200
                 CaptureIntegrationRuntimes_GetStatus(); // 200
-
+                
                 // Start LinkedServices operations, leaving linked service available
                 CaptureLinkedServices_Create(); // 200
                 CaptureLinkedServices_Update(); // 200
@@ -671,7 +672,44 @@ namespace DataFactory.Tests.Utils
 
             triggerPipelineReference.Parameters.Add("OutputBlobNameList", outputBlobNameArray);
 
-            resource.Properties.Pipelines.Add(triggerPipelineReference);
+            (resource.Properties as MultiplePipelineTrigger).Pipelines.Add(triggerPipelineReference);
+
+            return resource;
+        }
+
+        private TriggerResource GetTWTriggerResource(string description)
+        {
+            TriggerResource resource = new TriggerResource() 
+            {
+                Properties = new TumblingWindowTrigger()
+                {
+                    Description = description,
+                    StartTime = DateTime.UtcNow.AddMinutes(-10),
+                    EndTime = DateTime.UtcNow.AddMinutes(5),
+                    Frequency = RecurrenceFrequency.Minute,
+                    Interval = 1,
+                    Delay = "00:00:01",
+                    MaxConcurrency = 1,
+                    RetryPolicy = new RetryPolicy(1, 1),
+                    Pipeline = new TriggerPipelineReference()
+                }
+            };
+
+            TriggerPipelineReference triggerPipelineReference = new TriggerPipelineReference()
+            {
+                PipelineReference = new PipelineReference(pipelineName),
+                Parameters = new Dictionary<string, object>()
+            };
+
+            string[] outputBlobNameList = new string[1];
+            outputBlobNameList[0] = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", outputBlobName, "@{concat('output',formatDateTime(trigger().outputs.windowStartTime,'-dd-MM-yyyy-HH-mm-ss-ffff'))}");
+            outputBlobNameList[0] = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", outputBlobName, "@{concat('output',formatDateTime(trigger().outputs.windowEndTime,'-dd-MM-yyyy-HH-mm-ss-ffff'))}");
+
+            JArray outputBlobNameArray = JArray.FromObject(outputBlobNameList);
+
+            triggerPipelineReference.Parameters.Add("OutputBlobNameList", outputBlobNameArray);
+
+            (resource.Properties as TumblingWindowTrigger).Pipeline = triggerPipelineReference;
 
             return resource;
         }

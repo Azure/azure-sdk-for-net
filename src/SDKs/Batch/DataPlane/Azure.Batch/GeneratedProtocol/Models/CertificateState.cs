@@ -21,11 +21,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CertificateState
     {
+        /// <summary>
+        /// The certificate is available for use in pools.
+        /// </summary>
         [EnumMember(Value = "active")]
         Active,
+        /// <summary>
+        /// The user has requested that the certificate be deleted, but the
+        /// delete operation has not yet completed. You may not reference the
+        /// certificate when creating or updating pools.
+        /// </summary>
         [EnumMember(Value = "deleting")]
         Deleting,
-        [EnumMember(Value = "deleteFailed")]
+        /// <summary>
+        /// The user requested that the certificate be deleted, but there are
+        /// pools that still have references to the certificate, or it is still
+        /// installed on one or more compute nodes. (The latter can occur if
+        /// the certificate has been removed from the pool, but the node has
+        /// not yet restarted. Nodes refresh their certificates only when they
+        /// restart.) You may use the cancel certificate delete operation to
+        /// cancel the delete, or the delete certificate operation to retry the
+        /// delete.
+        /// </summary>
+        [EnumMember(Value = "deletefailed")]
         DeleteFailed
     }
     internal static class CertificateStateEnumExtension
@@ -44,7 +62,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case CertificateState.Deleting:
                     return "deleting";
                 case CertificateState.DeleteFailed:
-                    return "deleteFailed";
+                    return "deletefailed";
             }
             return null;
         }
@@ -57,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return CertificateState.Active;
                 case "deleting":
                     return CertificateState.Deleting;
-                case "deleteFailed":
+                case "deletefailed":
                     return CertificateState.DeleteFailed;
             }
             return null;

@@ -95,11 +95,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the task counts have been validated.
         /// </summary>
         /// <remarks>
-        /// If the validationStatus is unvalidated, then the Batch service has
-        /// not been able to check state counts against the task states as
-        /// reported in the List Tasks API. The validationStatus may be
-        /// unvalidated if the job contains more than 200,000 tasks. Possible
-        /// values include: 'validated', 'unvalidated'
+        /// Possible values include: 'validated', 'unvalidated'
         /// </remarks>
         [JsonProperty(PropertyName = "validationStatus")]
         public TaskCountValidationStatus ValidationStatus { get; set; }
