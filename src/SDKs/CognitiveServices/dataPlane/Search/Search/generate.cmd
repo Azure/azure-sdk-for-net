@@ -5,4 +5,5 @@
 
 @echo off
 call %~dp0..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/EntitySearch %*
+call %~dp0..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/VideoSearch %*
 call %~dp0..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/WebSearch %*
