@@ -22,11 +22,11 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Batch</PackageId>
-    <Description>Provides management functions for Microsoft Azure Batch services.</Description>
+    <Description>Provides management functions for the Microsoft Azure Batch services.</Description>
     <AssemblyTitle>Microsoft Azure Batch Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Batch</AssemblyName>
     <VersionPrefix>5.1.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Batch Management Library</PackageTags>
+    <PackageTags>Microsoft Azure Batch Management windowsazureofficial</PackageTags>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-management-changelog</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

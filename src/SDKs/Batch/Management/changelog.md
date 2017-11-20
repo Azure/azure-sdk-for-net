@@ -3,7 +3,7 @@
 ### Changes in 6.0.0
 #### REST API version
 - This version targets REST API version 2017-09-01.
-- Batch ARM support certificate and pool operations.
+- Adding support for Certificate and Pool operations.
 
 ### Changes in 5.1.0
 #### REST API version
