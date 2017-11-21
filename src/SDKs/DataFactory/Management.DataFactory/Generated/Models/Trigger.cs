@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,14 +31,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the Trigger class.
         /// </summary>
         /// <param name="description">Trigger description.</param>
-        /// <param name="pipelines">Pipelines that need to be started.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
-        public Trigger(string description = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string runtimeState = default(string))
+        public Trigger(string description = default(string), string runtimeState = default(string))
         {
             Description = description;
-            Pipelines = pipelines;
             RuntimeState = runtimeState;
             CustomInit();
         }
@@ -55,12 +51,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets pipelines that need to be started.
-        /// </summary>
-        [JsonProperty(PropertyName = "pipelines")]
-        public IList<TriggerPipelineReference> Pipelines { get; set; }
 
         /// <summary>
         /// Gets indicates if trigger is running or not. Updated when
