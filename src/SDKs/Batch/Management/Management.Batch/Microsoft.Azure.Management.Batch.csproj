@@ -25,21 +25,17 @@
     <Description>Provides management functions for the Microsoft Azure Batch services.</Description>
     <AssemblyTitle>Microsoft Azure Batch Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Batch</AssemblyName>
-    <VersionPrefix>5.1.0</VersionPrefix>
+    <VersionPrefix>6.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Batch Management windowsazureofficial</PackageTags>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-management-changelog</PackageReleaseNotes>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <AssemblyVersion>6.0.0.0</AssemblyVersion>
-    <FileVersion>6.0.0.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <Company>Microsoft</Company>
     <Product>Microsoft Azure .NET SDK</Product>
     <Copyright>Copyright (c) Microsoft Corporation</Copyright>
-    <Version>6.0.0.0</Version>
     <Authors />
   </PropertyGroup>
 </Project>

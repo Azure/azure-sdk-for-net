@@ -126,9 +126,10 @@ namespace Batch.Tests.ScenarioTests
                         "",
                         "vaults",
                         keyvaultName,
-                        "2015-06-01",
-                        new GenericResource(this.Location)
+                        "2016-10-01",
+                        new GenericResource()
                         {
+                            Location = this.Location,
                             Properties = new Dictionary<string, object>
                             {
                                 {"tenantId", "72f988bf-86f1-41af-91ab-2d7cd011db47"},
