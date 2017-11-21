@@ -1,0 +1,317 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet8448?api-version=2016-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0ODQ0OD9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyDefinition Policy Definition\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "322"
+        ],
+        "x-ms-client-request-id": [
+          "91370a2d-e965-48e6-9baf-5597c9788b5a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet8448\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet8448\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "441"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 20:04:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "centralus:557518cb-91af-4b13-b2dd-76b4c915fbfa"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1181"
+        ],
+        "x-ms-correlation-request-id": [
+          "707b0c6a-95bb-42f8-a1ce-d15fdc1ed149"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T200422Z:707b0c6a-95bb-42f8-a1ce-d15fdc1ed149"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "//subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyAssignments/azsmnet6699?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzBjODJjYWRmLWY3MTEtNDgyNS1iY2FmLTQ0MTg5ZThiYWE5Zi9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDY2OTk/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Assignment\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "126"
+        ],
+        "x-ms-client-request-id": [
+          "c52d0bac-87d2-4f7a-830b-27ba5dbed415"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidRequestContent\",\r\n    \"message\": \"The request content was invalid and could not be deserialized: 'Required property 'policyDefinitionId' not found in JSON. Path 'properties', line 4, position 4.'.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "217"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 20:04:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "centralus:6e34fd6a-5b7b-4c85-8040-c58f17adc5e5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1180"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a9d2ce1-9d5a-4032-85e6-201a83a78826"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T200422Z:8a9d2ce1-9d5a-4032-85e6-201a83a78826"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "//subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyAssignments/azsmnet6699?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzBjODJjYWRmLWY3MTEtNDgyNS1iY2FmLTQ0MTg5ZThiYWE5Zi9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDY2OTk/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet5964\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "272"
+        ],
+        "x-ms-client-request-id": [
+          "55aed54e-eea5-4dfd-b6df-7cc5da4c8cc6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy assignment create request is invalid. The policy definition '/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet5964' could not be found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "266"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 20:04:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "centralus:98135e1a-3249-4887-93fe-9a1a912ddcb8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1179"
+        ],
+        "x-ms-correlation-request-id": [
+          "60aa319b-f934-4143-9fea-c19957513ff3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T200422Z:60aa319b-f934-4143-9fea-c19957513ff3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "//subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyAssignments/azsmnet6699?api-version=2017-06-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzBjODJjYWRmLWY3MTEtNDgyNS1iY2FmLTQ0MTg5ZThiYWE5Zi9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDY2OTk/YXBpLXZlcnNpb249MjAxNy0wNi0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet8448\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"A2\",\r\n    \"tier\": \"Free\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "272"
+        ],
+        "x-ms-client-request-id": [
+          "34ec629f-9c41-43f5-baf7-b9e474f45210"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidPolicySku\",\r\n    \"message\": \"The policy assignment 'azsmnet6699' request is invalid. The supported SKUs are '[{\\\"name\\\":\\\"A0\\\",\\\"tier\\\":\\\"Free\\\"},{\\\"name\\\":\\\"A1\\\",\\\"tier\\\":\\\"Standard\\\"}]'.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "209"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 20:04:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "centralus:56210b11-bde2-44e0-9d6d-09ca53bd37be"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1178"
+        ],
+        "x-ms-correlation-request-id": [
+          "7069dc68-c9bb-4dc7-985b-98911fe4ee0f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T200422Z:7069dc68-c9bb-4dc7-985b-98911fe4ee0f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet8448?api-version=2016-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0ODQ0OD9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "99a23eb4-8489-4555-ba61-56519be7befa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet8448\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet8448\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 20:04:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "centralus:b96db5c7-193f-4f50-8a82-7b33f67f3c61"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1177"
+        ],
+        "x-ms-correlation-request-id": [
+          "37b315e9-6aed-45b8-920f-b3703c5508a3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T200422Z:37b315e9-6aed-45b8-920f-b3703c5508a3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "ValidatePolicyAssignmentErrorHandling": [
+      "azsmnet8448",
+      "azsmnet6699",
+      "azsmnet5964"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "0c82cadf-f711-4825-bcaf-44189e8baa9f"
+  }
+}

@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Dns
             RecordSets = new RecordSetsOperations(this);
             Zones = new ZonesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-09-15-preview";
+            ApiVersion = "2017-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

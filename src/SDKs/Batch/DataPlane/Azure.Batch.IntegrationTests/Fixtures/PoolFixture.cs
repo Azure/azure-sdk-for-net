@@ -63,7 +63,7 @@
             return null;
         }
 
-        protected static CloudPool WaitForPoolAllocation(BatchClient client, string poolId)
+        public static CloudPool WaitForPoolAllocation(BatchClient client, string poolId)
         {
             CloudPool thePool = client.PoolOperations.GetPool(poolId);
 

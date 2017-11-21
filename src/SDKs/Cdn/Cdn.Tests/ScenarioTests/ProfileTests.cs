@@ -490,6 +490,48 @@ namespace Cdn.Tests.ScenarioTests
         }
 
         [Fact]
+        public void GetSupportedOptimizationTypes()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create clients
+                var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
+                var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
+
+                // Create resource group
+                var resourceGroupName = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create a standard cdn profile
+                string profileName = TestUtilities.GenerateName("profile");
+                Profile createParameters = new Profile
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        }
+                };
+
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
+                VerifyProfileCreated(profile, createParameters);
+
+                // Get the supported optimization types for the created profile should succeed
+                var supportedOptimizationTypesResult = cdnMgmtClient.Profiles.ListSupportedOptimizationTypes(resourceGroupName, profileName);
+                Assert.NotNull(supportedOptimizationTypesResult);
+                Assert.NotNull(supportedOptimizationTypesResult.SupportedOptimizationTypes);
+                Assert.NotEmpty(supportedOptimizationTypesResult.SupportedOptimizationTypes);
+
+                // Delete resource group
+                CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
+
+        [Fact]
         public void ProfileCheckUsageTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -502,7 +544,7 @@ namespace Cdn.Tests.ScenarioTests
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // CheckUsage on subscription should return zero profiles
-                var subscriptionLevelUsages = cdnMgmtClient.ListResourceUsage();
+                var subscriptionLevelUsages = cdnMgmtClient.ResourceUsage.List();
                 Assert.Equal(1, subscriptionLevelUsages.Count());
 
                 var defaultUsage = subscriptionLevelUsages.First();
@@ -528,7 +570,7 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
-                subscriptionLevelUsages = cdnMgmtClient.ListResourceUsage();
+                subscriptionLevelUsages = cdnMgmtClient.ResourceUsage.List();
                 Assert.Equal(1, subscriptionLevelUsages.Count());
 
                 var usageAfterCreation = subscriptionLevelUsages.First();

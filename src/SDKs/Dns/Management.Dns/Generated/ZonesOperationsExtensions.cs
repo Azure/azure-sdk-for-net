@@ -103,9 +103,9 @@ namespace Microsoft.Azure.Management.Dns
             /// zone. Specify the last-seen etag value to prevent accidentally deleting any
             /// concurrent changes.
             /// </param>
-            public static ZoneDeleteResult Delete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
+            public static void Delete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
             {
-                return operations.DeleteAsync(resourceGroupName, zoneName, ifMatch).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, zoneName, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,12 +129,9 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ZoneDeleteResult> DeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -275,9 +272,9 @@ namespace Microsoft.Azure.Management.Dns
             /// zone. Specify the last-seen etag value to prevent accidentally deleting any
             /// concurrent changes.
             /// </param>
-            public static ZoneDeleteResult BeginDelete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
+            public static void BeginDelete(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string))
             {
-                return operations.BeginDeleteAsync(resourceGroupName, zoneName, ifMatch).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, zoneName, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -301,12 +298,9 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ZoneDeleteResult> BeginDeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

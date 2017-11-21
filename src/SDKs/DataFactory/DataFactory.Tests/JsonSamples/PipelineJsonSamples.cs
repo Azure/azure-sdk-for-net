@@ -2055,5 +2055,214 @@ namespace DataFactory.Tests.JsonSamples
   }
 }";
 
+        [JsonSample(version: "Copy")]
+        public const string CopyAzureMySqlToBlob = @"{
+    name: ""AzureMySqlToBlobPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""CopyFromAzureMySqlToBlob"",
+                type: ""Copy"",
+                inputs: [
+                    {
+                        referenceName: ""AzureMySQLDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""AzureBlobOut"", type: ""DatasetReference""
+                    }
+                ],
+                policy: {
+                },
+                typeProperties: {
+                    source: {
+                        type: ""AzureMySqlSource"",
+                        query:""select * from azuremysqltable""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyFromSalesforceToSalesforce = @"
+{
+  ""name"": ""SalesforceToSalesforce"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""CopyFromSalesforceToSalesforce"",
+        ""type"": ""Copy"",
+        ""inputs"": [
+          {
+            ""referenceName"": ""SalesforceSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SalesforceSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""typeProperties"":
+        {
+          ""source"":
+          {
+            ""type"": ""SalesforceSource"",
+            ""query"":""select Id from table"",
+          },
+          ""sink"":
+          {
+            ""type"": ""SalesforceSink"",
+            ""writeBehavior"": ""Insert"",
+            ""ignoreNullValues"": false
+          }
+        }
+      }
+    ]
+  }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyFromDynamicsToDynamics = @"{
+    name: ""DynamicsToDynamicsPipeline"",
+    properties: {
+        activities: [
+            {
+                name: ""CopyFromDynamicsToDynamics"",
+                type: ""Copy"",
+                inputs: [
+                    {
+                        referenceName: ""DynamicsIn"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""DynamicsOut"", type: ""DatasetReference""
+                    }
+                ],
+                policy: {
+                },
+                typeProperties: {
+                    source: {
+                        type: ""DynamicsSource"",
+                        query:""fetchXml query""
+                    },
+                    sink: {
+                        type: ""DynamicsSink"",
+                        writeBehavior: ""Upsert"",
+                        ignoreNullValues: false
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapC4CToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SAP Cloud for Customer to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SapCloudForCustomerSource"",
+                        query: ""$select=Column0""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSapC4C"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyFromBlobToSapC4C = @"{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""CopyBlobToSapC4c"",
+                type: ""Copy"",
+                typeProperties: {
+                  source: {
+                    type: ""BlobSource""
+                  },
+                  sink: {
+                    type: ""SapCloudForCustomerSink"",
+                    writeBehavior: ""Insert"",
+                    writeBatchSize: 50
+                  },
+                  enableSkipIncompatibleRow: true,
+                  parallelCopies: 32,
+                  cloudDataMovementUnits: 16,
+                  enableSkipIncompatibleRow: true,
+                  redirectIncompatibleRowSettings: {
+                      linkedServiceName: {
+                          referenceName: ""AzureBlobLinkedService"",
+                          type: ""LinkedServiceReference""
+                      },
+                      path: ""redirectcontainer/erroroutput""
+                  }
+                },
+                inputs: [
+                  {
+                    referenceName: ""SourceBlobDataset"",
+                    type: ""DatasetReference""
+                  }
+                ],
+                outputs: [
+                  {
+                    referenceName: ""SapC4CDataset"",
+                    type: ""DatasetReference""
+                  }
+                ]
+            }
+        ]
+    }
+}";
     }
 }

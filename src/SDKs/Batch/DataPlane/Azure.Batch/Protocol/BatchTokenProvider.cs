@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Batch.Protocol
     using System.Threading.Tasks;
     using Rest;
 
-    internal class BatchTokenProvider : ITokenProvider
+    public class BatchTokenProvider : ITokenProvider
     {
         private const string BearerAuthenticationScheme = "Bearer";
 

@@ -18,6 +18,9 @@ namespace Microsoft.Azure.Management.Dns.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Common properties of an Azure Resource Manager resource
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>

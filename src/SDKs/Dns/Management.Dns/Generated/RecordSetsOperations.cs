@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Dns
         /// </param>
         /// <param name='recordType'>
         /// The type of DNS record in this record set. Possible values include: 'A',
-        /// 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
+        /// 'AAAA', 'CAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Update operation.
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -304,8 +304,8 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='recordType'>
         /// The type of DNS record in this record set. Record sets of type SOA can be
         /// updated but not created (they are created when the DNS zone is created).
-        /// Possible values include: 'A', 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA',
-        /// 'SRV', 'TXT'
+        /// Possible values include: 'A', 'AAAA', 'CAA', 'CNAME', 'MX', 'NS', 'PTR',
+        /// 'SOA', 'SRV', 'TXT'
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the CreateOrUpdate operation.
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 201 && (int)_statusCode != 200)
@@ -576,7 +576,8 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='recordType'>
         /// The type of DNS record in this record set. Record sets of type SOA cannot
         /// be deleted (they are deleted when the DNS zone is deleted). Possible values
-        /// include: 'A', 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
+        /// include: 'A', 'AAAA', 'CAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV',
+        /// 'TXT'
         /// </param>
         /// <param name='ifMatch'>
         /// The etag of the record set. Omit this value to always delete the current
@@ -714,7 +715,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 204 && (int)_statusCode != 200)
@@ -780,7 +781,7 @@ namespace Microsoft.Azure.Management.Dns
         /// </param>
         /// <param name='recordType'>
         /// The type of DNS record in this record set. Possible values include: 'A',
-        /// 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
+        /// 'AAAA', 'CAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -907,7 +908,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -988,7 +989,7 @@ namespace Microsoft.Azure.Management.Dns
         /// </param>
         /// <param name='recordType'>
         /// The type of record sets to enumerate. Possible values include: 'A', 'AAAA',
-        /// 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
+        /// 'CAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
         /// </param>
         /// <param name='top'>
         /// The maximum number of record sets to return. If not specified, returns up
@@ -1128,7 +1129,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1343,7 +1344,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1516,7 +1517,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1689,7 +1690,7 @@ namespace Microsoft.Azure.Management.Dns
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)

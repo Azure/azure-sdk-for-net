@@ -28,8 +28,17 @@ src\SDKs\Compute
 
 ### To build:
 =======
+#### If you have recently cloned the repo or did a pull from upstream or did git clean -xdf you need to the following before you do anything else in order to build your projects
+ 1. Open VS 2017 command prompt
+ 2. Navigate to repository root directory
+ 3. execute MsBuild.exe build.proj (this will pull all the build related tools needed to build the repo)
+ 4. Follow below steps to start building your repo/project
+
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
-#### Full Build
+ 1. Open any solution, eg "SDKs\Compute\Compute.sln"
+ 2. Build solution from VS
+ 
+#### Full Build from command line
 
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
@@ -37,14 +46,10 @@ src\SDKs\Compute
  will Build
  ##### *Build* without any scope will build all SDK's and create nuget packages.
 
-#### Build one nuget package
+#### Create single nuget package
 In order to build one package and run it's test
 `msbuild build.proj /t:CreateNugetPackage /p:scope=SDKs\Compute`
 Nuget package will be created in root directory under \binaries\packages
-
-#### Build Using Visual Studio:
- 1. Open any solution, eg "SDKs\Compute\Compute.sln"
- 2. Build solution
  
 ### To run the tests:
 Using Visual Studio:
