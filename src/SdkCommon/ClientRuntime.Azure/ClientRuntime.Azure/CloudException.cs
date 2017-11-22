@@ -9,7 +9,7 @@ namespace Microsoft.Rest.Azure
     /// <summary>
     /// An exception generated from an http response returned from a Microsoft Azure service
     /// </summary>
-    public class CloudException : RestException
+    public class CloudException : RestException, IHttpRestException<CloudError>
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -54,6 +54,11 @@ namespace Microsoft.Rest.Azure
         /// <param name="innerException">The exception which caused the current exception.</param>
         public CloudException(string message, Exception innerException) : base(message, innerException)
         {
+        }
+
+        public void SetErrorModel(CloudError errorBody)
+        {
+            this.Body = errorBody;
         }
     }
 }
