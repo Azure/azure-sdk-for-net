@@ -64,7 +64,7 @@ namespace Compute.Tests
             }
         }
 
-        public void ValidateListUsageResponse(IEnumerable<Usage> luResponse)
+        private void ValidateListUsageResponse(IEnumerable<Usage> luResponse)
         {
             Assert.NotNull(luResponse);
             Assert.True(luResponse.Count() > 0);
