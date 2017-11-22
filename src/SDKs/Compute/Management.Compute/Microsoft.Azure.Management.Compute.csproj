@@ -6,6 +6,11 @@
     <VersionPrefix>17.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>Microsoft Azure resource management;virtual machine;compute;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public release of the Azure Compute SDK. Included with this release is the update of SKU API.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
