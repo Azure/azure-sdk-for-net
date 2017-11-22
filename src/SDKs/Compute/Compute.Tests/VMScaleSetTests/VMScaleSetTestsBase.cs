@@ -82,7 +82,10 @@ namespace Compute.Tests
             string storageAccountName,
             ImageReference imageRef,
             string subnetId,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string healthProbeId = null,
+            string loadBalancerBackendPoolId = null,
+            IList<string> zones = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
@@ -96,8 +99,9 @@ namespace Compute.Tests
                 Sku = new CM.Sku()
                 {
                     Capacity = 2,
-                    Name = VirtualMachineSizeTypes.StandardA0,
+                    Name = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2,
                 },
+                Zones = zones,
                 Overprovision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
@@ -134,6 +138,10 @@ namespace Compute.Tests
                     },
                     NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
                     {
+                        HealthProbe = healthProbeId == null ? null : new ApiEntityReference
+                        {
+                            Id = healthProbeId
+                        },
                         NetworkInterfaceConfigurations = new List<VirtualMachineScaleSetNetworkConfiguration>()
                         {
                             new VirtualMachineScaleSetNetworkConfiguration()
@@ -149,6 +157,10 @@ namespace Compute.Tests
                                         {
                                             Id = subnetId
                                         },
+                                        LoadBalancerBackendAddressPools = (loadBalancerBackendPoolId != null) ? 
+                                            new List<Microsoft.Azure.Management.Compute.Models.SubResource> {
+                                                new Microsoft.Azure.Management.Compute.Models.SubResource(loadBalancerBackendPoolId)
+                                            } : null,
                                         ApplicationGatewayBackendAddressPools = new List<Microsoft.Azure.Management.Compute.Models.SubResource>(),
                                     }
                                 }
@@ -170,7 +182,9 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool createWithManagedDisks = false,
-            Subnet subnet = null)
+            bool createWithHealthProbe = false,
+            Subnet subnet = null,
+            IList<string> zones = null)
         {
             try
             {
@@ -183,7 +197,9 @@ namespace Compute.Tests
                                                                                      vmScaleSetCustomizer,
                                                                                      createWithPublicIpAddress,
                                                                                      createWithManagedDisks,
-                                                                                     subnet);
+                                                                                     createWithHealthProbe,
+                                                                                     subnet,
+                                                                                     zones);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -238,6 +254,13 @@ namespace Compute.Tests
             var createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
         }
 
+        // This method is used to Update VM Scale Set but it internally calls PATCH verb instead of PUT.
+        // PATCH verb is more relaxed and does not puts constraint to specify full parameters.
+        protected void PatchVMScaleSet(string rgName, string vmssName, VirtualMachineScaleSetUpdate inputVMScaleSet)
+        {
+            var patchResponse = m_CrpClient.VirtualMachineScaleSets.Update(rgName, vmssName, inputVMScaleSet);
+        }
+
         private VirtualMachineScaleSet CreateVMScaleSetAndGetOperationResponse(
             string rgName,
             string vmssName,
@@ -248,7 +271,9 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool createWithManagedDisks = false,
-            Subnet subnet = null)
+            bool createWithHealthProbe = false,
+            Subnet subnet = null,
+            IList<string> zones = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -267,7 +292,12 @@ namespace Compute.Tests
                 subnetResponse,
                 getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
 
-            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks);
+            var loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
+                CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
+
+            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
+                healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
+                loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
