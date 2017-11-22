@@ -321,6 +321,7 @@ namespace Microsoft.Azure.Management.Authorization
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -334,6 +335,7 @@ namespace Microsoft.Azure.Management.Authorization
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

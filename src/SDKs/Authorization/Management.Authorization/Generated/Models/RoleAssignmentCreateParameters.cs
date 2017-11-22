@@ -11,12 +11,15 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Authorization;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Role assignment create parameters.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class RoleAssignmentCreateParameters
     {
         /// <summary>
@@ -32,10 +35,18 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// Initializes a new instance of the RoleAssignmentCreateParameters
         /// class.
         /// </summary>
-        /// <param name="properties">Role assignment properties.</param>
-        public RoleAssignmentCreateParameters(RoleAssignmentProperties properties = default(RoleAssignmentProperties))
+        /// <param name="roleDefinitionId">The role definition ID used in the
+        /// role assignment.</param>
+        /// <param name="principalId">The principal ID assigned to the role.
+        /// This maps to the ID inside the Active Directory. It can point to a
+        /// user, service principal, or security group.</param>
+        /// <param name="canDelegate">The delgation flag used for creating a
+        /// role assignment</param>
+        public RoleAssignmentCreateParameters(string roleDefinitionId = default(string), string principalId = default(string), bool? canDelegate = default(bool?))
         {
-            Properties = properties;
+            RoleDefinitionId = roleDefinitionId;
+            PrincipalId = principalId;
+            CanDelegate = canDelegate;
             CustomInit();
         }
 
@@ -45,10 +56,24 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets role assignment properties.
+        /// Gets or sets the role definition ID used in the role assignment.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public RoleAssignmentProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.roleDefinitionId")]
+        public string RoleDefinitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the principal ID assigned to the role. This maps to
+        /// the ID inside the Active Directory. It can point to a user, service
+        /// principal, or security group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.principalId")]
+        public string PrincipalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delgation flag used for creating a role assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.canDelegate")]
+        public bool? CanDelegate { get; set; }
 
     }
 }
