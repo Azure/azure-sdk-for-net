@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,12 +31,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationRuntimeStatus class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
         /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
         /// 'Offline'</param>
-        public IntegrationRuntimeStatus(string state = default(string))
+        public IntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string state = default(string))
         {
+            AdditionalProperties = additionalProperties;
             State = state;
             CustomInit();
         }
@@ -43,6 +48,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets the state of integration runtime. Possible values include:

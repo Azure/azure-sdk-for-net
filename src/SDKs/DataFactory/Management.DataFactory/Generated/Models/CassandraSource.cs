@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the CassandraSource class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -45,8 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// default value is 'ONE'. It is case-insensitive. Possible values
         /// include: 'ALL', 'EACH_QUORUM', 'QUORUM', 'LOCAL_QUORUM', 'ONE',
         /// 'TWO', 'THREE', 'LOCAL_ONE', 'SERIAL', 'LOCAL_SERIAL'</param>
-        public CassandraSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object), string consistencyLevel = default(string))
-            : base(sourceRetryCount, sourceRetryWait)
+        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object), string consistencyLevel = default(string))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
         {
             Query = query;
             ConsistencyLevel = consistencyLevel;

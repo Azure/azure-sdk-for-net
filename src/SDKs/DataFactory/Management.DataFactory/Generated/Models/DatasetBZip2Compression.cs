@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -27,6 +29,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DatasetBZip2Compression class.
+        /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        public DatasetBZip2Compression(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+            : base(additionalProperties)
+        {
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
