@@ -8,6 +8,7 @@
   * Add SAP Cloud For Customer Sink
   * Support providing a Dynamics password as a SecureString, a secret in Azure Key Vault, or as an encrypted credential.
   * App model for Tumbling Window Trigger
+  * Support to roundtrip new properties in some types using additionalProperties
 
 ## Version 0.2.1-preview
 
