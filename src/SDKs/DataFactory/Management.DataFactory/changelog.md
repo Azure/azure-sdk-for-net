@@ -8,7 +8,11 @@
   * Add SAP Cloud For Customer Sink
   * Support providing a Dynamics password as a SecureString, a secret in Azure Key Vault, or as an encrypted credential.
   * App model for Tumbling Window Trigger
+<<<<<<< HEAD
   * Support to roundtrip new properties in some types using additionalProperties
+=======
+  * Add LinkedService, Dataset, Source for 26 RFI connectors, including: PostgreSQL,Google BigQuery,Impala,ServiceNow,Greenplum/Hawq,HBase,Hive ODBC,Spark ODBC,HBase Phoenix,MariaDB,Presto,Couchbase,Concur,Zoho CRM,Amazon Marketplace Services,PayPal,Square,Shopify,QuickBooks Online,Hubspot,Atlassian Jira,Magento,Xero,Drill,Marketo,Eloqua.
+>>>>>>> d2e42ab1f6e9107c37c36cccf1c4b4d639205b80
 
 ## Version 0.2.1-preview
 
