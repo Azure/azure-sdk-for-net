@@ -21,8 +21,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AutoUserScope
     {
+        /// <summary>
+        /// Specifies that the service should create a new user for the task.
+        /// </summary>
         [EnumMember(Value = "task")]
         Task,
+        /// <summary>
+        /// Specifies that the task runs as the common auto user account which
+        /// is created on every node in a pool.
+        /// </summary>
         [EnumMember(Value = "pool")]
         Pool
     }
