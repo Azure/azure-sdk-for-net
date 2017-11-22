@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.Azure.Management.IotHub;
+﻿using Microsoft.Azure.Management.IotHub;
 using Microsoft.Azure.Management.IotHub.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
@@ -9,20 +8,24 @@ namespace ProvisioningServices.Tests
     public class ProvisioningClientTest : DeviceProvisioningTestBase
     {
         [Fact]
-        public void DeviceProvisioningCreateOrUpdate()
+        public void DeviceProvisioningCreateAndDelete()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
+
                 this.Initialize(context);
-                
-                var nameAvailabilityInputs = new OperationInputs(Constants.DefaultProvisioningServiceName);
+                var testName = "unitTestingDPSCreateUpdate";
+                this.GetResourceGroup(testName);
+
+
+                var nameAvailabilityInputs = new OperationInputs(testName);
                 var availabilityInfo =
                     this.provisioningClient.IotDpsResource.CheckNameAvailability(nameAvailabilityInputs);
 
                 if (!availabilityInfo.NameAvailable ?? false)
                 {
                     //it exists, so test the delete
-                    this.provisioningClient.IotDpsResource.Delete(Constants.DefaultProvisioningServiceName, Constants.DefaultResourceGroupName);
+                    this.provisioningClient.IotDpsResource.Delete(testName, testName);
 
                     //check the name is now available
                     availabilityInfo =
@@ -31,76 +34,57 @@ namespace ProvisioningServices.Tests
                 }
 
                 //try to create a DPS service
-                var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation, new IotDpsSkuInfo { Name = Constants.DefaultSku.Name, Capacity = Constants.DefaultSku.Capacity });
-                var dpsInstance = this.provisioningClient.IotDpsResource.CreateOrUpdate(Constants.DefaultResourceGroupName,
-                    Constants.DefaultProvisioningServiceName, createServiceDescription);
+                var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
+                    new IotDpsSkuInfo(Constants.DefaultSku.Name,
+                        Constants.DefaultSku.Tier,
+                        Constants.DefaultSku.Capacity
+                    ),
+                    properties: new IotDpsPropertiesDescription());
+
+                var dpsInstance = this.provisioningClient.IotDpsResource.CreateOrUpdate(
+                    testName,
+                    testName,
+                    createServiceDescription);
 
                 Assert.NotNull(dpsInstance);
                 Assert.Equal(Constants.DefaultSku.Name, dpsInstance.Sku.Name);
-                Assert.Equal(Constants.DefaultProvisioningServiceName, dpsInstance.Name);
+                Assert.Equal(testName, dpsInstance.Name);
 
+                //verify item exists in list by resource group
                 var existingServices =
-                    this.provisioningClient.IotDpsResource.ListByResourceGroup(Constants.DefaultResourceGroupName);
-                Assert.Contains(existingServices, x => x.Name == Constants.DefaultProvisioningServiceName);
+                    this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
+                Assert.Contains(existingServices, x => x.Name == testName);
 
+                //verify can find
+                var foundInstance = this.provisioningClient.IotDpsResource.Get(testName, testName);
+                Assert.NotNull(foundInstance);
+                Assert.Equal(testName, foundInstance.Name);
+
+                this.provisioningClient.IotDpsResource.Delete(testName, testName);
+                existingServices =
+                    this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
+                Assert.DoesNotContain(existingServices, x => x.Name == testName);
+            }
+        }
+
+        [Fact]
+        public void DeviceProvisioningUpdateSku()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                this.Initialize(context);
+                string testName = "unitTestingDPSUpdateSku";
+                var resourceGroup = this.GetResourceGroup(testName);
+                var service = this.GetService(testName, testName);
                 //update capacity
-                dpsInstance.Sku.Capacity += 1;
+                service.Sku.Capacity += 1;
 
                 var updatedInstance =
-                    this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, dpsInstance.Name,
-                        dpsInstance);
+                    this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, service.Name,
+                        service);
 
-                Assert.Equal(dpsInstance.Sku.Capacity, updatedInstance.Sku.Capacity);
-
-                DeviceProvisioningSharedAccessKeys();
-                DeviceProvisioningCertificates();
+                Assert.Equal(service.Sku.Capacity, updatedInstance.Sku.Capacity);
             }
-        }
-
-        
-        private void DeviceProvisioningSharedAccessKeys()
-        {
-            //verify owner has been created
-            var ownerKey = this.provisioningClient.IotDpsResource.GetKeysForKeyName(Constants.DefaultResourceGroupName,
-                Constants.AccessKeyName, Constants.DefaultResourceGroupName);
-            Assert.Equal(Constants.AccessKeyName, ownerKey.KeyName);
-        }
-
-        private void DeviceProvisioningCertificates()
-        {
-            //get certificates list
-            var certificateList = this.provisioningClient.DpsCertificates.List(Constants.DefaultResourceGroupName,
-                Constants.DefaultProvisioningServiceName);
-
-            if (certificateList.Value.Any(x => x.Name == Constants.Certificate.Name))
-            {
-                this.provisioningClient.DpsCertificate.Delete(Constants.DefaultResourceGroupName,
-                    Constants.DefaultProvisioningServiceName, Constants.Certificate.Name);
-                certificateList =
-                    this.provisioningClient.DpsCertificates.List(Constants.DefaultResourceGroupName,
-                        Constants.DefaultProvisioningServiceName);
-                Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);
-            }
-
-            //add a cert
-            this.provisioningClient.DpsCertificate.CreateOrUpdate(Constants.DefaultResourceGroupName,
-                Constants.DefaultProvisioningServiceName, Constants.Certificate.Name,
-                new CertificateBodyDescription(Constants.Certificate.Content));
-
-            certificateList = this.provisioningClient.DpsCertificates.List(Constants.DefaultResourceGroupName,
-                Constants.DefaultProvisioningServiceName);
-
-            Assert.Contains(certificateList.Value, x => x.Name == Constants.Certificate.Name);
-
-            //verify certificate details
-            var certificateDetails = certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);
-            Assert.Equal(certificateDetails.Properties.Subject, Constants.Certificate.Subject);
-            Assert.Equal(certificateDetails.Properties.Thumbprint, Constants.Certificate.Thumbprint);
-
-            //delete certificate
-            this.provisioningClient.DpsCertificate.Delete(Constants.DefaultResourceGroupName,
-                Constants.DefaultProvisioningServiceName, Constants.Certificate.Name);
-            Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);
         }
     }
 }

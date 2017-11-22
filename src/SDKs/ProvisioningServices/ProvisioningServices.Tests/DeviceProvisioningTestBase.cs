@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using Microsoft.Azure.Management.IotHub;
+using Microsoft.Azure.Management.IotHub.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -11,12 +13,12 @@ namespace ProvisioningServices.Tests
     {
         protected IotDpsClient provisioningClient;
         protected ResourceManagementClient resourcesClient;
-        protected ResourceGroup resourceGroup;
         protected TestEnvironment testEnv;
 
         protected bool initialized = false;
         protected object locker = new object();
-        
+
+
 
         protected void Initialize(MockContext context)
         {
@@ -29,13 +31,35 @@ namespace ProvisioningServices.Tests
                         testEnv = TestEnvironmentFactory.GetTestEnvironment();
                         resourcesClient = GetClient<ResourceManagementClient>(context);
                         provisioningClient = GetClient<IotDpsClient>(context);
-                        resourceGroup = this.GetResourceGroup();
                     }
+                    initialized = true;
                 }
             }
         }
 
-        protected T GetClient<T>(MockContext context, RecordedDelegatingHandler handler = null) where T:class 
+        protected ProvisioningServiceDescription GetService(string serviceName, string resourceGroupName)
+        {
+            var nameAvailabilityInputs = new OperationInputs(serviceName);
+            var availabilityInfo =
+                this.provisioningClient.IotDpsResource.CheckNameAvailability(nameAvailabilityInputs);
+            if (!availabilityInfo.NameAvailable ?? true)
+            {
+                this.provisioningClient.IotDpsResource.Get(serviceName,
+                    resourceGroupName);
+            }
+            var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
+            new IotDpsSkuInfo(Constants.DefaultSku.Name,
+                Constants.DefaultSku.Tier,
+                Constants.DefaultSku.Capacity
+            ),
+            properties: new IotDpsPropertiesDescription());
+
+            return this.provisioningClient.IotDpsResource.CreateOrUpdate(
+                resourceGroupName,
+                serviceName, createServiceDescription);
+        }
+
+        protected T GetClient<T>(MockContext context, RecordedDelegatingHandler handler = null) where T : class
         {
             if (handler == null)
             {
@@ -49,20 +73,15 @@ namespace ProvisioningServices.Tests
             return client;
         }
 
-        protected ResourceGroup GetResourceGroup(string resourceGroupName = null, string resourceGroupLocation = null)
+        protected ResourceGroup GetResourceGroup(string resourceGroupName, string resourceGroupLocation = null)
         {
-            if (string.IsNullOrEmpty(resourceGroupName))
-            {
-                resourceGroupName = Constants.DefaultResourceGroupName;
-            }
-
             if (string.IsNullOrEmpty(resourceGroupLocation))
             {
                 resourceGroupLocation = Constants.DefaultLocation;
             }
-
+            
             return this.resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
-                new ResourceGroup {Location = resourceGroupLocation});
+                new ResourceGroup { Location = resourceGroupLocation });
         }
     }
 }
