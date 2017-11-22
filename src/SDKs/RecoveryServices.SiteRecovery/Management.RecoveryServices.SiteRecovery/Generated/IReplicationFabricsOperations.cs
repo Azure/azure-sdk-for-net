@@ -25,6 +25,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationFabricsOperations
     {
         /// <summary>
+        /// Migrates the site to AAD.
+        /// </summary>
+        /// <remarks>
+        /// The operation to migrate an Azure Site Recovery fabric to AAD.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// ASR fabric to migrate.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> MigrateToAadWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Renews certificate for the fabric.
         /// </summary>
         /// <remarks>
@@ -63,8 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The name of the fabric containing the process server.
         /// </param>
         /// <param name='failoverProcessServerRequest'>
-        /// The input to the failover process
-        /// server operation.
+        /// The input to the failover process server operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -228,6 +249,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<IPage<Fabric>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Migrates the site to AAD.
+        /// </summary>
+        /// <remarks>
+        /// The operation to migrate an Azure Site Recovery fabric to AAD.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// ASR fabric to migrate.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginMigrateToAadWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Renews certificate for the fabric.
         /// </summary>
         /// <remarks>
@@ -266,8 +309,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// The name of the fabric containing the process server.
         /// </param>
         /// <param name='failoverProcessServerRequest'>
-        /// The input to the failover process
-        /// server operation.
+        /// The input to the failover process server operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

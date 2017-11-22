@@ -493,6 +493,49 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
+            /// Dissociates a Unified Gateway associated with the server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure Resource group of which a given Analysis Services
+            /// server is part. This name must be at least 1 character in length, and no
+            /// more than 90.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Analysis Services server. It must be at least 3 characters
+            /// in length, and no more than 63.
+            /// </param>
+            public static void DissociateGateway(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                operations.DissociateGatewayAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Dissociates a Unified Gateway associated with the server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure Resource group of which a given Analysis Services
+            /// server is part. This name must be at least 1 character in length, and no
+            /// more than 90.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Analysis Services server. It must be at least 3 characters
+            /// in length, and no more than 63.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DissociateGatewayAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DissociateGatewayWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Provisions the specified Analysis Services server based on the
             /// configuration specified in the request.
             /// </summary>

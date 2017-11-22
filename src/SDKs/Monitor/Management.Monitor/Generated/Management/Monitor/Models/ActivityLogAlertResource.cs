@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// prefixes. The alert will only apply to activityLogs with
         /// resourceIds that fall under one of these prefixes. This list must
         /// include at least one item.</param>
-        /// <param name="condition">The conditon that will cause this alert to
+        /// <param name="condition">The condition that will cause this alert to
         /// activate.</param>
         /// <param name="actions">The actions that will activate when the
         /// condition is met.</param>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the conditon that will cause this alert to activate.
+        /// Gets or sets the condition that will cause this alert to activate.
         /// </summary>
         [JsonProperty(PropertyName = "properties.condition")]
         public ActivityLogAlertAllOfCondition Condition { get; set; }
