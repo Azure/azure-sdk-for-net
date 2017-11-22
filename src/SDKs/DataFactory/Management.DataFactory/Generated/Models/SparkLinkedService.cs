@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// access the Spark server. Possible values include: 'Anonymous',
         /// 'Username', 'UsernameAndPassword',
         /// 'WindowsAzureHDInsightService'</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="serverType">The type of Spark server. Possible values
@@ -75,8 +79,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SparkLinkedService(object host, object port, string authenticationType, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string serverType = default(string), string thriftTransportProtocol = default(string), object username = default(object), SecretBase password = default(SecretBase), object httpPath = default(object), object enableSsl = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object allowHostNameCNMismatch = default(object), object allowSelfSignedServerCert = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public SparkLinkedService(object host, object port, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string serverType = default(string), string thriftTransportProtocol = default(string), object username = default(object), SecretBase password = default(SecretBase), object httpPath = default(object), object enableSsl = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object allowHostNameCNMismatch = default(object), object allowSelfSignedServerCert = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Host = host;
             Port = port;
