@@ -115,10 +115,10 @@ namespace Compute.Tests
                         Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name), hasManagedDisks, hasUserDefinedAS);
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null);
 
                     listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null);
 
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
