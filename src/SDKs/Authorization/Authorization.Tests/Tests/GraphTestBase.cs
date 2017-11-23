@@ -65,7 +65,7 @@ namespace Authorization.Tests
 				context.GetGraphServiceClient<GraphRbacManagementClient>() :
 				context.GetGraphServiceClient<GraphRbacManagementClient>(handlers: handler);
 
-            client.TenantID = "1273adef-00a3-4086-a51a-dbcce1857d36";//GetTenantAndDomain().TenantId;
+			client.TenantID = GetTenantAndDomain().TenantId;
 			return client;
 		}
 
