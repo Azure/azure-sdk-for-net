@@ -8,15 +8,15 @@ using System.Reflection;
 using System.Text;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 using Newtonsoft.Json;
-using ResourceGroups.Tests;
+using FullDesktop.Tests.Helpers;
+using FullDesktop.Tests.SpecTestSupport.Resources;
 
-namespace Net45.Tests
+namespace FullDesktop.Tests
 {
     /// <summary>
     /// These tests exercise Microsoft.Subscription/subscriptionDefinitions PUT, GET and LIST

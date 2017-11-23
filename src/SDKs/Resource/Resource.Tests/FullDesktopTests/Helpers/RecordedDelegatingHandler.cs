@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace ResourceGroups.Tests
+namespace FullDesktop.Tests.Helpers
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {

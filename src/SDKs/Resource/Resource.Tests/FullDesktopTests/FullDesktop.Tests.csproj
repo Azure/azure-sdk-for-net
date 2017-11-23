@@ -2,14 +2,14 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <TargetFrameworks>net452</TargetFrameworks>    
-    <PackageId>Resource.Net452.Tests</PackageId>
-    <Description>Resource.Net452.Tests Class Library</Description>
-    <AssemblyName>Net45.Tests</AssemblyName>
+    <PackageId>Resource.FullDesktop.Tests</PackageId>
+    <Description>Resource.FullDesktop.Tests Class Library</Description>
+    <AssemblyName>FullDesktop.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
+    <ProjectReference Include="..\..\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>
