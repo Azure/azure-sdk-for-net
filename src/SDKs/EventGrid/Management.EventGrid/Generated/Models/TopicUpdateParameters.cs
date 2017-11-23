@@ -11,30 +11,30 @@
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Shared access keys of the Topic
+    /// Properties of the Topic update
     /// </summary>
-    public partial class TopicSharedAccessKeys
+    public partial class TopicUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the TopicSharedAccessKeys class.
+        /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
-        public TopicSharedAccessKeys()
+        public TopicUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TopicSharedAccessKeys class.
+        /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
-        /// <param name="key1">Shared access key1 for the topic.</param>
-        /// <param name="key2">Shared access key2 for the topic.</param>
-        public TopicSharedAccessKeys(string key1 = default(string), string key2 = default(string))
+        /// <param name="tags">Tags of the resource</param>
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Key1 = key1;
-            Key2 = key2;
+            Tags = tags;
             CustomInit();
         }
 
@@ -44,16 +44,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets shared access key1 for the topic.
+        /// Gets or sets tags of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "key1")]
-        public string Key1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets shared access key2 for the topic.
-        /// </summary>
-        [JsonProperty(PropertyName = "key2")]
-        public string Key2 { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
