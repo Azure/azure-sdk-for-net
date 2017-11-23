@@ -62,14 +62,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the status of the add task request.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// success - Task was added successfully.
-        /// clienterror - Task failed to add due to a client error and should
-        /// not be retried without modifying the request as appropriate.
-        /// servererror - Task failed to add due to a server error and can be
-        /// retried without modification. Possible values include: 'success',
-        /// 'clientError', 'serverError'
+        /// Possible values include: 'success', 'clientError', 'serverError'
         /// </remarks>
         [JsonProperty(PropertyName = "status")]
         public TaskAddStatus Status { get; set; }

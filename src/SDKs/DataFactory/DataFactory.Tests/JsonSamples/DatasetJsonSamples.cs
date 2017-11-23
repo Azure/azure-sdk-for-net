@@ -402,5 +402,429 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string AzureMySqlTable = @"
+{
+    name: ""AzureMySqlTable"",
+    properties:
+    {
+        type: ""AzureMySqlTable"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            tableName: ""$EncryptedString$MyEncryptedTableName""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SalesforceDataset = @"
+{
+    name: ""SalesforceDataset"",
+    properties:
+    {
+        type: ""SalesforceObject"",
+        typeProperties:
+        {
+            objectApiName: ""fakeObjectApiName""
+        },
+        linkedServiceName:
+        {
+            referenceName: ""SalesforceLinkedService"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string BlobTableWithJsonArray = @"
+{
+    name: ""JsonArrayDataset"",
+    properties:
+    {
+        type: ""AzureBlob"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {        
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time\\{PartitionKey}"",
+            fileName: ""TestBlobName"",
+            format:
+            {
+                type: ""JsonFormat"",
+                nestingSeparator: "","",
+                filePattern: ""setOfObjects"",
+                encodingName: ""utf-8"",
+                jsonNodeReference: ""$.root"",
+                jsonPathDefinition: {PartitionKey:""$.PartitionKey"", RowKey:""$.RowKey"", p1:""p1"", p2:""p2""}
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SapCloudForCustomerResourceDataset = @"
+{
+    name: ""SapCloudForCustomerResourceDataset"",
+    properties:
+    {
+        type: ""SapCloudForCustomerResource"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            path: ""LeadCollection""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AmazonMWSDataset = @"
+{
+    name: ""AmazonMWSDataset"",
+    properties: {
+        type: ""AmazonMWSObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AzurePostgreSqlDataset = @"
+{
+    name: ""AzurePostgreSqlDataset"",
+    properties: {
+        type: ""AzurePostgreSqlTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ConcurDataset = @"
+{
+    name: ""ConcurDataset"",
+    properties: {
+        type: ""ConcurObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string CouchbaseDataset = @"
+{
+    name: ""CouchbaseDataset"",
+    properties: {
+        type: ""CouchbaseTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DrillDataset = @"
+{
+    name: ""DrillDataset"",
+    properties: {
+        type: ""DrillTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string EloquaDataset = @"
+{
+    name: ""EloquaDataset"",
+    properties: {
+        type: ""EloquaObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string GoogleBigQueryDataset = @"
+{
+    name: ""GoogleBigQueryDataset"",
+    properties: {
+        type: ""GoogleBigQueryObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string GreenplumDataset = @"
+{
+    name: ""GreenplumDataset"",
+    properties: {
+        type: ""GreenplumTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string HBaseDataset = @"
+{
+    name: ""HBaseDataset"",
+    properties: {
+        type: ""HBaseObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string HiveDataset = @"
+{
+    name: ""HiveDataset"",
+    properties: {
+        type: ""HiveObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string HubspotDataset = @"
+{
+    name: ""HubspotDataset"",
+    properties: {
+        type: ""HubspotObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ImpalaDataset = @"
+{
+    name: ""ImpalaDataset"",
+    properties: {
+        type: ""ImpalaObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string JiraDataset = @"
+{
+    name: ""JiraDataset"",
+    properties: {
+        type: ""JiraObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MagentoDataset = @"
+{
+    name: ""MagentoDataset"",
+    properties: {
+        type: ""MagentoObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MariaDBDataset = @"
+{
+    name: ""MariaDBDataset"",
+    properties: {
+        type: ""MariaDBTable"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MarketoDataset = @"
+{
+    name: ""MarketoDataset"",
+    properties: {
+        type: ""MarketoObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PaypalDataset = @"
+{
+    name: ""PaypalDataset"",
+    properties: {
+        type: ""PaypalObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PhoenixDataset = @"
+{
+    name: ""PhoenixDataset"",
+    properties: {
+        type: ""PhoenixObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PrestoDataset = @"
+{
+    name: ""PrestoDataset"",
+    properties: {
+        type: ""PrestoObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string QuickBooksDataset = @"
+{
+    name: ""QuickBooksDataset"",
+    properties: {
+        type: ""QuickBooksObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ServiceNowDataset = @"
+{
+    name: ""ServiceNowDataset"",
+    properties: {
+        type: ""ServiceNowObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ShopifyDataset = @"
+{
+    name: ""ShopifyDataset"",
+    properties: {
+        type: ""ShopifyObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SparkDataset = @"
+{
+    name: ""SparkDataset"",
+    properties: {
+        type: ""SparkObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SquareDataset = @"
+{
+    name: ""SquareDataset"",
+    properties: {
+        type: ""SquareObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string XeroDataset = @"
+{
+    name: ""XeroDataset"",
+    properties: {
+        type: ""XeroObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ZohoDataset = @"
+{
+    name: ""ZohoDataset"",
+    properties: {
+        type: ""ZohoObject"",
+        linkedServiceName: {
+            referenceName: ""ls"",
+            type: ""LinkedServiceReference""
+        }
+    }
+}
+";
     }
 }

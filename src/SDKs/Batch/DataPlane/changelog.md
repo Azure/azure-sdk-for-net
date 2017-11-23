@@ -1,10 +1,14 @@
-## Azure.Batch release notes
+# Azure.Batch release notes
 
-### Upcoming changes
-These changes are planned but haven't been published yet.
+## Changes in 8.0.1
+### Bug fixes
+- Fixed a bug where deserializing some enum properties could fail if using Newtonsoft 10.
 
-### Changes in 8.0.0
-#### Features
+### REST API version
+This version of the Batch .NET client library targets version 2017-09-01.6.0 of the Azure Batch REST API.
+
+## Changes in 8.0.0
+### Features
 - Added the ability to get a discount on Windows VM pricing if you have on-premises licenses for the OS SKUs you are deploying, via `LicenseType` on `VirtualMachineConfiguration`.
 - Added support for attaching empty data drives to `VirtualMachineConfiguration` based pools, via the new `DataDisks` property on `VirtualMachineConfiguration`.
 - **[Breaking]** Custom images must now be deployed using a reference to an ARM Image, instead of pointing to .vhd files in blobs directly.
@@ -13,33 +17,33 @@ These changes are planned but haven't been published yet.
 - **[Breaking]** Multi-instance tasks (created using `MultiInstanceSettings`) must now specify a `CoordinationCommandLine`, and `NumberOfInstances` is now optional and defaults to 1.
 - Added support for tasks run using Docker containers. To run a task using a Docker container you must specify a `ContainerConfiguration` on the `VirtualMachineConfiguration` for a pool, and then add `TaskContainerSettings` on the Task.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2017-09-01.6.0 of the Azure Batch REST API.
 
-### Changes in 7.1.0
-#### Features
+## Changes in 7.1.0
+### Features
 - Added support for detailed aggregate task counts via a new `JobOperations.GetJobTaskCounts` API. Also available on `CloudJob.GetTaskCounts`.
 - Added support for specifying inbound endpoints on pool compute nodes, via a new `CloudPool.PoolEndpointConfiguration` property.  This allows specific ports on the node to be addressed externally.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2017-06-01.5.1 of the Azure Batch REST API.
 
-### Changes in 7.0.1
-#### Bug fixes
+## Changes in 7.0.1
+### Bug fixes
 - Fixed a bug where requests using HTTP DELETE (for example, `DeletePool` and `DeleteJob`) failed with an authentication error in the netstandard package. This was due to a change made to `HttpClient` in netcore.
   - This bug impacted the 6.1.0 release as well.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2017-05-01.5.0 of the Azure Batch REST API.
 
-### Changes in 7.0.0
-#### License
+## Changes in 7.0.0
+### License
 Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as .NET.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2017-05-01.5.0 of the Azure Batch REST API.
 
-#### Features
+### Features
 - Added support for the new low-priority node type.
   - **[Breaking]** `TargetDedicated` and `CurrentDedicated` on `CloudPool` and `PoolSpecification` have been renamed to `TargetDedicatedComputeNodes` and `CurrentDedicatedComputeNodes`.
   - **[Breaking]** `ResizeError` on `CloudPool` is now a collection called `ResizeErrors`.
@@ -60,98 +64,98 @@ This version of the Batch .NET client library targets version 2017-05-01.5.0 of 
 - Added support for provisioning application licenses be your pool, via a new `ApplicationLicenses` property on `CloudPool` and `PoolSpecification`.
   - Please note that this feature is in gated public preview, and you must request access to it via a support ticket.
 
-#### Bug fixes
+### Bug fixes
 - **[Breaking]** Removed `Unmapped` enum state from `AddTaskStatus`, `CertificateFormat`, `CertificateVisibility`, `CertStoreLocation`, `ComputeNodeFillType`, `OSType`, and `PoolLifetimeOption` as they were not ever used.
 
-#### Documentation
+### Documentation
 - Improved and clarified documentation.
 
-#### Packaging
+### Packaging
 - The package now includes a `netstandard1.4` assembly instead of the previous `netstandard1.5`.
 
-### Changes in 6.1.0
-#### REST API version
+## Changes in 6.1.0
+### REST API version
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
 
-#### Packaging
+### Packaging
 - The client library is now supported on .NET Core. The package now includes a `netstandard1.5` assembly in addition to the `net45` assembly.
 
-### Changes in 6.0.0
-#### REST API version
+## Changes in 6.0.0
+### REST API version
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
 
-#### Features
-##### Breaking changes
+### Features
+#### Breaking changes
 - Added support for running a task under a configurable user identity via the `UserIdentity` property on all task objects (`CloudTask`, `JobPreparationTask`, `StartTask`, etc). `UserIdentity` replaces `RunElevated`. `UserIdentity` supports running a task as a predefined named user (via `UserIdentity.UserName`) or an automatically created user. The `AutoUserSpecification` specifies an automatically created user account under which to run the task. To translate existing code, change `RunElevated = true` to `UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.Admin))` and `RunElevated = false` to `UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.NonAdmin))`.
 - Moved `FileToStage` implementation to the [Azure.Batch.FileStaging](https://www.nuget.org/packages/Azure.Batch.FileStaging) NuGet package and removed the dependency on `WindowsAzure.Storage` from the `Azure.Batch` package. This gives more flexibility on what version of `WindowsAzure.Storage` to use for users who do not use the `FileToStage` features.
 
-##### Non-breaking changes
+#### Non-breaking changes
 - Added support for defining pool-wide users, via the `UserAccounts` property on `CloudPool` and `PoolSpecification`. You can run a task as such a user using the `UserIdentity` constructor that takes a user name.
 - Added support for requesting the Batch service provide an authentication token to the task when it runs. This is done using the `AuthenticationTokenSettings` on `CloudTask` and `JobManagerTask`. This avoids the need to pass Batch account keys to the task in order to issue requests to the Batch service.
 - Added support for specifying an action to take on a task's dependencies if the task fails using the `DependencyAction` property of `ExitOptions`.
 - Added support for deploying nodes using custom VHDs, via the `OSDisk` property of `VirtualMachineConfiguration`. Note that the Batch account being used must have been created with `PoolAllocationMode = UserSubscription` to allow this.
 - Added support for Azure Active Directory based authentication. Use `BatchClient.Open/OpenAsync(BatchTokenCredentials)` to use this form of authentication. This is mandatory for accounts with `PoolAllocationMode = UserSubscription`.
 
-#### Package dependencies
+### Package dependencies
 - Removed the dependency on `WindowsAzure.Storage`.
 - Updated to use version 3.3.5 of `Microsoft.Rest.ClientRuntime.Azure`.
 
-#### Documentation
+### Documentation
 - Improved and clarified documentation.
 
-### Changes in 5.1.2
-#### Bug fixes
+## Changes in 5.1.2
+### Bug fixes
 - Fixed a bug where performing `JobOperations.GetNodeFile` and `PoolOperations.GetNodeFile` could throw an `OutOfMemoryException` if the file that was being examined was large.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-### Changes in 5.1.1
-#### Bug fixes
+## Changes in 5.1.1
+### Bug fixes
 - Fixed a bug where certificates with a signing algorithm other than SHA1 were incorrectly imported, causing the Batch service to reject them.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-### Changes in 5.1.0
-#### Features
+## Changes in 5.1.0
+### Features
 - Added support for a new operation `JobOperations.ReactivateTask` (or `CloudTask.Reactivate`) which allows users to reactivate a previously failed task.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-### Changes in 5.0.2
-#### Bug fixes
+## Changes in 5.0.2
+### Bug fixes
 - Fixed bug where `CommitChanges` would incorrectly include elements in the request which did not actually change.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-### Changes in 5.0.1
-#### Bug fixes
+## Changes in 5.0.1
+### Bug fixes
 - Fixed bug where `CloudJob.Commit` and `CloudJob.CommitChanges` would hit an exception when attempting to commit a job which had previously been gotten using an `ODataDetail` select clause.
 
-#### Documentation
+### Documentation
 - Improved comments for `ExitCode` on all task execution information objects (`TaskExecutionInformation`, `JobPreparationTaskExecutionInformation`, `JobReleaseTaskExecutionInformation`, `StartTaskInformation`, etc)
 - Improved documentation on `ocp-range` header format.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-### Changes in 5.0.0
-#### Features
+## Changes in 5.0.0
+### Features
 - Added `CommitChanges` method on `CloudJob`, `CloudJobSchedule` and `CloudPool`, which use the HTTP PATCH verb to perform partial updates, which can be safer if multiple clients are making concurrent changes).
 - Added support for joining a `CloudPool` to a virtual network on using the `NetworkConfiguration` property.
 - Added support for automatically terminating jobs when all tasks complete or when a task fails, via the `CloudJob.OnAllTasksComplete` and `CloudJob.OnAllTasksFailure` properties, and the `CloudTask.ExitConditions` property.
 - Added support for application package references on `CloudTask` and `JobManagerTask`.
 
 
-#### Documentation
+### Documentation
 - Improved documentation across various classes in the `Microsoft.Azure.Batch` namespace as well as the `Microsoft.Azure.Batch.Protocol` namespaces.
 - Improved documentation for `AddTask` overload which takes a collection of `CloudTask` objects to include details about possible exceptions.
 - Improved documentation for the `WhenAll`/`WaitAll` methods of `TaskStateMonitor`.
 
-#### Other
+### Other
 - Updated constructors for the following types to more clearly convey their required properties:
   - `JobManagerTask`
   - `JobPreparationTask`
@@ -165,27 +169,27 @@ This version of the Batch .NET client library targets version 2016-07-01.3.1 of 
   - `WhenAll` overloads now have a consistent return type.
   - Refactored existing methods to provide an overload which takes a `CancellationToken`, and an overload which takes a timeout.  Removed the overload which takes both.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-### Changes in 4.0.1
-#### Bug fixes
+## Changes in 4.0.1
+### Bug fixes
 -  Fixed a bug where specifying a `DetailLevel` on a list operation would fail if the Batch service returned a list spanning multiple pages.
 -  Fixed a bug where `TaskDependencies` and `ApplicationPackageSummary` could throw a `NullReferenceException` if the Batch service returned a collection that was null.
 -  Fixed a bug where `PoolOperations.ListNodeAgentSkus` and `PoolOperations.ListPoolUsageMetrics` were missing support for `DetailLevel`.
 -  Updated `FileMode` comment to clarify that the default is `0770` instead of `0600`. 
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-02-01.3.0 of the Azure Batch REST API.
 
-### Changes in 4.0.0
-#### Package dependencies
+## Changes in 4.0.0
+### Package dependencies
 -  Removed Hyak.Common dependency.
 -  Removed Microsoft.Azure.Common dependency.
 -  Added Microsoft.Rest.ClientRuntime.Azure dependency.
 -  Updated Azure.Storage 4.x to 6.x.
 
-#### Features
+### Features
 -  Azure Batch now supports Linux compute nodes (you can see which Linux distributions and versions are supported by using the new `ListNodeAgentSkus` API).
 -  New API `ListNodeAgentSkus`.
 -  New API `GetRemoteLoginSettings`.
@@ -197,12 +201,12 @@ This version of the Batch .NET client library targets version 2016-02-01.3.0 of 
 -  Changed various properties which had a type of `IEnumerable` to `IReadOnlyList` because they are explicitly read-only.
 -  Changed `CloudJob.CommonEnvironmentSettings` type from `IEnumerable` to `IList`.
 
-#### Bug fixes
+### Bug fixes
 -  Fixed bug where `Enable` and `Disable` scheduling APIs weren't correctly inheriting the behaviors of their parent objects.
 -  Fixed bug in signing which breaks some requests issued with custom conditional headers such as If-Match.
 -  Fixed a few possible memory leaks.
 
-#### Breaking and default behavior changes
+### Breaking and default behavior changes
 -  Changed the default exception thrown from all synchronous methods.  Previously, all synchronous methods threw an `AggregateException`, which usually contained a single inner exception.  Now that inner exception will be thrown directly and it will not be wrapped in an outer `AggregateException`.
 -  Changed `AddTask(IEnumerable<CloudTask>)` to always wrap exceptions from its many parallel REST requests in a `ParallelOperationsException`.  Note that in some cases (such as when performing validation before issuing requests) this method can throw exceptions other than a `ParallelOperationsException`.
 -  The `CloudPool` class has changed to support the creation and management of Linux pools based on the virtual machine compute infrastructure as well as Windows pools based on the Azure cloud services platform.
@@ -234,5 +238,5 @@ This version of the Batch .NET client library targets version 2016-02-01.3.0 of 
 -  Removed `ResourceStatistics.DiskWriteIOps` setter.
 -  Removed `TaskInformation.JobScheduleId` property.
 
-#### REST API version
+### REST API version
 This version of the Batch .NET client library targets version 2016-02-01.3.0 of the Azure Batch REST API.

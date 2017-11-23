@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// <summary>
         /// Initializes a new instance of the RuleWebhookAction class.
         /// </summary>
-        /// <param name="serviceUri">the service uri to Post the notitication
+        /// <param name="serviceUri">the service uri to Post the notification
         /// when the alert activates or resolves.</param>
         /// <param name="properties">the dictionary of custom properties to
         /// include with the post operation. These data are appended to the
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the service uri to Post the notitication when the
+        /// Gets or sets the service uri to Post the notification when the
         /// alert activates or resolves.
         /// </summary>
         [JsonProperty(PropertyName = "serviceUri")]

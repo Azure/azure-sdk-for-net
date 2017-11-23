@@ -21,30 +21,78 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeState
     {
+        /// <summary>
+        /// The node is not currently running a task.
+        /// </summary>
         [EnumMember(Value = "idle")]
         Idle,
+        /// <summary>
+        /// The node is rebooting.
+        /// </summary>
         [EnumMember(Value = "rebooting")]
         Rebooting,
+        /// <summary>
+        /// The node is reimaging.
+        /// </summary>
         [EnumMember(Value = "reimaging")]
         Reimaging,
+        /// <summary>
+        /// The node is running one or more tasks (other than a start task).
+        /// </summary>
         [EnumMember(Value = "running")]
         Running,
+        /// <summary>
+        /// The node cannot be used for task execution due to errors.
+        /// </summary>
         [EnumMember(Value = "unusable")]
         Unusable,
+        /// <summary>
+        /// The Batch service has obtained the underlying virtual machine from
+        /// Azure Compute, but it has not yet started to join the pool.
+        /// </summary>
         [EnumMember(Value = "creating")]
         Creating,
+        /// <summary>
+        /// The Batch service is starting on the underlying virtual machine.
+        /// </summary>
         [EnumMember(Value = "starting")]
         Starting,
+        /// <summary>
+        /// The start task has started running on the compute node, but
+        /// waitForSuccess is set and the start task has not yet completed.
+        /// </summary>
         [EnumMember(Value = "waitingForStartTask")]
         WaitingForStartTask,
-        [EnumMember(Value = "startTaskFailed")]
+        /// <summary>
+        /// The start task has failed on the compute node (and exhausted all
+        /// retries), and waitForSuccess is set. The node is not usable for
+        /// running tasks.
+        /// </summary>
+        [EnumMember(Value = "starttaskfailed")]
         StartTaskFailed,
+        /// <summary>
+        /// The Batch service has lost contact with the node, and does not know
+        /// its true state.
+        /// </summary>
         [EnumMember(Value = "unknown")]
         Unknown,
-        [EnumMember(Value = "leavingPool")]
+        /// <summary>
+        /// The node is leaving the pool, either because the user explicitly
+        /// removed it or because the pool is resizing or autoscaling down.
+        /// </summary>
+        [EnumMember(Value = "leavingpool")]
         LeavingPool,
+        /// <summary>
+        /// The node is not currently running a task, and scheduling of new
+        /// tasks to the node is disabled.
+        /// </summary>
         [EnumMember(Value = "offline")]
         Offline,
+        /// <summary>
+        /// The low-priority node has been preempted. Tasks which were running
+        /// on the node when it was pre-empted will be rescheduled when another
+        /// node becomes available.
+        /// </summary>
         [EnumMember(Value = "preempted")]
         Preempted
     }
@@ -76,11 +124,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case ComputeNodeState.WaitingForStartTask:
                     return "waitingForStartTask";
                 case ComputeNodeState.StartTaskFailed:
-                    return "startTaskFailed";
+                    return "starttaskfailed";
                 case ComputeNodeState.Unknown:
                     return "unknown";
                 case ComputeNodeState.LeavingPool:
-                    return "leavingPool";
+                    return "leavingpool";
                 case ComputeNodeState.Offline:
                     return "offline";
                 case ComputeNodeState.Preempted:
@@ -109,11 +157,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeState.Starting;
                 case "waitingForStartTask":
                     return ComputeNodeState.WaitingForStartTask;
-                case "startTaskFailed":
+                case "starttaskfailed":
                     return ComputeNodeState.StartTaskFailed;
                 case "unknown":
                     return ComputeNodeState.Unknown;
-                case "leavingPool":
+                case "leavingpool":
                     return ComputeNodeState.LeavingPool;
                 case "offline":
                     return ComputeNodeState.Offline;

@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft.Azure.Batch.FileStaging")]
 [assembly: AssemblyDescription("Client library for uploading resource files for tasks in the Azure Batch service.")]
 
-[assembly: AssemblyVersion("7.0.0.0")]
-[assembly: AssemblyFileVersion("7.0.0.0")]
+[assembly: AssemblyVersion("8.0.0.0")]
+[assembly: AssemblyFileVersion("8.0.0.0")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Azure")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation. All rights reserved.")]

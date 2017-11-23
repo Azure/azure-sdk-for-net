@@ -547,6 +547,57 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string DynamicsLinkedService_AKV = @"
+{
+    name: ""Test-Dynamics-LinkedService"",
+    properties:
+    {
+        type : ""Dynamics"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""Office365"", 
+            username : ""fakeuser@contoso.com"",
+            password : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsLinkedService = @"
+{
+    name: ""LinkedService-Dynamics"",
+    properties:
+    {
+        type: ""Dynamics"",
+        typeProperties: {
+            deploymentType: ""Online"",
+            authenticationType: ""Office365"",
+            hostName: ""hostname.com"",
+            port: 12345,
+            organizationName: ""contoso"",
+            username: ""fakeuser@contoso.com"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string SalesforceLinkedService = @"
 {
     name: ""SalesforceLinkedService"",
@@ -565,6 +616,38 @@ namespace DataFactory.Tests.JsonSamples
             securityToken: {
                 value : ""fakeToken"",
                 type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SalesforceLinkedServiceWithAkv = @"
+{
+    name: ""SalesforceLinkedServiceWithAkv"",
+    properties:
+    {
+        type: ""Salesforce"",
+        description: ""test description"",
+        typeProperties:
+        {
+            environmentUrl: ""url"",
+            username: ""admin"",
+            password : {
+                type : ""AzureKeyVaultSecret"",
+                secretName : ""fakeSecretName1"",
+                store : {
+                    type : ""LinkedServiceReference"",
+                    referenceName : ""fakeAKVLinkedService""
+                }
+            },
+            securityToken: {
+                type : ""AzureKeyVaultSecret"",
+                secretName : ""fakeSecretName2"",
+                store : {
+                    type : ""LinkedServiceReference"",
+                    referenceName : ""fakeAKVLinkedService""
+                }
             }
         }
     }
@@ -810,5 +893,552 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureMySqlLinkedService = @"
+{
+    name: ""LinkedService-AzureMySQLDB"",
+    properties:
+    {
+        type: ""AzureMySql"",
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
+        public const string AmazonMWSLinkedService = @"
+{
+    name: ""AmazonMWSLinkedService"",
+    properties: {
+        type: ""AmazonMWS"",
+        typeProperties: {
+            endpoint : ""mws.amazonservices.com"",
+            marketplaceID : ""A2EUQ1WTGCTBG2"",
+            sellerID : ""ACGMZIK6QTD9T"",
+            mwsAuthToken : {
+                type: ""SecureString"",
+                value: ""amzn.mws.94acb321-6915-09bf-b628-7e94337f01b7""
+            },
+            accessKeyId : ""123456789123"",
+            secretKey : {
+                type: ""SecureString"",
+                value: ""7LHODzgokrgITY17EGz2u7cBAm57QX3sopQErLpU""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AzurePostgreSqlLinkedService = @"
+{
+    name: ""AzurePostgreSqlLinkedService"",
+    properties: {
+        type: ""AzurePostgreSql"",
+        typeProperties: {
+            connectionString: {
+                type: ""AzureKeyVaultSecret"",
+                secretName: ""postgreSqlConnectionString"",
+                store: {
+                    type: ""LinkedServiceReference"",
+                    referenceName: ""AKVLinkedService""
+                }
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ConcurLinkedService = @"
+{
+    name: ""ConcurLinkedService"",
+    properties: {
+        type: ""Concur"",
+        typeProperties: {
+            clientId : ""f145kn9Pcyq9pr4lvumdapfl4rive"",
+            username : ""jsmith"",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string CouchbaseLinkedService = @"
+{
+    name: ""CouchbaseLinkedService"",
+    properties: {
+        type: ""Couchbase"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DrillLinkedService = @"
+{
+    name: ""DrillLinkedService"",
+    properties: {
+        type: ""Drill"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string EloquaLinkedService = @"
+{
+    name: ""EloquaLinkedService"",
+    properties: {
+        type: ""Eloqua"",
+        typeProperties: {
+            endpoint : ""eloqua.example.com"",
+            username : ""Eloqua/Alice"",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string GoogleBigQueryLinkedService = @"
+{
+    name: ""GoogleBigQueryLinkedService"",
+    properties: {
+        type: ""GoogleBigQuery"",
+        typeProperties: {
+            project : ""myproject"",
+            requestGoogleDriveScope : true,
+            authenticationType : ""ServiceAuthentication"",
+            refreshToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useSystemTrustStore : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string GreenplumLinkedService = @"
+{
+    name: ""GreenplumLinkedService"",
+    properties: {
+        type: ""Greenplum"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string HBaseLinkedService = @"
+{
+    name: ""HBaseLinkedService"",
+    properties: {
+        type: ""HBase"",
+        typeProperties: {
+            host : ""192.168.222.160"",
+            httpPath : ""/gateway/sandbox/hbase/version"",
+            authenticationType : ""Anonymous"",
+            enableSsl : true,
+            allowHostNameCNMismatch : true,
+            allowSelfSignedServerCert : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string HiveLinkedService = @"
+{
+    name: ""HiveLinkedService"",
+    properties: {
+        type: ""Hive"",
+        typeProperties: {
+            host : ""my server"",
+            port : 1000,
+            serverType : ""HiveServer1"",
+            thriftTransportProtocol : ""Binary"",
+            authenticationType : ""Anonymous"",
+            serviceDiscoveryMode : true,
+            zooKeeperNameSpace : """",
+            useNativeQuery : true,
+            username : """",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            httpPath : """",
+            enableSsl : true,
+            trustedCertPath : """",
+            useSystemTrustStore : true,
+            allowHostNameCNMismatch : true,
+            allowSelfSignedServerCert : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string HubspotLinkedService = @"
+{
+    name: ""HubspotLinkedService"",
+    properties: {
+        type: ""Hubspot"",
+        typeProperties: {
+            clientId : ""11b5516f1322-11e6-9653-93a39db85acf"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""abCD+E1f2Gxhi3J4klmN/OP5QrSTuvwXYzabcdEF""
+            },
+            accessToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            refreshToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ImpalaLinkedService = @"
+{
+    name: ""ImpalaLinkedService"",
+    properties: {
+        type: ""Impala"",
+        typeProperties: {
+            host : ""192.168.222.160"",
+            authenticationType : ""Anonymous"",
+            username : """",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            enableSsl : true,
+            trustedCertPath : """",
+            useSystemTrustStore : true,
+            allowHostNameCNMismatch : true,
+            allowSelfSignedServerCert : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string JiraLinkedService = @"
+{
+    name: ""JiraLinkedService"",
+    properties: {
+        type: ""Jira"",
+        typeProperties: {
+            host : ""jira.example.com"",
+            port : 1000,
+            username : ""skroob"",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MagentoLinkedService = @"
+{
+    name: ""MagentoLinkedService"",
+    properties: {
+        type: ""Magento"",
+        typeProperties: {
+            host : ""192.168.222.110/magento3"",
+            accessToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MariaDBLinkedService = @"
+{
+    name: ""MariaDBLinkedService"",
+    properties: {
+        type: ""MariaDB"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MarketoLinkedService = @"
+{
+    name: ""MarketoLinkedService"",
+    properties: {
+        type: ""Marketo"",
+        typeProperties: {
+            endpoint : ""123-ABC-321.mktorest.com"",
+            clientId : ""fakeClientId"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PaypalLinkedService = @"
+{
+    name: ""PaypalLinkedService"",
+    properties: {
+        type: ""Paypal"",
+        typeProperties: {
+            host : ""api.sandbox.paypal.com"",
+            clientId : ""fakeClientId"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true,
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PhoenixLinkedService = @"
+{
+    name: ""PhoenixLinkedService"",
+    properties: {
+        type: ""Phoenix"",
+        typeProperties: {
+            host : ""192.168.222.160"",
+            port : 443,
+            httpPath : ""/gateway/sandbox/phoenix/version"",
+            authenticationType : ""Anonymous"",
+            enableSsl : true,
+            useSystemTrustStore : true,
+            allowHostNameCNMismatch : true,
+            allowSelfSignedServerCert : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PrestoLinkedService = @"
+{
+    name: ""PrestoLinkedService"",
+    properties: {
+        type: ""Presto"",
+        typeProperties: {
+            host : ""192.168.222.160"",
+            serverVersion : ""0.148-t"",
+            catalog : ""test"",
+            authenticationType : ""Anonymous"",
+            username : """",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            enableSsl : true,
+            trustedCertPath : """",
+            useSystemTrustStore : true,
+            allowHostNameCNMismatch : true,
+            allowSelfSignedServerCert : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string QuickBooksLinkedService = @"
+{
+    name: ""QuickBooksLinkedService"",
+    properties: {
+        type: ""QuickBooks"",
+        typeProperties: {
+            endpoint : ""quickbooks.api.intuit.com"",
+            companyId : ""fakeCompanyId"",
+            accessToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            accessTokenSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ServiceNowLinkedService = @"
+{
+    name: ""ServiceNowLinkedService"",
+    properties: {
+        type: ""ServiceNow"",
+        typeProperties: {
+            endpoint : ""http://ServiceNowData.com"",
+            authenticationType : ""Basic"",
+            username : ""admin"",
+            password : {
+                type: ""SecureString"",
+                value: ""some secret""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ShopifyLinkedService = @"
+{
+    name: ""ShopifyLinkedService"",
+    properties: {
+        type: ""Shopify"",
+        typeProperties: {
+            host : ""mystore.myshopify.com"",
+            accessToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SparkLinkedService = @"
+{
+    name: ""SparkLinkedService"",
+    properties: {
+        type: ""Spark"",
+        typeProperties: {
+            host : ""myserver"",
+            port : 443,
+            serverType : ""SharkServer"",
+            thriftTransportProtocol : ""Binary"",
+            authenticationType : ""WindowsAzureHDInsightService"",
+            username : ""admin"",
+            password : {
+                type: ""AzureKeyVaultSecret"",
+                secretName: ""SparkPassword"",
+                store: {
+                    type: ""LinkedServiceReference"",
+                    referenceName: ""AKVLinkedService""
+                }
+            },
+            httpPath : ""gateway/sandbox/spark"",
+            enableSsl : true,
+            useSystemTrustStore : true,
+            allowHostNameCNMismatch : true,
+            allowSelfSignedServerCert : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string SquareLinkedService = @"
+{
+    name: ""SquareLinkedService"",
+    properties: {
+        type: ""Square"",
+        typeProperties: {
+            host : ""mystore.mysquare.com"",
+            clientId : ""clientIdFake"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            redirectUri : ""http://localhost:2500"",
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string XeroLinkedService = @"
+{
+    name: ""XeroLinkedService"",
+    properties: {
+        type: ""Xero"",
+        typeProperties: {
+            host : ""api.xero.com"",
+            consumerKey : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            privateKey : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string ZohoLinkedService = @"
+{
+    name: ""ZohoLinkedService"",
+    properties: {
+        type: ""Zoho"",
+        typeProperties: {
+            endpoint : ""crm.zoho.com/crm/private"",
+            accessToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            useEncryptedEndpoints : true,
+            useHostVerification : true,
+            usePeerVerification : true
+        }
+    }
+}
+";
     }
 }
