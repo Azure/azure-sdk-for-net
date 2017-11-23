@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.IotHub;
+﻿using System;
+using Microsoft.Azure.Management.IotHub;
 using Microsoft.Azure.Management.IotHub.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
@@ -84,6 +85,33 @@ namespace ProvisioningServices.Tests
                         service);
 
                 Assert.Equal(service.Sku.Capacity, updatedInstance.Sku.Capacity);
+            }
+        }
+        [Fact]
+        public void DeviceProvisioningCreateFailure()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+
+                this.Initialize(context);
+                var testName = "unitTestingDPSCreateUpdateInvalidName";
+                this.GetResourceGroup(testName);
+
+
+                //try to create a DPS service
+                var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
+                    new IotDpsSkuInfo(Constants.DefaultSku.Name,
+                        Constants.DefaultSku.Tier,
+                        Constants.DefaultSku.Capacity
+                    ),
+                    properties: new IotDpsPropertiesDescription());
+
+                var badCall = new Func<ProvisioningServiceDescription>(() => this.provisioningClient.IotDpsResource.CreateOrUpdate(
+                    testName,
+                    $"1ñ1{testName}!!!", //We dont't allow most punctuation, leading numbers, etc
+                    createServiceDescription));
+
+                Assert.Throws<ErrorDetailsException>(badCall);
             }
         }
     }
