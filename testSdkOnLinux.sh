@@ -55,6 +55,7 @@ restoreBuildAzStack() {
 restoreBuildRepo() {
     #printf "$sdkdir\n"
     for folder in $sdkdir/*
+    #for folder in $sdkdir/Resource
     do
         item=`basename $folder`
         if [ -d $sdkdir/$item ]; then
@@ -67,14 +68,17 @@ restoreBuildRepo() {
                     dotnet restore $slnFile -r $ubuntu1404
                 fi
                 if [ -d $sdkdir/$item/*.Tests ]; then
-                    testProj=($sdkdir/$item/*.Tests/*.csproj)
-                    skipTest=$( skip_Rps $testProj )
-                    printf "$skipRp\n"
-                    if [ "$skipTest" == "false" ]; then
-                        printf "Test ------ $testProj for framework $netcore11\n"
-                        dotnet build $testProj -f $netcore11
-                        dotnet test $testProj -f $netcore11
-                    fi
+                    testProj=$(find $sdkdir/$item/*.Tests -name "*.csproj")
+                    for tp in $testProj
+                    do
+                        skipTest=$( skip_Rps $tp )
+                        printf "$skipRp\n"
+                        if [ "$skipTest" == "false" ]; then
+                            printf "Test ------ $tp for framework $netcore11\n"
+                            dotnet build $testProj -f $netcore11
+                            dotnet test $testProj -f $netcore11
+                        fi
+                    done
                 fi
             fi
         fi
