@@ -15,6 +15,24 @@ namespace Sql.Tests
     public class UsageScenarioTests
     {
         [Fact]
+        public void TestGetSubscriptionUsageData()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Get subscription usages for a location
+                IEnumerable<SubscriptionUsage> subscriptionUsages =
+                    sqlClient.SubscriptionUsages.ListByLocation(TestEnvironmentUtilities.DefaultLocation);
+                Assert.True(subscriptionUsages.Count() > 0);
+
+                // Get a single subscription usage for a location
+                SubscriptionUsage subscriptionUsage =
+                    sqlClient.SubscriptionUsages.Get(TestEnvironmentUtilities.DefaultLocation, "ServerQuota");
+            }
+        }
+
+        [Fact]
         public void TestGetUsageData()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
