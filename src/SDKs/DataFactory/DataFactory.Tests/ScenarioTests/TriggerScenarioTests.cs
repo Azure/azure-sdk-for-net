@@ -51,7 +51,7 @@ namespace DataFactory.Tests.ScenarioTests
 
             triggerPipelineReference.Parameters.Add("OutputBlobNameList", outputBlobNameArray);
 
-            resource.Properties.Pipelines.Add(triggerPipelineReference);
+            ((ScheduleTrigger)(resource.Properties)).Pipelines.Add(triggerPipelineReference);
 
             return resource;
         }
