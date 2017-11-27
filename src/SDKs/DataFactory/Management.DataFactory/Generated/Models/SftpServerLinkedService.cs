@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="host">The SFTP server host name. Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="port">The TCP port number that the SFTP server uses to
@@ -72,8 +76,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// SFTP server. When SkipHostKeyValidation is false,
         /// HostKeyFingerprint should be specified. Type: string (or Expression
         /// with resultType string).</param>
-        public SftpServerLinkedService(object host, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object), object privateKeyPath = default(object), SecureString privateKeyContent = default(SecureString), SecureString passPhrase = default(SecureString), object skipHostKeyValidation = default(object), object hostKeyFingerprint = default(object))
-            : base(connectVia, description)
+        public SftpServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object), object privateKeyPath = default(object), SecureString privateKeyContent = default(SecureString), SecureString passPhrase = default(SecureString), object skipHostKeyValidation = default(object), object hostKeyFingerprint = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Host = host;
             Port = port;

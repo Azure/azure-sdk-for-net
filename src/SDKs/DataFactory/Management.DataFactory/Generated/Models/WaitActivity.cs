@@ -37,10 +37,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="name">Activity name.</param>
         /// <param name="waitTimeInSeconds">Duration in seconds.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
-        public WaitActivity(string name, int waitTimeInSeconds, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>))
-            : base(name, description, dependsOn)
+        public WaitActivity(string name, int waitTimeInSeconds, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>))
+            : base(name, additionalProperties, description, dependsOn)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             CustomInit();
