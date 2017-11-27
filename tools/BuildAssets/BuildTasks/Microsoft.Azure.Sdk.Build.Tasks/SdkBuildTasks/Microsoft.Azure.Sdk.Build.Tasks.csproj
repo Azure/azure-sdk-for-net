@@ -11,5 +11,8 @@
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StaticAnalysisTasks\" />
+  </ItemGroup>
 
 </Project>

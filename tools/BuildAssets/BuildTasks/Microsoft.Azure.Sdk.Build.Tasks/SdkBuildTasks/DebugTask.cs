@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Build.Tasks
     /// <summary>
     /// Utility task to help debug
     /// </summary>
-    public class DebugTask : Microsoft.Build.Utilities.Task
+    public class DebugTask : Task
     {
         /// <summary>
         /// Default timeout

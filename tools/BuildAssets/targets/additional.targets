@@ -81,7 +81,7 @@
 
 
   <Target Name="MyCustomTarget1">
-    <Message Text="Custom 11   1111  111111"/>
+    <Message Text="MsBuildThisFileDirectory -- $(MSBuildThisFileDirectory)"/>
   </Target>
 
   <Target Name="MyCustomTarget2">
@@ -267,6 +267,24 @@
 
 <SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
       <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
+	  
+	  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), AzSdk.reference.props))\buildConfig\sdk.projects.header.props" />
+	  
+	    
+	 Please do not move/edit code below this line
+  <Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  Please do not move/edit code above this line
+  
+  
+  az.test.reference.props
+  <PropertyGroup>
+		<EnablePostBuildTarget Condition=" '$(EnablePostBuildTarget)' != '' ">false</EnablePostBuildTarget>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<EnablePreBuildTarget Condition=" '$(EnablePreBuildTarget)' == '' ">true</EnablePreBuildTarget>
+		<EnablePostBuildTarget Condition=" '$(EnablePostBuildTarget)' == '' ">false</EnablePostBuildTarget>
+	</PropertyGroup>
 
 -->
 

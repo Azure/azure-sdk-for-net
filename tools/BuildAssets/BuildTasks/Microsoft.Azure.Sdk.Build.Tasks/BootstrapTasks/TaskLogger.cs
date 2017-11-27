@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.Azure.Build.BootstrapTasks
 {
-    using Microsoft.Build.Framework;
+    //using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
     using System.Diagnostics;
     using System;
