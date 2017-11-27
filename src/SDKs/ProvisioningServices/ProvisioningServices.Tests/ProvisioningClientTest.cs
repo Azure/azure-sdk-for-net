@@ -1,6 +1,7 @@
 ﻿using System;
-using Microsoft.Azure.Management.IotHub;
-using Microsoft.Azure.Management.IotHub.Models;
+using System.Linq;
+using Microsoft.Azure.Management.ProvisioningServices;
+using Microsoft.Azure.Management.ProvisioningServices.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
@@ -54,7 +55,7 @@ namespace ProvisioningServices.Tests
                 //verify item exists in list by resource group
                 var existingServices =
                     this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
-                Assert.Contains(existingServices, x => x.Name == testName);
+                Assert.Contains(existingServices.Value, x => x.Name == testName);
 
                 //verify can find
                 var foundInstance = this.provisioningClient.IotDpsResource.Get(testName, testName);
@@ -64,7 +65,7 @@ namespace ProvisioningServices.Tests
                 this.provisioningClient.IotDpsResource.Delete(testName, testName);
                 existingServices =
                     this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
-                Assert.DoesNotContain(existingServices, x => x.Name == testName);
+                Assert.DoesNotContain(existingServices.Value, x => x.Name == testName);
             }
         }
 

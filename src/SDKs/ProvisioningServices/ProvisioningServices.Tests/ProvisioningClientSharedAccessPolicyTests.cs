@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Microsoft.Azure.Management.IotHub;
+using Microsoft.Azure.Management.ProvisioningServices;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 namespace ProvisioningServices.Tests

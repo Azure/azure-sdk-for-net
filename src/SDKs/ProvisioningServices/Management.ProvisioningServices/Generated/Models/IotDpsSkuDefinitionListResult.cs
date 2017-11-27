@@ -12,25 +12,27 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// The JSON-serialized array of Certificate objects.
+    /// List of available SKUs.
     /// </summary>
-    public partial class CertificateListDescription
+    public partial class IotDpsSkuDefinitionListResult
     {
         /// <summary>
-        /// Initializes a new instance of the CertificateListDescription class.
+        /// Initializes a new instance of the IotDpsSkuDefinitionListResult
+        /// class.
         /// </summary>
-        public CertificateListDescription()
+        public IotDpsSkuDefinitionListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CertificateListDescription class.
+        /// Initializes a new instance of the IotDpsSkuDefinitionListResult
+        /// class.
         /// </summary>
-        /// <param name="value">The array of Certificate objects.</param>
-        public CertificateListDescription(IList<CertificateResponse> value = default(IList<CertificateResponse>))
+        public IotDpsSkuDefinitionListResult(IList<IotDpsSkuDefinition> value = default(IList<IotDpsSkuDefinition>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -40,10 +42,14 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the array of Certificate objects.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<CertificateResponse> Value { get; set; }
+        public IList<IotDpsSkuDefinition> Value { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }

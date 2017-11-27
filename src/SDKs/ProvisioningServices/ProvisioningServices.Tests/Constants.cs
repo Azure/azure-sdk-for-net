@@ -3,6 +3,7 @@
     public static class Constants
     {
         public const string AccessKeyName = "provisioningserviceowner";
+        public const string ApiVersion = "2017-08-21-preview";
 
         public static class Certificate
         {

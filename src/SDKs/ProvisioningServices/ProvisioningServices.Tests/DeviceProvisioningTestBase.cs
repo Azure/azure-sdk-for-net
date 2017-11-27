@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Net;
-using Microsoft.Azure.Management.IotHub;
-using Microsoft.Azure.Management.IotHub.Models;
+﻿using System.Net;
+using Microsoft.Azure.Management.ProvisioningServices;
+using Microsoft.Azure.Management.ProvisioningServices.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -31,6 +30,7 @@ namespace ProvisioningServices.Tests
                         testEnv = TestEnvironmentFactory.GetTestEnvironment();
                         resourcesClient = GetClient<ResourceManagementClient>(context);
                         provisioningClient = GetClient<IotDpsClient>(context);
+                        provisioningClient.ApiVersion = Constants.ApiVersion;
                     }
                     initialized = true;
                 }
