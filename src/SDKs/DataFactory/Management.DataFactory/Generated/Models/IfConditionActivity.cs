@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Boolean. This is used to determine the block of activities
         /// (ifTrueActivities or ifFalseActivities) that will be
         /// executed.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="ifTrueActivities">List of activities to execute if
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="ifFalseActivities">List of activities to execute if
         /// expression is evaluated to false. This is an optional property and
         /// if not provided, the activity will exit without any action.</param>
-        public IfConditionActivity(string name, Expression expression, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
-            : base(name, description, dependsOn)
+        public IfConditionActivity(string name, Expression expression, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
+            : base(name, additionalProperties, description, dependsOn)
         {
             Expression = expression;
             IfTrueActivities = ifTrueActivities;

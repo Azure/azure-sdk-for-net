@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,12 +32,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the Trigger class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Trigger description.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
-        public Trigger(string description = default(string), string runtimeState = default(string))
+        public Trigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string))
         {
+            AdditionalProperties = additionalProperties;
             Description = description;
             RuntimeState = runtimeState;
             CustomInit();
@@ -45,6 +50,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets trigger description.

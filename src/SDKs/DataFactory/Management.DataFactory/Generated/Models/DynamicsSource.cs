@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DynamicsSource class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -37,8 +41,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="query">FetchXML is a proprietary query language that
         /// is used in Microsoft Dynamics (online &amp; on-premises). Type:
         /// string (or Expression with resultType string).</param>
-        public DynamicsSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object))
-            : base(sourceRetryCount, sourceRetryWait)
+        public DynamicsSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
         {
             Query = query;
             CustomInit();

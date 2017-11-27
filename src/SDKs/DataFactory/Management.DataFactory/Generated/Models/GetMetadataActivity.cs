@@ -39,14 +39,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Activity name.</param>
         /// <param name="dataset">GetMetadata activity dataset
         /// reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="fieldList">Fields of metadata to get from
         /// dataset.</param>
-        public GetMetadataActivity(string name, DatasetReference dataset, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> fieldList = default(IList<object>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public GetMetadataActivity(string name, DatasetReference dataset, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> fieldList = default(IList<object>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             Dataset = dataset;
             FieldList = fieldList;

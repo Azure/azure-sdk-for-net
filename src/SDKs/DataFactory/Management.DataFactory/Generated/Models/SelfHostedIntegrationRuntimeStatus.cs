@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// SelfHostedIntegrationRuntimeStatus class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
         /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
@@ -66,8 +68,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="autoUpdate">Whether Self-hosted integration runtime
         /// auto update has been turned on. Possible values include: 'On',
         /// 'Off'</param>
-        public SelfHostedIntegrationRuntimeStatus(string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string))
-            : base(state)
+        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string))
+            : base(additionalProperties, state)
         {
             CreateTime = createTime;
             TaskQueueId = taskQueueId;
