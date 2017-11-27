@@ -21,7 +21,10 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
 
         private ILuisRuntimeAPI GetClient(DelegatingHandler handler, string subscriptionKey = subscriptionKey)
         {
-            return new LuisRuntimeAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
+            return new LuisRuntimeAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler)
+            {
+                AzureRegion = region
+            };
         }
 
         protected async void UseClientFor(Func<ILuisRuntimeAPI, Task> doTest, string className = null, [CallerMemberName] string methodName = "")

@@ -7,14 +7,15 @@ using Xunit;
 
 namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
 {
-    public class PredictionTests: BaseTest
+    public class PredictionTests : BaseTest
     {
         [Fact]
         public void PredictionGet()
         {
-            UseClientFor(async client => {
+            UseClientFor(async client =>
+            {
                 var utterance = "this is a test";
-                var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(region, appId, utterance);
+                var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(appId, utterance);
 
                 Assert.Equal("None", result.TopScoringIntent.Intent);
                 Assert.Equal(utterance, result.Query);
@@ -28,8 +29,9 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
 
             UseClientFor(async client =>
             {
-                var ex = await Assert.ThrowsAsync<APIErrorException>(async () => {
-                    await client.Prediction.GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(region, appId, "test", customHeaders: headers);
+                var ex = await Assert.ThrowsAsync<APIErrorException>(async () =>
+                {
+                    await client.Prediction.GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(appId, "test", customHeaders: headers);
                 });
 
                 Assert.Equal("401", ex.Body.StatusCode);
@@ -39,9 +41,10 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
         [Fact]
         public void PredictionPost()
         {
-            UseClientFor(async client => {
+            UseClientFor(async client =>
+            {
                 var utterance = "this is a test with post";
-                var result = await client.Prediction.GetPredictionsFromEndpointViaPostAsync(region, appId, utterance);
+                var result = await client.Prediction.GetPredictionsFromEndpointViaPostAsync(appId, utterance);
 
                 Assert.Equal("None", result.TopScoringIntent.Intent);
                 Assert.Equal(utterance, result.Query);

@@ -24,7 +24,27 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         [EnumMember(Value = "westus")]
         Westus,
         [EnumMember(Value = "westeurope")]
-        Westeurope
+        Westeurope,
+        [EnumMember(Value = "southeastasia")]
+        Southeastasia,
+        [EnumMember(Value = "eastus2")]
+        Eastus2,
+        [EnumMember(Value = "westcentralus")]
+        Westcentralus,
+        [EnumMember(Value = "westus2")]
+        Westus2,
+        [EnumMember(Value = "eastus")]
+        Eastus,
+        [EnumMember(Value = "southcentralus")]
+        Southcentralus,
+        [EnumMember(Value = "northeurope")]
+        Northeurope,
+        [EnumMember(Value = "eastasia")]
+        Eastasia,
+        [EnumMember(Value = "australiaeast")]
+        Australiaeast,
+        [EnumMember(Value = "brazilsouth")]
+        Brazilsouth
     }
     internal static class AzureRegionsEnumExtension
     {
@@ -41,6 +61,26 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
                     return "westus";
                 case AzureRegions.Westeurope:
                     return "westeurope";
+                case AzureRegions.Southeastasia:
+                    return "southeastasia";
+                case AzureRegions.Eastus2:
+                    return "eastus2";
+                case AzureRegions.Westcentralus:
+                    return "westcentralus";
+                case AzureRegions.Westus2:
+                    return "westus2";
+                case AzureRegions.Eastus:
+                    return "eastus";
+                case AzureRegions.Southcentralus:
+                    return "southcentralus";
+                case AzureRegions.Northeurope:
+                    return "northeurope";
+                case AzureRegions.Eastasia:
+                    return "eastasia";
+                case AzureRegions.Australiaeast:
+                    return "australiaeast";
+                case AzureRegions.Brazilsouth:
+                    return "brazilsouth";
             }
             return null;
         }
@@ -53,6 +93,26 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
                     return AzureRegions.Westus;
                 case "westeurope":
                     return AzureRegions.Westeurope;
+                case "southeastasia":
+                    return AzureRegions.Southeastasia;
+                case "eastus2":
+                    return AzureRegions.Eastus2;
+                case "westcentralus":
+                    return AzureRegions.Westcentralus;
+                case "westus2":
+                    return AzureRegions.Westus2;
+                case "eastus":
+                    return AzureRegions.Eastus;
+                case "southcentralus":
+                    return AzureRegions.Southcentralus;
+                case "northeurope":
+                    return AzureRegions.Northeurope;
+                case "eastasia":
+                    return AzureRegions.Eastasia;
+                case "australiaeast":
+                    return AzureRegions.Australiaeast;
+                case "brazilsouth":
+                    return AzureRegions.Brazilsouth;
             }
             return null;
         }
