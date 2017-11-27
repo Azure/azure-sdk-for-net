@@ -8,7 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.LUIS</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services LUIS runtine SDK. Included with this release is support for LUIS Prediction API.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a preview release of the Cognitive Services LUIS Runtime SDK. Included with this release is support for LUIS Prediction API.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
