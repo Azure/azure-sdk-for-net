@@ -38,6 +38,20 @@
         {
             throw new NotImplementedException();
         }
+
+        #region Logging
+
+        //public void LogDebug(string debugInfo)
+        //{
+        //    TaskLogger.LogDebugInfo(debugInfo);
+        //}
+
+        //public void LogDebug(string logFormat, params string[] info)
+        //{
+        //    TaskLogger.LogDebugInfo(string.Format(logFormat, info));
+        //}
+
+        #endregion
     }
 
     public interface INetSdkTask : ITask

@@ -52,10 +52,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
         {
             if (IsBuildEngineInitialized)
             {
-                if (OutputDebugTrace)
-                {
-                    NetSdkLogger.LogMessage(messageToLog);
-                }
+                NetSdkLogger.LogMessage(messageToLog);
             }
             else
             {
@@ -63,7 +60,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
             }
         }
 
-        public void LogInfo<T>(IEnumerable<T> infoToLog) where T:class
+        public void LogInfo<T>(IEnumerable<T> infoToLog) where T : class
         {
             LogInfo<T>(infoToLog, (i) => i.ToString());
         }
@@ -104,6 +101,53 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
                 Debug.WriteLine(errorMessage);
             }
         }
+        #endregion
+
+        #region Log Debug info
+        public void LogDebugInfo(string debugInfo)
+        {
+            if (IsBuildEngineInitialized)
+            {
+                NetSdkLogger.LogMessage(debugInfo);
+            }
+            else
+            {
+                Debug.WriteLine(debugInfo);
+            }
+        }
+
+        public void LogDebugInfo(string logFormat, params string[] debugInfo)
+        {
+            LogDebugInfo(string.Format(logFormat, debugInfo));
+        }
+
+        public void LogDebugInfo(IEnumerable<Tuple<string, string, string>> tupCol)
+        {
+            string logFormat = "Tuple:{0}_{1}_{2}";
+            foreach(Tuple<string, string, string> tup in tupCol)
+            {
+                LogDebugInfo(logFormat, tup.Item1, tup.Item2, tup.Item3);
+            }
+        }
+
+        public void LogDebugInfo(IEnumerable<Tuple<string, string>> tupCol)
+        {
+            string logFormat = "Tuple:{0}_{1}";
+            foreach (Tuple<string, string> tup in tupCol)
+            {
+                LogDebugInfo(logFormat, tup.Item1, tup.Item2);
+            }
+        }
+
+        public void LogDebugInfo(Dictionary<string, string> col)
+        {
+            string logFormat = "KV:{0}_{1}";
+            foreach (KeyValuePair<string, string> kv in col)
+            {
+                LogDebugInfo(logFormat, kv.Key, kv.Value);
+            }
+        }
+
         #endregion
     }
 }

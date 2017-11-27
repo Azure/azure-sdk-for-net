@@ -217,7 +217,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 try
                 {
                     projCollection.Add(new SdkProjectMetaData() { MsBuildProject = new Project(proj.ItemSpec), ProjectTaskItem = proj });
-                    SdkProjectMetaData foo;
                     
                 }
                 catch (Exception ex)

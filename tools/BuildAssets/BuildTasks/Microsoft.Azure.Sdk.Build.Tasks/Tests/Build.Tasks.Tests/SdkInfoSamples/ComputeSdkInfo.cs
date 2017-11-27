@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Build.Tasks.Tests
 {
-    public static partial class ComputeSdkInfo
+    public static partial class SdkInfo
     {
         public static IEnumerable<Tuple<string, string, string>> SdkInfo_Compute
         {

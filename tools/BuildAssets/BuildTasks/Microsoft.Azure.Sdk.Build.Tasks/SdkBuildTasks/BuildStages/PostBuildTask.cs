@@ -3,6 +3,7 @@ using Microsoft.Azure.Sdk.Build.Tasks.Models;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using Microsoft.WindowsAzure.Build.Tasks.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 {
     public class PostBuildTask : NetSdkTask
     {
-
         const string API_TAG_PROPERTYNAME = "AzureApiTags";
         const string PROPS_FILE_NAME = "AzSdk.RP.props";
         protected override INetSdkTask TaskInstance { get => this; }
@@ -25,11 +25,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         public bool EnableDebugTrace { get; set; }
         public ITaskItem[] SdkProjects { get; set; }
 
-        //public ITaskItem SdkProject { get; set; }
+        public string AssemblyFullPath { get; set; }
+        public string FQTypeName { get; set; }
+        //public bool CreatePropsFile { get; set; }
 
-        public string BuildScope { get; set; }
-
-        public bool InvokePostBuildTask { get; set; }
+        //public bool InvokePostBuildTask { get; set; }
 
         [Output]
         public string ApiTag { get; set; }
@@ -42,74 +42,194 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         {
             DebugTrace = EnableDebugTrace;
         }
-
         
         public override bool Execute()
         {
-            if (ValidateArgs())
+            if(!string.IsNullOrEmpty(AssemblyFullPath))
             {
-                List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
-                TaskLogger.LogInfo(filteredProjects?.Count.ToString());
-
-                foreach (SdkProjectMetaData proj in filteredProjects)
-                {
-                    ApiTag = GetApiMap(proj);
-                    UpdateProject(ApiTag, proj);
-                }
+                ApiTag = GetApiMap(AssemblyFullPath);
+            }
+            else
+            {
+                GetApiMapFromProject();
             }
 
             return true;
         }
 
-        internal string GetApiMap(SdkProjectMetaData sdkProjList)
+
+        private void GetApiMapFromProject()
         {
-            return GetApiMapUsingReflection(sdkProjList);
+            if (ValidateArgs())
+            {
+                List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
+                TaskLogger.LogInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
+
+                foreach (SdkProjectMetaData proj in filteredProjects)
+                {
+                    ApiTag = GetApiMap(proj.TargetOutputFullPath);
+                    if (!string.IsNullOrEmpty(ApiTag))
+                    {
+                        ApiTagPropsFile = UpdateProject(ApiTag, proj);
+                    }
+                    else
+                    {
+                        TaskLogger.LogInfo("SdkInfo Not Found in '{0}'", proj.FullProjectPath);
+                    }
+                }
+            }
         }
 
-        private string GetApiMapUsingReflection(SdkProjectMetaData sdkProjList)
+        //internal string GetApiMap(SdkProjectMetaData sdkProj)
+        //{
+        //    string apiTag = string.Empty;
+        //    string asmPath = sdkProj.TargetOutputFullPath;
+        //    IEnumerable<Tuple<string,string,string>> apiMap = GetApiMapUsingReflection(asmPath);
+        //    if(apiMap.Any())
+        //    {
+        //        Dictionary<string, string> normalizedMap = NormalizeTuple(apiMap);
+        //        apiTag = GetApiTag(normalizedMap);
+        //    }
+
+        //    return apiTag;
+        //}
+
+        internal string GetApiMap(string assemblyPath)
         {
-            string sdkAsmPath = sdkProjList.TargetOutputFullPath;
-            string apiMapPropertyName = string.Empty;
-            Assembly sdkAsm = Assembly.LoadFrom(sdkAsmPath);
-
-            Type someType = sdkAsm.GetType("SdkInfo");
-            StringBuilder sb = new StringBuilder();
-
-            var sdkInfoProp = someType.GetProperties().Where<PropertyInfo>((p) => p.Name.StartsWith("SdkInfo_"));
-
-            if (sdkInfoProp.Any())
+            string apiTag = string.Empty;
+            IEnumerable<Tuple<string, string, string>> apiMap = GetApiMapUsingReflection(assemblyPath);
+            if (apiMap.Any())
             {
-                apiMapPropertyName = sdkInfoProp.FirstOrDefault()?.Name;
+                IEnumerable<Tuple<string, string>> normalizedMap = NormalizeTuple(apiMap);
+                apiTag = GetApiTag(normalizedMap);
+            }
 
-                IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string, string, string>>)someType.GetProperty(apiMapPropertyName).GetValue(null, null);
-                string apiTagFormat = "{0}_{1}_{2};";
+            return apiTag;
+        }
 
-                foreach (Tuple<string, string, string> apiSet in apiMap)
+        private IEnumerable<Tuple<string, string, string>> GetApiMapUsingReflection(string assemblyFullPath)
+        {
+            string TYPENAMETOSEACH = "SdkInfo";
+            string PROPERTYNAMEPREFIX = "ApiInfo_";
+
+            //string sdkAsmPath = sdkProjList.TargetOutputFullPath;
+            string sdkAsmPath = assemblyFullPath;
+            string apiMapPropertyName = string.Empty;
+            //IEnumerable<Tuple<string, string, string>> combinedApiMap = new List<Tuple<string, string, string>>();
+            List<Tuple<string, string, string>> combinedApiMap = new List<Tuple<string, string, string>>();
+
+            try
+            {
+                TaskLogger.LogDebugInfo("Trying to load assembly: '{0}'", sdkAsmPath);
+                Assembly sdkAsm = Assembly.LoadFrom(sdkAsmPath);
+                Type sdkInfoType = null;
+                if(string.IsNullOrEmpty(FQTypeName))
                 {
-                    sb.Append(string.Format(apiTagFormat, apiSet.Item1, apiSet.Item2, apiSet.Item3));
+                    sdkInfoType = sdkAsm.GetType(TYPENAMETOSEACH, true, true);
+                }
+                else
+                {
+                    sdkInfoType = sdkAsm.GetType(FQTypeName, true, true);
+                }
+
+                var props = sdkInfoType.GetProperties(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                var sdkInfoProp = props.Where<PropertyInfo>((p) => p.Name.StartsWith(PROPERTYNAMEPREFIX, StringComparison.OrdinalIgnoreCase));
+
+                if (sdkInfoProp.Any())
+                {
+                    foreach (PropertyInfo pInfo in sdkInfoProp)
+                    {
+                        IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string, string, string>>)pInfo.GetValue(null, null);
+
+                        if (apiMap.Any())
+                        {
+                            //combinedApiMap.Union(apiMap);
+                            combinedApiMap.AddRange(apiMap);
+                        }
+
+                        //string apiTagFormat = "{0}_{1}_{2};";
+                        //foreach (Tuple<string, string, string> apiSet in apiMap)
+                        //{
+                        //    sb.Append(string.Format(apiTagFormat, apiSet.Item1, apiSet.Item2, apiSet.Item3));
+                        //}
+                    }
+                }
+                sdkAsm = null;
+            }
+            catch(Exception ex)
+            {
+                TaskLogger.LogInfo(ex.Message);
+            }
+
+            return combinedApiMap;
+        }
+
+        private IEnumerable<Tuple<string, string>> NormalizeTuple(IEnumerable<Tuple<string, string, string>> apiMap)
+        {
+            //TODO: get rid of second dictionary (optimize)
+            Dictionary<string, string> na = new Dictionary<string, string>(new ObjectComparer<string>((l, r) => l.Equals(r, StringComparison.OrdinalIgnoreCase)));
+            List<Tuple<string, string>> normalized = new List<Tuple<string, string>>();
+            //List<Tuple<string, string>> normalized = new Dictionary<string, string>(new ObjectComparer<string>((l, r) => l.Equals(r, StringComparison.OrdinalIgnoreCase)));
+
+
+            foreach (var api in apiMap)
+            {
+                string nsApi = string.Concat(api.Item1, api.Item3);
+                if (!na.ContainsKey(nsApi))
+                {
+                    na.Add(nsApi, nsApi);
+                    normalized.Add(new Tuple<string, string>(api.Item1, api.Item3));
                 }
             }
 
-            sdkAsm = null;
+            TaskLogger.LogDebugInfo(apiMap);
+            TaskLogger.LogDebugInfo(normalized);
+
+            return normalized;
+        }
+        
+        private string GetApiTag(Dictionary<string, string> apiMap)
+        {
+            StringBuilder sb = new StringBuilder();
+            string apiTagFormat = "{0}_{1};";
+            foreach(KeyValuePair<String, string> kvp in apiMap)
+            {
+                sb.Append(string.Format(apiTagFormat, kvp.Key, kvp.Value));
+            }
 
             return sb.ToString();
         }
 
-        internal void UpdateProject(string apiTag, SdkProjectMetaData sdkProject)
+        private string GetApiTag(IEnumerable<Tuple<string, string>> apiMap)
+        {
+            StringBuilder sb = new StringBuilder();
+            string apiTagFormat = "{0}_{1};";
+            foreach (Tuple<string, string> kvp in apiMap)
+            {
+                sb.Append(string.Format(apiTagFormat, kvp.Item1, kvp.Item2));
+            }
+
+            return sb.ToString();
+        }
+
+
+            private string UpdateProject(string apiTag, SdkProjectMetaData sdkProject)
         {
             string azApiPropertyName = API_TAG_PROPERTYNAME;
             string propsFile = GetApiTagsPropsPath(sdkProject);
             Project propsProject = new Project(propsFile);
             string existingApiTags = propsProject.GetPropertyValue(azApiPropertyName);
-            ApiTagPropsFile = propsFile;
+            //ApiTagPropsFile = propsFile;
             if (!existingApiTags.Trim().Equals(apiTag.Trim(), StringComparison.OrdinalIgnoreCase))
             {   
                 propsProject.SetProperty(azApiPropertyName, apiTag);
-                propsProject.Save();                
+                propsProject.Save();
             }
+
+            return propsFile;
         }
 
-        internal string GetApiTagsPropsPath(SdkProjectMetaData sdkProject)
+        private string GetApiTagsPropsPath(SdkProjectMetaData sdkProject)
         {
             string apiTagsPropsPath = string.Empty;
             string apiTagsFileName = PROPS_FILE_NAME;
@@ -145,17 +265,17 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             //TaskLogger.LogInfo("InvokePostBuildTask: {0}", InvokePostBuildTask.ToString());
             //TaskLogger.LogInfo("ProjectBeingBuilt: {0}", SdkProject.ItemSpec.ToString());
 
-            if (InvokePostBuildTask == false)
-            {
-                TaskLogger.LogInfo("InvokePostBuildTask: {0}", InvokePostBuildTask.ToString());
-                isValidated = false;
-            }
+            //if (InvokePostBuildTask == false)
+            //{
+            //    TaskLogger.LogInfo("InvokePostBuildTask: {0}", InvokePostBuildTask.ToString());
+            //    isValidated = false;
+            //}
             //else if(!String.IsNullOrEmpty(SdkProject.ItemSpec))
             //{
             //    isValidated = true;
             //    TaskLogger.LogInfo(SdkProject.ItemSpec);
             //}
-            else if (SdkProjects.Any<ITaskItem>())
+            if (SdkProjects.Any<ITaskItem>())
             {
                 isValidated = true;
                 TaskLogger.LogInfo<ITaskItem>(SdkProjects, (proj) => proj.ItemSpec.ToString());

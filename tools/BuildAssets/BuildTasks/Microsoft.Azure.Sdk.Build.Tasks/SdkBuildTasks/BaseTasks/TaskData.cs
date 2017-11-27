@@ -24,16 +24,27 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
             //ad.AssemblyResolve += Ad_AssemblyResolve;
         }
 
-        
 
-        public static List<SdkProjectMetaData> FilterCategorizedProjects(ITaskItem[] filterProjectOn)
+
+        public static List<SdkProjectMetaData> FilterCategorizedProjects(ITaskItem[] filterProjectOn, bool filterSdkProjectsOnly = true)
         {
+            IEnumerable<SdkProjectMetaData> filteredNetFxFull;
             //IEnumerable<SdkProjectMetaData> distinctList = new List<SdkProjectMetaData>();
             //if (filterProjectOn.Any<ITaskItem>())
             //{
-                var filtered = CategorizedProjects.Where((cat) => filterProjectOn.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
-                var filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452));
-                var distinctList = filteredNetFxFull.Distinct<SdkProjectMetaData>(new ObjectComparer<SdkProjectMetaData>((l, r) => l.FullProjectPath.Equals(r.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+            var filtered = CategorizedProjects.Where((cat) => filterProjectOn.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+
+            if (filterSdkProjectsOnly == true)
+            {
+                filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452) && (f.ProjectType == SdkProjctType.Sdk));
+            }
+            else
+            {
+                filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452));
+            }
+
+            var distinctList = filteredNetFxFull.Distinct<SdkProjectMetaData>(new ObjectComparer<SdkProjectMetaData>((l, r) => l.FullProjectPath.Equals(r.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+
             //}
 
             return distinctList?.ToList<SdkProjectMetaData>();
