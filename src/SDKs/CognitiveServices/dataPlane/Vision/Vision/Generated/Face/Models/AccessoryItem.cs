@@ -13,21 +13,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class AccessoryPropertiesItem
+    /// <summary>
+    /// Accessory item and corresponding confidence level.
+    /// </summary>
+    public partial class AccessoryItem
     {
         /// <summary>
-        /// Initializes a new instance of the AccessoryPropertiesItem class.
+        /// Initializes a new instance of the AccessoryItem class.
         /// </summary>
-        public AccessoryPropertiesItem()
+        public AccessoryItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AccessoryPropertiesItem class.
+        /// Initializes a new instance of the AccessoryItem class.
         /// </summary>
         /// <param name="type">Description of an accessory</param>
-        public AccessoryPropertiesItem(string type = default(string), double confidence = default(double))
+        public AccessoryItem(string type = default(string), double confidence = default(double))
         {
             Type = type;
             Confidence = confidence;

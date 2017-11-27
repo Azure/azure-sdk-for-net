@@ -67,7 +67,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<SimilarFaceResult>>> FindSimilarWithHttpMessagesAsync(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = 20, string mode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<SimilarFaceResult>>> FindSimilarWithHttpMessagesAsync(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = 20, FaceMatchingMode mode = default(FaceMatchingMode), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Divide candidate faces into groups based on face similarity.
         /// </summary>
@@ -123,39 +123,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         Task<HttpOperationResponse<IList<IdentifyResultItem>>> IdentifyWithHttpMessagesAsync(string personGroupId, IList<string> faceIds, int? maxNumOfCandidatesReturned = 1, double confidenceThreshold = default(double), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Verify whether two faces belong to a same person. Compares a face
-        /// Id with a Person Id
-        /// </summary>
-        /// <param name='faceId'>
-        /// faceId the face, comes from Face - Detect
-        /// </param>
-        /// <param name='personId'>
-        /// Specify a certain person in a person group. personId is created in
-        /// Persons.Create.
-        /// </param>
-        /// <param name='personGroupId'>
-        /// Using existing personGroupId and personId for fast loading a
-        /// specified person. personGroupId is created in Person Groups.Create.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<VerifyResult>> VerifyWithPersonGroupWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Verify whether two faces belong to a same person. Compares two
-        /// different face Ids.
+        /// Verify whether two faces belong to a same person or whether one
+        /// face belongs to a person.
         /// </summary>
         /// <param name='faceId1'>
         /// faceId of the first face, comes from Face - Detect
@@ -216,6 +185,37 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeTypes> returnFaceAttributes = default(IList<FaceAttributeTypes>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Verify whether two faces belong to a same person. Compares a face
+        /// Id with a Person Id
+        /// </summary>
+        /// <param name='faceId'>
+        /// faceId the face, comes from Face - Detect
+        /// </param>
+        /// <param name='personId'>
+        /// Specify a certain person in a person group. personId is created in
+        /// Persons.Create.
+        /// </param>
+        /// <param name='personGroupId'>
+        /// Using existing personGroupId and personId for fast loading a
+        /// specified person. personGroupId is created in Person Groups.Create.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<VerifyResult>> VerifyWithPersonGroupWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Detect human faces in an image and returns face locations, and
         /// optionally with faceIds, landmarks, and attributes.

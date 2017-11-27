@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.Face
 {
+    using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
 
@@ -33,16 +34,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Subscription key in header
-        /// </summary>
-        string SubscriptionKey { get; set; }
-
-        /// <summary>
         /// Supported Azure regions for Cognitive Services endpoints. Possible
         /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth'
         /// </summary>
         AzureRegions AzureRegion { get; set; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client
+        /// subscription.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
 
 
         /// <summary>

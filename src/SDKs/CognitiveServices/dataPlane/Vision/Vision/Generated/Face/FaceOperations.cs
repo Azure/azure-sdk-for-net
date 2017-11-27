@@ -97,12 +97,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<SimilarFaceResult>>> FindSimilarWithHttpMessagesAsync(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = 20, string mode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<SimilarFaceResult>>> FindSimilarWithHttpMessagesAsync(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = 20, FaceMatchingMode mode = default(FaceMatchingMode), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (faceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceId");
@@ -141,7 +137,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "maxNumOfCandidatesReturned", 1);
             }
             FindSimilarRequest body = new FindSimilarRequest();
-            if (faceId != null || faceListId != null || faceIds != null || maxNumOfCandidatesReturned != null || mode != null)
+            if (faceId != null || faceListId != null || faceIds != null || maxNumOfCandidatesReturned != null)
             {
                 body.FaceId = faceId;
                 body.FaceListId = faceListId;
@@ -170,14 +166,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -199,6 +187,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -302,10 +296,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<GroupResponse>> GroupWithHttpMessagesAsync(IList<string> faceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (faceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceIds");
@@ -343,14 +333,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -372,6 +354,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -482,10 +470,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<IdentifyResultItem>>> IdentifyWithHttpMessagesAsync(string personGroupId, IList<string> faceIds, int? maxNumOfCandidatesReturned = 1, double confidenceThreshold = default(double), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -538,14 +522,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -567,6 +543,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -641,199 +623,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Verify whether two faces belong to a same person. Compares a face Id with a
-        /// Person Id
-        /// </summary>
-        /// <param name='faceId'>
-        /// faceId the face, comes from Face - Detect
-        /// </param>
-        /// <param name='personId'>
-        /// Specify a certain person in a person group. personId is created in
-        /// Persons.Create.
-        /// </param>
-        /// <param name='personGroupId'>
-        /// Using existing personGroupId and personId for fast loading a specified
-        /// person. personGroupId is created in Person Groups.Create.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<VerifyResult>> VerifyWithPersonGroupWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
-            if (faceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "faceId");
-            }
-            if (faceId != null)
-            {
-                if (faceId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "faceId", 64);
-                }
-            }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
-            }
-            if (personGroupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
-            }
-            VerifyPersonGroupRequest body = new VerifyPersonGroupRequest();
-            if (faceId != null || personId != null || personGroupId != null)
-            {
-                body.FaceId = faceId;
-                body.PersonId = personId;
-                body.PersonGroupId = personGroupId;
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("body", body);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "VerifyWithPersonGroup", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(body != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<VerifyResult>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VerifyResult>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Verify whether two faces belong to a same person. Compares two different
-        /// face Ids.
+        /// Verify whether two faces belong to a same person or whether one face
+        /// belongs to a person.
         /// </summary>
         /// <param name='faceId1'>
         /// faceId of the first face, comes from Face - Detect
@@ -864,10 +655,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<VerifyResult>> VerifyWithHttpMessagesAsync(string faceId1, string faceId2, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (faceId1 == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceId1");
@@ -917,14 +704,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -946,6 +725,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1063,10 +848,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeTypes> returnFaceAttributes = default(IList<FaceAttributeTypes>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -1117,14 +898,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -1146,6 +919,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(imageUrl, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1220,6 +999,191 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
+        /// Verify whether two faces belong to a same person. Compares a face Id with a
+        /// Person Id
+        /// </summary>
+        /// <param name='faceId'>
+        /// faceId the face, comes from Face - Detect
+        /// </param>
+        /// <param name='personId'>
+        /// Specify a certain person in a person group. personId is created in
+        /// Persons.Create.
+        /// </param>
+        /// <param name='personGroupId'>
+        /// Using existing personGroupId and personId for fast loading a specified
+        /// person. personGroupId is created in Person Groups.Create.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="APIErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<VerifyResult>> VerifyWithPersonGroupWithHttpMessagesAsync(string faceId, string personId, string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (faceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "faceId");
+            }
+            if (faceId != null)
+            {
+                if (faceId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "faceId", 64);
+                }
+            }
+            if (personId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
+            }
+            if (personGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
+            }
+            VerifyPersonGroupRequest body = new VerifyPersonGroupRequest();
+            if (faceId != null || personId != null || personGroupId != null)
+            {
+                body.FaceId = faceId;
+                body.PersonId = personId;
+                body.PersonGroupId = personGroupId;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("body", body);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "VerifyWithPersonGroup", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(body != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<VerifyResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VerifyResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Detect human faces in an image and returns face locations, and optionally
         /// with faceIds, landmarks, and attributes.
         /// </summary>
@@ -1264,10 +1228,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectInStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeTypes> returnFaceAttributes = default(IList<FaceAttributeTypes>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -1313,14 +1273,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -1345,6 +1297,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
               _httpRequest.Content = new StreamContent(image);
               _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)

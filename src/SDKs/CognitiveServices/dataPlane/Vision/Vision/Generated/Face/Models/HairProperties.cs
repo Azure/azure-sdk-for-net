@@ -36,9 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// the person is bald.</param>
         /// <param name="invisible">A boolean value describing whether the hair
         /// is visible in the image.</param>
-        /// <param name="hairColor">An array of candidate colors and confidence
-        /// level in the presence of each.</param>
-        public HairProperties(double? bald = default(double?), bool? invisible = default(bool?), IList<HairPropertiesHairColorItem> hairColor = default(IList<HairPropertiesHairColorItem>))
+        public HairProperties(double? bald = default(double?), bool? invisible = default(bool?), IList<ColorProperty> hairColor = default(IList<ColorProperty>))
         {
             Bald = bald;
             Invisible = invisible;
@@ -66,11 +64,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public bool? Invisible { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of candidate colors and confidence level in
-        /// the presence of each.
         /// </summary>
         [JsonProperty(PropertyName = "hairColor")]
-        public IList<HairPropertiesHairColorItem> HairColor { get; set; }
+        public IList<ColorProperty> HairColor { get; set; }
 
         /// <summary>
         /// Validate the object.

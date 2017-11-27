@@ -99,10 +99,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
             }
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             if (name != null)
             {
                 if (name.Length > 128)
@@ -146,14 +142,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -175,6 +163,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -274,10 +268,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
             }
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -300,14 +290,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -324,6 +306,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -415,7 +403,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -443,10 +431,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 {
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
-            }
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
             }
             if (name != null)
             {
@@ -491,14 +475,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -521,6 +497,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -537,19 +519,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
                 }
-                catch (JsonException)
-                {
-                    // Ignore the exception
+                else {
+                    _responseContent = string.Empty;
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -588,7 +563,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -617,10 +592,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
             }
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -643,14 +614,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -667,6 +630,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -683,19 +652,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
                 }
-                catch (JsonException)
-                {
-                    // Ignore the exception
+                else {
+                    _responseContent = string.Empty;
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -737,21 +699,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<IList<GetFaceListResult>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -772,14 +724,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -796,6 +740,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -884,7 +834,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -917,10 +867,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "persistedFaceId");
             }
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -945,14 +891,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -969,6 +907,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -985,19 +929,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
                 }
-                catch (JsonException)
-                {
-                    // Ignore the exception
+                else {
+                    _responseContent = string.Empty;
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1031,13 +968,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='faceListId'>
         /// Id referencing a Face List.
         /// </param>
+        /// <param name='url'>
+        /// </param>
         /// <param name='userData'>
         /// User-specified data about the face list for any purpose. The  maximum
         /// length is 1KB.
         /// </param>
         /// <param name='targetFace'>
-        /// A face rectangle to specify the target face to be added into the face list,
-        /// in the format of "targetFace=left,top,width,height". E.g.
+        /// A face rectangle to specify the target face to be added to a person in the
+        /// format of "targetFace=left,top,width,height". E.g.
         /// "targetFace=10,10,100,100". If there is more than one face in the image,
         /// targetFace is required to specify which face to add. No targetFace means
         /// there is only one face detected in the entire image.
@@ -1051,6 +990,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -1060,7 +1002,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> AddFaceWithHttpMessagesAsync(string faceListId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFaceResult>> AddFaceWithHttpMessagesAsync(string faceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (faceListId == null)
             {
@@ -1077,9 +1019,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
             }
-            if (Client.SubscriptionKey == null)
+            if (url == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
+                throw new ValidationException(ValidationRules.CannotBeNull, "url");
+            }
+            ImageUrl imageUrl = new ImageUrl();
+            if (url != null)
+            {
+                imageUrl.Url = url;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1091,6 +1038,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("faceListId", faceListId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
+                tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AddFace", tracingParameters);
             }
@@ -1106,7 +1054,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             if (targetFace != null)
             {
-                _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(targetFace)));
+                _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(string.Join(",", targetFace))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1118,14 +1066,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -1142,6 +1082,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            if(imageUrl != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(imageUrl, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1186,9 +1138,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<PersistedFaceResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PersistedFaceResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -1209,8 +1179,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// length is 1KB.
         /// </param>
         /// <param name='targetFace'>
-        /// A face rectangle to specify the target face to be added into the face list,
-        /// in the format of "targetFace=left,top,width,height". E.g.
+        /// A face rectangle to specify the target face to be added to a person in the
+        /// format of "targetFace=left,top,width,height". E.g.
         /// "targetFace=10,10,100,100". If there is more than one face in the image,
         /// targetFace is required to specify which face to add. No targetFace means
         /// there is only one face detected in the entire image.
@@ -1224,6 +1194,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -1233,7 +1206,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFaceResult>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (faceListId == null)
             {
@@ -1249,10 +1222,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 {
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
-            }
-            if (Client.SubscriptionKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionKey");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1279,7 +1248,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             if (targetFace != null)
             {
-                _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(targetFace)));
+                _queryParameters.Add(string.Format("targetFace={0}", System.Uri.EscapeDataString(string.Join(",", targetFace))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1291,14 +1260,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (Client.SubscriptionKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Ocp-Apim-Subscription-Key"))
-                {
-                    _httpRequest.Headers.Remove("Ocp-Apim-Subscription-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", Client.SubscriptionKey);
-            }
 
 
             if (customHeaders != null)
@@ -1315,6 +1276,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1359,9 +1326,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<PersistedFaceResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PersistedFaceResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);

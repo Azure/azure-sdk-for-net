@@ -40,16 +40,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Subscription key in header
-        /// </summary>
-        public string SubscriptionKey { get; set; }
-
-        /// <summary>
         /// Supported Azure regions for Cognitive Services endpoints. Possible values
         /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus'
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+        /// 'eastasia', 'australiaeast', 'brazilsouth'
         /// </summary>
         public AzureRegions AzureRegion { get; set; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client subscription.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Gets the IFaceOperations.
@@ -77,7 +78,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public FaceAPI(params DelegatingHandler[] handlers) : base(handlers)
+        protected FaceAPI(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -91,9 +92,62 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public FaceAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected FaceAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FaceAPI class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public FaceAPI(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FaceAPI class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public FaceAPI(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>

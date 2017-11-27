@@ -15,32 +15,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Response body for find similar face operation.
+    /// Persisted face result.
     /// </summary>
-    public partial class SimilarFaceResult
+    public partial class PersistedFaceResult
     {
         /// <summary>
-        /// Initializes a new instance of the SimilarFaceResult class.
+        /// Initializes a new instance of the PersistedFaceResult class.
         /// </summary>
-        public SimilarFaceResult()
+        public PersistedFaceResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SimilarFaceResult class.
+        /// Initializes a new instance of the PersistedFaceResult class.
         /// </summary>
-        /// <param name="faceId">faceId of candidate face when find by faceIds.
-        /// faceId is created by Face - Detect and will expire 24 hours after
-        /// the detection call</param>
         /// <param name="persistedFaceId">persistedFaceId of candidate face
         /// when find by faceListId. persistedFaceId in face list is persisted
         /// and will not expire. As showed in below response</param>
-        public SimilarFaceResult(string faceId = default(string), string persistedFaceId = default(string), double confidence = default(double))
+        public PersistedFaceResult(string persistedFaceId)
         {
-            FaceId = faceId;
             PersistedFaceId = persistedFaceId;
-            Confidence = confidence;
             CustomInit();
         }
 
@@ -48,14 +43,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets faceId of candidate face when find by faceIds. faceId
-        /// is created by Face - Detect and will expire 24 hours after the
-        /// detection call
-        /// </summary>
-        [JsonProperty(PropertyName = "faceId")]
-        public string FaceId { get; set; }
 
         /// <summary>
         /// Gets or sets persistedFaceId of candidate face when find by
@@ -66,11 +53,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public string PersistedFaceId { get; set; }
 
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "confidence")]
-        public double Confidence { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -78,12 +60,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FaceId != null)
+            if (PersistedFaceId == null)
             {
-                if (FaceId.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "FaceId", 64);
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "PersistedFaceId");
             }
         }
     }

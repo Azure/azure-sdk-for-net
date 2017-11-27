@@ -12,6 +12,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,11 +37,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="name">Face list's display name.</param>
         /// <param name="userData">User-provided data attached to this face
         /// list.</param>
-        public GetFaceListResult(string faceListId, string name = default(string), string userData = default(string))
+        /// <param name="persistedFaces">Persisted faces within the face
+        /// list.</param>
+        public GetFaceListResult(string faceListId, string name = default(string), string userData = default(string), IList<PersonFaceResult> persistedFaces = default(IList<PersonFaceResult>))
         {
             FaceListId = faceListId;
             Name = name;
             UserData = userData;
+            PersistedFaces = persistedFaces;
             CustomInit();
         }
 
@@ -65,6 +70,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets persisted faces within the face list.
+        /// </summary>
+        [JsonProperty(PropertyName = "persistedFaces")]
+        public IList<PersonFaceResult> PersistedFaces { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -101,6 +112,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                 if (UserData.Length > 16384)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
+                }
+            }
+            if (PersistedFaces != null)
+            {
+                foreach (var element in PersistedFaces)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
                 }
             }
         }

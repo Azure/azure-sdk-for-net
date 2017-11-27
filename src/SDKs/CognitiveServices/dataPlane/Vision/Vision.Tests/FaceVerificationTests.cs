@@ -23,15 +23,15 @@ namespace FaceSDK.Tests
                 string faceId2 = null;
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "verificationBase1.png"), FileMode.Open))
                 {
-                    faceId1 = client.Face.DetectInStream(stream, true)[0].FaceId;
+                    faceId1 = client.Face.DetectInStreamAsync(stream, true).Result[0].FaceId;
                 }
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "verificationCompare1.png"), FileMode.Open))
                 {
-                    faceId2 = client.Face.DetectInStream(stream, true)[0].FaceId;
+                    faceId2 = client.Face.DetectInStreamAsync(stream, true).Result[0].FaceId;
                 }
 
-                VerifyResult verifyResult = client.Face.Verify(faceId1, faceId2);
+                VerifyResult verifyResult = client.Face.VerifyAsync(faceId1, faceId2).Result;
                 Assert.True(verifyResult.Confidence > 0.7);
                 Assert.True(verifyResult.IsIdentical);
             }
@@ -50,55 +50,55 @@ namespace FaceSDK.Tests
                 string faceId2 = null;
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "verificationBase1.png"), FileMode.Open))
                 {
-                    faceId1 = client.Face.DetectInStream(stream, true)[0].FaceId;
+                    faceId1 = client.Face.DetectInStreamAsync(stream, true).Result[0].FaceId;
                 }
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "verificationCompare2.png"), FileMode.Open))
                 {
-                    faceId2 = client.Face.DetectInStream(stream, true)[0].FaceId;
+                    faceId2 = client.Face.DetectInStreamAsync(stream, true).Result[0].FaceId;
                 }
 
-                VerifyResult verifyResult = client.Face.Verify(faceId1, faceId2);
+                VerifyResult verifyResult = client.Face.VerifyAsync(faceId1, faceId2).Result;
                 Assert.True(verifyResult.Confidence < 0.3);
                 Assert.False(verifyResult.IsIdentical);
             }
         }
 
         [Fact]
-        public void FaceVerificationPersonGroup()
+        public void FaceVerificationNegative2()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationNegative");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationNegative2");
 
                 IFaceAPI client = GetClient(HttpMockServer.CreateInstance());
                 string faceId1 = null;
                 string faceId2 = null;
                 string personGroupId = "123";
 
-                client.PersonGroup.Create(personGroupId, "fakePersonGroup");
+                client.PersonGroup.CreateAsync(personGroupId, "fakePersonGroup").Wait();
                 try
                 {
-                    CreatePersonResult createPersonResult = client.Person.Create(personGroupId, "David");
+                    CreatePersonResult createPersonResult = client.Person.CreateAsync(personGroupId, "David").Result;
                     using (FileStream stream = new FileStream(Path.Combine("TestImages", "verificationBase1.png"), FileMode.Open))
                     {
-                        client.Person.AddPersonFaceFromStream(personGroupId, createPersonResult.PersonId, stream);
+                        client.Person.AddPersonFaceFromStreamAsync(personGroupId, createPersonResult.PersonId, stream).Wait();
                     }
 
-                    client.PersonGroup.Train(personGroupId);
+                    client.PersonGroup.TrainAsync(personGroupId).Wait();
 
                     using (FileStream stream = new FileStream(Path.Combine("TestImages", "verificationCompare1.png"), FileMode.Open))
                     {
-                        faceId2 = client.Face.DetectInStream(stream, true)[0].FaceId;
+                        faceId2 = client.Face.DetectInStreamAsync(stream, true).Result[0].FaceId;
                     }
 
-                    VerifyResult verifyResult = client.Face.VerifyWithPersonGroup(faceId2, createPersonResult.PersonId, personGroupId);
+                    VerifyResult verifyResult = client.Face.VerifyWithPersonGroupAsync(faceId2, createPersonResult.PersonId, personGroupId).Result;
                     Assert.True(verifyResult.Confidence > 0.7);
                     Assert.True(verifyResult.IsIdentical);
                 }
                 finally
                 {
-                    client.PersonGroup.Delete(personGroupId);
+                    client.PersonGroup.DeleteAsync(personGroupId);
                 }
             }
         }

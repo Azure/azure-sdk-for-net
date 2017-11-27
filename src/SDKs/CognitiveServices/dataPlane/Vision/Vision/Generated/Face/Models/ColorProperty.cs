@@ -16,23 +16,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     /// <summary>
     /// Hair color and associated confidence
     /// </summary>
-    public partial class HairPropertiesHairColorItem
+    public partial class ColorProperty
     {
         /// <summary>
-        /// Initializes a new instance of the HairPropertiesHairColorItem
-        /// class.
+        /// Initializes a new instance of the ColorProperty class.
         /// </summary>
-        public HairPropertiesHairColorItem()
+        public ColorProperty()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HairPropertiesHairColorItem
-        /// class.
+        /// Initializes a new instance of the ColorProperty class.
         /// </summary>
         /// <param name="color">Name of the color.</param>
-        public HairPropertiesHairColorItem(string color = default(string), double confidence = default(double))
+        public ColorProperty(string color = default(string), double confidence = default(double))
         {
             Color = color;
             Confidence = confidence;

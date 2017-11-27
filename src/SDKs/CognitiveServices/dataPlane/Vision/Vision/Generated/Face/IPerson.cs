@@ -55,9 +55,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <summary>
         /// List all persons in a person group, and retrieve person information
         /// (including personId, name, userData and persistedFaceIds of
-        /// registered faces of the person). Start and top are used to specify
-        /// a range of person groups to list indicated by a 'start'ing Person
-        /// ID and the number (top) of persons to return.
+        /// registered faces of the person).
         /// </summary>
         /// <param name='personGroupId'>
         /// personGroupId of the target person group.
@@ -101,7 +99,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -156,7 +154,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -182,7 +180,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -240,7 +238,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -280,10 +278,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AddPersonFaceWithHttpMessagesAsync(string personGroupId, string personId, string url, string userData = default(string), IList<int?> targetFace = default(IList<int?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFaceResult>> AddPersonFaceWithHttpMessagesAsync(string personGroupId, string personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a representative face to a person for identification. The input
         /// face is specified as an image with a targetFace rectangle.
@@ -302,8 +303,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// The maximum length is 1KB.
         /// </param>
         /// <param name='targetFace'>
-        /// A face rectangle to specify the target face to be added to a
-        /// person, in the format of "targetFace=left,top,width,height". E.g.
+        /// A face rectangle to specify the target face to be added to a person
+        /// in the format of "targetFace=left,top,width,height". E.g.
         /// "targetFace=10,10,100,100". If there is more than one face in the
         /// image, targetFace is required to specify which face to add. No
         /// targetFace means there is only one face detected in the entire
@@ -318,9 +319,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AddPersonFaceFromStreamWithHttpMessagesAsync(string personGroupId, string personId, Stream image, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFaceResult>> AddPersonFaceFromStreamWithHttpMessagesAsync(string personGroupId, string personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

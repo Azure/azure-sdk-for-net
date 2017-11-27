@@ -10,99 +10,63 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Training status object.
+    /// Defines values for TrainingStatus.
     /// </summary>
-    public partial class TrainingStatus
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TrainingStatus
     {
-        /// <summary>
-        /// Initializes a new instance of the TrainingStatus class.
-        /// </summary>
-        public TrainingStatus()
+        [EnumMember(Value = "nonstarted")]
+        Nonstarted,
+        [EnumMember(Value = "running")]
+        Running,
+        [EnumMember(Value = "succeeded")]
+        Succeeded,
+        [EnumMember(Value = "failed")]
+        Failed
+    }
+    internal static class TrainingStatusEnumExtension
+    {
+        internal static string ToSerializedValue(this TrainingStatus? value)
         {
-            CustomInit();
+            return value == null ? null : ((TrainingStatus)value).ToSerializedValue();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the TrainingStatus class.
-        /// </summary>
-        /// <param name="status">Training status: notstarted, running,
-        /// succeeded, failed. If the training process is waiting to perform,
-        /// the status is notstarted. If the training is ongoing, the status is
-        /// running. Status succeed means this person group is ready for Face -
-        /// Identify. Status failed is often caused by no person or no
-        /// persisted face exist in the person group. Possible values include:
-        /// 'nonstarted', 'running', 'succeeded', 'failed'</param>
-        /// <param name="created">A combined UTC date and time string that
-        /// describes person group created time.</param>
-        /// <param name="lastAction">Person group last modify time in the UTC,
-        /// could be null value when the person group is not successfully
-        /// trained.</param>
-        /// <param name="message">Show failure message when training failed
-        /// (omitted when training succeed).</param>
-        public TrainingStatus(string status, System.DateTime? created = default(System.DateTime?), System.DateTime? lastAction = default(System.DateTime?), string message = default(string))
+        internal static string ToSerializedValue(this TrainingStatus value)
         {
-            Status = status;
-            Created = created;
-            LastAction = lastAction;
-            Message = message;
-            CustomInit();
-        }
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets training status: notstarted, running, succeeded,
-        /// failed. If the training process is waiting to perform, the status
-        /// is notstarted. If the training is ongoing, the status is running.
-        /// Status succeed means this person group is ready for Face -
-        /// Identify. Status failed is often caused by no person or no
-        /// persisted face exist in the person group. Possible values include:
-        /// 'nonstarted', 'running', 'succeeded', 'failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
-
-        /// <summary>
-        /// Gets or sets a combined UTC date and time string that describes
-        /// person group created time.
-        /// </summary>
-        [JsonProperty(PropertyName = "createdDateTime")]
-        public System.DateTime? Created { get; set; }
-
-        /// <summary>
-        /// Gets or sets person group last modify time in the UTC, could be
-        /// null value when the person group is not successfully trained.
-        /// </summary>
-        [JsonProperty(PropertyName = "lastActionDateTime")]
-        public System.DateTime? LastAction { get; set; }
-
-        /// <summary>
-        /// Gets or sets show failure message when training failed (omitted
-        /// when training succeed).
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Status == null)
+            switch( value )
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Status");
+                case TrainingStatus.Nonstarted:
+                    return "nonstarted";
+                case TrainingStatus.Running:
+                    return "running";
+                case TrainingStatus.Succeeded:
+                    return "succeeded";
+                case TrainingStatus.Failed:
+                    return "failed";
             }
+            return null;
+        }
+
+        internal static TrainingStatus? ParseTrainingStatus(this string value)
+        {
+            switch( value )
+            {
+                case "nonstarted":
+                    return TrainingStatus.Nonstarted;
+                case "running":
+                    return TrainingStatus.Running;
+                case "succeeded":
+                    return TrainingStatus.Succeeded;
+                case "failed":
+                    return TrainingStatus.Failed;
+            }
+            return null;
         }
     }
 }

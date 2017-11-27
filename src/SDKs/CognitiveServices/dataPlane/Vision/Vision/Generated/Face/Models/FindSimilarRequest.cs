@@ -49,7 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="mode">Similar face searching mode. It can be
         /// "matchPerson" or "matchFace". Possible values include:
         /// 'matchPerson', 'matchFace'</param>
-        public FindSimilarRequest(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = default(int?), string mode = default(string))
+        public FindSimilarRequest(string faceId, string faceListId = default(string), IList<string> faceIds = default(IList<string>), int? maxNumOfCandidatesReturned = default(int?), FaceMatchingMode mode = default(FaceMatchingMode))
         {
             FaceId = faceId;
             FaceListId = faceListId;
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// or "matchFace". Possible values include: 'matchPerson', 'matchFace'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
-        public string Mode { get; set; }
+        public FaceMatchingMode Mode { get; set; }
 
         /// <summary>
         /// Validate the object.

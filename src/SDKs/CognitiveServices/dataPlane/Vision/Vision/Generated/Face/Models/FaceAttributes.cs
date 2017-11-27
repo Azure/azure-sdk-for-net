@@ -40,13 +40,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="glasses">Glasses type if any of the face. Possible
         /// values include: 'noGlasses', 'readingGlasses', 'sunglasses',
         /// 'swimmingGoggles'</param>
-        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), GlassesTypes? glasses = default(GlassesTypes?), FacialHairProperties facialHair = default(FacialHairProperties), HeadPoseProperties headPose = default(HeadPoseProperties), EmotionProperties emotion = default(EmotionProperties), HairProperties hair = default(HairProperties), MakeupProperties makeup = default(MakeupProperties), OcclusionProperties occlusion = default(OcclusionProperties), IList<AccessoryPropertiesItem> accessories = default(IList<AccessoryPropertiesItem>), BlurProperties blur = default(BlurProperties), ExposureProperties exposure = default(ExposureProperties), NoiseProperties noise = default(NoiseProperties))
+        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), FacialHairProperties facialHair = default(FacialHairProperties), GlassesTypes? glasses = default(GlassesTypes?), HeadPoseProperties headPose = default(HeadPoseProperties), EmotionProperties emotion = default(EmotionProperties), HairProperties hair = default(HairProperties), MakeupProperties makeup = default(MakeupProperties), OcclusionProperties occlusion = default(OcclusionProperties), IList<AccessoryItem> accessories = default(IList<AccessoryItem>), BlurProperties blur = default(BlurProperties), ExposureProperties exposure = default(ExposureProperties), NoiseProperties noise = default(NoiseProperties))
         {
             Age = age;
             Gender = gender;
             Smile = smile;
-            Glasses = glasses;
             FacialHair = facialHair;
+            Glasses = glasses;
             HeadPose = headPose;
             Emotion = emotion;
             Hair = hair;
@@ -84,17 +84,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public double? Smile { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "facialHair")]
+        public FacialHairProperties FacialHair { get; set; }
+
+        /// <summary>
         /// Gets or sets glasses type if any of the face. Possible values
         /// include: 'noGlasses', 'readingGlasses', 'sunglasses',
         /// 'swimmingGoggles'
         /// </summary>
         [JsonProperty(PropertyName = "glasses")]
         public GlassesTypes? Glasses { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "facialHair")]
-        public FacialHairProperties FacialHair { get; set; }
 
         /// <summary>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "accessories")]
-        public IList<AccessoryPropertiesItem> Accessories { get; set; }
+        public IList<AccessoryItem> Accessories { get; set; }
 
         /// <summary>
         /// </summary>

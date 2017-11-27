@@ -11,16 +11,16 @@ namespace FaceSDK.Tests
     public class FaceDetectionTests : BaseTests
     {
         [Fact]
-        public void FaceDetection()
+        public void FaceDetectionWithAttributes()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceDetection");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceDetectionWithAttributes");
 
                 IFaceAPI client = GetClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "detection2.jpg"), FileMode.Open))
                 {
-                    IList<DetectedFace> faceList = client.Face.DetectInStream(
+                    IList<DetectedFace> faceList = client.Face.DetectInStreamAsync(
                         stream,
                         true,
                         true,
@@ -41,7 +41,7 @@ namespace FaceSDK.Tests
                             FaceAttributeTypes.Occlusion,
                             FaceAttributeTypes.Smile
                             }
-                        );
+                        ).Result;
 
                     Assert.Equal(1, faceList.Count);
                     var face = faceList[0];
@@ -140,16 +140,16 @@ namespace FaceSDK.Tests
         }
 
         [Fact]
-        public void NoFaces()
+        public void FaceDetectionNoFace()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceDetection");
+                HttpMockServer.Initialize(this.GetType().FullName, "FaceDetectionNoFace");
 
                 IFaceAPI client = GetClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "NoFace.jpg"), FileMode.Open))
                 {
-                    IList<DetectedFace> faceList = client.Face.DetectInStream(stream);
+                    IList<DetectedFace> faceList = client.Face.DetectInStreamAsync(stream).Result;
                     Assert.Equal(0, faceList.Count);
                 }
             }

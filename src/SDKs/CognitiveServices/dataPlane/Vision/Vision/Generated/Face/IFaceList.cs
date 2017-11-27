@@ -90,7 +90,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -133,9 +133,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
         Task<HttpOperationResponse<IList<GetFaceListResult>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing face from a face list (given by a
@@ -154,7 +151,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="APIErrorException">
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -169,15 +166,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='faceListId'>
         /// Id referencing a Face List.
         /// </param>
+        /// <param name='url'>
+        /// </param>
         /// <param name='userData'>
         /// User-specified data about the face list for any purpose. The
         /// maximum length is 1KB.
         /// </param>
         /// <param name='targetFace'>
-        /// A face rectangle to specify the target face to be added into the
-        /// face list, in the format of "targetFace=left,top,width,height".
-        /// E.g. "targetFace=10,10,100,100". If there is more than one face in
-        /// the image, targetFace is required to specify which face to add. No
+        /// A face rectangle to specify the target face to be added to a person
+        /// in the format of "targetFace=left,top,width,height". E.g.
+        /// "targetFace=10,10,100,100". If there is more than one face in the
+        /// image, targetFace is required to specify which face to add. No
         /// targetFace means there is only one face detected in the entire
         /// image.
         /// </param>
@@ -190,10 +189,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AddFaceWithHttpMessagesAsync(string faceListId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFaceResult>> AddFaceWithHttpMessagesAsync(string faceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Add a face to a face list. The input face is specified as an image
         /// with a targetFace rectangle. It returns a persistedFaceId
@@ -207,10 +209,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// maximum length is 1KB.
         /// </param>
         /// <param name='targetFace'>
-        /// A face rectangle to specify the target face to be added into the
-        /// face list, in the format of "targetFace=left,top,width,height".
-        /// E.g. "targetFace=10,10,100,100". If there is more than one face in
-        /// the image, targetFace is required to specify which face to add. No
+        /// A face rectangle to specify the target face to be added to a person
+        /// in the format of "targetFace=left,top,width,height". E.g.
+        /// "targetFace=10,10,100,100". If there is more than one face in the
+        /// image, targetFace is required to specify which face to add. No
         /// targetFace means there is only one face detected in the entire
         /// image.
         /// </param>
@@ -223,9 +225,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PersistedFaceResult>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

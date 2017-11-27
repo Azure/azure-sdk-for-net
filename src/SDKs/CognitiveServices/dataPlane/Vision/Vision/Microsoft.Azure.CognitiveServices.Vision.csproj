@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Generated\Face\Models\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
