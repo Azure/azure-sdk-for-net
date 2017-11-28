@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +34,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the SelfHostedIntegrationRuntime
         /// class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Integration runtime description.</param>
-        public SelfHostedIntegrationRuntime(string description = default(string))
-            : base(description)
+        public SelfHostedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string))
+            : base(additionalProperties, description)
         {
             CustomInit();
         }

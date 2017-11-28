@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the BlobTrigger class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Trigger description.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
@@ -45,8 +47,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// handle when it is triggered.</param>
         /// <param name="linkedService">The Azure Storage linked service
         /// reference.</param>
-        public BlobTrigger(string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string folderPath = default(string), int? maxConcurrency = default(int?), LinkedServiceReference linkedService = default(LinkedServiceReference))
-            : base(description, runtimeState, pipelines)
+        public BlobTrigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string folderPath = default(string), int? maxConcurrency = default(int?), LinkedServiceReference linkedService = default(LinkedServiceReference))
+            : base(additionalProperties, description, runtimeState, pipelines)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
