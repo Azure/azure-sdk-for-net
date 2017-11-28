@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzurePostgreSqlLinkedService
         /// class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="connectionString">An ODBC connection string.</param>
@@ -42,8 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzurePostgreSqlLinkedService(IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase connectionString = default(SecretBase), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AzurePostgreSqlLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase connectionString = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             ConnectionString = connectionString;
             EncryptedCredential = encryptedCredential;

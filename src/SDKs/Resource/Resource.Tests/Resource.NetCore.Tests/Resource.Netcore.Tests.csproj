@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />-->
-    <ProjectReference Include="..\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
+    <ProjectReference Include="..\..\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>
