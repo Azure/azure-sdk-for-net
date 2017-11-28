@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ServiceNowData.com)</param>
         /// <param name="authenticationType">The authentication type to use.
         /// Possible values include: 'Basic', 'OAuth2'</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="username">The user name used to connect to the
@@ -60,8 +64,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public ServiceNowLinkedService(object endpoint, string authenticationType, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object username = default(object), SecretBase password = default(SecretBase), object clientId = default(object), SecretBase clientSecret = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public ServiceNowLinkedService(object endpoint, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object username = default(object), SecretBase password = default(SecretBase), object clientId = default(object), SecretBase clientSecret = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Endpoint = endpoint;
             AuthenticationType = authenticationType;

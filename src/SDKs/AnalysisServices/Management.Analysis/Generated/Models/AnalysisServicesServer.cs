@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// provisioning properties.</param>
         /// <param name="asAdministrators">A collection of AS server
         /// administrators</param>
-        /// <param name="backupBlobContainerUri">The container URI of backup
-        /// blob.</param>
+        /// <param name="backupBlobContainerUri">The SAS container URI to the
+        /// backup container.</param>
         /// <param name="gatewayDetails">The gateway details configured for the
         /// AS server.</param>
         /// <param name="state">The current state of Analysis Services
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public ServerAdministrators AsAdministrators { get; set; }
 
         /// <summary>
-        /// Gets or sets the container URI of backup blob.
+        /// Gets or sets the SAS container URI to the backup container.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupBlobContainerUri")]
         public string BackupBlobContainerUri { get; set; }

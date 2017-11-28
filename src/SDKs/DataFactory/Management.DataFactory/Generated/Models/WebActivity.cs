@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// values include: 'GET', 'POST', 'PUT'</param>
         /// <param name="url">Web activity target endpoint and path. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -57,8 +59,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// endpoint.</param>
         /// <param name="linkedServices">List of linked services passed to web
         /// endpoint.</param>
-        public WebActivity(string name, string method, object url, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), IList<DatasetReference> datasets = default(IList<DatasetReference>), IList<LinkedServiceReference> linkedServices = default(IList<LinkedServiceReference>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public WebActivity(string name, string method, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), IList<DatasetReference> datasets = default(IList<DatasetReference>), IList<LinkedServiceReference> linkedServices = default(IList<LinkedServiceReference>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             Method = method;
             Url = url;

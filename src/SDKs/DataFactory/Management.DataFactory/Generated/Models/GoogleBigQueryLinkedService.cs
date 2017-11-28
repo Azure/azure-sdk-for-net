@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// mechanism used for authentication. ServiceAuthentication can only
         /// be used on self-hosted IR. Possible values include:
         /// 'ServiceAuthentication', 'UserAuthentication'</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="additionalProjects">A comma-separated list of public
@@ -69,8 +73,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public GoogleBigQueryLinkedService(object project, string authenticationType, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object additionalProjects = default(object), object requestGoogleDriveScope = default(object), SecretBase refreshToken = default(SecretBase), object email = default(object), object keyFilePath = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public GoogleBigQueryLinkedService(object project, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object additionalProjects = default(object), object requestGoogleDriveScope = default(object), SecretBase refreshToken = default(SecretBase), object email = default(object), object keyFilePath = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Project = project;
             AdditionalProjects = additionalProjects;

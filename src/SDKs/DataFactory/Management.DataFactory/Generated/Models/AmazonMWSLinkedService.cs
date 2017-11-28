@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sellerID">The Amazon seller ID.</param>
         /// <param name="accessKeyId">The access key id used to access
         /// data.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="mwsAuthToken">The Amazon MWS authentication
@@ -59,8 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AmazonMWSLinkedService(object endpoint, object marketplaceID, object sellerID, object accessKeyId, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase mwsAuthToken = default(SecretBase), SecretBase secretKey = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AmazonMWSLinkedService(object endpoint, object marketplaceID, object sellerID, object accessKeyId, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase mwsAuthToken = default(SecretBase), SecretBase secretKey = default(SecretBase), object useEncryptedEndpoints = default(object), object useHostVerification = default(object), object usePeerVerification = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Endpoint = endpoint;
             MarketplaceID = marketplaceID;

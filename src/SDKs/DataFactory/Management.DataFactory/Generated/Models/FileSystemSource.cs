@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the FileSystemSource class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -37,8 +41,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        public FileSystemSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object recursive = default(object))
-            : base(sourceRetryCount, sourceRetryWait)
+        public FileSystemSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object recursive = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
         {
             Recursive = recursive;
             CustomInit();

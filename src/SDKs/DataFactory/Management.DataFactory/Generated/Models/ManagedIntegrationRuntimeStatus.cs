@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ManagedIntegrationRuntimeStatus
         /// class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
         /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
@@ -49,8 +51,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime.</param>
         /// <param name="lastOperation">The last operation result that occurred
         /// on this integration runtime.</param>
-        public ManagedIntegrationRuntimeStatus(string state = default(string), System.DateTime? createTime = default(System.DateTime?), IList<ManagedIntegrationRuntimeNode> nodes = default(IList<ManagedIntegrationRuntimeNode>), IList<ManagedIntegrationRuntimeError> otherErrors = default(IList<ManagedIntegrationRuntimeError>), ManagedIntegrationRuntimeOperationResult lastOperation = default(ManagedIntegrationRuntimeOperationResult))
-            : base(state)
+        public ManagedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string state = default(string), System.DateTime? createTime = default(System.DateTime?), IList<ManagedIntegrationRuntimeNode> nodes = default(IList<ManagedIntegrationRuntimeNode>), IList<ManagedIntegrationRuntimeError> otherErrors = default(IList<ManagedIntegrationRuntimeError>), ManagedIntegrationRuntimeOperationResult lastOperation = default(ManagedIntegrationRuntimeOperationResult))
+            : base(additionalProperties, state)
         {
             CreateTime = createTime;
             Nodes = nodes;
