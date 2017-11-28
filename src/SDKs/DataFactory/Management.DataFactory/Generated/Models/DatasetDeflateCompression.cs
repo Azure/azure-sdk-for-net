@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,9 +32,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DatasetDeflateCompression class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="level">The Deflate compression level. Possible values
         /// include: 'Optimal', 'Fastest'</param>
-        public DatasetDeflateCompression(string level = default(string))
+        public DatasetDeflateCompression(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string level = default(string))
+            : base(additionalProperties)
         {
             Level = level;
             CustomInit();
