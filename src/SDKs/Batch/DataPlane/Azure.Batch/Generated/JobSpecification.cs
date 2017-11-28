@@ -39,69 +39,69 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("CommonEnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.ConstraintsProperty = this.CreatePropertyAccessor<JobConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.JobManagerTaskProperty = this.CreatePropertyAccessor<JobManagerTask>("JobManagerTask", BindingAccess.Read | BindingAccess.Write);
-                this.JobPreparationTaskProperty = this.CreatePropertyAccessor<JobPreparationTask>("JobPreparationTask", BindingAccess.Read | BindingAccess.Write);
-                this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>("JobReleaseTask", BindingAccess.Read | BindingAccess.Write);
-                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
-                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>("OnAllTasksComplete", BindingAccess.Read | BindingAccess.Write);
-                this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>("OnTaskFailure", BindingAccess.Read | BindingAccess.Write);
-                this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>("PoolInformation", BindingAccess.Read | BindingAccess.Write);
-                this.PriorityProperty = this.CreatePropertyAccessor<int?>("Priority", BindingAccess.Read | BindingAccess.Write);
-                this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor<bool?>("UsesTaskDependencies", BindingAccess.Read | BindingAccess.Write);
+                this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(CommonEnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.ConstraintsProperty = this.CreatePropertyAccessor<JobConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.JobManagerTaskProperty = this.CreatePropertyAccessor<JobManagerTask>(nameof(JobManagerTask), BindingAccess.Read | BindingAccess.Write);
+                this.JobPreparationTaskProperty = this.CreatePropertyAccessor<JobPreparationTask>(nameof(JobPreparationTask), BindingAccess.Read | BindingAccess.Write);
+                this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>(nameof(JobReleaseTask), BindingAccess.Read | BindingAccess.Write);
+                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
+                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>(nameof(OnAllTasksComplete), BindingAccess.Read | BindingAccess.Write);
+                this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>(nameof(OnTaskFailure), BindingAccess.Read | BindingAccess.Write);
+                this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>(nameof(PoolInformation), BindingAccess.Read | BindingAccess.Write);
+                this.PriorityProperty = this.CreatePropertyAccessor<int?>(nameof(Priority), BindingAccess.Read | BindingAccess.Write);
+                this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor<bool?>(nameof(UsesTaskDependencies), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobSpecification protocolObject) : base(BindingState.Bound)
             {
                 this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.CommonEnvironmentSettings),
-                    "CommonEnvironmentSettings",
+                    nameof(CommonEnvironmentSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new JobConstraints(o)),
-                    "Constraints",
+                    nameof(Constraints),
                     BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read | BindingAccess.Write);
                 this.JobManagerTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobManagerTask, o => new JobManagerTask(o)),
-                    "JobManagerTask",
+                    nameof(JobManagerTask),
                     BindingAccess.Read | BindingAccess.Write);
                 this.JobPreparationTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobPreparationTask, o => new JobPreparationTask(o)),
-                    "JobPreparationTask",
+                    nameof(JobPreparationTask),
                     BindingAccess.Read | BindingAccess.Write);
                 this.JobReleaseTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobReleaseTask, o => new JobReleaseTask(o)),
-                    "JobReleaseTask",
+                    nameof(JobReleaseTask),
                     BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
-                    "Metadata",
+                    nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete, Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
-                    "OnAllTasksComplete",
+                    nameof(OnAllTasksComplete),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OnTaskFailureProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.OnTaskFailure, Common.OnTaskFailure>(protocolObject.OnTaskFailure),
-                    "OnTaskFailure",
+                    nameof(OnTaskFailure),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PoolInfo, o => new PoolInformation(o)),
-                    "PoolInformation",
+                    nameof(PoolInformation),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PriorityProperty = this.CreatePropertyAccessor(
                     protocolObject.Priority,
-                    "Priority",
+                    nameof(Priority),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor(
                     protocolObject.UsesTaskDependencies,
-                    "UsesTaskDependencies",
+                    nameof(UsesTaskDependencies),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

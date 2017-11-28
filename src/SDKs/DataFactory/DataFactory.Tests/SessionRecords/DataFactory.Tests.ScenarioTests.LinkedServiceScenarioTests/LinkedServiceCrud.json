@@ -1,0 +1,684 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourcegroups/sdktestingadfrg6600?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "31"
+        ],
+        "x-ms-client-request-id": [
+          "44481083-10ed-4e40-8b99-f2ded8738408"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600\",\r\n  \"name\": \"sdktestingadfrg6600\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "192"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1161"
+        ],
+        "x-ms-request-id": [
+          "8b64e625-efca-47cd-b95e-628d70b65c1e"
+        ],
+        "x-ms-correlation-request-id": [
+          "8b64e625-efca-47cd-b95e-628d70b65c1e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230204Z:8b64e625-efca-47cd-b95e-628d70b65c1e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDAvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzMDIxP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "31"
+        ],
+        "x-ms-client-request-id": [
+          "e2b55069-2ad1-41ed-8b88-8daa28200901"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"sdktestingfactory3021\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"loggingStorageAccountKey\": \"**********\",\r\n    \"createTime\": \"2017-10-31T23:02:06.5290172Z\",\r\n    \"version\": \"2017-09-01-preview\"\r\n  },\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021\",\r\n  \"type\": \"Microsoft.DataFactory/factories\",\r\n  \"location\": \"East US 2\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "e2b55069-2ad1-41ed-8b88-8daa28200901"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1172"
+        ],
+        "x-ms-correlation-request-id": [
+          "009020d6-6f65-41c4-9f01-41df276be8d8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230207Z:009020d6-6f65-41c4-9f01-41df276be8d8"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices/TestDataLakeStore?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDAvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzMDIxL2xpbmtlZHNlcnZpY2VzL1Rlc3REYXRhTGFrZVN0b3JlP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"AzureDataLakeStore\",\r\n    \"typeProperties\": {\r\n      \"dataLakeStoreUri\": \"adl://test.azuredatalakestore.net/\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "159"
+        ],
+        "x-ms-client-request-id": [
+          "8399768a-e353-4d63-a41d-39641af94caa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices/TestDataLakeStore\",\r\n  \"name\": \"TestDataLakeStore\",\r\n  \"properties\": {\r\n    \"type\": \"AzureDataLakeStore\",\r\n    \"typeProperties\": {\r\n      \"dataLakeStoreUri\": \"adl://test.azuredatalakestore.net/\"\r\n    }\r\n  },\r\n  \"etag\": \"9a00b2ca-0000-0000-0000-59f900ef0000\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "8399768a-e353-4d63-a41d-39641af94caa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1171"
+        ],
+        "x-ms-correlation-request-id": [
+          "cc8cf895-969b-4aef-8269-403e983181a8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230208Z:cc8cf895-969b-4aef-8269-403e983181a8"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices/TestDataLakeStore?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDAvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzMDIxL2xpbmtlZHNlcnZpY2VzL1Rlc3REYXRhTGFrZVN0b3JlP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1ed5580c-61b1-4ec9-93c9-d8ef2a16913d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices/TestDataLakeStore\",\r\n  \"name\": \"TestDataLakeStore\",\r\n  \"properties\": {\r\n    \"type\": \"AzureDataLakeStore\",\r\n    \"typeProperties\": {\r\n      \"dataLakeStoreUri\": \"adl://test.azuredatalakestore.net/\"\r\n    }\r\n  },\r\n  \"etag\": \"9a00b2ca-0000-0000-0000-59f900ef0000\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "1ed5580c-61b1-4ec9-93c9-d8ef2a16913d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14891"
+        ],
+        "x-ms-correlation-request-id": [
+          "68d7a771-cda3-49ba-b66e-107eeb8b9dec"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230208Z:68d7a771-cda3-49ba-b66e-107eeb8b9dec"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDAvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzMDIxL2xpbmtlZHNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a3a49640-c8c1-4a6d-b6e7-ed8fb7b98f7f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices/TestDataLakeStore\",\r\n      \"name\": \"TestDataLakeStore\",\r\n      \"properties\": {\r\n        \"type\": \"AzureDataLakeStore\",\r\n        \"typeProperties\": {\r\n          \"dataLakeStoreUri\": \"adl://test.azuredatalakestore.net/\"\r\n        }\r\n      },\r\n      \"etag\": \"9a00b2ca-0000-0000-0000-59f900ef0000\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "a3a49640-c8c1-4a6d-b6e7-ed8fb7b98f7f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14890"
+        ],
+        "x-ms-correlation-request-id": [
+          "7f573856-cce2-4544-9a4d-747ce67c36d2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230208Z:7f573856-cce2-4544-9a4d-747ce67c36d2"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021/linkedservices/TestDataLakeStore?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDAvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzMDIxL2xpbmtlZHNlcnZpY2VzL1Rlc3REYXRhTGFrZVN0b3JlP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "256eb772-38cd-4b06-a515-01778f1ab224"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.1.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "256eb772-38cd-4b06-a515-01778f1ab224"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1170"
+        ],
+        "x-ms-correlation-request-id": [
+          "02b8cd47-2725-4ecf-a598-e30c2602d33c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230208Z:02b8cd47-2725-4ecf-a598-e30c2602d33c"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourceGroups/sdktestingadfrg6600/providers/Microsoft.DataFactory/factories/sdktestingfactory3021?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDAvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3RvcnkzMDIxP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9be7246f-226c-422b-b19f-a4dbbe47c26f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/0.2.1.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:10 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "9be7246f-226c-422b-b19f-a4dbbe47c26f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1169"
+        ],
+        "x-ms-correlation-request-id": [
+          "049918d1-acdd-4c3c-875c-2f423652976b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230210Z:049918d1-acdd-4c3c-875c-2f423652976b"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/resourcegroups/sdktestingadfrg6600?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzY2MDA/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b5bf3f87-6d23-42c5-a3a8-a6478cd90dcd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc2NjAwLUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1160"
+        ],
+        "x-ms-request-id": [
+          "bd35d0b6-1cb0-41e5-98ce-9ac7a830241b"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd35d0b6-1cb0-41e5-98ce-9ac7a830241b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230211Z:bd35d0b6-1cb0-41e5-98ce-9ac7a830241b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc2NjAwLUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUUkV0VVJWTlVTVTVIUVVSR1VrYzJOakF3TFVWQlUxUlZVeklpTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN6SWlmUT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc2NjAwLUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14868"
+        ],
+        "x-ms-request-id": [
+          "1826eee4-56cd-4886-973f-9ef78f3dd447"
+        ],
+        "x-ms-correlation-request-id": [
+          "1826eee4-56cd-4886-973f-9ef78f3dd447"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230227Z:1826eee4-56cd-4886-973f-9ef78f3dd447"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc2NjAwLUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUUkV0VVJWTlVTVTVIUVVSR1VrYzJOakF3TFVWQlUxUlZVeklpTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN6SWlmUT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc2NjAwLUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14867"
+        ],
+        "x-ms-request-id": [
+          "dfee1570-faf3-4c3f-a886-dec790765629"
+        ],
+        "x-ms-correlation-request-id": [
+          "dfee1570-faf3-4c3f-a886-dec790765629"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230242Z:dfee1570-faf3-4c3f-a886-dec790765629"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/876407bb-5bd3-45c4-9c07-cd74a964b2fc/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TREtURVNUSU5HQURGUkc2NjAwLUVBU1RVUzIiLCJqb2JMb2NhdGlvbiI6ImVhc3R1czIifQ?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODc2NDA3YmItNWJkMy00NWM0LTljMDctY2Q3NGE5NjRiMmZjL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFUUkV0VVJWTlVTVTVIUVVSR1VrYzJOakF3TFVWQlUxUlZVeklpTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN6SWlmUT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Oct 2017 23:02:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14866"
+        ],
+        "x-ms-request-id": [
+          "e9d1a23d-7289-4b6a-a15d-9aa102828608"
+        ],
+        "x-ms-correlation-request-id": [
+          "e9d1a23d-7289-4b6a-a15d-9aa102828608"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171031T230257Z:e9d1a23d-7289-4b6a-a15d-9aa102828608"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "RunTest": [
+      "sdktestingadfrg6600",
+      "sdktestingfactory3021"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "876407bb-5bd3-45c4-9c07-cd74a964b2fc"
+  }
+}

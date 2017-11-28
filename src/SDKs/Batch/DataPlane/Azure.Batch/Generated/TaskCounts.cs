@@ -22,23 +22,16 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskCounts : IPropertyMetadata
     {
-        private readonly int active;
-        private readonly int completed;
-        private readonly int failed;
-        private readonly int running;
-        private readonly int succeeded;
-        private readonly Common.TaskCountValidationStatus validationStatus;
-
         #region Constructors
 
         internal TaskCounts(Models.TaskCounts protocolObject)
         {
-            this.active = protocolObject.Active;
-            this.completed = protocolObject.Completed;
-            this.failed = protocolObject.Failed;
-            this.running = protocolObject.Running;
-            this.succeeded = protocolObject.Succeeded;
-            this.validationStatus = UtilitiesInternal.MapEnum<Models.TaskCountValidationStatus, Common.TaskCountValidationStatus>(protocolObject.ValidationStatus);
+            this.Active = protocolObject.Active;
+            this.Completed = protocolObject.Completed;
+            this.Failed = protocolObject.Failed;
+            this.Running = protocolObject.Running;
+            this.Succeeded = protocolObject.Succeeded;
+            this.ValidationStatus = UtilitiesInternal.MapEnum<Models.TaskCountValidationStatus, Common.TaskCountValidationStatus>(protocolObject.ValidationStatus);
         }
 
         #endregion Constructors
@@ -48,43 +41,28 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the number of tasks in the active state.
         /// </summary>
-        public int Active
-        {
-            get { return this.active; }
-        }
+        public int Active { get; }
 
         /// <summary>
         /// Gets the number of tasks in the completed state.
         /// </summary>
-        public int Completed
-        {
-            get { return this.completed; }
-        }
+        public int Completed { get; }
 
         /// <summary>
         /// Gets the number of tasks which failed. A task fails if its result (found in the executionInfo property) is 'failure'.
         /// </summary>
-        public int Failed
-        {
-            get { return this.failed; }
-        }
+        public int Failed { get; }
 
         /// <summary>
         /// Gets the number of tasks in the running or preparing state.
         /// </summary>
-        public int Running
-        {
-            get { return this.running; }
-        }
+        public int Running { get; }
 
         /// <summary>
         /// Gets the number of tasks which succeeded. A task succeeds if its result (found in the executionInfo property) 
         /// is 'success'.
         /// </summary>
-        public int Succeeded
-        {
-            get { return this.succeeded; }
-        }
+        public int Succeeded { get; }
 
         /// <summary>
         /// Gets whether the task counts have been validated. If the <see cref="ValidationStatus" /> is unvalidated, then 
@@ -94,10 +72,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The <see cref="ValidationStatus" /> may be unvalidated if the job contains more than 200,000 tasks.
         /// </remarks>
-        public Common.TaskCountValidationStatus ValidationStatus
-        {
-            get { return this.validationStatus; }
-        }
+        public Common.TaskCountValidationStatus ValidationStatus { get; }
 
         #endregion // TaskCounts
 

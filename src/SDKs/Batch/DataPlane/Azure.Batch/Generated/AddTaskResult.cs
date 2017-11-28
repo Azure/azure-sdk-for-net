@@ -22,23 +22,16 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class AddTaskResult : IPropertyMetadata
     {
-        private readonly BatchError error;
-        private readonly string eTag;
-        private readonly DateTime? lastModified;
-        private readonly string location;
-        private readonly Common.AddTaskStatus status;
-        private readonly string taskId;
-
         #region Constructors
 
         internal AddTaskResult(Models.TaskAddResult protocolObject)
         {
-            this.error = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Error, o => new BatchError(o).Freeze());
-            this.eTag = protocolObject.ETag;
-            this.lastModified = protocolObject.LastModified;
-            this.location = protocolObject.Location;
-            this.status = UtilitiesInternal.MapEnum<Models.TaskAddStatus, Common.AddTaskStatus>(protocolObject.Status);
-            this.taskId = protocolObject.TaskId;
+            this.Error = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Error, o => new BatchError(o).Freeze());
+            this.ETag = protocolObject.ETag;
+            this.LastModified = protocolObject.LastModified;
+            this.Location = protocolObject.Location;
+            this.Status = UtilitiesInternal.MapEnum<Models.TaskAddStatus, Common.AddTaskStatus>(protocolObject.Status);
+            this.TaskId = protocolObject.TaskId;
         }
 
         #endregion Constructors
@@ -48,50 +41,32 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the error caught while attempting to add the task.
         /// </summary>
-        public BatchError Error
-        {
-            get { return this.error; }
-        }
+        public BatchError Error { get; }
 
         /// <summary>
         /// Gets an ETag associated with a successfully added task.
         /// </summary>
-        public string ETag
-        {
-            get { return this.eTag; }
-        }
+        public string ETag { get; }
 
         /// <summary>
         /// Gets the last modified time associated with a successfully added task.
         /// </summary>
-        public DateTime? LastModified
-        {
-            get { return this.lastModified; }
-        }
+        public DateTime? LastModified { get; }
 
         /// <summary>
         /// Gets the URL of a successfully added task.
         /// </summary>
-        public string Location
-        {
-            get { return this.location; }
-        }
+        public string Location { get; }
 
         /// <summary>
         /// Gets the status of the add task request.
         /// </summary>
-        public Common.AddTaskStatus Status
-        {
-            get { return this.status; }
-        }
+        public Common.AddTaskStatus Status { get; }
 
         /// <summary>
         /// Gets the id of the task which this result applies to.
         /// </summary>
-        public string TaskId
-        {
-            get { return this.taskId; }
-        }
+        public string TaskId { get; }
 
         #endregion // AddTaskResult
 

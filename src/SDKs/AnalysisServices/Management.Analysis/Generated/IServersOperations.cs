@@ -340,6 +340,79 @@ namespace Microsoft.Azure.Management.Analysis
         /// </exception>
         Task<AzureOperationResponse> DissociateGatewayWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Check the name availability in the target location.
+        /// </summary>
+        /// <param name='location'>
+        /// The region name which the operation will lookup into.
+        /// </param>
+        /// <param name='serverParameters'>
+        /// Contains the information used to provision the Analysis Services
+        /// server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CheckServerNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string location, CheckServerNameAvailabilityParameters serverParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List the result of the specified operation.
+        /// </summary>
+        /// <param name='location'>
+        /// The region name which the operation will lookup into.
+        /// </param>
+        /// <param name='operationId'>
+        /// The target operation Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ListOperationResultsWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List the status of operation.
+        /// </summary>
+        /// <param name='location'>
+        /// The region name which the operation will lookup into.
+        /// </param>
+        /// <param name='operationId'>
+        /// The target operation Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationStatus>> ListOperationStatusesWithHttpMessagesAsync(string location, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Provisions the specified Analysis Services server based on the
         /// configuration specified in the request.
         /// </summary>

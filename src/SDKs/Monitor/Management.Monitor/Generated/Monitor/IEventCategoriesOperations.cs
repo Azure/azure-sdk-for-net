@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <summary>
         /// Get the list of available event categories supported in the
         /// Activity Logs Service.&lt;br&gt;The current list includes the
-        /// following: Aministrative, Security, ServiceHealth, Alert,
+        /// following: Administrative, Security, ServiceHealth, Alert,
         /// Recommendation, Policy.
         /// </summary>
         /// <param name='customHeaders'>

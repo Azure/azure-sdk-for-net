@@ -18,42 +18,20 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace image. To retrieve a list of images supported by the Batch service, 
-    /// see <see cref="PoolOperations.ListNodeAgentSkus"/> and <see cref="NodeAgentSku.VerifiedImageReferences"/>.
+    /// Azure Virtual Machine image. To get the list of all Azure Marketplace image references verified by Azure Batch, see 
+    /// <see cref="PoolOperations.ListNodeAgentSkus"/> and <see cref="NodeAgentSku.VerifiedImageReferences"/>.
     /// </summary>
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
-        private readonly string offer;
-        private readonly string publisher;
-        private readonly string sku;
-        private readonly string version;
-
         #region Constructors
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageReference"/> class.
-        /// </summary>
-        /// <param name='offer'>The offer type of the Azure Virtual Machines Marketplace image.</param>
-        /// <param name='publisher'>The publisher of the Azure Virtual Machines Marketplace image.</param>
-        /// <param name='sku'>The SKU of the Azure Virtual Machines Marketplace image.</param>
-        /// <param name='version'>The version of the Azure Virtual Machines Marketplace image.</param>
-        public ImageReference(
-            string offer,
-            string publisher,
-            string sku,
-            string version = default(string))
-        {
-            this.offer = offer;
-            this.publisher = publisher;
-            this.sku = sku;
-            this.version = version;
-        }
 
         internal ImageReference(Models.ImageReference protocolObject)
         {
-            this.offer = protocolObject.Offer;
-            this.publisher = protocolObject.Publisher;
-            this.sku = protocolObject.Sku;
-            this.version = protocolObject.Version;
+            this.Offer = protocolObject.Offer;
+            this.Publisher = protocolObject.Publisher;
+            this.Sku = protocolObject.Sku;
+            this.Version = protocolObject.Version;
+            this.VirtualMachineImageId = protocolObject.VirtualMachineImageId;
         }
 
         #endregion Constructors
@@ -66,10 +44,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// For example, UbuntuServer or WindowsServer.
         /// </remarks>
-        public string Offer
-        {
-            get { return this.offer; }
-        }
+        public string Offer { get; }
 
         /// <summary>
         /// Gets the publisher of the Azure Virtual Machines Marketplace image.
@@ -77,10 +52,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// For example, Canonical or MicrosoftWindowsServer.
         /// </remarks>
-        public string Publisher
-        {
-            get { return this.publisher; }
-        }
+        public string Publisher { get; }
 
         /// <summary>
         /// Gets the SKU of the Azure Virtual Machines Marketplace image.
@@ -88,10 +60,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
         /// </remarks>
-        public string Sku
-        {
-            get { return this.sku; }
-        }
+        public string Sku { get; }
 
         /// <summary>
         /// Gets the version of the Azure Virtual Machines Marketplace image.
@@ -99,10 +68,18 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// If this property is not specified, it defaults to 'latest', which is the latest version of the image.
         /// </remarks>
-        public string Version
-        {
-            get { return this.version; }
-        }
+        public string Version { get; }
+
+        /// <summary>
+        /// Gets the ARM resource identifier of the virtual machine image. Computes nodes of the pool will be created using 
+        /// this custom image. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other ImageReference properties. The virtual machine image must be in 
+        /// the same region and subscription as the Azure Batch account. For information about the firewall settings for 
+        /// the Batch node agent to communicate with Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// </remarks>
+        public string VirtualMachineImageId { get; }
 
         #endregion // ImageReference
 
@@ -139,6 +116,7 @@ namespace Microsoft.Azure.Batch
                 Publisher = this.Publisher,
                 Sku = this.Sku,
                 Version = this.Version,
+                VirtualMachineImageId = this.VirtualMachineImageId,
             };
 
             return result;

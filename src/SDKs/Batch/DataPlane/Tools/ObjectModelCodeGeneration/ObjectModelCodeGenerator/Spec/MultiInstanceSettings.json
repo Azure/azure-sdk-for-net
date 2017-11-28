@@ -24,19 +24,20 @@
             "SummaryComment": "The command to run on the compute node instances for coordinating among the subtasks.",
             "RemarksComment": null,
             "BoundAccess": "read",
-            "UnboundAccess": "read,write"
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
           },
           "Value": null
         },
         {
           "Key": {
-            "Type": "int",
+            "Type": "int?",
             "Name": "NumberOfInstances",
             "SummaryComment": "The number of compute nodes required by the multi-instance task.",
             "RemarksComment": null,
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Required"
+            "ConstructorArgumentType": "Optional"
           },
           "Value": null
         }
