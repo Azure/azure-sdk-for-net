@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="pipeline">Pipeline for which runs are created when an
         /// event is fired for trigger window that is ready.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Trigger description.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
@@ -61,8 +65,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// triggered.</param>
         /// <param name="retryPolicy">Retry policy that will be applied for
         /// failed pipeline runs.</param>
-        public TumblingWindowTrigger(TriggerPipelineReference pipeline, string description = default(string), string runtimeState = default(string), string frequency = default(string), int? interval = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), int? maxConcurrency = default(int?), RetryPolicy retryPolicy = default(RetryPolicy))
-            : base(description, runtimeState)
+        public TumblingWindowTrigger(TriggerPipelineReference pipeline, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), string frequency = default(string), int? interval = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), int? maxConcurrency = default(int?), RetryPolicy retryPolicy = default(RetryPolicy))
+            : base(additionalProperties, description, runtimeState)
         {
             Pipeline = pipeline;
             Frequency = frequency;

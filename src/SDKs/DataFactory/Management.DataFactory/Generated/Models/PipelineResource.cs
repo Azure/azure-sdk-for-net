@@ -38,14 +38,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
         /// <param name="etag">Etag identifies change in the resource.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">The description of the pipeline.</param>
         /// <param name="activities">List of activities in pipeline.</param>
         /// <param name="parameters">List of parameters for pipeline.</param>
         /// <param name="concurrency">The max number of concurrent runs for the
         /// pipeline.</param>
-        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?))
+        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?))
             : base(id, name, type, etag)
         {
+            AdditionalProperties = additionalProperties;
             Description = description;
             Activities = activities;
             Parameters = parameters;
@@ -57,6 +60,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the pipeline.

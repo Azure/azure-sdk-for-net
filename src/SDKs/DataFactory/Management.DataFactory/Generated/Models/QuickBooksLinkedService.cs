@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// quickbooks.api.intuit.com)</param>
         /// <param name="companyId">The company ID of the QuickBooks company to
         /// authorize.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="accessToken">The access token for OAuth 1.0
@@ -50,8 +54,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public QuickBooksLinkedService(object endpoint, object companyId, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase accessToken = default(SecretBase), SecretBase accessTokenSecret = default(SecretBase), object useEncryptedEndpoints = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public QuickBooksLinkedService(object endpoint, object companyId, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase accessToken = default(SecretBase), SecretBase accessTokenSecret = default(SecretBase), object useEncryptedEndpoints = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Endpoint = endpoint;
             CompanyId = companyId;
