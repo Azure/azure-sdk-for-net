@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for SsisUse32bitRuntime.
+    /// Defines values for SsisExecutionUse32bitRuntime.
     /// </summary>
-    public static class SsisUse32bitRuntime
+    public static class SsisExecutionUse32bitRuntime
     {
         public const string True = "True";
         public const string False = "False";

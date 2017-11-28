@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for SsisLoggingLevel.
+    /// Defines values for SsisExecutionLoggingLevel.
     /// </summary>
-    public static class SsisLoggingLevel
+    public static class SsisExecutionLoggingLevel
     {
         public const string None = "None";
         public const string Basic = "Basic";
