@@ -15,7 +15,6 @@
     /// </summary>
     public class PreBuildTask : NetSdkTask
     {
-        const string PROPS_FILE_NAME = "AzSdk.RP.props";
 
         #region Required Properties
         protected override INetSdkTask TaskInstance { get => this; }
@@ -29,14 +28,7 @@
         [Output]
         public string ApiTagPropsFile { get; set; }
         #endregion
-
-        public PreBuildTask()
-        {
-            //if(CreatePropsFile == false)
-            //{
-            //    CreatePropsFile = true;
-            //}
-        }
+        
         public override bool Execute()
         {
             if(CreatePropsFile == true)
@@ -50,7 +42,7 @@
                     {
                         if(string.IsNullOrEmpty(propFilePath))
                         {
-                            propFilePath = Path.Combine(slnDirPath, PROPS_FILE_NAME);
+                            propFilePath = Path.Combine(slnDirPath, BuildStagesConstants.PROPS_FILE_NAME);
                             MsBuildProjectFile msBuildFile = new MsBuildProjectFile(propFilePath);
                             ApiTagPropsFile = msBuildFile.CreateXmlDocWithProps();
                         }
@@ -70,7 +62,7 @@
         {
             string apiTagsPropsPath = string.Empty;
             string sFile = string.Empty;
-            string apiTagsFileName = PROPS_FILE_NAME;
+            string apiTagsFileName = BuildStagesConstants.PROPS_FILE_NAME;
 
             string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
             int depthSearchIndex = 0;
