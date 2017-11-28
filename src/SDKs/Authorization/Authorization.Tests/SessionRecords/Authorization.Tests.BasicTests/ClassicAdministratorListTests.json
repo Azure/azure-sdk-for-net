@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ac8dca2d-7c3b-4add-9849-95d4b05f6770"
+          "46d71dbf-f198-492b-93d6-96e31f1e65bb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.6.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"test2@rbacCliTest.onmicrosoft.com\",\r\n        \"role\": \"ServiceAdministrator;AccountAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/10030000930A2D88\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"10030000930A2D88\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"emailAddress\": \"stefmil@microsoft.com\",\r\n        \"role\": \"CoAdministrator\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/classicAdministrators/1003BFFD801C213F\",\r\n      \"type\": \"Microsoft.Authorization/classicAdministrators\",\r\n      \"name\": \"1003BFFD801C213F\"\r\n    }\r\n  ]\r\n}",
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 22 Nov 2017 23:38:57 GMT"
+          "Mon, 27 Nov 2017 23:55:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -42,16 +42,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:0136178b-b457-4856-8eb2-9bd75efef6d0"
+          "centralus:e5e8dd49-b49a-4fb7-a270-047ecca6822b"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "cdbcf254-6584-45e8-af2f-9f083765bc3e"
+          "1db6a75b-95be-4cd9-9167-b0d5bc5c2419"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20171122T233857Z:cdbcf254-6584-45e8-af2f-9f083765bc3e"
+          "CENTRALUSEUAP:20171127T235558Z:1db6a75b-95be-4cd9-9167-b0d5bc5c2419"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
