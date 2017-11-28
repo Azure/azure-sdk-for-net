@@ -33,8 +33,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DiskInstanceView class.
         /// </summary>
         /// <param name="name">The disk name.</param>
-        /// <param name="encryptionSettings">The encryption settings of the
-        /// disk.</param>
+        /// <param name="encryptionSettings">Specifies the encryption settings
+        /// for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version:
+        /// 2015-06-15</param>
         /// <param name="statuses">The resource status information.</param>
         public DiskInstanceView(string name = default(string), IList<DiskEncryptionSettings> encryptionSettings = default(IList<DiskEncryptionSettings>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
@@ -56,7 +57,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the encryption settings of the disk.
+        /// Gets or sets specifies the encryption settings for the OS Disk.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
+        /// 2015-06-15
         /// </summary>
         [JsonProperty(PropertyName = "encryptionSettings")]
         public IList<DiskEncryptionSettings> EncryptionSettings { get; set; }

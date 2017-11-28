@@ -33,8 +33,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the ImageStorageProfile class.
         /// </summary>
-        /// <param name="osDisk">The OS disk.</param>
-        /// <param name="dataDisks">The data disks.</param>
+        /// <param name="osDisk">Specifies information about the operating
+        /// system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For
+        /// more information about disks, see [About disks and VHDs for Azure
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
+        /// <param name="dataDisks">Specifies the parameters that are used to
+        /// add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more
+        /// information about disks, see [About disks and VHDs for Azure
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
         public ImageStorageProfile(ImageOSDisk osDisk, IList<ImageDataDisk> dataDisks = default(IList<ImageDataDisk>))
         {
             OsDisk = osDisk;
@@ -48,13 +56,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the OS disk.
+        /// Gets or sets specifies information about the operating system disk
+        /// used by the virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// For more information about disks, see [About disks and VHDs for
+        /// Azure virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public ImageOSDisk OsDisk { get; set; }
 
         /// <summary>
-        /// Gets or sets the data disks.
+        /// Gets or sets specifies the parameters that are used to add a data
+        /// disk to a virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For
+        /// more information about disks, see [About disks and VHDs for Azure
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<ImageDataDisk> DataDisks { get; set; }

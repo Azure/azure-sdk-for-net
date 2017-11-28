@@ -15,7 +15,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The image reference.
+    /// Specifies information about the image to use. You can specify
+    /// information about platform images, marketplace images, or virtual
+    /// machine images. This element is required when you want to use a
+    /// platform image, marketplace image, or virtual machine image, but is not
+    /// used in other creation operations.
     /// </summary>
     public partial class ImageReference : SubResource
     {
@@ -32,12 +36,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="publisher">The image publisher.</param>
-        /// <param name="offer">The image offer.</param>
+        /// <param name="offer">Specifies the offer of the platform image or
+        /// marketplace image used to create the virtual machine.</param>
         /// <param name="sku">The image SKU.</param>
-        /// <param name="version">The image version. The allowed formats are
-        /// Major.Minor.Build or 'latest'. Major, Minor and Build are decimal
-        /// numbers. Specify 'latest' to use the latest version of the
-        /// image.</param>
+        /// <param name="version">Specifies the version of the platform image
+        /// or marketplace image used to create the virtual machine. The
+        /// allowed formats are Major.Minor.Build or 'latest'. Major, Minor,
+        /// and Build are decimal numbers. Specify 'latest' to use the latest
+        /// version of an image available at deploy time. Even if you use
+        /// 'latest', the VM image will not automatically update after deploy
+        /// time even if a new version becomes available.</param>
         public ImageReference(string id = default(string), string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string))
             : base(id)
         {
@@ -60,7 +68,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the image offer.
+        /// Gets or sets specifies the offer of the platform image or
+        /// marketplace image used to create the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
@@ -72,9 +81,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the image version. The allowed formats are
-        /// Major.Minor.Build or 'latest'. Major, Minor and Build are decimal
-        /// numbers. Specify 'latest' to use the latest version of the image.
+        /// Gets or sets specifies the version of the platform image or
+        /// marketplace image used to create the virtual machine. The allowed
+        /// formats are Major.Minor.Build or 'latest'. Major, Minor, and Build
+        /// are decimal numbers. Specify 'latest' to use the latest version of
+        /// an image available at deploy time. Even if you use 'latest', the VM
+        /// image will not automatically update after deploy time even if a new
+        /// version becomes available.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
