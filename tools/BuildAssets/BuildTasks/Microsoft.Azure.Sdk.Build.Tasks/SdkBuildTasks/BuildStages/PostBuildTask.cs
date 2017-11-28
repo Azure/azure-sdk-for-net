@@ -10,13 +10,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.Azure.Sdk.Build.Tasks.BuildStages;
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 {
     public class PostBuildTask : NetSdkTask
     {
-        const string API_TAG_PROPERTYNAME = "AzureApiTags";
-        const string PROPS_FILE_NAME = "AzSdk.RP.props";
         protected override INetSdkTask TaskInstance { get => this; }
 
         public override string NetSdkTaskName => "PostBuildTask";
@@ -27,9 +26,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
         public string AssemblyFullPath { get; set; }
         public string FQTypeName { get; set; }
-        //public bool CreatePropsFile { get; set; }
-
-        //public bool InvokePostBuildTask { get; set; }
 
         [Output]
         public string ApiTag { get; set; }
@@ -57,7 +53,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             return true;
         }
 
-
         private void GetApiMapFromProject()
         {
             if (ValidateArgs())
@@ -80,20 +75,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
         }
 
-        //internal string GetApiMap(SdkProjectMetaData sdkProj)
-        //{
-        //    string apiTag = string.Empty;
-        //    string asmPath = sdkProj.TargetOutputFullPath;
-        //    IEnumerable<Tuple<string,string,string>> apiMap = GetApiMapUsingReflection(asmPath);
-        //    if(apiMap.Any())
-        //    {
-        //        Dictionary<string, string> normalizedMap = NormalizeTuple(apiMap);
-        //        apiTag = GetApiTag(normalizedMap);
-        //    }
-
-        //    return apiTag;
-        //}
-
         internal string GetApiMap(string assemblyPath)
         {
             string apiTag = string.Empty;
@@ -111,11 +92,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         {
             string TYPENAMETOSEACH = "SdkInfo";
             string PROPERTYNAMEPREFIX = "ApiInfo_";
-
-            //string sdkAsmPath = sdkProjList.TargetOutputFullPath;
+            
             string sdkAsmPath = assemblyFullPath;
             string apiMapPropertyName = string.Empty;
-            //IEnumerable<Tuple<string, string, string>> combinedApiMap = new List<Tuple<string, string, string>>();
             List<Tuple<string, string, string>> combinedApiMap = new List<Tuple<string, string, string>>();
 
             try
@@ -143,7 +122,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
                         if (apiMap.Any())
                         {
-                            //combinedApiMap.Union(apiMap);
                             combinedApiMap.AddRange(apiMap);
                         }
 
@@ -169,8 +147,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             //TODO: get rid of second dictionary (optimize)
             Dictionary<string, string> na = new Dictionary<string, string>(new ObjectComparer<string>((l, r) => l.Equals(r, StringComparison.OrdinalIgnoreCase)));
             List<Tuple<string, string>> normalized = new List<Tuple<string, string>>();
-            //List<Tuple<string, string>> normalized = new Dictionary<string, string>(new ObjectComparer<string>((l, r) => l.Equals(r, StringComparison.OrdinalIgnoreCase)));
-
 
             foreach (var api in apiMap)
             {
@@ -213,15 +189,25 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         }
 
 
-            private string UpdateProject(string apiTag, SdkProjectMetaData sdkProject)
+        private string UpdateProject(string apiTag, SdkProjectMetaData sdkProject)
         {
-            string azApiPropertyName = API_TAG_PROPERTYNAME;
+            string azApiPropertyName = BuildStagesConstants.API_TAG_PROPERTYNAME;
             string propsFile = GetApiTagsPropsPath(sdkProject);
-            Project propsProject = new Project(propsFile);
+            Project propsProject;
+
+            if (ProjectCollection.GlobalProjectCollection.GetLoadedProjects(propsFile).Count != 0)
+            {
+                propsProject = ProjectCollection.GlobalProjectCollection.GetLoadedProjects(propsFile).FirstOrDefault<Project>();
+            }
+            else
+            {
+                propsProject = new Project(propsFile);
+            }
+
+
             string existingApiTags = propsProject.GetPropertyValue(azApiPropertyName);
-            //ApiTagPropsFile = propsFile;
             if (!existingApiTags.Trim().Equals(apiTag.Trim(), StringComparison.OrdinalIgnoreCase))
-            {   
+            {
                 propsProject.SetProperty(azApiPropertyName, apiTag);
                 propsProject.Save();
             }
@@ -232,7 +218,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         private string GetApiTagsPropsPath(SdkProjectMetaData sdkProject)
         {
             string apiTagsPropsPath = string.Empty;
-            string apiTagsFileName = PROPS_FILE_NAME;
+            string apiTagsFileName = BuildStagesConstants.PROPS_FILE_NAME;
 
             string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
             int depthSearchIndex = 0;
@@ -259,22 +245,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         private bool ValidateArgs()
         {
             bool isValidated = false;
-
-            //TaskLogger.LogInfo("EnableDebugTrace: {0}", EnableDebugTrace.ToString());
-            //TaskLogger.LogInfo("BuildScope: {0}", BuildScope.ToString());
-            //TaskLogger.LogInfo("InvokePostBuildTask: {0}", InvokePostBuildTask.ToString());
-            //TaskLogger.LogInfo("ProjectBeingBuilt: {0}", SdkProject.ItemSpec.ToString());
-
-            //if (InvokePostBuildTask == false)
-            //{
-            //    TaskLogger.LogInfo("InvokePostBuildTask: {0}", InvokePostBuildTask.ToString());
-            //    isValidated = false;
-            //}
-            //else if(!String.IsNullOrEmpty(SdkProject.ItemSpec))
-            //{
-            //    isValidated = true;
-            //    TaskLogger.LogInfo(SdkProject.ItemSpec);
-            //}
             if (SdkProjects.Any<ITaskItem>())
             {
                 isValidated = true;
@@ -282,7 +252,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
             else
             {
-                //TaskLogger.LogException(new Microsoft.Build.Exceptions.InvalidProjectFileException("Unable to detect projects being build"));
+                TaskLogger.LogException(new Microsoft.Build.Exceptions.InvalidProjectFileException("Unable to detect projects being build"));
             }
 
             return isValidated;

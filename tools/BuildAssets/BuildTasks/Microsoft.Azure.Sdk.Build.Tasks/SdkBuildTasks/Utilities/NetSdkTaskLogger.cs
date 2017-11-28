@@ -108,7 +108,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
         {
             if (IsBuildEngineInitialized)
             {
-                NetSdkLogger.LogMessage(debugInfo);
+                if (OutputDebugTrace == true)
+                {
+                    NetSdkLogger.LogMessage(debugInfo);
+                }
             }
             else
             {

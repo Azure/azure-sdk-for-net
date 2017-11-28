@@ -2,6 +2,7 @@ targets/additional.targets
 targets/common.Build.props
 targets/common.NugetPackage.props
 targets/common.targets
+targets/ideCmd.targets
 targets/signing.targets
 tasks/common.tasks
 tasks/net46/Microsoft.Build.dll
