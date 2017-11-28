@@ -144,7 +144,7 @@ namespace Automation.Tests.TestSupport
                     Draft = new RunbookDraft()
                 });
 
-            this.UpdateRunbookContent(runbookName, runbookContent);
+            UpdateRunbookContent(runbookName, runbookContent);
         }
 
         public Schedule CreateHourlySchedule(string scheduleName, DateTimeOffset startTime,
