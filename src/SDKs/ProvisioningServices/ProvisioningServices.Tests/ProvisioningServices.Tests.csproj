@@ -19,6 +19,8 @@
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.ProvisioningServices" Version="1.1.0" />-->
 
+    <ProjectReference Include="..\..\IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj" />
+
     <ProjectReference Include="..\Management.ProvisioningServices\Microsoft.Azure.Management.ProvisioningServices.csproj" />
   </ItemGroup>
   
@@ -35,6 +37,9 @@
   <ItemGroup>
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 
 </Project>

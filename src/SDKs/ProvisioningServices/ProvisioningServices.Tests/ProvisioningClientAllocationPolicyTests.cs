@@ -18,7 +18,7 @@ namespace ProvisioningServices.Tests
                 var testedService = GetService(testName, resourceGroup.Name);
 
                 
-                Assert.Contains(testedService.Properties.AllocationPolicy, x => x.Equals(Constants.AllocationPolicies));
+                Assert.Contains(Constants.AllocationPolicies, x => x.Equals(testedService.Properties.AllocationPolicy));
             }
         }
         [Fact]

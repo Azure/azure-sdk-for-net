@@ -15,9 +15,6 @@
     <PackageReference Include="System.Net.Http" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 </Project>

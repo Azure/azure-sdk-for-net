@@ -10,7 +10,7 @@ namespace ProvisioningServices.Tests
     public class ProvisioningClientTest : DeviceProvisioningTestBase
     {
         [Fact]
-        public void DeviceProvisioningCreateAndDelete()
+        public void CreateAndDelete()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
@@ -70,7 +70,7 @@ namespace ProvisioningServices.Tests
         }
 
         [Fact]
-        public void DeviceProvisioningUpdateSku()
+        public void UpdateSku()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
@@ -89,7 +89,7 @@ namespace ProvisioningServices.Tests
             }
         }
         [Fact]
-        public void DeviceProvisioningCreateFailure()
+        public void CreateFailure()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {

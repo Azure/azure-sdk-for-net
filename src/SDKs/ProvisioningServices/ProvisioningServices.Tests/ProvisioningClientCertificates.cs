@@ -9,7 +9,7 @@ namespace ProvisioningServices.Tests
     public class ProvisioningClientCertificates : DeviceProvisioningTestBase
     {
 
-        [Fact(Skip = "DeviceProvisioningCertificatesList")]
+        [Fact]
         public void List()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -35,7 +35,7 @@ namespace ProvisioningServices.Tests
             }
         }
 
-        [Fact(Skip = "DeviceProvisioningCertificatesCreateAndDelete")]
+        [Fact]
         public void CreateAndDelete()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -64,6 +64,8 @@ namespace ProvisioningServices.Tests
                 //delete certificate
                 this.provisioningClient.DpsCertificate.Delete(testName,
                     testName, Constants.Certificate.Name);
+                certificateList = this.provisioningClient.DpsCertificates.List(testName,
+                    testName);
                 Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);
             }
         }
