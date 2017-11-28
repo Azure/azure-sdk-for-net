@@ -21,8 +21,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum PoolLifetimeOption
     {
-        [EnumMember(Value = "jobSchedule")]
+        /// <summary>
+        /// The pool exists for the lifetime of the job schedule. The Batch
+        /// Service creates the pool when it creates the first job on the
+        /// schedule. You may apply this option only to job schedules, not to
+        /// jobs.
+        /// </summary>
+        [EnumMember(Value = "jobschedule")]
         JobSchedule,
+        /// <summary>
+        /// The pool exists for the lifetime of the job to which it is
+        /// dedicated. The Batch service creates the pool when it creates the
+        /// job. If the 'job' option is applied to a job schedule, the Batch
+        /// service creates a new auto pool for every job created on the
+        /// schedule.
+        /// </summary>
         [EnumMember(Value = "job")]
         Job
     }
@@ -38,7 +51,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case PoolLifetimeOption.JobSchedule:
-                    return "jobSchedule";
+                    return "jobschedule";
                 case PoolLifetimeOption.Job:
                     return "job";
             }
@@ -49,7 +62,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "jobSchedule":
+                case "jobschedule":
                     return PoolLifetimeOption.JobSchedule;
                 case "job":
                     return PoolLifetimeOption.Job;

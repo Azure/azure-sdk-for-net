@@ -11,12 +11,13 @@
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
     <DefineConstants>FullNetFx</DefineConstants>
     <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,9 +40,9 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>-->
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170222-09" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="Microsoft.Azure.Management.Batch" Version="4.2.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
   </ItemGroup>
