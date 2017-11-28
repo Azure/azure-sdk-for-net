@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Activity name.</param>
         /// <param name="command">Command for custom activity Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// is no restriction on the keys or values that can be used. The user
         /// specified custom activity has the full responsibility to consume
         /// and interpret the content defined.</param>
-        public CustomActivity(string name, object command, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), LinkedServiceReference resourceLinkedService = default(LinkedServiceReference), object folderPath = default(object), CustomActivityReferenceObject referenceObjects = default(CustomActivityReferenceObject), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public CustomActivity(string name, object command, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), LinkedServiceReference resourceLinkedService = default(LinkedServiceReference), object folderPath = default(object), CustomActivityReferenceObject referenceObjects = default(CustomActivityReferenceObject), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
