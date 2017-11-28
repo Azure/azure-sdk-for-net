@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// i.e. it is a localizable string.</param>
         /// <param name="unit">the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
-        /// 'Percent', 'MilliSeconds'</param>
+        /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified'</param>
         /// <param name="primaryAggregationType">the primary aggregation type
         /// value defining how to use the values for display. Possible values
         /// include: 'None', 'Average', 'Count', 'Minimum', 'Maximum',
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the unit of the metric. Possible values include:
         /// 'Count', 'Bytes', 'Seconds', 'CountPerSecond', 'BytesPerSecond',
-        /// 'Percent', 'MilliSeconds'
+        /// 'Percent', 'MilliSeconds', 'ByteSeconds', 'Unspecified'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public Unit? Unit { get; set; }

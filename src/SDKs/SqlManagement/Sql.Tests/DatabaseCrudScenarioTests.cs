@@ -110,6 +110,38 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestRenameDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create database only required parameters
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                Database db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Rename
+                string newSuffix = "_renamed";
+                string newName = db1.Name + newSuffix;
+                string newId = db1.Id + newSuffix;
+                sqlClient.Databases.Rename(resourceGroup.Name, server.Name, dbName, new ResourceMoveDefinition
+                {
+                    Id = newId
+                });
+
+                // Get database at its new id
+                Database db2 = sqlClient.Databases.Get(resourceGroup.Name, server.Name, newName);
+                Assert.Equal(newId, db2.Id);
+            }
+        }
+
+        [Fact]
         public void TestUpdateDatabaseWithCreateOrUpdate()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -173,6 +205,18 @@ namespace Sql.Tests
             Assert.NotNull(db1);
             SqlManagementTestUtilities.ValidateDatabase(dbInput, db1, dbName);
 
+            // Create zone redundant database
+            //
+            var dbInput2 = new Database()
+            {
+                Location = server.Location,
+                Edition = "Premium",
+                ZoneRedundant = true,
+            };
+            var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput2);
+            Assert.NotNull(db8);
+            SqlManagementTestUtilities.ValidateDatabase(dbInput2, db8, dbName);
+
             // Upgrade Edition + SLO Name
             //
             dynamic updateEditionAndSloInput = createModelFunc();
@@ -224,6 +268,14 @@ namespace Sql.Tests
             updateTags.Tags = new Dictionary<string, string> { { "asdf", "zxcv" } };
             var db7 = updateFunc(resourceGroup.Name, server.Name, dbName, updateTags);
             SqlManagementTestUtilities.ValidateDatabase(updateTags, db7, dbName);
+
+            // Update Zone Redundancy
+            //
+            dynamic updateZoneRedundant = createModelFunc();
+            updateZoneRedundant.Edition = "Premium";
+            updateZoneRedundant.ZoneRedundant = true;
+            var db9 = updateFunc(resourceGroup.Name, server.Name, dbName, updateZoneRedundant);
+            SqlManagementTestUtilities.ValidateDatabase(updateZoneRedundant, db9, dbName);
         }
 
         [Fact]

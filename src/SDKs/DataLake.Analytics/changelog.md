@@ -3,7 +3,7 @@
 
 **Notes**
 
-- The JobInnerError object is now recursively defined in order to capture additional error information returned by the service.
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
 
 ### Changes in 3.1.1-preview
 
@@ -48,9 +48,16 @@
         - endpoint
 - When retrieving account information, an account id field called "accountId" is now included.
     - accountId's description: The unique identifier associated with this Data Lake Analytics account.
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
 
 ### Changes in 3.0.1
-- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
+
+**Notes**
+
+- This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required. (this is addressed in version 3.1.0-preview)
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class (this is addressed in version 3.1.2-preview)
+- Add two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled` (this will be addressed in an upcoming preview release)
 
 ### Changes in 3.0.0
 - All previous preview changes (below) are now stable and part of the official release
