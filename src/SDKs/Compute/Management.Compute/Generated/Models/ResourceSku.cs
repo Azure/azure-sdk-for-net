@@ -35,12 +35,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resourceType">The type of resource the SKU applies
         /// to.</param>
         /// <param name="name">The name of SKU.</param>
-        /// <param name="tier">The tier of this particular SKU.</param>
+        /// <param name="tier">Specifies the tier of virtual machines in a
+        /// scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br
+        /// /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt;
+        /// **Basic**</param>
         /// <param name="size">The Size of the SKU.</param>
         /// <param name="family">The Family of this particular SKU.</param>
         /// <param name="kind">The Kind of resources that are supported in this
         /// SKU.</param>
-        /// <param name="capacity">Available scaling information.</param>
+        /// <param name="capacity">Specifies the number of virtual machines in
+        /// the scale set.</param>
         /// <param name="locations">The set of locations that the SKU is
         /// available.</param>
         /// <param name="apiVersions">The api versions that support this
@@ -85,7 +89,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the tier of this particular SKU.
+        /// Gets specifies the tier of virtual machines in a scale
+        /// set.&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; Possible
+        /// Values:&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
+        /// **Standard**&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt; **Basic**
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; private set; }
@@ -109,7 +116,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Kind { get; private set; }
 
         /// <summary>
-        /// Gets available scaling information.
+        /// Gets specifies the number of virtual machines in the scale set.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public ResourceSkuCapacity Capacity { get; private set; }

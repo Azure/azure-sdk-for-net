@@ -43,8 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="managedBy">A relative URI containing the ID of the VM
-        /// that has the disk attached.</param>
+        /// <param name="managedBy">Unused. Always Null.</param>
         /// <param name="timeCreated">The time when the disk was
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
@@ -79,8 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a relative URI containing the ID of the VM that has the disk
-        /// attached.
+        /// Gets unused. Always Null.
         /// </summary>
         [JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; private set; }

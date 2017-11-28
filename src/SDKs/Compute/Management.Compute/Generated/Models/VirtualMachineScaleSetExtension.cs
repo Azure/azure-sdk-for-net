@@ -43,15 +43,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// changed.</param>
         /// <param name="publisher">The name of the extension handler
         /// publisher.</param>
-        /// <param name="type">The type of the extension handler.</param>
-        /// <param name="typeHandlerVersion">The type version of the extension
-        /// handler.</param>
-        /// <param name="autoUpgradeMinorVersion">Whether the extension handler
-        /// should be automatically upgraded across minor versions.</param>
+        /// <param name="type">Specifies the type of the extension; an example
+        /// is "CustomScriptExtension".</param>
+        /// <param name="typeHandlerVersion">Specifies the version of the
+        /// script handler.</param>
+        /// <param name="autoUpgradeMinorVersion">Indicates whether the
+        /// extension should use a newer minor version if one is available at
+        /// deployment time. Once deployed, however, the extension will not
+        /// upgrade minor versions unless redeployed, even with this property
+        /// set to true.</param>
         /// <param name="settings">Json formatted public settings for the
         /// extension.</param>
-        /// <param name="protectedSettings">Json formatted protected settings
-        /// for the extension.</param>
+        /// <param name="protectedSettings">The extension can contain either
+        /// protectedSettings or protectedSettingsFromKeyVault or no protected
+        /// settings at all.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
@@ -95,20 +100,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the extension handler.
+        /// Gets or sets specifies the type of the extension; an example is
+        /// "CustomScriptExtension".
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the type version of the extension handler.
+        /// Gets or sets specifies the version of the script handler.
         /// </summary>
         [JsonProperty(PropertyName = "properties.typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the extension handler should be automatically
-        /// upgraded across minor versions.
+        /// Gets or sets indicates whether the extension should use a newer
+        /// minor version if one is available at deployment time. Once
+        /// deployed, however, the extension will not upgrade minor versions
+        /// unless redeployed, even with this property set to true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
@@ -120,7 +128,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public object Settings { get; set; }
 
         /// <summary>
-        /// Gets or sets json formatted protected settings for the extension.
+        /// Gets or sets the extension can contain either protectedSettings or
+        /// protectedSettingsFromKeyVault or no protected settings at all.
         /// </summary>
         [JsonProperty(PropertyName = "properties.protectedSettings")]
         public object ProtectedSettings { get; set; }
