@@ -35,13 +35,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="typeProperties">Custom dataset properties.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
-        public CustomDataset(LinkedServiceReference linkedServiceName, object typeProperties, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
-            : base(linkedServiceName, description, structure, parameters)
+        public CustomDataset(LinkedServiceReference linkedServiceName, object typeProperties, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters)
         {
             TypeProperties = typeProperties;
             CustomInit();

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,6 +40,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="apiKey">The API key for accessing the Azure ML model
         /// endpoint.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="updateResourceEndpoint">The Update Resource REST URL
@@ -57,8 +61,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureMLLinkedService(object mlEndpoint, SecureString apiKey, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object tenant = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AzureMLLinkedService(object mlEndpoint, SecureString apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object tenant = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;
