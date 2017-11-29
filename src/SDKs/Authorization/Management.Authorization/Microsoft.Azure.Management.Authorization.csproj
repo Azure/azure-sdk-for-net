@@ -10,7 +10,11 @@
 		<AssemblyName>Microsoft.Azure.Management.Authorization</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Authorization</PackageId>
 		<PackageTags>Microsoft Azure Management;Authorization</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+			<![CDATA[
+			This is a public preview release of the Azure Authorization SDK. Included with this release is support for delegation of Role Assignments.
+			]]>
+		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
