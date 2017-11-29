@@ -17,7 +17,7 @@ namespace DataLakeStore.Tests
     {   
         private CommonTestFixture commonData;
 
-        [Fact]
+        // [Fact]
         public void CreateGetUpdateDeleteTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -149,7 +149,7 @@ namespace DataLakeStore.Tests
                 Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
             }
         }
-        [Fact]
+        // [Fact]
         public void FirewallAndTrustedProviderTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
