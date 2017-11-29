@@ -16,7 +16,7 @@ namespace DataLakeAnalytics.Tests
     public class AccountOperationTests : TestBase
     {
         private CommonTestFixture commonData;
-        [Fact]
+        // [Fact]
         public void CreateGetUpdateDeleteTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -237,7 +237,7 @@ namespace DataLakeAnalytics.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void ComputePolicyCrudTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -342,7 +342,7 @@ namespace DataLakeAnalytics.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void FirewallTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
