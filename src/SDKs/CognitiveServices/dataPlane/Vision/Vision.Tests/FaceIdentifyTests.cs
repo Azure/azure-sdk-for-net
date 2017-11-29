@@ -20,7 +20,7 @@ namespace FaceSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceIdentificationPositive");
 
-                IFaceAPI client = GetClient(HttpMockServer.CreateInstance());
+                IFaceAPI client = GetFaceClient(HttpMockServer.CreateInstance());
                 string faceId1 = null;
                 string personGroupId = "1234";
                 client.PersonGroup.CreateAsync(personGroupId, "fakePersonGroup").Wait();
