@@ -63,7 +63,6 @@ namespace DataFactory.Tests.Utils
 
                 // All Integration runtime operations, creating/deleting integration runtime
                 CaptureIntegrationRuntimes_Create(); // 200
-
                 // Before running this method, please make sure the SQL Database "SSISDB" does *NOT* exist in yandongeverest.database.windows.net by SSMS,
                 // otherwise the operation will fail. The connection string for this server could be found in GetIntegrationRuntimeResource().
                 // Note this operation is quite time consuming, normally it will take more than 30 minutes to finish the starting process.
