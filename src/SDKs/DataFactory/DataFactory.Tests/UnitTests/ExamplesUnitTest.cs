@@ -107,8 +107,13 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("IntegrationRuntimes_Update", (example, client, responseCode) =>
             {
-                IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(RGN(example), FN(example), IRN(example), IRR(example, client, "integrationRuntime"));
-                CheckResponseBody(example, client, responseCode, resource);
+                IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
+                    new UpdateIntegrationRuntimeRequest
+                    {
+                        AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                        UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                    });
+                CheckResponseBody(example, client, responseCode, response);
             });
         }
 
@@ -202,20 +207,6 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
-        public void IntegrationRuntimes_Patch()
-        {
-            RunAyncApiTest("IntegrationRuntimes_Patch", (example, client, responseCode) =>
-            {
-                client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
-                new UpdateIntegrationRuntimeRequest
-                {
-                    AutoUpdate = IntegrationRuntimeAutoUpdate.On,
-                    UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
-                });
-            });
-        }
-
-        [Fact]
         public void IntegrationRuntimes_Upgrade()
         {
             RunAyncApiTest("IntegrationRuntimes_Upgrade", (example, client, responseCode) =>
@@ -225,15 +216,28 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
-        public void IntegrationRuntimeNodes_Patch()
+        public void IntegrationRuntimeNodes_Update()
         {
-            RunAyncApiTest("IntegrationRuntimeNodes_Patch", (example, client, responseCode) =>
+            RunAyncApiTest("IntegrationRuntimeNodes_Update", (example, client, responseCode) =>
             {
                 client.IntegrationRuntimeNodes.Update(RGN(example), FN(example), IRN(example), "Node_1",
                 new UpdateIntegrationRuntimeNodeRequest
                 {
                     ConcurrentJobsLimit = 2
                 });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_RemoveNode()
+        {
+            RunAyncApiTest("IntegrationRuntimes_RemoveNode", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.RemoveNode(RGN(example), FN(example), IRN(example),
+                    new IntegrationRuntimeRemoveNodeRequest
+                    {
+                        NodeName = "Node_1"
+                    });
             });
         }
 

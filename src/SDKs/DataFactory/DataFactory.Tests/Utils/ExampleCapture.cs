@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DataFactory.Tests.Utils
 {
@@ -75,13 +76,12 @@ namespace DataFactory.Tests.Utils
                 CaptureIntegrationRuntimes_ListAuthKeys(); // 200
                 CaptureIntegrationRuntimes_RegenerateAuthKey(); // 200
                 CaptureIntegrationRuntimes_GetStatus(); // 200
-                CaptureIntegrationRuntimes_Patch(); // 200
                 CaptureIntegrationRuntimes_Upgrade();
 
                 // The following 3 methods invovling a mannual step as prerequisites. We need to install an integration runtime node and register it.
                 // After the integration runtime node is online, we can run methods.
                 CaptureIntegrationRuntimeNodes_GetIpAddress();
-                CaptureIntegrationRuntimeNodes_Patch(); // 200
+                CaptureIntegrationRuntimeNodes_Update(); // 200
                 CaptureIntegrationRuntimeNodes_Delete(); // 200
                 CaptureIntegrationRuntimeNodes_Delete(); // 204
 
@@ -244,7 +244,7 @@ namespace DataFactory.Tests.Utils
             client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName);
         }
 
-        private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description)
+        private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description, string location = null)
         {
             if (type.Equals("Managed", StringComparison.OrdinalIgnoreCase))
             {
@@ -258,7 +258,7 @@ namespace DataFactory.Tests.Utils
                             NodeSize = "Standard_D1_v2",
                             MaxParallelExecutionsPerNode = 1,
                             NumberOfNodes = 1,
-                            Location = "eastUS"
+                            Location = location
                         },
                         SsisProperties = new IntegrationRuntimeSsisProperties
                         {
@@ -292,13 +292,19 @@ namespace DataFactory.Tests.Utils
         private void CaptureIntegrationRuntimes_Create()
         {
             interceptor.CurrentExampleName = "IntegrationRuntimes_Create";
-            IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, GetIntegrationRuntimeResource("SelfHosted", "A selfhosted integration runtime"));
+            IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
+                GetIntegrationRuntimeResource("SelfHosted", "A selfhosted integration runtime"));
         }
 
         private void CaptureIntegrationRuntimes_Update()
         {
             interceptor.CurrentExampleName = "IntegrationRuntimes_Update";
-            IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, GetIntegrationRuntimeResource("SelfHosted", "Update description"));
+            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
+                new UpdateIntegrationRuntimeRequest
+                {
+                    AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                    UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                });
         }
 
         private void CaptureIntegrationRuntimes_Get()
@@ -352,7 +358,7 @@ namespace DataFactory.Tests.Utils
                 secrets.ResourceGroupName,
                 secrets.FactoryName,
                 managedIntegrationRuntimeName,
-                GetIntegrationRuntimeResource("Managed", "A managed reserved integration runtime"));
+                GetIntegrationRuntimeResource("Managed", "A managed reserved integration runtime", "West US"));
             ServiceClientTracing.IsEnabled = true;
 
             client.IntegrationRuntimes.Start(secrets.ResourceGroupName, secrets.FactoryName, managedIntegrationRuntimeName);
@@ -368,18 +374,6 @@ namespace DataFactory.Tests.Utils
             ServiceClientTracing.IsEnabled = true;
         }
 
-        private void CaptureIntegrationRuntimes_Patch()
-        {
-            interceptor.CurrentExampleName = "IntegrationRuntimes_Patch";
-
-            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
-                new UpdateIntegrationRuntimeRequest
-                {
-                    AutoUpdate = IntegrationRuntimeAutoUpdate.On,
-                    UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
-                });
-        }
-
         private void CaptureIntegrationRuntimes_Upgrade()
         {
             interceptor.CurrentExampleName = "IntegrationRuntimes_Upgrade";
@@ -387,9 +381,20 @@ namespace DataFactory.Tests.Utils
             client.IntegrationRuntimes.Upgrade(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
         }
 
-        private void CaptureIntegrationRuntimeNodes_Patch()
+        private void CaptureIntegrationRuntimes_RemoveNode()
         {
-            interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Patch";
+            interceptor.CurrentExampleName = "IntegrationRuntimes_RemoveNode";
+
+            client.IntegrationRuntimes.RemoveNode(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName,
+                new IntegrationRuntimeRemoveNodeRequest
+                {
+                    NodeName = "Node_1"
+                });
+        }
+
+        private void CaptureIntegrationRuntimeNodes_Update()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimeNodes_Update";
 
             SelfHostedIntegrationRuntimeNode response = client.IntegrationRuntimeNodes.Update(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "Node_1",
                 new UpdateIntegrationRuntimeNodeRequest

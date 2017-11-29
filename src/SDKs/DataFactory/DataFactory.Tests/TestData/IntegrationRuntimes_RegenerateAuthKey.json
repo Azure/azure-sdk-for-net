@@ -19,7 +19,7 @@
         "x-ms-correlation-request-id": "46ee8708-affc-403d-ab9f-53824b169fdf"
       },
       "body": {
-        "authKey2": "IR@1baad24d-93e5-4074-8eeb-cd93fbb83b42@exampleFactoryName@eu@IYLMSMWzzjQswOJHrTJNZc2SGwWla/SQ3QraZs3wqbw="
+        "authKey2": "*********************************"
       }
     }
   }
