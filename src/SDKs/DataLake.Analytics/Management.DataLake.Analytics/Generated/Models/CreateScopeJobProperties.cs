@@ -11,38 +11,42 @@
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// U-SQL job properties used when submitting U-SQL jobs.
+    /// Scope job properties used when submitting Scope jobs.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("USql")]
-    public partial class CreateUSqlJobProperties : CreateJobProperties
+    [Newtonsoft.Json.JsonObject("Scope")]
+    public partial class CreateScopeJobProperties : CreateJobProperties
     {
         /// <summary>
-        /// Initializes a new instance of the CreateUSqlJobProperties class.
+        /// Initializes a new instance of the CreateScopeJobProperties class.
         /// </summary>
-        public CreateUSqlJobProperties()
+        public CreateScopeJobProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CreateUSqlJobProperties class.
+        /// Initializes a new instance of the CreateScopeJobProperties class.
         /// </summary>
         /// <param name="script">the script to run. Please note that the
         /// maximum script size is 3 MB.</param>
         /// <param name="runtimeVersion">the runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
-        /// <param name="compileMode">the specific compilation mode for the job
-        /// used during execution. If this is not specified during submission,
-        /// the server will determine the optimal compilation mode. Possible
-        /// values include: 'Semantic', 'Full', 'SingleBox'</param>
-        public CreateUSqlJobProperties(string script, string runtimeVersion = default(string), CompileMode? compileMode = default(CompileMode?))
+        /// <param name="resources">the list of resources that are required by
+        /// the job.</param>
+        /// <param name="notifier">the list of email addresses, separated by
+        /// semi-colons, to notify when the job reaches a terminal
+        /// state.</param>
+        public CreateScopeJobProperties(string script, string runtimeVersion = default(string), IList<ScopeJobResource> resources = default(IList<ScopeJobResource>), string notifier = default(string))
             : base(script, runtimeVersion)
         {
-            CompileMode = compileMode;
+            Resources = resources;
+            Notifier = notifier;
             CustomInit();
         }
 
@@ -52,13 +56,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the specific compilation mode for the job used during
-        /// execution. If this is not specified during submission, the server
-        /// will determine the optimal compilation mode. Possible values
-        /// include: 'Semantic', 'Full', 'SingleBox'
+        /// Gets or sets the list of resources that are required by the job.
         /// </summary>
-        [JsonProperty(PropertyName = "compileMode")]
-        public CompileMode? CompileMode { get; set; }
+        [JsonProperty(PropertyName = "resources")]
+        public IList<ScopeJobResource> Resources { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of email addresses, separated by semi-colons,
+        /// to notify when the job reaches a terminal state.
+        /// </summary>
+        [JsonProperty(PropertyName = "notifier")]
+        public string Notifier { get; set; }
 
         /// <summary>
         /// Validate the object.
