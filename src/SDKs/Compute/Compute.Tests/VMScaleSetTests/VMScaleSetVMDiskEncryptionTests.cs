@@ -42,7 +42,7 @@ namespace Compute.Tests
             }
         }
 
-        public void TestDiskEncryptionOnScaleSetVMInternal(MockContext context, bool hasManagedDisks = true, bool useVmssExtension = true)
+        private void TestDiskEncryptionOnScaleSetVMInternal(MockContext context, bool hasManagedDisks = true, bool useVmssExtension = true)
         {
             EnsureClientsInitialized(context);
 

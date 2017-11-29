@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="source">Dataset-specific source properties, same as
         /// copy activity source.</param>
         /// <param name="dataset">Lookup activity dataset reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -47,8 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="firstRowOnly">Whether to return first row or all rows.
         /// Default value is true. Type: boolean (or Expression with resultType
         /// boolean).</param>
-        public LookupActivity(string name, CopySource source, DatasetReference dataset, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object firstRowOnly = default(object))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public LookupActivity(string name, CopySource source, DatasetReference dataset, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object firstRowOnly = default(object))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             Source = source;
             Dataset = dataset;

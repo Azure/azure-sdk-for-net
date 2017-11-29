@@ -40,13 +40,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="errorCode">The error code.</param>
         /// <param name="parameters">Managed integration runtime error
         /// parameters.</param>
-        public ManagedIntegrationRuntimeOperationResult(string type = default(string), System.DateTime? startTime = default(System.DateTime?), string result = default(string), string errorCode = default(string), IList<string> parameters = default(IList<string>))
+        /// <param name="activityId">The activity id for the operation
+        /// request.</param>
+        public ManagedIntegrationRuntimeOperationResult(string type = default(string), System.DateTime? startTime = default(System.DateTime?), string result = default(string), string errorCode = default(string), IList<string> parameters = default(IList<string>), string activityId = default(string))
         {
             Type = type;
             StartTime = startTime;
             Result = result;
             ErrorCode = errorCode;
             Parameters = parameters;
+            ActivityId = activityId;
             CustomInit();
         }
 
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IList<string> Parameters { get; private set; }
+
+        /// <summary>
+        /// Gets the activity id for the operation request.
+        /// </summary>
+        [JsonProperty(PropertyName = "activityId")]
+        public string ActivityId { get; private set; }
 
     }
 }
