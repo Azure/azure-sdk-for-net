@@ -73,7 +73,7 @@ namespace Compute.Tests
         protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
-            Assert.True(vmScaleSetVMInstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
+            Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
 
             if (!hasManagedDisks)
             {

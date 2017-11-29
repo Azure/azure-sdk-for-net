@@ -6,9 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
     <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <Version>16.3.0</Version>
+    <Version>17.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>Microsoft Azure resource management;virtual machine;compute</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public release of the Azure Compute SDK. Included with this release is the update of SKU API.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

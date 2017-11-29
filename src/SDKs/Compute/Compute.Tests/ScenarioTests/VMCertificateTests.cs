@@ -55,7 +55,7 @@ namespace Compute.Tests
             }
         }
 
-        public void SetCertificateInfo(VirtualMachine vm)
+        private void SetCertificateInfo(VirtualMachine vm)
         {
             SubResource vault = GetDefaultSourceVault();
 
