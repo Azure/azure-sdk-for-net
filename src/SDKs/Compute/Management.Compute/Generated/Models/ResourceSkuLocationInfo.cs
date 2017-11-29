@@ -15,27 +15,26 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// The Resource model definition.
-    /// </summary>
-    public partial class ResourceUpdate
+    public partial class ResourceSkuLocationInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceUpdate class.
+        /// Initializes a new instance of the ResourceSkuLocationInfo class.
         /// </summary>
-        public ResourceUpdate()
+        public ResourceSkuLocationInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceUpdate class.
+        /// Initializes a new instance of the ResourceSkuLocationInfo class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        public ResourceUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        /// <param name="location">Location of the SKU</param>
+        /// <param name="zones">List of availability zones where the SKU is
+        /// supported.</param>
+        public ResourceSkuLocationInfo(string location = default(string), IList<string> zones = default(IList<string>))
         {
-            Tags = tags;
-            Sku = sku;
+            Location = location;
+            Zones = zones;
             CustomInit();
         }
 
@@ -45,15 +44,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets location of the SKU
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
 
         /// <summary>
+        /// Gets list of availability zones where the SKU is supported.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public DiskSku Sku { get; set; }
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; private set; }
 
     }
 }

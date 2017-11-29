@@ -83,7 +83,7 @@ namespace Compute.Tests
             }
         }
 
-        public void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true, IList<string> zones = null)
+        private void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true, IList<string> zones = null)
         {
             EnsureClientsInitialized(context);
 

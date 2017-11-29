@@ -525,7 +525,7 @@ namespace Compute.Tests.DiskRPTests
                 Assert.Equal(zonesExp.Count, zonesAct.Count);
                 foreach (string zone in zonesExp)
                 {
-                    Assert.True(zonesAct.Contains(zone, StringComparer.OrdinalIgnoreCase));
+                    Assert.Contains(zone, zonesAct, StringComparer.OrdinalIgnoreCase);
                 }
             }
             else

@@ -127,11 +127,11 @@ namespace Compute.Tests
                 Assert.Null(listeners[0].CertificateUrl);
 
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Https);
-                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal(listeners[1].CertificateUrl, winRMCertificateUrl, ignoreCase: true);
             }
             else if (listeners[0].Protocol == ProtocolTypes.Https)
             {
-                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal(listeners[0].CertificateUrl, winRMCertificateUrl, ignoreCase: true);
 
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Http);
                 Assert.Null(listeners[1].CertificateUrl);

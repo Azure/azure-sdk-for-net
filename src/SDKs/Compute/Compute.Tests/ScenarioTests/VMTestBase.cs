@@ -944,7 +944,7 @@ namespace Compute.Tests
 
         private void ValidateVMInstanceView(VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false, string osDiskName = null)
         {
-            Assert.True(vmInstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
+            Assert.Contains(vmInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
 
             if (!hasManagedDisks)
             {
@@ -953,7 +953,7 @@ namespace Compute.Tests
 
                 if (osDiskName != null)
                 {
-                    Assert.True(vmInstanceView.Disks.Any(x => x.Name == osDiskName));
+                    Assert.Contains(vmInstanceView.Disks, x => x.Name == osDiskName);
                 }
 
                 DiskInstanceView diskInstanceView = vmInstanceView.Disks.First();
