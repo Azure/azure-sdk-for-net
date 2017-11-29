@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
 
     /// <summary>
-    /// Defines values for AADObjectType.
+    /// Defines values for OperationOrigin.
     /// </summary>
-    public static class AADObjectType
+    public static class OperationOrigin
     {
-        public const string User = "User";
-        public const string Group = "Group";
-        public const string ServicePrincipal = "ServicePrincipal";
+        public const string User = "user";
+        public const string System = "system";
+        public const string Usersystem = "user,system";
     }
 }
