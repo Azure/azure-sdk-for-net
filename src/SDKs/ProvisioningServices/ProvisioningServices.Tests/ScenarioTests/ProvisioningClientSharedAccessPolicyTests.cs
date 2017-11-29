@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.ProvisioningServices;
 using Microsoft.Azure.Management.ProvisioningServices.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ProvisioningServices.Tests.Helpers;
 using Xunit;
 
-namespace ProvisioningServices.Tests
+namespace ProvisioningServices.Tests.ScenarioTests
 {
     public class ProvisioningClientSharedAccessPolicyTests : DeviceProvisioningTestBase
     {

@@ -2,9 +2,10 @@
 using Microsoft.Azure.Management.ProvisioningServices;
 using Microsoft.Azure.Management.ProvisioningServices.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ProvisioningServices.Tests.Helpers;
 using Xunit;
 
-namespace ProvisioningServices.Tests
+namespace ProvisioningServices.Tests.ScenarioTests
 {
     public class ProvisioningClientCertificates : DeviceProvisioningTestBase
     {

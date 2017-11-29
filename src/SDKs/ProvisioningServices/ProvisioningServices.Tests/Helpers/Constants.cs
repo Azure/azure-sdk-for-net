@@ -1,4 +1,4 @@
-﻿namespace ProvisioningServices.Tests
+﻿namespace ProvisioningServices.Tests.Helpers
 {
     public static class Constants
     {

@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using Microsoft.Azure.Management.ProvisioningServices;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ProvisioningServices.Tests.Helpers;
 using Xunit;
 
-namespace ProvisioningServices.Tests
+namespace ProvisioningServices.Tests.ScenarioTests
 {
     public class ProvisioningClientAllocationPolicyTests : DeviceProvisioningTestBase
     {
@@ -36,6 +37,9 @@ namespace ProvisioningServices.Tests
                     .Except(new[] { testedService.Properties.AllocationPolicy }).First();
 
                 testedService.Properties.AllocationPolicy = newAllocationPolicy;
+
+                //Allow DPS creation to complete
+                System.Threading.Thread.Sleep(500);
 
                 var updatedInstance =
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,

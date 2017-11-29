@@ -3,9 +3,10 @@ using System.Linq;
 using Microsoft.Azure.Management.ProvisioningServices;
 using Microsoft.Azure.Management.ProvisioningServices.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ProvisioningServices.Tests.Helpers;
 using Xunit;
 
-namespace ProvisioningServices.Tests
+namespace ProvisioningServices.Tests.ScenarioTests
 {
     public class ProvisioningClientTest : DeviceProvisioningTestBase
     {
@@ -62,9 +63,24 @@ namespace ProvisioningServices.Tests
                 Assert.NotNull(foundInstance);
                 Assert.Equal(testName, foundInstance.Name);
 
-                this.provisioningClient.IotDpsResource.Delete(testName, testName);
-                existingServices =
-                    this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
+                //loop control
+                var maxAttemptCount = 5;
+                while (maxAttemptCount > 0 && existingServices.Value.Any(x=> x.Name == testName))
+                {
+                    try
+                    {
+                        this.provisioningClient.IotDpsResource.Delete(testName, testName);
+                        existingServices =
+                            this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
+                    }
+                    catch //Conflict because underlying process is still executing
+                    {
+                        maxAttemptCount--;
+                        //Let whatever operations need to finish
+                        System.Threading.Thread.Sleep(1000);
+                    }
+
+                }
                 Assert.DoesNotContain(existingServices.Value, x => x.Name == testName);
             }
         }

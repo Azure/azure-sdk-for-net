@@ -6,7 +6,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ProvisioningServices.Tests.Helpers;
 
-namespace ProvisioningServices.Tests
+namespace ProvisioningServices.Tests.ScenarioTests
 {
     public class DeviceProvisioningTestBase : TestBase
     {

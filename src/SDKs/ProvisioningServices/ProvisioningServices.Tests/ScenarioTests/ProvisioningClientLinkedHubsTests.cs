@@ -9,16 +9,16 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
-namespace ProvisioningServices.Tests
+namespace ProvisioningServices.Tests.ScenarioTests
 {
     public class ProvisioningClientLinkedHubsTests : DeviceProvisioningTestBase
     {
         [Fact]
-        public void Create()
+        public void CreateAndDelete()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                var testName = "unitTestingDPSLinkedHubCreate";
+                var testName = "unitTestingDPSLinkedHubCreateUpdateDelete";
                 this.Initialize(context);
                 var iotHubClient = this.GetClient<IotHubClient>(context);
                 var resourceGroup = this.GetResourceGroup(testName);
@@ -39,8 +39,36 @@ namespace ProvisioningServices.Tests
                     testedService);
 
                 Assert.Contains(updatedInstance.Properties.IotHubs, x => x.Name == iotHub.Name);
+
+                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.Name == iotHub.Name);
+                Assert.NotNull(returnedHub);
+
+                var updatedApplyPolicy = !(returnedHub.ApplyAllocationPolicy ?? false);
+                returnedHub.ApplyAllocationPolicy = updatedApplyPolicy;
+
+                var updatedPolicyWeight = new System.Random().Next();
+                returnedHub.AllocationWeight = updatedPolicyWeight;
+
+                updatedInstance =
+                    this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
+                        updatedInstance);
+                var updatedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.Name == iotHub.Name);
+                Assert.NotNull(updatedHub);
+
+                Assert.Equal(updatedApplyPolicy, updatedHub.ApplyAllocationPolicy);
+                Assert.Equal(updatedPolicyWeight, updatedHub.AllocationWeight);
+
+
+                //Delete the linked hub
+                testedService.Properties.IotHubs = testedService.Properties.IotHubs.Except(
+                    testedService.Properties.IotHubs.Where(x => x.Name == testName)).ToList();
+                updatedInstance = this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
+                    testedService);
+                Assert.DoesNotContain(updatedInstance.Properties.IotHubs, x=> x.Name == iotHub.Name);
+
             }
         }
+
 
         private IotHubDescription GetIoTHub(IotHubClient iotHubClient, ResourceGroup resourceGroup, string hubName)
         {
