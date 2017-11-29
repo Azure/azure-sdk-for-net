@@ -34,14 +34,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleTrigger class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Trigger description.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
         /// <param name="pipelines">Pipelines that need to be started.</param>
         /// <param name="recurrence">Recurrence schedule configuration.</param>
-        public ScheduleTrigger(string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), ScheduleTriggerRecurrence recurrence = default(ScheduleTriggerRecurrence))
-            : base(description, runtimeState, pipelines)
+        public ScheduleTrigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), ScheduleTriggerRecurrence recurrence = default(ScheduleTriggerRecurrence))
+            : base(additionalProperties, description, runtimeState, pipelines)
         {
             Recurrence = recurrence;
             CustomInit();

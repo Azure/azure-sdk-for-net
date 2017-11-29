@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultKeyReference class.
         /// </summary>
-        /// <param name="keyUrl">The URL referencing a key in a Key
-        /// Vault.</param>
+        /// <param name="keyUrl">The URL referencing a key encryption key in
+        /// Key Vault.</param>
         /// <param name="sourceVault">The relative URL of the Key Vault
         /// containing the key.</param>
         public KeyVaultKeyReference(string keyUrl, SubResource sourceVault)
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the URL referencing a key in a Key Vault.
+        /// Gets or sets the URL referencing a key encryption key in Key Vault.
         /// </summary>
         [JsonProperty(PropertyName = "keyUrl")]
         public string KeyUrl { get; set; }

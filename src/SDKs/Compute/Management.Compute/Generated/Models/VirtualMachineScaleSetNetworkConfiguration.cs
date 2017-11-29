@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineScaleSetNetworkConfiguration class.
         /// </summary>
         /// <param name="name">The network configuration name.</param>
-        /// <param name="ipConfigurations">The virtual machine scale set IP
-        /// Configuration.</param>
+        /// <param name="ipConfigurations">Specifies the IP configurations of
+        /// the network interface.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="primary">Whether this is a primary NIC on a virtual
-        /// machine.</param>
+        /// <param name="primary">Specifies the primary network interface in
+        /// case the virtual machine has more than 1 network interface.</param>
         /// <param name="enableAcceleratedNetworking">Specifies whether the
         /// network interface is accelerated networking-enabled.</param>
         /// <param name="networkSecurityGroup">The network security
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets whether this is a primary NIC on a virtual machine.
+        /// Gets or sets specifies the primary network interface in case the
+        /// virtual machine has more than 1 network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
@@ -100,7 +101,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set IP Configuration.
+        /// Gets or sets specifies the IP configurations of the network
+        /// interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }

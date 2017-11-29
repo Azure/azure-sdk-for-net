@@ -39,7 +39,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="location">The supported Azure location of the
         /// resource.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="tags">The tags attached to the resource.</param>
+        /// <param name="tags">Specifies the tags that are assigned to the
+        /// virtual machine. For more information about using tags, see [Using
+        /// tags to organize your Azure
+        /// resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).</param>
         public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
             : base(name, location, id, tags)
         {

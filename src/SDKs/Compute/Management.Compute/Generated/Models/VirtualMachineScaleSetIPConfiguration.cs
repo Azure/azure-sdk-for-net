@@ -40,10 +40,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="name">The IP configuration name.</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="subnet">The subnet.</param>
-        /// <param name="primary">Specifies the primary IP Configuration in
-        /// case the network interface has more than one IP
-        /// Configuration.</param>
+        /// <param name="subnet">Specifies the identifier of the
+        /// subnet.</param>
+        /// <param name="primary">Specifies the primary network interface in
+        /// case the virtual machine has more than 1 network interface.</param>
         /// <param name="publicIPAddressConfiguration">The
         /// publicIPAddressConfiguration.</param>
         /// <param name="privateIPAddressVersion">Available from Api-Version
@@ -51,12 +51,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
         /// Possible values are: 'IPv4' and 'IPv6'. Possible values include:
         /// 'IPv4', 'IPv6'</param>
-        /// <param name="applicationGatewayBackendAddressPools">The application
-        /// gateway backend address pools.</param>
-        /// <param name="loadBalancerBackendAddressPools">The load balancer
-        /// backend address pools.</param>
-        /// <param name="loadBalancerInboundNatPools">The load balancer inbound
-        /// nat pools.</param>
+        /// <param name="applicationGatewayBackendAddressPools">Specifies an
+        /// array of references to backend address pools of application
+        /// gateways. A scale set can reference backend address pools of
+        /// multiple application gateways. Multiple scale sets cannot use the
+        /// same application gateway.</param>
+        /// <param name="loadBalancerBackendAddressPools">Specifies an array of
+        /// references to backend address pools of load balancers. A scale set
+        /// can reference backend address pools of one public and one internal
+        /// load balancer. Multiple scale sets cannot use the same load
+        /// balancer.</param>
+        /// <param name="loadBalancerInboundNatPools">Specifies an array of
+        /// references to inbound Nat pools of the load balancers. A scale set
+        /// can reference inbound nat pools of one public and one internal load
+        /// balancer. Multiple scale sets cannot use the same load
+        /// balancer</param>
         public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
@@ -83,14 +92,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the subnet.
+        /// Gets or sets specifies the identifier of the subnet.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public ApiEntityReference Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the primary IP Configuration in case the
-        /// network interface has more than one IP Configuration.
+        /// Gets or sets specifies the primary network interface in case the
+        /// virtual machine has more than 1 network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
@@ -111,19 +120,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string PrivateIPAddressVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the application gateway backend address pools.
+        /// Gets or sets specifies an array of references to backend address
+        /// pools of application gateways. A scale set can reference backend
+        /// address pools of multiple application gateways. Multiple scale sets
+        /// cannot use the same application gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
         public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the load balancer backend address pools.
+        /// Gets or sets specifies an array of references to backend address
+        /// pools of load balancers. A scale set can reference backend address
+        /// pools of one public and one internal load balancer. Multiple scale
+        /// sets cannot use the same load balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the load balancer inbound nat pools.
+        /// Gets or sets specifies an array of references to inbound Nat pools
+        /// of the load balancers. A scale set can reference inbound nat pools
+        /// of one public and one internal load balancer. Multiple scale sets
+        /// cannot use the same load balancer
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
         public IList<SubResource> LoadBalancerInboundNatPools { get; set; }

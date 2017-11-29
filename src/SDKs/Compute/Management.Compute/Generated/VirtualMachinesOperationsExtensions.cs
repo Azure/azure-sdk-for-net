@@ -208,6 +208,46 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Retrieves information about the run-time state of a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static VirtualMachineInstanceView InstanceView(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                return operations.InstanceViewAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves information about the run-time state of a virtual machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineInstanceView> InstanceViewAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.InstanceViewWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Converts virtual machine disks from blob-based to managed disks. Virtual
             /// machine must be stop-deallocated before invoking this operation.
             /// </summary>
