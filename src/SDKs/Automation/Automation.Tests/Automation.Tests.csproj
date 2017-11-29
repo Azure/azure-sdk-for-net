@@ -11,12 +11,6 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
     <TestProjectType>true</TestProjectType>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Customizations\**" />
-    <EmbeddedResource Remove="Customizations\**" />
-    <None Remove="Customizations\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />
