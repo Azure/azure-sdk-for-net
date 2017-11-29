@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resourceType">The type of resource the sku applies
         /// to.</param>
         /// <param name="sku">The Sku.</param>
-        /// <param name="capacity">Available scaling information.</param>
+        /// <param name="capacity">Specifies the number of virtual machines in
+        /// the scale set.</param>
         public VirtualMachineScaleSetSku(string resourceType = default(string), Sku sku = default(Sku), VirtualMachineScaleSetSkuCapacity capacity = default(VirtualMachineScaleSetSkuCapacity))
         {
             ResourceType = resourceType;
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public Sku Sku { get; private set; }
 
         /// <summary>
-        /// Gets available scaling information.
+        /// Gets specifies the number of virtual machines in the scale set.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public VirtualMachineScaleSetSkuCapacity Capacity { get; private set; }

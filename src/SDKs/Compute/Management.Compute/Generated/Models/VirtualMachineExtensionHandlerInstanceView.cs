@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineExtensionHandlerInstanceView class.
         /// </summary>
-        /// <param name="type">Full type of the extension handler which
-        /// includes both publisher and type.</param>
-        /// <param name="typeHandlerVersion">The type version of the extension
-        /// handler.</param>
+        /// <param name="type">Specifies the type of the extension; an example
+        /// is "CustomScriptExtension".</param>
+        /// <param name="typeHandlerVersion">Specifies the version of the
+        /// script handler.</param>
         /// <param name="status">The extension handler status.</param>
         public VirtualMachineExtensionHandlerInstanceView(string type = default(string), string typeHandlerVersion = default(string), InstanceViewStatus status = default(InstanceViewStatus))
         {
@@ -51,14 +51,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets full type of the extension handler which includes both
-        /// publisher and type.
+        /// Gets or sets specifies the type of the extension; an example is
+        /// "CustomScriptExtension".
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the type version of the extension handler.
+        /// Gets or sets specifies the version of the script handler.
         /// </summary>
         [JsonProperty(PropertyName = "typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }

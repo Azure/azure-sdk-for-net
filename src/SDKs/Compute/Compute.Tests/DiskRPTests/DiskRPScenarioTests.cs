@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Models;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Compute.Tests.DiskRPTests
@@ -12,6 +13,13 @@ namespace Compute.Tests.DiskRPTests
         public void Disk_CRUD_EmptyDisk()
         {
             Disk_CRUD_Execute(DiskCreateOption.Empty, "Disk_CRUD_EmptyDisk", diskSizeGB: 5);
+        }
+
+        [Fact]
+        public void Disk_CRUD_EmptyDisk_Zones()
+        {
+            string supportedZoneLocation = "eastus2";
+            Disk_CRUD_Execute(DiskCreateOption.Empty, "Disk_CRUD_EmptyDisk_Zones", diskSizeGB: 5, location: supportedZoneLocation, zones: new List<string> { "1" });
         }
 
         [Fact]
