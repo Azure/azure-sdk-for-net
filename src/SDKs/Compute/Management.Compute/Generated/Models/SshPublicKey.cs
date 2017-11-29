@@ -32,11 +32,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the SshPublicKey class.
         /// </summary>
         /// <param name="path">Specifies the full path on the created VM where
-        /// SSH public key is stored. If the file already exists, the specified
-        /// key is appended to the file.</param>
-        /// <param name="keyData">Certificate public key used to authenticate
-        /// to the VM through SSH. The certificate must be in Pem format with
-        /// or without headers.</param>
+        /// ssh public key is stored. If the file already exists, the specified
+        /// key is appended to the file. Example:
+        /// /home/user/.ssh/authorized_keys</param>
+        /// <param name="keyData">SSH public key certificate used to
+        /// authenticate with the VM through ssh. The key needs to be at least
+        /// 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating
+        /// ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
         public SshPublicKey(string path = default(string), string keyData = default(string))
         {
             Path = path;
@@ -50,17 +53,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the full path on the created VM where SSH
+        /// Gets or sets specifies the full path on the created VM where ssh
         /// public key is stored. If the file already exists, the specified key
-        /// is appended to the file.
+        /// is appended to the file. Example: /home/user/.ssh/authorized_keys
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets certificate public key used to authenticate to the VM
-        /// through SSH. The certificate must be in Pem format with or without
-        /// headers.
+        /// Gets or sets SSH public key certificate used to authenticate with
+        /// the VM through ssh. The key needs to be at least 2048-bit and in
+        /// ssh-rsa format. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For creating
+        /// ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
         /// </summary>
         [JsonProperty(PropertyName = "keyData")]
         public string KeyData { get; set; }

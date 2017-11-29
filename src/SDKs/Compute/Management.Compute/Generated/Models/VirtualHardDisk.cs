@@ -30,8 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualHardDisk class.
         /// </summary>
-        /// <param name="uri">The virtual hard disk's URI. Must be a valid URI
-        /// to a virtual hard disk.</param>
+        /// <param name="uri">Specifies the virtual hard disk's uri.</param>
         public VirtualHardDisk(string uri = default(string))
         {
             Uri = uri;
@@ -44,8 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the virtual hard disk's URI. Must be a valid URI to a
-        /// virtual hard disk.
+        /// Gets or sets specifies the virtual hard disk's uri.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }

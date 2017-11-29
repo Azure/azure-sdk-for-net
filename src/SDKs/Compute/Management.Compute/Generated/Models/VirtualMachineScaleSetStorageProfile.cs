@@ -34,9 +34,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetStorageProfile class.
         /// </summary>
-        /// <param name="imageReference">The image reference.</param>
-        /// <param name="osDisk">The OS disk.</param>
-        /// <param name="dataDisks">The data disks.</param>
+        /// <param name="imageReference">Specifies information about the image
+        /// to use. You can specify information about platform images,
+        /// marketplace images, or virtual machine images. This element is
+        /// required when you want to use a platform image, marketplace image,
+        /// or virtual machine image, but is not used in other creation
+        /// operations.</param>
+        /// <param name="osDisk">Specifies information about the operating
+        /// system disk used by the virtual machines in the scale set.
+        /// &lt;br&gt;&lt;br&gt; For more information about disks, see [About
+        /// disks and VHDs for Azure virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
+        /// <param name="dataDisks">Specifies the parameters that are used to
+        /// add data disks to the virtual machines in the scale set.
+        /// &lt;br&gt;&lt;br&gt; For more information about disks, see [About
+        /// disks and VHDs for Azure virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
         public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>))
         {
             ImageReference = imageReference;
@@ -51,19 +64,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the image reference.
+        /// Gets or sets specifies information about the image to use. You can
+        /// specify information about platform images, marketplace images, or
+        /// virtual machine images. This element is required when you want to
+        /// use a platform image, marketplace image, or virtual machine image,
+        /// but is not used in other creation operations.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets the OS disk.
+        /// Gets or sets specifies information about the operating system disk
+        /// used by the virtual machines in the scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information about
+        /// disks, see [About disks and VHDs for Azure virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
 
         /// <summary>
-        /// Gets or sets the data disks.
+        /// Gets or sets specifies the parameters that are used to add data
+        /// disks to the virtual machines in the scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information about
+        /// disks, see [About disks and VHDs for Azure virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; set; }

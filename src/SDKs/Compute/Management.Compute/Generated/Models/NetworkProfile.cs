@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a network profile.
+    /// Specifies the network interfaces of the virtual machine.
     /// </summary>
     public partial class NetworkProfile
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the NetworkProfile class.
         /// </summary>
-        /// <param name="networkInterfaces">Specifies the list of resource IDs
+        /// <param name="networkInterfaces">Specifies the list of resource Ids
         /// for the network interfaces associated with the virtual
         /// machine.</param>
         public NetworkProfile(IList<NetworkInterfaceReference> networkInterfaces = default(IList<NetworkInterfaceReference>))
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the list of resource IDs for the network
+        /// Gets or sets specifies the list of resource Ids for the network
         /// interfaces associated with the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "networkInterfaces")]

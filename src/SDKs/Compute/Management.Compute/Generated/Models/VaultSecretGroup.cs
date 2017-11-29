@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VaultSecretGroup class.
         /// </summary>
-        /// <param name="sourceVault">The Relative URL of the Key Vault
+        /// <param name="sourceVault">The relative URL of the Key Vault
         /// containing all of the certificates in VaultCertificates.</param>
         /// <param name="vaultCertificates">The list of key vault references in
         /// SourceVault which contain certificates.</param>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Relative URL of the Key Vault containing all of
+        /// Gets or sets the relative URL of the Key Vault containing all of
         /// the certificates in VaultCertificates.
         /// </summary>
         [JsonProperty(PropertyName = "sourceVault")]
