@@ -28,11 +28,11 @@ namespace Microsoft.Azure.Management.Automation
         /// the URI.
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
         /// </summary>
-        /// <param name='parameters'>
-        /// Request body.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within user's subscription.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request body.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SoftwareUpdateConfiguration>> CreateWithHttpMessagesAsync(SoftwareUpdateConfiguration parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SoftwareUpdateConfiguration>> CreateWithHttpMessagesAsync(string resourceGroupName, SoftwareUpdateConfiguration parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a single software update configuration by name.
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />

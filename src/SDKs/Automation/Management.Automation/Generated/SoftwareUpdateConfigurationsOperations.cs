@@ -54,11 +54,11 @@ namespace Microsoft.Azure.Management.Automation
         /// Create a new software update configuration with the name given in the URI.
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
         /// </summary>
-        /// <param name='parameters'>
-        /// Request body.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within user's subscription.
+        /// </param>
+        /// <param name='parameters'>
+        /// Request body.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,16 +81,8 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SoftwareUpdateConfiguration>> CreateWithHttpMessagesAsync(SoftwareUpdateConfiguration parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SoftwareUpdateConfiguration>> CreateWithHttpMessagesAsync(string resourceGroupName, SoftwareUpdateConfiguration parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -98,6 +90,14 @@ namespace Microsoft.Azure.Management.Automation
             if (Client.SoftwareUpdateConfigurationName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SoftwareUpdateConfigurationName");
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             string apiVersion = "2017-05-15-preview";
             // Tracing
@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -698,9 +698,9 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -711,13 +711,13 @@ namespace Microsoft.Azure.Management.Automation
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AutomationAccountName, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {
