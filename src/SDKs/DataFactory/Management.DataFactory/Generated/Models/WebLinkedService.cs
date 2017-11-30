@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,10 +34,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the WebLinkedService class.
         /// </summary>
         /// <param name="typeProperties">Web linked service properties.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
-        public WebLinkedService(WebLinkedServiceTypeProperties typeProperties, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
-            : base(connectVia, description)
+        public WebLinkedService(WebLinkedServiceTypeProperties typeProperties, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
+            : base(additionalProperties, connectVia, description)
         {
             TypeProperties = typeProperties;
             CustomInit();
