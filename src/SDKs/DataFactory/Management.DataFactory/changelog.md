@@ -1,6 +1,6 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Version 0.2.2-preview
+## Version 0.3.0-preview
 
 ### Feature Additions
   * Add SAP Cloud For Customer Source
@@ -10,6 +10,8 @@
   * App model for Tumbling Window Trigger
   * Add LinkedService, Dataset, Source for 26 RFI connectors, including: PostgreSQL,Google BigQuery,Impala,ServiceNow,Greenplum/Hawq,HBase,Hive ODBC,Spark ODBC,HBase Phoenix,MariaDB,Presto,Couchbase,Concur,Zoho CRM,Amazon Marketplace Services,PayPal,Square,Shopify,QuickBooks Online,Hubspot,Atlassian Jira,Magento,Xero,Drill,Marketo,Eloqua.
   * Support round tripping of new properties using additionalProperties for some types
+  * Add new integration runtime API's: patch integration runtime; patch integration runtime node; upgrade integration runtime, get node IP address
+  * Add integration runtime naming validation
 
 ## Version 0.2.1-preview
 
