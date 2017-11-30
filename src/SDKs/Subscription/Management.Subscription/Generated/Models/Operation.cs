@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// A Management REST API operation.
+    /// REST API operation
     /// </summary>
     public partial class Operation
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// Initializes a new instance of the Operation class.
         /// </summary>
         /// <param name="name">Operation name:
-        /// {provider}/{resource}/{operation}.</param>
+        /// {provider}/{resource}/{operation}</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
         public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets operation name: {provider}/{resource}/{operation}.
+        /// Gets or sets operation name: {provider}/{resource}/{operation}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the object that represents the operation.

@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
         /// <param name="provider">Service provider:
-        /// Microsoft.Management.</param>
+        /// Microsoft.Subscription</param>
         /// <param name="resource">Resource on which the operation is
-        /// performed: Invoice, etc.</param>
+        /// performed: Profile, endpoint, etc.</param>
         /// <param name="operation">Operation type: Read, write, delete,
         /// etc.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
@@ -50,22 +50,23 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service provider: Microsoft.Management.
+        /// Gets or sets service provider: Microsoft.Subscription
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; private set; }
+        public string Provider { get; set; }
 
         /// <summary>
-        /// Gets resource on which the operation is performed: Invoice, etc.
+        /// Gets or sets resource on which the operation is performed: Profile,
+        /// endpoint, etc.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; private set; }
+        public string Resource { get; set; }
 
         /// <summary>
-        /// Gets operation type: Read, write, delete, etc.
+        /// Gets or sets operation type: Read, write, delete, etc.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; private set; }
+        public string Operation { get; set; }
 
     }
 }
