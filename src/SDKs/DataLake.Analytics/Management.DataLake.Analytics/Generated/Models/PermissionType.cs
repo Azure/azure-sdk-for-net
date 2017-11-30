@@ -12,12 +12,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
 
     /// <summary>
-    /// Defines values for FileType.
+    /// Defines values for PermissionType.
     /// </summary>
-    public static class FileType
+    public static class PermissionType
     {
-        public const string Assembly = "Assembly";
-        public const string Resource = "Resource";
-        public const string Nodeploy = "Nodeploy";
+        public const string None = "None";
+        public const string Use = "Use";
+        public const string Create = "Create";
+        public const string Drop = "Drop";
+        public const string Alter = "Alter";
+        public const string Write = "Write";
+        public const string All = "All";
     }
 }

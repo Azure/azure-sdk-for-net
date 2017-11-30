@@ -11,32 +11,30 @@
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A Data Lake Analytics catalog U-SQL credential item.
+    /// A Data Lake Analytics catalog access control list (ACL).
     /// </summary>
-    public partial class USqlCredential : CatalogItem
+    public partial class AclList
     {
         /// <summary>
-        /// Initializes a new instance of the USqlCredential class.
+        /// Initializes a new instance of the AclList class.
         /// </summary>
-        public USqlCredential()
+        public AclList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the USqlCredential class.
+        /// Initializes a new instance of the AclList class.
         /// </summary>
-        /// <param name="computeAccountName">the name of the Data Lake
-        /// Analytics account.</param>
-        /// <param name="version">the version of the catalog item.</param>
-        /// <param name="name">the name of the credential.</param>
-        public USqlCredential(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string name = default(string))
-            : base(computeAccountName, version)
+        /// <param name="value">the access control list (ACL).</param>
+        public AclList(IList<Acl> value = default(IList<Acl>))
         {
-            Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -46,10 +44,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the credential.
+        /// Gets the access control list (ACL).
         /// </summary>
-        [JsonProperty(PropertyName = "credentialName")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Acl> Value { get; private set; }
 
     }
 }
