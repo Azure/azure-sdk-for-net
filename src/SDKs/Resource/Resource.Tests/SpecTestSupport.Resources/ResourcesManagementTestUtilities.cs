@@ -62,18 +62,6 @@ namespace Microsoft.Azure.Test
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
         /// <param name="testBase">the test class</param>
-        /// <returns>A subscription client, created from the current context (environment variables)</returns>
-        public static SubscriptionDefinitionsClient GetSubscriptionDefinitionClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            var client = context.GetServiceClient<SubscriptionDefinitionsClient>(handlers: handler);
-            return client;
-        }
-
-        /// <summary>
-        /// Default constructor for management clients, using the TestSupport Infrastructure
-        /// </summary>
-        /// <param name="testBase">the test class</param>
         /// <returns>A policy client, created from the current context (environment variables)</returns>
         public static PolicyClient GetPolicyClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
