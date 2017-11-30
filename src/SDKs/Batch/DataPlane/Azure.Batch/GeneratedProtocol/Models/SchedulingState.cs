@@ -21,8 +21,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SchedulingState
     {
+        /// <summary>
+        /// Tasks can be scheduled on the node.
+        /// </summary>
         [EnumMember(Value = "enabled")]
         Enabled,
+        /// <summary>
+        /// No new tasks will be scheduled on the node. Tasks already running
+        /// on the node may still run to completion. All nodes start with
+        /// scheduling enabled.
+        /// </summary>
         [EnumMember(Value = "disabled")]
         Disabled
     }

@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b",
+      "RequestMethod": "POST",
+      "RequestBody": "\"this is a test with post\"",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "26"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.LuisRuntimeAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"query\": \"this is a test with post\",\r\n  \"topScoringIntent\": {\r\n    \"intent\": \"None\",\r\n    \"score\": 0.470495373\r\n  },\r\n  \"entities\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "142"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 24 Nov 2017 18:03:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "81fb65ad-436a-4969-8e11-3155e5c66db6"
+        ],
+        "Request-Id": [
+          "81fb65ad-436a-4969-8e11-3155e5c66db6"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the CassandraTableDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
@@ -46,8 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="keyspace">The keyspace of the Cassandra database.
         /// Type: string (or Expression with resultType string).</param>
-        public CassandraTableDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object tableName = default(object), object keyspace = default(object))
-            : base(linkedServiceName, description, structure, parameters)
+        public CassandraTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object tableName = default(object), object keyspace = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters)
         {
             TableName = tableName;
             Keyspace = keyspace;

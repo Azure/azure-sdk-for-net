@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the ActivityRun class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="pipelineName">The name of the pipeline.</param>
         /// <param name="pipelineRunId">The id of the pipeline run.</param>
         /// <param name="activityName">The name of the activity.</param>
@@ -46,8 +50,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="input">The input for the activity.</param>
         /// <param name="output">The output for the activity.</param>
         /// <param name="error">The error if any from the activity run.</param>
-        public ActivityRun(string pipelineName = default(string), string pipelineRunId = default(string), string activityName = default(string), string activityType = default(string), string activityRunId = default(string), string linkedServiceName = default(string), string status = default(string), System.DateTime? activityRunStart = default(System.DateTime?), System.DateTime? activityRunEnd = default(System.DateTime?), int? durationInMs = default(int?), object input = default(object), object output = default(object), object error = default(object))
+        public ActivityRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string pipelineName = default(string), string pipelineRunId = default(string), string activityName = default(string), string activityType = default(string), string activityRunId = default(string), string linkedServiceName = default(string), string status = default(string), System.DateTime? activityRunStart = default(System.DateTime?), System.DateTime? activityRunEnd = default(System.DateTime?), int? durationInMs = default(int?), object input = default(object), object output = default(object), object error = default(object))
         {
+            AdditionalProperties = additionalProperties;
             PipelineName = pipelineName;
             PipelineRunId = pipelineRunId;
             ActivityName = activityName;
@@ -68,6 +73,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets the name of the pipeline.

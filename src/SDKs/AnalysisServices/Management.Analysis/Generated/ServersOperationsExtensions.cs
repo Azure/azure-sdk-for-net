@@ -536,6 +536,123 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
+            /// Check the name availability in the target location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='serverParameters'>
+            /// Contains the information used to provision the Analysis Services server.
+            /// </param>
+            public static CheckServerNameAvailabilityResult CheckNameAvailability(this IServersOperations operations, string location, CheckServerNameAvailabilityParameters serverParameters)
+            {
+                return operations.CheckNameAvailabilityAsync(location, serverParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the name availability in the target location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='serverParameters'>
+            /// Contains the information used to provision the Analysis Services server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckServerNameAvailabilityResult> CheckNameAvailabilityAsync(this IServersOperations operations, string location, CheckServerNameAvailabilityParameters serverParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, serverParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the result of the specified operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='operationId'>
+            /// The target operation Id.
+            /// </param>
+            public static void ListOperationResults(this IServersOperations operations, string location, string operationId)
+            {
+                operations.ListOperationResultsAsync(location, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the result of the specified operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='operationId'>
+            /// The target operation Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ListOperationResultsAsync(this IServersOperations operations, string location, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ListOperationResultsWithHttpMessagesAsync(location, operationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List the status of operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='operationId'>
+            /// The target operation Id.
+            /// </param>
+            public static OperationStatus ListOperationStatuses(this IServersOperations operations, string location, string operationId)
+            {
+                return operations.ListOperationStatusesAsync(location, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the status of operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The region name which the operation will lookup into.
+            /// </param>
+            /// <param name='operationId'>
+            /// The target operation Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> ListOperationStatusesAsync(this IServersOperations operations, string location, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOperationStatusesWithHttpMessagesAsync(location, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Provisions the specified Analysis Services server based on the
             /// configuration specified in the request.
             /// </summary>

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DocumentDbCollectionSink class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="writeBatchSize">Write batch size. Type: integer (or
         /// Expression with resultType integer), minimum: 0.</param>
         /// <param name="writeBatchTimeout">Write batch timeout. Type: string
@@ -42,8 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="nestingSeparator">Nested properties separator. Default
         /// is . (dot). Type: string (or Expression with resultType
         /// string).</param>
-        public DocumentDbCollectionSink(object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object nestingSeparator = default(object))
-            : base(writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait)
+        public DocumentDbCollectionSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object nestingSeparator = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait)
         {
             NestingSeparator = nestingSeparator;
             CustomInit();
