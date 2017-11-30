@@ -140,6 +140,25 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 assertZoneInvariants(updateResponse);
                 Assert.Equal(3, updateResponse.Tags.Count);
 
+                // Call Patch operation
+                retrievedZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"},
+                    {"tag3", "value3"},
+                    {"tag4", "value4"}
+                };
+
+                updateResponse =
+                    dnsClient.Zones.Update(
+                        resourceGroup.Name,
+                        zoneName,
+                        ifMatch: null,
+                        parameters: retrievedZone);
+
+                assertZoneInvariants(updateResponse);
+                Assert.Equal(4, updateResponse.Tags.Count);
+
                 // Delete the zone
                 DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
             }
