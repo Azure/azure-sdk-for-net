@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.Azure.Sdk.Build.Tasks.BuildStages;
+using static Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants;
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 {
@@ -24,8 +25,20 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         public bool EnableDebugTrace { get; set; }
         public ITaskItem[] SdkProjects { get; set; }
 
+        public string ProjectTargetFramework { get; set; }
+
+        #region Properties for test purpose
+        /// <summary>
+        /// This property is test purpose only
+        /// </summary>
         public string AssemblyFullPath { get; set; }
+
+        /// <summary>
+        /// This property is test purpose only
+        /// </summary>
         public string FQTypeName { get; set; }
+
+        #endregion
 
         [Output]
         public string ApiTag { get; set; }
@@ -89,10 +102,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         }
 
         private IEnumerable<Tuple<string, string, string>> GetApiMapUsingReflection(string assemblyFullPath)
-        {
-            string TYPENAMETOSEACH = "SdkInfo";
-            string PROPERTYNAMEPREFIX = "ApiInfo_";
-            
+        {   
             string sdkAsmPath = assemblyFullPath;
             string apiMapPropertyName = string.Empty;
             List<Tuple<string, string, string>> combinedApiMap = new List<Tuple<string, string, string>>();
@@ -104,7 +114,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 Type sdkInfoType = null;
                 if(string.IsNullOrEmpty(FQTypeName))
                 {
-                    sdkInfoType = sdkAsm.GetType(TYPENAMETOSEACH, true, true);
+                    sdkInfoType = sdkAsm.GetType(BuildStageConstant.TYPENAMETOSEACH, true, true);
                 }
                 else
                 {
@@ -112,7 +122,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 }
 
                 var props = sdkInfoType.GetProperties(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-                var sdkInfoProp = props.Where<PropertyInfo>((p) => p.Name.StartsWith(PROPERTYNAMEPREFIX, StringComparison.OrdinalIgnoreCase));
+                var sdkInfoProp = props.Where<PropertyInfo>((p) => p.Name.StartsWith(BuildStageConstant.PROPERTYNAMEPREFIX, StringComparison.OrdinalIgnoreCase));
 
                 if (sdkInfoProp.Any())
                 {
@@ -124,12 +134,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                         {
                             combinedApiMap.AddRange(apiMap);
                         }
-
-                        //string apiTagFormat = "{0}_{1}_{2};";
-                        //foreach (Tuple<string, string, string> apiSet in apiMap)
-                        //{
-                        //    sb.Append(string.Format(apiTagFormat, apiSet.Item1, apiSet.Item2, apiSet.Item3));
-                        //}
                     }
                 }
                 sdkAsm = null;
@@ -191,7 +195,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
         private string UpdateProject(string apiTag, SdkProjectMetaData sdkProject)
         {
-            string azApiPropertyName = BuildStagesConstants.API_TAG_PROPERTYNAME;
+            string azApiPropertyName = BuildStageConstant.API_TAG_PROPERTYNAME;
             string propsFile = GetApiTagsPropsPath(sdkProject);
             Project propsProject;
 
@@ -218,7 +222,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         private string GetApiTagsPropsPath(SdkProjectMetaData sdkProject)
         {
             string apiTagsPropsPath = string.Empty;
-            string apiTagsFileName = BuildStagesConstants.PROPS_FILE_NAME;
+            string apiTagsFileName = BuildStageConstant.PROPS_FILE_NAME;
 
             string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
             int depthSearchIndex = 0;
@@ -253,6 +257,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             else
             {
                 TaskLogger.LogException(new Microsoft.Build.Exceptions.InvalidProjectFileException("Unable to detect projects being build"));
+            }
+
+
+            if(ProjectTargetFramework != FrameworkMonikerConstant.Net452)
+            {
+                isValidated = (isValidated && false);
             }
 
             return isValidated;

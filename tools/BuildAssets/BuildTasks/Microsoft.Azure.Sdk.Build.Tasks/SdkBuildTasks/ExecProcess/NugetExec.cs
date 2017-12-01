@@ -123,7 +123,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
             int exitCode = ExecuteCommand(args);
             string output = this.AnalyzeExitCode();
 
-            return new NugetPublishStatus() { NugetPackagePath = nupkgPath, NugetPublishExitCode = exitCode, NugetPublishStatusOutput = output, PublishArgs = displayArgs };
+            return new NugetPublishStatus()
+            {
+                NugetPackagePath = nupkgPath,
+                NugetPublishExitCode = exitCode,
+                NugetPublishStatusOutput = output,
+                PublishArgs = displayArgs,
+                CaughtException = this.LastException
+            };
         }
 
         /// <summary>
@@ -177,5 +184,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
         public string NugetPublishStatusOutput { get; set; }
 
         public string PublishArgs { get; set; }
+
+        public Exception CaughtException { get; set; }
     }
 }

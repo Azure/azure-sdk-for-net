@@ -196,7 +196,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 if(status.NugetPublishExitCode != 0)
                 {
                     string exMessage = string.Format("{0}\r\n ExitCode:{1}\r\n {2}\r\n", status.PublishArgs, status.NugetPublishExitCode.ToString(), status.NugetPublishStatusOutput);
-                    throw new ApplicationException(exMessage);
+                    if(status.CaughtException != null)
+                    {
+                        throw new ApplicationException(exMessage, status.CaughtException);
+                    }
+                    else
+                    {
+                        throw new ApplicationException(exMessage);
+                    }
                 }
                 else
                 {

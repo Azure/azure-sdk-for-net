@@ -401,49 +401,4 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             return fxSupported;
         }
     }
-
-    //public class SdkProjectMetaData
-    //{
-    //    public TargetFrameworkMoniker FxMoniker { get; set; }
-    //    public string FullProjectPath { get; set; }
-
-    //    public string TargetOutputFullPath { get; set; }
-
-    //    public bool IsTargetFxSupported { get; set; }
-
-    //    public SdkProjctType ProjectType { get; set; } 
-
-    //    public ITaskItem ProjectTaskItem { get; set; }
-
-    //    public SdkProjectMetaData() { }
-
-    //    public Project MsBuildProject { get; set; }
-
-    //    public SdkProjectMetaData(ITaskItem project, TargetFrameworkMoniker fxMoniker, string fullProjectPath, string targetOutputPath, bool isTargetFxSupported, SdkProjctType projectType = SdkProjctType.Sdk)
-    //    {
-    //        ProjectTaskItem = project;
-    //        FxMoniker = fxMoniker;
-    //        FullProjectPath = fullProjectPath;
-    //        IsTargetFxSupported = isTargetFxSupported;
-    //        ProjectType = projectType;
-    //        TargetOutputFullPath = targetOutputPath;
-    //    }
-    //}
-
-    //public enum TargetFrameworkMoniker
-    //{
-    //    net45,
-    //    net452,
-    //    net46,
-    //    net461,
-    //    netcoreapp11,
-    //    netstandard14,
-    //    UnSupported
-    //}
-
-    //public enum SdkProjctType
-    //{
-    //    Sdk,
-    //    Test
-    //}
 }

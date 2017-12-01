@@ -9,6 +9,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using static Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants;
 
     /// <summary>
     /// 
@@ -42,7 +43,7 @@
                     {
                         if(string.IsNullOrEmpty(propFilePath))
                         {
-                            propFilePath = Path.Combine(slnDirPath, BuildStagesConstants.PROPS_FILE_NAME);
+                            propFilePath = Path.Combine(slnDirPath, BuildStageConstant.PROPS_FILE_NAME);
                             MsBuildProjectFile msBuildFile = new MsBuildProjectFile(propFilePath);
                             ApiTagPropsFile = msBuildFile.CreateXmlDocWithProps();
                         }
@@ -62,7 +63,7 @@
         {
             string apiTagsPropsPath = string.Empty;
             string sFile = string.Empty;
-            string apiTagsFileName = BuildStagesConstants.PROPS_FILE_NAME;
+            string apiTagsFileName = BuildStageConstant.PROPS_FILE_NAME;
 
             string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
             int depthSearchIndex = 0;

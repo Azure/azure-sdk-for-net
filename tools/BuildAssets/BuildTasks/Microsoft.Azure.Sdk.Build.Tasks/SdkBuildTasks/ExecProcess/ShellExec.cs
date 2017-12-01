@@ -14,26 +14,39 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
     public class ShellExec
     {
         #region CONST
-        const int DEFAULT_WAIT_TIMEOUT = 30000;  // 30 seconds default timeout
-        //const string COMMAND_ARGS = "push {0} -source {1} -ApiKey {2} -NonInteractive -Timeout {3}";
+        const int DEFAULT_WAIT_TIMEOUT = 60000;  // 60 seconds default timeout
+                                                 //const string COMMAND_ARGS = "push {0} -source {1} -ApiKey {2} -NonInteractive -Timeout {3}";
+
+        const int E_FAIL = -2147467259;
+        const int ERROR_FILE_NOT_FOUND = 2;
         #endregion
 
 
         #region Fields
-        //Process _shellProc;
+        Process _shellProc;
         
         #endregion
 
         protected int LastExitCode { get; set; }
 
+        protected Exception LastException { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
-        public Process ShellProcess { get; protected set; }
+        public Process ShellProcess
+        {
+            get
+            {
+                if (_shellProc == null)
+                    _shellProc = new Process();
+
+                return _shellProc;
+            }
+        }
 
         protected ShellExec()
         {
-            ShellProcess = new Process();
         }
 
         public ShellExec(string commandPath): this()
@@ -48,23 +61,32 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
         }
 
         public virtual int ExecuteCommand(string args)
-        {   
+        {
             try
             {
                 ShellProcess.StartInfo.Arguments = args;
                 ShellProcess.Start();
                 ShellProcess.WaitForExit(DEFAULT_WAIT_TIMEOUT);
                 LastExitCode = ShellProcess.ExitCode;
-                return LastExitCode;
+
+                //if (ShellProcess.HasExited == false)
+                //{
+                //    //ShellProcess.Kill();
+                //    ShellProcess.Close();
+                //}
             }
-            finally
+            catch(Win32Exception win32Ex)
             {
-                //ShellProcess.Close();
-                //ShellProcess.Dispose();
-                //_lazyProcess.Value.WaitForExit(DEFAULT_WAIT_TIMEOUT);
-                //_lazyProcess.Value.Close();
-                //_lazyProcess.Value.Dispose();
+                LastExitCode = win32Ex.ErrorCode;
+                LastException = win32Ex;
             }
+            catch(Exception ex)
+            {
+                LastExitCode = ex.HResult;
+                LastException = ex;
+            }
+
+            return LastExitCode;
         }
 
         public virtual string GetError()
@@ -81,19 +103,26 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
 
         public virtual string AnalyzeExitCode(int exitCode = 9999)
         {
-            string finalOutput = string.Empty;
+            StringBuilder sb = new StringBuilder();
             if (exitCode == 9999) exitCode = LastExitCode;
-
-            if (exitCode != 0)
+            
+            if(LastException != null)
             {
-                finalOutput = ShellProcess.StandardError?.ReadToEnd();
+                sb.AppendLine(LastException.ToString());                
             }
             else
             {
-                finalOutput = ShellProcess.StandardOutput?.ReadToEnd();
+                if (exitCode != 0)
+                {
+                    sb.AppendLine(ShellProcess.StandardError?.ReadToEnd());
+                }
+                else
+                {
+                    sb.AppendLine(ShellProcess?.StandardOutput?.ReadToEnd());
+                }
             }
-
-            return finalOutput;
+            
+            return sb.ToString();
         }
     }
 }

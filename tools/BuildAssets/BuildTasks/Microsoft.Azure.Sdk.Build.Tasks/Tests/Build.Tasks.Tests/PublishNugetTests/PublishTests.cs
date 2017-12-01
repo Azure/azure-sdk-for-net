@@ -206,7 +206,30 @@ namespace Build.Tasks.Tests.PublishNugetTests
             pubNug.SkipNugetPublishing = true;
             Assert.Throws<ApplicationException>(() => pubNug.Execute());
         }
-        
+
+
+        [Fact]
+        public void GetInnerExceptionWhilePublishing()
+        {
+            PublishSDKNuget pubNug = new PublishSDKNuget();
+            pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.NugetPackageName = NUGET_PKG_NAME;
+            pubNug.PublishNugetToPath = PublishToDir;
+            pubNug.NugetExePath = @"C:\Foo\NoExistantPath\nuget.exe";
+            try
+            {
+                pubNug.Execute();
+
+                //If we reach at this point, something was not right, we should have got an exception
+                Assert.True(false);
+            }
+            catch (ApplicationException appEx)
+            {
+                Assert.NotNull(appEx.InnerException);
+            }
+            //Assert.Throws<ApplicationException>(() => pubNug.Execute());
+        }
+
         #endregion
     }
 }

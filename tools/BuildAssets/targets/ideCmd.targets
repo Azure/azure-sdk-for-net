@@ -19,11 +19,11 @@
   </Target>
   
   <Target Name="TargetTrace" Condition=" '$(DebugTrace)' == 'true' ">
-	<Message Text="MSBuildProjectFile -- $(MSBuildProjectFullPath)" Importance="High" />
-	<Message Text="Scope -- $(Scope)" Importance="High" />
-	<Message Text="EnablePreBuildTarget -- $(EnablePreBuildTarget)" Importance="High" />
-	<Message Text="EnablePostBuildTarget -- $(EnablePostBuildTarget)" Importance="High" />
-	<Message Text="CIBuild -- $(CIBuild)" Importance="High" />
-	<Message Text="TargetFramework -- $(TargetFramework)" Importance="High" />
+	<Message Text="MSBuildProjectFile -- $(MSBuildProjectFullPath)"/>
+	<Message Text="Scope -- $(Scope)" />
+	<Message Text="EnablePreBuildTarget -- $(EnablePreBuildTarget)" />
+	<Message Text="EnablePostBuildTarget -- $(EnablePostBuildTarget)" />
+	<Message Text="CIBuild -- $(CIBuild)" />
+	<Message Text="TargetFramework -- $(TargetFramework)" />
   </Target>
 </Project>

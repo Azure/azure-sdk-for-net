@@ -14,5 +14,15 @@
   <ItemGroup>
     <Folder Include="StaticAnalysisTasks\" />
   </ItemGroup>
+  <ItemGroup>
+    <!--<Reference Include="Microsoft.Build">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Microsoft.Build.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Microsoft.Build.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />-->
+  </ItemGroup>
 
 </Project>

@@ -24,5 +24,23 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             public const string DEFAULT_API_KEY = "1234";
             public const string SDK_NUGET_APIKEY_ENV = "NetSdkNugetApiKey";
         }
+
+        /// <summary>
+        /// Constants used for various build stage tasks
+        /// </summary>
+        internal static class BuildStageConstant
+        {
+            public const string API_TAG_PROPERTYNAME = "AzureApiTag";
+            public const string PROPS_FILE_NAME = "AzSdk.RP.props";
+            public const string TYPENAMETOSEACH = "SdkInfo";
+            public const string PROPERTYNAMEPREFIX = "ApiInfo_";
+        }
+
+        internal static class FrameworkMonikerConstant
+        {
+            // Switch to Attributes on enums for description
+            public static string Net452 = "net452";
+            public static string NetStd14 = "netstandard1.4";
+        }
     }
 }
