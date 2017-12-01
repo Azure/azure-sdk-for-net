@@ -15,9 +15,8 @@
 
 namespace Management.HDInsight.Tests
 {
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Microsoft.HDInsight;
-    using Microsoft.HDInsight.Models;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections.Generic;
