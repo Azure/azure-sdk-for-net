@@ -1,0 +1,47 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Tue, 28 Nov 2017 07:05:29 GMT",
+        "x-ms-request-id": "f0c62d3c-0df3-4b08-b860-d258752bdfec",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
+        "name": "exampleIntegrationRuntime",
+        "properties": {
+          "type": "Managed",
+          "typeProperties": {
+            "computeProperties": {
+              "location": "West US",
+              "nodeSize": "Standard_D1_v2",
+              "numberOfNodes": 1,
+              "maxParallelExecutionsPerNode": 1
+            },
+            "ssisProperties": {
+              "catalogInfo": {
+                "catalogServerEndpoint": "yandongtestsvr.database.windows.net",
+                "catalogAdminUserName": "yanzhang",
+                "catalogAdminPassword": {
+                  "type": "SecureString",
+                  "value": "**********"
+                },
+                "catalogPricingTier": "S1"
+              }
+            }
+          },
+          "description": "A managed reserved integration runtime",
+          "state": "Initial"
+        },
+        "etag": "0100333d-0000-0000-0000-5a1d0ab80000"
+      }
+    }
+  }
+}

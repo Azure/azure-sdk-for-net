@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 string recordSetName,
                 uint ttl = 42)
             {
-                return new RecordSet
+                return new RecordSet(name: recordSetName)
                 {
-                    Name = recordSetName,
                     Etag = null,
                     TTL = ttl,
                 };
@@ -221,7 +220,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ifMatch: null);
 
                 // Delete the zone
-                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     ifMatch: null);
@@ -360,6 +359,23 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
+        public void CreateGetCaa()
+        {
+            Action<RecordSet> setTestRecords = createParams =>
+            {
+                createParams.CaaRecords = new List<CaaRecord>
+                {
+                    new CaaRecord() { Flags = 0, Tag = "issue", Value = "contoso.com" },
+                    new CaaRecord() { Flags = 0, Tag = "issue", Value = "fabrikam.com" },
+                };
+
+                return;
+            };
+
+            this.RecordSetCreateGet(RecordType.CAA, setTestRecords);
+        }
+
+        [Fact]
         public void CreateGetCname()
         {
             Action<RecordSet> setTestRecords = createParams =>
@@ -450,16 +466,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
             ListRecordsInZone(isCrossType: true);
         }
 
-        [Fact]
+        [Fact(Skip = "needs re-recording. XUnit released version will not support overloaded test names")]
         public void ListRecordsInZoneWithSuffixAcrossTypes()
         {
-            ListRecordsInZoneWithSuffix(isCrossType: true);
+            ListRecordsInZoneWithSuffixCrossType(isCrossType: true);
         }
 
-        [Fact]
+        [Fact(Skip ="needs re-recording. XUnit released version will not support overloaded test names")]
         public void ListRecordsInZoneWithSuffix()
         {
-            ListRecordsInZoneWithSuffix(isCrossType: false);
+            ListRecordsInZoneWithSuffixCrossType(isCrossType: false);
         }
 
 
@@ -546,7 +562,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     recordSetNames);
             }
         }
-        private void ListRecordsInZoneWithSuffix(
+        private void ListRecordsInZoneWithSuffixCrossType(
             bool isCrossType,
             [System.Runtime.CompilerServices.CallerMemberName] string methodName
                 = "testframework_failed")
@@ -832,7 +848,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     recordType,
                     ifMatch: null);
 
-                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     ifMatch: null);

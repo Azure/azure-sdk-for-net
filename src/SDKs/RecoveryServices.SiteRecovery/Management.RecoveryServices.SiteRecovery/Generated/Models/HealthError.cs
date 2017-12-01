@@ -13,10 +13,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using Microsoft.Azure.Management.RecoveryServices;
     using Microsoft.Azure.Management.RecoveryServices.SiteRecovery;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The health error class.
+    /// Health Error
     /// </summary>
     public partial class HealthError
     {
@@ -31,6 +33,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the HealthError class.
         /// </summary>
+        /// <param name="errorSource">Source of error.</param>
+        /// <param name="errorType">Type of error.</param>
         /// <param name="errorLevel">Level of error.</param>
         /// <param name="errorCode">Error code.</param>
         /// <param name="errorMessage">Error message.</param>
@@ -41,8 +45,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryProviderErrorMessage">DRA error
         /// message.</param>
         /// <param name="entityId">ID of the entity.</param>
-        public HealthError(string errorLevel = default(string), string errorCode = default(string), string errorMessage = default(string), string possibleCauses = default(string), string recommendedAction = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), string recoveryProviderErrorMessage = default(string), string entityId = default(string))
+        /// <param name="childErrors">The child health errors.</param>
+        public HealthError(string errorSource = default(string), string errorType = default(string), string errorLevel = default(string), string errorCode = default(string), string errorMessage = default(string), string possibleCauses = default(string), string recommendedAction = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), string recoveryProviderErrorMessage = default(string), string entityId = default(string), IList<HealthError> childErrors = default(IList<HealthError>))
         {
+            ErrorSource = errorSource;
+            ErrorType = errorType;
             ErrorLevel = errorLevel;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -51,6 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CreationTimeUtc = creationTimeUtc;
             RecoveryProviderErrorMessage = recoveryProviderErrorMessage;
             EntityId = entityId;
+            ChildErrors = childErrors;
             CustomInit();
         }
 
@@ -58,6 +66,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets source of error.
+        /// </summary>
+        [JsonProperty(PropertyName = "errorSource")]
+        public string ErrorSource { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of error.
+        /// </summary>
+        [JsonProperty(PropertyName = "errorType")]
+        public string ErrorType { get; set; }
 
         /// <summary>
         /// Gets or sets level of error.
@@ -106,6 +126,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "entityId")]
         public string EntityId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the child health errors.
+        /// </summary>
+        [JsonProperty(PropertyName = "childErrors")]
+        public IList<HealthError> ChildErrors { get; set; }
 
     }
 }

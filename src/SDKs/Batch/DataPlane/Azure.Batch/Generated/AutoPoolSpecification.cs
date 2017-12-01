@@ -32,29 +32,29 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.AutoPoolIdPrefixProperty = this.CreatePropertyAccessor<string>("AutoPoolIdPrefix", BindingAccess.Read | BindingAccess.Write);
-                this.KeepAliveProperty = this.CreatePropertyAccessor<bool?>("KeepAlive", BindingAccess.Read | BindingAccess.Write);
-                this.PoolLifetimeOptionProperty = this.CreatePropertyAccessor<Common.PoolLifetimeOption>("PoolLifetimeOption", BindingAccess.Read | BindingAccess.Write);
-                this.PoolSpecificationProperty = this.CreatePropertyAccessor<PoolSpecification>("PoolSpecification", BindingAccess.Read | BindingAccess.Write);
+                this.AutoPoolIdPrefixProperty = this.CreatePropertyAccessor<string>(nameof(AutoPoolIdPrefix), BindingAccess.Read | BindingAccess.Write);
+                this.KeepAliveProperty = this.CreatePropertyAccessor<bool?>(nameof(KeepAlive), BindingAccess.Read | BindingAccess.Write);
+                this.PoolLifetimeOptionProperty = this.CreatePropertyAccessor<Common.PoolLifetimeOption>(nameof(PoolLifetimeOption), BindingAccess.Read | BindingAccess.Write);
+                this.PoolSpecificationProperty = this.CreatePropertyAccessor<PoolSpecification>(nameof(PoolSpecification), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.AutoPoolSpecification protocolObject) : base(BindingState.Bound)
             {
                 this.AutoPoolIdPrefixProperty = this.CreatePropertyAccessor(
                     protocolObject.AutoPoolIdPrefix,
-                    "AutoPoolIdPrefix",
+                    nameof(AutoPoolIdPrefix),
                     BindingAccess.Read | BindingAccess.Write);
                 this.KeepAliveProperty = this.CreatePropertyAccessor(
                     protocolObject.KeepAlive,
-                    "KeepAlive",
+                    nameof(KeepAlive),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolLifetimeOptionProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapEnum<Models.PoolLifetimeOption, Common.PoolLifetimeOption>(protocolObject.PoolLifetimeOption),
-                    "PoolLifetimeOption",
+                    nameof(PoolLifetimeOption),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolSpecificationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Pool, o => new PoolSpecification(o)),
-                    "PoolSpecification",
+                    nameof(PoolSpecification),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

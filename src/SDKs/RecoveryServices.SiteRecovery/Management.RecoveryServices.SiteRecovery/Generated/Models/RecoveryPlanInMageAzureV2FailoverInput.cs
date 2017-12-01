@@ -39,10 +39,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointType">The recovery point type. Possible
         /// values include: 'Latest', 'LatestApplicationConsistent',
         /// 'LatestCrashConsistent', 'LatestProcessed'</param>
-        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, InMageV2RpRecoveryPointType recoveryPointType)
+        /// <param name="useMultiVmSyncPoint">A value indicating whether multi
+        /// VM sync enabled VMs should use multi VM sync points for
+        /// failover.</param>
+        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, InMageV2RpRecoveryPointType recoveryPointType, string useMultiVmSyncPoint = default(string))
         {
             VaultLocation = vaultLocation;
             RecoveryPointType = recoveryPointType;
+            UseMultiVmSyncPoint = useMultiVmSyncPoint;
             CustomInit();
         }
 
@@ -64,6 +68,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
         public InMageV2RpRecoveryPointType RecoveryPointType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether multi VM sync enabled VMs
+        /// should use multi VM sync points for failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "useMultiVmSyncPoint")]
+        public string UseMultiVmSyncPoint { get; set; }
 
         /// <summary>
         /// Validate the object.

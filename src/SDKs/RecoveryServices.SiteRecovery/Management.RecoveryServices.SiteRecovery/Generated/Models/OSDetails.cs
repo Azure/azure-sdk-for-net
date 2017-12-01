@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the OSDetails class.
         /// </summary>
         /// <param name="osType">VM Disk details.</param>
-        /// <param name="productType">ProductType.</param>
+        /// <param name="productType">Product type.</param>
         /// <param name="osEdition">The OSEdition.</param>
         /// <param name="oSVersion">The OS Version.</param>
         /// <param name="oSMajorVersion">The OS Major Version.</param>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string OsType { get; set; }
 
         /// <summary>
-        /// Gets or sets productType.
+        /// Gets or sets product type.
         /// </summary>
         [JsonProperty(PropertyName = "productType")]
         public string ProductType { get; set; }

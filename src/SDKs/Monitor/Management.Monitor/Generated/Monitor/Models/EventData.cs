@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="submissionTimestamp">the timestamp of when the event
         /// became available for querying via this API. It is in ISO 8601
         /// format. This value should not be confused eventTimestamp. As there
-        /// might be a delay between the occurence time of the event, and the
+        /// might be a delay between the occurrence time of the event, and the
         /// time that the event is submitted to the Azure logging
         /// infrastructure.</param>
         /// <param name="claims">key value pairs to identify ARM
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets the timestamp of when the event became available for
         /// querying via this API. It is in ISO 8601 format. This value should
         /// not be confused eventTimestamp. As there might be a delay between
-        /// the occurence time of the event, and the time that the event is
+        /// the occurrence time of the event, and the time that the event is
         /// submitted to the Azure logging infrastructure.
         /// </summary>
         [JsonProperty(PropertyName = "submissionTimestamp")]

@@ -6,6 +6,8 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Rest.Serialization
@@ -91,14 +93,38 @@ namespace Microsoft.Rest.Serialization
             var result = contract.DefaultCreator();
 
             // parse properties
+            var queriedKeys = new HashSet<string> { Discriminator };
+            var additionalPropertiesTargets = new List<JsonProperty>();
             foreach (var expectedProperty in contract.Properties)
             {
-                var property = SelectTokenCaseInsensitive(item, expectedProperty.PropertyName);
-                if (property != null)
+                if (!expectedProperty.Ignored)
                 {
-                    var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
-                    expectedProperty.ValueProvider.SetValue(result, propertyValue);
+                    queriedKeys.Add(expectedProperty.PropertyName);
+                    var property = SelectTokenCaseInsensitive(item, expectedProperty.PropertyName);
+                    if (property != null)
+                    {
+                        var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
+                        expectedProperty.ValueProvider.SetValue(result, propertyValue);
+                    }
                 }
+                if (expectedProperty.IsJsonExtensionData())
+                {
+                    additionalPropertiesTargets.Add(expectedProperty);
+                }
+            }
+
+            // populate additional properties
+            var dict = new Dictionary<string, object>();
+            foreach (var property in item.Properties())
+            {
+                if (!queriedKeys.Contains(property.Name))
+                {
+                    dict[property.Name] = property.Value.ToObject<object>();
+                }
+            }
+            foreach (var additionalPropertiesTarget in additionalPropertiesTargets)
+            {
+                additionalPropertiesTarget.ValueProvider.SetValue(result, dict);
             }
 
             return result;

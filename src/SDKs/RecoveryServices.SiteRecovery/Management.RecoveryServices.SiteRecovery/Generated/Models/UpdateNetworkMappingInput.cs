@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the UpdateNetworkMappingInput class.
         /// </summary>
-        /// <param name="properties">Properties.</param>
+        /// <param name="properties">The input properties needed to update
+        /// network mapping.</param>
         public UpdateNetworkMappingInput(UpdateNetworkMappingInputProperties properties = default(UpdateNetworkMappingInputProperties))
         {
             Properties = properties;
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties.
+        /// Gets or sets the input properties needed to update network mapping.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public UpdateNetworkMappingInputProperties Properties { get; set; }

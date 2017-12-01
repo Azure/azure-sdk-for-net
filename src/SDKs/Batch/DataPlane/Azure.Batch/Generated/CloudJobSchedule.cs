@@ -43,84 +43,84 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>("CreationTime", BindingAccess.None);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.ETagProperty = this.CreatePropertyAccessor<string>("ETag", BindingAccess.None);
-                this.ExecutionInformationProperty = this.CreatePropertyAccessor<JobScheduleExecutionInformation>("ExecutionInformation", BindingAccess.None);
-                this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
-                this.JobSpecificationProperty = this.CreatePropertyAccessor<JobSpecification>("JobSpecification", BindingAccess.Read | BindingAccess.Write);
-                this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
-                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
-                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.JobScheduleState?>("PreviousState", BindingAccess.None);
-                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
-                this.ScheduleProperty = this.CreatePropertyAccessor<Schedule>("Schedule", BindingAccess.Read | BindingAccess.Write);
-                this.StateProperty = this.CreatePropertyAccessor<Common.JobScheduleState?>("State", BindingAccess.None);
-                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
-                this.StatisticsProperty = this.CreatePropertyAccessor<JobScheduleStatistics>("Statistics", BindingAccess.None);
-                this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
+                this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.ETagProperty = this.CreatePropertyAccessor<string>(nameof(ETag), BindingAccess.None);
+                this.ExecutionInformationProperty = this.CreatePropertyAccessor<JobScheduleExecutionInformation>(nameof(ExecutionInformation), BindingAccess.None);
+                this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.JobSpecificationProperty = this.CreatePropertyAccessor<JobSpecification>(nameof(JobSpecification), BindingAccess.Read | BindingAccess.Write);
+                this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
+                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
+                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.JobScheduleState?>(nameof(PreviousState), BindingAccess.None);
+                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(PreviousStateTransitionTime), BindingAccess.None);
+                this.ScheduleProperty = this.CreatePropertyAccessor<Schedule>(nameof(Schedule), BindingAccess.Read | BindingAccess.Write);
+                this.StateProperty = this.CreatePropertyAccessor<Common.JobScheduleState?>(nameof(State), BindingAccess.None);
+                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(StateTransitionTime), BindingAccess.None);
+                this.StatisticsProperty = this.CreatePropertyAccessor<JobScheduleStatistics>(nameof(Statistics), BindingAccess.None);
+                this.UrlProperty = this.CreatePropertyAccessor<string>(nameof(Url), BindingAccess.None);
             }
 
             public PropertyContainer(Models.CloudJobSchedule protocolObject) : base(BindingState.Bound)
             {
                 this.CreationTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.CreationTime,
-                    "CreationTime",
+                    nameof(CreationTime),
                     BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read);
                 this.ETagProperty = this.CreatePropertyAccessor(
                     protocolObject.ETag,
-                    "ETag",
+                    nameof(ETag),
                     BindingAccess.Read);
                 this.ExecutionInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExecutionInfo, o => new JobScheduleExecutionInformation(o).Freeze()),
-                    "ExecutionInformation",
+                    nameof(ExecutionInformation),
                     BindingAccess.Read);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read);
                 this.JobSpecificationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobSpecification, o => new JobSpecification(o)),
-                    "JobSpecification",
+                    nameof(JobSpecification),
                     BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor(
                     protocolObject.LastModified,
-                    "LastModified",
+                    nameof(LastModified),
                     BindingAccess.Read);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
-                    "Metadata",
+                    nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.JobScheduleState, Common.JobScheduleState>(protocolObject.PreviousState),
-                    "PreviousState",
+                    nameof(PreviousState),
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.PreviousStateTransitionTime,
-                    "PreviousStateTransitionTime",
+                    nameof(PreviousStateTransitionTime),
                     BindingAccess.Read);
                 this.ScheduleProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Schedule, o => new Schedule(o)),
-                    "Schedule",
+                    nameof(Schedule),
                     BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.JobScheduleState, Common.JobScheduleState>(protocolObject.State),
-                    "State",
+                    nameof(State),
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.StateTransitionTime,
-                    "StateTransitionTime",
+                    nameof(StateTransitionTime),
                     BindingAccess.Read);
                 this.StatisticsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Stats, o => new JobScheduleStatistics(o).Freeze()),
-                    "Statistics",
+                    nameof(Statistics),
                     BindingAccess.Read);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
-                    "Url",
+                    nameof(Url),
                     BindingAccess.Read);
             }
         }

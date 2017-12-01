@@ -50,4 +50,77 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [EnumMember(Value = "CompleteMigration")]
         CompleteMigration
     }
+    internal static class ReplicationProtectedItemOperationEnumExtension
+    {
+        internal static string ToSerializedValue(this ReplicationProtectedItemOperation? value)  =>
+            value == null ? null : ((ReplicationProtectedItemOperation)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ReplicationProtectedItemOperation value)
+        {
+            switch( value )
+            {
+                case ReplicationProtectedItemOperation.ReverseReplicate:
+                    return "ReverseReplicate";
+                case ReplicationProtectedItemOperation.Commit:
+                    return "Commit";
+                case ReplicationProtectedItemOperation.PlannedFailover:
+                    return "PlannedFailover";
+                case ReplicationProtectedItemOperation.UnplannedFailover:
+                    return "UnplannedFailover";
+                case ReplicationProtectedItemOperation.DisableProtection:
+                    return "DisableProtection";
+                case ReplicationProtectedItemOperation.TestFailover:
+                    return "TestFailover";
+                case ReplicationProtectedItemOperation.TestFailoverCleanup:
+                    return "TestFailoverCleanup";
+                case ReplicationProtectedItemOperation.Failback:
+                    return "Failback";
+                case ReplicationProtectedItemOperation.FinalizeFailback:
+                    return "FinalizeFailback";
+                case ReplicationProtectedItemOperation.ChangePit:
+                    return "ChangePit";
+                case ReplicationProtectedItemOperation.RepairReplication:
+                    return "RepairReplication";
+                case ReplicationProtectedItemOperation.SwitchProtection:
+                    return "SwitchProtection";
+                case ReplicationProtectedItemOperation.CompleteMigration:
+                    return "CompleteMigration";
+            }
+            return null;
+        }
+
+        internal static ReplicationProtectedItemOperation? ParseReplicationProtectedItemOperation(this string value)
+        {
+            switch( value )
+            {
+                case "ReverseReplicate":
+                    return ReplicationProtectedItemOperation.ReverseReplicate;
+                case "Commit":
+                    return ReplicationProtectedItemOperation.Commit;
+                case "PlannedFailover":
+                    return ReplicationProtectedItemOperation.PlannedFailover;
+                case "UnplannedFailover":
+                    return ReplicationProtectedItemOperation.UnplannedFailover;
+                case "DisableProtection":
+                    return ReplicationProtectedItemOperation.DisableProtection;
+                case "TestFailover":
+                    return ReplicationProtectedItemOperation.TestFailover;
+                case "TestFailoverCleanup":
+                    return ReplicationProtectedItemOperation.TestFailoverCleanup;
+                case "Failback":
+                    return ReplicationProtectedItemOperation.Failback;
+                case "FinalizeFailback":
+                    return ReplicationProtectedItemOperation.FinalizeFailback;
+                case "ChangePit":
+                    return ReplicationProtectedItemOperation.ChangePit;
+                case "RepairReplication":
+                    return ReplicationProtectedItemOperation.RepairReplication;
+                case "SwitchProtection":
+                    return ReplicationProtectedItemOperation.SwitchProtection;
+                case "CompleteMigration":
+                    return ReplicationProtectedItemOperation.CompleteMigration;
+            }
+            return null;
+        }
+    }
 }

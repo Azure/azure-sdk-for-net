@@ -8,11 +8,13 @@ using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -108,6 +110,38 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestRenameDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create database only required parameters
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                Database db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Rename
+                string newSuffix = "_renamed";
+                string newName = db1.Name + newSuffix;
+                string newId = db1.Id + newSuffix;
+                sqlClient.Databases.Rename(resourceGroup.Name, server.Name, dbName, new ResourceMoveDefinition
+                {
+                    Id = newId
+                });
+
+                // Get database at its new id
+                Database db2 = sqlClient.Databases.Get(resourceGroup.Name, server.Name, newName);
+                Assert.Equal(newId, db2.Id);
+            }
+        }
+
+        [Fact]
         public void TestUpdateDatabaseWithCreateOrUpdate()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -171,6 +205,18 @@ namespace Sql.Tests
             Assert.NotNull(db1);
             SqlManagementTestUtilities.ValidateDatabase(dbInput, db1, dbName);
 
+            // Create zone redundant database
+            //
+            var dbInput2 = new Database()
+            {
+                Location = server.Location,
+                Edition = "Premium",
+                ZoneRedundant = true,
+            };
+            var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput2);
+            Assert.NotNull(db8);
+            SqlManagementTestUtilities.ValidateDatabase(dbInput2, db8, dbName);
+
             // Upgrade Edition + SLO Name
             //
             dynamic updateEditionAndSloInput = createModelFunc();
@@ -222,6 +268,70 @@ namespace Sql.Tests
             updateTags.Tags = new Dictionary<string, string> { { "asdf", "zxcv" } };
             var db7 = updateFunc(resourceGroup.Name, server.Name, dbName, updateTags);
             SqlManagementTestUtilities.ValidateDatabase(updateTags, db7, dbName);
+
+            // Update Zone Redundancy
+            //
+            dynamic updateZoneRedundant = createModelFunc();
+            updateZoneRedundant.Edition = "Premium";
+            updateZoneRedundant.ZoneRedundant = true;
+            var db9 = updateFunc(resourceGroup.Name, server.Name, dbName, updateZoneRedundant);
+            SqlManagementTestUtilities.ValidateDatabase(updateZoneRedundant, db9, dbName);
+        }
+
+        [Fact]
+        public async Task TestCancelDatabaseOperation()
+        {
+            string testPrefix = "sqldblistcanceloperation-";
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup("North Europe");
+                Server server = context.CreateServer(resourceGroup, "northeurope");
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create database only required parameters
+                //
+                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    RequestedServiceObjectiveName = ServiceObjectiveName.S0,
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Start updateslo operation
+                //
+                var dbUpdateResponse = sqlClient.Databases.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    RequestedServiceObjectiveName = ServiceObjectiveName.P2,
+                    Location = server.Location,
+                });
+                TestUtilities.Wait(TimeSpan.FromSeconds(3));
+
+                // Get the updateslo operation
+                //
+                AzureOperationResponse<IPage<DatabaseOperation>> response = sqlClient.DatabaseOperations.ListByDatabaseWithHttpMessagesAsync(
+                    resourceGroup.Name, server.Name, dbName).Result;
+                Assert.Equal(response.Response.StatusCode, HttpStatusCode.OK);
+                IList<DatabaseOperation> responseObject = response.Body.ToList();
+                Assert.Equal(responseObject.Count(), 1);
+
+                // Cancel the database updateslo operation
+                //
+                string requestId = responseObject[0].Name;
+                sqlClient.DatabaseOperations.Cancel(resourceGroup.Name, server.Name, dbName, Guid.Parse(requestId));
+
+                CloudException ex = await Assert.ThrowsAsync<CloudException>(() => sqlClient.GetPutOrPatchOperationResultAsync(dbUpdateResponse.Result, new Dictionary<string, List<string>>(), CancellationToken.None));
+                Assert.Contains("Long running operation failed with status 'Canceled'", ex.Message);
+
+                // Make sure the database is not updated due to cancel operation
+                //
+                var dbGetResponse = sqlClient.Databases.Get(resourceGroup.Name, server.Name, dbName);
+                Assert.Equal(dbGetResponse.ServiceLevelObjective, ServiceObjectiveName.S0);
+            }
         }
 
         [Fact]

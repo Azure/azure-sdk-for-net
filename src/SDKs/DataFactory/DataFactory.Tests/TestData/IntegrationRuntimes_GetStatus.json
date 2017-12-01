@@ -1,0 +1,38 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 29 Nov 2017 04:14:01 GMT",
+        "x-ms-request-id": "4d936ea3-f235-46a1-98aa-5c3c0b46e0cb",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "body": {
+        "name": "exampleIntegrationRuntime",
+        "properties": {
+          "state": "NeedRegistration",
+          "type": "SelfHosted",
+          "typeProperties": {
+            "autoUpdate": "Off",
+            "taskQueueId": "00bb6126-79e3-46f1-a7ea-0d192a3efc26",
+            "nodes": [],
+            "updateDelayOffset": "PT3H",
+            "serviceUrls": [
+              "wu.frontend.int.clouddatahub-int.net",
+              "*.servicebus.windows.net"
+            ],
+            "versionStatus": "UpToDate",
+            "capabilities": {},
+            "createTime": "2017-11-29T04:13:56.3605984Z"
+          }
+        }
+      }
+    }
+  }
+}
