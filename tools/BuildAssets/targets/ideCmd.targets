@@ -1,6 +1,6 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Target Name="PreAzSdkBuild" BeforeTargets="BeforeBuild" DependsOnTargets="TargetTrace" 
-			Condition=" ('$(EnablePreBuildTarget)' == 'true') AND ( '$(CIBuild)' != 'true' ) AND ( '$(TargetFramework)' == '$(NetFx452)' ) AND ( '$(Scope)' != 'All') ">
+			Condition=" ('$(EnablePreBuildTarget)' == 'true') AND ( '$(CIBuild)' != 'true' ) AND ( '$(TargetFramework)' == '$(NetFx452)' ) AND ( '$(BuildingInsideVisualStudio)' != 'true' )  AND ( '$(Scope)' != 'All') ">
 			<Message Text="Executing PreBuildTask" Importance="High" />
 		<PreBuildTask
 			SdkProjects="$(MSBuildProjectFullPath)"
@@ -9,7 +9,7 @@
 	</Target>
 	
 	<Target Name="PostAzSdkBuild" AfterTargets="AfterBuild" DependsOnTargets="TargetTrace" 
-			Condition=" ('$(EnablePostBuildTarget)' == 'true') AND ( '$(CIBuild)' != 'true' ) AND ( '$(TargetFramework)' == '$(NetFx452)' ) AND ( '$(Scope)' != 'All') ">
+			Condition=" ('$(EnablePostBuildTarget)' == 'true') AND ( '$(CIBuild)' != 'true' ) AND ( '$(TargetFramework)' == '$(NetFx452)' ) AND ( '$(BuildingInsideVisualStudio)' != 'true' ) AND ( '$(Scope)' != 'All') ">
 			
 			<Message Text="Executing PostBuildTask" Importance="High" />
 		<PostBuildTask 		

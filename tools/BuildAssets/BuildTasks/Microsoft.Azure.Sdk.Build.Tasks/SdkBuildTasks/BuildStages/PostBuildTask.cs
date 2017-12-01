@@ -259,11 +259,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 TaskLogger.LogException(new Microsoft.Build.Exceptions.InvalidProjectFileException("Unable to detect projects being build"));
             }
 
-
-            if(ProjectTargetFramework != FrameworkMonikerConstant.Net452)
-            {
-                isValidated = (isValidated && false);
-            }
+            //if(ProjectTargetFramework != FrameworkMonikerConstant.Net452)
+            //{
+            //    isValidated = (isValidated && false);
+            //}
 
             return isValidated;
         }
