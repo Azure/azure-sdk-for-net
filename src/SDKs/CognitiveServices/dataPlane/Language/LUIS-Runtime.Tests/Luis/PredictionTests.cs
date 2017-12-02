@@ -1,21 +1,20 @@
-﻿using Microsoft.Azure.CognitiveServices.Language.LUIS;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Collections.Generic;
-using Xunit;
-
-namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
+﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
 {
+    using System.Collections.Generic;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
+    using Microsoft.Rest;
+    using Xunit;
+
     public class PredictionTests : BaseTest
     {
         [Fact]
-        public void PredictionGet()
+        public void Prediction_Post()
         {
             UseClientFor(async client =>
             {
-                var utterance = "this is a test";
-                var result = await client.Prediction.GetPredictionsFromEndpointViaGetAsync(appId, utterance);
+                var utterance = "this is a test with post";
+                var result = await client.Prediction.ResolveAsync(appId, utterance);
 
                 Assert.Equal("None", result.TopScoringIntent.Intent);
                 Assert.Equal(utterance, result.Query);
@@ -23,7 +22,7 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
         }
 
         [Fact]
-        public void PredictionInvalidKey()
+        public void Prediction_InvalidKey_ThrowsAPIErrorException()
         {
             var headers = new Dictionary<string, List<string>> { ["Ocp-Apim-Subscription-Key"] = new List<string> { "invalid-key" } };
 
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
             {
                 var ex = await Assert.ThrowsAsync<APIErrorException>(async () =>
                 {
-                    await client.Prediction.GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(appId, "test", customHeaders: headers);
+                    await client.Prediction.ResolveWithHttpMessagesAsync(appId, "this is a test with post", customHeaders: headers);
                 });
 
                 Assert.Equal("401", ex.Body.StatusCode);
@@ -39,15 +38,17 @@ namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
         }
 
         [Fact]
-        public void PredictionPost()
+        public void Prediction_QueryTooLong_ThrowsValidationException()
         {
             UseClientFor(async client =>
             {
-                var utterance = "this is a test with post";
-                var result = await client.Prediction.GetPredictionsFromEndpointViaPostAsync(appId, utterance);
+                var query = string.Empty.PadLeft(501, 'x');
+                var ex = await Assert.ThrowsAsync<ValidationException>(async () =>
+                {
+                    await client.Prediction.ResolveWithHttpMessagesAsync(appId, query);
+                });
 
-                Assert.Equal("None", result.TopScoringIntent.Intent);
-                Assert.Equal(utterance, result.Query);
+                Assert.Equal("query", ex.Target);
             });
         }
     }
