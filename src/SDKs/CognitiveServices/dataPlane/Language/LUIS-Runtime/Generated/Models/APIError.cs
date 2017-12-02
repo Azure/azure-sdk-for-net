@@ -29,6 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// <summary>
         /// Initializes a new instance of the APIError class.
         /// </summary>
+        /// <param name="statusCode">HTTP Status code</param>
+        /// <param name="message">Cause of the error.</param>
         public APIError(string statusCode = default(string), string message = default(string))
         {
             StatusCode = statusCode;
@@ -42,11 +44,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets HTTP Status code
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
         public string StatusCode { get; set; }
 
         /// <summary>
+        /// Gets or sets cause of the error.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
