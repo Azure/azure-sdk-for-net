@@ -44,22 +44,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="use32bitRuntime">Specifies whether to use 32 bit
-        /// runtime to execute SSIS package. Possible values include: 'True',
-        /// 'False'</param>
+        /// runtime to execute SSIS package.</param>
         /// <param name="loggingLevel">The logging level of SSIS package
-        /// execution. Possible values include: 'None', 'Basic', 'Performance',
-        /// 'Verbose'</param>
-        /// <param name="customizedLoggingLevel">The customized logging level
-        /// of SSIS package execution.</param>
+        /// execution.</param>
         /// <param name="environmentPath">The environment path to execution the
         /// SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string use32bitRuntime = default(string), string loggingLevel = default(string), string customizedLoggingLevel = default(string), string environmentPath = default(string))
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), bool? use32bitRuntime = default(bool?), string loggingLevel = default(string), string environmentPath = default(string))
             : base(name, description, dependsOn, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
             Use32bitRuntime = use32bitRuntime;
             LoggingLevel = loggingLevel;
-            CustomizedLoggingLevel = customizedLoggingLevel;
             EnvironmentPath = environmentPath;
             ConnectVia = connectVia;
             CustomInit();
@@ -74,28 +69,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets SSIS package location.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.packageLocation")]
-        public SsisPackageLocation PackageLocation { get; set; }
+        public SSISPackageLocation PackageLocation { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether to use 32 bit runtime to execute
-        /// SSIS package. Possible values include: 'True', 'False'
+        /// SSIS package.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.use32bitRuntime")]
-        public string Use32bitRuntime { get; set; }
+        public bool? Use32bitRuntime { get; set; }
 
         /// <summary>
-        /// Gets or sets the logging level of SSIS package execution. Possible
-        /// values include: 'None', 'Basic', 'Performance', 'Verbose'
+        /// Gets or sets the logging level of SSIS package execution.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.loggingLevel")]
         public string LoggingLevel { get; set; }
-
-        /// <summary>
-        /// Gets or sets the customized logging level of SSIS package
-        /// execution.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.customizedLoggingLevel")]
-        public string CustomizedLoggingLevel { get; set; }
 
         /// <summary>
         /// Gets or sets the environment path to execution the SSIS package.
