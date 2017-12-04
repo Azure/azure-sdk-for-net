@@ -22,6 +22,20 @@
         }
 
         [Fact]
+        public void Prediction_WithSpellCheck()
+        {
+            UseClientFor(async client =>
+            {
+                var utterance = "helo, what dai is todey?";
+                var result = await client.Prediction.ResolveAsync(appId, utterance, spellCheck: true, bingSpellCheckSubscriptionKey: "00000000000000000000000000000000");
+
+                Assert.True(!string.IsNullOrWhiteSpace(result.AlteredQuery));
+                Assert.Equal("hello, what day is today?", result.AlteredQuery);
+                Assert.Equal(utterance, result.Query);
+            });
+        }
+
+        [Fact]
         public void Prediction_InvalidKey_ThrowsAPIErrorException()
         {
             var headers = new Dictionary<string, List<string>> { ["Ocp-Apim-Subscription-Key"] = new List<string> { "invalid-key" } };
