@@ -66,11 +66,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <param name='verbose'>
         /// If true, return all intents instead of just the top scoring intent.
         /// </param>
+        /// <param name='staging'>
+        /// Use the staging endpoint slot.
+        /// </param>
         /// <param name='spellCheck'>
         /// Enable spell checking.
         /// </param>
-        /// <param name='staging'>
-        /// Use the staging endpoint slot.
+        /// <param name='bingSpellCheckSubscriptionKey'>
+        /// The subscription key to use when enabling bing spell check
+        /// </param>
+        /// <param name='log'>
+        /// Log query (default is true)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -93,7 +99,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (appId == null)
             {
@@ -121,8 +127,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
                 tracingParameters.Add("query", query);
                 tracingParameters.Add("timezoneOffset", timezoneOffset);
                 tracingParameters.Add("verbose", verbose);
-                tracingParameters.Add("spellCheck", spellCheck);
                 tracingParameters.Add("staging", staging);
+                tracingParameters.Add("spellCheck", spellCheck);
+                tracingParameters.Add("bingSpellCheckSubscriptionKey", bingSpellCheckSubscriptionKey);
+                tracingParameters.Add("log", log);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Resolve", tracingParameters);
             }
@@ -140,13 +148,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             {
                 _queryParameters.Add(string.Format("verbose={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(verbose, Client.SerializationSettings).Trim('"'))));
             }
+            if (staging != null)
+            {
+                _queryParameters.Add(string.Format("staging={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(staging, Client.SerializationSettings).Trim('"'))));
+            }
             if (spellCheck != null)
             {
                 _queryParameters.Add(string.Format("spellCheck={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(spellCheck, Client.SerializationSettings).Trim('"'))));
             }
-            if (staging != null)
+            if (bingSpellCheckSubscriptionKey != null)
             {
-                _queryParameters.Add(string.Format("staging={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(staging, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("bing-spell-check-subscription-key={0}", System.Uri.EscapeDataString(bingSpellCheckSubscriptionKey)));
+            }
+            if (log != null)
+            {
+                _queryParameters.Add(string.Format("log={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(log, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

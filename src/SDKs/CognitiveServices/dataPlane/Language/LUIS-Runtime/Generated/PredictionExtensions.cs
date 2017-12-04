@@ -38,18 +38,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
             /// <param name='verbose'>
             /// If true, return all intents instead of just the top scoring intent.
             /// </param>
+            /// <param name='staging'>
+            /// Use the staging endpoint slot.
+            /// </param>
             /// <param name='spellCheck'>
             /// Enable spell checking.
             /// </param>
-            /// <param name='staging'>
-            /// Use the staging endpoint slot.
+            /// <param name='bingSpellCheckSubscriptionKey'>
+            /// The subscription key to use when enabling bing spell check
+            /// </param>
+            /// <param name='log'>
+            /// Log query (default is true)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ResolveWithHttpMessagesAsync(appId, query, timezoneOffset, verbose, spellCheck, staging, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ResolveWithHttpMessagesAsync(appId, query, timezoneOffset, verbose, staging, spellCheck, bingSpellCheckSubscriptionKey, log, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

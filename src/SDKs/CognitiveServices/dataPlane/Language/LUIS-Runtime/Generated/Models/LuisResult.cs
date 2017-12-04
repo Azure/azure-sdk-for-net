@@ -33,15 +33,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// Initializes a new instance of the LuisResult class.
         /// </summary>
         /// <param name="query">The input utterance that was analized.</param>
+        /// <param name="alteredQuery">The corrected utterance (when spell
+        /// checking was enabled).</param>
         /// <param name="intents">All the intents (and their score) that were
         /// detected from utterance.</param>
         /// <param name="entities">The entities extracted from the
         /// utterance.</param>
         /// <param name="compositeEntities">The composite entities extracted
         /// from the utterance.</param>
-        public LuisResult(string query = default(string), IntentModel topScoringIntent = default(IntentModel), IList<IntentModel> intents = default(IList<IntentModel>), IList<EntityModel> entities = default(IList<EntityModel>), IList<CompositeEntityModel> compositeEntities = default(IList<CompositeEntityModel>))
+        public LuisResult(string query = default(string), string alteredQuery = default(string), IntentModel topScoringIntent = default(IntentModel), IList<IntentModel> intents = default(IList<IntentModel>), IList<EntityModel> entities = default(IList<EntityModel>), IList<CompositeEntityModel> compositeEntities = default(IList<CompositeEntityModel>))
         {
             Query = query;
+            AlteredQuery = alteredQuery;
             TopScoringIntent = topScoringIntent;
             Intents = intents;
             Entities = entities;
@@ -59,6 +62,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public string Query { get; set; }
+
+        /// <summary>
+        /// Gets or sets the corrected utterance (when spell checking was
+        /// enabled).
+        /// </summary>
+        [JsonProperty(PropertyName = "alteredQuery")]
+        public string AlteredQuery { get; set; }
 
         /// <summary>
         /// </summary>
