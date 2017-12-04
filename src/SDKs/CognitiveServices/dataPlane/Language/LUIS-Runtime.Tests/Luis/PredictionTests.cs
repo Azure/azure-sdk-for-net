@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.LUIS.Tests.Luis
+﻿namespace LUIS.Tests
 {
     using System.Collections.Generic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS;
