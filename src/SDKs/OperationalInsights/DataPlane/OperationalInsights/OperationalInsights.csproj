@@ -9,7 +9,7 @@
     <Description>Provides Microsoft Azure Operational Insights data operations</Description>
     <AssemblyName>Microsoft.Azure.OperationalInsights</AssemblyName>
     <Version>1.0.0-preview</Version>
-    <PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>    
+    <PackageTags>Microsoft Azure OperationalInsights;OperationalInsights;</PackageTags>    
 	<PackageReleaseNotes>
       <![CDATA[
         This is a public preview release of the Azure Operational Insights Data Plane SDK. This release includes support for querying Operational Insights via the new API (https://dev.loganalytics.io/).

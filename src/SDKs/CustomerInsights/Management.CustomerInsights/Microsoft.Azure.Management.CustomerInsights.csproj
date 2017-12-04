@@ -8,7 +8,7 @@
 		<Version>0.9.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.CustomerInsights</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.CustomerInsights</PackageId>
-		<PackageTags>Microsoft Azure CustomerInsights Management;CustomerInsights;CustomerInsights management</PackageTags>
+		<PackageTags>Microsoft Azure CustomerInsights Management;CustomerInsights;CustomerInsights management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

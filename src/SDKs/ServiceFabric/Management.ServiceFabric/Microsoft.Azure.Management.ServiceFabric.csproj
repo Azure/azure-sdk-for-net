@@ -8,7 +8,7 @@
 		<Description>Microsoft Azure Management ServiceFabric Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.ServiceFabric</AssemblyName>
 		<Version>1.0.1-preview</Version>
-		<PackageTags>Microsoft Azure Management Library;ServiceFabric;ServiceFabric management</PackageTags>
+		<PackageTags>Microsoft Azure Management Library;ServiceFabric;ServiceFabric management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 

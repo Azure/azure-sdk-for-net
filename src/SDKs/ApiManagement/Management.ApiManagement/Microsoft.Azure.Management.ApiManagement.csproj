@@ -9,7 +9,7 @@
     <AssemblyTitle>Microsoft Azure API Management Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.ApiManagement</AssemblyName>
     <Version>1.0.0-preview</Version>
-    <PackageTags>Microsoft Azure ApiManagement management;API Managementt</PackageTags>
+    <PackageTags>ApiManagement management;API Management;</PackageTags>
 	<PackageReleaseNotes/>
   </PropertyGroup>
   <PropertyGroup>

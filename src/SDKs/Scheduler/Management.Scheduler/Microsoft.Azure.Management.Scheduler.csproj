@@ -8,7 +8,7 @@
 		<Description>Provides job collection and job management capabilities for Microsoft Azure Scheduler.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Scheduler</AssemblyName>
 		<Version>2.2.0</Version>
-		<PackageTags>Microsoft Azure Scheduler;Scheduler</PackageTags>
+		<PackageTags>Microsoft Azure Scheduler;Scheduler;</PackageTags>
 		<PackageReleaseNotes/>    
 	</PropertyGroup>
 	<PropertyGroup>

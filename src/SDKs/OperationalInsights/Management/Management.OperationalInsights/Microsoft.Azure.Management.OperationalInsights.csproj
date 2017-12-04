@@ -8,7 +8,7 @@
 		<Description>Provides Microsoft Azure Operational Insights management operations</Description>
 		<AssemblyName>Microsoft.Azure.Management.OperationalInsights</AssemblyName>
 		<Version>0.18.0-preview</Version>
-		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>  
+		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights;</PackageTags>  
 		<PackageReleaseNotes/>		
 	</PropertyGroup>
 	<PropertyGroup>

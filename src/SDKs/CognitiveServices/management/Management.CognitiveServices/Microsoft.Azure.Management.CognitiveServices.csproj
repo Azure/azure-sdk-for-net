@@ -8,7 +8,7 @@
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
 		<Version>2.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
-		<PackageTags>Microsoft Azure Cognitive Services management;Cognitive Services;Cognitive Services management</PackageTags>
+		<PackageTags>Microsoft Azure Cognitive Services management;Cognitive Services;Cognitive Services management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

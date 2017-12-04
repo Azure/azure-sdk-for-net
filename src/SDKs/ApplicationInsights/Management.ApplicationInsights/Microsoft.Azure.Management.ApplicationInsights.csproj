@@ -8,7 +8,7 @@
 		<Version>0.1.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ApplicationInsights</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ApplicationInsights</PackageId>
-		<PackageTags>Management.ApplicationInsights</PackageTags>
+		<PackageTags>Management.ApplicationInsights;</PackageTags>
 		<PackageReleaseNotes>This is a preview release of the Application Insights Management SDK. Included with this release is support for components/webtests/continuous export configuration/pricing tier managment APIs.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

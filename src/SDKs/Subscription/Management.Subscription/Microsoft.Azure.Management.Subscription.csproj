@@ -8,7 +8,7 @@
 		<Description>Provides subscription management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Subscription</AssemblyName>
 		<Version>1.0.0-preview</Version>
-		<PackageTags>Microsoft Azure Subscription;subscription definitions</PackageTags>
+		<PackageTags>Microsoft Azure Subscription;subscription definitions;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

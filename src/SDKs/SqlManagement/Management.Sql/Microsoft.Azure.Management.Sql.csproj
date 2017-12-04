@@ -8,7 +8,7 @@
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
 		<Version>1.10.0-preview</Version>
-		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management</PackageTags>
+		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:

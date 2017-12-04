@@ -8,7 +8,7 @@
 		<Version>4.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Cdn</AssemblyName>    
 		<PackageId>Microsoft.Azure.Management.Cdn</PackageId>
-		<PackageTags>Microsoft Azure CDN management;CDN;Cdn management</PackageTags>
+		<PackageTags>Microsoft Azure CDN management;CDN;Cdn management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 

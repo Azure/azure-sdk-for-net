@@ -8,7 +8,7 @@
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
 		<Version>3.0.0-preview</Version>
-		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>    
+		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management;</PackageTags>    
 		<PackageReleaseNotes>
 			<![CDATA[
         This is a public preview release of the Azure HDInsight SDK. Included with this release is support for OMS diagnostics.

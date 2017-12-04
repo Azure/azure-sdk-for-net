@@ -8,7 +8,7 @@
 		<Description>Microsoft.Azure.Management.DevTestLabs</Description>
 		<AssemblyName>Microsoft.Azure.Management.DevTestLabs</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.DevTestLabs</PackageId>
-		<PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>    
+		<PackageTags>Microsoft AutoRest Management REST;</PackageTags>    
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

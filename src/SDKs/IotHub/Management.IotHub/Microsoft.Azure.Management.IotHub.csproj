@@ -9,7 +9,7 @@
 		<AssemblyTitle>Microsoft Azure IotHub Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.IotHub</AssemblyName>
 		<Version>1.1.3</Version>
-		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub</PackageTags>
+		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
         This is a public preview release of the Azure IotHub SDK. Included with this release is support for certificate and operation related APIs.

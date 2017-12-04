@@ -8,7 +8,7 @@
 		<Description>Provides Machine Learning WebServices management capabilities for Microsoft Azure.</Description>
 		<Version>0.10.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.MachineLearning</AssemblyName>
-		<PackageTags>Microsoft Azure Machine Learning WebServices management;WebServices management</PackageTags>
+		<PackageTags>Microsoft Azure Machine Learning WebServices management;WebServices management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

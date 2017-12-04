@@ -8,7 +8,7 @@
     <Description>This client library provides access to the Microsoft Cognitive Services Video Search API.</Description>
     <Version>1.1.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.VideoSearch</AssemblyName>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;VideoSearch API;BingVideoSearch API;VideoSearchSDK;BingVideoSearchSDK</PackageTags>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;VideoSearch API;BingVideoSearch API;VideoSearchSDK;BingVideoSearchSDK;</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Search SDK. Included with this release is support for Video Search API.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

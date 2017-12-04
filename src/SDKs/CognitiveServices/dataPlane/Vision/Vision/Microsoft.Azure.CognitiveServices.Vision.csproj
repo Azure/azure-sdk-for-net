@@ -8,7 +8,7 @@
     <Description>This client library provides access to the Microsoft Cognitive Services Vision APIs.</Description>
     <Version>1.0.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision</AssemblyName>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;Face SDK</PackageTags>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;Face SDK;</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Vision SDK. Included with this release is support for Face API.</PackageReleaseNotes>
   </PropertyGroup>
 

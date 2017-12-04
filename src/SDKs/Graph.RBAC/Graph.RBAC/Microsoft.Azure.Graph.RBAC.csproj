@@ -5,7 +5,7 @@
     <VersionPrefix>3.4.0-preview</VersionPrefix>
     <Description>Microsoft.Azure.Graph.RBAC</Description>
     <AssemblyName>Microsoft.Azure.Graph.RBAC</AssemblyName>
-    <PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>    
+    <PackageTags>GraphRBAC;</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

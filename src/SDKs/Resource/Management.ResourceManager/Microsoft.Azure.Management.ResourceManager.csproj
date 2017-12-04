@@ -8,7 +8,7 @@
 		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
 		<Version>1.7.0-preview</Version>
-		<PackageTags>Microsoft Azure resource management;resource management;resource groups</PackageTags>
+		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

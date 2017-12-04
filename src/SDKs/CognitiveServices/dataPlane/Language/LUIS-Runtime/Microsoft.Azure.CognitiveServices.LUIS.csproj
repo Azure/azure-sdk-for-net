@@ -8,7 +8,7 @@
     <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Runtime API.</Description>
     <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.LUIS</AssemblyName>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services LUIS Runtime SDK. Included with this release is support for LUIS Prediction API.</PackageReleaseNotes>
   </PropertyGroup>
 

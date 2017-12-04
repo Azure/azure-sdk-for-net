@@ -8,7 +8,7 @@
 		<Description>Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.</Description>
 		<Version>2.3.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
-		<PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management</PackageTags>
+		<PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/adlsdotnetsdkchangelog for release notes.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

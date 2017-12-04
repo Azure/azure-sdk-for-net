@@ -8,7 +8,7 @@
 		<Description>Provides streaming job management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.StreamAnalytics</AssemblyName>
 		<Version>2.1.0</Version>
-		<PackageTags>Stream Analytics management;streaming jobs;streaming job management</PackageTags>
+		<PackageTags>Stream Analytics management;streaming jobs;streaming job management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>

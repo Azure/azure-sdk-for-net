@@ -8,7 +8,7 @@
 		<Description>Microsoft Azure Management TrafficManager Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
 		<Version>2.3.0-preview</Version>
-		<PackageTags>TrafficManager management</PackageTags>
+		<PackageTags>TrafficManager management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>
