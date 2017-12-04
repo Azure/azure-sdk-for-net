@@ -60,11 +60,11 @@ namespace DataFactory.Tests.UnitTests
             ExecuteSSISPackageActivity activity = new ExecuteSSISPackageActivity
             {
                 Name = triggeredPipelineName,
-                Description = "Execute ssis package activity",
-                Use32bitRuntime = "False",
+                Description = "Execute SSIS package activity",
+                Use32bitRuntime = false,
                 LoggingLevel = "Basic",
                 EnvironmentPath = "./test",
-                PackageLocation = new SsisPackageLocation
+                PackageLocation = new SSISPackageLocation
                 {
                     PackagePath = "myfolder/myproject/mypackage.dtsx"
                 },
