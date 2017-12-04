@@ -17,21 +17,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// SSIS package location.
     /// </summary>
-    public partial class SSISPackageLocation
+    public partial class SsisPackageLocation
     {
         /// <summary>
-        /// Initializes a new instance of the SSISPackageLocation class.
+        /// Initializes a new instance of the SsisPackageLocation class.
         /// </summary>
-        public SSISPackageLocation()
+        public SsisPackageLocation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SSISPackageLocation class.
+        /// Initializes a new instance of the SsisPackageLocation class.
         /// </summary>
         /// <param name="packagePath">The SSIS package path.</param>
-        public SSISPackageLocation(string packagePath)
+        public SsisPackageLocation(string packagePath)
         {
             PackagePath = packagePath;
             CustomInit();
