@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
 		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>1.8.0-preview</Version>
+		<Version>1.7.0-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>

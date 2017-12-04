@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.Netcore.Tests", "Resource.Tests\Resource.NetCore.Tests\Resource.Netcore.Tests.csproj", "{04B4A8C0-95B4-4139-BE8E-885E087F5205}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.Tests", "Resource.Tests\Resource.Tests.csproj", "{04B4A8C0-95B4-4139-BE8E-885E087F5205}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ResourceManager", "Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj", "{5F659AC2-FC75-4C17-B021-6AA6F9360790}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.FullDesktop.Tests", "Resource.Tests\Resource.FullDesktop.Tests\Resource.FullDesktop.Tests.csproj", "{85F6DD50-F7C4-4B8B-9286-2AD60EC322A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{5F659AC2-FC75-4C17-B021-6AA6F9360790}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F659AC2-FC75-4C17-B021-6AA6F9360790}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F659AC2-FC75-4C17-B021-6AA6F9360790}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85F6DD50-F7C4-4B8B-9286-2AD60EC322A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85F6DD50-F7C4-4B8B-9286-2AD60EC322A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85F6DD50-F7C4-4B8B-9286-2AD60EC322A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85F6DD50-F7C4-4B8B-9286-2AD60EC322A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

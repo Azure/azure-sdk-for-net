@@ -100,7 +100,7 @@ namespace OperationalInsights.Data.Test.ScenarioTests
         private OperationalInsightsDataClient GetClient(MockContext ctx, string workspaceId = DefaultWorkspaceId, string apiKey = DefaultApiKey)
         {
             var credentials = new ApiKeyClientCredentials(apiKey);
-            var client = OperationalInsightsDataClient.CreateClient(credentials, HttpMockServer.CreateInstance());
+            var client = new OperationalInsightsDataClient(credentials, HttpMockServer.CreateInstance());
             client.WorkspaceId = workspaceId;
 
             return client;

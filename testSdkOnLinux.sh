@@ -162,7 +162,7 @@ skip_Rps() {
     #printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
-                || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Resource.FullDesktop.Tests") ]]; then                
+                || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Subscription.FullDesktop.Tests") ]]; then                
         retVal=true
     fi
     echo $retVal

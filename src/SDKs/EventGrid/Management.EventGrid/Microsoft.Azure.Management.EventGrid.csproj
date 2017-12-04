@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
 		<Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-		<Version>1.0.0-preview</Version>
+		<Version>1.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>Added a new API to support updating of Event Grid topics.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

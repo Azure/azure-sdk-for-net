@@ -1,34 +1,38 @@
 ﻿using Microsoft.Azure.OperationalInsights.Models;
 using Microsoft.Rest;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 
 namespace Microsoft.Azure.OperationalInsights
 {
     public partial class OperationalInsightsDataClient : ServiceClient<OperationalInsightsDataClient>, IOperationalInsightsDataClient
     {
-        public static OperationalInsightsDataClient CreateClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers)
+        /// <summary>
+        /// Initializes a new instance of the OperationalInsightsDataClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public OperationalInsightsDataClient(ServiceClientCredentials credentials)
+            : this(credentials, (DelegatingHandler[])null)
         {
-            return CreateClient(credentials, null, handlers);
         }
 
-        public static OperationalInsightsDataClient CreateClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler = null, params DelegatingHandler[] handlers)
+        partial void CustomInitialize()
         {
-            var customHandler = new CustomDelegatingHandler();
-            if (handlers == null)
-            {
-                handlers = new[] { customHandler };
-            }
-            else
-            {
-                handlers = new[] { customHandler }.Concat(handlers).ToArray();
-            }
+            var firstHandler = this.FirstMessageHandler as DelegatingHandler;
+            if (firstHandler == null) return;
 
-            var client = new OperationalInsightsDataClient(credentials, rootHandler, handlers);
-            customHandler.Client = client;
+            var customHandler = new CustomDelegatingHandler
+            {
+                InnerHandler = firstHandler.InnerHandler,
+                Client = this,
+            };
 
-            return client;
+            firstHandler.InnerHandler = customHandler;
         }
 
         public IList<string> AdditionalWorkspaces { get; set; } = new List<string>();
