@@ -1,7 +1,7 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-	<!-- Please do not move/edit code below this line -->
+	<!-- Please do not move/edit code above this line -->
 
 	<PropertyGroup>
 		<Description>Microsoft Azure LogicApps Management Library</Description>
@@ -15,6 +15,6 @@
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>
