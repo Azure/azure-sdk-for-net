@@ -1,13 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+  
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Insights</PackageId>
     <Description>Microsoft Azure Insights Library</Description>
     <VersionPrefix>0.15.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Insights</AssemblyName>
-    <PackageTags>Microsoft;Microsoft Azure;Azure;Insights;monitoring;monitoring services;metrics;alerts;autoscale;events;operations;logs;REST;HTTP;client;azureofficial;windowsazureofficial;management services;diagnostics;telemetry;analytics;netcore451511</PackageTags>
+    <PackageTags>Insights;monitoring;monitoring services;metrics;alerts;autoscale;events;operations;logs;diagnostics;telemetry;analytics;</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>

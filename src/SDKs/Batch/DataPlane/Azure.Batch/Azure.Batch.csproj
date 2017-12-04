@@ -14,7 +14,7 @@
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
-    <PackageTags>Microsoft;Azure;Batch;windowsazureofficial</PackageTags>
+    <PackageTags>Microsoft;Azure;Batch;</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>

@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+  
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Vision APIs.</Description>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>1.0.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision</AssemblyName>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;REST HTTP client;Face SDK;netcore451511</PackageTags>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;Face SDK;</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Vision SDK. Included with this release is support for Face API.</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -17,6 +18,9 @@
 
   <ItemGroup>
     <Folder Include="Generated\Face\Models\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
+  
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>

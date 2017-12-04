@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-	<!-- Please do not move/edit code below this line -->
+	<!-- Please do not move/edit code above this line -->
 	
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
 		<Version>1.10.0-preview</Version>
-		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management</PackageTags>
+		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
@@ -21,6 +21,6 @@ New features:
 	</PropertyGroup>
 	
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>
