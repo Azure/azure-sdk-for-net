@@ -44,12 +44,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="use32bitRuntime">Specifies whether to use 32 bit
-        /// runtime to execute SSIS package.</param>
+        /// runtime to execute SSIS package. Possible values include: 'Yes',
+        /// 'No'</param>
         /// <param name="loggingLevel">The logging level of SSIS package
         /// execution.</param>
         /// <param name="environmentPath">The environment path to execution the
         /// SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), bool? use32bitRuntime = default(bool?), string loggingLevel = default(string), string environmentPath = default(string))
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string use32bitRuntime = default(string), string loggingLevel = default(string), string environmentPath = default(string))
             : base(name, description, dependsOn, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
@@ -73,10 +74,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets specifies whether to use 32 bit runtime to execute
-        /// SSIS package.
+        /// SSIS package. Possible values include: 'Yes', 'No'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.use32bitRuntime")]
-        public bool? Use32bitRuntime { get; set; }
+        public string Use32bitRuntime { get; set; }
 
         /// <summary>
         /// Gets or sets the logging level of SSIS package execution.
