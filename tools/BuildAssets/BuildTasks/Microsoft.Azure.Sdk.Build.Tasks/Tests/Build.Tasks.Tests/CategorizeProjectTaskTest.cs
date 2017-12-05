@@ -79,6 +79,22 @@ namespace Build.Tasks.Tests
         }
 
         [Fact]
+        public void ScopedProject_1()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"SDKs\Compute";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
+            }
+        }
+
+
+        [Fact]
         public void UnSupportedProjects()
         {
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
@@ -174,8 +190,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.Equal(1, cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>());
-                Assert.Equal(1, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(2, cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(2, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 

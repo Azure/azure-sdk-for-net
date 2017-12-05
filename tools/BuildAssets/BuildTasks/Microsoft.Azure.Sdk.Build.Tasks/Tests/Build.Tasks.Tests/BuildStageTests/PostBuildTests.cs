@@ -187,7 +187,7 @@ namespace Build.Tasks.Tests
 
             if (postBld.Execute())
             {
-                Assert.Null(postBld.ApiTag);
+                Assert.Empty(postBld.ApiTag);
             }
         }
 

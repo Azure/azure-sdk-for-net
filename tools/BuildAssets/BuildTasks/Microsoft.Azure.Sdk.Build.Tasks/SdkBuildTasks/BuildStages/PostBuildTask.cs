@@ -75,14 +75,17 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
                 foreach (SdkProjectMetaData proj in filteredProjects)
                 {
-                    ApiTag = GetApiMap(proj.TargetOutputFullPath);
-                    if (!string.IsNullOrEmpty(ApiTag))
+                    if (!proj.IsProjectDataPlane)
                     {
-                        ApiTagPropsFile = UpdateProject(ApiTag, proj);
-                    }
-                    else
-                    {
-                        TaskLogger.LogInfo("SdkInfo Not Found in '{0}'", proj.FullProjectPath);
+                        ApiTag = GetApiMap(proj.TargetOutputFullPath);
+                        if (!string.IsNullOrEmpty(ApiTag))
+                        {
+                            ApiTagPropsFile = UpdateProject(ApiTag, proj);
+                        }
+                        else
+                        {
+                            TaskLogger.LogInfo("SdkInfo Not Found in '{0}'", proj.FullProjectPath);
+                        }
                     }
                 }
             }

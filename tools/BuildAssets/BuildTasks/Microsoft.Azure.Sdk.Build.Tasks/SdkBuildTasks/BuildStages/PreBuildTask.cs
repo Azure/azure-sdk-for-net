@@ -10,6 +10,7 @@
     using System.IO;
     using System.Linq;
     using static Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants;
+    using Microsoft.WindowsAzure.Build.Tasks.Utilities;
 
     /// <summary>
     /// 
@@ -29,34 +30,46 @@
         [Output]
         public string ApiTagPropsFile { get; set; }
         #endregion
-        
+
         public override bool Execute()
         {
-            if(CreatePropsFile == true)
+            if (CreatePropsFile == true)
             {
                 List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
                 TaskLogger.LogInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
 
-                if(filteredProjects.Count > 0 )
+                if (filteredProjects.Count > 0)
                 {
-                    if (GetApiTagsPropsPath(filteredProjects[0], out string propFilePath, out string slnDirPath))
+                    if (!filteredProjects.First<SdkProjectMetaData>().IsProjectDataPlane)
                     {
-                        if(string.IsNullOrEmpty(propFilePath))
+                        if (GetApiTagsPropsPath(filteredProjects[0], out string propFilePath, out string slnDirPath))
                         {
-                            propFilePath = Path.Combine(slnDirPath, BuildStageConstant.PROPS_FILE_NAME);
-                            MsBuildProjectFile msBuildFile = new MsBuildProjectFile(propFilePath);
-                            ApiTagPropsFile = msBuildFile.CreateXmlDocWithProps();
+                            if (string.IsNullOrEmpty(propFilePath))
+                            {
+                                propFilePath = Path.Combine(slnDirPath, BuildStageConstant.PROPS_FILE_NAME);
+                                MsBuildProjectFile msBuildFile = new MsBuildProjectFile(propFilePath);
+                                ApiTagPropsFile = msBuildFile.CreateXmlDocWithProps();
+                            }
+                            else
+                            {
+                                ApiTagPropsFile = propFilePath;
+                            }
+                            //ToDo: Schema verification
                         }
-                        else
-                        {
-                            ApiTagPropsFile = propFilePath;
-                        }
-                        //ToDo: Schema verification
                     }
                 }
             }
 
             return true;
+        }
+
+        private bool ValidateArgs()
+        {
+            bool isValid = false;
+            bool isProjDataPlane = SdkProjects.Select<ITaskItem, string>((item) => item.ItemSpec).Contains<string>("dataPlane", new ObjectComparer<string>((l, r) => l.Equals(r, StringComparison.OrdinalIgnoreCase)));
+            
+            isValid = !isProjDataPlane;
+            return isValid;
         }
 
         private bool GetApiTagsPropsPath(SdkProjectMetaData sdkProject, out string propsFilePath, out string slnFilePath)
