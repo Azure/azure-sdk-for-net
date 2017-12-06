@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>16.0.0-preview</Version>
+		<Version>16.1.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management</PackageTags>    
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>* Updated TopologyParameters with new optional properties: TargetVirtualNetwork, TargetSubnet; TargetResourceGroupName property changed to optional</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
