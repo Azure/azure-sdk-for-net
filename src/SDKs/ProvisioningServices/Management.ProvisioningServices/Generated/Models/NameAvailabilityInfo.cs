@@ -25,8 +25,12 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the NameAvailabilityInfo class.
         /// </summary>
-        /// <param name="reason">Possible values include: 'Invalid',
-        /// 'AlreadyExists'</param>
+        /// <param name="nameAvailable">specifies if a name is available or
+        /// not</param>
+        /// <param name="reason">specifies the reason a name is unavailable.
+        /// Possible values include: 'Invalid', 'AlreadyExists'</param>
+        /// <param name="message">message containing a etailed reason name is
+        /// unavailable</param>
         public NameAvailabilityInfo(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
             NameAvailable = nameAvailable;
@@ -41,17 +45,21 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets specifies if a name is available or not
         /// </summary>
         [JsonProperty(PropertyName = "nameAvailable")]
         public bool? NameAvailable { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Invalid', 'AlreadyExists'
+        /// Gets or sets specifies the reason a name is unavailable. Possible
+        /// values include: 'Invalid', 'AlreadyExists'
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
         public string Reason { get; set; }
 
         /// <summary>
+        /// Gets or sets message containing a etailed reason name is
+        /// unavailable
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

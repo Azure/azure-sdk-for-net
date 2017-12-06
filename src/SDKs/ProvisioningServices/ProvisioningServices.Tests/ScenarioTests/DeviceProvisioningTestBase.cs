@@ -39,20 +39,19 @@ namespace ProvisioningServices.Tests.ScenarioTests
 
         protected ProvisioningServiceDescription GetService(string serviceName, string resourceGroupName)
         {
-            var nameAvailabilityInputs = new OperationInputs(serviceName);
             var availabilityInfo =
-                this.provisioningClient.IotDpsResource.CheckNameAvailability(nameAvailabilityInputs);
+                this.provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(serviceName));
             if (!availabilityInfo.NameAvailable ?? true)
             {
                 this.provisioningClient.IotDpsResource.Get(serviceName,
                     resourceGroupName);
             }
             var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
-            new IotDpsSkuInfo(Constants.DefaultSku.Name,
+                new IotDpsPropertiesDescription(),
+                new IotDpsSkuInfo(Constants.DefaultSku.Name,
                 Constants.DefaultSku.Tier,
                 Constants.DefaultSku.Capacity
-            ),
-            properties: new IotDpsPropertiesDescription());
+            ));
 
             return this.provisioningClient.IotDpsResource.CreateOrUpdate(
                 resourceGroupName,
@@ -75,11 +74,12 @@ namespace ProvisioningServices.Tests.ScenarioTests
 
         protected ResourceGroup GetResourceGroup(string resourceGroupName, string resourceGroupLocation = null)
         {
+
             if (string.IsNullOrEmpty(resourceGroupLocation))
             {
                 resourceGroupLocation = Constants.DefaultLocation;
             }
-            
+
             return this.resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                 new ResourceGroup { Location = resourceGroupLocation });
         }

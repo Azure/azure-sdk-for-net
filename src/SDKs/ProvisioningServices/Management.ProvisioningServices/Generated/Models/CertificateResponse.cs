@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the CertificateResponse class.
         /// </summary>
+        /// <param name="properties">properties of a certificate</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The name of the certificate.</param>
         /// <param name="etag">The entity tag.</param>
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets properties of a certificate
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public CertificateProperties Properties { get; set; }

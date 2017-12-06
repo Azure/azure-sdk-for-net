@@ -25,6 +25,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the AsyncOperationResult class.
         /// </summary>
+        /// <param name="status">current status of a long running
+        /// operation.</param>
+        /// <param name="error">Error message containing code, description and
+        /// details</param>
         public AsyncOperationResult(string status = default(string), ErrorMesssage error = default(ErrorMesssage))
         {
             Status = status;
@@ -38,11 +42,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets current status of a long running operation.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
         /// <summary>
+        /// Gets or sets error message containing code, description and details
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ErrorMesssage Error { get; set; }

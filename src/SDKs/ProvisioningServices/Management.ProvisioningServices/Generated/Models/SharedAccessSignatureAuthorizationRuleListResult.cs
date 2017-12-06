@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// Initializes a new instance of the
         /// SharedAccessSignatureAuthorizationRuleListResult class.
         /// </summary>
+        /// <param name="value">The list of shared access policies.</param>
+        /// <param name="nextLink">The next link.</param>
         public SharedAccessSignatureAuthorizationRuleListResult(IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> value = default(IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>), string nextLink = default(string))
         {
             Value = value;
@@ -42,11 +44,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the list of shared access policies.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> Value { get; set; }
 
         /// <summary>
+        /// Gets the next link.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; private set; }

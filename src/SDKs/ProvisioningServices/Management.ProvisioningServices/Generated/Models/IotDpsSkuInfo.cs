@@ -25,11 +25,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the IotDpsSkuInfo class.
         /// </summary>
-        /// <param name="name">Possible values include: 'S1'</param>
-        /// <param name="tier">Pricing tier of the provisioning
+        /// <param name="name">Sku name. Possible values include: 'S1'</param>
+        /// <param name="tier">Pricing tier name of the provisioning
         /// service.</param>
-        /// <param name="capacity">The number of services of the selected tier
-        /// allowed in the subscription.</param>
+        /// <param name="capacity">The number of units to provision</param>
         public IotDpsSkuInfo(string name = default(string), string tier = default(string), long? capacity = default(long?))
         {
             Name = name;
@@ -44,20 +43,19 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'S1'
+        /// Gets or sets sku name. Possible values include: 'S1'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets pricing tier of the provisioning service.
+        /// Gets pricing tier name of the provisioning service.
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of services of the selected tier allowed in
-        /// the subscription.
+        /// Gets or sets the number of units to provision
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public long? Capacity { get; set; }

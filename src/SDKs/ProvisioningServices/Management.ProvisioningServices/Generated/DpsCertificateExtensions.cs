@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Name of the provisioning service the certificate is associated with.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the certificate. This is required to update an existing
-            /// certificate, and ignored while creating a brand new certificate.
+            /// ETag of the certificate.
             /// </param>
             public static CertificateResponse Get(this IDpsCertificate operations, string certificateName, string resourceGroupName, string provisioningServiceName, string ifMatch = default(string))
             {
@@ -55,8 +54,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Name of the provisioning service the certificate is associated with.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the certificate. This is required to update an existing
-            /// certificate, and ignored while creating a brand new certificate.
+            /// ETag of the certificate.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -90,9 +88,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificateDescription'>
             /// The certificate body.
             /// </param>
-            public static CertificateResponse CreateOrUpdate(this IDpsCertificate operations, string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription)
+            /// <param name='ifMatch'>
+            /// ETag of the certificate. This is required to update an existing
+            /// certificate, and ignored while creating a brand new certificate.
+            /// </param>
+            public static CertificateResponse CreateOrUpdate(this IDpsCertificate operations, string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, provisioningServiceName, certificateName, certificateDescription).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, provisioningServiceName, certificateName, certificateDescription, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -116,22 +118,35 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificateDescription'>
             /// The certificate body.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate. This is required to update an existing
+            /// certificate, and ignored while creating a brand new certificate.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateResponse> CreateOrUpdateAsync(this IDpsCertificate operations, string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateResponse> CreateOrUpdateAsync(this IDpsCertificate operations, string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, certificateName, certificateDescription, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, certificateName, certificateDescription, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
+            /// <summary>
+            /// Delete the Provisioning Service Certificate.
+            /// </summary>
+            /// <remarks>
+            /// Deletes the specified certificate assosciated with the Provisioning Service
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Resource group identifier.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate
             /// </param>
             /// <param name='provisioningServiceName'>
             /// The name of the provisioning service.
@@ -165,16 +180,25 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificatenonce'>
             /// Random number generated to indicate Proof of Possession.
             /// </param>
-            public static void Delete(this IDpsCertificate operations, string resourceGroupName, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string))
+            public static void Delete(this IDpsCertificate operations, string resourceGroupName, string ifMatch, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string))
             {
-                operations.DeleteAsync(resourceGroupName, provisioningServiceName, certificateName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, ifMatch, provisioningServiceName, certificateName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Delete the Provisioning Service Certificate.
+            /// </summary>
+            /// <remarks>
+            /// Deletes the specified certificate assosciated with the Provisioning Service
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Resource group identifier.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate
             /// </param>
             /// <param name='provisioningServiceName'>
             /// The name of the provisioning service.
@@ -211,9 +235,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDpsCertificate operations, string resourceGroupName, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDpsCertificate operations, string resourceGroupName, string ifMatch, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, certificateName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, ifMatch, provisioningServiceName, certificateName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -225,6 +249,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificateName'>
             /// The mandatory logical name of the certificate, that the provisioning
             /// service uses to access.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate. This is required to update an existing
+            /// certificate, and ignored while creating a brand new certificate.
             /// </param>
             /// <param name='resourceGroupName'>
             /// name of resource group.
@@ -257,9 +285,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificatenonce'>
             /// Random number generated to indicate Proof of Possession.
             /// </param>
-            public static VerificationCodeResponse GenerateVerificationCode(this IDpsCertificate operations, string certificateName, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string))
+            public static VerificationCodeResponse GenerateVerificationCode(this IDpsCertificate operations, string certificateName, string ifMatch, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string))
             {
-                return operations.GenerateVerificationCodeAsync(certificateName, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce).GetAwaiter().GetResult();
+                return operations.GenerateVerificationCodeAsync(certificateName, ifMatch, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -271,6 +299,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificateName'>
             /// The mandatory logical name of the certificate, that the provisioning
             /// service uses to access.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate. This is required to update an existing
+            /// certificate, and ignored while creating a brand new certificate.
             /// </param>
             /// <param name='resourceGroupName'>
             /// name of resource group.
@@ -306,17 +338,21 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VerificationCodeResponse> GenerateVerificationCodeAsync(this IDpsCertificate operations, string certificateName, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VerificationCodeResponse> GenerateVerificationCodeAsync(this IDpsCertificate operations, string certificateName, string ifMatch, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GenerateVerificationCodeWithHttpMessagesAsync(certificateName, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GenerateVerificationCodeWithHttpMessagesAsync(certificateName, ifMatch, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Verifies certificate for the provisioning service.
+            /// Verify certificate's private key possession.
             /// </summary>
+            /// <remarks>
+            /// Verifies the certificate's private key possession by providing the leaf
+            /// cert issued by the verifying pre uploaded certificate.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -324,7 +360,11 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// The mandatory logical name of the certificate, that the provisioning
             /// service uses to access.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate.
+            /// </param>
             /// <param name='request'>
+            /// The name of the certificate
             /// </param>
             /// <param name='resourceGroupName'>
             /// Resource group name.
@@ -357,14 +397,18 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='certificatenonce'>
             /// Random number generated to indicate Proof of Possession.
             /// </param>
-            public static CertificateResponse VerifyCertificate(this IDpsCertificate operations, string certificateName, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string))
+            public static CertificateResponse VerifyCertificate(this IDpsCertificate operations, string certificateName, string ifMatch, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string))
             {
-                return operations.VerifyCertificateAsync(certificateName, request, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce).GetAwaiter().GetResult();
+                return operations.VerifyCertificateAsync(certificateName, ifMatch, request, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Verifies certificate for the provisioning service.
+            /// Verify certificate's private key possession.
             /// </summary>
+            /// <remarks>
+            /// Verifies the certificate's private key possession by providing the leaf
+            /// cert issued by the verifying pre uploaded certificate.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -372,7 +416,11 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// The mandatory logical name of the certificate, that the provisioning
             /// service uses to access.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the certificate.
+            /// </param>
             /// <param name='request'>
+            /// The name of the certificate
             /// </param>
             /// <param name='resourceGroupName'>
             /// Resource group name.
@@ -408,9 +456,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateResponse> VerifyCertificateAsync(this IDpsCertificate operations, string certificateName, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateResponse> VerifyCertificateAsync(this IDpsCertificate operations, string certificateName, string ifMatch, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.VerifyCertificateWithHttpMessagesAsync(certificateName, request, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.VerifyCertificateWithHttpMessagesAsync(certificateName, ifMatch, request, resourceGroupName, provisioningServiceName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -11,6 +11,11 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// the service specific properties of a provisoning service, including
+    /// keys, linked iot hubs, current state, and system generated properties
+    /// such as hostname and idScope
+    /// </summary>
     public partial class IotDpsPropertiesDescription
     {
         /// <summary>
@@ -44,6 +49,8 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// provisioning service.</param>
         /// <param name="idScope">Unique identifier of this provisioning
         /// service.</param>
+        /// <param name="authorizationPolicies">List of authorization keys for
+        /// a provisioning service.</param>
         public IotDpsPropertiesDescription(string state = default(string), string provisioningState = default(string), IList<IotHubDefinitionDescription> iotHubs = default(IList<IotHubDefinitionDescription>), string allocationPolicy = default(string), string serviceOperationsHostName = default(string), string deviceProvisioningHostName = default(string), string idScope = default(string), IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>))
         {
             State = state;
@@ -112,6 +119,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         public string IdScope { get; private set; }
 
         /// <summary>
+        /// Gets or sets list of authorization keys for a provisioning service.
         /// </summary>
         [JsonProperty(PropertyName = "authorizationPolicies")]
         public IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> AuthorizationPolicies { get; set; }

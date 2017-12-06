@@ -17,13 +17,14 @@ namespace ProvisioningServices.Tests.ScenarioTests
             {
                 this.Initialize(context);
                 var testName = "unitTestingDPSSharedAccessPoliciesListCreateDelete";
-                this.GetResourceGroup(testName);
+                var resourceGroup = this.GetResourceGroup(testName);
                 var testedService = GetService(testName, testName);
 
                 //verify owner has been created
-                var ownerKey = this.provisioningClient.IotDpsResource.GetKeysForKeyName(
+                var ownerKey = this.provisioningClient.IotDpsResource.ListKeysForKeyName(
                     testedService.Name,
-                    Constants.AccessKeyName, testName);
+                    Constants.AccessKeyName, 
+                    resourceGroup.Name);
                 Assert.Equal(Constants.AccessKeyName, ownerKey.KeyName);
 
                 //this access policy should not exist
@@ -65,7 +66,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
         {
             try
             {
-                accessPolicy = this.provisioningClient.IotDpsResource.GetKeysForKeyName(testName, testName, testName);
+                accessPolicy = this.provisioningClient.IotDpsResource.ListKeysForKeyName(testName, testName, testName);
                 return true;
             }
             catch (ErrorDetailsException ex)

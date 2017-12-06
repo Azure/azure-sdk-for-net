@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// SKU definition in terms of tier and units.
+    /// Available Sku's of tier and units.
     /// </summary>
     public partial class IotDpsSkuDefinition
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the IotDpsSkuDefinition class.
         /// </summary>
-        /// <param name="name">Possible values include: 'S1'</param>
+        /// <param name="name">Sku name. Possible values include: 'S1'</param>
         public IotDpsSkuDefinition(string name = default(string))
         {
             Name = name;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'S1'
+        /// Gets or sets sku name. Possible values include: 'S1'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

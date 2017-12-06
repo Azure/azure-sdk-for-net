@@ -11,40 +11,14 @@ namespace ProvisioningServices.Tests.ScenarioTests
     {
 
         [Fact]
-        public void List()
-        {
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                this.Initialize(context);
-                var testName = "unitTestingDPSCertificatesList";
-                this.GetResourceGroup(testName);
-                this.GetService(testName, testName);
-
-                //get certificates list
-                var certificateList = this.provisioningClient.DpsCertificates.List(testName,
-                    testName);
-
-                if (certificateList.Value.Any(x => x.Name == Constants.Certificate.Name))
-                {
-                    this.provisioningClient.DpsCertificate.Delete(testName,
-                        testName, Constants.Certificate.Name);
-                    certificateList =
-                        this.provisioningClient.DpsCertificates.List(testName,
-                            testName);
-                    Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);
-                }
-            }
-        }
-
-        [Fact]
         public void CreateAndDelete()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.Initialize(context);
                 var testName = "unitTestingDPSCertificatesCreateAndDelete";
-                this.GetResourceGroup(testName);
-                this.GetService(testName, testName);
+                var resourceGroup = this.GetResourceGroup(testName);
+                var service = this.GetService(resourceGroup.Name, testName);
 
                 //add a cert
                 this.provisioningClient.DpsCertificate.CreateOrUpdate(testName,
@@ -59,12 +33,30 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 //verify certificate details
                 var certificateDetails =
                     certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);
+                Assert.NotNull(certificateDetails);
                 Assert.Equal(certificateDetails.Properties.Subject, Constants.Certificate.Subject);
                 Assert.Equal(certificateDetails.Properties.Thumbprint, Constants.Certificate.Thumbprint);
 
+                //verify ownership
+                Assert.False(certificateDetails.Properties.IsVerified);
+                var verificationCodeResponse =
+                    this.provisioningClient.DpsCertificate.GenerateVerificationCode(certificateDetails.Name,
+                        certificateDetails.Etag, resourceGroup.Name, service.Name);
+                Assert.NotNull(verificationCodeResponse.Properties);
+                Assert.False(string.IsNullOrEmpty(verificationCodeResponse.Properties.VerificationCode));
+
+                var verificationRequest = new VerificationCodeRequest(verificationCodeResponse.Properties.VerificationCode);
+                var verificationResponse = this.provisioningClient.DpsCertificate.VerifyCertificate(certificateDetails.Name,
+                    verificationCodeResponse.Etag, verificationRequest, resourceGroup.Name, service.Name);
+                Assert.True(verificationResponse.Properties.IsVerified);
+
+                //verify the cert is now showing verified
+                certificateDetails =
+                    certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);
+                Assert.True(certificateDetails.Properties.IsVerified);
+
                 //delete certificate
-                this.provisioningClient.DpsCertificate.Delete(testName,
-                    testName, Constants.Certificate.Name);
+                this.provisioningClient.DpsCertificate.Delete(resourceGroup.Name, certificateDetails.Etag, service.Name, Constants.Certificate.Name);
                 certificateList = this.provisioningClient.DpsCertificates.List(testName,
                     testName);
                 Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);

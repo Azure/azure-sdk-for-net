@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get the non-security related metadata of the provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get the non-security related metadata of the provisioning service.
+            /// Get the metadata of the provisioning service without SAS keys.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get the non-security related metadata of the provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get the non-security related metadata of the provisioning service.
+            /// Get the metadata of the provisioning service without SAS keys.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,6 +119,66 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 }
             }
 
+            /// <summary>
+            /// Update an existing provisioning service's tags.
+            /// </summary>
+            /// <remarks>
+            /// Update an existing provisioning service's tags. to update other fields use
+            /// the CreateOrUpdate method
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group identifier.
+            /// </param>
+            /// <param name='provisioningServiceName'>
+            /// Name of provisioning service to create or update.
+            /// </param>
+            /// <param name='provisioningServiceTags'>
+            /// Updated tag information to set into the provisioning service instance.
+            /// </param>
+            public static ProvisioningServiceDescription Update(this IIotDpsResource operations, string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags)
+            {
+                return operations.UpdateAsync(resourceGroupName, provisioningServiceName, provisioningServiceTags).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an existing provisioning service's tags.
+            /// </summary>
+            /// <remarks>
+            /// Update an existing provisioning service's tags. to update other fields use
+            /// the CreateOrUpdate method
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group identifier.
+            /// </param>
+            /// <param name='provisioningServiceName'>
+            /// Name of provisioning service to create or update.
+            /// </param>
+            /// <param name='provisioningServiceTags'>
+            /// Updated tag information to set into the provisioning service instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProvisioningServiceDescription> UpdateAsync(this IIotDpsResource operations, string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, provisioningServiceTags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete the Provisioning Service
+            /// </summary>
+            /// <remarks>
+            /// Deletes the Provisioning Service.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -133,6 +193,12 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 operations.DeleteAsync(provisioningServiceName, resourceGroupName).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Delete the Provisioning Service
+            /// </summary>
+            /// <remarks>
+            /// Deletes the Provisioning Service.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -154,7 +220,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get all the provisioning services in a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all the provisioning services in a subscription.
+            /// List all the provisioning services for a given subscription id.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,7 +234,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get all the provisioning services in a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all the provisioning services in a subscription.
+            /// List all the provisioning services for a given subscription id.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -280,7 +346,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get the list of valid SKUs for a provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get the list of valid SKUs for a provisioning service.
+            /// Gets the list of valid SKUs and tiers for a provisioning service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -300,7 +366,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get the list of valid SKUs for a provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get the list of valid SKUs for a provisioning service.
+            /// Gets the list of valid SKUs and tiers for a provisioning service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -326,7 +392,8 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Check if a provisioning service name is available.
             /// </summary>
             /// <remarks>
-            /// Check if a provisioning service name is available.
+            /// Check if a provisioning service name is available. This will validate if
+            /// the name is syntactically valid and if the name is usable
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -335,16 +402,17 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Set the name parameter in the OperationInputs structure to the name of the
             /// provisioning service to check.
             /// </param>
-            public static NameAvailabilityInfo CheckNameAvailability(this IIotDpsResource operations, OperationInputs arguments)
+            public static NameAvailabilityInfo CheckProvisioningServiceNameAvailability(this IIotDpsResource operations, OperationInputs arguments)
             {
-                return operations.CheckNameAvailabilityAsync(arguments).GetAwaiter().GetResult();
+                return operations.CheckProvisioningServiceNameAvailabilityAsync(arguments).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Check if a provisioning service name is available.
             /// </summary>
             /// <remarks>
-            /// Check if a provisioning service name is available.
+            /// Check if a provisioning service name is available. This will validate if
+            /// the name is syntactically valid and if the name is usable
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,9 +424,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NameAvailabilityInfo> CheckNameAvailabilityAsync(this IIotDpsResource operations, OperationInputs arguments, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NameAvailabilityInfo> CheckProvisioningServiceNameAvailabilityAsync(this IIotDpsResource operations, OperationInputs arguments, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(arguments, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckProvisioningServiceNameAvailabilityWithHttpMessagesAsync(arguments, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -368,7 +436,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get the security metadata for a provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get the security metadata for a provisioning service.
+            /// List the primary and secondary keys for a provisioning service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -388,7 +456,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get the security metadata for a provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get the security metadata for a provisioning service.
+            /// List the primary and secondary keys for a provisioning service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -414,7 +482,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// Get a shared access policy by name from a provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get a shared access policy by name from a provisioning service.
+            /// List primary and secondary keys for a specific key name
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -428,16 +496,16 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the provisioning service.
             /// </param>
-            public static SharedAccessSignatureAuthorizationRuleAccessRightsDescription GetKeysForKeyName(this IIotDpsResource operations, string provisioningServiceName, string keyName, string resourceGroupName)
+            public static SharedAccessSignatureAuthorizationRuleAccessRightsDescription ListKeysForKeyName(this IIotDpsResource operations, string provisioningServiceName, string keyName, string resourceGroupName)
             {
-                return operations.GetKeysForKeyNameAsync(provisioningServiceName, keyName, resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListKeysForKeyNameAsync(provisioningServiceName, keyName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Get a shared access policy by name from a provisioning service.
             /// </summary>
             /// <remarks>
-            /// Get a shared access policy by name from a provisioning service.
+            /// List primary and secondary keys for a specific key name
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -454,9 +522,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKeysForKeyNameAsync(this IIotDpsResource operations, string provisioningServiceName, string keyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> ListKeysForKeyNameAsync(this IIotDpsResource operations, string provisioningServiceName, string keyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetKeysForKeyNameWithHttpMessagesAsync(provisioningServiceName, keyName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListKeysForKeyNameWithHttpMessagesAsync(provisioningServiceName, keyName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

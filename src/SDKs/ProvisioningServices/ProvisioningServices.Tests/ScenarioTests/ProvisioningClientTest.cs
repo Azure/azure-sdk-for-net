@@ -21,9 +21,8 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 this.GetResourceGroup(testName);
 
 
-                var nameAvailabilityInputs = new OperationInputs(testName);
                 var availabilityInfo =
-                    this.provisioningClient.IotDpsResource.CheckNameAvailability(nameAvailabilityInputs);
+                    this.provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(testName));
 
                 if (!availabilityInfo.NameAvailable ?? false)
                 {
@@ -32,17 +31,17 @@ namespace ProvisioningServices.Tests.ScenarioTests
 
                     //check the name is now available
                     availabilityInfo =
-                        this.provisioningClient.IotDpsResource.CheckNameAvailability(nameAvailabilityInputs);
+                        this.provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(testName));
                     Assert.True(availabilityInfo.NameAvailable);
                 }
 
                 //try to create a DPS service
                 var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
+                    new IotDpsPropertiesDescription(),
                     new IotDpsSkuInfo(Constants.DefaultSku.Name,
                         Constants.DefaultSku.Tier,
                         Constants.DefaultSku.Capacity
-                    ),
-                    properties: new IotDpsPropertiesDescription());
+                    ));
 
                 var dpsInstance = this.provisioningClient.IotDpsResource.CreateOrUpdate(
                     testName,
@@ -63,24 +62,11 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 Assert.NotNull(foundInstance);
                 Assert.Equal(testName, foundInstance.Name);
 
-                //loop control
-                var maxAttemptCount = 5;
-                while (maxAttemptCount > 0 && existingServices.Value.Any(x=> x.Name == testName))
-                {
-                    try
-                    {
-                        this.provisioningClient.IotDpsResource.Delete(testName, testName);
-                        existingServices =
-                            this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
-                    }
-                    catch //Conflict because underlying process is still executing
-                    {
-                        maxAttemptCount--;
-                        //Let whatever operations need to finish
-                        System.Threading.Thread.Sleep(1000);
-                    }
 
-                }
+                this.provisioningClient.IotDpsResource.Delete(testName, testName);
+                existingServices =
+                    this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
+
                 Assert.DoesNotContain(existingServices.Value, x => x.Name == testName);
             }
         }
@@ -117,11 +103,11 @@ namespace ProvisioningServices.Tests.ScenarioTests
 
                 //try to create a DPS service
                 var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
+                    new IotDpsPropertiesDescription(),
                     new IotDpsSkuInfo(Constants.DefaultSku.Name,
                         Constants.DefaultSku.Tier,
                         Constants.DefaultSku.Capacity
-                    ),
-                    properties: new IotDpsPropertiesDescription());
+                    ));
 
                 var badCall = new Func<ProvisioningServiceDescription>(() => this.provisioningClient.IotDpsResource.CreateOrUpdate(
                     testName,

@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// Initializes a new instance of the
         /// ProvisioningServiceDescriptionListResult class.
         /// </summary>
+        /// <param name="value">List of provisioning service
+        /// descriptions.</param>
+        /// <param name="nextLink">the next link</param>
         public ProvisioningServiceDescriptionListResult(IList<ProvisioningServiceDescription> value = default(IList<ProvisioningServiceDescription>), string nextLink = default(string))
         {
             Value = value;
@@ -42,11 +45,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets list of provisioning service descriptions.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ProvisioningServiceDescription> Value { get; set; }
 
         /// <summary>
+        /// Gets the next link
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; private set; }

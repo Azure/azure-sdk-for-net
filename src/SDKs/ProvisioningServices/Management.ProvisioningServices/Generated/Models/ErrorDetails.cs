@@ -9,6 +9,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Error details.
+    /// </summary>
     public partial class ErrorDetails
     {
         /// <summary>
@@ -23,6 +26,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// Initializes a new instance of the ErrorDetails class.
         /// </summary>
         /// <param name="code">The error code.</param>
+        /// <param name="httpStatusCode">The HTTP status code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="details">The error details.</param>
         public ErrorDetails(string code = default(string), string httpStatusCode = default(string), string message = default(string), string details = default(string))
         {
             Code = code;
@@ -40,23 +46,26 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "Code")]
         public string Code { get; private set; }
 
         /// <summary>
+        /// Gets the HTTP status code.
         /// </summary>
-        [JsonProperty(PropertyName = "httpStatusCode")]
+        [JsonProperty(PropertyName = "HttpStatusCode")]
         public string HttpStatusCode { get; private set; }
 
         /// <summary>
+        /// Gets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "Message")]
+        public string Message { get; private set; }
 
         /// <summary>
+        /// Gets the error details.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public string Details { get; set; }
+        [JsonProperty(PropertyName = "Details")]
+        public string Details { get; private set; }
 
     }
 }

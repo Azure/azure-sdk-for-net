@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourcegroups/unitTestingDPSCreateUpdateInvalidName?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourcegroups/unitTestingDPSCreateUpdateInvalidName?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "dc8d2c84-1350-4a5e-9f7e-bc4144e7634a"
+          "91e3ee60-b326-4d07-83be-f38e2b630753"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/unitTestingDPSCreateUpdateInvalidName\",\r\n  \"name\": \"unitTestingDPSCreateUpdateInvalidName\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdateInvalidName\",\r\n  \"name\": \"unitTestingDPSCreateUpdateInvalidName\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "227"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 27 Nov 2017 22:48:55 GMT"
+          "Tue, 05 Dec 2017 23:33:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
+          "1198"
         ],
         "x-ms-request-id": [
-          "a2b9f8ae-8d8a-43bc-b542-65ed772f7340"
+          "4d07665d-4d8d-4562-9802-ecc2803bb764"
         ],
         "x-ms-correlation-request-id": [
-          "a2b9f8ae-8d8a-43bc-b542-65ed772f7340"
+          "4d07665d-4d8d-4562-9802-ecc2803bb764"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171127T224856Z:a2b9f8ae-8d8a-43bc-b542-65ed772f7340"
+          "WESTUS2:20171205T233352Z:4d07665d-4d8d-4562-9802-ecc2803bb764"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/91d12660-3dec-467a-be2a-213b5544ddc0/resourceGroups/unitTestingDPSCreateUpdateInvalidName/providers/Microsoft.Devices/provisioningServices/1%C3%B11unitTestingDPSCreateUpdateInvalidName!!!?api-version=2017-08-21-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTFkMTI2NjAtM2RlYy00NjdhLWJlMmEtMjEzYjU1NDRkZGMwL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWUvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL3Byb3Zpc2lvbmluZ1NlcnZpY2VzLzElQzMlQjExdW5pdFRlc3RpbmdEUFNDcmVhdGVVcGRhdGVJbnZhbGlkTmFtZSEhIT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdateInvalidName/providers/Microsoft.Devices/provisioningServices/1%C3%B11unitTestingDPSCreateUpdateInvalidName!!!?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWUvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL3Byb3Zpc2lvbmluZ1NlcnZpY2VzLzElQzMlQjExdW5pdFRlc3RpbmdEUFNDcmVhdGVVcGRhdGVJbnZhbGlkTmFtZSEhIT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
       "RequestHeaders": {
@@ -78,7 +78,7 @@
           "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"Code\": \"InvalidIotDpsName\",\r\n  \"HttpStatusCode\": \"BadRequest\",\r\n  \"Message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: c5df2f0a-7ee0-46d3-af3e-5240f7274bad, timestamp: 2017-11-27 22:48:58Z, errorcode: IH400305.\"\r\n}",
+      "ResponseBody": "{\r\n  \"Code\": \"InvalidIotDpsName\",\r\n  \"HttpStatusCode\": \"BadRequest\",\r\n  \"Message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: a4134123-9fd2-4dcd-ac8f-02251853ef79, timestamp: 2017-12-05 23:33:54Z, errorcode: IH400305.\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "408"
@@ -93,7 +93,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 27 Nov 2017 22:48:58 GMT"
+          "Tue, 05 Dec 2017 23:33:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,13 +105,13 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "eddef748-48a1-4151-a196-b514c462d4fb"
+          "c856a7e7-adfb-4d90-b144-f7afbd0a0313"
         ],
         "x-ms-correlation-request-id": [
-          "eddef748-48a1-4151-a196-b514c462d4fb"
+          "c856a7e7-adfb-4d90-b144-f7afbd0a0313"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171127T224858Z:eddef748-48a1-4151-a196-b514c462d4fb"
+          "WESTUS2:20171205T233355Z:c856a7e7-adfb-4d90-b144-f7afbd0a0313"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -122,6 +122,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "91d12660-3dec-467a-be2a-213b5544ddc0"
+    "SubscriptionId": "9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b"
   }
 }

@@ -25,27 +25,17 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the VerificationCodeResponse class.
         /// </summary>
-        /// <param name="verificationCode">Verification code.</param>
         /// <param name="name">Name of certificate.</param>
         /// <param name="etag">Request etag.</param>
-        /// <param name="subject">Certificate subject.</param>
-        /// <param name="expiry">Code expiry.</param>
-        /// <param name="thumbprint">Certificate thumbprint.</param>
-        /// <param name="isVerified">Indicate if the certificate is verified by
-        /// owner of private key.</param>
-        /// <param name="created">Certificate created time.</param>
-        /// <param name="updated">Certificate updated time.</param>
-        public VerificationCodeResponse(string verificationCode = default(string), string name = default(string), string etag = default(string), string subject = default(string), string expiry = default(string), string thumbprint = default(string), bool? isVerified = default(bool?), string created = default(string), string updated = default(string))
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="type">The resource type.</param>
+        public VerificationCodeResponse(string name = default(string), string etag = default(string), string id = default(string), string type = default(string), VerificationCodeResponseProperties properties = default(VerificationCodeResponseProperties))
         {
-            VerificationCode = verificationCode;
             Name = name;
             Etag = etag;
-            Subject = subject;
-            Expiry = expiry;
-            Thumbprint = thumbprint;
-            IsVerified = isVerified;
-            Created = created;
-            Updated = updated;
+            Id = id;
+            Type = type;
+            Properties = properties;
             CustomInit();
         }
 
@@ -55,59 +45,33 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets verification code.
-        /// </summary>
-        [JsonProperty(PropertyName = "verificationCode")]
-        public string VerificationCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of certificate.
+        /// Gets name of certificate.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets request etag.
+        /// Gets request etag.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets certificate subject.
+        /// Gets the resource identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "subject")]
-        public string Subject { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets code expiry.
+        /// Gets the resource type.
         /// </summary>
-        [JsonProperty(PropertyName = "expiry")]
-        public string Expiry { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets certificate thumbprint.
         /// </summary>
-        [JsonProperty(PropertyName = "thumbprint")]
-        public string Thumbprint { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicate if the certificate is verified by owner of
-        /// private key.
-        /// </summary>
-        [JsonProperty(PropertyName = "isVerified")]
-        public bool? IsVerified { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate created time.
-        /// </summary>
-        [JsonProperty(PropertyName = "created")]
-        public string Created { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificate updated time.
-        /// </summary>
-        [JsonProperty(PropertyName = "updated")]
-        public string Updated { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public VerificationCodeResponseProperties Properties { get; set; }
 
     }
 }

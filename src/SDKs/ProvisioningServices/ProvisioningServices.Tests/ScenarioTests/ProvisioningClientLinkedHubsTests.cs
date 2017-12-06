@@ -33,7 +33,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 testedService.Properties.IotHubs =
                     testedService.Properties.IotHubs ?? new List<IotHubDefinitionDescription>(1);
 
-                testedService.Properties.IotHubs.Add(new IotHubDefinitionDescription(connectionString, resourceGroup.Location));
+                testedService.Properties.IotHubs.Add(new IotHubDefinitionDescription(connectionString, resourceGroup.Location, name: testName));
                 var updatedInstance = 
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                     testedService);

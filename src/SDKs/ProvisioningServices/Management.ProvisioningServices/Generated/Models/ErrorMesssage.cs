@@ -25,6 +25,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <summary>
         /// Initializes a new instance of the ErrorMesssage class.
         /// </summary>
+        /// <param name="code">standard error code</param>
+        /// <param name="message">standard error description</param>
+        /// <param name="details">detailed summary of error</param>
         public ErrorMesssage(string code = default(string), string message = default(string), string details = default(string))
         {
             Code = code;
@@ -39,16 +42,19 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets standard error code
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
+        /// Gets or sets standard error description
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
+        /// Gets or sets detailed summary of error
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public string Details { get; set; }

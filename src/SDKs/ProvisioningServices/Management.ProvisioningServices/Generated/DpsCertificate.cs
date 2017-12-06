@@ -59,8 +59,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Name of the provisioning service the certificate is associated with.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the certificate. This is required to update an existing
-        /// certificate, and ignored while creating a brand new certificate.
+        /// ETag of the certificate.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -261,6 +260,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <param name='certificateDescription'>
         /// The certificate body.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate. This is required to update an existing
+        /// certificate, and ignored while creating a brand new certificate.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -282,7 +285,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -326,6 +329,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 tracingParameters.Add("provisioningServiceName", provisioningServiceName);
                 tracingParameters.Add("certificateName", certificateName);
                 tracingParameters.Add("certificateDescription", certificateDescription);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -351,6 +355,14 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
 
 
             if (customHeaders != null)
@@ -451,8 +463,17 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             return _result;
         }
 
+        /// <summary>
+        /// Delete the Provisioning Service Certificate.
+        /// </summary>
+        /// <remarks>
+        /// Deletes the specified certificate assosciated with the Provisioning Service
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// Resource group identifier.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate
         /// </param>
         /// <param name='provisioningServiceName'>
         /// The name of the provisioning service.
@@ -504,7 +525,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string ifMatch, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -513,6 +534,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (ifMatch == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             if (provisioningServiceName == null)
             {
@@ -534,6 +559,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("provisioningServiceName", provisioningServiceName);
                 tracingParameters.Add("certificateName", certificateName);
                 tracingParameters.Add("certificatename", certificatename);
@@ -601,6 +627,14 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
 
 
             if (customHeaders != null)
@@ -684,6 +718,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// The mandatory logical name of the certificate, that the provisioning
         /// service uses to access.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate. This is required to update an existing
+        /// certificate, and ignored while creating a brand new certificate.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// name of resource group.
         /// </param>
@@ -736,11 +774,15 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<VerificationCodeResponse>> GenerateVerificationCodeWithHttpMessagesAsync(string certificateName, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<VerificationCodeResponse>> GenerateVerificationCodeWithHttpMessagesAsync(string certificateName, string ifMatch, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (certificateName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (ifMatch == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             if (Client.SubscriptionId == null)
             {
@@ -766,6 +808,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("provisioningServiceName", provisioningServiceName);
                 tracingParameters.Add("certificatename", certificatename);
@@ -833,6 +876,14 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
 
 
             if (customHeaders != null)
@@ -928,13 +979,21 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         }
 
         /// <summary>
-        /// Verifies certificate for the provisioning service.
+        /// Verify certificate's private key possession.
         /// </summary>
+        /// <remarks>
+        /// Verifies the certificate's private key possession by providing the leaf
+        /// cert issued by the verifying pre uploaded certificate.
+        /// </remarks>
         /// <param name='certificateName'>
         /// The mandatory logical name of the certificate, that the provisioning
         /// service uses to access.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate.
+        /// </param>
         /// <param name='request'>
+        /// The name of the certificate
         /// </param>
         /// <param name='resourceGroupName'>
         /// Resource group name.
@@ -988,11 +1047,15 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<CertificateResponse>> VerifyCertificateWithHttpMessagesAsync(string certificateName, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<CertificateResponse>> VerifyCertificateWithHttpMessagesAsync(string certificateName, string ifMatch, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (certificateName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (ifMatch == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             if (request == null)
             {
@@ -1022,6 +1085,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("request", request);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("provisioningServiceName", provisioningServiceName);
@@ -1090,6 +1154,14 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
 
 
             if (customHeaders != null)

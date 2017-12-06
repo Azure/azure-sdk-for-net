@@ -6,6 +6,7 @@
 
 namespace Microsoft.Azure.Management.ProvisioningServices.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,13 +31,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// class.
         /// </summary>
         /// <param name="keyName">Name of the key.</param>
-        /// <param name="primaryKey">Primary SAS key value.</param>
-        /// <param name="secondaryKey">Secondary SAS key value.</param>
         /// <param name="rights">Rights that this key has. Possible values
         /// include: 'ServiceConfig', 'EnrollmentRead', 'EnrollmentWrite',
         /// 'DeviceConnect', 'RegistrationStatusRead',
         /// 'RegistrationStatusWrite'</param>
-        public SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName = default(string), string primaryKey = default(string), string secondaryKey = default(string), string rights = default(string))
+        /// <param name="primaryKey">Primary SAS key value.</param>
+        /// <param name="secondaryKey">Secondary SAS key value.</param>
+        public SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, string rights, string primaryKey = default(string), string secondaryKey = default(string))
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
@@ -77,5 +78,22 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         [JsonProperty(PropertyName = "rights")]
         public string Rights { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
+            }
+            if (Rights == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
+            }
+        }
     }
 }

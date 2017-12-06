@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get the non-security related metadata of the provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get the non-security related metadata of the provisioning service.
+        /// Get the metadata of the provisioning service without SAS keys.
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of the provisioning service to retrieve.
@@ -81,6 +81,45 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<ProvisioningServiceDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, ProvisioningServiceDescription iotDpsDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update an existing provisioning service's tags.
+        /// </summary>
+        /// <remarks>
+        /// Update an existing provisioning service's tags. to update other
+        /// fields use the CreateOrUpdate method
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Resource group identifier.
+        /// </param>
+        /// <param name='provisioningServiceName'>
+        /// Name of provisioning service to create or update.
+        /// </param>
+        /// <param name='provisioningServiceTags'>
+        /// Updated tag information to set into the provisioning service
+        /// instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<ProvisioningServiceDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete the Provisioning Service
+        /// </summary>
+        /// <remarks>
+        /// Deletes the Provisioning Service.
+        /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of provisioning service to delete.
         /// </param>
@@ -104,7 +143,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get all the provisioning services in a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all the provisioning services in a subscription.
+        /// List all the provisioning services for a given subscription id.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -183,7 +222,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get the list of valid SKUs for a provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get the list of valid SKUs for a provisioning service.
+        /// Gets the list of valid SKUs and tiers for a provisioning service.
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of provisioning service.
@@ -211,7 +250,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Check if a provisioning service name is available.
         /// </summary>
         /// <remarks>
-        /// Check if a provisioning service name is available.
+        /// Check if a provisioning service name is available. This will
+        /// validate if the name is syntactically valid and if the name is
+        /// usable
         /// </remarks>
         /// <param name='arguments'>
         /// Set the name parameter in the OperationInputs structure to the name
@@ -232,12 +273,12 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<NameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(OperationInputs arguments, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<NameAvailabilityInfo>> CheckProvisioningServiceNameAvailabilityWithHttpMessagesAsync(OperationInputs arguments, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the security metadata for a provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get the security metadata for a provisioning service.
+        /// List the primary and secondary keys for a provisioning service.
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// The provisioning service name to get the shared access keys for.
@@ -265,7 +306,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get a shared access policy by name from a provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get a shared access policy by name from a provisioning service.
+        /// List primary and secondary keys for a specific key name
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of the provisioning service.
@@ -292,6 +333,6 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> GetKeysForKeyNameWithHttpMessagesAsync(string provisioningServiceName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> ListKeysForKeyNameWithHttpMessagesAsync(string provisioningServiceName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

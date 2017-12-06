@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get the non-security related metadata of the provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get the non-security related metadata of the provisioning service.
+        /// Get the metadata of the provisioning service without SAS keys.
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of the provisioning service to retrieve.
@@ -441,6 +441,198 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             return _result;
         }
 
+        /// <summary>
+        /// Update an existing provisioning service's tags.
+        /// </summary>
+        /// <remarks>
+        /// Update an existing provisioning service's tags. to update other fields use
+        /// the CreateOrUpdate method
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Resource group identifier.
+        /// </param>
+        /// <param name='provisioningServiceName'>
+        /// Name of provisioning service to create or update.
+        /// </param>
+        /// <param name='provisioningServiceTags'>
+        /// Updated tag information to set into the provisioning service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<ProvisioningServiceDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "provisioningServiceName");
+            }
+            if (provisioningServiceTags == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "provisioningServiceTags");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("provisioningServiceName", provisioningServiceName);
+                tracingParameters.Add("provisioningServiceTags", provisioningServiceTags);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{provisioningServiceName}", System.Uri.EscapeDataString(provisioningServiceName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(provisioningServiceTags != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(provisioningServiceTags, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<ProvisioningServiceDescription>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProvisioningServiceDescription>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Delete the Provisioning Service
+        /// </summary>
+        /// <remarks>
+        /// Deletes the Provisioning Service.
+        /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of provisioning service to delete.
         /// </param>
@@ -552,7 +744,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 200 && (int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204 && (int)_statusCode != 404)
             {
                 var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -596,7 +788,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get all the provisioning services in a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all the provisioning services in a subscription.
+        /// List all the provisioning services for a given subscription id.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1121,7 +1313,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get the list of valid SKUs for a provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get the list of valid SKUs for a provisioning service.
+        /// Gets the list of valid SKUs and tiers for a provisioning service.
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of provisioning service.
@@ -1299,7 +1491,8 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Check if a provisioning service name is available.
         /// </summary>
         /// <remarks>
-        /// Check if a provisioning service name is available.
+        /// Check if a provisioning service name is available. This will validate if
+        /// the name is syntactically valid and if the name is usable
         /// </remarks>
         /// <param name='arguments'>
         /// Set the name parameter in the OperationInputs structure to the name of the
@@ -1326,7 +1519,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<NameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(OperationInputs arguments, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<NameAvailabilityInfo>> CheckProvisioningServiceNameAvailabilityWithHttpMessagesAsync(OperationInputs arguments, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1353,7 +1546,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("arguments", arguments);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CheckProvisioningServiceNameAvailability", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -1478,7 +1671,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get the security metadata for a provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get the security metadata for a provisioning service.
+        /// List the primary and secondary keys for a provisioning service.
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// The provisioning service name to get the shared access keys for.
@@ -1656,7 +1849,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// Get a shared access policy by name from a provisioning service.
         /// </summary>
         /// <remarks>
-        /// Get a shared access policy by name from a provisioning service.
+        /// List primary and secondary keys for a specific key name
         /// </remarks>
         /// <param name='provisioningServiceName'>
         /// Name of the provisioning service.
@@ -1688,7 +1881,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> GetKeysForKeyNameWithHttpMessagesAsync(string provisioningServiceName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> ListKeysForKeyNameWithHttpMessagesAsync(string provisioningServiceName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (provisioningServiceName == null)
             {
@@ -1721,7 +1914,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
                 tracingParameters.Add("keyName", keyName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetKeysForKeyName", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListKeysForKeyName", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

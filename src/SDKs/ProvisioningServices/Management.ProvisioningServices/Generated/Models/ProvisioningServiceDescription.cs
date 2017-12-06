@@ -31,6 +31,9 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// class.
         /// </summary>
         /// <param name="location">The resource location.</param>
+        /// <param name="properties">Service specific properties for a
+        /// provisioning service</param>
+        /// <param name="sku">Sku info for a provisioning Service.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
@@ -38,7 +41,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <param name="etag">The Etag field is *not* required. If it is
         /// provided in the response body, it must also be provided as a header
         /// per the normal ETag convention.</param>
-        public ProvisioningServiceDescription(string location, IotDpsSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotDpsPropertiesDescription properties = default(IotDpsPropertiesDescription))
+        public ProvisioningServiceDescription(string location, IotDpsPropertiesDescription properties, IotDpsSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
@@ -61,11 +64,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         public string Etag { get; set; }
 
         /// <summary>
+        /// Gets or sets service specific properties for a provisioning service
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IotDpsPropertiesDescription Properties { get; set; }
 
         /// <summary>
+        /// Gets or sets sku info for a provisioning Service.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public IotDpsSkuInfo Sku { get; set; }
@@ -79,6 +84,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         public override void Validate()
         {
             base.Validate();
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");

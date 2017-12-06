@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// Initializes a new instance of the IotDpsSkuDefinitionListResult
         /// class.
         /// </summary>
+        /// <param name="value">The list of SKU's</param>
+        /// <param name="nextLink">The next link.</param>
         public IotDpsSkuDefinitionListResult(IList<IotDpsSkuDefinition> value = default(IList<IotDpsSkuDefinition>), string nextLink = default(string))
         {
             Value = value;
@@ -42,11 +44,13 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the list of SKU's
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<IotDpsSkuDefinition> Value { get; set; }
 
         /// <summary>
+        /// Gets the next link.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; private set; }

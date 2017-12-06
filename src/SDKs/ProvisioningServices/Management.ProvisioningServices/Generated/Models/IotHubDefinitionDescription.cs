@@ -31,6 +31,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         /// <param name="connectionString">Connection string og the IoT
         /// hub.</param>
         /// <param name="location">ARM region of the IoT hub.</param>
+        /// <param name="applyAllocationPolicy">flag for applying
+        /// allocationPolicy or not for a given iot hub.</param>
+        /// <param name="allocationWeight">weight to apply for a given iot
+        /// h.</param>
         /// <param name="name">Host name of the IoT hub.</param>
         public IotHubDefinitionDescription(string connectionString, string location, bool? applyAllocationPolicy = default(bool?), int? allocationWeight = default(int?), string name = default(string))
         {
@@ -48,11 +52,14 @@ namespace Microsoft.Azure.Management.ProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets flag for applying allocationPolicy or not for a given
+        /// iot hub.
         /// </summary>
         [JsonProperty(PropertyName = "applyAllocationPolicy")]
         public bool? ApplyAllocationPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets weight to apply for a given iot h.
         /// </summary>
         [JsonProperty(PropertyName = "allocationWeight")]
         public int? AllocationWeight { get; set; }

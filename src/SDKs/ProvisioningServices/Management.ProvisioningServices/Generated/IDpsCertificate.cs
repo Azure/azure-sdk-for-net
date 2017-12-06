@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// with.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the certificate. This is required to update an existing
-        /// certificate, and ignored while creating a brand new certificate.
+        /// ETag of the certificate.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -69,6 +68,10 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <param name='certificateDescription'>
         /// The certificate body.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate. This is required to update an existing
+        /// certificate, and ignored while creating a brand new certificate.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -84,9 +87,19 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete the Provisioning Service Certificate.
+        /// </summary>
+        /// <remarks>
+        /// Deletes the specified certificate assosciated with the Provisioning
+        /// Service
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// Resource group identifier.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate
         /// </param>
         /// <param name='provisioningServiceName'>
         /// The name of the provisioning service.
@@ -134,13 +147,17 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string ifMatch, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Generate verification code for Proof of Possession.
         /// </summary>
         /// <param name='certificateName'>
         /// The mandatory logical name of the certificate, that the
         /// provisioning service uses to access.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate. This is required to update an existing
+        /// certificate, and ignored while creating a brand new certificate.
         /// </param>
         /// <param name='resourceGroupName'>
         /// name of resource group.
@@ -189,15 +206,23 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<VerificationCodeResponse>> GenerateVerificationCodeWithHttpMessagesAsync(string certificateName, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<VerificationCodeResponse>> GenerateVerificationCodeWithHttpMessagesAsync(string certificateName, string ifMatch, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Verifies certificate for the provisioning service.
+        /// Verify certificate's private key possession.
         /// </summary>
+        /// <remarks>
+        /// Verifies the certificate's private key possession by providing the
+        /// leaf cert issued by the verifying pre uploaded certificate.
+        /// </remarks>
         /// <param name='certificateName'>
         /// The mandatory logical name of the certificate, that the
         /// provisioning service uses to access.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the certificate.
+        /// </param>
         /// <param name='request'>
+        /// The name of the certificate
         /// </param>
         /// <param name='resourceGroupName'>
         /// Resource group name.
@@ -246,6 +271,6 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateResponse>> VerifyCertificateWithHttpMessagesAsync(string certificateName, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<CertificateResponse>> VerifyCertificateWithHttpMessagesAsync(string certificateName, string ifMatch, VerificationCodeRequest request, string resourceGroupName, string provisioningServiceName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

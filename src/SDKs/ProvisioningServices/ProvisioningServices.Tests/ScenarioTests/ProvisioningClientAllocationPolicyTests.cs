@@ -38,9 +38,6 @@ namespace ProvisioningServices.Tests.ScenarioTests
 
                 testedService.Properties.AllocationPolicy = newAllocationPolicy;
 
-                //Allow DPS creation to complete
-                System.Threading.Thread.Sleep(500);
-
                 var updatedInstance =
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                         testedService);
