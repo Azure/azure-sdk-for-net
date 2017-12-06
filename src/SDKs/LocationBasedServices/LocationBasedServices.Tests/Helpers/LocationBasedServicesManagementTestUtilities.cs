@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.LocationServices;
-using Microsoft.Azure.Management.LocationServices.Models;
+using Microsoft.Azure.Management.LocationBasedServices;
+using Microsoft.Azure.Management.LocationBasedServices.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest;
@@ -47,7 +47,7 @@ namespace LocationBasedServices.Tests.Helpers
             }
         }
 
-        public static Microsoft.Azure.Management.LocationServices.Client GetLocationBasedServicesManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static Microsoft.Azure.Management.LocationBasedServices.Client GetLocationBasedServicesManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             Client locationBasedServicesClient;
             if (IsTestTenant)
@@ -59,7 +59,7 @@ namespace LocationBasedServices.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                locationBasedServicesClient = context.GetServiceClient<Microsoft.Azure.Management.LocationServices.Client>(handlers: handler);
+                locationBasedServicesClient = context.GetServiceClient<Microsoft.Azure.Management.LocationBasedServices.Client>(handlers: handler);
             }
             return locationBasedServicesClient;
         }
@@ -69,17 +69,17 @@ namespace LocationBasedServices.Tests.Helpers
             return Handler;
         }
 
-        public static LocationServicesAccountCreateParameters GetDefaultLocationBasedServicesAccountParameters()
+        public static LocationBasedServicesAccountCreateParameters GetDefaultLocationBasedServicesAccountParameters()
         {
-            LocationServicesAccountCreateParameters account = new LocationServicesAccountCreateParameters
-                                                              {
-                                                                  Location = DefaultLocation,
-                                                                  Tags = DefaultTags,
-                                                                  Sku = new Microsoft.Azure.Management.LocationServices.Models.Sku()
-                                                                        {
-                                                                            Name = DefaultSkuName
-                                                                        }
-                                                              };
+            LocationBasedServicesAccountCreateParameters account = new LocationBasedServicesAccountCreateParameters
+                                                                   {
+                                                                       Location = DefaultLocation,
+                                                                       Tags = DefaultTags,
+                                                                       Sku = new Microsoft.Azure.Management.LocationBasedServices.Models.Sku()
+                                                                             {
+                                                                                 Name = DefaultSkuName
+                                                                             }
+                                                                   };
 
             return account;
         }
@@ -102,10 +102,10 @@ namespace LocationBasedServices.Tests.Helpers
             return rgname;
         }
 
-        public static string CreateDefaultLocationBasedServicesAccount(Microsoft.Azure.Management.LocationServices.Client locationBasedServicesManagementClient, string rgname)
+        public static string CreateDefaultLocationBasedServicesAccount(Microsoft.Azure.Management.LocationBasedServices.Client locationBasedServicesManagementClient, string rgname)
         {
             string accountName = TestUtilities.GenerateName("lbs");
-            LocationServicesAccountCreateParameters parameters = GetDefaultLocationBasedServicesAccountParameters();
+            LocationBasedServicesAccountCreateParameters parameters = GetDefaultLocationBasedServicesAccountParameters();
             var newAccount = locationBasedServicesManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
             VerifyAccountProperties(newAccount, true);
 
@@ -129,7 +129,7 @@ namespace LocationBasedServices.Tests.Helpers
         //    return account;
         //}
 
-        public static void VerifyAccountProperties(LocationServicesAccount account, bool useDefaults, string skuName = DefaultSkuName, string location = "global")
+        public static void VerifyAccountProperties(LocationBasedServicesAccount account, bool useDefaults, string skuName = DefaultSkuName, string location = "global")
         {
             Assert.NotNull(account); // verifies that the account is actually created
             Assert.NotNull(account.Id);
@@ -146,8 +146,8 @@ namespace LocationBasedServices.Tests.Helpers
                 
                 Assert.NotNull(account.Tags);
                 Assert.Equal(2, account.Tags.Count);
-                Assert.Equal(account.Tags["key1"], "value1");
-                Assert.Equal(account.Tags["key2"], "value2");
+                Assert.Equal("value1", account.Tags["key1"]);
+                Assert.Equal("value2", account.Tags["key2"]);
             }
             else
             {

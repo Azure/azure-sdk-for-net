@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using LocationBasedServices.Tests.Helpers;
-using Microsoft.Azure.Management.LocationServices;
-using Microsoft.Azure.Management.LocationServices.Models;
+using Microsoft.Azure.Management.LocationBasedServices;
+using Microsoft.Azure.Management.LocationBasedServices.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
@@ -22,7 +22,7 @@ namespace LocationBasedServicesServices.Tests
 
     public class LocationBasedServicesServicesAccountTests
     {
-        private const string c_resourceNamespace = "Microsoft.LocationServices";
+        private const string c_resourceNamespace = "Microsoft.LocationBasedServices";
         private const string c_resourceType = "accounts";
 
         [Fact]
@@ -88,8 +88,8 @@ namespace LocationBasedServicesServices.Tests
                 LocationBasedServicesManagementTestUtilities.VerifyAccountProperties(updatedAccount, false);
                 Assert.NotNull(updatedAccount.Tags);
                 Assert.Equal(2, updatedAccount.Tags.Count);
-                Assert.Equal(updatedAccount.Tags["key3"], "value3");
-                Assert.Equal(updatedAccount.Tags["key4"], "value4");
+                Assert.Equal("value3", updatedAccount.Tags["key3"]);
+                Assert.Equal("value4", updatedAccount.Tags["key4"]);
             }
         }
 
@@ -237,7 +237,7 @@ namespace LocationBasedServicesServices.Tests
                 // Regenerate keys and verify that keys change
                 var regenKeys = locationBasedServicesManagementClient.Accounts.RegenerateKeys(rgname,
                                                                                               accountName,
-                                                                                              new LocationServicesKeySpecification("secondary"));
+                                                                                              new LocationBasedServicesKeySpecification("secondary"));
                 var key2Regen = regenKeys.SecondaryKey;
                 Assert.NotNull(key2Regen);
 

@@ -13,10 +13,13 @@
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.CognitiveServices" Version="0.3.0-preview" />-->
-    <ProjectReference Include="..\Management.LocationBasedServices\Microsoft.Azure.Management.LocationBasedServices.csproj" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     
     <PackageReference Include="System.Runtime" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.LocationBasedServices\Microsoft.Azure.Management.LocationBasedServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>
