@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             IsFxNetCore = IsExpectedFxCategory(fxMoniker, TargetFxCategory.NetCore);
         }
 
-        public SdkProjectMetaData(string fullProjectPath, TargetFrameworkMoniker priorityFxVersion)
+        public SdkProjectMetaData(string fullProjectPath, TargetFrameworkMoniker priorityFxVersion = TargetFrameworkMoniker.net452)
         {
             if(!string.IsNullOrEmpty(fullProjectPath))
             {
@@ -92,6 +92,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     FxMoniker = GetTargetFramework(MsBuildProject, priorityFxVersion);
                     FxMonikerString = GetFxMonikerString(priorityFxVersion);
                     ProjectTaskItem = new Microsoft.Build.Utilities.TaskItem(fullProjectPath);
+                    FullProjectPath = fullProjectPath;
                     TargetOutputFullPath = GetTargetFullPath(MsBuildProject, FxMonikerString);                    
                     ProjectType = GetProjectType(MsBuildProject);
                     IsTargetFxSupported = IsFxSupported(FxMonikerString);

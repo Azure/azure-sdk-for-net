@@ -19,6 +19,7 @@
     {
 
         #region Required Properties
+        public bool EnableDebugTrace { get; set; }
         protected override INetSdkTask TaskInstance { get => this; }
 
         public override string NetSdkTaskName => "PreBuildTask";
@@ -27,22 +28,45 @@
 
         public ITaskItem[] SdkProjects { get; set; }
 
+        public bool IdeBuild { get; set; }
+
         [Output]
         public string ApiTagPropsFile { get; set; }
         #endregion
 
+        public PreBuildTask()
+        {
+            DebugTrace = EnableDebugTrace;
+        }
         public override bool Execute()
         {
+            TaskLogger.LogDebugInfo("Executing PreBuildTask");
             if (CreatePropsFile == true)
             {
                 List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
-                TaskLogger.LogInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
+                
+                SdkProjectMetaData metaProject = null;
 
-                if (filteredProjects.Count > 0)
+                if (filteredProjects.Count <= 0)
                 {
-                    if (!filteredProjects.First<SdkProjectMetaData>().IsProjectDataPlane)
+                    foreach (ITaskItem item in SdkProjects)
                     {
-                        if (GetApiTagsPropsPath(filteredProjects[0], out string propFilePath, out string slnDirPath))
+                        metaProject = new SdkProjectMetaData(item.ItemSpec);
+                        if (metaProject != null) break;
+                    }
+                }
+                else if (filteredProjects.Count > 0)
+                {
+                    TaskLogger.LogDebugInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
+                    metaProject = filteredProjects.First<SdkProjectMetaData>();
+                }
+
+                if (metaProject.IsProjectDataPlane == false)
+                {
+                    if (metaProject.ProjectType != SdkProjctType.Test)
+                    {
+                        TaskLogger.LogDebugInfo("Filtered project(s) is '{0}'", metaProject.FullProjectPath);
+                        if (GetApiTagsPropsPath(metaProject, out string propFilePath, out string slnDirPath))
                         {
                             if (string.IsNullOrEmpty(propFilePath))
                             {
@@ -59,6 +83,7 @@
                     }
                 }
             }
+
 
             return true;
         }

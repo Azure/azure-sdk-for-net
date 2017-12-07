@@ -169,7 +169,7 @@ namespace Build.Tasks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Enable way to bypass based on target framework within the task")]
         public void SkipNetCoreTargets()
         {
             string scope = @"SDKs\Compute";

@@ -133,6 +133,13 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
             }
         }
 
+        public void LogDebugInfo<T>(IEnumerable<T> infoToLog, Func<T, string> logDelegate)
+        {
+            foreach (var info in infoToLog)
+            {
+                LogDebugInfo(logDelegate(info));
+            }
+        }
         public void LogDebugInfo(IEnumerable<Tuple<string, string>> tupCol)
         {
             string logFormat = "Tuple:{0}_{1}";

@@ -29,23 +29,23 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
         public static List<SdkProjectMetaData> FilterCategorizedProjects(ITaskItem[] filterProjectOn, bool filterSdkProjectsOnly = true)
         {
             IEnumerable<SdkProjectMetaData> filteredNetFxFull;
-            //IEnumerable<SdkProjectMetaData> distinctList = new List<SdkProjectMetaData>();
-            //if (filterProjectOn.Any<ITaskItem>())
-            //{
-            var filtered = CategorizedProjects.Where((cat) => filterProjectOn.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
-
-            if (filterSdkProjectsOnly == true)
+            IEnumerable<SdkProjectMetaData> distinctList = new List<SdkProjectMetaData>();
+            if (CategorizedProjects != null)
             {
-                filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452) && (f.ProjectType == SdkProjctType.Sdk));
-            }
-            else
-            {
-                filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452));
-            }
+                var filtered = CategorizedProjects.Where((cat) => filterProjectOn.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
 
-            var distinctList = filteredNetFxFull.Distinct<SdkProjectMetaData>(new ObjectComparer<SdkProjectMetaData>((l, r) => l.FullProjectPath.Equals(r.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+                if (filterSdkProjectsOnly == true)
+                {
+                    filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452) && (f.ProjectType == SdkProjctType.Sdk));
+                }
+                else
+                {
+                    filteredNetFxFull = filtered.Where((f) => f.FxMoniker.Equals(TargetFrameworkMoniker.net452));
+                }
 
-            //}
+                distinctList = filteredNetFxFull.Distinct<SdkProjectMetaData>(new ObjectComparer<SdkProjectMetaData>((l, r) => l.FullProjectPath.Equals(r.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+
+            }
 
             return distinctList?.ToList<SdkProjectMetaData>();
         }
