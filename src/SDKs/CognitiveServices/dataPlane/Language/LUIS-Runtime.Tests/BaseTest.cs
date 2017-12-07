@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.CognitiveServices.LUIS.Tests
+namespace LUIS.Tests
 {
     using System;
     using System.Net.Http;
