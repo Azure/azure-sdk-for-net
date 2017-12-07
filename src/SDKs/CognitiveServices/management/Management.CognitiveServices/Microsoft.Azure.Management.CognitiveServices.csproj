@@ -9,7 +9,10 @@
 		<Version>2.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Microsoft Azure Cognitive Services management;Cognitive Services;Cognitive Services management</PackageTags>
-		<PackageReleaseNotes />
+    <PackageReleaseNotes>
+      * Regenerate the SDK by the latest version of AutoRest and Cognitive Services Management Swagger file.
+      * ProvisioningState is changed to a set of constant strings from an enum.
+    </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
