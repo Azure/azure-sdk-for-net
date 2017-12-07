@@ -68,7 +68,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="autoUpdate">Whether Self-hosted integration runtime
         /// auto update has been turned on. Possible values include: 'On',
         /// 'Off'</param>
-        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string))
+        /// <param name="versionStatus">Status of the integration runtime
+        /// version.</param>
+        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string))
             : base(additionalProperties, state)
         {
             CreateTime = createTime;
@@ -82,6 +84,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Capabilities = capabilities;
             ServiceUrls = serviceUrls;
             AutoUpdate = autoUpdate;
+            VersionStatus = versionStatus;
             CustomInit();
         }
 
@@ -164,6 +167,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.autoUpdate")]
         public string AutoUpdate { get; private set; }
+
+        /// <summary>
+        /// Gets status of the integration runtime version.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.versionStatus")]
+        public string VersionStatus { get; private set; }
 
     }
 }

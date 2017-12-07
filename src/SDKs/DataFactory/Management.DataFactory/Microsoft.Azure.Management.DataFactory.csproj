@@ -6,12 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
 		<Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-		<Version>0.2.1-preview</Version>
+		<Version>0.3.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is the initial preview offering for Azure Data Factory V2.  
+        In this release we added 29+ new connectors for ADF Copy activity and Tumbling Window trigger.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

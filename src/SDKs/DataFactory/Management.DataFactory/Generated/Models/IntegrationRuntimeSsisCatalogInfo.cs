@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -100,11 +101,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (CatalogAdminUserName != null)
+            {
+                if (CatalogAdminUserName.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CatalogAdminUserName", 128);
+                }
+                if (CatalogAdminUserName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "CatalogAdminUserName", 1);
+                }
+            }
             if (CatalogAdminPassword != null)
             {
                 CatalogAdminPassword.Validate();
