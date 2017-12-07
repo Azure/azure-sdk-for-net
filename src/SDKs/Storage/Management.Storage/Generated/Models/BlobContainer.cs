@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// TODO
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BlobContainer : BlobResource
+    public partial class BlobContainer : BlobResourceWithEtag
     {
         /// <summary>
         /// Initializes a new instance of the BlobContainer class.
@@ -48,11 +48,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="metadata">TODO</param>
         /// <param name="immutabilityPolicy">TODO</param>
         /// <param name="legalHold">TODO</param>
-        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), PublicAccess? publicAccess = default(PublicAccess?), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold))
-            : base(id, name, type)
+        public BlobContainer(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold))
+            : base(id, name, type, etag)
         {
             PublicAccess = publicAccess;
-            Etag = etag;
             LastModifiedTime = lastModifiedTime;
             LeaseStatus = leaseStatus;
             LeaseState = leaseState;
@@ -73,11 +72,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicAccess")]
         public PublicAccess? PublicAccess { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.etag")]
-        public string Etag { get; private set; }
 
         /// <summary>
         /// </summary>

@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -46,7 +44,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// the default version to use for requests to the Blob service if an
         /// incoming request’s version is not specified. Possible values
         /// include version 2008-10-27 and all more recent versions.</param>
-        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string))
+        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRule cors = default(CorsRule), string defaultServiceVersion = default(string))
             : base(id, name, type)
         {
             Cors = cors;
@@ -65,8 +63,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// elements are included in the request body, all CORS rules will be
         /// deleted, and CORS will be disabled for the Blob service.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.cors")]
-        public IList<CorsRule> Cors { get; set; }
+        [JsonProperty(PropertyName = "properties.Cors")]
+        public CorsRule Cors { get; set; }
 
         /// <summary>
         /// Gets or sets defaultServiceVersion indicates the default version to
@@ -74,7 +72,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// version is not specified. Possible values include version
         /// 2008-10-27 and all more recent versions.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.defaultServiceVersion")]
+        [JsonProperty(PropertyName = "properties.DefaultServiceVersion")]
         public string DefaultServiceVersion { get; set; }
 
     }

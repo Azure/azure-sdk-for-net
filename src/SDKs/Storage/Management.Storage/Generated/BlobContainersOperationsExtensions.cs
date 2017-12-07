@@ -605,7 +605,7 @@ namespace Microsoft.Azure.Management.Storage
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            public static ImmutabilityPolicy GetImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch)
+            public static ImmutabilityPolicy GetImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch = default(string))
             {
                 return operations.GetImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch).GetAwaiter().GetResult();
             }
@@ -639,7 +639,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImmutabilityPolicy> GetImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImmutabilityPolicy> GetImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -22,6 +22,10 @@ using Microsoft.Azure.Test.HttpRecorder;
 using System.Net.Http;
 using Microsoft.Azure.KeyVault.WebKey;
 
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+
 namespace Storage.Tests
 {
     public class BlobServiceTests
@@ -139,23 +143,23 @@ namespace Storage.Tests
 
                     // set properties.
                     blobServiceProperties.DefaultServiceVersion = "2017-04-17";
-                    //blobServiceProperties.Cors = new List<CorsRule>{new CorsRule{
-                    //    AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
-                    //    AllowedMethods = HTTPMethod.GET,
-                    //    MaxAgeInSeconds = 500,
-                    //    ExposedHeaders = new List<string>(){
-                    //        "x-ms-meta-data*",
-                    //        "x-ms-meta-source*",
-                    //        "x-ms-meta-abc",
-                    //        "x-ms-meta-bcd"
-                    //    },
-                    //    AllowedHeaders = new List<string>() {
-                    //        "x-ms-meta-data*",
-                    //        "x-ms-meta-target*",
-                    //        "x-ms-meta-xyz",
-                    //        "x-ms-meta-foo"
-                    //    }
-                    //}};
+                    blobServiceProperties.Cors = new CorsRule{
+                        AllowedOrigins = new List<string>() { "www.ab.com", "www.bc.com" },
+                        AllowedMethods = HTTPMethod.GET,
+                        MaxAgeInSeconds = 500,
+                        ExposedHeaders = new List<string>(){
+                            "x-ms-meta-data*",
+                            "x-ms-meta-source*",
+                            "x-ms-meta-abc",
+                            "x-ms-meta-bcd"
+                        },
+                        AllowedHeaders = new List<string>() {
+                            "x-ms-meta-data*",
+                            "x-ms-meta-target*",
+                            "x-ms-meta-xyz",
+                            "x-ms-meta-foo"
+                        }
+                    };
                     storageMgmtClient.BlobService.SetServiceProperties(rgName, accountName, blobServiceProperties.Cors, blobServiceProperties.DefaultServiceVersion);
 
                     // veryfy properties.
@@ -165,12 +169,11 @@ namespace Storage.Tests
                     Assert.Equal(blobServiceProperties.Type, blobServicePropertiesSet.Type);
 
                     Assert.Equal("2017-04-17", blobServicePropertiesSet.DefaultServiceVersion);
-                    Assert.Equal(1, blobServicePropertiesSet.Cors.Count);
-                    Assert.Equal(2, blobServicePropertiesSet.Cors[0].AllowedOrigins.Count);
-                    Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors[0].AllowedMethods);
-                    Assert.Equal(4, blobServicePropertiesSet.Cors[0].ExposedHeaders.Count);
-                    Assert.Equal(4, blobServicePropertiesSet.Cors[0].AllowedHeaders.Count);
-                    Assert.Equal(500, blobServicePropertiesSet.Cors[0].MaxAgeInSeconds);
+                    Assert.Equal(2, blobServicePropertiesSet.Cors.AllowedOrigins.Count);
+                    Assert.Equal(HTTPMethod.GET, blobServicePropertiesSet.Cors.AllowedMethods);
+                    Assert.Equal(4, blobServicePropertiesSet.Cors.ExposedHeaders.Count);
+                    Assert.Equal(4, blobServicePropertiesSet.Cors.AllowedHeaders.Count);
+                    Assert.Equal(500, blobServicePropertiesSet.Cors.MaxAgeInSeconds);
                 }
                 finally
                 {
@@ -262,7 +265,12 @@ namespace Storage.Tests
                     Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
                     Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
 
+                    var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
+                    var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName);
+                    container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
+
                     var blobContainerGet = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
+                    Assert.Equal(Microsoft.Azure.Management.Storage.Models.LeaseDuration.Fixed, blobContainerGet.LeaseDuration);
                     Assert.Equal(blobContainerSet.PublicAccess, blobContainerGet.PublicAccess);
                     Assert.Equal(blobContainerSet.Metadata, blobContainerGet.Metadata);
                 }
@@ -313,9 +321,13 @@ namespace Storage.Tests
                     Assert.Equal(blobContainer.PublicAccess, blobContainerSet.PublicAccess);
 
                     string containerName2 = TestUtilities.GenerateName("container");
-                    BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName1);
+                    BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName2);
                     Assert.Null(blobContainer2.Metadata);
                     Assert.Null(blobContainer2.PublicAccess);
+
+                    var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
+                    var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName2);
+                    container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
                     var containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
                 }
@@ -408,7 +420,7 @@ namespace Storage.Tests
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.DeleteImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"");
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.DeleteImmutabilityPolicy(rgName, accountName, containerName, ifMatch:immutabilityPolicy.Etag);
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -459,14 +471,14 @@ namespace Storage.Tests
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 5);
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, immutabilityPeriodSinceCreationInDays: 5);
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(5, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.GetImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"");
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.GetImmutabilityPolicy(rgName, accountName, containerName);
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
@@ -518,12 +530,14 @@ namespace Storage.Tests
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.LockImmutabilityPolicy(rgName, accountName, containerName, ifMatch: "");
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.LockImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag);
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
+
+                    storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
                 }
                 finally
                 {
@@ -569,19 +583,21 @@ namespace Storage.Tests
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.LockImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"");
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.LockImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag);
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
 
-                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch:"", immutabilityPeriodSinceCreationInDays: 100);
+                    immutabilityPolicy = storageMgmtClient.BlobContainers.ExtendImmutabilityPolicy(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Etag, immutabilityPeriodSinceCreationInDays: 100);
                     Assert.NotNull(immutabilityPolicy.Id);
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(100, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
                     Assert.Equal(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
+
+                    storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
                 }
                 finally
                 {

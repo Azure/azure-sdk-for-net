@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// TODO
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ImmutabilityPolicy : BlobResource
+    public partial class ImmutabilityPolicy : BlobResourceWithEtag
     {
         /// <summary>
         /// Initializes a new instance of the ImmutabilityPolicy class.
@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="type">Resource type</param>
         /// <param name="state">TODO. Possible values include: 'Locked',
         /// 'Unlocked'</param>
-        public ImmutabilityPolicy(int immutabilityPeriodSinceCreationInDays, string id = default(string), string name = default(string), string type = default(string), ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
-            : base(id, name, type)
+        public ImmutabilityPolicy(int immutabilityPeriodSinceCreationInDays, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
+            : base(id, name, type, etag)
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;

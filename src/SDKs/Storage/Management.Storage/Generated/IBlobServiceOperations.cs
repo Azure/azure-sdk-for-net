@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRule cors = default(CorsRule), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the properties of a storage account’s Blob service, including
         /// properties for Storage Analytics and CORS (Cross-Origin Resource

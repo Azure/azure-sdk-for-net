@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRule cors = default(CorsRule), string defaultServiceVersion = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

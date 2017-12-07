@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -51,7 +49,7 @@ namespace Microsoft.Azure.Management.Storage
             /// the Blob service if an incoming request’s version is not specified.
             /// Possible values include version 2008-10-27 and all more recent versions.
             /// </param>
-            public static void SetServiceProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string))
+            public static void SetServiceProperties(this IBlobServiceOperations operations, string resourceGroupName, string accountName, CorsRule cors = default(CorsRule), string defaultServiceVersion = default(string))
             {
                 operations.SetServicePropertiesAsync(resourceGroupName, accountName, cors, defaultServiceVersion).GetAwaiter().GetResult();
             }
@@ -87,7 +85,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetServicePropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, IList<CorsRule> cors = default(IList<CorsRule>), string defaultServiceVersion = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SetServicePropertiesAsync(this IBlobServiceOperations operations, string resourceGroupName, string accountName, CorsRule cors = default(CorsRule), string defaultServiceVersion = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, cors, defaultServiceVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
