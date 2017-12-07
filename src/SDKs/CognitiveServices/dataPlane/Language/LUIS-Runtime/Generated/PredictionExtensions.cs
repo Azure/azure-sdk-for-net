@@ -20,70 +20,42 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
     public static partial class PredictionExtensions
     {
             /// <summary>
-            /// Gets the published endpoint predictions for the given query.
+            /// Gets predictions for a given utterance, in the form of intents and
+            /// entities. The current maximum query size is 500 characters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='appId'>
-            /// Format - guid. The application ID.
+            /// The LUIS application ID (Guid).
             /// </param>
-            /// <param name='q'>
-            /// The query to predict.
-            /// </param>
-            /// <param name='timezoneOffset'>
-            /// The timezone offset for the location of the request.
-            /// </param>
-            /// <param name='verbose'>
-            /// If true will return all intents instead of just the topscoring intent.
-            /// </param>
-            /// <param name='spellCheck'>
-            /// Enable spell checking.
-            /// </param>
-            /// <param name='staging'>
-            /// Use staging endpoint.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<LuisResult> GetPredictionsFromEndpointViaGetAsync(this IPrediction operations, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(appId, q, timezoneOffset, verbose, spellCheck, staging, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the published endpoint prediction for the given long query.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appId'>
-            /// Format - guid. The application ID.
-            /// </param>
-            /// <param name='q'>
-            /// The query to predict.
+            /// <param name='query'>
+            /// The utterance to predict.
             /// </param>
             /// <param name='timezoneOffset'>
             /// The timezone offset for the location of the request.
             /// </param>
             /// <param name='verbose'>
-            /// If true will return all intents instead of just the topscoring intent.
+            /// If true, return all intents instead of just the top scoring intent.
+            /// </param>
+            /// <param name='staging'>
+            /// Use the staging endpoint slot.
             /// </param>
             /// <param name='spellCheck'>
             /// Enable spell checking.
             /// </param>
-            /// <param name='staging'>
-            /// Use staging endpoint.
+            /// <param name='bingSpellCheckSubscriptionKey'>
+            /// The subscription key to use when enabling bing spell check
+            /// </param>
+            /// <param name='log'>
+            /// Log query (default is true)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LuisResult> GetPredictionsFromEndpointViaPostAsync(this IPrediction operations, string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(appId, q, timezoneOffset, verbose, spellCheck, staging, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ResolveWithHttpMessagesAsync(appId, query, timezoneOffset, verbose, staging, spellCheck, bingSpellCheckSubscriptionKey, log, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

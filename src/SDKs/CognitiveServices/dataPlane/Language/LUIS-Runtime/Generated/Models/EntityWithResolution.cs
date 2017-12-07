@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -28,9 +29,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// <summary>
         /// Initializes a new instance of the EntityWithResolution class.
         /// </summary>
+        /// <param name="entity">Name of the entity, as defined in
+        /// LUIS.</param>
+        /// <param name="type">Type of the entity, as defined in LUIS.</param>
+        /// <param name="startIndex">The position of the first character of the
+        /// matched entity within the utterance.</param>
+        /// <param name="endIndex">The position of the last character of the
+        /// matched entity within the utterance.</param>
+        /// <param name="resolution">Resolution values for pre-built LUIS
+        /// entities.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public EntityWithResolution(string entity, string type, double startIndex, double endIndex, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object resolution = default(object))
+        public EntityWithResolution(string entity, string type, double startIndex, double endIndex, object resolution, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
             : base(entity, type, startIndex, endIndex, additionalProperties)
         {
             Resolution = resolution;
@@ -43,6 +53,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets resolution values for pre-built LUIS entities.
         /// </summary>
         [JsonProperty(PropertyName = "resolution")]
         public object Resolution { get; set; }
@@ -50,12 +61,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
+            if (Resolution == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Resolution");
+            }
         }
     }
 }
