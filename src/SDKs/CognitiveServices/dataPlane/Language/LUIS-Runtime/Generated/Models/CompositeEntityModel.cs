@@ -35,6 +35,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// <param name="parentType">Type/name of parent entity.</param>
         /// <param name="value">Value for composite entity extracted by
         /// LUIS.</param>
+        /// <param name="children">Child entities.</param>
         public CompositeEntityModel(string parentType, string value, IList<CompositeChildModel> children)
         {
             ParentType = parentType;
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         public string Value { get; set; }
 
         /// <summary>
+        /// Gets or sets child entities.
         /// </summary>
         [JsonProperty(PropertyName = "children")]
         public IList<CompositeChildModel> Children { get; set; }

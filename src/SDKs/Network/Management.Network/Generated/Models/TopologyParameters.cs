@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,9 +31,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="targetResourceGroupName">The name of the target
         /// resource group to perform topology on.</param>
-        public TopologyParameters(string targetResourceGroupName)
+        /// <param name="targetVirtualNetwork">The reference of the Virtual
+        /// Network resource.</param>
+        /// <param name="targetSubnet">The reference of the Subnet
+        /// resource.</param>
+        public TopologyParameters(string targetResourceGroupName = default(string), SubResource targetVirtualNetwork = default(SubResource), SubResource targetSubnet = default(SubResource))
         {
             TargetResourceGroupName = targetResourceGroupName;
+            TargetVirtualNetwork = targetVirtualNetwork;
+            TargetSubnet = targetSubnet;
             CustomInit();
         }
 
@@ -51,17 +56,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string TargetResourceGroupName { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the reference of the Virtual Network resource.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (TargetResourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetResourceGroupName");
-            }
-        }
+        [JsonProperty(PropertyName = "targetVirtualNetwork")]
+        public SubResource TargetVirtualNetwork { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the Subnet resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetSubnet")]
+        public SubResource TargetSubnet { get; set; }
+
     }
 }
