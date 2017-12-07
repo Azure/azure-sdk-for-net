@@ -25,6 +25,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         public bool EnableDebugTrace { get; set; }
         public ITaskItem[] SdkProjects { get; set; }
 
+        public bool IdeBuild { get; set; }
+
         public string ProjectTargetFramework { get; set; }
 
         #region Properties for test purpose
@@ -54,7 +56,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         
         public override bool Execute()
         {
-            if(!string.IsNullOrEmpty(AssemblyFullPath))
+            TaskLogger.LogDebugInfo("Executing PostBuildTask");
+            if (!string.IsNullOrEmpty(AssemblyFullPath))
             {
                 ApiTag = GetApiMap(AssemblyFullPath);
             }
@@ -70,22 +73,49 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         {
             if (ValidateArgs())
             {
-                List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
-                TaskLogger.LogInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
+                SdkProjectMetaData proj = GetProject(SdkProjects);
 
-                foreach (SdkProjectMetaData proj in filteredProjects)
+                //List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
+                //TaskLogger.LogInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
+
+                //foreach (SdkProjectMetaData proj in filteredProjects)
+                //{
+                if (proj.IsProjectDataPlane == false)
                 {
-                    ApiTag = GetApiMap(proj.TargetOutputFullPath);
-                    if (!string.IsNullOrEmpty(ApiTag))
+                    if (proj.ProjectType != SdkProjctType.Test)
                     {
-                        ApiTagPropsFile = UpdateProject(ApiTag, proj);
-                    }
-                    else
-                    {
-                        TaskLogger.LogInfo("SdkInfo Not Found in '{0}'", proj.FullProjectPath);
+                        ApiTag = GetApiMap(proj.TargetOutputFullPath);
+                        if (!string.IsNullOrEmpty(ApiTag))
+                        {
+                            ApiTagPropsFile = UpdateProject(ApiTag, proj);
+                        }
+                        else
+                        {
+                            TaskLogger.LogDebugInfo("SdkInfo Not Found in '{0}'", proj.FullProjectPath);
+                        }
                     }
                 }
             }
+        }
+
+        private SdkProjectMetaData GetProject(ITaskItem[] sdkProjects)
+        {
+            SdkProjectMetaData metaProject = null;
+            List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
+            if(filteredProjects.Count <= 0)
+            {
+                foreach(ITaskItem item in sdkProjects)
+                {
+                    metaProject = new SdkProjectMetaData(item.ItemSpec);
+                    if (metaProject != null) break;
+                }
+            }
+            else if(filteredProjects.Count > 0)
+            {
+                metaProject = filteredProjects.First<SdkProjectMetaData>();
+            }
+
+            return metaProject;
         }
 
         internal string GetApiMap(string assemblyPath)
@@ -140,7 +170,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
             catch(Exception ex)
             {
-                TaskLogger.LogInfo(ex.Message);
+                TaskLogger.LogDebugInfo(ex.Message);
             }
 
             return combinedApiMap;
@@ -199,23 +229,25 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             string propsFile = GetApiTagsPropsPath(sdkProject);
             Project propsProject;
 
-            if (ProjectCollection.GlobalProjectCollection.GetLoadedProjects(propsFile).Count != 0)
+            if (!string.IsNullOrEmpty(propsFile))
             {
-                propsProject = ProjectCollection.GlobalProjectCollection.GetLoadedProjects(propsFile).FirstOrDefault<Project>();
-            }
-            else
-            {
-                propsProject = new Project(propsFile);
-            }
+                if (ProjectCollection.GlobalProjectCollection.GetLoadedProjects(propsFile).Count != 0)
+                {
+                    propsProject = ProjectCollection.GlobalProjectCollection.GetLoadedProjects(propsFile).FirstOrDefault<Project>();
+                }
+                else
+                {
+                    propsProject = new Project(propsFile);
+                }
 
 
-            string existingApiTags = propsProject.GetPropertyValue(azApiPropertyName);
-            if (!existingApiTags.Trim().Equals(apiTag.Trim(), StringComparison.OrdinalIgnoreCase))
-            {
-                propsProject.SetProperty(azApiPropertyName, apiTag);
-                propsProject.Save();
+                string existingApiTags = propsProject.GetPropertyValue(azApiPropertyName);
+                if (!existingApiTags.Trim().Equals(apiTag.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    propsProject.SetProperty(azApiPropertyName, apiTag);
+                    propsProject.Save();
+                }
             }
-
             return propsFile;
         }
 
@@ -252,17 +284,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             if (SdkProjects.Any<ITaskItem>())
             {
                 isValidated = true;
-                TaskLogger.LogInfo<ITaskItem>(SdkProjects, (proj) => proj.ItemSpec.ToString());
+                TaskLogger.LogDebugInfo<ITaskItem>(SdkProjects, (proj) => proj.ItemSpec.ToString());
             }
             else
             {
                 TaskLogger.LogException(new Microsoft.Build.Exceptions.InvalidProjectFileException("Unable to detect projects being build"));
             }
-
-            //if(ProjectTargetFramework != FrameworkMonikerConstant.Net452)
-            //{
-            //    isValidated = (isValidated && false);
-            //}
 
             return isValidated;
         }

@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
-    <Compile Include="..\..\..\..\..\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
     <PackageReference Include="Microsoft.Build" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />

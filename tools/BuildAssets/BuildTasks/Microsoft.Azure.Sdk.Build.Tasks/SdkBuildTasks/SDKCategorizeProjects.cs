@@ -242,8 +242,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     targetFxList = sdkProjMD.MsBuildProject.GetPropertyValue("TargetFramework");
                 }
 
-                
-
                 ICollection<ProjectItem> pkgs = sdkProjMD.MsBuildProject.GetItemsIgnoringCondition("PackageReference");
                 if (pkgs.Any<ProjectItem>())
                 {
@@ -263,10 +261,17 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 {
                     bool isFxSupported = IsTargetFxSupported(fx, out TargetFrameworkMoniker tfxMoniker);
                     string fullOutputPath = string.Empty;
+                    bool isProjDataPlane = false;
                     if(!tfxMoniker.Equals(TargetFrameworkMoniker.UnSupported))
                     {
                         fullOutputPath = GetTargetFullPath(sdkProjMD, fx);
                     }
+
+                    if(sdkProjMD.ProjectTaskItem.ItemSpec.ToLower().Contains("dataplane"))
+                    {
+                        isProjDataPlane = true;
+                    }
+
                     SdkProjectMetaData sp = new SdkProjectMetaData(project: sdkProjMD.ProjectTaskItem, 
                         msbuildProject:sdkProjMD.MsBuildProject, 
                         fxMoniker: tfxMoniker, 
@@ -274,7 +279,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         fullProjectPath: sdkProjMD.ProjectTaskItem.ItemSpec, 
                         targetOutputPath: fullOutputPath, 
                         isTargetFxSupported: isFxSupported, 
-                        projectType: pType);
+                        projectType: pType, isProjectDataPlaneProject: isProjDataPlane);
                     supportedProjectBag.Add(sp);
                 }
             }
@@ -297,7 +302,45 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             return fullTargetPath;
         }
+        
+        private bool IsTargetFxSupported(string fxMoniker, out TargetFrameworkMoniker targetFx)
+        {
+            string lcMoniker = fxMoniker.ToLower();
+            bool fxSupported = false;
+            TargetFrameworkMoniker validMoniker = TargetFrameworkMoniker.UnSupported;
+            switch (lcMoniker)
+            {
+                case "net452":
+                    validMoniker = TargetFrameworkMoniker.net452;
+                    fxSupported = true;
+                    break;
 
+                case "netcoreapp1.1":
+                    validMoniker = TargetFrameworkMoniker.netcoreapp11;
+                    fxSupported = true;
+                    break;
+
+                case "netstandard1.4":
+                    validMoniker = TargetFrameworkMoniker.netstandard14;
+                    fxSupported = true;
+                    break;
+
+                case "net46":
+                    validMoniker = TargetFrameworkMoniker.net46;
+                    fxSupported = false;
+                    break;
+
+                case "net461":
+                    validMoniker = TargetFrameworkMoniker.net461;
+                    fxSupported = false;
+                    break;
+            }
+
+            targetFx = validMoniker;
+            return fxSupported;
+        }
+
+        /*
         internal ConcurrentBag<SdkProjectMetaData> GetMetaData(List<string> projectList, ConcurrentBag<SdkProjectMetaData> supportedProjectBag)
         {
             SdkProjctType pType = SdkProjctType.Sdk;
@@ -363,42 +406,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             return supportedProjectBag;
         }
-        
-        private bool IsTargetFxSupported(string fxMoniker, out TargetFrameworkMoniker targetFx)
-        {
-            string lcMoniker = fxMoniker.ToLower();
-            bool fxSupported = false;
-            TargetFrameworkMoniker validMoniker = TargetFrameworkMoniker.UnSupported;
-            switch (lcMoniker)
-            {
-                case "net452":
-                    validMoniker = TargetFrameworkMoniker.net452;
-                    fxSupported = true;
-                    break;
-
-                case "netcoreapp1.1":
-                    validMoniker = TargetFrameworkMoniker.netcoreapp11;
-                    fxSupported = true;
-                    break;
-
-                case "netstandard1.4":
-                    validMoniker = TargetFrameworkMoniker.netstandard14;
-                    fxSupported = true;
-                    break;
-
-                case "net46":
-                    validMoniker = TargetFrameworkMoniker.net46;
-                    fxSupported = false;
-                    break;
-
-                case "net461":
-                    validMoniker = TargetFrameworkMoniker.net461;
-                    fxSupported = false;
-                    break;
-            }
-
-            targetFx = validMoniker;
-            return fxSupported;
-        }
+        */
     }
 }

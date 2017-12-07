@@ -169,7 +169,7 @@ namespace Build.Tasks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Enable way to bypass based on target framework within the task")]
         public void SkipNetCoreTargets()
         {
             string scope = @"SDKs\Compute";
@@ -187,7 +187,7 @@ namespace Build.Tasks.Tests
 
             if (postBld.Execute())
             {
-                Assert.Null(postBld.ApiTag);
+                Assert.Empty(postBld.ApiTag);
             }
         }
 
