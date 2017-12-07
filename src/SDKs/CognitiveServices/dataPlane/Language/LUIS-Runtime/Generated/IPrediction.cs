@@ -23,26 +23,32 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
     public partial interface IPrediction
     {
         /// <summary>
-        /// Gets the published endpoint predictions for the given query.
+        /// Gets predictions for a given utterance, in the form of intents and
+        /// entities. The current maximum query size is 500 characters.
         /// </summary>
         /// <param name='appId'>
-        /// Format - guid. The application ID.
+        /// The LUIS application ID (Guid).
         /// </param>
-        /// <param name='q'>
-        /// The query to predict.
+        /// <param name='query'>
+        /// The utterance to predict.
         /// </param>
         /// <param name='timezoneOffset'>
         /// The timezone offset for the location of the request.
         /// </param>
         /// <param name='verbose'>
-        /// If true will return all intents instead of just the topscoring
-        /// intent.
+        /// If true, return all intents instead of just the top scoring intent.
+        /// </param>
+        /// <param name='staging'>
+        /// Use the staging endpoint slot.
         /// </param>
         /// <param name='spellCheck'>
         /// Enable spell checking.
         /// </param>
-        /// <param name='staging'>
-        /// Use staging endpoint.
+        /// <param name='bingSpellCheckSubscriptionKey'>
+        /// The subscription key to use when enabling bing spell check
+        /// </param>
+        /// <param name='log'>
+        /// Log query (default is true)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -59,44 +65,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaGetWithHttpMessagesAsync(string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the published endpoint prediction for the given long query.
-        /// </summary>
-        /// <param name='appId'>
-        /// Format - guid. The application ID.
-        /// </param>
-        /// <param name='q'>
-        /// The query to predict.
-        /// </param>
-        /// <param name='timezoneOffset'>
-        /// The timezone offset for the location of the request.
-        /// </param>
-        /// <param name='verbose'>
-        /// If true will return all intents instead of just the topscoring
-        /// intent.
-        /// </param>
-        /// <param name='spellCheck'>
-        /// Enable spell checking.
-        /// </param>
-        /// <param name='staging'>
-        /// Use staging endpoint.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="APIErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse<LuisResult>> GetPredictionsFromEndpointViaPostWithHttpMessagesAsync(string appId, string q, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? spellCheck = default(bool?), bool? staging = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

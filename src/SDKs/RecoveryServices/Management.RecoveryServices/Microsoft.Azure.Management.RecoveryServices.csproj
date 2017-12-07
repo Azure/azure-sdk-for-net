@@ -8,7 +8,7 @@
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices</AssemblyName>
 		<Version>4.1.0-preview</Version>
-		<PackageTags>Management.RecoveryServices;Azure RecoverServices</PackageTags>
+		<PackageTags>Management.RecoveryServices;Azure RecoverServices;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -16,6 +16,6 @@
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>
