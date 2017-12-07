@@ -1,0 +1,11 @@
+2017-12-07 03:31:20 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: felixwa
+Branch:      Fix-Folder-Structure
+Commit:      4c580a4bfdc03eadcf9d1838e12587d9d951316e
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\felixwa\AppData\Roaming\npm `-- autorest@2.0.4215  
+Latest installed version:    
