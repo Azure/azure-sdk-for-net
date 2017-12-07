@@ -5,7 +5,7 @@
     <PackageId>Microsoft.Azure.OperationalInsights</PackageId>
     <Description>Provides Microsoft Azure Operational Insights data operations</Description>
     <AssemblyName>Microsoft.Azure.OperationalInsights</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>0.9.0.0-preview</VersionPrefix>
     <PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>    
 	<PackageReleaseNotes>
       <![CDATA[

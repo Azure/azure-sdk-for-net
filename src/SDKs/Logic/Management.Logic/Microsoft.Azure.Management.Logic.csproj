@@ -7,7 +7,7 @@
 		<Description>Microsoft Azure LogicApps Management Library</Description>
 		<Version>3.1.0</Version>
 		<PackageId>Microsoft.Azure.Management.Logic</PackageId>
-		<PackageTags>Microsoft Azure LogicApps management;LogicApps;LogicApps management</PackageTags>
+		<PackageTags>Microsoft Azure LogicApps management;LogicApps;LogicApps management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -15,6 +15,6 @@
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

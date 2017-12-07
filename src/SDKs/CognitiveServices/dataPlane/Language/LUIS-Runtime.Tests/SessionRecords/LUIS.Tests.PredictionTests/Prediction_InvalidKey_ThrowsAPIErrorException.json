@@ -1,12 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b?q=test",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b",
+      "RequestMethod": "POST",
+      "RequestBody": "\"this is a test with post\"",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "26"
+        ],
         "Ocp-Apim-Subscription-Key": [
-          "invalid-key"
+          "00000000000000000000000000000000"
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
