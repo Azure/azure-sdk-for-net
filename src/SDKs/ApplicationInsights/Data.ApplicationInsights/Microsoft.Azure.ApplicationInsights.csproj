@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <Description>Microsoft Azure Application Insights Data Library</Description>
+    <VersionPrefix>0.9.0.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.ApplicationInsights</AssemblyName>
+    <PackageId>Microsoft.Azure.ApplicationInsights</PackageId>
+    <PackageTags>Management.ApplicationInsights;</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the Application Insights Data SDK.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.ApplicationInsights</RootNamespace>
+  </PropertyGroup>
+</Project>

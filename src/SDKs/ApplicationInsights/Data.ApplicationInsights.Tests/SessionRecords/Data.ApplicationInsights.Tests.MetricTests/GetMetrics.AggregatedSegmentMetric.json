@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/v1/apps/DEMO_APP/metrics",
+      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvbWV0cmljcw==",
+      "RequestMethod": "POST",
+      "RequestBody": "[\r\n  {\r\n    \"id\": \"AggregatedSegmentMetric\",\r\n    \"parameters\": {\r\n      \"metricId\": \"requests/duration\",\r\n      \"timespan\": \"PT12H\",\r\n      \"aggregation\": [\r\n        \"avg\"\r\n      ],\r\n      \"segment\": [\r\n        \"request/name\"\r\n      ]\r\n    }\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "250"
+        ],
+        "x-api-key": [
+          "DEMO_KEY"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.1.0-preview"
+        ],
+        "prefer": [
+          "response-v1=true"
+        ],
+        "x-ms-app": [
+          "csharpsdk"
+        ],
+        "x-ms-client-request-id": [
+          "6b4866dd-8bc7-4888-9643-28710423998d"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedSegmentMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2017-11-08T06:29:03.083Z\",\r\n        \"end\": \"2017-11-08T18:29:03.083Z\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 14607.51\r\n            },\r\n            \"request/name\": \"GET customers/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1207.34\r\n            },\r\n            \"request/name\": \"POST ServiceTickets/Create\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1105.13\r\n            },\r\n            \"request/name\": \"GET Customers/Details\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 920.82\r\n            },\r\n            \"request/name\": \"HEAD Home/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 740.68\r\n            },\r\n            \"request/name\": \"GET Home/Index\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 676.07\r\n            },\r\n            \"request/name\": \"GET Reports/Employees\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 473.15\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Create\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 300.55\r\n            },\r\n            \"request/name\": \"GET customers/create\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 279.15\r\n            },\r\n            \"request/name\": \"GET Reports/Tickets\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 240.11\r\n            },\r\n            \"request/name\": \"GET ServiceTickets/Details\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "907"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Date": [
+          "Wed, 08 Nov 2017 18:29:04 GMT"
+        ],
+        "Via": [
+          "1.1 draft-ai-green.97ea3b51-c474-11e7-b56b-70b3d5800008"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "Vary": [
+          "Accept",
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Retry-After,Age,WWW-Authenticate"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
