@@ -220,8 +220,9 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        /// <return>
-        /// A response objec
+        /// <returns>
+        /// A response object
+        /// </returns>
         public async Task<AzureOperationResponse<IPage<BotResource>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await innerBotServicesOperations

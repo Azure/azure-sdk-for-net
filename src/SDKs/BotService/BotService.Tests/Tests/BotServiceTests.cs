@@ -47,8 +47,8 @@ namespace BotService.Tests
                 bots = botServiceMgmtClient.BotServices.ListByResourceGroup(rgname);
                 Assert.Equal(2, bots.Count());
 
-                Assert.True(bots.Any(b => b.Name == bot1.Name));
-                Assert.True(bots.Any(b => b.Name == bot2.Name));
+                Assert.Contains(bots, b => b.Name == bot1.Name);
+                Assert.Contains(bots, b => b.Name == bot2.Name);
             }
         }
 
