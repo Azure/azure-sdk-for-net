@@ -1,11 +1,11 @@
-2017-11-13 21:50:37 UTC
+2017-11-30 23:40:10 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: Azure
+GitHub user: wawon-msft
 Branch:      current
-Commit:      84a406a03b4809f702b868048dc3dd438f97b978
+Commit:      c8892365cd32383bf040f37b265ce95300357815
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\wawon\AppData\Roaming\npm `-- autorest@2.0.4166  
-Latest installed version:    2.0.4196
+Bootstrapper version:    C:\Users\wawon\AppData\Roaming\npm `-- autorest@2.0.4215  
+Latest installed version:    

@@ -37,10 +37,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="catalogInfo">Catalog information for managed dedicated
         /// integration runtime.</param>
-        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo))
+        /// <param name="licenseType">License type for bringing your own
+        /// license scenario. Possible values include: 'BasePrice',
+        /// 'LicenseIncluded'</param>
+        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string))
         {
             AdditionalProperties = additionalProperties;
             CatalogInfo = catalogInfo;
+            LicenseType = licenseType;
             CustomInit();
         }
 
@@ -62,6 +66,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "catalogInfo")]
         public IntegrationRuntimeSsisCatalogInfo CatalogInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets license type for bringing your own license scenario.
+        /// Possible values include: 'BasePrice', 'LicenseIncluded'
+        /// </summary>
+        [JsonProperty(PropertyName = "licenseType")]
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Validate the object.

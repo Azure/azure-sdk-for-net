@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.HDInsight.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
