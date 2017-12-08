@@ -1,10 +1,10 @@
-2017-12-07 02:33:12 UTC
+2017-12-08 05:40:35 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: smilenow
+GitHub user: Azure
 Branch:      current
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\haoqian\AppData\Roaming\npm `-- autorest@2.0.4215  
+Bootstrapper version:    C:\Users\jiayin\AppData\Roaming\npm `-- autorest@2.0.4215  
 Latest installed version:    
