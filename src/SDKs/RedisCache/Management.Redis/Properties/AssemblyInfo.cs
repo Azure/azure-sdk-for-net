@@ -5,15 +5,15 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Redis Cache Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure redis cache management operations.")]
+//[assembly: AssemblyTitle("Microsoft Azure Redis Cache Management Library")]
+//[assembly: AssemblyDescription("Provides Microsoft Azure redis cache management operations.")]
 
-[assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.3.0.0")]
+//[assembly: AssemblyVersion("4.0.0.0")]
+//[assembly: AssemblyFileVersion("4.3.0.0")]
 
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
+//[assembly: AssemblyConfiguration("")]
+//[assembly: AssemblyCompany("Microsoft")]
+//[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
