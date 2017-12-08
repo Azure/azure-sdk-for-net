@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// blob to import as a disk. Required only if the blob is in a
         /// different subscription</param>
         /// <param name="imageReference">Disk source information.</param>
-        /// <param name="sourceUri">If creationOption is Import, this is the
-        /// URI of a blob to be imported into a managed disk.</param>
+        /// <param name="sourceUri">If createOption is Import, this is the URI
+        /// of a blob to be imported into a managed disk.</param>
         /// <param name="sourceResourceId">If createOption is Copy, this is the
         /// ARM id of the source snapshot or disk.</param>
         public CreationData(DiskCreateOption createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string))
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ImageDiskReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets if creationOption is Import, this is the URI of a blob
+        /// Gets or sets if createOption is Import, this is the URI of a blob
         /// to be imported into a managed disk.
         /// </summary>
         [JsonProperty(PropertyName = "sourceUri")]

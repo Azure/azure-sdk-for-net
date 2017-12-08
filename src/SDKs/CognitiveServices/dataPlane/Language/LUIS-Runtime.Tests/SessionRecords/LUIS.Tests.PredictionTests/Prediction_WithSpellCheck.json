@@ -1,10 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b?q=this%20is%20a%20test",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b?spellCheck=true&bing-spell-check-subscription-key=00000000000000000000000000000000",
+      "RequestMethod": "POST",
+      "RequestBody": "\"helo, what dai is todey?\"",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "26"
+        ],
         "Ocp-Apim-Subscription-Key": [
           "00000000000000000000000000000000"
         ],
@@ -13,10 +19,10 @@
           "Microsoft.Azure.CognitiveServices.Language.LUIS.LuisRuntimeAPI/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"query\": \"this is a test\",\r\n  \"topScoringIntent\": {\r\n    \"intent\": \"None\",\r\n    \"score\": 0.460794479\r\n  },\r\n  \"entities\": []\r\n}",
+      "ResponseBody": "{\r\n  \"query\": \"helo, what dai is todey?\",\r\n  \"alteredQuery\": \"hello, what day is today?\",\r\n  \"topScoringIntent\": {\r\n    \"intent\": \"None\",\r\n    \"score\": 0.06220497\r\n  },\r\n  \"entities\": [\r\n    {\r\n      \"entity\": \"today\",\r\n      \"type\": \"builtin.datetime.date\",\r\n      \"startIndex\": 19,\r\n      \"endIndex\": 23,\r\n      \"resolution\": {\r\n        \"date\": \"2017-12-04\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "132"
+          "383"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +31,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 24 Nov 2017 18:04:02 GMT"
+          "Mon, 04 Dec 2017 15:42:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "2e63c27d-2898-4a4a-966f-2da6b7313e6f"
+          "1698cb79-a545-4a09-9459-8bff31ee8d96"
         ],
         "Request-Id": [
-          "2e63c27d-2898-4a4a-966f-2da6b7313e6f"
+          "1698cb79-a545-4a09-9459-8bff31ee8d96"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

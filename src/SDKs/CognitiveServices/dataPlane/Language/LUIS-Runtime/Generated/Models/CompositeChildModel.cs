@@ -15,7 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
     using System.Linq;
 
     /// <summary>
-    /// Child entity in LUIS composite entity.
+    /// Child entity in a LUIS Composite Entity.
     /// </summary>
     public partial class CompositeChildModel
     {
