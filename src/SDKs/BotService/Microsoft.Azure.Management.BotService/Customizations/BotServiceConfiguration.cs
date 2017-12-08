@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.BotService.Customizations
         private const string DefaultBotEnvironment = ProdBotEnvironment;
         private const string BotEnvironmentVariableName = "botenvironment";
         private const string AzureTestModeEnvironmentVariableName = "AZURE_TEST_MODE";
-        
+        private const string AzureOrgIdAuthEnvironmentVariableName = "TEST_CSM_ORGID_AUTHENTICATION";
+
         private const string ScratchDevPortalUrl = "https://scratch.botframework.com/";
         private const string PpeDevPortalUrl = "https://ppe.botframework.com/";
         private const string ProdDevPortalUrl = "https://dev.botframework.com/";
@@ -83,7 +84,8 @@ namespace Microsoft.Azure.Management.BotService.Customizations
             {
                 // The environment variable AZURE_TEST_MODE is set on test environments
                 string environmentOverride = Environment.GetEnvironmentVariable(AzureTestModeEnvironmentVariableName);
-                return string.IsNullOrEmpty(environmentOverride);
+                string orgIdAuth = Environment.GetEnvironmentVariable(AzureOrgIdAuthEnvironmentVariableName);
+                return string.IsNullOrEmpty(environmentOverride) && string.IsNullOrEmpty(orgIdAuth);
             }
         }
     }
