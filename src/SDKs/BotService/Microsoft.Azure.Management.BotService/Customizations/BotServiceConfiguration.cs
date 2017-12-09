@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.BotService.Customizations
         private const string DefaultBotEnvironment = ProdBotEnvironment;
         private const string BotEnvironmentVariableName = "botenvironment";
         private const string AzureTestModeEnvironmentVariableName = "AZURE_TEST_MODE";
-        private const string AzureOrgIdAuthEnvironmentVariableName = "TEST_CSM_ORGID_AUTHENTICATION";
+        private const string OmitMsaAppIdCreationEnvironmentVariableName = "BOT_SERVICE_OMIT_MSA_APPID";
 
         private const string ScratchDevPortalUrl = "https://scratch.botframework.com/";
         private const string PpeDevPortalUrl = "https://ppe.botframework.com/";
@@ -67,7 +67,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
                     case PpeBotEnvironment:
                         return PpeDevPortalUrl;
                     default:
-                        //return ScratchDevPortalUrl;
                         return ProdDevPortalUrl;
                 }
             }
@@ -82,10 +81,9 @@ namespace Microsoft.Azure.Management.BotService.Customizations
         {
             get
             {
-                // The environment variable AZURE_TEST_MODE is set on test environments
-                string environmentOverride = Environment.GetEnvironmentVariable(AzureTestModeEnvironmentVariableName);
-                string orgIdAuth = Environment.GetEnvironmentVariable(AzureOrgIdAuthEnvironmentVariableName);
-                return string.IsNullOrEmpty(environmentOverride) && string.IsNullOrEmpty(orgIdAuth);
+                // The environment variable BOT_SERVICE_OMIT_MSA_APPID is set on test environments
+                string environmentOverride = Environment.GetEnvironmentVariable(OmitMsaAppIdCreationEnvironmentVariableName);
+                return string.IsNullOrEmpty(environmentOverride);
             }
         }
     }

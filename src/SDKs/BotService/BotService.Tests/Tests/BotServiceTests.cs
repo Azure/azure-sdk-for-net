@@ -19,8 +19,12 @@ namespace BotService.Tests
 {
     public class BotServiceTests
     {
-        private const string resourceNamespace = "Microsoft.BotService";
-        private const string resourceType = "botService";
+        private const string OmitMsaAppIdCreationEnvironmentVariableName = "BOT_SERVICE_OMIT_MSA_APPID";
+
+        public BotServiceTests()
+        {
+            Environment.SetEnvironmentVariable(OmitMsaAppIdCreationEnvironmentVariableName, "1");
+        }
 
         [Fact]
         public void BotCreateAndListByResourceGroupTest()
