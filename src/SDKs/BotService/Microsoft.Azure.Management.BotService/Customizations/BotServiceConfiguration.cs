@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
         private const string ScratchBotEnvironment = "scratch";
         private const string DefaultBotEnvironment = ProdBotEnvironment;
         private const string BotEnvironmentVariableName = "botenvironment";
-        private const string AzureTestModeEnvironmentVariableName = "AZURE_TEST_MODE";
         private const string OmitMsaAppIdCreationEnvironmentVariableName = "BOT_SERVICE_OMIT_MSA_APPID";
 
         private const string ScratchDevPortalUrl = "https://scratch.botframework.com/";
