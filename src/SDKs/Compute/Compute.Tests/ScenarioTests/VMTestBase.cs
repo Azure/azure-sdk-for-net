@@ -18,6 +18,7 @@ using System.Net;
 using System.Reflection;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
+using NM=Microsoft.Azure.Management.Network.Models;
 
 namespace Compute.Tests
 {
@@ -207,7 +208,8 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitOperation = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            IList<string> zones = null)
         {
             try
             {
@@ -237,6 +239,14 @@ namespace Compute.Tests
                 string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks);
 
                 inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks);
+
+                if (zones != null)
+                {
+                    inputVM.AvailabilitySet = null;
+                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA1V2;
+                    inputVM.Zones = zones;
+                }
+
                 if (vmCustomizer != null)
                 {
                     vmCustomizer(inputVM);
@@ -258,16 +268,21 @@ namespace Compute.Tests
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") ||
                     createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
-                Assert.True(
-                    createOrUpdateResponse.AvailabilitySet.Id
-                        .ToLowerInvariant() == asetId.ToLowerInvariant());
-                ValidateVM(inputVM, createOrUpdateResponse, expectedVMReferenceId, hasManagedDisks);
+                if (zones == null)
+                {
+                    Assert.True(createOrUpdateResponse.AvailabilitySet.Id.ToLowerInvariant() == asetId.ToLowerInvariant());
+                }
+                else
+                {
+                    Assert.True(createOrUpdateResponse.Zones.Count == 1);
+                    Assert.True(createOrUpdateResponse.Zones.FirstOrDefault() == zones.FirstOrDefault());
+                }
 
                 // CONSIDER dropping this Get and ValidateVM call. Nothing changes in the VM model after it's accepted.
                 // There might have been intent to track the async operation to completion and then check the VM is
                 // still this and okay, but that's not what the code above does and still doesn't make much sense.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS: zones == null);
 
                 return getResponse;
             }
@@ -607,6 +622,81 @@ namespace Compute.Tests
             return getGwResponse;
         }
 
+        protected LoadBalancer CreatePublicLoadBalancerWithProbe(string rgName, PublicIPAddress publicIPAddress)
+        {
+            var loadBalancerName = ComputeManagementTestUtilities.GenerateName("lb");
+            var frontendIPConfigName = ComputeManagementTestUtilities.GenerateName("feip");
+            var backendAddressPoolName = ComputeManagementTestUtilities.GenerateName("beap");
+            var loadBalancingRuleName = ComputeManagementTestUtilities.GenerateName("lbr");
+            var loadBalancerProbeName = ComputeManagementTestUtilities.GenerateName("lbp");
+
+            var frontendIPConfigId =
+                $"/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigName}";
+            var backendAddressPoolId =
+                $"/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}";
+            var probeId =
+                $"/subscriptions/{m_subId}/resourceGroups/{rgName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{loadBalancerProbeName}";
+
+            var putLBResponse = m_NrpClient.LoadBalancers.CreateOrUpdate(rgName, loadBalancerName, new LoadBalancer
+            {
+                Location = m_location,
+                FrontendIPConfigurations = new List<FrontendIPConfiguration>
+                {
+                    new FrontendIPConfiguration
+                    {
+                        Name = frontendIPConfigName,
+                        PublicIPAddress = publicIPAddress
+                    }
+                },
+                BackendAddressPools = new List<BackendAddressPool>
+                {
+                    new BackendAddressPool
+                    {
+                        Name = backendAddressPoolName
+                    }
+                },
+                LoadBalancingRules = new List<LoadBalancingRule>
+                {
+                    new LoadBalancingRule
+                    {
+                        Name = loadBalancingRuleName,
+                        LoadDistribution = "Default",
+                        FrontendIPConfiguration = new NM.SubResource
+                        {
+                            Id = frontendIPConfigId
+                        },
+                        BackendAddressPool = new NM.SubResource
+                        {
+                            Id = backendAddressPoolId
+                        },
+                        Protocol = "Tcp",
+                        FrontendPort = 80,
+                        BackendPort = 80,
+                        EnableFloatingIP = false,
+                        IdleTimeoutInMinutes = 5,
+                        Probe = new NM.SubResource
+                        {
+                            Id = probeId
+                        }
+                    }
+                },
+                Probes = new List<Probe>
+                {
+                    new Probe
+                    {
+                        Port = 3389, // RDP port
+                        IntervalInSeconds = 5,
+                        NumberOfProbes = 2,
+                        Name = loadBalancerProbeName,
+                        Protocol = "Tcp",
+                    }
+                }
+            });
+
+            var getLBResponse = m_NrpClient.LoadBalancers.Get(rgName, loadBalancerName);
+            return getLBResponse;
+        }
+
         protected string CreateAvailabilitySet(string rgName, string asName, bool hasManagedDisks = false)
         {
             // Setup availability set
@@ -704,7 +794,7 @@ namespace Compute.Tests
             return vm;
         }
 
-        protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false)
+        protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -831,8 +921,12 @@ namespace Compute.Tests
                 }
             }
 
-            Assert.NotNull(vmOut.AvailabilitySet);
-            Assert.True(vm.AvailabilitySet.Id.ToLowerInvariant() == vmOut.AvailabilitySet.Id.ToLowerInvariant());
+            if (hasUserDefinedAS)
+            {
+                Assert.NotNull(vmOut.AvailabilitySet);
+                Assert.True(vm.AvailabilitySet.Id.ToLowerInvariant() == vmOut.AvailabilitySet.Id.ToLowerInvariant());
+            }
+
             ValidatePlan(vm.Plan, vmOut.Plan);
             Assert.NotNull(vmOut.VmId);
         }
@@ -840,20 +934,29 @@ namespace Compute.Tests
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut, bool hasManagedDisks = false)
         {
             Assert.NotNull(vmOut.InstanceView);
-            Assert.True(vmOut.InstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
+            ValidateVMInstanceView(vmIn, vmOut.InstanceView, hasManagedDisks);
+        }
+
+        protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false)
+        {
+            ValidateVMInstanceView(vmInstanceView, hasManagedDisks, !hasManagedDisks ? vmIn.StorageProfile.OsDisk.Name : null);
+        }
+
+        private void ValidateVMInstanceView(VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false, string osDiskName = null)
+        {
+            Assert.Contains(vmInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
 
             if (!hasManagedDisks)
             {
-                var instanceView = vmOut.InstanceView;
-                Assert.NotNull(instanceView.Disks);
-                Assert.True(instanceView.Disks.Any());
+                Assert.NotNull(vmInstanceView.Disks);
+                Assert.True(vmInstanceView.Disks.Any());
 
-                if (vmIn.StorageProfile.OsDisk != null)
+                if (osDiskName != null)
                 {
-                    Assert.True(instanceView.Disks.Any(x => x.Name == vmIn.StorageProfile.OsDisk.Name));
+                    Assert.Contains(vmInstanceView.Disks, x => x.Name == osDiskName);
                 }
 
-                DiskInstanceView diskInstanceView = instanceView.Disks.First();
+                DiskInstanceView diskInstanceView = vmInstanceView.Disks.First();
                 Assert.NotNull(diskInstanceView);
                 Assert.NotNull(diskInstanceView.Statuses[0].DisplayStatus);
                 Assert.NotNull(diskInstanceView.Statuses[0].Code);

@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Tests", "Automation.Tests\Automation.Tests.csproj", "{62F8139E-0CA4-4234-B5E3-6D2689ED743C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Automation.Tests", "Automation.Tests\Automation.Tests.csproj", "{62F8139E-0CA4-4234-B5E3-6D2689ED743C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3BC8F71C-6424-44F8-B553-BABC031F2AE7} = {3BC8F71C-6424-44F8-B553-BABC031F2AE7}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Automation", "Management.Automation\Microsoft.Azure.Management.Automation.csproj", "{3BC8F71C-6424-44F8-B553-BABC031F2AE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Automation", "Management.Automation\Microsoft.Azure.Management.Automation.csproj", "{3BC8F71C-6424-44F8-B553-BABC031F2AE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

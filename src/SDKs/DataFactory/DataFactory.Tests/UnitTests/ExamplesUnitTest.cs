@@ -107,8 +107,13 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("IntegrationRuntimes_Update", (example, client, responseCode) =>
             {
-                IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(RGN(example), FN(example), IRN(example), IRR(example, client, "integrationRuntime"));
-                CheckResponseBody(example, client, responseCode, resource);
+                IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
+                    new UpdateIntegrationRuntimeRequest
+                    {
+                        AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                        UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                    });
+                CheckResponseBody(example, client, responseCode, response);
             });
         }
 
@@ -198,6 +203,59 @@ namespace DataFactory.Tests.UnitTests
             {
                 client.LongRunningOperationRetryTimeout = 1;
                 client.IntegrationRuntimes.Stop(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_Upgrade()
+        {
+            RunAyncApiTest("IntegrationRuntimes_Upgrade", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.Upgrade(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Update()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Update", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Update(RGN(example), FN(example), IRN(example), "Node_1",
+                new UpdateIntegrationRuntimeNodeRequest
+                {
+                    ConcurrentJobsLimit = 2
+                });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_RemoveNode()
+        {
+            RunAyncApiTest("IntegrationRuntimes_RemoveNode", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.RemoveNode(RGN(example), FN(example), IRN(example),
+                    new IntegrationRuntimeRemoveNodeRequest
+                    {
+                        NodeName = "Node_1"
+                    });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Delete()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Delete", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_GetIpAddress()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_GetIpAddress", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
             });
         }
 

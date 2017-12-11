@@ -33,15 +33,16 @@ namespace EventGrid.Tests.ScenarioTests
                 var topicName = TestUtilities.GenerateName(EventGridManagementHelper.TopicPrefix);
 
                 var operationsResponse = this.EventGridManagementClient.Operations.List();
+                var originalTagsDictionary = new Dictionary<string, string>()
+                {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                };
 
                 Topic topic = new Topic()
                 {
                     Location = location,
-                    Tags = new Dictionary<string, string>()
-                    {
-                        { "tag1", "value1" },
-                        { "tag2", "value2" }
-                    }
+                    Tags = originalTagsDictionary
                 };
 
                 var createTopicResponse = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName, topic).Result;
@@ -62,7 +63,7 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.NotNull(getTopicResponse);
                 Assert.Equal("Succeeded", getTopicResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(location, getTopicResponse.Location, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Contains(getTopicResponse.Tags, tag => tag.Key == "tag1");
+                Assert.Contains(getTopicResponse.Tags, tag => tag.Key == "originalTag1");
 
                 // Get all topics created within a resourceGroup
                 var getAllTopicsResponse = this.EventGridManagementClient.Topics.ListByResourceGroupAsync(resourceGroup).Result;
@@ -77,21 +78,32 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.True(getAllTopicsResponse.Count() >= 1);
                 Assert.Contains(getAllTopicsResponse, t => t.Name == topicName);
 
-                // Update the topic
-                topic.Tags = new Dictionary<string, string>()
+                var replaceTopicTagsDictionary = new Dictionary<string, string>()
                 {
-                    { "newTag1", "value1" },
-                    { "newTag2", "value2"}
+                    { "replacedTag1", "replacedValue1" },
+                    { "replacedTag2", "replacedValue2" }
                 };
 
-                var updateTopicResponse = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName, topic).Result;
+                // Replace the topic
+                topic.Tags = replaceTopicTagsDictionary;
+                var replaceTopicResponse = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName, topic).Result;
 
-                // TODO: Uncomment the below lines after the Tags update bug is resolved.
-                // Assert.Contains(getTopicResponse.Tags, tag => tag.Key == "newTag1");
-                // Assert.DoesNotContain(getTopicResponse.Tags, tag => tag.Key == "tag1");
+                Assert.Contains(replaceTopicResponse.Tags, tag => tag.Key == "replacedTag1");
+                Assert.DoesNotContain(replaceTopicResponse.Tags, tag => tag.Key == "originalTag1");
+
+                // Update the topic
+                var updateTopicTagsDictionary = new Dictionary<string, string>()
+                {
+                    { "updatedTag1", "updatedValue1" },
+                    { "updatedTag2", "updatedValue2" }
+                };
+
+                var updateTopicResponse = this.EventGridManagementClient.Topics.UpdateAsync(resourceGroup, topicName, updateTopicTagsDictionary).Result;
+                Assert.Contains(updateTopicResponse.Tags, tag => tag.Key == "updatedTag1");
+                Assert.DoesNotContain(updateTopicResponse.Tags, tag => tag.Key == "replacedTag1");
 
                 // Delete topic
-                EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();
+                this.EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();
             }
         }
     }

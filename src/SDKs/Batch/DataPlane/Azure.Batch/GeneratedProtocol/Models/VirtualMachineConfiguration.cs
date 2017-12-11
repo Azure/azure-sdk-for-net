@@ -116,7 +116,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property must be specified if the compute nodes in the pool
         /// need to have empty data disks attached to them. This cannot be
-        /// updated.
+        /// updated. Each node gets its own disk (the disk is not a file
+        /// share). Existing disks cannot be attached, each attached disk is
+        /// empty. When the node is removed from the pool, the disk and all
+        /// data associated with it is also deleted. The disk is not formatted
+        /// after being attached, it must be formatted before use - for more
+        /// information see
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/classic/attach-disk#initialize-a-new-data-disk-in-linux
+        /// and
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/attach-disk-ps#add-an-empty-data-disk-to-a-virtual-machine.
         /// </remarks>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<DataDisk> DataDisks { get; set; }

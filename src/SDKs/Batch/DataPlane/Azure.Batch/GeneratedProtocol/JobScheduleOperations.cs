@@ -992,10 +992,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (jobSchedulePatchParameter == null)
-            {
-                jobSchedulePatchParameter = new JobSchedulePatchParameter();
-            }
             int? timeout = default(int?);
             if (jobSchedulePatchOptions != null)
             {
@@ -1300,10 +1296,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (jobScheduleUpdateParameter == null)
-            {
-                jobScheduleUpdateParameter = new JobScheduleUpdateParameter();
             }
             int? timeout = default(int?);
             if (jobScheduleUpdateOptions != null)
@@ -2438,10 +2430,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (cloudJobSchedule == null)
-            {
-                cloudJobSchedule = new JobScheduleAddParameter();
             }
             int? timeout = default(int?);
             if (jobScheduleAddOptions != null)

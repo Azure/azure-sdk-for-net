@@ -1,14 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+	
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ApiManagement</PackageId>
     <Description>Provides ApiManagement management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure API Management Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.ApiManagement</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure ApiManagement management;API Managementt;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+    <Version>1.0.0-preview</Version>
+    <PackageTags>Microsoft Azure ApiManagement management;API Management;</PackageTags>
+	<PackageReleaseNotes/>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
+  
+  	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>
