@@ -37,23 +37,12 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 Assert.Equal(certificateDetails.Properties.Subject, Constants.Certificate.Subject);
                 Assert.Equal(certificateDetails.Properties.Thumbprint, Constants.Certificate.Thumbprint);
 
-                //verify ownership
-                Assert.False(certificateDetails.Properties.IsVerified);
+                //can get a verification code
                 var verificationCodeResponse =
                     this.provisioningClient.DpsCertificate.GenerateVerificationCode(certificateDetails.Name,
                         certificateDetails.Etag, resourceGroup.Name, service.Name);
                 Assert.NotNull(verificationCodeResponse.Properties);
                 Assert.False(string.IsNullOrEmpty(verificationCodeResponse.Properties.VerificationCode));
-
-                var verificationRequest = new VerificationCodeRequest(verificationCodeResponse.Properties.VerificationCode);
-                var verificationResponse = this.provisioningClient.DpsCertificate.VerifyCertificate(certificateDetails.Name,
-                    verificationCodeResponse.Etag, verificationRequest, resourceGroup.Name, service.Name);
-                Assert.True(verificationResponse.Properties.IsVerified);
-
-                //verify the cert is now showing verified
-                certificateDetails =
-                    certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);
-                Assert.True(certificateDetails.Properties.IsVerified);
 
                 //delete certificate
                 this.provisioningClient.DpsCertificate.Delete(resourceGroup.Name, certificateDetails.Etag, service.Name, Constants.Certificate.Name);
