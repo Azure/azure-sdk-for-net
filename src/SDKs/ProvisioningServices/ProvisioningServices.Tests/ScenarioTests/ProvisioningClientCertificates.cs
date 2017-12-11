@@ -45,7 +45,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 Assert.False(string.IsNullOrEmpty(verificationCodeResponse.Properties.VerificationCode));
 
                 //delete certificate
-                this.provisioningClient.DpsCertificate.Delete(resourceGroup.Name, certificateDetails.Etag, service.Name, Constants.Certificate.Name);
+                this.provisioningClient.DpsCertificate.Delete(resourceGroup.Name, verificationCodeResponse.Etag, service.Name, Constants.Certificate.Name);
                 certificateList = this.provisioningClient.DpsCertificates.List(testName,
                     testName);
                 Assert.DoesNotContain(certificateList.Value, x => x.Name == Constants.Certificate.Name);

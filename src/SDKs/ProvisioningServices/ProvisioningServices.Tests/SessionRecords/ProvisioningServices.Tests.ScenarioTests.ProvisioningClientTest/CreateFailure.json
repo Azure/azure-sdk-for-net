@@ -13,7 +13,7 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "91e3ee60-b326-4d07-83be-f38e2b630753"
+          "c2a09114-b5f4-42c0-9e96-57a95b336268"
         ],
         "accept-language": [
           "en-US"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:33:51 GMT"
+          "Mon, 11 Dec 2017 18:38:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-request-id": [
-          "4d07665d-4d8d-4562-9802-ecc2803bb764"
+          "bd7ba401-5465-49ca-8939-1cc3dd371d11"
         ],
         "x-ms-correlation-request-id": [
-          "4d07665d-4d8d-4562-9802-ecc2803bb764"
+          "bd7ba401-5465-49ca-8939-1cc3dd371d11"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T233352Z:4d07665d-4d8d-4562-9802-ecc2803bb764"
+          "WESTUS2:20171211T183831Z:bd7ba401-5465-49ca-8939-1cc3dd371d11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -78,7 +78,7 @@
           "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"Code\": \"InvalidIotDpsName\",\r\n  \"HttpStatusCode\": \"BadRequest\",\r\n  \"Message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: a4134123-9fd2-4dcd-ac8f-02251853ef79, timestamp: 2017-12-05 23:33:54Z, errorcode: IH400305.\"\r\n}",
+      "ResponseBody": "{\r\n  \"Code\": \"InvalidIotDpsName\",\r\n  \"HttpStatusCode\": \"BadRequest\",\r\n  \"Message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: e2c2b5a6-0c2b-49d0-8b86-068b7adafd04, timestamp: 2017-12-11 18:39:12Z, errorcode: IH400305.\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "408"
@@ -93,7 +93,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:33:54 GMT"
+          "Mon, 11 Dec 2017 18:39:12 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -102,16 +102,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "4999"
+          "4998"
         ],
         "x-ms-request-id": [
-          "c856a7e7-adfb-4d90-b144-f7afbd0a0313"
+          "1812b06b-ef96-4f89-a226-1143db638fbb"
         ],
         "x-ms-correlation-request-id": [
-          "c856a7e7-adfb-4d90-b144-f7afbd0a0313"
+          "1812b06b-ef96-4f89-a226-1143db638fbb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T233355Z:c856a7e7-adfb-4d90-b144-f7afbd0a0313"
+          "WESTUS2:20171211T183913Z:1812b06b-ef96-4f89-a226-1143db638fbb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

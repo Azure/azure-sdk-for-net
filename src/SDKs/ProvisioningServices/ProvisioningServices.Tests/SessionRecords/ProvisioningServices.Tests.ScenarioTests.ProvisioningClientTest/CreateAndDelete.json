@@ -13,7 +13,7 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "3ba32f2e-3513-4a0f-8a4e-bab47e780866"
+          "26fa5e82-2d74-4930-b056-f0ff3c166c50"
         ],
         "accept-language": [
           "en-US"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:39:32 GMT"
+          "Mon, 11 Dec 2017 18:34:08 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1199"
         ],
         "x-ms-request-id": [
-          "a0d0f6a5-cb33-42a0-8554-a56af9611fd3"
+          "c7fcbf52-428d-4eb8-9d69-12115c56b935"
         ],
         "x-ms-correlation-request-id": [
-          "a0d0f6a5-cb33-42a0-8554-a56af9611fd3"
+          "c7fcbf52-428d-4eb8-9d69-12115c56b935"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T233932Z:a0d0f6a5-cb33-42a0-8554-a56af9611fd3"
+          "WESTUS2:20171211T183409Z:c7fcbf52-428d-4eb8-9d69-12115c56b935"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:39:35 GMT"
+          "Mon, 11 Dec 2017 18:34:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -108,13 +108,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "624084be-632a-4f53-829d-4fa1b3e31d4f"
+          "f25045af-3a23-4c1e-b790-70c0da1ccfd5"
         ],
         "x-ms-correlation-request-id": [
-          "624084be-632a-4f53-829d-4fa1b3e31d4f"
+          "f25045af-3a23-4c1e-b790-70c0da1ccfd5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T233936Z:624084be-632a-4f53-829d-4fa1b3e31d4f"
+          "WESTUS2:20171211T183412Z:f25045af-3a23-4c1e-b790-70c0da1ccfd5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -154,7 +154,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:45:57 GMT"
+          "Mon, 11 Dec 2017 18:34:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -163,19 +163,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate/operationResults/b3NfaWRfMGYyODgyNjctZTNlMS00NDJmLWIwNTUtMTY0OGFjYjBmYTc1?api-version=2017-08-21-preview&asyncinfo"
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate/operationResults/b3NfaWRfZGE3MjA1MTktYzk3MC00MzE1LThkN2YtZDQ4NTZjZDIyMGQ1?api-version=2017-08-21-preview&asyncinfo"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "4999"
         ],
         "x-ms-request-id": [
-          "7ac75c8d-cc44-47ce-b0cd-ab520115f563"
+          "37380608-a904-4383-b63d-126ad42c981b"
         ],
         "x-ms-correlation-request-id": [
-          "7ac75c8d-cc44-47ce-b0cd-ab520115f563"
+          "37380608-a904-4383-b63d-126ad42c981b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T234557Z:7ac75c8d-cc44-47ce-b0cd-ab520115f563"
+          "WESTUS2:20171211T183428Z:37380608-a904-4383-b63d-126ad42c981b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -194,7 +194,7 @@
           "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"etag\": \"AAAAAAAFBXI=\",\r\n      \"name\": \"unitTestingDPSCreateUpdate\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"state\": \"Active\",\r\n        \"iotHubs\": [],\r\n        \"allocationPolicy\": \"Hashed\",\r\n        \"serviceOperationsHostName\": \"unitTestingDPSCreateUpdate.azure-devices-provisioning.net\",\r\n        \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n        \"idScope\": \"0ne00004700\"\r\n      },\r\n      \"resourcegroup\": \"unitTestingDPSCreateUpdate\",\r\n      \"type\": \"Microsoft.Devices/provisioningServices\",\r\n      \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate\",\r\n      \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n      \"tags\": {},\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"etag\": \"AAAAAAAF5LI=\",\r\n      \"name\": \"unitTestingDPSCreateUpdate\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"state\": \"Active\",\r\n        \"iotHubs\": [],\r\n        \"allocationPolicy\": \"Hashed\",\r\n        \"serviceOperationsHostName\": \"unitTestingDPSCreateUpdate.azure-devices-provisioning.net\",\r\n        \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n        \"idScope\": \"0ne00005348\"\r\n      },\r\n      \"resourcegroup\": \"unitTestingDPSCreateUpdate\",\r\n      \"type\": \"Microsoft.Devices/provisioningServices\",\r\n      \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate\",\r\n      \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n      \"tags\": {},\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 1\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -206,7 +206,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:46:04 GMT"
+          "Mon, 11 Dec 2017 18:34:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -224,13 +224,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "68c215ce-7932-4c90-b57d-a48f2219a204"
+          "76ec5acd-cb9e-4937-aba7-937beaca6cb4"
         ],
         "x-ms-correlation-request-id": [
-          "68c215ce-7932-4c90-b57d-a48f2219a204"
+          "76ec5acd-cb9e-4937-aba7-937beaca6cb4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T234604Z:68c215ce-7932-4c90-b57d-a48f2219a204"
+          "WESTUS2:20171211T183431Z:76ec5acd-cb9e-4937-aba7-937beaca6cb4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -261,7 +261,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:46:14 GMT"
+          "Mon, 11 Dec 2017 18:34:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -279,13 +279,13 @@
           "14997"
         ],
         "x-ms-request-id": [
-          "b987ae8b-759a-4b11-9db1-046a4f2f02f3"
+          "45bcceea-616b-4f33-93d1-7d894fde0736"
         ],
         "x-ms-correlation-request-id": [
-          "b987ae8b-759a-4b11-9db1-046a4f2f02f3"
+          "45bcceea-616b-4f33-93d1-7d894fde0736"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T234615Z:b987ae8b-759a-4b11-9db1-046a4f2f02f3"
+          "WESTUS2:20171211T183436Z:45bcceea-616b-4f33-93d1-7d894fde0736"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -304,7 +304,7 @@
           "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAAAFBXI=\",\r\n  \"name\": \"unitTestingDPSCreateUpdate\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSCreateUpdate.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00004700\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSCreateUpdate\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAAAAF5LI=\",\r\n  \"name\": \"unitTestingDPSCreateUpdate\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSCreateUpdate.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00005348\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSCreateUpdate\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -316,7 +316,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:46:10 GMT"
+          "Mon, 11 Dec 2017 18:34:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -334,13 +334,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "fa691753-e886-43ee-b5b2-cf1ed1c85aa2"
+          "ec0c4d59-d131-4b42-af7e-e816a8681a21"
         ],
         "x-ms-correlation-request-id": [
-          "fa691753-e886-43ee-b5b2-cf1ed1c85aa2"
+          "ec0c4d59-d131-4b42-af7e-e816a8681a21"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T234610Z:fa691753-e886-43ee-b5b2-cf1ed1c85aa2"
+          "WESTUS2:20171211T183432Z:ec0c4d59-d131-4b42-af7e-e816a8681a21"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -374,13 +374,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 23:46:13 GMT"
+          "Mon, 11 Dec 2017 18:34:34 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate/operationResults/b3NfaWRfNDcwMzA3NzQtMGQ0Yy00OWFiLThiNzctY2JlYjc4MDY5YzJm?api-version=2017-08-21-preview"
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate/operationResults/b3NfaWRfMjM2Yzk0Y2UtODNjMC00YjZmLTljNTYtZjIzMjQ2Y2M1ZDEy?api-version=2017-08-21-preview"
         ],
         "Retry-After": [
           "15"
@@ -389,19 +389,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate/operationResults/b3NfaWRfNDcwMzA3NzQtMGQ0Yy00OWFiLThiNzctY2JlYjc4MDY5YzJm?api-version=2017-08-21-preview&asyncinfo"
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdate/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCreateUpdate/operationResults/b3NfaWRfMjM2Yzk0Y2UtODNjMC00YjZmLTljNTYtZjIzMjQ2Y2M1ZDEy?api-version=2017-08-21-preview&asyncinfo"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "8a51a377-59f9-4435-896e-77a6b0b495b8"
+          "347185b7-a90f-4c18-a85e-e823bc686523"
         ],
         "x-ms-correlation-request-id": [
-          "8a51a377-59f9-4435-896e-77a6b0b495b8"
+          "347185b7-a90f-4c18-a85e-e823bc686523"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T234613Z:8a51a377-59f9-4435-896e-77a6b0b495b8"
+          "WESTUS2:20171211T183435Z:347185b7-a90f-4c18-a85e-e823bc686523"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

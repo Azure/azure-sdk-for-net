@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.IotHub;
 using Microsoft.Azure.Management.IotHub.Models;
@@ -38,21 +37,19 @@ namespace ProvisioningServices.Tests.ScenarioTests
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                     testedService);
 
-                Assert.Contains(updatedInstance.Properties.IotHubs, x => x.Name == iotHub.Name);
-
-                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.Name == iotHub.Name);
+                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.ConnectionString == connectionString);
                 Assert.NotNull(returnedHub);
 
                 var updatedApplyPolicy = !(returnedHub.ApplyAllocationPolicy ?? false);
                 returnedHub.ApplyAllocationPolicy = updatedApplyPolicy;
 
-                var updatedPolicyWeight = new System.Random().Next();
+                var updatedPolicyWeight = Helpers.Constants.RandomAllocationWeight;
                 returnedHub.AllocationWeight = updatedPolicyWeight;
 
                 updatedInstance =
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                         updatedInstance);
-                var updatedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.Name == iotHub.Name);
+                var updatedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.ConnectionString == connectionString);
                 Assert.NotNull(updatedHub);
 
                 Assert.Equal(updatedApplyPolicy, updatedHub.ApplyAllocationPolicy);
@@ -64,7 +61,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                     testedService.Properties.IotHubs.Where(x => x.Name == testName)).ToList();
                 updatedInstance = this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                     testedService);
-                Assert.DoesNotContain(updatedInstance.Properties.IotHubs, x=> x.Name == iotHub.Name);
+                Assert.DoesNotContain(updatedInstance.Properties.IotHubs, x=> x.ConnectionString == connectionString);
 
             }
         }

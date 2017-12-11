@@ -34,5 +34,6 @@
         }
 
         public static readonly string[] AllocationPolicies = {"Hashed", "GeoLatency", "Static"};
+        public const int RandomAllocationWeight = 870084357;
     }
 }
