@@ -2,7 +2,6 @@
   <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <!-- Please do not move/edit code below this line -->
-
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
     <Description>Microsoft Azure Management Cognitive Services Library</Description>

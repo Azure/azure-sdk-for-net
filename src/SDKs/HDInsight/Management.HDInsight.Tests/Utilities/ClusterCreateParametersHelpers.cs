@@ -17,8 +17,7 @@ namespace Management.HDInsight.Tests
 {
     using System.Collections.Generic;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Microsoft.HDInsight.Models;
-    using Microsoft.HDInsight;
+    using Microsoft.Azure.Management.HDInsight;
     using System;
 
     public static class ClusterCreateParametersHelpers
