@@ -62,12 +62,27 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 Assert.NotNull(foundInstance);
                 Assert.Equal(testName, foundInstance.Name);
 
+                var attempts = Constants.ArmAttemptLimit;
+                var success = false;
+                while (attempts > 0 && !success)
+                {
+                    try
+                    {
 
-                this.provisioningClient.IotDpsResource.Delete(testName, testName);
+                        this.provisioningClient.IotDpsResource.Delete(testName, testName);
+                        success = true;
+                    }
+                    catch
+                    {
+                        attempts--;
+                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
+                    }
+                }
                 existingServices =
                     this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
 
-                Assert.DoesNotContain(existingServices.Value, x => x.Name == testName);
+                //As long as it is gone or deleting, we're good
+                Assert.DoesNotContain(existingServices.Value, x => x.Name == testName && x.Properties.State != "Deleting");
             }
         }
 
@@ -82,12 +97,28 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 var service = this.GetService(testName, testName);
                 //update capacity
                 service.Sku.Capacity += 1;
+                var attempts = Constants.ArmAttemptLimit;
+                var success = false;
+                while (attempts > 0 && !success)
+                {
+                    try
+                    {
+                        var updatedInstance =
+                   this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, service.Name,
+                       service);
+                        Assert.Equal(service.Sku.Capacity, updatedInstance.Sku.Capacity);
+                        success = true;
+                    }
+                    catch
+                    {
+                        //Let ARM finish
+                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
+                        attempts--;
+                    }
+                }
 
-                var updatedInstance =
-                    this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, service.Name,
-                        service);
 
-                Assert.Equal(service.Sku.Capacity, updatedInstance.Sku.Capacity);
+
             }
         }
         [Fact]

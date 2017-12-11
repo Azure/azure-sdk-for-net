@@ -36,13 +36,27 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 var newAllocationPolicy = Constants.AllocationPolicies
                     .Except(new[] { testedService.Properties.AllocationPolicy }).First();
 
-                testedService.Properties.AllocationPolicy = newAllocationPolicy;
+                var attempts = Constants.ArmAttemptLimit;
+                while (attempts > 0 && testedService.Properties.AllocationPolicy != newAllocationPolicy)
+                {
+                    testedService.Properties.AllocationPolicy = newAllocationPolicy;
+                    try
+                    {
+                        var updatedInstance =
+                            this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
+                                testedService);
+                        Assert.Equal(newAllocationPolicy, updatedInstance.Properties.AllocationPolicy);
 
-                var updatedInstance =
-                    this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
-                        testedService);
+                        testedService.Properties.AllocationPolicy = updatedInstance.Properties.AllocationPolicy;
+                    }
+                    catch
+                    {
+                        //Let ARM finish
+                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
 
-                Assert.Equal(newAllocationPolicy, updatedInstance.Properties.AllocationPolicy);
+                        attempts--;
+                    }
+                }
             }
         }
         

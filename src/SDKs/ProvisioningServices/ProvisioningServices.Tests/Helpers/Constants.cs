@@ -34,6 +34,9 @@
         }
 
         public static readonly string[] AllocationPolicies = {"Hashed", "GeoLatency", "Static"};
+
+        public const int ArmAttemptWaitMS = 500;
         public const int RandomAllocationWeight = 870084357;
+        public const int ArmAttemptLimit = 5;
     }
 }

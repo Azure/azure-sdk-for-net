@@ -42,8 +42,23 @@ namespace ProvisioningServices.Tests.ScenarioTests
                                 rights: "RegistrationStatusWrite"),
                         });
 
-                this.provisioningClient.IotDpsResource.CreateOrUpdate(testName, testedService.Name, testedService);
-
+                var attempts = Constants.ArmAttemptLimit;
+                var success = false;
+                while (attempts > 0 && !success)
+                {
+                    try
+                    {
+                        this.provisioningClient.IotDpsResource.CreateOrUpdate(testName, testedService.Name,
+                            testedService);
+                        success = true;
+                    }
+                    catch
+                    {
+                        //Let ARM finish
+                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
+                        attempts--;
+                    }
+                }
                 //this access policy exists now
                 Assert.True(TryGetKeyByName(testName, out accessPolicy));
                 Assert.NotNull(accessPolicy);
@@ -54,7 +69,23 @@ namespace ProvisioningServices.Tests.ScenarioTests
                         {
                             ownerKey
                         });
-                this.provisioningClient.IotDpsResource.CreateOrUpdate(testName, testedService.Name, testedService);
+                attempts = Constants.ArmAttemptLimit;
+                success = false;
+                while (attempts > 0 && !success)
+                {
+                    try
+                    {
+                        this.provisioningClient.IotDpsResource.CreateOrUpdate(testName, testedService.Name, testedService);
+                        success = true;
+                    }
+                    catch
+                    {
+                        //Let ARM finish
+                        System.Threading.Thread.Sleep(Constants.ArmAttemptWaitMS);
+
+                        attempts--;
+                    }
+                }
                 
                 //the policy has been removed
                 Assert.False(TryGetKeyByName(testName, out accessPolicy));
