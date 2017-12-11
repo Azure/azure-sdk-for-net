@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -28,9 +29,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// <summary>
         /// Initializes a new instance of the EntityWithScore class.
         /// </summary>
+        /// <param name="entity">Name of the entity, as defined in
+        /// LUIS.</param>
+        /// <param name="type">Type of the entity, as defined in LUIS.</param>
+        /// <param name="startIndex">The position of the first character of the
+        /// matched entity within the utterance.</param>
+        /// <param name="endIndex">The position of the last character of the
+        /// matched entity within the utterance.</param>
+        /// <param name="score">Associated prediction score for the intent
+        /// (float).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public EntityWithScore(string entity, string type, double startIndex, double endIndex, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), double? score = default(double?))
+        public EntityWithScore(string entity, string type, double startIndex, double endIndex, double score, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
             : base(entity, type, startIndex, endIndex, additionalProperties)
         {
             Score = score;
@@ -43,19 +53,28 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets associated prediction score for the intent (float).
         /// </summary>
         [JsonProperty(PropertyName = "score")]
-        public double? Score { get; set; }
+        public double Score { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
+            if (Score > 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Score", 1);
+            }
+            if (Score < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Score", 0);
+            }
         }
     }
 }

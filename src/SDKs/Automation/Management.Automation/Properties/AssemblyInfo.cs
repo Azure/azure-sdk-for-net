@@ -5,10 +5,10 @@ using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft Azure Automation Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Automation management operations.")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.50.1.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

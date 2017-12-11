@@ -67,7 +67,7 @@ namespace Batch.Tests.ScenarioTests
                         nextLink = listResponse.NextPageLink;
                     }
 
-                    Assert.Equal(1, accounts.Count);
+                    Assert.Single(accounts);
                     Assert.Equal(batchAccountName, accounts.First().Name);
 
                     // Delete the account
@@ -126,9 +126,10 @@ namespace Batch.Tests.ScenarioTests
                         "",
                         "vaults",
                         keyvaultName,
-                        "2015-06-01",
-                        new GenericResource(this.Location)
+                        "2016-10-01",
+                        new GenericResource()
                         {
+                            Location = this.Location,
                             Properties = new Dictionary<string, object>
                             {
                                 {"tenantId", "72f988bf-86f1-41af-91ab-2d7cd011db47"},

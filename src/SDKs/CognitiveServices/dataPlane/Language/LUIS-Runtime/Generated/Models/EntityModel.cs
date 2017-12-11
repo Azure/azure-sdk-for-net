@@ -17,7 +17,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
     using System.Linq;
 
     /// <summary>
-    /// Entity returned from LUIS.
+    /// An entity extracted from the utterance.
     /// </summary>
     public partial class EntityModel
     {
@@ -32,6 +32,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// <summary>
         /// Initializes a new instance of the EntityModel class.
         /// </summary>
+        /// <param name="entity">Name of the entity, as defined in
+        /// LUIS.</param>
+        /// <param name="type">Type of the entity, as defined in LUIS.</param>
+        /// <param name="startIndex">The position of the first character of the
+        /// matched entity within the utterance.</param>
+        /// <param name="endIndex">The position of the last character of the
+        /// matched entity within the utterance.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         public EntityModel(string entity, string type, double startIndex, double endIndex, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
@@ -57,21 +64,27 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets name of the entity, as defined in LUIS.
         /// </summary>
         [JsonProperty(PropertyName = "entity")]
         public string Entity { get; set; }
 
         /// <summary>
+        /// Gets or sets type of the entity, as defined in LUIS.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
+        /// Gets or sets the position of the first character of the matched
+        /// entity within the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "startIndex")]
         public double StartIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets the position of the last character of the matched
+        /// entity within the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "endIndex")]
         public double EndIndex { get; set; }
