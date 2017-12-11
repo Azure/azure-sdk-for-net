@@ -16,8 +16,7 @@
 namespace Management.HDInsight.Tests
 {
     using Xunit;
-    using Microsoft.HDInsight.Models;
-    using Microsoft.HDInsight;
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
     using System.Collections.Generic;
     using Newtonsoft.Json;
