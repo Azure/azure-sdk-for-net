@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\management\Management.EventGrid\Microsoft.Azure.Management.EventGrid.csproj" />
     <ProjectReference Include="..\Microsoft.Azure.EventGrid\Microsoft.Azure.EventGrid.csproj" />
-    <ProjectReference Include="..\..\Management.EventGrid\Microsoft.Azure.Management.EventGrid.csproj" />
   </ItemGroup>
 
   <ItemGroup>
