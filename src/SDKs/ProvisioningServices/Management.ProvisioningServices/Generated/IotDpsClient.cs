@@ -271,6 +271,8 @@ namespace Microsoft.Azure.Management.ProvisioningServices
         /// </summary>
         private void Initialize()
         {
+            ApiVersion = "2017-11-15";
+
             Operations = new Operations(this);
             DpsCertificate = new DpsCertificate(this);
             IotDpsResource = new IotDpsResource(this);
