@@ -39,22 +39,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Activity name.</param>
         /// <param name="packageLocation">SSIS package location.</param>
         /// <param name="connectVia">The integration runtime reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
-        /// <param name="use32bitRuntime">Specifies whether to use 32 bit
-        /// runtime to execute SSIS package. Possible values include: 'Yes',
-        /// 'No'</param>
+        /// <param name="runtime">Specifies the runtime to execute SSIS
+        /// package. Possible values include: 'x64', 'x86'</param>
         /// <param name="loggingLevel">The logging level of SSIS package
         /// execution.</param>
         /// <param name="environmentPath">The environment path to execution the
         /// SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string use32bitRuntime = default(string), string loggingLevel = default(string), string environmentPath = default(string))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string runtime = default(string), string loggingLevel = default(string), string environmentPath = default(string))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
-            Use32bitRuntime = use32bitRuntime;
+            Runtime = runtime;
             LoggingLevel = loggingLevel;
             EnvironmentPath = environmentPath;
             ConnectVia = connectVia;
@@ -73,11 +74,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public SSISPackageLocation PackageLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether to use 32 bit runtime to execute
-        /// SSIS package. Possible values include: 'Yes', 'No'
+        /// Gets or sets specifies the runtime to execute SSIS package.
+        /// Possible values include: 'x64', 'x86'
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.use32bitRuntime")]
-        public string Use32bitRuntime { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.runtime")]
+        public string Runtime { get; set; }
 
         /// <summary>
         /// Gets or sets the logging level of SSIS package execution.
