@@ -1,0 +1,152 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Subscription/subscriptionDefinitions/MySubDefYYYY11DD2241061935?api-version=2017-11-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbkRlZmluaXRpb25zL015U3ViRGVmWVlZWTExREQyMjQxMDYxOTM1P2FwaS12ZXJzaW9uPTIwMTctMTEtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"subscriptionDisplayName\": \"MySubDefYYYY11DD2241061935\",\r\n    \"offerType\": \"MS-AZR-0017P\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "123"
+        ],
+        "x-ms-client-request-id": [
+          "68faacfb-bf75-496d-bee9-a03d61dcb5ad"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2115.0",
+          "OSName/Windows10Education",
+          "OSVersion/6.3.15063",
+          "Microsoft.Azure.Management.Subscription.SubscriptionDefinitionsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "875a349c-7257-406a-8424-5644e94e8eb6"
+        ],
+        "x-ms-correlation-request-id": [
+          "875a349c-7257-406a-8424-5644e94e8eb6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171120T064205Z:875a349c-7257-406a-8424-5644e94e8eb6"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 06:42:05 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Subscription/subscriptionOperations/9870eab8-492c-47e8-bd20-313624c71e7a?api-version=2017-11-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/9870eab8-492c-47e8-bd20-313624c71e7a?api-version=2017-11-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbk9wZXJhdGlvbnMvOTg3MGVhYjgtNDkyYy00N2U4LWJkMjAtMzEzNjI0YzcxZTdhP2FwaS12ZXJzaW9uPTIwMTctMTEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.7.2115.0",
+          "OSName/Windows10Education",
+          "OSVersion/6.3.15063",
+          "Microsoft.Azure.Management.Subscription.SubscriptionDefinitionsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Subscription/subscriptionDefinitions/MySubDefYYYY11DD2241061935\",\r\n  \"name\": \"MySubDefYYYY11DD2241061935\",\r\n  \"properties\": {\r\n    \"etag\": \"rj7u2g==\",\r\n    \"subscriptionDisplayName\": \"MySubDefYYYY11DD2241061935\",\r\n    \"subscriptionId\": \"00fd1ef3-328d-4e75-a158-9dd4405585c8\",\r\n    \"offerType\": \"MS-AZR-0017P\"\r\n  },\r\n  \"type\": \"Microsoft.Subscription/subscriptionDefinitions\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "355"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "76b82bae-104b-4139-97a4-3c5864189983"
+        ],
+        "x-ms-correlation-request-id": [
+          "76b82bae-104b-4139-97a4-3c5864189983"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171120T064236Z:76b82bae-104b-4139-97a4-3c5864189983"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 20 Nov 2017 06:42:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f4b6d4b2-7f09-4856-84f6-b98c14642bf6"
+  }
+}

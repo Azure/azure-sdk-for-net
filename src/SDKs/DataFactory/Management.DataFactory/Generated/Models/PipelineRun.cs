@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the PipelineRun class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="runId">Identifier of a run.</param>
         /// <param name="pipelineName">The pipeline name.</param>
         /// <param name="parameters">The full or partial list of parameter
@@ -46,8 +48,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="durationInMs">The duration of a pipeline run.</param>
         /// <param name="status">The status of a pipeline run.</param>
         /// <param name="message">The message from a pipeline run.</param>
-        public PipelineRun(string runId = default(string), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
+        public PipelineRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string runId = default(string), string pipelineName = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), PipelineRunInvokedBy invokedBy = default(PipelineRunInvokedBy), System.DateTime? lastUpdated = default(System.DateTime?), System.DateTime? runStart = default(System.DateTime?), System.DateTime? runEnd = default(System.DateTime?), int? durationInMs = default(int?), string status = default(string), string message = default(string))
         {
+            AdditionalProperties = additionalProperties;
             RunId = runId;
             PipelineName = pipelineName;
             Parameters = parameters;
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets identifier of a run.

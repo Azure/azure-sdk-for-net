@@ -125,8 +125,8 @@ namespace Compute.Tests
                     Assert.NotNull(captureResponse.Output);
                     string outputAsString = captureResponse.Output.ToString();
                     Assert.Equal('{', outputAsString[0]);
-                    Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
-                    Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
+                    Assert.Contains(captureParams.DestinationContainerName.ToLowerInvariant(), outputAsString.ToLowerInvariant());
+                    Assert.Contains(captureParams.VhdPrefix.ToLowerInvariant(), outputAsString.ToLowerInvariant());
 
                     Template template = JsonConvert.DeserializeObject<Template>(outputAsString);
                     Assert.True(template.Resources.Count > 0);

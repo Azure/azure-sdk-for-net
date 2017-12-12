@@ -16,10 +16,9 @@
 namespace Management.HDInsight.Tests
 {
     using Xunit;
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Microsoft.HDInsight.Models;
     using System.Collections.Generic;
-    using Microsoft.HDInsight;
     using Microsoft.WindowsAzure.Storage.Auth;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Blob;

@@ -126,11 +126,9 @@ namespace EventGrid.Tests.ScenarioTests
                     }
                 };
 
-                // TODO: Uncomment the below after resolving the failure in update
-                // "Unexpected polling status code from long running operation 'Created' for method 'PATCH'.)"
-                // eventSubscriptionResponse = this.eventGridManagementClient.EventSubscriptions.UpdateAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
-                // Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
-                // Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
+                eventSubscriptionResponse = this.eventGridManagementClient.EventSubscriptions.UpdateAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
+                Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
 
                 // List event subscriptions
                 var eventSubscriptionsList = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;

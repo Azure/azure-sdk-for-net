@@ -16,16 +16,14 @@
 namespace Management.HDInsight.Tests
 {
     using Xunit;
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Microsoft.HDInsight.Models;
-    using Microsoft.HDInsight;
 
     public class OMSTests
     {
         private const string WorkspaceId = "1d364e89-bb71-4503-aa3d-a23535aea7bd";
         private const string PrimaryKey = "";
-
-
+        
         [Fact]
         public void TestOMSOnRunningCluster()
         {

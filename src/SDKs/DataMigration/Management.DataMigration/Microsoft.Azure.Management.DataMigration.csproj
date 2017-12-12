@@ -1,18 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.DataMigration</PackageId>
-    <Description>Provides developers with libraries for the Data Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Create project, Start Migration, and more.</Description>
-    <Version>0.1.2-preview</Version>
-    <AssemblyName>Microsoft.Azure.Management.DataMigration</AssemblyName>
-    <PackageTags>Microsoft Azure Data Migration;Data Migration Service;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.DataMigration</PackageId>
+		<Description>Provides developers with libraries for the Data Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Create project, Start Migration, and more.</Description>
+		<Version>0.1.2-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.DataMigration</AssemblyName>
+		<PackageTags>DataMigration;Data Migration;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
         This is a public preview release of the Azure DMS SDK. Included with this release is support for all service, project and task related APIs required for Sql to Azure Sql Database migration.
       ]]>
-    </PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

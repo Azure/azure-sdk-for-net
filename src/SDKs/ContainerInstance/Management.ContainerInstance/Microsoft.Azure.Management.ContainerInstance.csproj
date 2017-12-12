@@ -1,18 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <Description>Microsoft Azure Container Instance Management Library</Description>
-    <VersionPrefix>1.0.1-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.ContainerInstance</AssemblyName>
-    <PackageId>Microsoft.Azure.Management.ContainerInstance</PackageId>
-    <PackageTags>Microsoft Azure Container Instance Management;Container Instance;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<Description>Microsoft Azure Container Instance Management Library</Description>
+		<Version>1.0.1-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.ContainerInstance</AssemblyName>
+		<PackageId>Microsoft.Azure.Management.ContainerInstance</PackageId>
+		<PackageTags>Microsoft Azure Container Instance Management;Container Instance;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
         This is a public preview release of the Azure Container Instance SDK. Included with this release is run-to-completion and azure file volume support.
       ]]>
-    </PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

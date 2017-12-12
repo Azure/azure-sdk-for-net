@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="scriptLinkedService">Script linked service
         /// reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -62,8 +64,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="compilationMode">Compilation mode of U-SQL. Must be
         /// one of these values : Semantic, Full and SingleBox. Type: string
         /// (or Expression with resultType string).</param>
-        public DataLakeAnalyticsUSQLActivity(string name, object scriptPath, LinkedServiceReference scriptLinkedService, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object degreeOfParallelism = default(object), object priority = default(object), IDictionary<string, object> parameters = default(IDictionary<string, object>), object runtimeVersion = default(object), object compilationMode = default(object))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public DataLakeAnalyticsUSQLActivity(string name, object scriptPath, LinkedServiceReference scriptLinkedService, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object degreeOfParallelism = default(object), object priority = default(object), IDictionary<string, object> parameters = default(IDictionary<string, object>), object runtimeVersion = default(object), object compilationMode = default(object))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
