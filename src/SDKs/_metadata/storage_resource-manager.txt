@@ -1,16 +1,10 @@
-2017-10-25 04:35:48 UTC
+2017-12-12 03:10:11 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: blueww
-Branch:      storagev2
-Commit:      0e26edc92f20955de0c82a15e413b8b6750cdc4d
+GitHub user: origin
+Branch:      current
 
 2) AutoRest information
 Requested version: latest
-You cannot call a method on a null-valued expression.
-At D:\work\azure-sdk-for-net\tools\generateMetadata.ps1:19 char:1
-+ Write-Host "Latest version:   " (autorest --list-installed | Where {$ ...
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
-    + FullyQualifiedErrorId : InvokeMethodOnNull
- 
+Bootstrapper version:    C:\Users\weiwei\AppData\Roaming\npm `-- autorest@2.0.4215  
+Latest installed version:    
