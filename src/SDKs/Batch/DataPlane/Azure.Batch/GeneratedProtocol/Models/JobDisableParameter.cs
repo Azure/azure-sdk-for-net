@@ -46,13 +46,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets what to do with active tasks associated with the job.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// requeue - Terminate running tasks and requeue them. The tasks will
-        /// run again when the job is enabled.
-        /// terminate - Terminate running tasks. The tasks will not run again.
-        /// wait - Allow currently running tasks to complete. Possible values
-        /// include: 'requeue', 'terminate', 'wait'
+        /// Possible values include: 'requeue', 'terminate', 'wait'
         /// </remarks>
         [JsonProperty(PropertyName = "disableTasks")]
         public DisableJobOption DisableTasks { get; set; }

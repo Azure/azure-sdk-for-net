@@ -7,20 +7,20 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dbc90372-3670-493a-8b06-32650e47a124"
+          "1321db2c-f856-4a42-99c4-25585f40db80"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidResourceType\",\r\n    \"message\": \"The resource type 'providerOperations' could not be found in the namespace 'Microsoft.Authorization' for api version '0001-07-01'. The supported api-versions are '2015-07-01-preview,2015-07-01,2016-07-01'.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidResourceType\",\r\n    \"message\": \"The resource type 'providerOperations' could not be found in the namespace 'Microsoft.Authorization' for api version '0001-07-01'. The supported api-versions are '2015-07-01-preview,2015-07-01,2016-07-01,2017-05-01'.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "258"
+          "269"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 26 Jul 2017 07:21:22 GMT"
+          "Mon, 27 Nov 2017 23:56:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,16 +41,16 @@
           "gateway"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14980"
+          "14976"
         ],
         "x-ms-request-id": [
-          "900673a1-fd3e-4b2c-b0b7-17c8ed0fd052"
+          "ebe42c7e-049f-4767-b05c-c052ef203758"
         ],
         "x-ms-correlation-request-id": [
-          "900673a1-fd3e-4b2c-b0b7-17c8ed0fd052"
+          "ebe42c7e-049f-4767-b05c-c052ef203758"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170726T072122Z:900673a1-fd3e-4b2c-b0b7-17c8ed0fd052"
+          "CENTRALUSEUAP:20171127T235636Z:ebe42c7e-049f-4767-b05c-c052ef203758"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

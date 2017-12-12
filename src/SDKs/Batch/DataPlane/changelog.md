@@ -1,5 +1,12 @@
 # Azure.Batch release notes
 
+## Changes in 8.0.1
+### Bug fixes
+- Fixed a bug where deserializing some enum properties could fail if using Newtonsoft 10.
+
+### REST API version
+This version of the Batch .NET client library targets version 2017-09-01.6.0 of the Azure Batch REST API.
+
 ## Changes in 8.0.0
 ### Features
 - Added the ability to get a discount on Windows VM pricing if you have on-premises licenses for the OS SKUs you are deploying, via `LicenseType` on `VirtualMachineConfiguration`.
