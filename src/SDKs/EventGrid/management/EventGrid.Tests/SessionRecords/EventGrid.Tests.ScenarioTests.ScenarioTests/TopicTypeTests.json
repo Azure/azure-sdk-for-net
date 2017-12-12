@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "06e71093-00ac-4a4b-aeb7-9cc8e3dd09a4"
+          "baa7882d-0486-4107-8349-292bafd04c9f"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 19:17:12 GMT"
+          "Fri, 08 Dec 2017 00:11:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14974"
+          "14975"
         ],
         "x-ms-request-id": [
-          "ceb93aab-298b-45a3-89ae-398bbff9c10c"
+          "2ab667f6-a0c8-4ead-97c0-40771b128012"
         ],
         "x-ms-correlation-request-id": [
-          "ceb93aab-298b-45a3-89ae-398bbff9c10c"
+          "2ab667f6-a0c8-4ead-97c0-40771b128012"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171128T191712Z:ceb93aab-298b-45a3-89ae-398bbff9c10c"
+          "WESTUS2:20171208T001142Z:2ab667f6-a0c8-4ead-97c0-40771b128012"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,14 +62,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9070d17f-19bc-41d1-8a9d-efd0039d9fec"
+          "e3cb5462-d9cc-44d8-86dc-b581afe610f3"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Eventhub\",\r\n        \"displayName\": \"EventHubs Namespace\",\r\n        \"description\": \"Microsoft EventHubs service events.\",\r\n        \"resourceRegionType\": \"RegionalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Eventhub.Namespaces\",\r\n      \"name\": \"Microsoft.Eventhub.Namespaces\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Storage\",\r\n        \"displayName\": \"Storage Accounts\",\r\n        \"description\": \"Microsoft Storage service events.\",\r\n        \"resourceRegionType\": \"RegionalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts\",\r\n      \"name\": \"Microsoft.Storage.StorageAccounts\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Resources\",\r\n        \"displayName\": \"Azure Subscriptions\",\r\n        \"description\": \"Resource management events under an Azure subscription\",\r\n        \"resourceRegionType\": \"GlobalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.Subscriptions\",\r\n      \"name\": \"Microsoft.Resources.Subscriptions\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Resources\",\r\n        \"displayName\": \"Resource Groups\",\r\n        \"description\": \"Resource management events under a resource group.\",\r\n        \"resourceRegionType\": \"GlobalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups\",\r\n      \"name\": \"Microsoft.Resources.ResourceGroups\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    }\r\n  ]\r\n}",
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 19:17:12 GMT"
+          "Fri, 08 Dec 2017 00:11:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -102,13 +102,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "71bc2f57-b752-405d-9a14-4b78d5aa59ee"
+          "d3453d4d-4156-4dd7-8e6e-ba276472d093"
         ],
         "x-ms-correlation-request-id": [
-          "71bc2f57-b752-405d-9a14-4b78d5aa59ee"
+          "d3453d4d-4156-4dd7-8e6e-ba276472d093"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171128T191712Z:71bc2f57-b752-405d-9a14-4b78d5aa59ee"
+          "WESTUS2:20171208T001142Z:d3453d4d-4156-4dd7-8e6e-ba276472d093"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,14 +123,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a4a08548-a12a-4a82-9767-b5fa09cfd2fe"
+          "0334c5c6-55b7-4605-afcd-2cd04fb34e16"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provider\": \"Microsoft.Storage\",\r\n    \"displayName\": \"Storage Accounts\",\r\n    \"description\": \"Microsoft Storage service events.\",\r\n    \"resourceRegionType\": \"RegionalResource\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts\",\r\n  \"name\": \"Microsoft.Storage.StorageAccounts\",\r\n  \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n}",
@@ -145,7 +145,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 19:17:12 GMT"
+          "Fri, 08 Dec 2017 00:11:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -160,16 +160,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "15e22d93-417e-40ba-bc06-0eabd1ae766a"
+          "6ce4cb48-1843-40da-b6b9-3eb79288f5f9"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "0a45429c-360b-491e-9b57-883e34d0efc7"
+          "e5e6b3ed-8953-442f-9d17-37590377c10d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171128T191712Z:0a45429c-360b-491e-9b57-883e34d0efc7"
+          "WESTUS2:20171208T001142Z:e5e6b3ed-8953-442f-9d17-37590377c10d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -184,14 +184,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3ee7767e-f5e6-4ed1-9d61-3b472d54b7d7"
+          "5c386ea9-45c2-4570-8026-3b2c4bfba6be"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Blob Created\",\r\n        \"description\": \"Raised when a blob is created.\",\r\n        \"schemaUrl\": \"tbd\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts/eventTypes/Microsoft.Storage.BlobCreated\",\r\n      \"name\": \"Microsoft.Storage.BlobCreated\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Blob Deleted\",\r\n        \"description\": \"Raised when a blob is deleted.\",\r\n        \"schemaUrl\": \"tbd\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts/eventTypes/Microsoft.Storage.BlobDeleted\",\r\n      \"name\": \"Microsoft.Storage.BlobDeleted\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes/eventTypes\"\r\n    }\r\n  ]\r\n}",
@@ -206,7 +206,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 19:17:12 GMT"
+          "Fri, 08 Dec 2017 00:11:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -221,16 +221,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "d5cc429c-d1cd-4341-9163-4e40766dda66"
+          "1030d1d1-5bb0-4fd8-8614-eb2a5e1955fa"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "14997"
         ],
         "x-ms-correlation-request-id": [
-          "bd8d8367-d5fe-436d-99d7-2dadbdc70945"
+          "f756d133-da3e-48da-b13d-a75ecc797f7b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171128T191712Z:bd8d8367-d5fe-436d-99d7-2dadbdc70945"
+          "WESTUS2:20171208T001142Z:f756d133-da3e-48da-b13d-a75ecc797f7b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
