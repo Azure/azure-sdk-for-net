@@ -1,0 +1,472 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourcegroups/unitTestingDPSCertificatesCreateAndDelete?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "92282a9a-cc5e-4bb0-b224-704fd5b182e2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete\",\r\n  \"name\": \"unitTestingDPSCertificatesCreateAndDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "235"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "cef3f4be-cf8d-4c0f-92df-76d777e87769"
+        ],
+        "x-ms-correlation-request-id": [
+          "cef3f4be-cf8d-4c0f-92df-76d777e87769"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185019Z:cef3f4be-cf8d-4c0f-92df-76d777e87769"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja1Byb3Zpc2lvbmluZ1NlcnZpY2VOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMDgtMjEtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"unitTestingDPSCertificatesCreateAndDelete\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "59"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nameAvailable\": true,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "a19d6483-d117-4fd6-971f-b82ca0775775"
+        ],
+        "x-ms-correlation-request-id": [
+          "a19d6483-d117-4fd6-971f-b82ca0775775"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185024Z:a19d6483-d117-4fd6-971f-b82ca0775775"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0NlcnRpZmljYXRlc0NyZWF0ZUFuZERlbGV0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "105"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSCertificatesCreateAndDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSCertificatesCreateAndDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "614"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/operationResults/b3NfaWRfYTY4ZGQ3Y2QtMjEzMC00MDE1LTg3NDktYzdiZWIzZTViMzYy?api-version=2017-08-21-preview&asyncinfo"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4999"
+        ],
+        "x-ms-request-id": [
+          "219bbe5a-44ef-4538-b787-5ffbc5eb87d9"
+        ],
+        "x-ms-correlation-request-id": [
+          "219bbe5a-44ef-4538-b787-5ffbc5eb87d9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185026Z:219bbe5a-44ef-4538-b787-5ffbc5eb87d9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates/DPStestCert?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0NlcnRpZmljYXRlc0NyZWF0ZUFuZERlbGV0ZS9jZXJ0aWZpY2F0ZXMvRFBTdGVzdENlcnQ/YXBpLXZlcnNpb249MjAxNy0wOC0yMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"certificate\": \"MIIBvjCCAWOgAwIBAgIQG6PoBFT6GLJGNKn/EaxltTAKBggqhkjOPQQDAjAcMRowGAYDVQQDDBFBenVyZSBJb1QgUm9vdCBDQTAeFw0xNzExMDMyMDUyNDZaFw0xNzEyMDMyMTAyNDdaMBwxGjAYBgNVBAMMEUF6dXJlIElvVCBSb290IENBMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+CgpnW3K+KRNIi/U6Zqe/Al9m8PExHX2KgakmGTfE04nNBwnSoygWb0ekqpT+Lm+OP56LMMe9ynVNryDEr9OSKOBhjCBgzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB8GA1UdEQQYMBaCFENOPUF6dXJlIElvVCBSb290IENBMBIGA1UdEwEB/wQIMAYBAf8CAQwwHQYDVR0OBBYEFDjiklfHQzw1G0A33BcmRQTjAivTMAoGCCqGSM49BAMCA0kAMEYCIQCtjJ4bAvoYuDhwr92Kk+OkvpPF+qBFiRfrA/EC4YGtzQIhAO79WPtbUnBQ5fsQnW2aUAT4yJGWL+7l4/qfmqblb96n\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "625"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"subject\": \"CN=Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Mon, 11 Dec 2017 18:50:26 GMT\",\r\n    \"updated\": \"Mon, 11 Dec 2017 18:50:26 GMT\"\r\n  },\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates/DPStestCert\",\r\n  \"name\": \"DPStestCert\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAAAAAF5ZY=\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "8201765a-3fa4-43da-9d79-7628a12973d6"
+        ],
+        "x-ms-correlation-request-id": [
+          "8201765a-3fa4-43da-9d79-7628a12973d6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185027Z:8201765a-3fa4-43da-9d79-7628a12973d6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0NlcnRpZmljYXRlc0NyZWF0ZUFuZERlbGV0ZS9jZXJ0aWZpY2F0ZXM/YXBpLXZlcnNpb249MjAxNy0wOC0yMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"subject\": \"CN=Azure IoT Root CA\",\r\n        \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n        \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n        \"isVerified\": false,\r\n        \"created\": \"Mon, 11 Dec 2017 18:50:26 GMT\",\r\n        \"updated\": \"Mon, 11 Dec 2017 18:50:26 GMT\"\r\n      },\r\n      \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates/DPStestCert\",\r\n      \"name\": \"DPStestCert\",\r\n      \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n      \"etag\": \"AAAAAAAF5ZY=\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "1eb768f9-8e9f-4157-b2fa-462e1709b14b"
+        ],
+        "x-ms-correlation-request-id": [
+          "1eb768f9-8e9f-4157-b2fa-462e1709b14b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185028Z:1eb768f9-8e9f-4157-b2fa-462e1709b14b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0NlcnRpZmljYXRlc0NyZWF0ZUFuZERlbGV0ZS9jZXJ0aWZpY2F0ZXM/YXBpLXZlcnNpb249MjAxNy0wOC0yMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "187ab189-c41e-413f-a801-e6e931297e45"
+        ],
+        "x-ms-correlation-request-id": [
+          "187ab189-c41e-413f-a801-e6e931297e45"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185035Z:187ab189-c41e-413f-a801-e6e931297e45"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates/DPStestCert/generateVerificationCode?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0NlcnRpZmljYXRlc0NyZWF0ZUFuZERlbGV0ZS9jZXJ0aWZpY2F0ZXMvRFBTdGVzdENlcnQvZ2VuZXJhdGVWZXJpZmljYXRpb25Db2RlP2FwaS12ZXJzaW9uPTIwMTctMDgtMjEtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "If-Match": [
+          "AAAAAAAF5ZY="
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"verificationCode\": \"4EDD4CADD1385862E294C24CEFFAC7B735709C17D9250FF8\",\r\n    \"subject\": \"CN=Azure IoT Root CA\",\r\n    \"expiry\": \"Sun, 03 Dec 2017 21:02:47 GMT\",\r\n    \"thumbprint\": \"9F0983E8F2DB2DB3582997FEF331247D872DEE32\",\r\n    \"isVerified\": false,\r\n    \"created\": \"Mon, 11 Dec 2017 18:50:26 GMT\",\r\n    \"updated\": \"Mon, 11 Dec 2017 18:50:31 GMT\"\r\n  },\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates/DPStestCert\",\r\n  \"name\": \"DPStestCert\",\r\n  \"type\": \"Microsoft.Devices/IotHubs/Certificates\",\r\n  \"etag\": \"AAAAAAAF5Zw=\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "b5abde81-98a2-44e3-a874-854b900ef070"
+        ],
+        "x-ms-correlation-request-id": [
+          "b5abde81-98a2-44e3-a874-854b900ef070"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185031Z:b5abde81-98a2-44e3-a874-854b900ef070"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCertificatesCreateAndDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSCertificatesCreateAndDelete/certificates/DPStestCert?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ2VydGlmaWNhdGVzQ3JlYXRlQW5kRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0NlcnRpZmljYXRlc0NyZWF0ZUFuZERlbGV0ZS9jZXJ0aWZpY2F0ZXMvRFBTdGVzdENlcnQ/YXBpLXZlcnNpb249MjAxNy0wOC0yMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "If-Match": [
+          "AAAAAAAF5Zw="
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:50:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "b81b19b9-c532-4d7a-b7ec-194b4ef14fc7"
+        ],
+        "x-ms-correlation-request-id": [
+          "b81b19b9-c532-4d7a-b7ec-194b4ef14fc7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T185034Z:b81b19b9-c532-4d7a-b7ec-194b4ef14fc7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b"
+  }
+}
