@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.ProvisioningServices</PackageId>
+    <Description>Provides management capabilities for Microsoft Azure IoT Device Provisioning Service.</Description>
+    <AssemblyTitle>Microsoft Azure Provisioning Service Management</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Management.ProvisioningServices</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <PackageTags>Microsoft Azure IoT Provisioning Services;IoT Device Provisioning Service management;Provisioning Service;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+</Project>
