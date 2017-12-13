@@ -4,7 +4,8 @@ sudo: required
 dist: trusty
 #group: deprecated-2017Q4
 env:
-   global:
+  - CLI_VERSION=latest
+ global:
     - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
     - DOTNET_CLI_TELEMETRY_OPTOUT: 1
 # safelist
