@@ -170,6 +170,58 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Updates an integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='updateIntegrationRuntimeRequest'>
+            /// The parameters for updating an integration runtime.
+            /// </param>
+            public static IntegrationRuntimeStatusResponse Update(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest)
+            {
+                return operations.UpdateAsync(resourceGroupName, factoryName, integrationRuntimeName, updateIntegrationRuntimeRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='updateIntegrationRuntimeRequest'>
+            /// The parameters for updating an integration runtime.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeStatusResponse> UpdateAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, updateIntegrationRuntimeRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes an integration runtime.
             /// </summary>
             /// <param name='operations'>
@@ -543,8 +595,11 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Force the integration runtime to synchronize credentials among integration
-            /// runtime nodes.
+            /// Force the integration runtime to synchronize credentials across integration
+            /// runtime nodes, and this will override the credentials across all worker
+            /// nodes with those available on the dispatcher node. If you already have the
+            /// latest credential backup file, you should manually import it (preferred) on
+            /// any self-hosted integration runtime node than using this API directly.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -564,8 +619,11 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Force the integration runtime to synchronize credentials among integration
-            /// runtime nodes.
+            /// Force the integration runtime to synchronize credentials across integration
+            /// runtime nodes, and this will override the credentials across all worker
+            /// nodes with those available on the dispatcher node. If you already have the
+            /// latest credential backup file, you should manually import it (preferred) on
+            /// any self-hosted integration runtime node than using this API directly.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -633,6 +691,49 @@ namespace Microsoft.Azure.Management.DataFactory
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Upgrade self-hosted integration runtime to latest version if availably.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            public static void Upgrade(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName)
+            {
+                operations.UpgradeAsync(resourceGroupName, factoryName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade self-hosted integration runtime to latest version if availably.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpgradeAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpgradeWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

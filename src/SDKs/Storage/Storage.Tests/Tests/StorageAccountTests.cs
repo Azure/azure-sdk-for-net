@@ -1561,5 +1561,65 @@ namespace Storage.Tests
                 Assert.True(skulist.ElementAt(0).Kind.Equals(Kind.BlobStorage) || skulist.ElementAt(0).Kind.Equals(Kind.Storage));
             }
         }
+
+        [Fact]
+        public void StorageAccountCreateWithStorageV2()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with StorageV2
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(Kind.StorageV2, account.Kind);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountUpdateKindStorageV2()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
+
+                // Update storage account type
+                var parameters = new StorageAccountUpdateParameters
+                {
+                    Kind = Kind.StorageV2,
+                    EnableHttpsTrafficOnly = true
+                };
+                var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                Assert.Equal(account.Kind, Kind.StorageV2);
+                Assert.True(account.EnableHttpsTrafficOnly);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(account.Kind, Kind.StorageV2);
+                Assert.True(account.EnableHttpsTrafficOnly);
+            }
+        }
     }
 }

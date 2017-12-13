@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,14 +35,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="linkedServiceName">Staging linked service
         /// reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="path">The path to storage for storing the interim
         /// data. Type: string (or Expression with resultType string).</param>
         /// <param name="enableCompression">Specifies whether to use
         /// compression when copying data via an interim staging. Default value
         /// is false. Type: boolean (or Expression with resultType
         /// boolean).</param>
-        public StagingSettings(LinkedServiceReference linkedServiceName, object path = default(object), object enableCompression = default(object))
+        public StagingSettings(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object path = default(object), object enableCompression = default(object))
         {
+            AdditionalProperties = additionalProperties;
             LinkedServiceName = linkedServiceName;
             Path = path;
             EnableCompression = enableCompression;
@@ -51,6 +56,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets staging linked service reference.

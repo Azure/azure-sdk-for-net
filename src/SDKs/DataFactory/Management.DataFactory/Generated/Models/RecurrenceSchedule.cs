@@ -31,13 +31,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the RecurrenceSchedule class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="minutes">The minutes.</param>
         /// <param name="hours">The hours.</param>
         /// <param name="weekDays">The days of the week.</param>
         /// <param name="monthDays">The month days.</param>
         /// <param name="monthlyOccurrences">The monthly occurrences.</param>
-        public RecurrenceSchedule(IList<int?> minutes = default(IList<int?>), IList<int?> hours = default(IList<int?>), IList<DaysOfWeek?> weekDays = default(IList<DaysOfWeek?>), IList<int?> monthDays = default(IList<int?>), IList<RecurrenceScheduleOccurrence> monthlyOccurrences = default(IList<RecurrenceScheduleOccurrence>))
+        public RecurrenceSchedule(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<int?> minutes = default(IList<int?>), IList<int?> hours = default(IList<int?>), IList<DaysOfWeek?> weekDays = default(IList<DaysOfWeek?>), IList<int?> monthDays = default(IList<int?>), IList<RecurrenceScheduleOccurrence> monthlyOccurrences = default(IList<RecurrenceScheduleOccurrence>))
         {
+            AdditionalProperties = additionalProperties;
             Minutes = minutes;
             Hours = hours;
             WeekDays = weekDays;
@@ -50,6 +53,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the minutes.

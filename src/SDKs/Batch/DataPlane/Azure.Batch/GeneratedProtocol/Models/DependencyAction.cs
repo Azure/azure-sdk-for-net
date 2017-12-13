@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DependencyAction
     {
+        /// <summary>
+        /// Satisfy the task's dependencies.
+        /// </summary>
         [EnumMember(Value = "satisfy")]
         Satisfy,
+        /// <summary>
+        /// Block the task's dependencies.
+        /// </summary>
         [EnumMember(Value = "block")]
         Block
     }

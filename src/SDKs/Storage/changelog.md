@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 7.1.0-preview
+
+- Support Create or Upgrade Storage Account with kind StorageV2
+
 ### Changes in 7.0.0-preview
 
 **Breaking changes**
