@@ -1,9 +1,9 @@
-2017-12-07 03:31:20 UTC
+2017-12-13 03:43:01 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: felixwa
-Branch:      Fix-Folder-Structure
-Commit:      4c580a4bfdc03eadcf9d1838e12587d9d951316e
+GitHub user: Azure
+Branch:      current
+Commit:      6f19801e99f2962e77205a9d5d5f46a3386eb66f
 
 2) AutoRest information
 Requested version: latest
