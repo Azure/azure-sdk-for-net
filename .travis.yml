@@ -2,7 +2,7 @@ language: csharp
 mono: none
 sudo: required
 dist: trusty
-#group: deprecated-2017Q4
+group: deprecated-2017Q4
 env:
     global:
         - CLI_VERSION: latest
@@ -21,7 +21,7 @@ install:
   - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
   - sudo apt-get update
-  - sudo apt-get install dotnet-dev-1.0.3
+  - sudo apt-get install dotnet-dev-1.1.4
 script:
   - ./testSdkOnLinux.sh
 after_script:
