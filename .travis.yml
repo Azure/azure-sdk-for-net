@@ -1,6 +1,12 @@
 language: csharp
+mono: none
 sudo: required
 dist: trusty
+group: deprecated-2017Q4
+env:
+    global:
+        - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+        - DOTNET_CLI_TELEMETRY_OPTOUT: 1
 # safelist
 #branches:
 #    only:
@@ -11,11 +17,11 @@ addons:
     packages:
 install:
   - cat /etc/*release
-  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
-  - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
   - sudo apt-get update
-  - sudo apt-get install dotnet-dev-1.0.3 -y
-script: 
+  - sudo apt-get install dotnet-dev-1.0.4
+script:
   - ./testSdkOnLinux.sh
 after_script:
   - echo "========== Server log: ============"
