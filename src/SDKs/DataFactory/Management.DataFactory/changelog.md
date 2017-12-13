@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.3.1-preview
+
+### Feature Additions
+  * Add readBehavior to Salesforce Source
+
 ## Version 0.3.0-preview
 
 ### Feature Additions
