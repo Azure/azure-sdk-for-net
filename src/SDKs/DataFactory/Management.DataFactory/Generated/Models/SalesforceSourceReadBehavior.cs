@@ -8,17 +8,15 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Storage.Models
+namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for Bypass.
+    /// Defines values for SalesforceSourceReadBehavior.
     /// </summary>
-    public static class Bypass
+    public static class SalesforceSourceReadBehavior
     {
-        public const string None = "None";
-        public const string Logging = "Logging";
-        public const string Metrics = "Metrics";
-        public const string AzureServices = "AzureServices";
+        public const string Query = "Query";
+        public const string QueryAll = "QueryAll";
     }
 }

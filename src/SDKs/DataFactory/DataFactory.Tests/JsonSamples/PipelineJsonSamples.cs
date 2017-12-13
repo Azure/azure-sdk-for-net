@@ -2117,6 +2117,7 @@ namespace DataFactory.Tests.JsonSamples
           {
             ""type"": ""SalesforceSource"",
             ""query"":""select Id from table"",
+            ""readBehavior"": ""QueryAll""
           },
           ""sink"":
           {
