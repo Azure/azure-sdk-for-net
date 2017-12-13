@@ -1,9 +1,12 @@
 language: csharp
 mono: none
-dotnet: 1.0.3
 sudo: required
 dist: trusty
-group: deprecated-2017Q4
+#group: deprecated-2017Q4
+env:
+   global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+    - DOTNET_CLI_TELEMETRY_OPTOUT: 1
 # safelist
 #branches:
 #    only:
@@ -14,9 +17,9 @@ addons:
     packages:
 install:
   - cat /etc/*release
-  - curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-  - sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-  - sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+  - export DOTNET_INSTALL_DIR="$PWD/.dotnetsdk"
+  - curl -sSL https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.sh | bash /dev/stdin --version "$CLI_VERSION" --install-dir "$DOTNET_INSTALL_DIR"
+  - export PATH="$DOTNET_INSTALL_DIR:$PATH"
 script:
   - ./testSdkOnLinux.sh
 after_script:
