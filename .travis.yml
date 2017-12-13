@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 1.1.2
+dotnet: 1.0.3
 sudo: required
 dist: trusty
 group: deprecated-2017Q4
