@@ -1,5 +1,4 @@
 language: csharp
-mono: none
 sudo: required
 dist: trusty
 group: deprecated-2017Q4
@@ -13,11 +12,15 @@ addons:
     packages:
 install:
   - cat /etc/*release
-  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
+  - curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+  - sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+  #- sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
+  - sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
   - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
   - sudo apt-get update
   - sudo apt-get install dotnet-dev-1.0.3 -y
 script: 
+  - dotnet restore
   - ./testSdkOnLinux.sh
 after_script:
   - echo "========== Server log: ============"
