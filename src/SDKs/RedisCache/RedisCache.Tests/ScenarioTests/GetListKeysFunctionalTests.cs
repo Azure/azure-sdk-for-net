@@ -31,8 +31,7 @@ namespace AzureRedisCache.Tests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
         }
 
-        /*
-        [Fact(Skip = "Missing cleanup.json file")]
+        [Fact]
         public void GetTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -53,7 +52,7 @@ namespace AzureRedisCache.Tests
             }
         }
 
-        [Fact(Skip = "Missing cleanup.json file")]
+        [Fact]
         public void ListTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -86,7 +85,7 @@ namespace AzureRedisCache.Tests
             }
         }
 
-        [Fact(Skip = "Missing cleanup.json file")]
+        [Fact]
         public void ListWithoutResourceGroupTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -119,7 +118,7 @@ namespace AzureRedisCache.Tests
             }
         }
 
-        [Fact(Skip = "Missing cleanup.json file")]
+        [Fact]
         public void ListKeysTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -131,10 +130,9 @@ namespace AzureRedisCache.Tests
             }
         }
 
-        [Fact(Skip = "Missing cleanup.json file")]
+        [Fact]
         public void RegenerateKeyTest()
         {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
@@ -146,8 +144,6 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(beforeRegenerateResponse.SecondaryKey, afterRegenerateResponse.SecondaryKey);
             }
         }
-
-        */
 
         private static string GetSessionsDirectoryPath()
         {
