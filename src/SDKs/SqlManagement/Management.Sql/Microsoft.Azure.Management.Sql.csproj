@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Updated available service objectives & editions
+- Added BackupLongTermRetentionVaults.ListByServer and BackupLongTermRetentionPolicies.ListByDatabase
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

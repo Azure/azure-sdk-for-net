@@ -215,6 +215,12 @@ namespace Sql.Tests
 
                 // Get server LTR backup vault
                 serverVault = sqlClient.BackupLongTermRetentionVaults.Get(resourceGroup.Name, server.Name);
+                Assert.Equal(vault.Id, serverVault.RecoveryServicesVaultResourceId, ignoreCase: true);
+
+                // List server LTR backup vaults
+                IEnumerable<BackupLongTermRetentionVault> serverVaults = sqlClient.BackupLongTermRetentionVaults.ListByServer(resourceGroup.Name, server.Name);
+                Assert.Single(serverVaults);
+                Assert.Equal(vault.Id, serverVaults.Single().RecoveryServicesVaultResourceId, ignoreCase: true);
 
                 // Create database LTR policy
                 Database db = sqlClient.Databases.CreateOrUpdate(
@@ -229,6 +235,12 @@ namespace Sql.Tests
 
                 // Get database LTR policy
                 databasePolicy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, db.Name);
+                Assert.Equal(policy.Id, databasePolicy.RecoveryServicesBackupPolicyResourceId, ignoreCase: true);
+
+                // List database LTR policies
+                IEnumerable<BackupLongTermRetentionPolicy> databasePolicies = sqlClient.BackupLongTermRetentionPolicies.ListByDatabase(resourceGroup.Name, server.Name, db.Name);
+                Assert.Single(databasePolicies);
+                Assert.Equal(policy.Id, databasePolicies.Single().RecoveryServicesBackupPolicyResourceId, ignoreCase: true);
 
                 // Update database LTR policy
                 databasePolicy = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdate(
