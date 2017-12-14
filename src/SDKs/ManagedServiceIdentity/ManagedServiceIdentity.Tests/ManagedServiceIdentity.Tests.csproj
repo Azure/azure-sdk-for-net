@@ -15,19 +15,14 @@
     <ProjectReference Include="..\Management.ManagedServiceIdentity\Microsoft.Azure.Management.ManagedServiceIdentity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="SessionRecords\ManagedServiceIdentity.Tests.Tests.IdentityTests\Dispose.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\ManagedServiceIdentity.Tests.Tests.IdentityTests\TestIdentityCRUD.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\ManagedServiceIdentity.Tests.Tests.IdentityTests\TestOperationsApi.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

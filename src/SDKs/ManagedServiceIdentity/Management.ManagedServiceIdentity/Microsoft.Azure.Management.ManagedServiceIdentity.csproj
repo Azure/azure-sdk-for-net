@@ -8,7 +8,7 @@
     <Description>Provides developers with libraries for ManagedSericeIdentity under Azure Resource manager to perform CRUD operations on identities.</Description>
     <Version>1.0.0.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.ManagedServiceIdentity</AssemblyName>
-    <PackageTags>Microsoft Azure resource management;msi;managedserviceidentity</PackageTags>
+    <PackageTags>Microsoft Azure resource management;msi;managedserviceidentity;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a private preview release of the ManagedServiceIdentity SDK.
