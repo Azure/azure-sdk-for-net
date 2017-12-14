@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SBAuthorizationRule class.
         /// </summary>
+        /// <param name="rights">The rights associated with the rule.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="rights">The rights associated with the rule.</param>
-        public SBAuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<AccessRights?> rights = default(IList<AccessRights?>))
+        public SBAuthorizationRule(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             Rights = rights;
@@ -56,5 +56,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         [JsonProperty(PropertyName = "properties.rights")]
         public IList<AccessRights?> Rights { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Rights == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
+            }
+        }
     }
 }
