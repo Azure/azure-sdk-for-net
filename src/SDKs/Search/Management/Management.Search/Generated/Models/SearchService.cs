@@ -34,16 +34,14 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchService class.
         /// </summary>
-        /// <param name="location">The geographic location of the resource.
-        /// This must be one of the supported and registered Azure Geo Regions
-        /// (for example, West US, East US, Southeast Asia, and so
-        /// forth).</param>
-        /// <param name="sku">The SKU of the Search Service, which determines
-        /// price tier and capacity limits.</param>
         /// <param name="id">The ID of the resource. This can be used with the
         /// Azure Resource Manager to link resources together.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The resource type.</param>
+        /// <param name="location">The geographic location of the resource.
+        /// This must be one of the supported and registered Azure Geo Regions
+        /// (for example, West US, East US, Southeast Asia, and so
+        /// forth).</param>
         /// <param name="tags">Tags to help categorize the resource in the
         /// Azure portal.</param>
         /// <param name="replicaCount">The number of replicas in the Search
@@ -92,8 +90,10 @@ namespace Microsoft.Azure.Management.Search.Models
         /// the call to Create Search service. This is because the free service
         /// uses capacity that is already set up. Possible values include:
         /// 'succeeded', 'provisioning', 'failed'</param>
-        public SearchService(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?))
-            : base(location, id, name, type, tags)
+        /// <param name="sku">The SKU of the Search Service, which determines
+        /// price tier and capacity limits.</param>
+        public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), Sku sku = default(Sku))
+            : base(id, name, type, location, tags)
         {
             ReplicaCount = replicaCount;
             PartitionCount = partitionCount;
@@ -196,13 +196,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (Sku == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
-            }
             if (ReplicaCount > 12)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "ReplicaCount", 12);

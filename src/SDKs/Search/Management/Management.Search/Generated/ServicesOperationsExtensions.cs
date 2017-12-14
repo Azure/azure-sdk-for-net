@@ -96,6 +96,62 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
+            /// Updates an existing Search service in the given resource group.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Search service to update.
+            /// </param>
+            /// <param name='service'>
+            /// The definition of the Search service to update.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static SearchService Update(this IServicesOperations operations, string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            {
+                return operations.UpdateAsync(resourceGroupName, searchServiceName, service, searchManagementRequestOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing Search service in the given resource group.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Search service to update.
+            /// </param>
+            /// <param name='service'>
+            /// The definition of the Search service to update.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SearchService> UpdateAsync(this IServicesOperations operations, string resourceGroupName, string searchServiceName, SearchService service, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, searchServiceName, service, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the Search service with the given name in the given resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>

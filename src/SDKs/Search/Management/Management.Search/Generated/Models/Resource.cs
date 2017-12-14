@@ -33,17 +33,17 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="location">The geographic location of the resource.
-        /// This must be one of the supported and registered Azure Geo Regions
-        /// (for example, West US, East US, Southeast Asia, and so
-        /// forth).</param>
         /// <param name="id">The ID of the resource. This can be used with the
         /// Azure Resource Manager to link resources together.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The resource type.</param>
+        /// <param name="location">The geographic location of the resource.
+        /// This must be one of the supported and registered Azure Geo Regions
+        /// (for example, West US, East US, Southeast Asia, and so
+        /// forth).</param>
         /// <param name="tags">Tags to help categorize the resource in the
         /// Azure portal.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -92,18 +92,5 @@ namespace Microsoft.Azure.Management.Search.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }
