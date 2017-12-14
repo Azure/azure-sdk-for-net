@@ -40,17 +40,20 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Alias(Disaster Recovery configuration) - possible values 'Accepted'
         /// or 'Succeeded' or 'Failed'. Possible values include: 'Accepted',
         /// 'Succeeded', 'Failed'</param>
-        /// <param name="partnerNamespace">Primary/Secondary eventhub namespace
-        /// name, which is part of GEO DR pairning</param>
+        /// <param name="partnerNamespace">ARM Id of the Primary/Secondary
+        /// eventhub namespace name, which is part of GEO DR pairning</param>
+        /// <param name="alternateName">Alternate name specified when alias and
+        /// namespace names are same.</param>
         /// <param name="role">role of namespace in GEO DR - possible values
         /// 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. Possible
         /// values include: 'Primary', 'PrimaryNotReplicating',
         /// 'Secondary'</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?))
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;
+            AlternateName = alternateName;
             Role = role;
             CustomInit();
         }
@@ -70,11 +73,18 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public ProvisioningStateDR? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets primary/Secondary eventhub namespace name, which is
-        /// part of GEO DR pairning
+        /// Gets or sets ARM Id of the Primary/Secondary eventhub namespace
+        /// name, which is part of GEO DR pairning
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerNamespace")]
         public string PartnerNamespace { get; set; }
+
+        /// <summary>
+        /// Gets or sets alternate name specified when alias and namespace
+        /// names are same.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alternateName")]
+        public string AlternateName { get; set; }
 
         /// <summary>
         /// Gets role of namespace in GEO DR - possible values 'Primary' or
