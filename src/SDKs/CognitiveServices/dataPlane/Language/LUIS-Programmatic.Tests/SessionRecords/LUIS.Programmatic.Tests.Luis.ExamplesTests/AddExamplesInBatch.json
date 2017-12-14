@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/examples",
+      "RequestMethod": "POST",
+      "RequestBody": "[\r\n  {\r\n    \"text\": \"whats the weather in seattle?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 29\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  },\r\n  {\r\n    \"text\": \"whats the weather in buenos aires?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 34\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "474"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"value\": {\r\n      \"UtteranceText\": \"whats the weather in seattle?\",\r\n      \"ExampleId\": -728104\r\n    },\r\n    \"hasError\": false\r\n  },\r\n  {\r\n    \"value\": {\r\n      \"UtteranceText\": \"whats the weather in buenos aires?\",\r\n      \"ExampleId\": -5313943\r\n    },\r\n    \"hasError\": false\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "201"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 21:10:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "f7251f28-e607-48a3-898a-6ebeae8a140e"
+        ],
+        "Request-Id": [
+          "f7251f28-e607-48a3-898a-6ebeae8a140e"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

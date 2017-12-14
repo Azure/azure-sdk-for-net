@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/usagescenarios",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy91c2FnZXNjZW5hcmlvcw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  \"IoT\",\r\n  \"Bot\",\r\n  \"Mobile Application\",\r\n  \"Other\"\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "42"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 04:08:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "c941e592-16b4-4b61-82de-b7d4f183346f"
+        ],
+        "Request-Id": [
+          "c941e592-16b4-4b61-82de-b7d4f183346f"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -1,0 +1,168 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions?skip=0&take=100",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2017-08-01T14:34:15Z\",\r\n    \"lastModifiedDateTime\": \"2017-11-28T20:12:09Z\",\r\n    \"lastTrainedDateTime\": \"2017-11-28T20:12:12Z\",\r\n    \"lastPublishedDateTime\": \"2017-11-28T20:12:35Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 4,\r\n    \"entitiesCount\": 0,\r\n    \"endpointHitsCount\": 175,\r\n    \"trainingStatus\": \"Trained\"\r\n  },\r\n  {\r\n    \"version\": \"0.2\",\r\n    \"createdDateTime\": \"2017-11-28T20:14:19Z\",\r\n    \"lastModifiedDateTime\": \"2017-11-28T20:14:43Z\",\r\n    \"lastTrainedDateTime\": \"2017-11-28T20:14:46Z\",\r\n    \"lastPublishedDateTime\": \"2017-11-28T20:20:11Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 4,\r\n    \"entitiesCount\": 0,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"Trained\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1023"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Wed, 29 Nov 2017 14:37:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "7fc5a374-fad1-4aee-8bc7-75f6006d2a35"
+        ],
+        "Request-Id": [
+          "7fc5a374-fad1-4aee-8bc7-75f6006d2a35"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"version\": \"0.1\",\r\n  \"createdDateTime\": \"2017-08-01T14:34:15Z\",\r\n  \"lastModifiedDateTime\": \"2017-11-28T20:12:09Z\",\r\n  \"lastTrainedDateTime\": \"2017-11-28T20:12:12Z\",\r\n  \"lastPublishedDateTime\": \"2017-11-28T20:12:35Z\",\r\n  \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n  \"assignedEndpointKey\": {\r\n    \"SubscriptionKey\": \"\",\r\n    \"SubscriptionRegion\": \"westus\",\r\n    \"SubscriptionName\": \"\"\r\n  },\r\n  \"externalApiKeys\": {},\r\n  \"intentsCount\": 4,\r\n  \"entitiesCount\": 0,\r\n  \"endpointHitsCount\": 175,\r\n  \"trainingStatus\": \"Trained\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "511"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Wed, 29 Nov 2017 14:37:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "7927d220-5cf3-4749-9ae6-1c30918f8f0c"
+        ],
+        "Request-Id": [
+          "7927d220-5cf3-4749-9ae6-1c30918f8f0c"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.2/",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"version\": \"0.2\",\r\n  \"createdDateTime\": \"2017-11-28T20:14:19Z\",\r\n  \"lastModifiedDateTime\": \"2017-11-28T20:14:43Z\",\r\n  \"lastTrainedDateTime\": \"2017-11-28T20:14:46Z\",\r\n  \"lastPublishedDateTime\": \"2017-11-28T20:20:11Z\",\r\n  \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n  \"assignedEndpointKey\": {\r\n    \"SubscriptionKey\": \"\",\r\n    \"SubscriptionRegion\": \"westus\",\r\n    \"SubscriptionName\": \"\"\r\n  },\r\n  \"externalApiKeys\": {},\r\n  \"intentsCount\": 4,\r\n  \"entitiesCount\": 0,\r\n  \"endpointHitsCount\": 0,\r\n  \"trainingStatus\": \"Trained\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "509"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Wed, 29 Nov 2017 14:37:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "1b432659-b8c7-4321-99e9-69250d4b39cb"
+        ],
+        "Request-Id": [
+          "1b432659-b8c7-4321-99e9-69250d4b39cb"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

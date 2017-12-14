@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/domains",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9kb21haW5z",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  \"Booking & Reference\",\r\n  \"Business\",\r\n  \"Comics\",\r\n  \"Communication\",\r\n  \"Education\",\r\n  \"Entertainment\",\r\n  \"Finance\",\r\n  \"Food & Nutrition\",\r\n  \"Gaming\",\r\n  \"Health & Fitness\",\r\n  \"Home Automation\",\r\n  \"Media & Video\",\r\n  \"Medical\",\r\n  \"Music & Audio\",\r\n  \"Navigation & Maps\",\r\n  \"News & Magazines\",\r\n  \"Personalization\",\r\n  \"Productivity\",\r\n  \"Real Estate\",\r\n  \"Scheduler\",\r\n  \"Shopping\",\r\n  \"Social Network\",\r\n  \"Sports\",\r\n  \"Telecom\",\r\n  \"Tools\",\r\n  \"Transportation\",\r\n  \"Translation\",\r\n  \"Travel & Local\",\r\n  \"Weather\",\r\n  \"Others\"\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "424"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 04:07:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "4d6dbd52-6e2b-42b7-a437-6794a6335be5"
+        ],
+        "Request-Id": [
+          "4d6dbd52-6e2b-42b7-a437-6794a6335be5"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

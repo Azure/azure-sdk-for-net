@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic</PackageId>
+    <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Programmatic API.</Description>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the Cognitive Services LUIS Programmatic SDK.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

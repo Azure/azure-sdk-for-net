@@ -1,0 +1,238 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App to be renamed\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "147"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"caa128b7-3ac7-4e72-a151-1f70c8833032\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 04:07:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/caa128b7-3ac7-4e72-a151-1f70c8833032"
+        ],
+        "Apim-Request-Id": [
+          "dc687e56-2f31-4456-94fb-a3a148cec473"
+        ],
+        "Request-Id": [
+          "dc687e56-2f31-4456-94fb-a3a148cec473"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/caa128b7-3ac7-4e72-a151-1f70c8833032"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/caa128b7-3ac7-4e72-a151-1f70c8833032",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jYWExMjhiNy0zYWM3LTRlNzItYTE1MS0xZjcwYzg4MzMwMzI=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"LUIS App name updated\",\r\n  \"description\": \"LUIS App description updated\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "89"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 04:07:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "ad25e8ec-fbe5-4680-96d1-de17e1d92334"
+        ],
+        "Request-Id": [
+          "ad25e8ec-fbe5-4680-96d1-de17e1d92334"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/caa128b7-3ac7-4e72-a151-1f70c8833032",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jYWExMjhiNy0zYWM3LTRlNzItYTE1MS0xZjcwYzg4MzMwMzI=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"caa128b7-3ac7-4e72-a151-1f70c8833032\",\r\n  \"name\": \"LUIS App name updated\",\r\n  \"description\": \"LUIS App description updated\",\r\n  \"culture\": \"en-us\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"domain\": \"Comics\",\r\n  \"versionsCount\": 1,\r\n  \"createdDateTime\": \"2017-11-30T04:07:39Z\",\r\n  \"endpoints\": {},\r\n  \"endpointHitsCount\": 0,\r\n  \"activeVersion\": \"0.1\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "297"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 04:07:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "d8a1a477-3737-4138-8f15-5250f00777f5"
+        ],
+        "Request-Id": [
+          "d8a1a477-3737-4138-8f15-5250f00777f5"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/caa128b7-3ac7-4e72-a151-1f70c8833032",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jYWExMjhiNy0zYWM3LTRlNzItYTE1MS0xZjcwYzg4MzMwMzI=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 04:07:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "854d2ccb-4730-428e-b25b-897f1bdf79df"
+        ],
+        "Request-Id": [
+          "854d2ccb-4730-428e-b25b-897f1bdf79df"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

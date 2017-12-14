@@ -1,0 +1,279 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions?skip=0&take=100",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2017-11-29T18:46:10Z\",\r\n    \"lastModifiedDateTime\": \"2017-12-01T12:36:12Z\",\r\n    \"lastTrainedDateTime\": \"2017-12-01T12:35:07Z\",\r\n    \"lastPublishedDateTime\": \"2017-11-29T19:32:55Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 8,\r\n    \"entitiesCount\": 5,\r\n    \"endpointHitsCount\": 4,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "517"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 01 Dec 2017 12:53:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "b854fb07-5aac-4425-9dc5-574378394250"
+        ],
+        "Request-Id": [
+          "b854fb07-5aac-4425-9dc5-574378394250"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/intents?skip=0&take=100",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"0c2cdd38-dca3-4372-93d0-ba40f5c703b7\",\r\n    \"name\": \"Calendar.Add\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Add\"\r\n  },\r\n  {\r\n    \"id\": \"3bb0aab7-f580-4603-b968-166c48c0ce7e\",\r\n    \"name\": \"Calendar.CheckAvailability\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"CheckAvailability\"\r\n  },\r\n  {\r\n    \"id\": \"d7a1eca0-64e4-4747-8462-8f2ae0002909\",\r\n    \"name\": \"Calendar.Delete\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Delete\"\r\n  },\r\n  {\r\n    \"id\": \"3b50e682-425a-4a82-a83c-bcf28c444d32\",\r\n    \"name\": \"Calendar.Edit\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Edit\"\r\n  },\r\n  {\r\n    \"id\": \"c08d92cb-bc09-4173-bf4a-bfcdfc4ca63c\",\r\n    \"name\": \"Calendar.Find\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Find\"\r\n  },\r\n  {\r\n    \"id\": \"01d07c96-2f5f-4578-bfcf-c99176c6b04f\",\r\n    \"name\": \"EnzoCano\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"d81d151e-59a1-49d0-bd2d-dce0533c7efe\",\r\n    \"name\": \"Hello\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"e5392131-603e-4d90-928d-3d7e6148343c\",\r\n    \"name\": \"None\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1282"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 01 Dec 2017 12:53:29 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "9aa86d5e-2f29-4cce-ac12-24dce1cc9379"
+        ],
+        "Request-Id": [
+          "9aa86d5e-2f29-4cce-ac12-24dce1cc9379"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/intents/0c2cdd38-dca3-4372-93d0-ba40f5c703b7/suggest?take=100",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"text\": \"today || from today to tomorrow || one million || eleventh || three ars || we have one simple intent || this is a simple intent\",\r\n    \"tokenizedText\": [\r\n      \"today\",\r\n      \"|\",\r\n      \"|\",\r\n      \"from\",\r\n      \"today\",\r\n      \"to\",\r\n      \"tomorrow\",\r\n      \"|\",\r\n      \"|\",\r\n      \"one\",\r\n      \"million\",\r\n      \"|\",\r\n      \"|\",\r\n      \"eleventh\",\r\n      \"|\",\r\n      \"|\",\r\n      \"three\",\r\n      \"ars\",\r\n      \"|\",\r\n      \"|\",\r\n      \"we\",\r\n      \"have\",\r\n      \"one\",\r\n      \"simple\",\r\n      \"intent\",\r\n      \"|\",\r\n      \"|\",\r\n      \"this\",\r\n      \"is\",\r\n      \"a\",\r\n      \"simple\",\r\n      \"intent\"\r\n    ],\r\n    \"intentPredictions\": [\r\n      {\r\n        \"name\": \"Calendar.Add\",\r\n        \"score\": 0.35\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Find\",\r\n        \"score\": 0.28\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Edit\",\r\n        \"score\": 0.05\r\n      },\r\n      {\r\n        \"name\": \"None\",\r\n        \"score\": 0.02\r\n      },\r\n      {\r\n        \"name\": \"Calendar.CheckAvailability\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Delete\",\r\n        \"score\": 0.0\r\n      },\r\n      {\r\n        \"name\": \"EnzoCano\",\r\n        \"score\": 0.0\r\n      },\r\n      {\r\n        \"name\": \"Hello\",\r\n        \"score\": 0.0\r\n      }\r\n    ],\r\n    \"entityPredictions\": [\r\n      {\r\n        \"entityName\": \"datetimeV2\",\r\n        \"startTokenIndex\": 0,\r\n        \"endTokenIndex\": 0,\r\n        \"phrase\": \"today\"\r\n      },\r\n      {\r\n        \"entityName\": \"datetimeV2\",\r\n        \"startTokenIndex\": 0,\r\n        \"endTokenIndex\": 0,\r\n        \"phrase\": \"today\"\r\n      },\r\n      {\r\n        \"entityName\": \"datetimeV2\",\r\n        \"startTokenIndex\": 3,\r\n        \"endTokenIndex\": 6,\r\n        \"phrase\": \"from today to tomorrow\"\r\n      },\r\n      {\r\n        \"entityName\": \"datetimeV2\",\r\n        \"startTokenIndex\": 3,\r\n        \"endTokenIndex\": 6,\r\n        \"phrase\": \"from today to tomorrow\"\r\n      },\r\n      {\r\n        \"entityName\": \"number\",\r\n        \"startTokenIndex\": 9,\r\n        \"endTokenIndex\": 9,\r\n        \"phrase\": \"one\"\r\n      },\r\n      {\r\n        \"entityName\": \"number\",\r\n        \"startTokenIndex\": 9,\r\n        \"endTokenIndex\": 9,\r\n        \"phrase\": \"one\"\r\n      },\r\n      {\r\n        \"entityName\": \"number\",\r\n        \"startTokenIndex\": 9,\r\n        \"endTokenIndex\": 10,\r\n        \"phrase\": \"one million\"\r\n      },\r\n      {\r\n        \"entityName\": \"number\",\r\n        \"startTokenIndex\": 9,\r\n        \"endTokenIndex\": 10,\r\n        \"phrase\": \"one million\"\r\n      },\r\n      {\r\n        \"entityName\": \"ordinal\",\r\n        \"startTokenIndex\": 13,\r\n        \"endTokenIndex\": 13,\r\n        \"phrase\": \"eleventh\"\r\n      },\r\n      {\r\n        \"entityName\": \"ordinal\",\r\n        \"startTokenIndex\": 13,\r\n        \"endTokenIndex\": 13,\r\n        \"phrase\": \"eleventh\"\r\n      },\r\n      {\r\n        \"entityName\": \"number\",\r\n        \"startTokenIndex\": 16,\r\n        \"endTokenIndex\": 16,\r\n        \"phrase\": \"three\"\r\n      },\r\n      {\r\n        \"entityName\": \"number\",\r\n        \"startTokenIndex\": 16,\r\n        \"endTokenIndex\": 16,\r\n        \"phrase\": \"three\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"text\": \"lorem ipsum dolor sit amet, consectetur adipiscing elit. duis pharetra viverra tristique. quisque quis rutrum ex. nam varius mauris nec mauris malesuada volutpat. integer luctus nec libero non iaculis. in ante massa, porttitor quis tempus id, condimentum non dolor. nullam porttitor ante tristique felis tempus, lacinia dapibus magna volutpat. suspendisse potenti. pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. curabitur congue gravida nisi ut posuere.\",\r\n    \"tokenizedText\": [\r\n      \"lorem\",\r\n      \"ipsum\",\r\n      \"dolor\",\r\n      \"sit\",\r\n      \"amet\",\r\n      \",\",\r\n      \"consectetur\",\r\n      \"adipiscing\",\r\n      \"elit\",\r\n      \".\",\r\n      \"duis\",\r\n      \"pharetra\",\r\n      \"viverra\",\r\n      \"tristique\",\r\n      \".\",\r\n      \"quisque\",\r\n      \"quis\",\r\n      \"rutrum\",\r\n      \"ex\",\r\n      \".\",\r\n      \"nam\",\r\n      \"varius\",\r\n      \"mauris\",\r\n      \"nec\",\r\n      \"mauris\",\r\n      \"malesuada\",\r\n      \"volutpat\",\r\n      \".\",\r\n      \"integer\",\r\n      \"luctus\",\r\n      \"nec\",\r\n      \"libero\",\r\n      \"non\",\r\n      \"iaculis\",\r\n      \".\",\r\n      \"in\",\r\n      \"ante\",\r\n      \"massa\",\r\n      \",\",\r\n      \"porttitor\",\r\n      \"quis\",\r\n      \"tempus\",\r\n      \"id\",\r\n      \",\",\r\n      \"condimentum\",\r\n      \"non\",\r\n      \"dolor\",\r\n      \".\",\r\n      \"nullam\",\r\n      \"porttitor\",\r\n      \"ante\",\r\n      \"tristique\",\r\n      \"felis\",\r\n      \"tempus\",\r\n      \",\",\r\n      \"lacinia\",\r\n      \"dapibus\",\r\n      \"magna\",\r\n      \"volutpat\",\r\n      \".\",\r\n      \"suspendisse\",\r\n      \"potenti\",\r\n      \".\",\r\n      \"pellentesque\",\r\n      \"habitant\",\r\n      \"morbi\",\r\n      \"tristique\",\r\n      \"senectus\",\r\n      \"et\",\r\n      \"netus\",\r\n      \"et\",\r\n      \"malesuada\",\r\n      \"fames\",\r\n      \"ac\",\r\n      \"turpis\",\r\n      \"egestas\",\r\n      \".\",\r\n      \"curabitur\",\r\n      \"congue\",\r\n      \"gravida\",\r\n      \"nisi\",\r\n      \"ut\",\r\n      \"posuere\",\r\n      \".\"\r\n    ],\r\n    \"intentPredictions\": [\r\n      {\r\n        \"name\": \"Calendar.Add\",\r\n        \"score\": 0.82\r\n      },\r\n      {\r\n        \"name\": \"Calendar.CheckAvailability\",\r\n        \"score\": 0.64\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Find\",\r\n        \"score\": 0.62\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Edit\",\r\n        \"score\": 0.11\r\n      },\r\n      {\r\n        \"name\": \"None\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Delete\",\r\n        \"score\": 0.0\r\n      },\r\n      {\r\n        \"name\": \"EnzoCano\",\r\n        \"score\": 0.0\r\n      },\r\n      {\r\n        \"name\": \"Hello\",\r\n        \"score\": 0.0\r\n      }\r\n    ],\r\n    \"entityPredictions\": []\r\n  },\r\n  {\r\n    \"text\": \"god morning bot\",\r\n    \"tokenizedText\": [\r\n      \"god\",\r\n      \"morning\",\r\n      \"bot\"\r\n    ],\r\n    \"intentPredictions\": [\r\n      {\r\n        \"name\": \"Hello\",\r\n        \"score\": 1.0\r\n      },\r\n      {\r\n        \"name\": \"None\",\r\n        \"score\": 0.05\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Add\",\r\n        \"score\": 0.04\r\n      },\r\n      {\r\n        \"name\": \"Calendar.CheckAvailability\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Delete\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Edit\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Find\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"EnzoCano\",\r\n        \"score\": 0.0\r\n      }\r\n    ],\r\n    \"entityPredictions\": [\r\n      {\r\n        \"entityName\": \"datetimeV2\",\r\n        \"startTokenIndex\": 1,\r\n        \"endTokenIndex\": 1,\r\n        \"phrase\": \"morning\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3758"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 01 Dec 2017 12:53:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "3cf7b02e-c021-4fb2-af29-ae35ca7ff3fb"
+        ],
+        "Request-Id": [
+          "3cf7b02e-c021-4fb2-af29-ae35ca7ff3fb"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/intents/0c2cdd38-dca3-4372-93d0-ba40f5c703b7/suggest?take=100",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"text\": \"lorem ipsum dolor sit amet, consectetur adipiscing elit. duis pharetra viverra tristique. quisque quis rutrum ex. nam varius mauris nec mauris malesuada volutpat. integer luctus nec libero non iaculis. in ante massa, porttitor quis tempus id, condimentum non dolor. nullam porttitor ante tristique felis tempus, lacinia dapibus magna volutpat. suspendisse potenti. pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. curabitur congue gravida nisi ut posuere.\",\r\n    \"tokenizedText\": [\r\n      \"lorem\",\r\n      \"ipsum\",\r\n      \"dolor\",\r\n      \"sit\",\r\n      \"amet\",\r\n      \",\",\r\n      \"consectetur\",\r\n      \"adipiscing\",\r\n      \"elit\",\r\n      \".\",\r\n      \"duis\",\r\n      \"pharetra\",\r\n      \"viverra\",\r\n      \"tristique\",\r\n      \".\",\r\n      \"quisque\",\r\n      \"quis\",\r\n      \"rutrum\",\r\n      \"ex\",\r\n      \".\",\r\n      \"nam\",\r\n      \"varius\",\r\n      \"mauris\",\r\n      \"nec\",\r\n      \"mauris\",\r\n      \"malesuada\",\r\n      \"volutpat\",\r\n      \".\",\r\n      \"integer\",\r\n      \"luctus\",\r\n      \"nec\",\r\n      \"libero\",\r\n      \"non\",\r\n      \"iaculis\",\r\n      \".\",\r\n      \"in\",\r\n      \"ante\",\r\n      \"massa\",\r\n      \",\",\r\n      \"porttitor\",\r\n      \"quis\",\r\n      \"tempus\",\r\n      \"id\",\r\n      \",\",\r\n      \"condimentum\",\r\n      \"non\",\r\n      \"dolor\",\r\n      \".\",\r\n      \"nullam\",\r\n      \"porttitor\",\r\n      \"ante\",\r\n      \"tristique\",\r\n      \"felis\",\r\n      \"tempus\",\r\n      \",\",\r\n      \"lacinia\",\r\n      \"dapibus\",\r\n      \"magna\",\r\n      \"volutpat\",\r\n      \".\",\r\n      \"suspendisse\",\r\n      \"potenti\",\r\n      \".\",\r\n      \"pellentesque\",\r\n      \"habitant\",\r\n      \"morbi\",\r\n      \"tristique\",\r\n      \"senectus\",\r\n      \"et\",\r\n      \"netus\",\r\n      \"et\",\r\n      \"malesuada\",\r\n      \"fames\",\r\n      \"ac\",\r\n      \"turpis\",\r\n      \"egestas\",\r\n      \".\",\r\n      \"curabitur\",\r\n      \"congue\",\r\n      \"gravida\",\r\n      \"nisi\",\r\n      \"ut\",\r\n      \"posuere\",\r\n      \".\"\r\n    ],\r\n    \"intentPredictions\": [\r\n      {\r\n        \"name\": \"Calendar.Add\",\r\n        \"score\": 0.82\r\n      },\r\n      {\r\n        \"name\": \"Calendar.CheckAvailability\",\r\n        \"score\": 0.64\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Find\",\r\n        \"score\": 0.62\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Edit\",\r\n        \"score\": 0.11\r\n      },\r\n      {\r\n        \"name\": \"None\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Delete\",\r\n        \"score\": 0.0\r\n      },\r\n      {\r\n        \"name\": \"EnzoCano\",\r\n        \"score\": 0.0\r\n      },\r\n      {\r\n        \"name\": \"Hello\",\r\n        \"score\": 0.0\r\n      }\r\n    ],\r\n    \"entityPredictions\": []\r\n  },\r\n  {\r\n    \"text\": \"god morning bot\",\r\n    \"tokenizedText\": [\r\n      \"god\",\r\n      \"morning\",\r\n      \"bot\"\r\n    ],\r\n    \"intentPredictions\": [\r\n      {\r\n        \"name\": \"Hello\",\r\n        \"score\": 1.0\r\n      },\r\n      {\r\n        \"name\": \"None\",\r\n        \"score\": 0.05\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Add\",\r\n        \"score\": 0.04\r\n      },\r\n      {\r\n        \"name\": \"Calendar.CheckAvailability\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Delete\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Edit\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"Calendar.Find\",\r\n        \"score\": 0.01\r\n      },\r\n      {\r\n        \"name\": \"EnzoCano\",\r\n        \"score\": 0.0\r\n      }\r\n    ],\r\n    \"entityPredictions\": [\r\n      {\r\n        \"entityName\": \"datetimeV2\",\r\n        \"startTokenIndex\": 1,\r\n        \"endTokenIndex\": 1,\r\n        \"phrase\": \"morning\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2042"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 01 Dec 2017 12:53:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "d4fad08d-05b4-47b9-a6ad-5d68f6c183b9"
+        ],
+        "Request-Id": [
+          "d4fad08d-05b4-47b9-a6ad-5d68f6c183b9"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/suggest",
+      "RequestMethod": "DELETE",
+      "RequestBody": "\"today || from today to tomorrow || one million || eleventh || three ars || we have one simple intent || this is a simple intent\"",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "129"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Fri, 01 Dec 2017 12:53:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "4f3b9d1e-c83c-4305-9976-ad15a3de2fcd"
+        ],
+        "Request-Id": [
+          "4f3b9d1e-c83c-4305-9976-ad15a3de2fcd"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -1,0 +1,126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/28027e3b-8356-4cdf-b395-24afb94e9469/sublists",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"canonicalForm\": \"Texas\",\r\n  \"list\": [\r\n    \"tx\",\r\n    \"texas\"\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "75"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "6134877",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "7"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Wed, 29 Nov 2017 23:37:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/28027e3b-8356-4cdf-b395-24afb94e9469/sublists/6134877"
+        ],
+        "Apim-Request-Id": [
+          "b284bb14-bea9-47da-98ef-146718eef726"
+        ],
+        "Request-Id": [
+          "b284bb14-bea9-47da-98ef-146718eef726"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/28027e3b-8356-4cdf-b395-24afb94e9469/sublists/6134877"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/28027e3b-8356-4cdf-b395-24afb94e9469",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"28027e3b-8356-4cdf-b395-24afb94e9469\",\r\n  \"name\": \"States\",\r\n  \"typeId\": 5,\r\n  \"readableType\": \"Closed List Entity Extractor\",\r\n  \"subLists\": [\r\n    {\r\n      \"id\": 6134874,\r\n      \"canonicalForm\": \"New York\",\r\n      \"list\": [\r\n        \"ny\",\r\n        \"new york\"\r\n      ]\r\n    },\r\n    {\r\n      \"id\": 6134875,\r\n      \"canonicalForm\": \"Washington\",\r\n      \"list\": [\r\n        \"wa\",\r\n        \"washington\"\r\n      ]\r\n    },\r\n    {\r\n      \"id\": 6134876,\r\n      \"canonicalForm\": \"California\",\r\n      \"list\": [\r\n        \"ca\",\r\n        \"california\",\r\n        \"calif.\",\r\n        \"cal.\"\r\n      ]\r\n    },\r\n    {\r\n      \"id\": 6134877,\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"tx\",\r\n        \"texas\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "417"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Wed, 29 Nov 2017 23:37:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "863a9f30-2f2a-446a-9f2a-c79174104eed"
+        ],
+        "Request-Id": [
+          "863a9f30-2f2a-446a-9f2a-c79174104eed"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/export",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"luis_schema_version\": \"2.1.0\",\r\n  \"versionId\": \"0.1\",\r\n  \"name\": \"LuisBot\",\r\n  \"desc\": \"\",\r\n  \"culture\": \"en-us\",\r\n  \"intents\": [\r\n    {\r\n      \"name\": \"dateintent\"\r\n    },\r\n    {\r\n      \"name\": \"Help\"\r\n    },\r\n    {\r\n      \"name\": \"None\"\r\n    },\r\n    {\r\n      \"name\": \"SearchHotels\"\r\n    },\r\n    {\r\n      \"name\": \"ShowHotelsReviews\"\r\n    }\r\n  ],\r\n  \"entities\": [\r\n    {\r\n      \"name\": \"AirportCode\"\r\n    },\r\n    {\r\n      \"name\": \"Hotel\"\r\n    }\r\n  ],\r\n  \"composites\": [],\r\n  \"closedLists\": [],\r\n  \"bing_entities\": [\r\n    \"datetimeV2\",\r\n    \"geography\"\r\n  ],\r\n  \"model_features\": [\r\n    {\r\n      \"name\": \"Near\",\r\n      \"mode\": true,\r\n      \"words\": \"near,around,close,nearby\",\r\n      \"activated\": true\r\n    },\r\n    {\r\n      \"name\": \"Show\",\r\n      \"mode\": true,\r\n      \"words\": \"show,find,look,search\",\r\n      \"activated\": true\r\n    }\r\n  ],\r\n  \"regex_features\": [\r\n    {\r\n      \"name\": \"AirportCodeRegex\",\r\n      \"pattern\": \"[a-z]{3}\",\r\n      \"activated\": true\r\n    }\r\n  ],\r\n  \"utterances\": [\r\n    {\r\n      \"text\": \"i need help\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"help me\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"tomorrow\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"search for hotels in seattle\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"what can i do?\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"next monday\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"next year\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"look for hotels in miami\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"show me hotels in california\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"show me the reviews of the amazing bot resort\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"Hotel\",\r\n          \"startPos\": 23,\r\n          \"endPos\": 44\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"can i see the reviews of extended bot hotel?\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"Hotel\",\r\n          \"startPos\": 25,\r\n          \"endPos\": 42\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find reviews of hotelxya\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"Hotel\",\r\n          \"startPos\": 16,\r\n          \"endPos\": 23\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"show me reviews of the amazing hotel\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"Hotel\",\r\n          \"startPos\": 19,\r\n          \"endPos\": 35\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"what are the available options?\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"best hotels in seattle\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"hotels in los angeles\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"can you show me hotels from los angeles?\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"can you show me the reviews of the amazing resort & hotel\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"Hotel\",\r\n          \"startPos\": 31,\r\n          \"endPos\": 56\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"what are the reviews of the hotel bot framework?\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"Hotel\",\r\n          \"startPos\": 24,\r\n          \"endPos\": 46\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels near eze\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"AirportCode\",\r\n          \"startPos\": 17,\r\n          \"endPos\": 19\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"where can i stay near nnn?\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"AirportCode\",\r\n          \"startPos\": 22,\r\n          \"endPos\": 24\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"show hotels near att airport\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"AirportCode\",\r\n          \"startPos\": 17,\r\n          \"endPos\": 19\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels near agl\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"AirportCode\",\r\n          \"startPos\": 17,\r\n          \"endPos\": 19\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels around eze airport\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"entity\": \"AirportCode\",\r\n          \"startPos\": 19,\r\n          \"endPos\": 21\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"01/7\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "5105"
+        ],
+        "Content-Type": [
+          "application/octet-stream"
+        ],
+        "Content-Disposition": [
+          "attachment; filename=LuisBot.json"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 30 Nov 2017 22:39:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "99f7327c-6432-4460-8049-d1b6fc972839"
+        ],
+        "Request-Id": [
+          "99f7327c-6432-4460-8049-d1b6fc972839"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

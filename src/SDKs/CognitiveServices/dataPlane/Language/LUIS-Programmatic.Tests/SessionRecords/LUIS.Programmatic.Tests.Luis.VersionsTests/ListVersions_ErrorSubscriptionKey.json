@@ -1,0 +1,45 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions?skip=0&take=100",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3eff76bb229942899255402725b72933"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"statusCode\": 401,\r\n  \"message\": \"Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription.\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "143"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Date": [
+          "Tue, 05 Dec 2017 19:20:17 GMT"
+        ],
+        "WWW-Authenticate": [
+          "AzureApiManagementKey realm=\"https://westus.api.cognitive.microsoft.com/luis/api/v2.0\",name=\"Ocp-Apim-Subscription-Key\",type=\"header\""
+        ],
+        "apim-request-id": [
+          "6ea35aaf-f2fe-4eb6-85ef-3b48d34f3d65"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 401
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
