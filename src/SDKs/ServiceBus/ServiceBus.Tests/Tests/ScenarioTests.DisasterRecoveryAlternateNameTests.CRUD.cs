@@ -17,7 +17,7 @@ namespace ServiceBus.Tests.ScenarioTests
     public partial class ScenarioTests
     {
         [Fact]
-        public void DisasterRecoveryCreateGetUpdateDelete()
+        public void DisasterRecoveryAlternateNameCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -33,8 +33,8 @@ namespace ServiceBus.Tests.ScenarioTests
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
-                var namespaceName =  TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
-
+                var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
+                
                 // Create namespace 1
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new SBNamespace()
@@ -57,9 +57,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-
-                //// Create namespace 2
+                // Create namespace 2
                 var namespaceName2 = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
                 var createNamespaceResponse2 = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName2,
                     new SBNamespace()
@@ -83,7 +81,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Create a namespace AuthorizationRule
-                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);                
+                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
@@ -97,7 +95,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 {
                     Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Any(r => r == right));
                 }
-                
+
                 // Get created namespace AuthorizationRules
                 var getNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
@@ -110,97 +108,96 @@ namespace ServiceBus.Tests.ScenarioTests
                 var getNamespaceAuthorizationRulesListKeysResponse = ServiceBusManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
 
                 // Create a Disaster Recovery -
-                var disasterRecoveryName = TestUtilities.GenerateName(ServiceBusManagementHelper.DisasterRecoveryPrefix);
+                var alternateName = TestUtilities.GenerateName(ServiceBusManagementHelper.DisasterRecoveryPrefix);
 
                 //CheckNameavaliability for Alias
-                var checknameAlias = ServiceBusManagementClient.DisasterRecoveryConfigs.CheckNameAvailabilityMethod(resourceGroup, namespaceName, new CheckNameAvailability(disasterRecoveryName));
 
-                Assert.True(checknameAlias.NameAvailable, "The Alias Name: '"+ disasterRecoveryName + "' is not avilable");
+                var checknameAlias = ServiceBusManagementClient.DisasterRecoveryConfigs.CheckNameAvailabilityMethod(resourceGroup, namespaceName, new CheckNameAvailability(namespaceName));
 
-                //CheckNameAvaliability for Alias with same as namespace name (alternateName will be used in this case)
-                var checknameAliasSame = ServiceBusManagementClient.DisasterRecoveryConfigs.CheckNameAvailabilityMethod(resourceGroup, namespaceName, new CheckNameAvailability(namespaceName));
-
-                Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
+                Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
 
 
-                var DisasterRecoveryResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
+                var DisasterRecoveryResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
                 {
-                    PartnerNamespace = createNamespaceResponse2.Id
+                    PartnerNamespace = createNamespaceResponse2.Id,
+                    AlternateName = alternateName
+
                 });
                 Assert.NotNull(DisasterRecoveryResponse);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 //// Get the created DisasterRecovery config - Primary
-                var disasterRecoveryGetResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
+                var disasterRecoveryGetResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName);
                 Assert.NotNull(disasterRecoveryGetResponse);
                 Assert.Equal(disasterRecoveryGetResponse.Role, RoleDisasterRecovery.Primary);
 
                 //// Get the created DisasterRecovery config - Secondary
-                var disasterRecoveryGetResponse_Sec = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName);
+                var disasterRecoveryGetResponse_Sec = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, namespaceName);
                 Assert.NotNull(disasterRecoveryGetResponse_Sec);
                 Assert.Equal(disasterRecoveryGetResponse_Sec.Role, RoleDisasterRecovery.Secondary);
 
                 //Get authorization rule thorugh Alias 
 
-                var getAuthoRuleAliasResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.GetAuthorizationRule(resourceGroup, namespaceName, disasterRecoveryName, authorizationRuleName);
+                var getAuthoRuleAliasResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.GetAuthorizationRule(resourceGroup, namespaceName, namespaceName, authorizationRuleName);
                 Assert.Equal(getAuthoRuleAliasResponse.Name, getNamespaceAuthorizationRulesResponse.Name);
 
-                var getAuthoruleListKeysResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, disasterRecoveryName, authorizationRuleName);
-                //Assert.Equal(getAuthoruleListKeysResponse.AliasPrimaryConnectionString, getNamespaceAuthorizationRulesListKeysResponse.AliasPrimaryConnectionString);
-                //Assert.Equal(getAuthoruleListKeysResponse.AliasSecondaryConnectionString, getNamespaceAuthorizationRulesListKeysResponse.AliasSecondaryConnectionString);
-                
-                var disasterRecoveryGetResponse_Accepted = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
+                var getAuthoruleListKeysResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, namespaceName, authorizationRuleName);
 
-                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+
+                var disasterRecoveryGetResponse_Accepted = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName);
+
+                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
-                
+
                 //// Break Pairing
-                ServiceBusManagementClient.DisasterRecoveryConfigs.BreakPairing(resourceGroup, namespaceName, disasterRecoveryName);
+                ServiceBusManagementClient.DisasterRecoveryConfigs.BreakPairing(resourceGroup, namespaceName, namespaceName);
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
 
-                var DisasterRecoveryResponse_update = ServiceBusManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
+                var DisasterRecoveryResponse_update = ServiceBusManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
                 {
-                    PartnerNamespace = createNamespaceResponse2.Id
+                    PartnerNamespace = createNamespaceResponse2.Id,
+                    AlternateName = alternateName
                 });
 
                 Assert.NotNull(DisasterRecoveryResponse_update);
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
 
                 // Fail over
-                ServiceBusManagementClient.DisasterRecoveryConfigs.FailOver(resourceGroup, namespaceName2, disasterRecoveryName);
+                ServiceBusManagementClient.DisasterRecoveryConfigs.FailOver(resourceGroup, namespaceName2, namespaceName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
-                
+
                 // Get all Disaster Recovery for a given NameSpace
                 var getListisasterRecoveryResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.List(resourceGroup, namespaceName2);
                 Assert.NotNull(getListisasterRecoveryResponse);
                 Assert.True(getListisasterRecoveryResponse.Count<ArmDisasterRecovery>() >= 1);
 
                 // Delete the DisasterRecovery 
-                ServiceBusManagementClient.DisasterRecoveryConfigs.Delete(resourceGroup, namespaceName2, disasterRecoveryName);
+                ServiceBusManagementClient.DisasterRecoveryConfigs.Delete(resourceGroup, namespaceName2, namespaceName);
 
                 // Delete Namespace using Async
                 ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
 
                 ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName2, null, new CancellationToken()).ConfigureAwait(false);
+                
             }
         }
     }
