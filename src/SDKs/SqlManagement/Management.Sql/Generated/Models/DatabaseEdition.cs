@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Basic = "Basic";
         public const string Standard = "Standard";
         public const string Premium = "Premium";
+        public const string PremiumRS = "PremiumRS";
         public const string Free = "Free";
         public const string Stretch = "Stretch";
         public const string DataWarehouse = "DataWarehouse";
