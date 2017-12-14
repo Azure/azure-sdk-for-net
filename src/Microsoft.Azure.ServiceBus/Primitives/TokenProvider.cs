@@ -4,40 +4,14 @@
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
-    using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
     /// </summary>
-    internal abstract class TokenProvider
+    public abstract class TokenProvider : ITokenProvider
     {
-        internal static readonly TimeSpan DefaultTokenTimeout = TimeSpan.FromMinutes(60);
-        internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
-        const TokenScope DefaultTokenScope = TokenScope.Entity;
-
-        /// <summary></summary>
-        protected TokenProvider()
-            : this(TokenProvider.DefaultTokenScope)
-        {
-        }
-
-        /// <summary></summary>
-        /// <param name="tokenScope"></param>
-        protected TokenProvider(TokenScope tokenScope)
-        {
-            this.TokenScope = tokenScope;
-            this.ThisLock = new object();
-        }
-
-        /// <summary>
-        /// Gets the scope or permissions associated with the token.
-        /// </summary>
-        public TokenScope TokenScope { get; }
-
-        /// <summary></summary>
-        protected object ThisLock { get; }
-
         /// <summary>
         /// Construct a TokenProvider based on a sharedAccessSignature.
         /// </summary>
@@ -56,13 +30,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey)
         {
-            return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
+            return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey);
         }
 
-        ////internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
-        ////{
-        ////    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
-        ////}
+        //internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
+        //{
+        //    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
+        //}
 
         /// <summary>
         /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
@@ -85,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope)
         {
-            return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout, tokenScope);
+            return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenScope);
         }
 
         /// <summary>
@@ -93,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <param name="tokenTimeToLive">The token time to live</param>
+        /// <param name="tokenTimeToLive">The token time to live</param> 
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
@@ -101,33 +75,96 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive, tokenScope);
         }
 
+        /// <summary>Creates an Azure Active Directory token provider.</summary>
+        /// <param name="authContext">AuthenticationContext for AAD.</param>
+        /// <param name="clientCredential">The app credential.</param>
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateAadTokenProvider(AuthenticationContext authContext, ClientCredential clientCredential)
+        {
+            if (authContext == null)
+            {
+                throw new ArgumentNullException(nameof(authContext));
+            }
+
+            if (clientCredential == null)
+            {
+                throw new ArgumentNullException(nameof(clientCredential));
+            }
+
+            return new AzureActiveDirectoryTokenProvider(authContext, clientCredential);
+        }
+
+        /// <summary>Creates an Azure Active Directory token provider.</summary>
+        /// <param name="authContext">AuthenticationContext for AAD.</param>
+        /// <param name="clientId">ClientId for AAD.</param>
+        /// <param name="redirectUri">The redirectUri on Client App.</param>
+        /// <param name="platformParameters">Platform parameters</param>
+        /// <param name="userIdentifier">User Identifier</param>
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateAadTokenProvider(
+            AuthenticationContext authContext,
+            string clientId,
+            Uri redirectUri,
+            IPlatformParameters platformParameters,
+            UserIdentifier userIdentifier = null)
+        {
+            if (authContext == null)
+            {
+                throw new ArgumentNullException(nameof(authContext));
+            }
+
+            if (string.IsNullOrEmpty(clientId))
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+
+            if (redirectUri == null)
+            {
+                throw new ArgumentNullException(nameof(redirectUri));
+            }
+
+            if (platformParameters == null)
+            {
+                throw new ArgumentNullException(nameof(platformParameters));
+            }
+
+            return new AzureActiveDirectoryTokenProvider(authContext, clientId, redirectUri, platformParameters, userIdentifier);
+        }
+
+#if !UAP10_0
+        /// <summary>Creates an Azure Active Directory token provider.</summary>
+        /// <param name="authContext">AuthenticationContext for AAD.</param>
+        /// <param name="clientAssertionCertificate">The client assertion certificate credential.</param>
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateAadTokenProvider(AuthenticationContext authContext, ClientAssertionCertificate clientAssertionCertificate)
+        {
+            if (authContext == null)
+            {
+                throw new ArgumentNullException(nameof(authContext));
+            }
+
+            if (clientAssertionCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(clientAssertionCertificate));
+            }
+
+            return new AzureActiveDirectoryTokenProvider(authContext, clientAssertionCertificate);
+        }
+#endif
+
+        /// <summary>Creates Azure Managed Service Identity token provider.</summary>
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateManagedServiceIdentityTokenProvider()
+        {
+            return new ManagedServiceIdentityTokenProvider();
+        }
+
         /// <summary>
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
         /// </summary>
         /// <param name="appliesTo">The URI which the access token applies to</param>
-        /// <param name="action">The request action</param>
         /// <param name="timeout">The time span that specifies the timeout value for the message that gets the security token</param>
         /// <returns></returns>
-        public Task<SecurityToken> GetTokenAsync(string appliesTo, string action, TimeSpan timeout)
-        {
-            TimeoutHelper.ThrowIfNegativeArgument(timeout);
-            appliesTo = this.NormalizeAppliesTo(appliesTo);
-            return this.OnGetTokenAsync(appliesTo, action, timeout);
-        }
-
-        /// <summary></summary>
-        /// <param name="appliesTo"></param>
-        /// <param name="action"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
-        protected abstract Task<SecurityToken> OnGetTokenAsync(string appliesTo, string action, TimeSpan timeout);
-
-        /// <summary></summary>
-        /// <param name="appliesTo"></param>
-        /// <returns></returns>
-        protected virtual string NormalizeAppliesTo(string appliesTo)
-        {
-            return ServiceBusUriHelper.NormalizeUri(appliesTo, "http", true, stripPath: this.TokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
-        }
+        public abstract Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout);
     }
 }

@@ -28,5 +28,22 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             this.InitializeConnection(builder);
         }
+
+        public ServiceBusNamespaceConnection(string endpoint, TransportType transportType, RetryPolicy retryPolicy)
+            : base(Constants.DefaultOperationTimeout, retryPolicy)
+        {
+            if (string.IsNullOrWhiteSpace(endpoint))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(endpoint));
+            }
+
+            var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder()
+            {
+                Endpoint = endpoint,
+                TransportType = transportType
+            };
+
+            this.InitializeConnection(serviceBusConnectionStringBuilder);
+        }
     }
 }

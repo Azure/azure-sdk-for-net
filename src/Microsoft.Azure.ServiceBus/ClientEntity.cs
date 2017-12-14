@@ -16,15 +16,15 @@ namespace Microsoft.Azure.ServiceBus
     public abstract class ClientEntity : IClientEntity
     {
         static int nextId;
+        readonly string clientTypeName;
         readonly object syncLock;
+        bool isClosedOrClosing;
 
-        /// <summary></summary>
-        /// <param name="clientId"></param>
-        /// <param name="retryPolicy"></param>
-        protected ClientEntity(string clientId, RetryPolicy retryPolicy)
+        protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {
-            this.ClientId = clientId;
-            this.RetryPolicy = retryPolicy ?? throw new ArgumentNullException(nameof(retryPolicy));
+            this.clientTypeName = clientTypeName;
+            this.ClientId = GenerateClientId(clientTypeName, postfix);
+            this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
             this.syncLock = new object();
         }
 
@@ -33,8 +33,20 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public bool IsClosedOrClosing
         {
-            get;
-            internal set;
+            get
+            {
+                lock (syncLock)
+                {
+                    return isClosedOrClosing;
+                }
+            }
+            internal set
+            {
+                lock (syncLock)
+                {
+                    isClosedOrClosing = value;
+                }
+            }
         }
 
         /// <summary>
@@ -51,15 +63,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets the <see cref="ServiceBus.RetryPolicy"/> defined on the client.
         /// </summary>
-        public RetryPolicy RetryPolicy { get; private set; }
+        public RetryPolicy RetryPolicy { get; }
 
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.
         /// </summary>
-        /// <returns>The asynchronous operation</returns>
         public async Task CloseAsync()
         {
-            bool callClose = false;
+            var callClose = false;
             lock (this.syncLock)
             {
                 if (!this.IsClosedOrClosing)
@@ -92,12 +103,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
         public abstract void UnregisterPlugin(string serviceBusPluginName);
 
-        /// <summary></summary>
-        /// <returns></returns>
         protected abstract Task OnClosingAsync();
 
-        /// <summary></summary>
-        /// <returns></returns>
         protected static long GetNextId()
         {
             return Interlocked.Increment(ref nextId);
@@ -106,17 +113,26 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Generates a new client id that can be used to identify a specific client in logs and error messages.
         /// </summary>
-        /// <param name="clientTypeName">The type of the client.</param>
         /// <param name="postfix">Information that can be appended by the client.</param>
         protected static string GenerateClientId(string clientTypeName, string postfix = "")
         {
             return $"{clientTypeName}{GetNextId()}{postfix}";
         }
-        
+
+        /// <summary>
+        /// Throw an OperationCanceledException if the object is Closing.
+        /// </summary>
+        protected virtual void ThrowIfClosed()
+        {
+            if (this.IsClosedOrClosing)
+            {
+                throw new ObjectDisposedException($"{this.clientTypeName} with Id '{this.ClientId}' has already been closed. Please create a new {this.clientTypeName}.");
+            }
+        }
+
         /// <summary>
         /// Updates the client id.
         /// </summary>
-        /// <param name="newClientId"></param>
         internal void UpdateClientId(string newClientId)
         {
             MessagingEventSource.Log.UpdateClientId(this.ClientId, newClientId);

@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// <summary>
     /// A enum representing the scope of the <see cref="SecurityToken"/>.
     /// </summary>
-    internal enum TokenScope
+    public enum TokenScope
     {
         /// <summary>
         /// The namespace.
