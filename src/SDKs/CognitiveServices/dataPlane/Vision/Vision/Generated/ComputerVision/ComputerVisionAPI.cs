@@ -1869,7 +1869,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;

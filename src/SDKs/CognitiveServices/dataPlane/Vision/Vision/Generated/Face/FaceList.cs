@@ -403,7 +403,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -519,12 +519,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -563,7 +570,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -652,12 +659,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -834,7 +848,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="APIErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -929,12 +943,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new APIErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    APIError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<APIError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1174,6 +1195,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='faceListId'>
         /// Id referencing a Face List.
         /// </param>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
         /// <param name='userData'>
         /// User-specified data about the face list for any purpose. The  maximum
         /// length is 1KB.
@@ -1206,7 +1230,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFaceResult>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFaceResult>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (faceListId == null)
             {
@@ -1223,6 +1247,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                     throw new ValidationException(ValidationRules.Pattern, "faceListId", "^[a-z0-9-_]+$");
                 }
             }
+            if (image == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "image");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1233,6 +1261,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("faceListId", faceListId);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
+                tracingParameters.Add("image", image);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromStream", tracingParameters);
             }
@@ -1276,6 +1305,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            if(image == null)
+            {
+              throw new System.ArgumentNullException("image");
+            }
+            if (image != null && image != Stream.Null)
+            {
+              _httpRequest.Content = new StreamContent(image);
+              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
