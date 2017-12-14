@@ -40,6 +40,6 @@ namespace Microsoft.Rest
         /// Gets information about the associated HTTP response.
         /// </summary>
         public HttpResponseMessageWrapper Response { get; set; }
-
+        
     }
 }

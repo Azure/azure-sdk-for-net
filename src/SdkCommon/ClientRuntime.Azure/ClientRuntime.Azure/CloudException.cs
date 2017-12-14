@@ -40,6 +40,21 @@ namespace Microsoft.Rest.Azure
         }
 
         /// <summary>
+        /// The error code in Body
+        /// </summary>
+        public string Code => Body.Code;
+
+        /// <summary>
+        /// The error message in Body
+        /// </summary>
+        public string Message => Body.Message;
+
+        /// <summary>
+        /// Target in error Body
+        /// </summary>
+        public string Target => Body.Target;
+
+        /// <summary>
         /// Initializes a new instance of the CloudException class given exception message.
         /// </summary>
         /// <param name="message">A message describing the error.</param>

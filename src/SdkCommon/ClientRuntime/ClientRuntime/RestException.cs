@@ -40,6 +40,8 @@ namespace Microsoft.Rest
         {
         }
 
+        public string RequestId { get; set; }
+
 #if FullNetFx
         /// <summary>
         /// Initializes a new instance of the RestException class.
