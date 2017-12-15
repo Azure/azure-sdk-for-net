@@ -34,11 +34,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="PublicApiGenerator" Version="6.5.0" />
+    <PackageReference Include="ApprovalTests" Version="3.0.13" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalUtilities" Version="3.0.13" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
   </ItemGroup>
 
@@ -47,8 +50,6 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="ApprovalTests" Version="3.0.13" />
-    <PackageReference Include="PublicApiGenerator" Version="6.4.0" />
     <PackageReference Include="WindowsAzure.ServiceBus" Version="4.1.2" />
   </ItemGroup>
   
