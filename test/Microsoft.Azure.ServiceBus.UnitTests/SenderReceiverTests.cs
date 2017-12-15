@@ -185,7 +185,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        [Fact(Skip = "Flaky Test in AppServer, fix and enable back")]
+        [Fact(Skip = "Flaky Test in Appveyor, fix and enable back")]
         [DisplayTestMethodName]
         public async Task WaitingReceiveShouldReturnImmediatelyWhenReceiverIsClosed()
         {

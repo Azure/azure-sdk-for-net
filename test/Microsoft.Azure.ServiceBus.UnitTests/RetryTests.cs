@@ -128,7 +128,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(policy1.IsServerBusy, "policy1.IsServerBusy is not true");
         }
 
-        [Fact(Skip = "Flaky Test in AppServer, fix and enable back")]
+        [Fact(Skip = "Flaky Test in Appveyor, fix and enable back")]
         async void RunOperationShouldReturnImmediatelyIfRetryIntervalIsGreaterThanOperationTimeout()
         {
             var policy = RetryPolicy.Default;
