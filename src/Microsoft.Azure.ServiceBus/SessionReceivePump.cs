@@ -149,7 +149,10 @@ namespace Microsoft.Azure.ServiceBus
                     }
                     else
                     {
-                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false);
+                        if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
+                        {
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false); 
+                        }
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
                             break;
@@ -200,7 +203,10 @@ namespace Microsoft.Azure.ServiceBus
                             continue;
                         }
 
-                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
+                        if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
+                        {
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
+                        }
                         break;
                     }
 
@@ -314,9 +320,10 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     MessagingEventSource.Log.SessionReceivePumpSessionRenewLockException(this.clientId, session.SessionId, exception);
 
-                    // TaskCancelled is expected here as renewTasks will be cancelled after the Complete call is made.
-                    // Lets not bother user with this exception.
-                    if (!(exception is TaskCanceledException))
+                    // TaskCanceled is expected here as renewTasks will be cancelled after the Complete call is made.
+                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point 
+                    // this renew exception is not relevant anymore. Lets not bother user with this exception.
+                    if (!(exception is TaskCanceledException) && !(exception is ObjectDisposedException))
                     {
                         await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.RenewLock).ConfigureAwait(false);
                     }

@@ -82,8 +82,12 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 catch (Exception exception)
                 {
-                    MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
-                    await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
+                    // Not reporting an ObjectDisposedException as we're stopping the pump
+                    if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
+                    {
+                        MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
+                    }
                 }
                 finally
                 {
@@ -244,9 +248,10 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     MessagingEventSource.Log.MessageReceiverPumpRenewMessageException(this.messageReceiver.ClientId, message, exception);
 
-                    // TaskCancelled is expected here as renewTasks will be cancelled after the Complete call is made.
-                    // Lets not bother user with this exception.
-                    if (!(exception is TaskCanceledException))
+                    // TaskCanceled is expected here as renewTasks will be cancelled after the Complete call is made.
+                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point 
+                    // this renew exception is not relevant anymore. Lets not bother user with this exception.
+                    if (!(exception is TaskCanceledException) && !(exception is ObjectDisposedException))
                     {
                         await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.RenewLock).ConfigureAwait(false);
                     }
