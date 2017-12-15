@@ -17,6 +17,22 @@
     <ProjectReference Include="..\..\src\Microsoft.Azure.ServiceBus\Microsoft.Azure.ServiceBus.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\ExpectedMessagingExceptionTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageQueueTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionQueueTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\RetryTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\ExtractActivityTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\QueueClientDiagnosticsTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SubscriptionClientDiagnosticsTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SessionDiagnosticsTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageTopicSubscriptionTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionTopicSubscriptionTests.cs" />    
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.1" />
@@ -35,5 +51,6 @@
     <PackageReference Include="PublicApiGenerator" Version="6.4.0" />
     <PackageReference Include="WindowsAzure.ServiceBus" Version="4.1.2" />
   </ItemGroup>
+  
 
 </Project>
