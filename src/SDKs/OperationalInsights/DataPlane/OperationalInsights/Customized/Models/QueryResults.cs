@@ -29,7 +29,14 @@ namespace Microsoft.Azure.OperationalInsights.Models
             }
         }
 
+        /// <summary>
+        /// If requested, contains visualization information for the results. See https://dev.loganalytics.io/documentation/Using-the-API/RequestOptions for more info.
+        /// </summary>
         public IDictionary<string, string> Render { get; set; }
+
+        /// <summary>
+        /// If requested, contains query statistics. See https://dev.loganalytics.io/documentation/Using-the-API/RequestOptions for more info.
+        /// </summary>
         public IDictionary<string, object> Statistics{ get; set; }
     }
 }
