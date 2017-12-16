@@ -1,0 +1,887 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourcegroups/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "b096acb6-aa6d-4924-8d45-8a468b787ac7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "235"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:34:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "a250a7a2-7c3f-4760-a6ea-971f90ccf339"
+        ],
+        "x-ms-correlation-request-id": [
+          "a250a7a2-7c3f-4760-a6ea-971f90ccf339"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183450Z:a250a7a2-7c3f-4760-a6ea-971f90ccf339"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja1Byb3Zpc2lvbmluZ1NlcnZpY2VOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMDgtMjEtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "59"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nameAvailable\": true,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:34:54 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "e1e5328e-92e5-4dbf-9cbb-dc6e74f44e99"
+        ],
+        "x-ms-correlation-request-id": [
+          "e1e5328e-92e5-4dbf-9cbb-dc6e74f44e99"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183454Z:e1e5328e-92e5-4dbf-9cbb-dc6e74f44e99"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0xpbmtlZEh1YkNyZWF0ZVVwZGF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "105"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "614"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:34:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWRfMDc3MWUxOWYtZmYzYi00MTgxLTkzOWYtYzhmYTZhYjFiMTVh?api-version=2017-08-21-preview&asyncinfo"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4999"
+        ],
+        "x-ms-request-id": [
+          "4618387c-ca56-46d6-8a00-3ab4ef33477e"
+        ],
+        "x-ms-correlation-request-id": [
+          "4618387c-ca56-46d6-8a00-3ab4ef33477e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183457Z:4618387c-ca56-46d6-8a00-3ab4ef33477e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0xpbmtlZEh1YkNyZWF0ZVVwZGF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [\r\n      {\r\n        \"connectionString\": \"HostName=unitTestingDPSLinkedHubCreateUpdateDelete;SharedAccessKeyName=service;SharedAccessKey=f6n1zMZ7brF3RkU/F9na3MHH+S7CPIUD4suekQkOGlk=\",\r\n        \"location\": \"eastus\"\r\n      }\r\n    ],\r\n    \"allocationPolicy\": \"Hashed\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "470"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [\r\n      {\r\n        \"connectionString\": \"HostName=unitTestingDPSLinkedHubCreateUpdateDelete;SharedAccessKeyName=service;SharedAccessKey=f6n1zMZ7brF3RkU/F9na3MHH+S7CPIUD4suekQkOGlk=\",\r\n        \"location\": \"eastus\"\r\n      }\r\n    ],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "812"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:38:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWRfMjY2OWFiMmUtZTg3OS00MzQxLTlmYmYtZDdhZTlkY2U2NzRl?api-version=2017-08-21-preview&asyncinfo"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4999"
+        ],
+        "x-ms-request-id": [
+          "1fccd52a-c6a0-429a-bd49-9e60af8d3d2f"
+        ],
+        "x-ms-correlation-request-id": [
+          "1fccd52a-c6a0-429a-bd49-9e60af8d3d2f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183831Z:1fccd52a-c6a0-429a-bd49-9e60af8d3d2f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0xpbmtlZEh1YkNyZWF0ZVVwZGF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [\r\n      {\r\n        \"applyAllocationPolicy\": true,\r\n        \"allocationWeight\": 870084357,\r\n        \"connectionString\": \"HostName=unitTestingDPSLinkedHubCreateUpdateDelete;SharedAccessKeyName=service;SharedAccessKey=f6n1zMZ7brF3RkU/F9na3MHH+S7CPIUD4suekQkOGlk=\",\r\n        \"location\": \"eastus\"\r\n      }\r\n    ],\r\n    \"allocationPolicy\": \"Hashed\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "553"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [\r\n      {\r\n        \"applyAllocationPolicy\": true,\r\n        \"allocationWeight\": 870084357,\r\n        \"connectionString\": \"HostName=unitTestingDPSLinkedHubCreateUpdateDelete;SharedAccessKeyName=service;SharedAccessKey=f6n1zMZ7brF3RkU/F9na3MHH+S7CPIUD4suekQkOGlk=\",\r\n        \"location\": \"eastus\"\r\n      }\r\n    ],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "870"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:38:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWRfZGQxMzVkODQtOTkxZS00ODBjLThkYTktZjFkMTJhZGY1NTFh?api-version=2017-08-21-preview&asyncinfo"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4998"
+        ],
+        "x-ms-request-id": [
+          "d7724e8b-1ef8-4279-82fa-1900f0c2a509"
+        ],
+        "x-ms-correlation-request-id": [
+          "d7724e8b-1ef8-4279-82fa-1900f0c2a509"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183842Z:d7724e8b-1ef8-4279-82fa-1900f0c2a509"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU0xpbmtlZEh1YkNyZWF0ZVVwZGF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "244"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "630"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:38:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWRfZjhjYjkyNWQtZmRkZi00Y2EyLWE2NmUtYmEyM2QzZjAwNWM3?api-version=2017-08-21-preview&asyncinfo"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4997"
+        ],
+        "x-ms-request-id": [
+          "d6175f51-48c2-46df-ae5b-c4e54184dc03"
+        ],
+        "x-ms-correlation-request-id": [
+          "d6175f51-48c2-46df-ae5b-c4e54184dc03"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183852Z:d6175f51-48c2-46df-ae5b-c4e54184dc03"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlP2FwaS12ZXJzaW9uPTIwMTctMDctMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"properties\": {\r\n    \"routing\": {}\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "254"
+        ],
+        "x-ms-client-request-id": [
+          "da876ca4-7630-41db-a9f8-b365a2fe2ef4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [],\r\n        \"serviceBusTopics\": [],\r\n        \"eventHubs\": [],\r\n        \"storageContainers\": []\r\n      },\r\n      \"routes\": [],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1005"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:35:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4999"
+        ],
+        "x-ms-request-id": [
+          "8abf9d9f-a0cb-40a8-94fb-d3c2970e82f1"
+        ],
+        "x-ms-correlation-request-id": [
+          "8abf9d9f-a0cb-40a8-94fb-d3c2970e82f1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183501Z:8abf9d9f-a0cb-40a8-94fb-d3c2970e82f1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL29wZXJhdGlvblJlc3VsdHMvYjNOZmFXaGZObVEzWkRabFlqUXRabVF3WWkwME1EbGpMV0V5Tm1JdFpEWmxPVGxoTnpZNE0yWmw/YXBpLXZlcnNpb249MjAxNy0wNy0wMSZhc3luY2luZm8=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:35:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "b4579abc-cb10-42cc-b151-20bfc00d08cc"
+        ],
+        "x-ms-correlation-request-id": [
+          "b4579abc-cb10-42cc-b151-20bfc00d08cc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183532Z:b4579abc-cb10-42cc-b151-20bfc00d08cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL29wZXJhdGlvblJlc3VsdHMvYjNOZmFXaGZObVEzWkRabFlqUXRabVF3WWkwME1EbGpMV0V5Tm1JdFpEWmxPVGxoTnpZNE0yWmw/YXBpLXZlcnNpb249MjAxNy0wNy0wMSZhc3luY2luZm8=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:36:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-request-id": [
+          "baa16ba4-49bf-4a87-9e0b-d50e1d00e2eb"
+        ],
+        "x-ms-correlation-request-id": [
+          "baa16ba4-49bf-4a87-9e0b-d50e1d00e2eb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183605Z:baa16ba4-49bf-4a87-9e0b-d50e1d00e2eb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL29wZXJhdGlvblJlc3VsdHMvYjNOZmFXaGZObVEzWkRabFlqUXRabVF3WWkwME1EbGpMV0V5Tm1JdFpEWmxPVGxoTnpZNE0yWmw/YXBpLXZlcnNpb249MjAxNy0wNy0wMSZhc3luY2luZm8=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:36:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-request-id": [
+          "3567cecf-4356-415c-aaac-de1919969386"
+        ],
+        "x-ms-correlation-request-id": [
+          "3567cecf-4356-415c-aaac-de1919969386"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183635Z:3567cecf-4356-415c-aaac-de1919969386"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL29wZXJhdGlvblJlc3VsdHMvYjNOZmFXaGZObVEzWkRabFlqUXRabVF3WWkwME1EbGpMV0V5Tm1JdFpEWmxPVGxoTnpZNE0yWmw/YXBpLXZlcnNpb249MjAxNy0wNy0wMSZhc3luY2luZm8=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:37:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-request-id": [
+          "74b62e19-c37e-43ae-86ba-94d595a386ca"
+        ],
+        "x-ms-correlation-request-id": [
+          "74b62e19-c37e-43ae-86ba-94d595a386ca"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183705Z:74b62e19-c37e-43ae-86ba-94d595a386ca"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL29wZXJhdGlvblJlc3VsdHMvYjNOZmFXaGZObVEzWkRabFlqUXRabVF3WWkwME1EbGpMV0V5Tm1JdFpEWmxPVGxoTnpZNE0yWmw/YXBpLXZlcnNpb249MjAxNy0wNy0wMSZhc3luY2luZm8=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:37:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-request-id": [
+          "4b857103-7687-45bf-a562-d429e1be89c4"
+        ],
+        "x-ms-correlation-request-id": [
+          "4b857103-7687-45bf-a562-d429e1be89c4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183736Z:4b857103-7687-45bf-a562-d429e1be89c4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/operationResults/b3NfaWhfNmQ3ZDZlYjQtZmQwYi00MDljLWEyNmItZDZlOTlhNzY4M2Zl?api-version=2017-07-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL29wZXJhdGlvblJlc3VsdHMvYjNOZmFXaGZObVEzWkRabFlqUXRabVF3WWkwME1EbGpMV0V5Tm1JdFpEWmxPVGxoTnpZNE0yWmw/YXBpLXZlcnNpb249MjAxNy0wNy0wMSZhc3luY2luZm8=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:38:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-request-id": [
+          "9c8fe1ec-276d-4752-8294-de2a77b20473"
+        ],
+        "x-ms-correlation-request-id": [
+          "9c8fe1ec-276d-4752-8294-de2a77b20473"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183807Z:9c8fe1ec-276d-4752-8294-de2a77b20473"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlP2FwaS12ZXJzaW9uPTIwMTctMDctMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"name\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"type\": \"Microsoft.Devices/IotHubs\",\r\n  \"location\": \"eastus\",\r\n  \"tags\": {},\r\n  \"subscriptionid\": \"9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b\",\r\n  \"resourcegroup\": \"unitTestingDPSLinkedHubCreateUpdateDelete\",\r\n  \"etag\": \"AAAAAAFc538=\",\r\n  \"properties\": {\r\n    \"operationsMonitoringProperties\": {\r\n      \"events\": {\r\n        \"None\": \"None\",\r\n        \"Connections\": \"None\",\r\n        \"DeviceTelemetry\": \"None\",\r\n        \"C2DCommands\": \"None\",\r\n        \"DeviceIdentityOperations\": \"None\",\r\n        \"FileUploadOperations\": \"None\",\r\n        \"Routes\": \"None\"\r\n      }\r\n    },\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"ipFilterRules\": [],\r\n    \"hostName\": \"unitTestingDPSLinkedHubCreateUpdateDelete.azure-devices.net\",\r\n    \"eventHubEndpoints\": {\r\n      \"events\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"unittestingdpslinkedhubcr\",\r\n        \"endpoint\": \"sb://iothub-ns-unittestin-292267-c4822915a5.servicebus.windows.net/\"\r\n      },\r\n      \"operationsMonitoringEvents\": {\r\n        \"retentionTimeInDays\": 1,\r\n        \"partitionCount\": 4,\r\n        \"partitionIds\": [\r\n          \"0\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ],\r\n        \"path\": \"unittestingdpslinkedhubcr-operationmonitoring\",\r\n        \"endpoint\": \"sb://iothub-ns-unittestin-292267-c4822915a5.servicebus.windows.net/\"\r\n      }\r\n    },\r\n    \"routing\": {\r\n      \"endpoints\": {\r\n        \"serviceBusQueues\": [],\r\n        \"serviceBusTopics\": [],\r\n        \"eventHubs\": [],\r\n        \"storageContainers\": []\r\n      },\r\n      \"routes\": [],\r\n      \"fallbackRoute\": {\r\n        \"name\": \"$fallback\",\r\n        \"source\": \"DeviceMessages\",\r\n        \"condition\": \"true\",\r\n        \"endpointNames\": [\r\n          \"events\"\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    \"storageEndpoints\": {\r\n      \"$default\": {\r\n        \"sasTtlAsIso8601\": \"PT1H\",\r\n        \"connectionString\": \"\",\r\n        \"containerName\": \"\"\r\n      }\r\n    },\r\n    \"messagingEndpoints\": {\r\n      \"fileNotifications\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"enableFileUploadNotifications\": false,\r\n    \"cloudToDevice\": {\r\n      \"maxDeliveryCount\": 10,\r\n      \"defaultTtlAsIso8601\": \"PT1H\",\r\n      \"feedback\": {\r\n        \"lockDurationAsIso8601\": \"PT1M\",\r\n        \"ttlAsIso8601\": \"PT1H\",\r\n        \"maxDeliveryCount\": 10\r\n      }\r\n    },\r\n    \"features\": \"None\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:38:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-request-id": [
+          "af6012cc-f289-49c8-a7d0-32a2b7b62f5a"
+        ],
+        "x-ms-correlation-request-id": [
+          "af6012cc-f289-49c8-a7d0-32a2b7b62f5a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183807Z:af6012cc-f289-49c8-a7d0-32a2b7b62f5a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSLinkedHubCreateUpdateDelete/providers/Microsoft.Devices/IotHubs/unitTestingDPSLinkedHubCreateUpdateDelete/listkeys?api-version=2017-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9Jb3RIdWJzL3VuaXRUZXN0aW5nRFBTTGlua2VkSHViQ3JlYXRlVXBkYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMTctMDctMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b8682f6a-ffa3-402a-80a3-e3ff7ae71e1b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.IotHub.IotHubClient/1.1.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"keyName\": \"iothubowner\",\r\n      \"primaryKey\": \"AZutBuzvwq5fKPc5W4ce6mqm4DEHOj6AuUZWcHF1Cns=\",\r\n      \"secondaryKey\": \"NDutBS4tzUtDXrlLIlUaqH7psfd8lTPAgyX98XpuqwE=\",\r\n      \"rights\": \"RegistryWrite, ServiceConnect, DeviceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"service\",\r\n      \"primaryKey\": \"f6n1zMZ7brF3RkU/F9na3MHH+S7CPIUD4suekQkOGlk=\",\r\n      \"secondaryKey\": \"dqyZMYXIEHRNMR3PmsNEJx7rhQaAvy1cdCIkKe+CZyw=\",\r\n      \"rights\": \"ServiceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"device\",\r\n      \"primaryKey\": \"2UfRXxI5EhgyCEmHMk6jpsa2i3pPJIffNrk+laEk+V4=\",\r\n      \"secondaryKey\": \"0O1L9MlTa9B+fsdGfTQgdNFj6dcEe92ojQy3dHt/Qpg=\",\r\n      \"rights\": \"DeviceConnect\"\r\n    },\r\n    {\r\n      \"keyName\": \"registryRead\",\r\n      \"primaryKey\": \"xr1onfCOXIi16hiOZd4+PpWBkqDs4jW+Eao0wDuNVvg=\",\r\n      \"secondaryKey\": \"UpZucM5XD6ujo5hUZucpkJwLwcwskkI50qQtqxkWOAg=\",\r\n      \"rights\": \"RegistryRead\"\r\n    },\r\n    {\r\n      \"keyName\": \"registryReadWrite\",\r\n      \"primaryKey\": \"/rGRo4wq/JSrcttKxRiZEzNWaGMdEeLCa5+sr8Fl0Jw=\",\r\n      \"secondaryKey\": \"ArdUOsoU0k1FsMhf7FPoos1H8Bntw4Wa6IB6afzttKw=\",\r\n      \"rights\": \"RegistryWrite\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 18:38:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "dd7a184e-88bd-4d03-bffa-ee4df1fcf836"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd7a184e-88bd-4d03-bffa-ee4df1fcf836"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171212T183825Z:dd7a184e-88bd-4d03-bffa-ee4df1fcf836"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b"
+  }
+}
