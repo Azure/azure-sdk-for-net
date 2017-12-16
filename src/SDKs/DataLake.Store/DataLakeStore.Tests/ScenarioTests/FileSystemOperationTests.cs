@@ -36,7 +36,7 @@ namespace DataLakeStore.Tests
         private CommonTestFixture commonData;
 
         #region SDK Tests
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemValidateDefaultTimeout()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -49,7 +49,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemFolderCreate()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -64,7 +64,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemSetAndRemoveExpiry()
         {
             const long maxTimeInMilliseconds = 253402300800000;
@@ -108,7 +108,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemNegativeExpiry()
         {
             const long maxTimeInMilliseconds = 253402300800000;
@@ -140,7 +140,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemListFolderContents()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -167,7 +167,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemGetNonExistentFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -209,7 +209,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemEmptyFileCreate()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -224,7 +224,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemTestFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -240,7 +240,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemFileAlreadyExists()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -265,7 +265,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemFileCreateWithContents()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -283,7 +283,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemGetContentSummaryForFileAndFolder()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -329,7 +329,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemAppendToFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -351,7 +351,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemAppendToFileWithOffset()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -373,7 +373,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemAppendToFileWithBadOffset()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -400,7 +400,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemConcurrentAppendToFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -425,7 +425,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemNegativeConcurrentAppend()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -460,7 +460,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemConcurrentAppendCreateFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -483,7 +483,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemConcatenateFiles()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -527,7 +527,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemMsConcatenateFiles()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -571,7 +571,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemMsConcatDeleteDir()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -627,7 +627,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemMoveFileAndFolder()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -690,7 +690,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemDeleteFolder()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -725,7 +725,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemDeleteFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -745,7 +745,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemGetAndSetAcl()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -820,7 +820,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemSetFileProperties()
         {
             // This test simply tests that all bool/empty return actions return successfully
@@ -885,7 +885,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemGetAcl()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -904,7 +904,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemSetAcl()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -942,7 +942,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        // [Fact]
         public void DataLakeStoreFileSystemSetDeleteAclEntry()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1001,7 +1001,7 @@ namespace DataLakeStore.Tests
         #endregion
 
         #region upload download tests
-        [Fact]
+        // [Fact]
         public void DataLakeStoreDownloadUploadFileAndFolder()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
