@@ -18,7 +18,7 @@ namespace EventHub.Tests.ScenarioTests
     public partial class ScenarioTests
     {
         [Fact]
-        public void DisasterRecoveryCreateGetUpdateDelete()
+        public void DisasterRecoveryAlertnateNameCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -58,9 +58,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //var createNamespaceResponse = this.EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-
-                //// Create namespace 2
+                // Create namespace 2
                 var namespaceName2 = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
                 var createNamespaceResponse2 = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName2,
                     new EHNamespace()
@@ -111,80 +109,79 @@ namespace EventHub.Tests.ScenarioTests
                 var getNamespaceAuthorizationRulesListKeysResponse = EventHubManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
 
                 // Create a Disaster Recovery -
-                var disasterRecoveryName = TestUtilities.GenerateName(EventHubManagementHelper.DisasterRecoveryPrefix);
+                var alternateName = TestUtilities.GenerateName(EventHubManagementHelper.DisasterRecoveryPrefix);
 
                 //CheckNameavaliability for Alias
 
-                var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(disasterRecoveryName));
+                var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
 
-                Assert.True(checknameAlias.NameAvailable, "The Alias Name: '"+ disasterRecoveryName + "' is not avilable");
-
-                //CheckNameAvaliability for Alias with same as namespace name (alternateName will be used in this case)
-                var checknameAliasSame = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
-
-                // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
+                Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
 
 
-                var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
+                var DisasterRecoveryResponse = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
                 {
-                    PartnerNamespace = createNamespaceResponse2.Id
+                    PartnerNamespace = createNamespaceResponse2.Id,
+                    AlternateName = alternateName
+
                 });
                 Assert.NotNull(DisasterRecoveryResponse);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 //// Get the created DisasterRecovery config - Primary
-                var disasterRecoveryGetResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
+                var disasterRecoveryGetResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName);
                 Assert.NotNull(disasterRecoveryGetResponse);
                 Assert.Equal(disasterRecoveryGetResponse.Role, RoleDisasterRecovery.Primary);
 
                 //// Get the created DisasterRecovery config - Secondary
-                var disasterRecoveryGetResponse_Sec = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName);
+                var disasterRecoveryGetResponse_Sec = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, namespaceName);
                 Assert.NotNull(disasterRecoveryGetResponse_Sec);
                 Assert.Equal(disasterRecoveryGetResponse_Sec.Role, RoleDisasterRecovery.Secondary);
 
                 //Get authorization rule thorugh Alias 
 
-                var getAuthoRuleAliasResponse = EventHubManagementClient.DisasterRecoveryConfigs.GetAuthorizationRule(resourceGroup, namespaceName, disasterRecoveryName, authorizationRuleName);
+                var getAuthoRuleAliasResponse = EventHubManagementClient.DisasterRecoveryConfigs.GetAuthorizationRule(resourceGroup, namespaceName, namespaceName, authorizationRuleName);
                 Assert.Equal(getAuthoRuleAliasResponse.Name, getNamespaceAuthorizationRulesResponse.Name);
 
-                var getAuthoruleListKeysResponse = EventHubManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, disasterRecoveryName, authorizationRuleName);
-                Assert.True(string.IsNullOrEmpty(getAuthoruleListKeysResponse.PrimaryConnectionString));
-                Assert.True(string.IsNullOrEmpty(getAuthoruleListKeysResponse.SecondaryConnectionString));
+                var getAuthoruleListKeysResponse = EventHubManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, namespaceName, authorizationRuleName);
 
-                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+
+                var disasterRecoveryGetResponse_Accepted = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName);
+
+                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
 
                 //// Break Pairing
-                EventHubManagementClient.DisasterRecoveryConfigs.BreakPairing(resourceGroup, namespaceName, disasterRecoveryName);
+                EventHubManagementClient.DisasterRecoveryConfigs.BreakPairing(resourceGroup, namespaceName, namespaceName);
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
 
-                var DisasterRecoveryResponse_update = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
+                var DisasterRecoveryResponse_update = EventHubManagementClient.DisasterRecoveryConfigs.CreateOrUpdate(resourceGroup, namespaceName, namespaceName, new ArmDisasterRecovery()
                 {
-                    PartnerNamespace = createNamespaceResponse2.Id
+                    PartnerNamespace = createNamespaceResponse2.Id,
+                    AlternateName = alternateName
                 });
 
                 Assert.NotNull(DisasterRecoveryResponse_update);
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
 
                 // Fail over
-                EventHubManagementClient.DisasterRecoveryConfigs.FailOver(resourceGroup, namespaceName2, disasterRecoveryName);
+                EventHubManagementClient.DisasterRecoveryConfigs.FailOver(resourceGroup, namespaceName2, namespaceName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, namespaceName).ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
@@ -195,12 +192,13 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(getListisasterRecoveryResponse.Count<ArmDisasterRecovery>() >= 1);
 
                 // Delete the DisasterRecovery 
-                EventHubManagementClient.DisasterRecoveryConfigs.Delete(resourceGroup, namespaceName2, disasterRecoveryName);
+                EventHubManagementClient.DisasterRecoveryConfigs.Delete(resourceGroup, namespaceName2, namespaceName);
 
                 // Delete Namespace using Async
                 EventHubManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
 
                 EventHubManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName2, null, new CancellationToken()).ConfigureAwait(false);
+
             }
         }
     }
