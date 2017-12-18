@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
 
     /// <summary>
-    /// Defines values for FileType.
+    /// Defines values for AclType.
     /// </summary>
-    public static class FileType
+    public static class AclType
     {
-        public const string Assembly = "Assembly";
-        public const string Resource = "Resource";
-        public const string Nodeploy = "Nodeploy";
+        public const string UserObj = "UserObj";
+        public const string GroupObj = "GroupObj";
+        public const string Other = "Other";
+        public const string User = "User";
+        public const string Group = "Group";
     }
 }
