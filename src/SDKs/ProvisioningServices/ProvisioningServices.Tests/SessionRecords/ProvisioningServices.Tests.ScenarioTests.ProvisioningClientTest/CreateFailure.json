@@ -1,0 +1,127 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourcegroups/unitTestingDPSCreateUpdateInvalidName?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "c2a09114-b5f4-42c0-9e96-57a95b336268"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdateInvalidName\",\r\n  \"name\": \"unitTestingDPSCreateUpdateInvalidName\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "227"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:38:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "bd7ba401-5465-49ca-8939-1cc3dd371d11"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd7ba401-5465-49ca-8939-1cc3dd371d11"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T183831Z:bd7ba401-5465-49ca-8939-1cc3dd371d11"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b/resourceGroups/unitTestingDPSCreateUpdateInvalidName/providers/Microsoft.Devices/provisioningServices/1%C3%B11unitTestingDPSCreateUpdateInvalidName!!!?api-version=2017-08-21-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTcxMmZmMjUtZGZhMy00OGYzLThhNmEtNWEyYmMwMGZiMDhiL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWUvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL3Byb3Zpc2lvbmluZ1NlcnZpY2VzLzElQzMlQjExdW5pdFRlc3RpbmdEUFNDcmVhdGVVcGRhdGVJbnZhbGlkTmFtZSEhIT9hcGktdmVyc2lvbj0yMDE3LTA4LTIxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "105"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ProvisioningServices.IotDpsClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Code\": \"InvalidIotDpsName\",\r\n  \"HttpStatusCode\": \"BadRequest\",\r\n  \"Message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: e2c2b5a6-0c2b-49d0-8b86-068b7adafd04, timestamp: 2017-12-11 18:39:12Z, errorcode: IH400305.\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "408"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 11 Dec 2017 18:39:12 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "4998"
+        ],
+        "x-ms-request-id": [
+          "1812b06b-ef96-4f89-a226-1143db638fbb"
+        ],
+        "x-ms-correlation-request-id": [
+          "1812b06b-ef96-4f89-a226-1143db638fbb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171211T183913Z:1812b06b-ef96-4f89-a226-1143db638fbb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9712ff25-dfa3-48f3-8a6a-5a2bc00fb08b"
+  }
+}
