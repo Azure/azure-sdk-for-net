@@ -15,30 +15,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The Sub Resource model definition.
+    /// Data Lake Analytics account name availability check parameters
     /// </summary>
-    public partial class SubResource
+    public partial class CheckNameAvailabilityParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the CheckNameAvailabilityParameters
+        /// class.
         /// </summary>
-        public SubResource()
+        public CheckNameAvailabilityParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the CheckNameAvailabilityParameters
+        /// class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        public SubResource(string name, string id = default(string), string type = default(string))
+        /// <param name="name">the Data Lake Analytics name to check
+        /// availability for.</param>
+        public CheckNameAvailabilityParameters(string name)
         {
-            Id = id;
             Name = name;
-            Type = type;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for CheckNameAvailabilityParameters class.
+        /// </summary>
+        static CheckNameAvailabilityParameters()
+        {
+            Type = "Microsoft.DataLakeAnalytics/accounts";
         }
 
         /// <summary>
@@ -47,22 +53,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets or sets resource name
+        /// Gets or sets the Data Lake Analytics name to check availability
+        /// for.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets resource type
+        /// the Resource type. Note: This should not be set by the user, as the
+        /// constant value is Microsoft.DataLakeAnalytics/accounts
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public static string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

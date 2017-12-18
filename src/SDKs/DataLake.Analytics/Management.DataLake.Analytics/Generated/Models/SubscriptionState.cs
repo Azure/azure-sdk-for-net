@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
 
     /// <summary>
-    /// Defines values for AADObjectType.
+    /// Defines values for SubscriptionState.
     /// </summary>
-    public static class AADObjectType
+    public static class SubscriptionState
     {
-        public const string User = "User";
-        public const string Group = "Group";
-        public const string ServicePrincipal = "ServicePrincipal";
+        public const string Registered = "Registered";
+        public const string Suspended = "Suspended";
+        public const string Deleted = "Deleted";
+        public const string Unregistered = "Unregistered";
+        public const string Warned = "Warned";
     }
 }
