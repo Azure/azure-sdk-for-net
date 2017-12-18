@@ -16,21 +16,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// U-SQL job properties used when retrieving U-SQL jobs.
+    /// Scope job properties used when submitting and retrieving Scope jobs.
+    /// (Only for use internally with Scope job type.)
     /// </summary>
-    [Newtonsoft.Json.JsonObject("USql")]
-    public partial class USqlJobProperties : JobProperties
+    [Newtonsoft.Json.JsonObject("Scope")]
+    public partial class ScopeJobProperties : JobProperties
     {
         /// <summary>
-        /// Initializes a new instance of the USqlJobProperties class.
+        /// Initializes a new instance of the ScopeJobProperties class.
         /// </summary>
-        public USqlJobProperties()
+        public ScopeJobProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the USqlJobProperties class.
+        /// Initializes a new instance of the ScopeJobProperties class.
         /// </summary>
         /// <param name="script">the script to run. Please note that the
         /// maximum script size is 3 MB.</param>
@@ -39,12 +40,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// run.</param>
         /// <param name="resources">the list of resources that are required by
         /// the job</param>
-        /// <param name="statistics">the job specific statistics.</param>
-        /// <param name="debugData">the job specific debug data
-        /// locations.</param>
-        /// <param name="diagnostics">the diagnostics for the job.</param>
-        /// <param name="algebraFilePath">the algebra file path after the job
+        /// <param name="userAlgebraPath">the algebra file path after the job
         /// has completed</param>
+        /// <param name="notifier">the list of email addresses, separated by
+        /// semi-colons, to notify when the job reaches a terminal
+        /// state.</param>
         /// <param name="totalCompilationTime">the total time this job spent
         /// compiling. This value should not be set by the user and will be
         /// ignored if it is.</param>
@@ -63,29 +63,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="yarnApplicationId">the ID used to identify the yarn
         /// application executing the job. This value should not be set by the
         /// user and will be ignored if it is.</param>
-        /// <param name="yarnApplicationTimeStamp">the timestamp (in ticks) for
-        /// the yarn application executing the job. This value should not be
-        /// set by the user and will be ignored if it is.</param>
-        /// <param name="compileMode">the specific compilation mode for the job
-        /// used during execution. If this is not specified during submission,
-        /// the server will determine the optimal compilation mode. Possible
-        /// values include: 'Semantic', 'Full', 'SingleBox'</param>
-        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), IList<Diagnostics> diagnostics = default(IList<Diagnostics>), string algebraFilePath = default(string), System.TimeSpan? totalCompilationTime = default(System.TimeSpan?), System.TimeSpan? totalPausedTime = default(System.TimeSpan?), System.TimeSpan? totalQueuedTime = default(System.TimeSpan?), System.TimeSpan? totalRunningTime = default(System.TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
+        public ScopeJobProperties(string script, string runtimeVersion = default(string), IList<ScopeJobResource> resources = default(IList<ScopeJobResource>), string userAlgebraPath = default(string), string notifier = default(string), System.TimeSpan? totalCompilationTime = default(System.TimeSpan?), System.TimeSpan? totalPausedTime = default(System.TimeSpan?), System.TimeSpan? totalQueuedTime = default(System.TimeSpan?), System.TimeSpan? totalRunningTime = default(System.TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string))
             : base(script, runtimeVersion)
         {
             Resources = resources;
-            Statistics = statistics;
-            DebugData = debugData;
-            Diagnostics = diagnostics;
-            AlgebraFilePath = algebraFilePath;
+            UserAlgebraPath = userAlgebraPath;
+            Notifier = notifier;
             TotalCompilationTime = totalCompilationTime;
             TotalPausedTime = totalPausedTime;
             TotalQueuedTime = totalQueuedTime;
             TotalRunningTime = totalRunningTime;
             RootProcessNodeId = rootProcessNodeId;
             YarnApplicationId = yarnApplicationId;
-            YarnApplicationTimeStamp = yarnApplicationTimeStamp;
-            CompileMode = compileMode;
             CustomInit();
         }
 
@@ -98,31 +87,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets the list of resources that are required by the job
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
-        public IList<JobResource> Resources { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the job specific statistics.
-        /// </summary>
-        [JsonProperty(PropertyName = "statistics")]
-        public JobStatistics Statistics { get; set; }
-
-        /// <summary>
-        /// Gets or sets the job specific debug data locations.
-        /// </summary>
-        [JsonProperty(PropertyName = "debugData")]
-        public JobDataPath DebugData { get; set; }
-
-        /// <summary>
-        /// Gets the diagnostics for the job.
-        /// </summary>
-        [JsonProperty(PropertyName = "diagnostics")]
-        public IList<Diagnostics> Diagnostics { get; private set; }
+        public IList<ScopeJobResource> Resources { get; private set; }
 
         /// <summary>
         /// Gets the algebra file path after the job has completed
         /// </summary>
-        [JsonProperty(PropertyName = "algebraFilePath")]
-        public string AlgebraFilePath { get; private set; }
+        [JsonProperty(PropertyName = "userAlgebraPath")]
+        public string UserAlgebraPath { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the list of email addresses, separated by semi-colons,
+        /// to notify when the job reaches a terminal state.
+        /// </summary>
+        [JsonProperty(PropertyName = "notifier")]
+        public string Notifier { get; set; }
 
         /// <summary>
         /// Gets the total time this job spent compiling. This value should not
@@ -167,23 +145,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "yarnApplicationId")]
         public string YarnApplicationId { get; private set; }
-
-        /// <summary>
-        /// Gets the timestamp (in ticks) for the yarn application executing
-        /// the job. This value should not be set by the user and will be
-        /// ignored if it is.
-        /// </summary>
-        [JsonProperty(PropertyName = "yarnApplicationTimeStamp")]
-        public long? YarnApplicationTimeStamp { get; private set; }
-
-        /// <summary>
-        /// Gets the specific compilation mode for the job used during
-        /// execution. If this is not specified during submission, the server
-        /// will determine the optimal compilation mode. Possible values
-        /// include: 'Semantic', 'Full', 'SingleBox'
-        /// </summary>
-        [JsonProperty(PropertyName = "compileMode")]
-        public CompileMode? CompileMode { get; private set; }
 
         /// <summary>
         /// Validate the object.
