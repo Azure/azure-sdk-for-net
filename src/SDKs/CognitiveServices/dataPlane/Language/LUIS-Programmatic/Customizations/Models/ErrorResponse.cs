@@ -7,6 +7,9 @@
         private string code;
         private string message;
 
+        /// <summary>
+        /// Error code.
+        /// </summary>
         public string Code
         {
             get
@@ -18,6 +21,10 @@
                 return code;
             }
         }
+
+        /// <summary>
+        /// A description of the error.
+        /// </summary>
         public string Message
         {
             get
