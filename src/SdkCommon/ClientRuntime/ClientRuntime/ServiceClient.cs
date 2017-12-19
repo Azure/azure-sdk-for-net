@@ -151,7 +151,7 @@ namespace Microsoft.Rest
         /// if not it gets the AssemblyFileVerion
         /// if neither are available it will default to the Assembly Version of a service client.
         /// </summary>
-        private string ClientVersion
+        protected virtual string ClientVersion
         {
             get
             {
