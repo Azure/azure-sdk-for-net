@@ -11,6 +11,7 @@
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageTags>Automation;Runbook;</PackageTags>
     <PackageReleaseNotes>Major version release: SDK rebuilt using the Swagger specs - Changes in the namespaces and interfaces. Still in preview mode and contains breaking changes.</PackageReleaseNotes>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   
   <PropertyGroup>
