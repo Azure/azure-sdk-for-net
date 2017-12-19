@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  
+  <PropertyGroup>
+    <PackageId>ContentModerator.Tests</PackageId>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator.Tests</AssemblyName>
+    <Description>ContentModerator.Tests Class Library</Description>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="app.config" />
+    <None Remove="ContentModeratorTestData.xlsx" />
+    <None Remove="TestDataSources\NormalImages\BMPOCR.bmp" />
+    <None Remove="TestDataSources\NormalImages\GifOCR.gif" />
+    <None Remove="TestDataSources\NormalImages\GIFOCRPDNA.gif" />
+    <None Remove="TestDataSources\NormalImages\JpegOCR.jpg" />
+    <None Remove="TestDataSources\NormalImages\PNGOCR.png" />
+    <None Remove="TestDataSources\NormalImages\TiffOCR.tiff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestDataSources\NormalImages\BMPOCR.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestDataSources\NormalImages\GifOCR.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestDataSources\NormalImages\GIFOCRPDNA.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestDataSources\NormalImages\JpegOCR.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestDataSources\NormalImages\PNGOCR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestDataSources\NormalImages\TiffOCR.tiff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ContentModerator\Microsoft.Azure.CognitiveServices.ContentModerator.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!--Do not remove until VS Test Tools fixes #472-->
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+</Project>
