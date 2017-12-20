@@ -61,56 +61,56 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the job id.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "Id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the team name associated with the job.
         /// </summary>
-        [JsonProperty(PropertyName = "teamName")]
+        [JsonProperty(PropertyName = "TeamName")]
         public string TeamName { get; set; }
 
         /// <summary>
         /// Gets or sets the status string (&amp;lt;Pending, Failed,
         /// Completed&amp;gt;).
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets the Id of the workflow.
         /// </summary>
-        [JsonProperty(PropertyName = "workflowId")]
+        [JsonProperty(PropertyName = "WorkflowId")]
         public string WorkflowId { get; set; }
 
         /// <summary>
         /// Gets or sets type of the content.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [JsonProperty(PropertyName = "Type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the callback endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "callBackEndpoint")]
+        [JsonProperty(PropertyName = "CallBackEndpoint")]
         public string CallBackEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets review Id if one is created.
         /// </summary>
-        [JsonProperty(PropertyName = "reviewId")]
+        [JsonProperty(PropertyName = "ReviewId")]
         public string ReviewId { get; set; }
 
         /// <summary>
         /// Gets or sets array of KeyValue pairs.
         /// </summary>
-        [JsonProperty(PropertyName = "resultMetaData")]
+        [JsonProperty(PropertyName = "ResultMetaData")]
         public IList<KeyValuePair> ResultMetaData { get; set; }
 
         /// <summary>
         /// Gets or sets job execution report- Array of KeyValue pairs object.
         /// </summary>
-        [JsonProperty(PropertyName = "jobExecutionReport")]
+        [JsonProperty(PropertyName = "JobExecutionReport")]
         public IList<JobExecutionReportDetails> JobExecutionReport { get; set; }
 
     }

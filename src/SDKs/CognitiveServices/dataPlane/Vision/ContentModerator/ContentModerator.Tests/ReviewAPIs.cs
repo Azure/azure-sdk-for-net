@@ -117,7 +117,7 @@ namespace CMTests
                 using (MockContext context = MockContext.Start("ReviewAPIs"))
                 {
                     //CreateImageJob();
-                    wait(2);
+                    //wait(2);
                     content = Content.IMAGE;
                     //string Jobid = Job.JobIdProperty;
                     api = ReviewAPI.JOB_GET;
@@ -130,6 +130,7 @@ namespace CMTests
                     Assert.NotNull(jobdetails);
                     var job = jobdetails.Body;
                     Assert.Equal("201712471f16b6733748a69e3cf66126d337fb", job.Id);
+                    //Assert.Equal(Jobid, job.Id);
                     Assert.True(Helpers.Utilities.VerifyJob(Content.IMAGE, job), " " + TestBase.ErrorMessage);
 
 
@@ -170,6 +171,7 @@ namespace CMTests
                     Assert.NotNull(jobdetails);
                     var job = jobdetails.Body;
                     Assert.Equal("201712b43444e4be70470b80bff6605a33e77d", job.Id);
+                    //Assert.Equal(Jobid, job.Id);
                     Assert.True(Helpers.Utilities.VerifyJob(Content.TEXT, job), " " + TestBase.ErrorMessage);
 
                 }
@@ -298,6 +300,7 @@ namespace CMTests
                     Assert.NotNull(r);
                     Assert.Equal(HttpStatusCode.OK, results.GetReview.Response.StatusCode);
                     Assert.Equal("201712if012516997aa4d19befb3129c1082c48", r.ReviewId);
+                    //Assert.Equal(reviewid, r.ReviewId);
                     Assert.True(Helpers.Utilities.VerifyReview(Content.IMAGE, r), " " + TestBase.ErrorMessage);
 
                     
@@ -337,6 +340,7 @@ namespace CMTests
                     Assert.NotNull(r);
                     Assert.Equal(HttpStatusCode.OK, results.GetReview.Response.StatusCode);
                     Assert.Equal("201712t9c7880135e834a939e4902ab82b5e97e", r.ReviewId);
+                    //Assert.Equal(reviewid, r.ReviewId);
                     Assert.True(Helpers.Utilities.VerifyReview(Content.TEXT, r), " " + TestBase.ErrorMessage);
                     
                 }
@@ -371,6 +375,7 @@ namespace CMTests
                     Assert.NotNull(r);
                     Assert.Equal(HttpStatusCode.OK, results.GetReview.Response.StatusCode);
                     Assert.Equal("201712ve9d5eb16c9a247389ed371dbbf380b3c", r.ReviewId);
+                    //Assert.Equal(reviewid, r.ReviewId);
                     Assert.True(Helpers.Utilities.VerifyReview(Content.VIDEO, r), " " + TestBase.ErrorMessage);
 
                 }
@@ -512,7 +517,7 @@ namespace CMTests
                 using (MockContext context = MockContext.Start("ReviewAPIs"))
                 {
                     rvwStatus = ReviewStatus.UNPUBLISHED;
-                    CreateVideoReview();
+                    //CreateVideoReview();
 
                     api = ReviewAPI.TRANSCRIPTS_ADD;
                     using (Stream s = new FileStream(currentExecutingDirectory + @"\TestDataSources\vttF.vtt", FileMode.Open, FileAccess.Read)) 
@@ -546,7 +551,7 @@ namespace CMTests
                 {
                     rvwStatus = ReviewStatus.UNPUBLISHED;
                     //CreateVideoReview();
-                    //AddTranscripts();
+                    AddTranscripts();
 
                     api = ReviewAPI.TRANSCRIPTS_ADD_MODERATION_RESULT;
                     HttpMockServer.Initialize("ReviewAPIs", "AddTranscriptsModerationResult");

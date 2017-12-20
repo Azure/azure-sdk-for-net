@@ -49,26 +49,26 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// Gets or sets index(Location) of the detected profanity term in the
         /// input text content.
         /// </summary>
-        [JsonProperty(PropertyName = "index")]
+        [JsonProperty(PropertyName = "Index")]
         public int? Index { get; set; }
 
         /// <summary>
         /// Gets or sets original Index(Location) of the detected profanity
         /// term in the input text content.
         /// </summary>
-        [JsonProperty(PropertyName = "originalIndex")]
+        [JsonProperty(PropertyName = "OriginalIndex")]
         public int? OriginalIndex { get; set; }
 
         /// <summary>
         /// Gets or sets matched Terms list Id.
         /// </summary>
-        [JsonProperty(PropertyName = "listId")]
+        [JsonProperty(PropertyName = "ListId")]
         public int? ListId { get; set; }
 
         /// <summary>
         /// Gets or sets detected profanity term.
         /// </summary>
-        [JsonProperty(PropertyName = "term")]
+        [JsonProperty(PropertyName = "Term")]
         public string Term { get; set; }
 
     }

@@ -46,25 +46,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the bottom coordinate.
         /// </summary>
-        [JsonProperty(PropertyName = "bottom")]
+        [JsonProperty(PropertyName = "Bottom")]
         public int? Bottom { get; set; }
 
         /// <summary>
         /// Gets or sets the left coordinate.
         /// </summary>
-        [JsonProperty(PropertyName = "left")]
+        [JsonProperty(PropertyName = "Left")]
         public int? Left { get; set; }
 
         /// <summary>
         /// Gets or sets the right coordinate.
         /// </summary>
-        [JsonProperty(PropertyName = "right")]
+        [JsonProperty(PropertyName = "Right")]
         public int? Right { get; set; }
 
         /// <summary>
         /// Gets or sets the top coordinate.
         /// </summary>
-        [JsonProperty(PropertyName = "top")]
+        [JsonProperty(PropertyName = "Top")]
         public int? Top { get; set; }
 
     }

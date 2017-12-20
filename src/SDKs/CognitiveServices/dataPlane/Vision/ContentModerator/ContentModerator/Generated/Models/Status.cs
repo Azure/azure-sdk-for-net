@@ -44,19 +44,19 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets status code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "Code")]
         public int? Code { get; set; }
 
         /// <summary>
         /// Gets or sets status description.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [JsonProperty(PropertyName = "Description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets exception status.
         /// </summary>
-        [JsonProperty(PropertyName = "exception")]
+        [JsonProperty(PropertyName = "Exception")]
         public string Exception { get; set; }
 
     }

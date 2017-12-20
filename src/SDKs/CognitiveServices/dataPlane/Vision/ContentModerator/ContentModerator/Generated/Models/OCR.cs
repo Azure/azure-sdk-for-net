@@ -54,43 +54,43 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the evaluate status
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets array of KeyValue.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty(PropertyName = "Metadata")]
         public IList<KeyValuePair> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets the tracking id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
         /// <summary>
         /// Gets or sets the cache id.
         /// </summary>
-        [JsonProperty(PropertyName = "cacheId")]
+        [JsonProperty(PropertyName = "CacheId")]
         public string CacheId { get; set; }
 
         /// <summary>
         /// Gets or sets the ISO 639-3 code.
         /// </summary>
-        [JsonProperty(PropertyName = "language")]
+        [JsonProperty(PropertyName = "Language")]
         public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets the found text.
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
+        [JsonProperty(PropertyName = "Text")]
         public string Text { get; set; }
 
         /// <summary>
         /// Gets or sets the list of candidate text.
         /// </summary>
-        [JsonProperty(PropertyName = "candidates")]
+        [JsonProperty(PropertyName = "Candidates")]
         public IList<Candidate> Candidates { get; set; }
 
     }

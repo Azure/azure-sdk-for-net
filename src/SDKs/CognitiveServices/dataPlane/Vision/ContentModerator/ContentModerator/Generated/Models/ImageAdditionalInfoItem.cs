@@ -39,13 +39,13 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets key parameter.
         /// </summary>
-        [JsonProperty(PropertyName = "key")]
+        [JsonProperty(PropertyName = "Key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Gets or sets value parameter.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "Value")]
         public string Value { get; set; }
 
     }

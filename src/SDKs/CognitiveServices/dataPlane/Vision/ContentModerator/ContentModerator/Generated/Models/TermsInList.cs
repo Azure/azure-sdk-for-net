@@ -40,7 +40,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets added term details.
         /// </summary>
-        [JsonProperty(PropertyName = "term")]
+        [JsonProperty(PropertyName = "Term")]
         public string Term { get; set; }
 
     }

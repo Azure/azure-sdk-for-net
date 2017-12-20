@@ -36,12 +36,12 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dataRepresentation")]
+        [JsonProperty(PropertyName = "DataRepresentation")]
         public string DataRepresentation { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
+        [JsonProperty(PropertyName = "Value")]
         public string Value { get; set; }
 
     }

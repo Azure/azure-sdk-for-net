@@ -50,31 +50,31 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets confidence score of the image match.
         /// </summary>
-        [JsonProperty(PropertyName = "score")]
+        [JsonProperty(PropertyName = "Score")]
         public double? Score { get; set; }
 
         /// <summary>
         /// Gets or sets the match id.
         /// </summary>
-        [JsonProperty(PropertyName = "matchId")]
+        [JsonProperty(PropertyName = "MatchId")]
         public int? MatchId { get; set; }
 
         /// <summary>
         /// Gets or sets the source.
         /// </summary>
-        [JsonProperty(PropertyName = "source")]
+        [JsonProperty(PropertyName = "Source")]
         public string Source { get; set; }
 
         /// <summary>
         /// Gets or sets the tags for match details.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
+        [JsonProperty(PropertyName = "Tags")]
         public IList<int?> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the label.
         /// </summary>
-        [JsonProperty(PropertyName = "label")]
+        [JsonProperty(PropertyName = "Label")]
         public string Label { get; set; }
 
     }

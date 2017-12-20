@@ -54,7 +54,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets content to review.
         /// </summary>
-        [JsonProperty(PropertyName = "frameImage")]
+        [JsonProperty(PropertyName = "FrameImage")]
         public string FrameImage { get; set; }
 
         /// <summary>

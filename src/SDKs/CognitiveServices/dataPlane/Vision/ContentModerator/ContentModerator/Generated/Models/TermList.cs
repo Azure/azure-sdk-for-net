@@ -46,25 +46,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets term list Id.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "Id")]
         public int? Id { get; set; }
 
         /// <summary>
         /// Gets or sets term list name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets description for term list.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [JsonProperty(PropertyName = "Description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets term list metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty(PropertyName = "Metadata")]
         public TermListMetadata Metadata { get; set; }
 
     }

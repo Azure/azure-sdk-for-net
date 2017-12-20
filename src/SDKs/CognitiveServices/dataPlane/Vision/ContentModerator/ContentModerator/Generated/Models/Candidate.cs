@@ -42,13 +42,13 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the text found.
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
+        [JsonProperty(PropertyName = "Text")]
         public string Text { get; set; }
 
         /// <summary>
         /// Gets or sets the confidence level.
         /// </summary>
-        [JsonProperty(PropertyName = "confidence")]
+        [JsonProperty(PropertyName = "Confidence")]
         public double? Confidence { get; set; }
 
     }

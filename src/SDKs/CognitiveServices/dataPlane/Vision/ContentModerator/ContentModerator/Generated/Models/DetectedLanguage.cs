@@ -45,19 +45,19 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the detected language.
         /// </summary>
-        [JsonProperty(PropertyName = "detectedLanguage")]
+        [JsonProperty(PropertyName = "DetectedLanguage")]
         public string DetectedLanguageProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the detect language status
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets the tracking id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
     }

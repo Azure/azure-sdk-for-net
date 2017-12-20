@@ -41,19 +41,19 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets name of the list.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets description of the list.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [JsonProperty(PropertyName = "Description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets metadata of the list.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty(PropertyName = "Metadata")]
         public BodyMetadata Metadata { get; set; }
 
     }

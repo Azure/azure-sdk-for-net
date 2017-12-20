@@ -88,7 +88,7 @@ namespace CMTests
                 {
                     
                     //GetImageLists();
-                    wait(2);
+                    //wait(2);
                     api = ContentModeratorAPI.DELETE_IMAGE_LIST;
                     //imageListIdToDelete = ((int)allImageLists[0].Id).ToString();
                     HttpMockServer.Initialize("ImageListManagement", "DeleteImageList");
@@ -142,7 +142,7 @@ namespace CMTests
                         Assert.NotNull(createImageList);
                         Assert.Equal(HttpStatusCode.OK, createImageList.Response.StatusCode);
 
-                       // counter++;
+                        //counter++;
                         wait(2);
                     }
                 }
@@ -177,8 +177,9 @@ namespace CMTests
                     Assert.NotNull(updateImageLists);
                     Assert.Equal(HttpStatusCode.OK, updateImageLists.Response.StatusCode);
                     Assert.Equal("157184", updateImageLists.Body.Id.ToString());
-                   
-                     
+                    //Assert.Equal(imageListIdToUpdate, updateImageLists.Body.Id.ToString());
+
+
                 }  
             }
             catch (Exception e)
@@ -198,7 +199,7 @@ namespace CMTests
                 using (MockContext context = MockContext.Start("ImageListManagement"))
                 {
 
-                    //GetImageLists();
+                    GetImageLists();
                     // wait(2);
                     api = ContentModeratorAPI.GET_DETAILS_IMAGE_LIST;
                     //imageListIdToUpdate = ((int)allImageLists[1].Id).ToString();
@@ -210,7 +211,8 @@ namespace CMTests
                     Assert.NotNull(getdetailsImageList);
                     Assert.Equal(HttpStatusCode.OK, getdetailsImageList.Response.StatusCode);
                     Assert.Equal("157299", getdetailsImageList.Body.Id.ToString());
-                    
+                    //Assert.Equal(imageListIdToUpdate, getdetailsImageList.Body.Id.ToString());
+
 
                 }
             }
@@ -273,7 +275,7 @@ namespace CMTests
                     //GetImageLists();
                     // wait(2);
                     api = ContentModeratorAPI.GET_ALL_IMAGES;
-                    //imageListId = ((int)allImageLists[1].Id).ToString();
+                    //imageListId = ((int)allImageLists[0].Id).ToString();
                     HttpMockServer.Initialize("ImageListManagement", "GetAllImages");
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
                     //results = Constants.GetResponse(client, api, imageListId);
@@ -283,6 +285,7 @@ namespace CMTests
                     Assert.NotNull(getAllImagesFromListId);
                     Assert.Equal(HttpStatusCode.OK,getAllImagesFromListId.Response.StatusCode);
                     Assert.Equal("157299", getAllImagesFromListId.Body.ContentSource);
+                    //Assert.Equal(imageListId, getAllImagesFromListId.Body.ContentSource);
 
                 }
             }
@@ -304,7 +307,7 @@ namespace CMTests
                 {
 
                     //GetImageLists();
-                    wait(2);
+                    //wait(2);
                     //imageListId = ((int)allImageLists[1].Id).ToString();
 
                     Constants.AddImage = new BodyModel ("URL", "https://moderatorsampleimages.blob.core.windows.net/samples/sample.jpg");
@@ -313,14 +316,14 @@ namespace CMTests
                     client = Constants.GenerateClient(api,HttpMockServer.CreateInstance());
                     //results = Constants.GetResponse(client, api, imageListId);
                     results = Constants.GetResponse(client, api, "157299");
-                    //if (results.InnerException!= null)
-                    //{
-                    //    DeleteImage();
-                    //    api = ContentModeratorAPI.ADD_IMAGE;
-                    //    HttpMockServer.Initialize("ImageListManagement", "AddImage");
-                    //    client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                    //    results = Constants.GetResponse(client, api, imageListId);
-                    //}
+                    if (results.InnerException != null)
+                    {
+                        DeleteImage();
+                        api = ContentModeratorAPI.ADD_IMAGE;
+                        HttpMockServer.Initialize("ImageListManagement", "AddImage");
+                        client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
+                        results = Constants.GetResponse(client, api, imageListId);
+                    }
                     var addImgeToListId = results.AddImage;
 
                     Assert.NotNull(addImgeToListId);
@@ -381,9 +384,9 @@ namespace CMTests
             {
                 using (MockContext context = MockContext.Start("ImageListManagement"))
                 {
-                    //GetImageLists();
-                    wait(2);
-                    //imageListId = ((int)allImageLists[1].Id).ToString();
+                     //GetImageLists();
+                     //wait(2);
+                     //imageListId = ((int)allImageLists[1].Id).ToString();
 
                     api = ContentModeratorAPI.DELETE_ALL_IMAGE;
                     HttpMockServer.Initialize("ImageListManagement", "DeleteAllImages");

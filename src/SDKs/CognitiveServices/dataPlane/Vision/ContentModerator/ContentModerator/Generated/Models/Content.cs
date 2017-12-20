@@ -38,7 +38,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets content to evaluate for a job.
         /// </summary>
-        [JsonProperty(PropertyName = "contentValue")]
+        [JsonProperty(PropertyName = "ContentValue")]
         public string ContentValue { get; set; }
 
         /// <summary>

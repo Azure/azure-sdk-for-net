@@ -43,12 +43,12 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets id of the review.
         /// </summary>
-        [JsonProperty(PropertyName = "reviewId")]
+        [JsonProperty(PropertyName = "ReviewId")]
         public string ReviewId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "videoFrames")]
+        [JsonProperty(PropertyName = "VideoFrames")]
         public IList<Frame> VideoFrames { get; set; }
 
     }

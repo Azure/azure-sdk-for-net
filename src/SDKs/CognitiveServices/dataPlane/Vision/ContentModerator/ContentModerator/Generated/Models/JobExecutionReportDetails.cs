@@ -42,13 +42,13 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets time details.
         /// </summary>
-        [JsonProperty(PropertyName = "ts")]
+        [JsonProperty(PropertyName = "Ts")]
         public string Ts { get; set; }
 
         /// <summary>
         /// Gets or sets message details.
         /// </summary>
-        [JsonProperty(PropertyName = "msg")]
+        [JsonProperty(PropertyName = "Msg")]
         public string Msg { get; set; }
 
     }

@@ -47,25 +47,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the adult score.
         /// </summary>
-        [JsonProperty(PropertyName = "adultScore")]
+        [JsonProperty(PropertyName = "AdultScore")]
         public double? AdultScore { get; set; }
 
         /// <summary>
         /// Gets or sets the racy score.
         /// </summary>
-        [JsonProperty(PropertyName = "racyScore")]
+        [JsonProperty(PropertyName = "RacyScore")]
         public double? RacyScore { get; set; }
 
         /// <summary>
         /// Gets or sets the offensive score.
         /// </summary>
-        [JsonProperty(PropertyName = "offensiveScore")]
+        [JsonProperty(PropertyName = "OffensiveScore")]
         public double? OffensiveScore { get; set; }
 
         /// <summary>
         /// Gets or sets the review recommended flag.
         /// </summary>
-        [JsonProperty(PropertyName = "reviewRecommended")]
+        [JsonProperty(PropertyName = "ReviewRecommended")]
         public bool? ReviewRecommended { get; set; }
 
     }

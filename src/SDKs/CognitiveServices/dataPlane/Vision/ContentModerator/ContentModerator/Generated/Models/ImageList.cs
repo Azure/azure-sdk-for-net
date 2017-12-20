@@ -46,25 +46,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets image List Id.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "Id")]
         public int? Id { get; set; }
 
         /// <summary>
         /// Gets or sets image List Name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets description for image list.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [JsonProperty(PropertyName = "Description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets image List Metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty(PropertyName = "Metadata")]
         public ImageListMetadata Metadata { get; set; }
 
     }

@@ -54,43 +54,43 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the evaluate status
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets the tracking id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
         /// <summary>
         /// Gets or sets the cache id.
         /// </summary>
-        [JsonProperty(PropertyName = "cacheId")]
+        [JsonProperty(PropertyName = "CacheId")]
         public string CacheId { get; set; }
 
         /// <summary>
         /// Gets or sets true if result was found.
         /// </summary>
-        [JsonProperty(PropertyName = "result")]
+        [JsonProperty(PropertyName = "Result")]
         public bool? Result { get; set; }
 
         /// <summary>
         /// Gets or sets number of faces found.
         /// </summary>
-        [JsonProperty(PropertyName = "count")]
+        [JsonProperty(PropertyName = "Count")]
         public int? Count { get; set; }
 
         /// <summary>
         /// Gets or sets the advanced info.
         /// </summary>
-        [JsonProperty(PropertyName = "advancedInfo")]
+        [JsonProperty(PropertyName = "AdvancedInfo")]
         public IList<KeyValuePair> AdvancedInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the list of faces.
         /// </summary>
-        [JsonProperty(PropertyName = "faces")]
+        [JsonProperty(PropertyName = "Faces")]
         public IList<Face> Faces { get; set; }
 
     }

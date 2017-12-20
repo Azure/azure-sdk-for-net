@@ -46,20 +46,20 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets countryCode of the detected Phone number.
         /// </summary>
-        [JsonProperty(PropertyName = "countryCode")]
+        [JsonProperty(PropertyName = "CountryCode")]
         public string CountryCode { get; set; }
 
         /// <summary>
         /// Gets or sets detected Phone number.
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
+        [JsonProperty(PropertyName = "Text")]
         public string Text { get; set; }
 
         /// <summary>
         /// Gets or sets index(Location) of the Phone number in the input text
         /// content.
         /// </summary>
-        [JsonProperty(PropertyName = "index")]
+        [JsonProperty(PropertyName = "Index")]
         public int? Index { get; set; }
 
     }

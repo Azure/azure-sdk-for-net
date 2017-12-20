@@ -48,25 +48,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets content Id.
         /// </summary>
-        [JsonProperty(PropertyName = "contentId")]
+        [JsonProperty(PropertyName = "ContentId")]
         public string ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets advanced info list.
         /// </summary>
-        [JsonProperty(PropertyName = "additionalInfo")]
+        [JsonProperty(PropertyName = "AdditionalInfo")]
         public IList<ImageAdditionalInfoItem> AdditionalInfo { get; set; }
 
         /// <summary>
         /// Gets or sets status details.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets tracking Id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
     }

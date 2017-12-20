@@ -50,31 +50,31 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets content source Id.
         /// </summary>
-        [JsonProperty(PropertyName = "contentSourceId")]
+        [JsonProperty(PropertyName = "ContentSourceId")]
         public string ContentSourceId { get; set; }
 
         /// <summary>
         /// Gets or sets update success status.
         /// </summary>
-        [JsonProperty(PropertyName = "isUpdateSuccess")]
+        [JsonProperty(PropertyName = "IsUpdateSuccess")]
         public bool? IsUpdateSuccess { get; set; }
 
         /// <summary>
         /// Gets or sets advanced info list.
         /// </summary>
-        [JsonProperty(PropertyName = "advancedInfo")]
+        [JsonProperty(PropertyName = "AdvancedInfo")]
         public IList<RefreshIndexAdvancedInfoItem> AdvancedInfo { get; set; }
 
         /// <summary>
         /// Gets or sets refresh index status.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets tracking Id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
     }

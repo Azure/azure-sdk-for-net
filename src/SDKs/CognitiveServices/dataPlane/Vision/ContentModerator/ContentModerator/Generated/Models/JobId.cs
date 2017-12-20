@@ -37,7 +37,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets id of the created job.
         /// </summary>
-        [JsonProperty(PropertyName = "jobId")]
+        [JsonProperty(PropertyName = "JobId")]
         public string JobIdProperty { get; set; }
 
     }

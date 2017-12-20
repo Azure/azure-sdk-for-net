@@ -48,25 +48,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets language of the terms.
         /// </summary>
-        [JsonProperty(PropertyName = "language")]
+        [JsonProperty(PropertyName = "Language")]
         public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets list of terms.
         /// </summary>
-        [JsonProperty(PropertyName = "terms")]
+        [JsonProperty(PropertyName = "Terms")]
         public IList<TermsInList> Terms { get; set; }
 
         /// <summary>
         /// Gets or sets term Status.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets tracking Id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
     }

@@ -38,7 +38,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
+        [JsonProperty(PropertyName = "Error")]
         public Error Error { get; set; }
 
     }

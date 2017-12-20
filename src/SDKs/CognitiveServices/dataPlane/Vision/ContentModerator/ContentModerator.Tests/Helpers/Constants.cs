@@ -405,7 +405,7 @@ namespace CMTests
 
         #region Declarations
         // variables 
-        public static string ContentModeratorSubscriptionKey= "", ReviewAPISubscriptionKey,TeamName="TeamNov2017";
+        public static string ContentModeratorSubscriptionKey= "a38732fe2c4b4ce2ba3386875e1222a0", ReviewAPISubscriptionKey,TeamName="TeamNov2017";
         
         // optional Parameters
         public static BodyModel  AddImage, matchImage ;

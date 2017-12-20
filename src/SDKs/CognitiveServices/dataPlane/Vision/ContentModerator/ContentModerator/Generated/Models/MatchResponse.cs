@@ -50,31 +50,31 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the tracking id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
         /// <summary>
         /// Gets or sets the cache id.
         /// </summary>
-        [JsonProperty(PropertyName = "cacheID")]
+        [JsonProperty(PropertyName = "CacheID")]
         public string CacheID { get; set; }
 
         /// <summary>
         /// Gets or sets indicates if there is a match.
         /// </summary>
-        [JsonProperty(PropertyName = "isMatch")]
+        [JsonProperty(PropertyName = "IsMatch")]
         public bool? IsMatch { get; set; }
 
         /// <summary>
         /// Gets or sets the match details.
         /// </summary>
-        [JsonProperty(PropertyName = "matches")]
+        [JsonProperty(PropertyName = "Matches")]
         public IList<Match> Matches { get; set; }
 
         /// <summary>
         /// Gets or sets the evaluate status
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
     }

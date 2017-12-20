@@ -69,13 +69,13 @@ namespace CMTests
             {
                 using (MockContext context = MockContext.Start("TextListManagement"))
                 {
-                    GetTermLists();
+                    //GetTermLists();
                     //wait(2);// should wait as the plan permits 1 trans/sec
                     api = ContentModeratorAPI.DELETE_TERM_LIST;
-                    TermListIdToDelete = ((int)allTermLists[0].Id).ToString();
+                    //TermListIdToDelete = ((int)allTermLists[0].Id).ToString();
                     HttpMockServer.Initialize("TextListManagement", "DeleteTermList");
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                    results = Constants.GetResponse(client, api, TermListIdToDelete);
+                    results = Constants.GetResponse(client, api, "66");
                     var deleteTermLists = results.DeleteTermLists;
                     Assert.NotNull(deleteTermLists);
                     Assert.Equal(HttpStatusCode.OK, deleteTermLists.Response.StatusCode);
@@ -100,21 +100,21 @@ namespace CMTests
                 using (MockContext context = MockContext.Start("TextListManagement"))
                 {
 
-                    int counter = 0;
-                    GetTermLists();
-                    wait(2);
+                    //int counter = 0;
+                    //GetTermLists();
+                    //wait(2);
 
 
-                    counter = allTermLists.Count;
-                    if (counter == 5)
-                    {
-                        DeleteTermList();
-                        counter--;
-                        wait(2);
-                    }
+                    //counter = allTermLists.Count;
+                    //if (counter == 5)
+                    //{
+                    //    DeleteTermList();
+                    //    counter--;
+                    //    wait(2);
+                    //}
                     // Create TermLIsts
                     api = ContentModeratorAPI.CREATE_TERM_LIST;
-                    while (counter < 5)
+                    //while (counter < 5)
                     {
                         HttpMockServer.Initialize("TextListManagement", "CreateTermLists");
                         client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
@@ -124,7 +124,7 @@ namespace CMTests
                         Assert.NotNull(createTermList);
                         Assert.Equal(HttpStatusCode.OK, createTermList.Response.StatusCode);
 
-                        counter++;
+                        //counter++;
                         wait(2);
                     }
                 }
@@ -159,6 +159,7 @@ namespace CMTests
                     Assert.NotNull(updateTermLists);
                     Assert.Equal(HttpStatusCode.OK, updateTermLists.Response.StatusCode);
                     Assert.Equal("67", updateTermLists.Body.Id.ToString());
+                    //Assert.Equal(TermListIdToUpdate, updateTermLists.Body.Id.ToString());
 
                 }
             }
@@ -192,7 +193,8 @@ namespace CMTests
                     Assert.NotNull(getdetailsTermList);
                     Assert.Equal(HttpStatusCode.OK,getdetailsTermList.Response.StatusCode);
                     Assert.Equal("67", getdetailsTermList.Body.Id.ToString());
-                    
+                    //Assert.Equal(TermListIdToUpdate, getdetailsTermList.Body.Id.ToString());
+
 
                 }
             }
@@ -218,7 +220,7 @@ namespace CMTests
                     //GetTermLists();
                     //wait(2);
                     api = ContentModeratorAPI.REFRESH_INDEX_TERM_LIST;
-                    //TermListIdToUpdate = ((int)allTermLists[1].Id).ToString();
+                    TermListIdToUpdate = ((int)allTermLists[1].Id).ToString();
                     HttpMockServer.Initialize("TextListManagement", "RefreshIndexTermList");
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
                     //results = Constants.GetResponse(client, api, TermListIdToUpdate);
@@ -257,7 +259,7 @@ namespace CMTests
                 using (MockContext context = MockContext.Start("TextListManagement"))
                 {
                     //GetTermLists();
-                    wait(2);
+                    //wait(2);
                     api = ContentModeratorAPI.GET_ALL_TERMS;
                     //TermListId = ((int)allTermLists[1].Id).ToString();
 
@@ -291,18 +293,18 @@ namespace CMTests
             {
                 using (MockContext context = MockContext.Start("TextListManagement"))
                 {
-                    GetTermLists();
-                    wait(2);
-                    if (allTermLists.Count == 1)
-                    {
-                        CreateTermLists();
-                    }
-                    TermListId = ((int)allTermLists[1].Id).ToString();
+                    //GetTermLists();
+                    //wait(2);
+                    //if (allTermLists.Count == 1)
+                    //{
+                    //    CreateTermLists();
+                    //}
+                    //TermListId = ((int)allTermLists[1].Id).ToString();
 
                     api = ContentModeratorAPI.ADD_TERM;
                     HttpMockServer.Initialize("TextListManagement", "AddTerm");
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                    results = Constants.GetResponse(client, api, TermListId);
+                    results = Constants.GetResponse(client, api, "67");
 
                     var addTermToListId = results.AddTerm;
                     Assert.NotNull(addTermToListId);
@@ -328,7 +330,7 @@ namespace CMTests
                 {
 
                     //GetAllTerms();
-                    wait(2);
+                    //wait(2);
                     //if (allTerms.Data.Terms.Count == 0)
                     //{
                     //    AddTerm();
@@ -368,7 +370,7 @@ namespace CMTests
                 using (MockContext context = MockContext.Start("TextListManagement"))
                 {
                     //GetTermLists();
-                    wait(2);
+                    //wait(2);
                     //TermListId = ((int)allTermLists[1].Id).ToString();
 
                     api = ContentModeratorAPI.DELETE_ALL_TERM;

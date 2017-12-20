@@ -44,13 +44,13 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets optional key value pair to describe your list.
         /// </summary>
-        [JsonProperty(PropertyName = "key One")]
+        [JsonProperty(PropertyName = "Key One")]
         public string KeyOne { get; set; }
 
         /// <summary>
         /// Gets or sets optional key value pair to describe your list.
         /// </summary>
-        [JsonProperty(PropertyName = "key Two")]
+        [JsonProperty(PropertyName = "Key Two")]
         public string KeyTwo { get; set; }
 
     }

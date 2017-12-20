@@ -62,61 +62,61 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets id of the review.
         /// </summary>
-        [JsonProperty(PropertyName = "reviewId")]
+        [JsonProperty(PropertyName = "ReviewId")]
         public string ReviewId { get; set; }
 
         /// <summary>
         /// Gets or sets name of the subteam.
         /// </summary>
-        [JsonProperty(PropertyName = "subTeam")]
+        [JsonProperty(PropertyName = "SubTeam")]
         public string SubTeam { get; set; }
 
         /// <summary>
         /// Gets or sets the status string (&amp;lt;Pending, Complete&amp;gt;).
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets array of KeyValue with Reviewer set Tags.
         /// </summary>
-        [JsonProperty(PropertyName = "reviewerResultTags")]
+        [JsonProperty(PropertyName = "ReviewerResultTags")]
         public IList<KeyValuePair> ReviewerResultTags { get; set; }
 
         /// <summary>
         /// Gets or sets the reviewer name.
         /// </summary>
-        [JsonProperty(PropertyName = "createdBy")]
+        [JsonProperty(PropertyName = "CreatedBy")]
         public string CreatedBy { get; set; }
 
         /// <summary>
         /// Gets or sets array of KeyValue.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty(PropertyName = "Metadata")]
         public IList<KeyValuePair> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets the type of content.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [JsonProperty(PropertyName = "Type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the content value.
         /// </summary>
-        [JsonProperty(PropertyName = "content")]
+        [JsonProperty(PropertyName = "Content")]
         public string Content { get; set; }
 
         /// <summary>
         /// Gets or sets id of the content.
         /// </summary>
-        [JsonProperty(PropertyName = "contentId")]
+        [JsonProperty(PropertyName = "ContentId")]
         public string ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the callback endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "callbackEndpoint")]
+        [JsonProperty(PropertyName = "CallbackEndpoint")]
         public string CallbackEndpoint { get; set; }
 
     }

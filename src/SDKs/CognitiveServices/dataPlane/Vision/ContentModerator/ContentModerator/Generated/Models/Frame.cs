@@ -48,25 +48,25 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets timestamp of the frame.
         /// </summary>
-        [JsonProperty(PropertyName = "timestamp")]
+        [JsonProperty(PropertyName = "Timestamp")]
         public string Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets frame image.
         /// </summary>
-        [JsonProperty(PropertyName = "frameImage")]
+        [JsonProperty(PropertyName = "FrameImage")]
         public string FrameImage { get; set; }
 
         /// <summary>
         /// Gets or sets array of KeyValue.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty(PropertyName = "Metadata")]
         public IList<KeyValuePair> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets reviewer result tags.
         /// </summary>
-        [JsonProperty(PropertyName = "reviewerResultTags")]
+        [JsonProperty(PropertyName = "ReviewerResultTags")]
         public IList<Tag> ReviewerResultTags { get; set; }
 
     }

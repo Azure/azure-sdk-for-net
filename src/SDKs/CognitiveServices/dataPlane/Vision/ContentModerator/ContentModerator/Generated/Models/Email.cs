@@ -49,26 +49,26 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets detected Email Address from the input text content.
         /// </summary>
-        [JsonProperty(PropertyName = "detected")]
+        [JsonProperty(PropertyName = "Detected")]
         public string Detected { get; set; }
 
         /// <summary>
         /// Gets or sets subtype of the detected Email Address.
         /// </summary>
-        [JsonProperty(PropertyName = "subType")]
+        [JsonProperty(PropertyName = "SubType")]
         public string SubType { get; set; }
 
         /// <summary>
         /// Gets or sets email Address in the input text content.
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
+        [JsonProperty(PropertyName = "Text")]
         public string Text { get; set; }
 
         /// <summary>
         /// Gets or sets index(Location) of the Email address in the input text
         /// content.
         /// </summary>
-        [JsonProperty(PropertyName = "index")]
+        [JsonProperty(PropertyName = "Index")]
         public int? Index { get; set; }
 
     }

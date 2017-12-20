@@ -42,13 +42,13 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets term data details.
         /// </summary>
-        [JsonProperty(PropertyName = "data")]
+        [JsonProperty(PropertyName = "Data")]
         public TermsData Data { get; set; }
 
         /// <summary>
         /// Gets or sets paging details.
         /// </summary>
-        [JsonProperty(PropertyName = "paging")]
+        [JsonProperty(PropertyName = "Paging")]
         public TermsPaging Paging { get; set; }
 
     }

@@ -62,55 +62,55 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the cache id.
         /// </summary>
-        [JsonProperty(PropertyName = "cacheID")]
+        [JsonProperty(PropertyName = "CacheID")]
         public string CacheID { get; set; }
 
         /// <summary>
         /// Gets or sets evaluate result.
         /// </summary>
-        [JsonProperty(PropertyName = "result")]
+        [JsonProperty(PropertyName = "Result")]
         public bool? Result { get; set; }
 
         /// <summary>
         /// Gets or sets the tracking id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
         /// <summary>
         /// Gets or sets the adult classification score.
         /// </summary>
-        [JsonProperty(PropertyName = "adultClassificationScore")]
+        [JsonProperty(PropertyName = "AdultClassificationScore")]
         public double? AdultClassificationScore { get; set; }
 
         /// <summary>
         /// Gets or sets indicates if an image is classified as adult.
         /// </summary>
-        [JsonProperty(PropertyName = "isImageAdultClassified")]
+        [JsonProperty(PropertyName = "IsImageAdultClassified")]
         public bool? IsImageAdultClassified { get; set; }
 
         /// <summary>
         /// Gets or sets the racy classication score.
         /// </summary>
-        [JsonProperty(PropertyName = "racyClassificationScore")]
+        [JsonProperty(PropertyName = "RacyClassificationScore")]
         public double? RacyClassificationScore { get; set; }
 
         /// <summary>
         /// Gets or sets indicates if the image is classified as racy.
         /// </summary>
-        [JsonProperty(PropertyName = "isImageRacyClassified")]
+        [JsonProperty(PropertyName = "IsImageRacyClassified")]
         public bool? IsImageRacyClassified { get; set; }
 
         /// <summary>
         /// Gets or sets the advanced info.
         /// </summary>
-        [JsonProperty(PropertyName = "advancedInfo")]
+        [JsonProperty(PropertyName = "AdvancedInfo")]
         public IList<KeyValuePair> AdvancedInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the evaluate status
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
     }

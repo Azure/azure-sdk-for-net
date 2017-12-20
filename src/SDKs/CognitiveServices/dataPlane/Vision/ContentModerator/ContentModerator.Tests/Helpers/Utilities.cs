@@ -361,17 +361,17 @@ namespace CMTests.Helpers
                         error += " Autocorrected Text property is null or empty";
                 }
                 if (isPII)
-                    if (s.Pii == null)
+                    if (s.PII == null)
                         error += " PII is null";
                     else
                     {
-                        if (s.Pii.Email == null)
+                        if (s.PII.Email == null)
                             error += " PII.Email is null";
-                        if (s.Pii.Ipa == null)
+                        if (s.PII.IPA == null)
                             error += " PII.IPA is null";
-                        if (s.Pii.Phone == null)
+                        if (s.PII.Phone == null)
                             error += " PII.Phone is null";
-                        if (s.Pii.Address == null)
+                        if (s.PII.Address == null)
                             error += " PII.Address is null";
                     }
 

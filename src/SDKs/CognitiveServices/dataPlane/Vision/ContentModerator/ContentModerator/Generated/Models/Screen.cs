@@ -34,11 +34,11 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <param name="classification">The classification details of the
         /// text.</param>
         /// <param name="status">The evaluate status.</param>
-        /// <param name="pii">Personal Identifier Information details.</param>
+        /// <param name="pII">Personal Identifier Information details.</param>
         /// <param name="language">Language of the input text content.</param>
         /// <param name="trackingId">Unique Content Moderator transaction
         /// Id.</param>
-        public Screen(string originalText = default(string), string normalizedText = default(string), string autoCorrectedText = default(string), IList<string> misrepresentation = default(IList<string>), Classification classification = default(Classification), Status status = default(Status), PII pii = default(PII), string language = default(string), IList<DetectedTerms> terms = default(IList<DetectedTerms>), string trackingId = default(string))
+        public Screen(string originalText = default(string), string normalizedText = default(string), string autoCorrectedText = default(string), IList<string> misrepresentation = default(IList<string>), Classification classification = default(Classification), Status status = default(Status), PII pII = default(PII), string language = default(string), IList<DetectedTerms> terms = default(IList<DetectedTerms>), string trackingId = default(string))
         {
             OriginalText = originalText;
             NormalizedText = normalizedText;
@@ -46,7 +46,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
             Misrepresentation = misrepresentation;
             Classification = classification;
             Status = status;
-            Pii = pii;
+            PII = pII;
             Language = language;
             Terms = terms;
             TrackingId = trackingId;
@@ -61,60 +61,60 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Gets or sets the original text.
         /// </summary>
-        [JsonProperty(PropertyName = "originalText")]
+        [JsonProperty(PropertyName = "OriginalText")]
         public string OriginalText { get; set; }
 
         /// <summary>
         /// Gets or sets the normalized text.
         /// </summary>
-        [JsonProperty(PropertyName = "normalizedText")]
+        [JsonProperty(PropertyName = "NormalizedText")]
         public string NormalizedText { get; set; }
 
         /// <summary>
         /// Gets or sets the autocorrected text
         /// </summary>
-        [JsonProperty(PropertyName = "autoCorrectedText")]
+        [JsonProperty(PropertyName = "AutoCorrectedText")]
         public string AutoCorrectedText { get; set; }
 
         /// <summary>
         /// Gets or sets the misrepresentation text.
         /// </summary>
-        [JsonProperty(PropertyName = "misrepresentation")]
+        [JsonProperty(PropertyName = "Misrepresentation")]
         public IList<string> Misrepresentation { get; set; }
 
         /// <summary>
         /// Gets or sets the classification details of the text.
         /// </summary>
-        [JsonProperty(PropertyName = "classification")]
+        [JsonProperty(PropertyName = "Classification")]
         public Classification Classification { get; set; }
 
         /// <summary>
         /// Gets or sets the evaluate status.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "Status")]
         public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets personal Identifier Information details.
         /// </summary>
-        [JsonProperty(PropertyName = "pii")]
-        public PII Pii { get; set; }
+        [JsonProperty(PropertyName = "PII")]
+        public PII PII { get; set; }
 
         /// <summary>
         /// Gets or sets language of the input text content.
         /// </summary>
-        [JsonProperty(PropertyName = "language")]
+        [JsonProperty(PropertyName = "Language")]
         public string Language { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "terms")]
+        [JsonProperty(PropertyName = "Terms")]
         public IList<DetectedTerms> Terms { get; set; }
 
         /// <summary>
         /// Gets or sets unique Content Moderator transaction Id.
         /// </summary>
-        [JsonProperty(PropertyName = "trackingId")]
+        [JsonProperty(PropertyName = "TrackingId")]
         public string TrackingId { get; set; }
 
     }
