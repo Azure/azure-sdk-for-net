@@ -335,6 +335,7 @@ namespace Automation.Tests.ScenarioTests
                 {
 
                     var moduleName = "HelloAndSum";
+                    // Content links don't have to be valid for playback. However, these are the actual module download locations used for recording.
                     var contentLink1 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module1/HelloAndSum.zip";
                     var contentLink2 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module2/HelloAndSum.zip";
 
@@ -381,7 +382,7 @@ namespace Automation.Tests.ScenarioTests
             bool provisioningSucceeded = false;
             do
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(50); // Used 5 seconds polling delay in the record mode, using 50 ms in playback for test to complete fast
                 module = testFixture.GetAutomationModule(moduleName);
                 if (module.ProvisioningState == ModuleProvisioningState.Succeeded)
                 {
