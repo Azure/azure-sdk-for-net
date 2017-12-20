@@ -10,26 +10,26 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// ARM Resource.
+    /// Tracked resource with location.
     /// </summary>
-    public partial class Resource : IResource
+    public partial class PatchTrackedResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the PatchTrackedResource class.
         /// </summary>
-        public Resource()
+        public PatchTrackedResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the PatchTrackedResource class.
         /// </summary>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
@@ -38,12 +38,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
         /// <param name="eTag">Optional ETag.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string))
+        /// <param name="location">Resource location.</param>
+        /// <param name="tags">Resource tags.</param>
+        public PatchTrackedResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type, eTag)
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            ETag = eTag;
+            Location = location;
+            Tags = tags;
             CustomInit();
         }
 
@@ -53,29 +54,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id represents the complete path to the resource.
+        /// Gets or sets resource location.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
-        /// Gets resource name associated with the resource.
+        /// Gets or sets resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type represents the complete path of the form
-        /// Namespace/ResourceType/ResourceType/...
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets optional ETag.
-        /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
