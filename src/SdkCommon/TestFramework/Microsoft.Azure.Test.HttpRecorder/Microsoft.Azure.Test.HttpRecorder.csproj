@@ -25,7 +25,7 @@
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.AppDomain" Version="2.0.11" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
     
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
