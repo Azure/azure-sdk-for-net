@@ -265,7 +265,10 @@ namespace DataLakeAnalytics.Tests
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                
+
+                // Wait 5 minutes for the account setup
+                TestUtilities.Wait(300000);
+
                 commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
                     commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
@@ -362,88 +365,6 @@ namespace DataLakeAnalytics.Tests
                         commonData.DatabaseName, commonData.SecretName));
 
                     // TODO: once support is available for delete all credentials add tests here for that.
-                }
-            }
-        }
-
-        [Fact]
-        public void SecretCRUDTest()
-        {
-            // NOTE: This is deprecated and will be removed in a future release
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                commonData = new CommonTestFixture(context);
-                commonData.HostUrl =
-                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
-                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                
-                commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
-                    commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
-                using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
-                {
-                    using (var jobClient = commonData.GetDataLakeAnalyticsJobManagementClient(context))
-                    {
-                        // Create the secret
-                        clientToUse.Catalog.CreateSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName, commonData.SecretName,
-                            new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
-                            {
-                                Password = commonData.SecretPwd,
-                                Uri = "https://adlasecrettest.contoso.com:443"
-                            });
-
-                        // Attempt to create the secret again, which should throw
-                        Assert.Throws<CloudException>(
-                            () => clientToUse.Catalog.CreateSecret(
-                                    commonData.SecondDataLakeAnalyticsAccountName,
-                                    commonData.DatabaseName, commonData.SecretName,
-                                    new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
-                                    {
-                                        Password = commonData.SecretPwd,
-                                        Uri = "https://adlasecrettest.contoso.com:443"
-                                    }));
-
-                        // Create another secret
-                        var secondSecretName = commonData.SecretName + "dup";
-                        clientToUse.Catalog.CreateSecret(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, secondSecretName,
-                        new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
-                        {
-                            Password = commonData.SecretPwd,
-                            Uri = "https://adlasecrettest.contoso.com:443"
-                        });
-
-                        // Get the secret and ensure the response contains a date.
-                        var secretGetResponse = clientToUse.Catalog.GetSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName, commonData.SecretName);
-
-                        Assert.NotNull(secretGetResponse);
-                        Assert.NotNull(secretGetResponse.CreationTime);
-
-                        // Delete the secret
-                        clientToUse.Catalog.DeleteSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName, commonData.SecretName);
-
-                        // Try to get the secret which should throw
-                        Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName, commonData.SecretName));
-
-                        // Delete all secrets
-                        clientToUse.Catalog.DeleteAllSecrets(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName);
-
-                        // Try to get the second secret, which should throw.
-                        // Try to get the secret which should throw
-                        Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName, secondSecretName));
-                    }
                 }
             }
         }
