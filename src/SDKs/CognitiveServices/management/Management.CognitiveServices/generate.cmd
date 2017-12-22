@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd cognitiveservices/resource-manager %*
+call %~dp0..\..\..\..\..\tools\generate.cmd cognitiveservices/resource-manager %*

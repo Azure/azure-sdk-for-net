@@ -36,12 +36,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="values">The value of restrictions. If the restriction
         /// type is set to location. This would be different locations where
         /// the SKU is restricted.</param>
+        /// <param name="restrictionInfo">The information about the restriction
+        /// where the SKU cannot be used.</param>
         /// <param name="reasonCode">The reason for restriction. Possible
         /// values include: 'QuotaId', 'NotAvailableForSubscription'</param>
-        public ResourceSkuRestrictions(ResourceSkuRestrictionsType? type = default(ResourceSkuRestrictionsType?), IList<string> values = default(IList<string>), ResourceSkuRestrictionsReasonCode? reasonCode = default(ResourceSkuRestrictionsReasonCode?))
+        public ResourceSkuRestrictions(ResourceSkuRestrictionsType? type = default(ResourceSkuRestrictionsType?), IList<string> values = default(IList<string>), ResourceSkuRestrictionInfo restrictionInfo = default(ResourceSkuRestrictionInfo), ResourceSkuRestrictionsReasonCode? reasonCode = default(ResourceSkuRestrictionsReasonCode?))
         {
             Type = type;
             Values = values;
+            RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
             CustomInit();
         }
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<string> Values { get; private set; }
+
+        /// <summary>
+        /// Gets the information about the restriction where the SKU cannot be
+        /// used.
+        /// </summary>
+        [JsonProperty(PropertyName = "restrictionInfo")]
+        public ResourceSkuRestrictionInfo RestrictionInfo { get; private set; }
 
         /// <summary>
         /// Gets the reason for restriction. Possible values include:
