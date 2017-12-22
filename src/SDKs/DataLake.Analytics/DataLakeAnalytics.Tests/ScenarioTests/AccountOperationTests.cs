@@ -33,6 +33,7 @@ namespace DataLakeAnalytics.Tests
                 };
 
                 var responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);
+
                 Assert.True(responseNameCheck.NameAvailable);
 
                 // Create a test account
@@ -61,6 +62,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.True(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
 
                 responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);
+
                 Assert.False(responseNameCheck.NameAvailable);
 
                 // Get the account and ensure that all the values are properly set.
