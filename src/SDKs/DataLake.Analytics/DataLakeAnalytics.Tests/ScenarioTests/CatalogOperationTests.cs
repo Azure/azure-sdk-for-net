@@ -198,7 +198,7 @@ namespace DataLakeAnalytics.Tests
                     Assert.False(typeGetResponse.Any(type => type.IsComplexType.Value));
 
                     // Prepare to grant/revoke ACLs
-                    var principalId = Guid.NewGuid();
+                    var principalId = TestUtilities.GenerateGuid();
                     var grantAclParam = new AclCreateOrUpdateParameters
                     {
                         AceType = AclType.User,
