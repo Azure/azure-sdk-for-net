@@ -10,7 +10,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <PackageReleaseNotes>This is a gneral availability release of the Azure Iot Device Provisioning Service SDK.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a general availability release of the Azure Iot Device Provisioning Service SDK.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
