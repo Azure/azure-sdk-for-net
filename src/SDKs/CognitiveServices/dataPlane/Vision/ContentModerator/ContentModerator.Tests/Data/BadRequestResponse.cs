@@ -4,18 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMTests.Data
+namespace ContentModeratorTests.Data
 {
 
    // [Serializable]
     public class BadRequestResponse
     {
-        public BadRequestResponse()
-        {
-
-        }
-
-
+        public BadRequestResponse(){}
         public string Message { get; set; }
         public string TrackingId { get; set; }
 
@@ -26,7 +21,6 @@ namespace CMTests.Data
    // [Serializable]
     public class Error
     {
-
         public string Title { get; set; }
         public string Message { get; set; }
 

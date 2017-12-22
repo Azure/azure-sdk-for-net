@@ -7,16 +7,13 @@ using Microsoft.Rest;
 using Microsoft.CognitiveServices.ContentModerator.Models;
 using Microsoft.CognitiveServices.ContentModerator;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
    public class Responses
     {
-        public Responses()
-        {
+        public Responses(){}
 
-        }
-
-              //ListManagementImageLIsts
+        //ListManagementImageLIsts
         public HttpOperationResponse<IList<ImageList>> GetAllImageLists { get; set; }
         public HttpOperationResponse<string> DeleteImageLists { get; set; }
         public HttpOperationResponse<ImageList> CreateImageList { get; set; }

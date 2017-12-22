@@ -10,13 +10,13 @@ using Microsoft.CognitiveServices.ContentModerator.Models;
 using Microsoft.CognitiveServices.ContentModerator;
 //using System.Net.Mime;
 //using System.Configuration;
-using CMTests.Helpers;
+using ContentModeratorTests.Helpers;
 using Microsoft.Rest;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Azure.CognitiveServices.ContentModerator;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
 	#region Enums
 
@@ -342,7 +342,7 @@ namespace CMTests
 				[
 					{
 						""Index"": 0,
-						""Term"" : ""fuck""
+						""Term"" : ""fck""
 
 					}
 				]

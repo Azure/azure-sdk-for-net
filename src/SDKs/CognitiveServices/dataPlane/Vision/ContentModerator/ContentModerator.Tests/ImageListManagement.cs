@@ -7,14 +7,14 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using CMTests.Helpers;
-using CMTests.Data;
+using ContentModeratorTests.Helpers;
+using ContentModeratorTests.Data;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.CognitiveServices.ContentModerator;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
         public class ImageListManagement : TestBase
     {
@@ -47,8 +47,6 @@ namespace CMTests
         #region ListManagementImageLists
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetImageLists()
         {
             try
@@ -78,8 +76,6 @@ namespace CMTests
 
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void DeleteImageList()
         {
             try
@@ -110,8 +106,6 @@ namespace CMTests
 
     
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void CreateImageLists()
         {
             try
@@ -156,8 +150,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void UpdateImageList()
         {
             try
@@ -190,8 +182,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetDetailsImageList()
         {
             try
@@ -224,8 +214,6 @@ namespace CMTests
 
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void RefreshIndexImageList()
         {
             try
@@ -263,8 +251,6 @@ namespace CMTests
 
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetAllImages()
         {
             try
@@ -297,8 +283,6 @@ namespace CMTests
 
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void AddImage()
         {
             try
@@ -339,8 +323,6 @@ namespace CMTests
 
        
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void DeleteImage()
         {
             try
@@ -376,8 +358,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void DeleteAllImages()
         {
             try

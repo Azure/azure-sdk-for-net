@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMTests.Helpers
+namespace ContentModeratorTests.Helpers
 {
     public static class EnumExtensions
     {

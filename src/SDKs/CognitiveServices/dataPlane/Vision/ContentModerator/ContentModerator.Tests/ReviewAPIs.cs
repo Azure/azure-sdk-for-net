@@ -2,7 +2,7 @@
 using Microsoft.CognitiveServices.ContentModerator;
 using Microsoft.CognitiveServices.ContentModerator.Models;
 using System.Collections.Generic;
-using CMTests.Helpers;
+using ContentModeratorTests.Helpers;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Net;
@@ -11,7 +11,7 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
         public class ReviewAPIs : TestBase
     {
@@ -39,8 +39,6 @@ namespace CMTests
         #region Jobs
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void CreateImageJob()
         {
 
@@ -73,8 +71,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void CreateTextJob()
         {
             try
@@ -107,8 +103,6 @@ namespace CMTests
 
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetImageJob()
         {
 
@@ -148,8 +142,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetTextJob()
         {
 
@@ -189,8 +181,6 @@ namespace CMTests
         #region Review
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void CreateImageReview()
         {
             try
@@ -219,8 +209,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void CreateTextReview()
         {
             try
@@ -249,8 +237,6 @@ namespace CMTests
         }
          
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void CreateVideoReview()
         {
             try
@@ -279,8 +265,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetImageReview()
         {
 
@@ -319,8 +303,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetTextReview()
         {
             try
@@ -354,8 +336,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetVideoReview()
         {
             try
@@ -389,8 +369,6 @@ namespace CMTests
 
         #region VideoReview
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void AddURLFramesVideoReview()
         {
             try
@@ -420,8 +398,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void AddZipFramesVideoReview()
         {
             try
@@ -449,8 +425,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetFramesVideoReview()
         {
             try
@@ -480,8 +454,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void PublishVideo()
         {
             try
@@ -508,8 +480,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void AddTranscripts()
         {
             try
@@ -541,8 +511,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void AddTranscriptsModerationResult()
         {
             try

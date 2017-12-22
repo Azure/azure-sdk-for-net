@@ -6,16 +6,16 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
-using CMTests.Helpers;
+using ContentModeratorTests.Helpers;
 using System.IO;
 using d = System.Drawing;
-using CMTests.Data;
+using ContentModeratorTests.Data;
 using System.Reflection;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
         public class ImageModerator : TestBase
     {
@@ -48,8 +48,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetImageLists()
         {
             try
@@ -79,8 +77,6 @@ namespace CMTests
         
      
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void Evaluate()
         {
             try
@@ -112,8 +108,6 @@ namespace CMTests
        
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void FindFaces()
         {
             try
@@ -145,8 +139,6 @@ namespace CMTests
         
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void Match()
         {
             try
@@ -177,9 +169,6 @@ namespace CMTests
        
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
-
         public void OCR()
         {
             try
@@ -214,8 +203,6 @@ namespace CMTests
         
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void EvaluateRaw()
         {
             try
@@ -257,8 +244,6 @@ namespace CMTests
 
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void FindFacesRaw()
         {
             try
@@ -298,8 +283,6 @@ namespace CMTests
 
       
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void MatchRaw()
         {
             try
@@ -337,8 +320,6 @@ namespace CMTests
 
       
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void OCRRaw()
         {
             try

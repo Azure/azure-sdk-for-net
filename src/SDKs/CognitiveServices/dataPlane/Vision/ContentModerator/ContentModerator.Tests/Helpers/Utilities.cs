@@ -12,21 +12,16 @@ using System.IO;
 using System.Configuration;
 using System.Reflection;
 //using d = System.Drawing;
-using CMTests.Data;
+using ContentModeratorTests.Data;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace CMTests.Helpers
+namespace ContentModeratorTests.Helpers
 {
     public class Utilities
     {
-        public Utilities()
-        {
-
-        }
-
-
-
+        public Utilities(){}
+        
         public void WaitUntilCompleted(Task tsk)
         {
             while (!tsk.IsCompleted)

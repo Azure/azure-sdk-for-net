@@ -1,4 +1,4 @@
-﻿using CMTests.Helpers;
+﻿using ContentModeratorTests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
         public class TestBase:IDisposable
     {
@@ -50,17 +50,11 @@ namespace CMTests
             
             Constants.ReviewAPISubscriptionKey = Constants.ContentModeratorSubscriptionKey;
 
-        currentExecutingDirectory = Utilities.GetCorrectedDeploymentDirectory(currentExecutingDirectory);
+            currentExecutingDirectory = Utilities.GetCorrectedDeploymentDirectory(currentExecutingDirectory);
         }
-
         
-        public void TestCleanupConfiguration()
-        {
-            
-        }
-
+        public void TestCleanupConfiguration(){}
         
-
         public static string ErrorMessage { get;  set; }
 
 

@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Linq;
 using Microsoft.Rest;
-using CMTests.Helpers;
+using ContentModeratorTests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
         public class TextModerator :TestBase
     {
@@ -28,8 +28,6 @@ namespace CMTests
         }
 
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void GetTermLists()
         {
             try
@@ -58,8 +56,6 @@ namespace CMTests
 
         
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void DetectLanguage()
         {
             try
@@ -89,8 +85,6 @@ namespace CMTests
 
        
         [Fact]
-        [assembly: Collection("BVT")]
-        [assembly: CollectionBehavior(DisableTestParallelization = true)]
         public void ScreenText()
         {
             try

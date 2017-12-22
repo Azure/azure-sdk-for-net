@@ -7,14 +7,11 @@ using Microsoft.Rest;
 using Microsoft.CognitiveServices.ContentModerator.Models;
 using Microsoft.CognitiveServices.ContentModerator;
 
-namespace CMTests
+namespace ContentModeratorTests
 {
    public class ReviewResponses
     {
-        public ReviewResponses()
-        {
-
-        }
+        public ReviewResponses(){}
 
         //JobAPIS
         public HttpOperationResponse<JobId> CreateJob { get; set; }
