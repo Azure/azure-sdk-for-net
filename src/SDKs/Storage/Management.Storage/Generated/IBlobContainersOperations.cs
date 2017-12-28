@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Storage
     public partial interface IBlobContainersOperations
     {
         /// <summary>
-        /// TODO
+        /// Lists all containers and does not support a prefix like data plane.
+        /// Also SRP today does not return continuation token.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -52,7 +53,10 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Creates a new container under the specified account as described by
+        /// request body. The container resource includes metadata and
+        /// properties for that container. It does not include a list of the
+        /// blobs contained by the container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -71,10 +75,12 @@ namespace Microsoft.Azure.Management.Storage
         /// by a letter or number.
         /// </param>
         /// <param name='publicAccess'>
-        /// TODO. Possible values include: 'container', 'blob'
+        /// Specifies whether data in the container may be accessed publicly
+        /// and the level of access. Possible values include: 'Container',
+        /// 'Blob', 'None'
         /// </param>
         /// <param name='metadata'>
-        /// TODO
+        /// A name-value pair to associate with the container as metadata.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -93,7 +99,9 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<BlobContainer>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Updates container properties as specified in request body.
+        /// Properties not mentioned in the request will be unchanged. Update
+        /// fails if the specified container doesn't already exist.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -112,10 +120,12 @@ namespace Microsoft.Azure.Management.Storage
         /// by a letter or number.
         /// </param>
         /// <param name='publicAccess'>
-        /// TODO. Possible values include: 'container', 'blob'
+        /// Specifies whether data in the container may be accessed publicly
+        /// and the level of access. Possible values include: 'Container',
+        /// 'Blob', 'None'
         /// </param>
         /// <param name='metadata'>
-        /// TODO
+        /// A name-value pair to associate with the container as metadata.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -134,7 +144,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<BlobContainer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Gets properties of a specified container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -169,7 +179,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<BlobContainer>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Deletes specified container under its account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -201,39 +211,9 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the storage account within the specified resource
-        /// group. Storage account names must be between 3 and 24 characters in
-        /// length and use numbers and lower-case letters only.
-        /// </param>
-        /// <param name='containerName'>
-        /// The name of the blob container within the specified storage
-        /// account. Blob container names must be between 3 and 63 characters
-        /// in length and use numbers, lower-case letters and dash (-) only.
-        /// Every dash (-) character must be immediately preceded and followed
-        /// by a letter or number.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> LeaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// TODO
+        /// Sets legal hold tags. Setting the same tag results in an idempotent
+        /// operation. SetLegalHold follows an append pattern and does not
+        /// clear out the existing tags that are not specified in the request.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -252,7 +232,8 @@ namespace Microsoft.Azure.Management.Storage
         /// by a letter or number.
         /// </param>
         /// <param name='tags'>
-        /// TODO
+        /// Each tag should be 3 to 23 alphanumeric characters and is
+        /// normalized to lower case at SRP.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -271,7 +252,9 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Clears legal hold tags. Clearing the same or non-existent tag
+        /// results in an idempotent operation. ClearLegalHold clears out only
+        /// the specified tags in the request.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -290,7 +273,8 @@ namespace Microsoft.Azure.Management.Storage
         /// by a letter or number.
         /// </param>
         /// <param name='tags'>
-        /// TODO
+        /// Each tag should be 3 to 23 alphanumeric characters and is
+        /// normalized to lower case at SRP.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -309,7 +293,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Creates or updates an unlocked immutability policy. ETag in
+        /// If-Match is honored if given but not required for this operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -327,14 +312,15 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
+        /// <param name='immutabilityPeriodSinceCreationInDays'>
+        /// The immutability period for the blobs in the container since the
+        /// policy creation, in days.
+        /// </param>
         /// <param name='ifMatch'>
         /// The entity state (ETag) version of the immutability policy to
         /// update. A value of "*" can be used to apply the operation only if
         /// the immutability policy already exists. If omitted, this operation
         /// will always be applied.
-        /// </param>
-        /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// TODO
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -351,9 +337,10 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Gets the existing immutability policy along with the corresponding
+        /// ETag in response headers and body.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -394,7 +381,11 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersGetImmutabilityPolicyHeaders>> GetImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Aborts an unlocked immutability policy. The response of delete has
+        /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
+        /// required for this operation. Deleting a locked immutability policy
+        /// is not allowed, only way is to delete the container after deleting
+        /// all blobs inside the container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -435,7 +426,9 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersDeleteImmutabilityPolicyHeaders>> DeleteImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Sets the ImmutabilityPolicy to Locked state. The only action
+        /// allowed on a Locked policy is ExtendImmutabilityPolicy action. ETag
+        /// in If-Match is required for this operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -476,7 +469,9 @@ namespace Microsoft.Azure.Management.Storage
         /// </exception>
         Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersLockImmutabilityPolicyHeaders>> LockImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Extends the immutabilityPeriodSinceCreationInDays of a locked
+        /// immutabilityPolicy. The only action allowed on a Locked policy will
+        /// be this action. ETag in If-Match is required for this operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -501,7 +496,8 @@ namespace Microsoft.Azure.Management.Storage
         /// will always be applied.
         /// </param>
         /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// TODO
+        /// The immutability period for the blobs in the container since the
+        /// policy creation, in days.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

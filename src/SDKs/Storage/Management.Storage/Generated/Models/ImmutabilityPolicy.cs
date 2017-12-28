@@ -16,10 +16,11 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// TODO
+    /// The ImmutabilityPolicy property of a blob container, including Id,
+    /// resource name, resource type, Etag.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ImmutabilityPolicy : BlobResourceWithEtag
+    public partial class ImmutabilityPolicy : AzureEntityResource
     {
         /// <summary>
         /// Initializes a new instance of the ImmutabilityPolicy class.
@@ -32,12 +33,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ImmutabilityPolicy class.
         /// </summary>
-        /// <param name="immutabilityPeriodSinceCreationInDays">TODO</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="state">TODO. Possible values include: 'Locked',
-        /// 'Unlocked'</param>
+        /// <param name="immutabilityPeriodSinceCreationInDays">The
+        /// immutability period for the blobs in the container since the policy
+        /// creation, in days.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="etag">Resource Etag.</param>
+        /// <param name="state">The ImmutabilityPolicy state of a blob
+        /// container, possible values include: Locked and Unlocked. Possible
+        /// values include: 'Locked', 'Unlocked'</param>
         public ImmutabilityPolicy(int immutabilityPeriodSinceCreationInDays, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
             : base(id, name, type, etag)
         {
@@ -52,15 +60,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets or sets the immutability period for the blobs in the container
+        /// since the policy creation, in days.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ImmutabilityPeriodSinceCreationInDays")]
+        [JsonProperty(PropertyName = "properties.immutabilityPeriodSinceCreationInDays")]
         public int ImmutabilityPeriodSinceCreationInDays { get; set; }
 
         /// <summary>
-        /// Gets TODO. Possible values include: 'Locked', 'Unlocked'
+        /// Gets the ImmutabilityPolicy state of a blob container, possible
+        /// values include: Locked and Unlocked. Possible values include:
+        /// 'Locked', 'Unlocked'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.State")]
+        [JsonProperty(PropertyName = "properties.state")]
         public ImmutabilityPolicyState? State { get; private set; }
 
         /// <summary>

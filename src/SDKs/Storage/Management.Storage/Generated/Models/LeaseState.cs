@@ -21,15 +21,15 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LeaseState
     {
-        [EnumMember(Value = "available")]
+        [EnumMember(Value = "Available")]
         Available,
-        [EnumMember(Value = "leased")]
+        [EnumMember(Value = "Leased")]
         Leased,
-        [EnumMember(Value = "expired")]
+        [EnumMember(Value = "Expired")]
         Expired,
-        [EnumMember(Value = "breaking")]
+        [EnumMember(Value = "Breaking")]
         Breaking,
-        [EnumMember(Value = "broken")]
+        [EnumMember(Value = "Broken")]
         Broken
     }
     internal static class LeaseStateEnumExtension
@@ -44,15 +44,15 @@ namespace Microsoft.Azure.Management.Storage.Models
             switch( value )
             {
                 case LeaseState.Available:
-                    return "available";
+                    return "Available";
                 case LeaseState.Leased:
-                    return "leased";
+                    return "Leased";
                 case LeaseState.Expired:
-                    return "expired";
+                    return "Expired";
                 case LeaseState.Breaking:
-                    return "breaking";
+                    return "Breaking";
                 case LeaseState.Broken:
-                    return "broken";
+                    return "Broken";
             }
             return null;
         }
@@ -61,15 +61,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         {
             switch( value )
             {
-                case "available":
+                case "Available":
                     return LeaseState.Available;
-                case "leased":
+                case "Leased":
                     return LeaseState.Leased;
-                case "expired":
+                case "Expired":
                     return LeaseState.Expired;
-                case "breaking":
+                case "Breaking":
                     return LeaseState.Breaking;
-                case "broken":
+                case "Broken":
                     return LeaseState.Broken;
             }
             return null;

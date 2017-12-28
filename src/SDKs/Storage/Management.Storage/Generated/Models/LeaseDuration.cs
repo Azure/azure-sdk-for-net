@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LeaseDuration
     {
-        [EnumMember(Value = "infinite")]
+        [EnumMember(Value = "Infinite")]
         Infinite,
-        [EnumMember(Value = "fixed")]
+        [EnumMember(Value = "Fixed")]
         Fixed
     }
     internal static class LeaseDurationEnumExtension
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             switch( value )
             {
                 case LeaseDuration.Infinite:
-                    return "infinite";
+                    return "Infinite";
                 case LeaseDuration.Fixed:
-                    return "fixed";
+                    return "Fixed";
             }
             return null;
         }
@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         {
             switch( value )
             {
-                case "infinite":
+                case "Infinite":
                     return LeaseDuration.Infinite;
-                case "fixed":
+                case "Fixed":
                     return LeaseDuration.Fixed;
             }
             return null;

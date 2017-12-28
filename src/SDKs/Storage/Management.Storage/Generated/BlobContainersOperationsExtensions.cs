@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Storage
     public static partial class BlobContainersOperationsExtensions
     {
             /// <summary>
-            /// TODO
+            /// Lists all containers and does not support a prefix like data plane. Also
+            /// SRP today does not return continuation token.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Lists all containers and does not support a prefix like data plane. Also
+            /// SRP today does not return continuation token.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,7 +72,10 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Creates a new container under the specified account as described by request
+            /// body. The container resource includes metadata and properties for that
+            /// container. It does not include a list of the blobs contained by the
+            /// container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,10 +96,11 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='publicAccess'>
-            /// TODO. Possible values include: 'container', 'blob'
+            /// Specifies whether data in the container may be accessed publicly and the
+            /// level of access. Possible values include: 'Container', 'Blob', 'None'
             /// </param>
             /// <param name='metadata'>
-            /// TODO
+            /// A name-value pair to associate with the container as metadata.
             /// </param>
             public static BlobContainer Create(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>))
             {
@@ -102,7 +108,10 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Creates a new container under the specified account as described by request
+            /// body. The container resource includes metadata and properties for that
+            /// container. It does not include a list of the blobs contained by the
+            /// container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -123,10 +132,11 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='publicAccess'>
-            /// TODO. Possible values include: 'container', 'blob'
+            /// Specifies whether data in the container may be accessed publicly and the
+            /// level of access. Possible values include: 'Container', 'Blob', 'None'
             /// </param>
             /// <param name='metadata'>
-            /// TODO
+            /// A name-value pair to associate with the container as metadata.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -140,7 +150,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Updates container properties as specified in request body. Properties not
+            /// mentioned in the request will be unchanged. Update fails if the specified
+            /// container doesn't already exist.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -161,10 +173,11 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='publicAccess'>
-            /// TODO. Possible values include: 'container', 'blob'
+            /// Specifies whether data in the container may be accessed publicly and the
+            /// level of access. Possible values include: 'Container', 'Blob', 'None'
             /// </param>
             /// <param name='metadata'>
-            /// TODO
+            /// A name-value pair to associate with the container as metadata.
             /// </param>
             public static BlobContainer Update(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>))
             {
@@ -172,7 +185,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Updates container properties as specified in request body. Properties not
+            /// mentioned in the request will be unchanged. Update fails if the specified
+            /// container doesn't already exist.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,10 +208,11 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='publicAccess'>
-            /// TODO. Possible values include: 'container', 'blob'
+            /// Specifies whether data in the container may be accessed publicly and the
+            /// level of access. Possible values include: 'Container', 'Blob', 'None'
             /// </param>
             /// <param name='metadata'>
-            /// TODO
+            /// A name-value pair to associate with the container as metadata.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -210,7 +226,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Gets properties of a specified container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,7 +252,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Gets properties of a specified container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -268,7 +284,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Deletes specified container under its account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -294,7 +310,7 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Deletes specified container under its account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,62 +339,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='containerName'>
-            /// The name of the blob container within the specified storage account. Blob
-            /// container names must be between 3 and 63 characters in length and use
-            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
-            /// must be immediately preceded and followed by a letter or number.
-            /// </param>
-            public static void Lease(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName)
-            {
-                operations.LeaseAsync(resourceGroupName, accountName, containerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// TODO
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the storage account within the specified resource group.
-            /// Storage account names must be between 3 and 24 characters in length and use
-            /// numbers and lower-case letters only.
-            /// </param>
-            /// <param name='containerName'>
-            /// The name of the blob container within the specified storage account. Blob
-            /// container names must be between 3 and 63 characters in length and use
-            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
-            /// must be immediately preceded and followed by a letter or number.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task LeaseAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.LeaseWithHttpMessagesAsync(resourceGroupName, accountName, containerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// TODO
+            /// Sets legal hold tags. Setting the same tag results in an idempotent
+            /// operation. SetLegalHold follows an append pattern and does not clear out
+            /// the existing tags that are not specified in the request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -399,7 +362,8 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='tags'>
-            /// TODO
+            /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
+            /// lower case at SRP.
             /// </param>
             public static LegalHold SetLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>))
             {
@@ -407,7 +371,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Sets legal hold tags. Setting the same tag results in an idempotent
+            /// operation. SetLegalHold follows an append pattern and does not clear out
+            /// the existing tags that are not specified in the request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -428,7 +394,8 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='tags'>
-            /// TODO
+            /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
+            /// lower case at SRP.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -442,7 +409,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Clears legal hold tags. Clearing the same or non-existent tag results in an
+            /// idempotent operation. ClearLegalHold clears out only the specified tags in
+            /// the request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -463,7 +432,8 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='tags'>
-            /// TODO
+            /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
+            /// lower case at SRP.
             /// </param>
             public static LegalHold ClearLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>))
             {
@@ -471,7 +441,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Clears legal hold tags. Clearing the same or non-existent tag results in an
+            /// idempotent operation. ClearLegalHold clears out only the specified tags in
+            /// the request.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -492,7 +464,8 @@ namespace Microsoft.Azure.Management.Storage
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
             /// <param name='tags'>
-            /// TODO
+            /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
+            /// lower case at SRP.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -506,7 +479,8 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Creates or updates an unlocked immutability policy. ETag in If-Match is
+            /// honored if given but not required for this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -526,21 +500,23 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
+            /// <param name='immutabilityPeriodSinceCreationInDays'>
+            /// The immutability period for the blobs in the container since the policy
+            /// creation, in days.
+            /// </param>
             /// <param name='ifMatch'>
             /// The entity state (ETag) version of the immutability policy to update. A
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// TODO
-            /// </param>
-            public static ImmutabilityPolicy CreateOrUpdateImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays)
+            public static ImmutabilityPolicy CreateOrUpdateImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, immutabilityPeriodSinceCreationInDays, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// TODO
+            /// Creates or updates an unlocked immutability policy. ETag in If-Match is
+            /// honored if given but not required for this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -560,27 +536,29 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
+            /// <param name='immutabilityPeriodSinceCreationInDays'>
+            /// The immutability period for the blobs in the container since the policy
+            /// creation, in days.
+            /// </param>
             /// <param name='ifMatch'>
             /// The entity state (ETag) version of the immutability policy to update. A
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
-            /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// TODO
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, immutabilityPeriodSinceCreationInDays, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// TODO
+            /// Gets the existing immutability policy along with the corresponding ETag in
+            /// response headers and body.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -611,7 +589,8 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Gets the existing immutability policy along with the corresponding ETag in
+            /// response headers and body.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -648,7 +627,11 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Aborts an unlocked immutability policy. The response of delete has
+            /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
+            /// required for this operation. Deleting a locked immutability policy is not
+            /// allowed, only way is to delete the container after deleting all blobs
+            /// inside the container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -679,7 +662,11 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Aborts an unlocked immutability policy. The response of delete has
+            /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
+            /// required for this operation. Deleting a locked immutability policy is not
+            /// allowed, only way is to delete the container after deleting all blobs
+            /// inside the container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -716,7 +703,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Sets the ImmutabilityPolicy to Locked state. The only action allowed on a
+            /// Locked policy is ExtendImmutabilityPolicy action. ETag in If-Match is
+            /// required for this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -747,7 +736,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Sets the ImmutabilityPolicy to Locked state. The only action allowed on a
+            /// Locked policy is ExtendImmutabilityPolicy action. ETag in If-Match is
+            /// required for this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -784,7 +775,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Extends the immutabilityPeriodSinceCreationInDays of a locked
+            /// immutabilityPolicy. The only action allowed on a Locked policy will be this
+            /// action. ETag in If-Match is required for this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -810,7 +803,8 @@ namespace Microsoft.Azure.Management.Storage
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
             /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// TODO
+            /// The immutability period for the blobs in the container since the policy
+            /// creation, in days.
             /// </param>
             public static ImmutabilityPolicy ExtendImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays)
             {
@@ -818,7 +812,9 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
-            /// TODO
+            /// Extends the immutabilityPeriodSinceCreationInDays of a locked
+            /// immutabilityPolicy. The only action allowed on a Locked policy will be this
+            /// action. ETag in If-Match is required for this operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -844,7 +840,8 @@ namespace Microsoft.Azure.Management.Storage
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
             /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// TODO
+            /// The immutability period for the blobs in the container since the policy
+            /// creation, in days.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

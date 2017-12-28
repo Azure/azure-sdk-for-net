@@ -16,25 +16,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a storage resource.
+    /// An Azure Resource Manager resource.
     /// </summary>
-    public partial class BlobResource : IResource
+    public partial class AzureResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the BlobResource class.
+        /// Initializes a new instance of the AzureResource class.
         /// </summary>
-        public BlobResource()
+        public AzureResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BlobResource class.
+        /// Initializes a new instance of the AzureResource class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public BlobResource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        public AzureResource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
@@ -48,19 +51,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets the name of the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets the type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

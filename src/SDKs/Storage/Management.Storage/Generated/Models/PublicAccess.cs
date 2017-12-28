@@ -21,10 +21,12 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum PublicAccess
     {
-        [EnumMember(Value = "container")]
+        [EnumMember(Value = "Container")]
         Container,
-        [EnumMember(Value = "blob")]
-        Blob
+        [EnumMember(Value = "Blob")]
+        Blob,
+        [EnumMember(Value = "None")]
+        None
     }
     internal static class PublicAccessEnumExtension
     {
@@ -38,9 +40,11 @@ namespace Microsoft.Azure.Management.Storage.Models
             switch( value )
             {
                 case PublicAccess.Container:
-                    return "container";
+                    return "Container";
                 case PublicAccess.Blob:
-                    return "blob";
+                    return "Blob";
+                case PublicAccess.None:
+                    return "None";
             }
             return null;
         }
@@ -49,10 +53,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         {
             switch( value )
             {
-                case "container":
+                case "Container":
                     return PublicAccess.Container;
-                case "blob":
+                case "Blob":
                     return PublicAccess.Blob;
+                case "None":
+                    return PublicAccess.None;
             }
             return null;
         }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// TODO
+    /// The properties of an ImmutabilityPolicy of a blob container.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ImmutabilityPolicyProperties
@@ -34,13 +34,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the ImmutabilityPolicyProperties
         /// class.
         /// </summary>
-        /// <param name="immutabilityPeriodSinceCreationInDays">TODO</param>
-        /// <param name="state">TODO. Possible values include: 'Locked',
-        /// 'Unlocked'</param>
-        public ImmutabilityPolicyProperties(int immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
+        /// <param name="immutabilityPeriodSinceCreationInDays">The
+        /// immutability period for the blobs in the container since the policy
+        /// creation, in days.</param>
+        /// <param name="state">The ImmutabilityPolicy state of a blob
+        /// container, possible values include: Locked and Unlocked. Possible
+        /// values include: 'Locked', 'Unlocked'</param>
+        /// <param name="etag">ImmutabilityPolicy Etag.</param>
+        public ImmutabilityPolicyProperties(int immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?), string etag = default(string))
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
+            Etag = etag;
             CustomInit();
         }
 
@@ -50,16 +55,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets or sets the immutability period for the blobs in the container
+        /// since the policy creation, in days.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ImmutabilityPeriodSinceCreationInDays")]
+        [JsonProperty(PropertyName = "properties.immutabilityPeriodSinceCreationInDays")]
         public int ImmutabilityPeriodSinceCreationInDays { get; set; }
 
         /// <summary>
-        /// Gets TODO. Possible values include: 'Locked', 'Unlocked'
+        /// Gets the ImmutabilityPolicy state of a blob container, possible
+        /// values include: Locked and Unlocked. Possible values include:
+        /// 'Locked', 'Unlocked'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.State")]
+        [JsonProperty(PropertyName = "properties.state")]
         public ImmutabilityPolicyState? State { get; private set; }
+
+        /// <summary>
+        /// Gets immutabilityPolicy Etag.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

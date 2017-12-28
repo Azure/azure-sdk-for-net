@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// TODO
+    /// The LegalHold property of a blob container.
     /// </summary>
     public partial class LegalHold
     {
@@ -31,8 +31,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the LegalHold class.
         /// </summary>
-        /// <param name="hasLegalHold">TODO</param>
-        /// <param name="tags">TODO</param>
+        /// <param name="hasLegalHold">The hasLegalHold public property is set
+        /// to true by SRP if there are at least one existing tag. The
+        /// hasLegalHold public property is set to false by SRP if all existing
+        /// legal hold tags are cleared out. There can be a maximum of 1000
+        /// blob containers with hasLegalHold=true for a given account.</param>
+        /// <param name="tags">Each tag should be 3 to 23 alphanumeric
+        /// characters and is normalized to lower case at SRP.</param>
         public LegalHold(bool? hasLegalHold = default(bool?), IList<string> tags = default(IList<string>))
         {
             HasLegalHold = hasLegalHold;
@@ -46,15 +51,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets TODO
+        /// Gets the hasLegalHold public property is set to true by SRP if
+        /// there are at least one existing tag. The hasLegalHold public
+        /// property is set to false by SRP if all existing legal hold tags are
+        /// cleared out. There can be a maximum of 1000 blob containers with
+        /// hasLegalHold=true for a given account.
         /// </summary>
-        [JsonProperty(PropertyName = "HasLegalHold")]
+        [JsonProperty(PropertyName = "hasLegalHold")]
         public bool? HasLegalHold { get; private set; }
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets or sets each tag should be 3 to 23 alphanumeric characters and
+        /// is normalized to lower case at SRP.
         /// </summary>
-        [JsonProperty(PropertyName = "Tags")]
+        [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
 
     }

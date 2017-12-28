@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.Storage
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft
+        /// Subscription credentials which uniquely identify the Microsoft
         /// Azure subscription. The subscription ID forms part of the URI for
         /// every service call.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The Service API version.
         /// </summary>
         string ApiVersion { get; }
 
@@ -89,11 +89,6 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IUsageOperations.
         /// </summary>
         IUsageOperations Usage { get; }
-
-        /// <summary>
-        /// Gets the IBlobServiceOperations.
-        /// </summary>
-        IBlobServiceOperations BlobService { get; }
 
         /// <summary>
         /// Gets the IBlobContainersOperations.

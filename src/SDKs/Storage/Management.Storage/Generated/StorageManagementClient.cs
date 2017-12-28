@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.Storage
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft Azure
+        /// Subscription credentials which uniquely identify the Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The Service API version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -94,11 +94,6 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IUsageOperations.
         /// </summary>
         public virtual IUsageOperations Usage { get; private set; }
-
-        /// <summary>
-        /// Gets the IBlobServiceOperations.
-        /// </summary>
-        public virtual IBlobServiceOperations BlobService { get; private set; }
 
         /// <summary>
         /// Gets the IBlobContainersOperations.
@@ -310,7 +305,6 @@ namespace Microsoft.Azure.Management.Storage
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Usage = new UsageOperations(this);
-            BlobService = new BlobServiceOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-10-01";

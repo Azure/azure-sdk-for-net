@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LeaseStatus
     {
-        [EnumMember(Value = "locked")]
+        [EnumMember(Value = "Locked")]
         Locked,
-        [EnumMember(Value = "unlocked")]
+        [EnumMember(Value = "Unlocked")]
         Unlocked
     }
     internal static class LeaseStatusEnumExtension
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             switch( value )
             {
                 case LeaseStatus.Locked:
-                    return "locked";
+                    return "Locked";
                 case LeaseStatus.Unlocked:
-                    return "unlocked";
+                    return "Unlocked";
             }
             return null;
         }
@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         {
             switch( value )
             {
-                case "locked":
+                case "Locked":
                     return LeaseStatus.Locked;
-                case "unlocked":
+                case "Unlocked":
                     return LeaseStatus.Unlocked;
             }
             return null;
