@@ -11,6 +11,11 @@
     <TargetFrameworks>net452</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <None Update="TestDataSources\NormalImages*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
