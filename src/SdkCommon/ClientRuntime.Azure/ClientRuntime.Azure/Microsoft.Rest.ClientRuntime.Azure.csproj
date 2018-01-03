@@ -25,7 +25,4 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
-  </ItemGroup>
 </Project>
