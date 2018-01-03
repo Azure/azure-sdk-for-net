@@ -27,12 +27,6 @@ namespace Microsoft.Rest.Azure
         public CloudError Body { get; set; }
 
         /// <summary>
-        /// Gets or sets the value that uniquely identifies a request 
-        /// made against the service.
-        /// </summary>
-        public string RequestId { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the CloudException class.
         /// </summary>
         public CloudException() : base()
@@ -42,17 +36,17 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// The error code in Body
         /// </summary>
-        public string Code => Body.Code;
+        public string Code => Body?.Code;
 
         /// <summary>
         /// The error message in Body
         /// </summary>
-        public string Message => Body.Message;
-
+        public override string Message => (string.IsNullOrEmpty(Body?.Message))? base.Message : Body.Message;
+        
         /// <summary>
         /// Target in error Body
         /// </summary>
-        public string Target => Body.Target;
+        public string Target => Body?.Target;
 
         /// <summary>
         /// Initializes a new instance of the CloudException class given exception message.
@@ -69,6 +63,18 @@ namespace Microsoft.Rest.Azure
         /// <param name="innerException">The exception which caused the current exception.</param>
         public CloudException(string message, Exception innerException) : base(message, innerException)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CloudException class caused by another exception.
+        /// </summary>
+        /// <param name="message">A description of the error.</param>
+        /// <param name="requestMessage">The request message.</param>
+        /// <param name="responseMessage">The response message.</param>
+        public CloudException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage) : base(message)
+        {
+            Request = requestMessage;
+            Response = responseMessage;
         }
 
         public void SetErrorModel(CloudError errorBody)
