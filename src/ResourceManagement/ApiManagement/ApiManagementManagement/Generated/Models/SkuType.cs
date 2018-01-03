@@ -43,5 +43,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Premium tier.
         /// </summary>
         Premium = 3,
+        
+        /// <summary>
+        /// Basic tier.
+        /// </summary>
+        Basic = 4,
     }
 }
