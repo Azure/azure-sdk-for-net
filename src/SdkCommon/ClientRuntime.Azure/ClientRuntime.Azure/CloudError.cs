@@ -8,7 +8,7 @@ namespace Microsoft.Rest.Azure
     /// <summary>
     /// Provides additional information about an http error response
     /// </summary>
-    public class CloudError : IHttpRestErrorModel
+    public class CloudError
     {
         /// <summary>
         /// Initializes a new instance of CloudError.
@@ -37,16 +37,5 @@ namespace Microsoft.Rest.Azure
         /// Gets or sets details for the error.
         /// </summary>
         public IList<CloudError> Details { get; private set; }
-
-        public void CreateAndThrowException(HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage)
-        {
-            var ex = new CloudException
-            {
-                Request = requestMessage,
-                Response = responseMessage
-            };
-            ex.SetErrorModel(this);
-            throw ex;
-        }
     }
 }
