@@ -132,7 +132,6 @@ namespace Microsoft.Azure.Management.Consumption
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
-           
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
@@ -159,10 +158,9 @@ namespace Microsoft.Azure.Management.Consumption
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
-           
+
             // Serialize Request
             string _requestContent = null;
-            
             // Set Credentials
             if (Client.Credentials != null)
             {

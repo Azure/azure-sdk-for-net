@@ -142,7 +142,6 @@ namespace Microsoft.Azure.Management.Consumption
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-           
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
@@ -156,7 +155,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
 
-            
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -168,17 +167,15 @@ namespace Microsoft.Azure.Management.Consumption
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
-            
+
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-          
             if (Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
-           
             // Send Request
             if (_shouldTrace)
             {
