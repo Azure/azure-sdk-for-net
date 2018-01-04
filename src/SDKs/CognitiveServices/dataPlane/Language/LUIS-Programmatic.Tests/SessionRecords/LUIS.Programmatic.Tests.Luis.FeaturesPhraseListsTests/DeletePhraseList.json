@@ -16,11 +16,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "603130",
+      "ResponseBody": "648647",
       "ResponseHeaders": {
         "Content-Length": [
           "6"
@@ -32,16 +32,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:01:39 GMT"
+          "Thu, 14 Dec 2017 17:05:36 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "4ef628f2-b238-41ac-91b4-6ab289e24de8"
+          "a2eb257e-076a-417c-9d28-7a93063621e6"
         ],
         "Request-Id": [
-          "4ef628f2-b238-41ac-91b4-6ab289e24de8"
+          "a2eb257e-076a-417c-9d28-7a93063621e6"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/603130",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzYwMzEzMA==",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/648647",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzY0ODY0Nw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -71,11 +71,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": 603130,\r\n  \"name\": \"DayOfWeek\",\r\n  \"phrases\": \"monday,tuesday,wednesday,thursday,friday,saturday,sunday\",\r\n  \"isExchangeable\": true,\r\n  \"isActive\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": 648647,\r\n  \"name\": \"DayOfWeek\",\r\n  \"phrases\": \"monday,tuesday,wednesday,thursday,friday,saturday,sunday\",\r\n  \"isExchangeable\": true,\r\n  \"isActive\": true\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "139"
@@ -87,16 +87,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:01:44 GMT"
+          "Thu, 14 Dec 2017 17:05:37 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "5645fbf1-015e-418c-b6e3-6e011cbb6e2c"
+          "b483eee3-fbf2-4102-bfd7-bd3f32101daa"
         ],
         "Request-Id": [
-          "5645fbf1-015e-418c-b6e3-6e011cbb6e2c"
+          "b483eee3-fbf2-4102-bfd7-bd3f32101daa"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -117,8 +117,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/603130",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzYwMzEzMA==",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/648647",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzY0ODY0Nw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -126,29 +126,32 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:01:45 GMT"
+          "Thu, 14 Dec 2017 17:05:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "3ba5cf2f-f3b6-4f97-b418-ba884d1a6c7f"
+          "1b34b738-3c7a-493c-a0fa-5b7783851412"
         ],
         "Request-Id": [
-          "3ba5cf2f-f3b6-4f97-b418-ba884d1a6c7f"
+          "1b34b738-3c7a-493c-a0fa-5b7783851412"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -178,8 +181,8 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "[]",
@@ -194,16 +197,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:01:45 GMT"
+          "Thu, 14 Dec 2017 17:05:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "963cb057-fa9a-48a8-8d82-4dba8f82522b"
+          "17632cfe-4ce2-4376-a0a7-8f932bd22ed6"
         ],
         "Request-Id": [
-          "963cb057-fa9a-48a8-8d82-4dba8f82522b"
+          "17632cfe-4ce2-4376-a0a7-8f932bd22ed6"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

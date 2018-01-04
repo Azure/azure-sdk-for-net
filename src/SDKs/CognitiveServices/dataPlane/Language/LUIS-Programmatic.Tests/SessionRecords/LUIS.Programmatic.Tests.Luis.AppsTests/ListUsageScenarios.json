@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "[\r\n  \"IoT\",\r\n  \"Bot\",\r\n  \"Mobile Application\",\r\n  \"Other\"\r\n]",
@@ -26,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:08:00 GMT"
+          "Tue, 12 Dec 2017 21:54:08 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c941e592-16b4-4b61-82de-b7d4f183346f"
+          "0c98cf8b-bf62-487a-b9f3-6c8e20e62c8b"
         ],
         "Request-Id": [
-          "c941e592-16b4-4b61-82de-b7d4f183346f"
+          "0c98cf8b-bf62-487a-b9f3-6c8e20e62c8b"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

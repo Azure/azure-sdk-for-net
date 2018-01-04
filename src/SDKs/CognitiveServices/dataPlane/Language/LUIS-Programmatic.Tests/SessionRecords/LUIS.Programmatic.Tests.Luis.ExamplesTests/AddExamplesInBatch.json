@@ -1,28 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/examples",
+      "RequestUri": "/luis/api/v2.0/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8=",
       "RequestMethod": "POST",
-      "RequestBody": "[\r\n  {\r\n    \"text\": \"whats the weather in seattle?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 29\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  },\r\n  {\r\n    \"text\": \"whats the weather in buenos aires?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 34\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  }\r\n]",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Examples Test App\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "474"
+          "142"
         ],
         "Ocp-Apim-Subscription-Key": [
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"value\": {\r\n      \"UtteranceText\": \"whats the weather in seattle?\",\r\n      \"ExampleId\": -728104\r\n    },\r\n    \"hasError\": false\r\n  },\r\n  {\r\n    \"value\": {\r\n      \"UtteranceText\": \"whats the weather in buenos aires?\",\r\n      \"ExampleId\": -5313943\r\n    },\r\n    \"hasError\": false\r\n  }\r\n]",
+      "ResponseBody": "\"b980a9d1-e535-4a4f-ba36-e0dc8b6275e7\"",
       "ResponseHeaders": {
         "Content-Length": [
-          "201"
+          "38"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -31,16 +32,22 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 21:10:40 GMT"
+          "Thu, 14 Dec 2017 15:32:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7"
+        ],
         "Apim-Request-Id": [
-          "f7251f28-e607-48a3-898a-6ebeae8a140e"
+          "58c5b221-722f-4d15-9355-042c42037401"
         ],
         "Request-Id": [
-          "f7251f28-e607-48a3-898a-6ebeae8a140e"
+          "58c5b221-722f-4d15-9355-042c42037401"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -59,6 +66,256 @@
         ]
       },
       "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/intents",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9iOTgwYTlkMS1lNTM1LTRhNGYtYmEzNi1lMGRjOGI2Mjc1ZTcvdmVyc2lvbnMvMC4xL2ludGVudHM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"WeatherInPlace\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"c23f0def-5c1b-46ea-a175-35ad559157b3\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 15:32:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/intents/c23f0def-5c1b-46ea-a175-35ad559157b3"
+        ],
+        "Apim-Request-Id": [
+          "fe183fe0-448c-4861-8d74-4deb0dd7a3f0"
+        ],
+        "Request-Id": [
+          "fe183fe0-448c-4861-8d74-4deb0dd7a3f0"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/intents/c23f0def-5c1b-46ea-a175-35ad559157b3"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/entities",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9iOTgwYTlkMS1lNTM1LTRhNGYtYmEzNi1lMGRjOGI2Mjc1ZTcvdmVyc2lvbnMvMC4xL2VudGl0aWVz",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"Place\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"d4a7d38f-2a5e-40b6-8230-b97251c4b0bb\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 15:32:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/entities/d4a7d38f-2a5e-40b6-8230-b97251c4b0bb"
+        ],
+        "Apim-Request-Id": [
+          "d8771b98-050d-48bf-9e1b-6f5c39ce01d1"
+        ],
+        "Request-Id": [
+          "d8771b98-050d-48bf-9e1b-6f5c39ce01d1"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/entities/d4a7d38f-2a5e-40b6-8230-b97251c4b0bb"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7/versions/0.1/examples",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9iOTgwYTlkMS1lNTM1LTRhNGYtYmEzNi1lMGRjOGI2Mjc1ZTcvdmVyc2lvbnMvMC4xL2V4YW1wbGVz",
+      "RequestMethod": "POST",
+      "RequestBody": "[\r\n  {\r\n    \"text\": \"whats the weather in seattle?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 29\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  },\r\n  {\r\n    \"text\": \"whats the weather in buenos aires?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 34\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  }\r\n]",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "474"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"value\": {\r\n      \"UtteranceText\": \"whats the weather in seattle?\",\r\n      \"ExampleId\": -728104\r\n    },\r\n    \"hasError\": false\r\n  },\r\n  {\r\n    \"value\": {\r\n      \"UtteranceText\": \"whats the weather in buenos aires?\",\r\n      \"ExampleId\": -5313943\r\n    },\r\n    \"hasError\": false\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "201"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 15:32:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "b4c84063-16d8-4502-a2ef-b041060e98f5"
+        ],
+        "Request-Id": [
+          "b4c84063-16d8-4502-a2ef-b041060e98f5"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/b980a9d1-e535-4a4f-ba36-e0dc8b6275e7",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9iOTgwYTlkMS1lNTM1LTRhNGYtYmEzNi1lMGRjOGI2Mjc1ZTc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 15:32:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "c50dc70e-166d-4276-9a92-b621c249877b"
+        ],
+        "Request-Id": [
+          "c50dc70e-166d-4276-9a92-b621c249877b"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {},

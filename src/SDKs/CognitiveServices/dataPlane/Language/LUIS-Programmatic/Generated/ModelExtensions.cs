@@ -149,7 +149,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Guid> AddHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, HierarchicalEntityModel hierarchicalModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AddHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -198,15 +198,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='versionId'>
             /// The version ID.
             /// </param>
-            /// <param name='hierarchicalModelCreateObject'>
+            /// <param name='compositeModelCreateObject'>
             /// A model containing the name and children of the new entity extractor.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Guid> AddCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, CompositeEntityModel compositeModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddCompositeEntityWithHttpMessagesAsync(appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddCompositeEntityWithHttpMessagesAsync(appId, versionId, compositeModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -451,9 +451,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateIntentWithHttpMessagesAsync(appId, versionId, intentId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateIntentWithHttpMessagesAsync(appId, versionId, intentId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -471,12 +474,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='intentId'>
             /// The intent classifier ID.
             /// </param>
+            /// <param name='deleteUtterances'>
+            /// Also delete the intent's utterances (true). Or move the utterances to the
+            /// None intent (false - the default value).
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteIntentAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, bool? deleteUtterances = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteIntentWithHttpMessagesAsync(appId, versionId, intentId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteIntentWithHttpMessagesAsync(appId, versionId, intentId, deleteUtterances, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -526,9 +536,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateEntityWithHttpMessagesAsync(appId, versionId, entityId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateEntityWithHttpMessagesAsync(appId, versionId, entityId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -549,9 +562,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteEntityWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteEntityWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -601,9 +617,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalEntityModel hierarchicalModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -624,9 +643,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -670,15 +692,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cEntityId'>
             /// The composite entity extractor ID.
             /// </param>
-            /// <param name='hierarchicalModelUpdateObject'>
+            /// <param name='compositeModelUpdateObject'>
             /// A model object containing the new entity extractor name and children.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CompositeEntityModel compositeModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, compositeModelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -699,9 +724,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteCompositeEntityWithHttpMessagesAsync(appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -751,9 +779,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, closedListModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, closedListModelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -777,9 +808,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PatchClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> PatchClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PatchClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, closedListModelPatchObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.PatchClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, closedListModelPatchObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -800,9 +834,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteClosedListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteClosedListWithHttpMessagesAsync(appId, versionId, clEntityId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -849,9 +886,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeletePrebuiltAsync(this IModel operations, System.Guid appId, string versionId, System.Guid prebuiltId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeletePrebuiltAsync(this IModel operations, System.Guid appId, string versionId, System.Guid prebuiltId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeletePrebuiltWithHttpMessagesAsync(appId, versionId, prebuiltId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeletePrebuiltWithHttpMessagesAsync(appId, versionId, prebuiltId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -875,9 +915,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -905,9 +948,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, wordListBaseUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, wordListBaseUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1166,9 +1212,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCustomPrebuiltDomainAsync(this IModel operations, System.Guid appId, string versionId, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteCustomPrebuiltDomainAsync(this IModel operations, System.Guid appId, string versionId, string domainName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCustomPrebuiltDomainWithHttpMessagesAsync(appId, versionId, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteCustomPrebuiltDomainWithHttpMessagesAsync(appId, versionId, domainName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1224,9 +1273,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, hierarchicalChildModelUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, hierarchicalChildModelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1250,9 +1302,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1334,9 +1389,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCompositeEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteCompositeEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCompositeEntityChildWithHttpMessagesAsync(appId, versionId, cEntityId, cChildId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteCompositeEntityChildWithHttpMessagesAsync(appId, versionId, cEntityId, cChildId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

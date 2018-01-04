@@ -1,10 +1,77 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/d1f95436-57ac-4524-ae81-5bdd32668ccf",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3RzL2QxZjk1NDM2LTU3YWMtNDUyNC1hZTgxLTViZGQzMjY2OGNjZg==",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3Rz",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"subLists\": [\r\n    {\r\n      \"canonicalForm\": \"New York\",\r\n      \"list\": [\r\n        \"NY\",\r\n        \"New York\"\r\n      ]\r\n    },\r\n    {\r\n      \"canonicalForm\": \"Washington\",\r\n      \"list\": [\r\n        \"WA\",\r\n        \"Washington\"\r\n      ]\r\n    },\r\n    {\r\n      \"canonicalForm\": \"California\",\r\n      \"list\": [\r\n        \"CA\",\r\n        \"California\",\r\n        \"Calif.\",\r\n        \"Cal.\"\r\n      ]\r\n    }\r\n  ],\r\n  \"name\": \"States\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "426"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"069c8f8b-9d0c-4dca-8ab1-4c22580f8aac\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 17:47:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/069c8f8b-9d0c-4dca-8ab1-4c22580f8aac"
+        ],
+        "Apim-Request-Id": [
+          "1a47a2e7-ffbf-4426-9e86-1be3ff4121c5"
+        ],
+        "Request-Id": [
+          "1a47a2e7-ffbf-4426-9e86-1be3ff4121c5"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/069c8f8b-9d0c-4dca-8ab1-4c22580f8aac"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/069c8f8b-9d0c-4dca-8ab1-4c22580f8aac",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3RzLzA2OWM4ZjhiLTlkMGMtNGRjYS04YWIxLTRjMjI1ODBmOGFhYw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"subLists\": [\r\n    {\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"TX\",\r\n        \"Texas\"\r\n      ]\r\n    }\r\n  ],\r\n  \"name\": \"New States\"\r\n}",
+      "RequestBody": "{\r\n  \"subLists\": [\r\n    {\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"tx\",\r\n        \"texas\"\r\n      ]\r\n    }\r\n  ],\r\n  \"name\": \"New States\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -16,11 +83,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"d1f95436-57ac-4524-ae81-5bdd32668ccf\",\r\n  \"name\": \"New States\",\r\n  \"typeId\": 5,\r\n  \"readableType\": \"Closed List Entity Extractor\",\r\n  \"subLists\": [\r\n    {\r\n      \"id\": 6133959,\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"tx\",\r\n        \"texas\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"069c8f8b-9d0c-4dca-8ab1-4c22580f8aac\",\r\n  \"name\": \"New States\",\r\n  \"typeId\": 5,\r\n  \"readableType\": \"Closed List Entity Extractor\",\r\n  \"subLists\": [\r\n    {\r\n      \"id\": 7654915,\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"tx\",\r\n        \"texas\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "196"
@@ -32,16 +99,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Wed, 29 Nov 2017 20:33:37 GMT"
+          "Thu, 14 Dec 2017 17:47:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "04830205-ffea-43de-8843-b675e7ed792a"
+          "3695ac7b-427c-46d6-a514-9a4be0dd03fa"
         ],
         "Request-Id": [
-          "04830205-ffea-43de-8843-b675e7ed792a"
+          "3695ac7b-427c-46d6-a514-9a4be0dd03fa"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -62,7 +129,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/d1f95436-57ac-4524-ae81-5bdd32668ccf",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/069c8f8b-9d0c-4dca-8ab1-4c22580f8aac",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3RzLzA2OWM4ZjhiLTlkMGMtNGRjYS04YWIxLTRjMjI1ODBmOGFhYw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -70,11 +138,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"d1f95436-57ac-4524-ae81-5bdd32668ccf\",\r\n  \"name\": \"New States\",\r\n  \"typeId\": 5,\r\n  \"readableType\": \"Closed List Entity Extractor\",\r\n  \"subLists\": [\r\n    {\r\n      \"id\": 6133959,\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"tx\",\r\n        \"texas\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"069c8f8b-9d0c-4dca-8ab1-4c22580f8aac\",\r\n  \"name\": \"New States\",\r\n  \"typeId\": 5,\r\n  \"readableType\": \"Closed List Entity Extractor\",\r\n  \"subLists\": [\r\n    {\r\n      \"id\": 7654915,\r\n      \"canonicalForm\": \"Texas\",\r\n      \"list\": [\r\n        \"tx\",\r\n        \"texas\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "196"
@@ -86,16 +154,71 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Wed, 29 Nov 2017 20:33:37 GMT"
+          "Thu, 14 Dec 2017 17:47:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "13df8aa6-99ba-4443-a756-ec72c7407d23"
+          "02513b95-633d-493a-80fb-b2a325d7f437"
         ],
         "Request-Id": [
-          "13df8aa6-99ba-4443-a756-ec72c7407d23"
+          "02513b95-633d-493a-80fb-b2a325d7f437"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/closedlists/069c8f8b-9d0c-4dca-8ab1-4c22580f8aac",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3RzLzA2OWM4ZjhiLTlkMGMtNGRjYS04YWIxLTRjMjI1ODBmOGFhYw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 17:47:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "43660af1-44bb-49b3-a1de-9fdd2020efec"
+        ],
+        "Request-Id": [
+          "43660af1-44bb-49b3-a1de-9fdd2020efec"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

@@ -16,26 +16,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Linq;
 
     /// <summary>
-    /// A model object containing the properties to update.
+    /// A composite entity.
     /// </summary>
-    public partial class HierarchicalModelUpdateObject
+    public partial class CompositeEntityModel
     {
         /// <summary>
-        /// Initializes a new instance of the HierarchicalModelUpdateObject
-        /// class.
+        /// Initializes a new instance of the CompositeEntityModel class.
         /// </summary>
-        public HierarchicalModelUpdateObject()
+        public CompositeEntityModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HierarchicalModelUpdateObject
-        /// class.
+        /// Initializes a new instance of the CompositeEntityModel class.
         /// </summary>
         /// <param name="children">Child entities.</param>
-        /// <param name="name">The new entity name.</param>
-        public HierarchicalModelUpdateObject(IList<string> children = default(IList<string>), string name = default(string))
+        /// <param name="name">Entity name.</param>
+        public CompositeEntityModel(IList<string> children = default(IList<string>), string name = default(string))
         {
             Children = children;
             Name = name;
@@ -54,7 +52,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         public IList<string> Children { get; set; }
 
         /// <summary>
-        /// Gets or sets the new entity name.
+        /// Gets or sets entity name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

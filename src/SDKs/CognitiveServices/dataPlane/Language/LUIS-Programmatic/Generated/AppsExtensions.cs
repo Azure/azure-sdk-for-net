@@ -215,9 +215,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IApps operations, System.Guid appId, ApplicationUpdateObject applicationUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateAsync(this IApps operations, System.Guid appId, ApplicationUpdateObject applicationUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(appId, applicationUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(appId, applicationUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -232,9 +235,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IApps operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteAsync(this IApps operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -296,9 +302,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSettingsAsync(this IApps operations, System.Guid appId, ApplicationSettingUpdateObject applicationSettingUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateSettingsAsync(this IApps operations, System.Guid appId, ApplicationSettingUpdateObject applicationSettingUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSettingsWithHttpMessagesAsync(appId, applicationSettingUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateSettingsWithHttpMessagesAsync(appId, applicationSettingUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -313,7 +322,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AvailableEndpoints> ListEndpointsAsync(this IApps operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IDictionary<string, string>> ListEndpointsAsync(this IApps operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListEndpointsWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
                 {

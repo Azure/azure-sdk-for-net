@@ -16,26 +16,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Linq;
 
     /// <summary>
-    /// Object model for creating a hierarchical entity extractor.
+    /// A Hierarchical Entity Extractor.
     /// </summary>
-    public partial class HierarchicalModelCreateObject
+    public partial class HierarchicalEntityModel
     {
         /// <summary>
-        /// Initializes a new instance of the HierarchicalModelCreateObject
-        /// class.
+        /// Initializes a new instance of the HierarchicalEntityModel class.
         /// </summary>
-        public HierarchicalModelCreateObject()
+        public HierarchicalEntityModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HierarchicalModelCreateObject
-        /// class.
+        /// Initializes a new instance of the HierarchicalEntityModel class.
         /// </summary>
-        /// <param name="children">List of child entities.</param>
-        /// <param name="name">Name of the new hierarchical entity.</param>
-        public HierarchicalModelCreateObject(IList<string> children = default(IList<string>), string name = default(string))
+        /// <param name="children">Child entities.</param>
+        /// <param name="name">Entity name.</param>
+        public HierarchicalEntityModel(IList<string> children = default(IList<string>), string name = default(string))
         {
             Children = children;
             Name = name;
@@ -48,13 +46,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of child entities.
+        /// Gets or sets child entities.
         /// </summary>
         [JsonProperty(PropertyName = "children")]
         public IList<string> Children { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the new hierarchical entity.
+        /// Gets or sets entity name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

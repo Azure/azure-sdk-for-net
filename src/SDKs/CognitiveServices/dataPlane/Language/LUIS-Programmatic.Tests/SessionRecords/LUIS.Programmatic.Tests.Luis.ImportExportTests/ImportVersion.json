@@ -16,11 +16,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "\"bd72e8d7-62b8-48f5-9dcb-e3b0588b803a\"",
+      "ResponseBody": "\"0645d086-d6a3-4a4b-9a9d-5efaab7bbd71\"",
       "ResponseHeaders": {
         "Content-Length": [
           "38"
@@ -32,22 +32,22 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 23:00:55 GMT"
+          "Thu, 14 Dec 2017 17:09:44 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api.luis.ai/api/v2.0/apps/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a"
+          "https://api.luis.ai/api/v2.0/apps/0645d086-d6a3-4a4b-9a9d-5efaab7bbd71"
         ],
         "Apim-Request-Id": [
-          "108786ed-6523-4648-a540-e15998160c3c"
+          "70e0d0d9-2a66-4cb6-9b0e-2eaca2af3d86"
         ],
         "Request-Id": [
-          "108786ed-6523-4648-a540-e15998160c3c"
+          "70e0d0d9-2a66-4cb6-9b0e-2eaca2af3d86"
         ],
         "Operation-Location": [
-          "https://api.luis.ai/api/v2.0/apps/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a"
+          "https://api.luis.ai/api/v2.0/apps/0645d086-d6a3-4a4b-9a9d-5efaab7bbd71"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -68,8 +68,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a/versions/import?versionId=0.2",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9iZDcyZThkNy02MmI4LTQ4ZjUtOWRjYi1lM2IwNTg4YjgwM2EvdmVyc2lvbnMvaW1wb3J0P3ZlcnNpb25JZD0wLjI=",
+      "RequestUri": "/luis/api/v2.0/apps/0645d086-d6a3-4a4b-9a9d-5efaab7bbd71/versions/import?versionId=0.2",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8wNjQ1ZDA4Ni1kNmEzLTRhNGItOWE5ZC01ZWZhYWI3YmJkNzEvdmVyc2lvbnMvaW1wb3J0P3ZlcnNpb25JZD0wLjI=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"LuisBot\",\r\n  \"versionId\": \"0.1\",\r\n  \"desc\": \"\",\r\n  \"culture\": \"en-us\",\r\n  \"intents\": [\r\n    {\r\n      \"name\": \"dateintent\"\r\n    },\r\n    {\r\n      \"name\": \"Help\"\r\n    },\r\n    {\r\n      \"name\": \"None\"\r\n    },\r\n    {\r\n      \"name\": \"SearchHotels\"\r\n    },\r\n    {\r\n      \"name\": \"ShowHotelsReviews\"\r\n    }\r\n  ],\r\n  \"entities\": [\r\n    {\r\n      \"name\": \"AirportCode\"\r\n    },\r\n    {\r\n      \"name\": \"Hotel\"\r\n    }\r\n  ],\r\n  \"bing_entities\": [\r\n    \"datetimeV2\",\r\n    \"geography\"\r\n  ],\r\n  \"closedLists\": [],\r\n  \"composites\": [],\r\n  \"regex_features\": [\r\n    {\r\n      \"pattern\": \"[a-z]{3}\",\r\n      \"activated\": true,\r\n      \"name\": \"AirportCodeRegex\"\r\n    }\r\n  ],\r\n  \"model_features\": [\r\n    {\r\n      \"activated\": true,\r\n      \"name\": \"Near\",\r\n      \"words\": \"near,around,close,nearby\",\r\n      \"mode\": true\r\n    },\r\n    {\r\n      \"activated\": true,\r\n      \"name\": \"Show\",\r\n      \"words\": \"show,find,look,search\",\r\n      \"mode\": true\r\n    }\r\n  ],\r\n  \"utterances\": [\r\n    {\r\n      \"text\": \"i need help\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"help me\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"tomorrow\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"search for hotels in seattle\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"what can i do?\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"next monday\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"next year\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"look for hotels in miami\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"show me hotels in california\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"show me the reviews of the amazing bot resort\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 23,\r\n          \"endPos\": 44,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"can i see the reviews of extended bot hotel?\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 25,\r\n          \"endPos\": 42,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find reviews of hotelxya\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 16,\r\n          \"endPos\": 23,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"show me reviews of the amazing hotel\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 19,\r\n          \"endPos\": 35,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"what are the available options?\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"best hotels in seattle\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"hotels in los angeles\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"can you show me hotels from los angeles?\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"can you show me the reviews of the amazing resort & hotel\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 31,\r\n          \"endPos\": 56,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"what are the reviews of the hotel bot framework?\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 24,\r\n          \"endPos\": 46,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels near eze\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 17,\r\n          \"endPos\": 19,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"where can i stay near nnn?\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 22,\r\n          \"endPos\": 24,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"show hotels near att airport\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 17,\r\n          \"endPos\": 19,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels near agl\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 17,\r\n          \"endPos\": 19,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels around eze airport\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 19,\r\n          \"endPos\": 21,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"01/7\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    }\r\n  ],\r\n  \"luis_schema_version\": \"2.1.0\"\r\n}",
       "RequestHeaders": {
@@ -83,8 +83,8 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "\"0.2\"",
@@ -99,22 +99,22 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 23:01:02 GMT"
+          "Thu, 14 Dec 2017 17:09:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api.luis.ai/api/v2.0/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a/versions/0.2"
+          "https://api.luis.ai/api/v2.0/0645d086-d6a3-4a4b-9a9d-5efaab7bbd71/versions/0.2"
         ],
         "Apim-Request-Id": [
-          "571b6025-ed5f-49ce-8a1b-ae4d262bb4f2"
+          "ab45a363-4cf8-4d40-a281-c98a1ab3cc36"
         ],
         "Request-Id": [
-          "571b6025-ed5f-49ce-8a1b-ae4d262bb4f2"
+          "ab45a363-4cf8-4d40-a281-c98a1ab3cc36"
         ],
         "Operation-Location": [
-          "https://api.luis.ai/api/v2.0/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a/versions/0.2"
+          "https://api.luis.ai/api/v2.0/0645d086-d6a3-4a4b-9a9d-5efaab7bbd71/versions/0.2"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -135,8 +135,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9iZDcyZThkNy02MmI4LTQ4ZjUtOWRjYi1lM2IwNTg4YjgwM2E=",
+      "RequestUri": "/luis/api/v2.0/apps/0645d086-d6a3-4a4b-9a9d-5efaab7bbd71",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8wNjQ1ZDA4Ni1kNmEzLTRhNGItOWE5ZC01ZWZhYWI3YmJkNzE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -144,29 +144,32 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 23:01:03 GMT"
+          "Thu, 14 Dec 2017 17:09:52 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "08175c01-5006-4de1-a216-cc286031c757"
+          "88abee9d-92ee-4d34-9eff-05ad5723d709"
         ],
         "Request-Id": [
-          "08175c01-5006-4de1-a216-cc286031c757"
+          "88abee9d-92ee-4d34-9eff-05ad5723d709"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

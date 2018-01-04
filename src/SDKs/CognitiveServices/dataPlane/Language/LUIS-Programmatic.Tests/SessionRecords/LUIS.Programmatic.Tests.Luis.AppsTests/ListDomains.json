@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "[\r\n  \"Booking & Reference\",\r\n  \"Business\",\r\n  \"Comics\",\r\n  \"Communication\",\r\n  \"Education\",\r\n  \"Entertainment\",\r\n  \"Finance\",\r\n  \"Food & Nutrition\",\r\n  \"Gaming\",\r\n  \"Health & Fitness\",\r\n  \"Home Automation\",\r\n  \"Media & Video\",\r\n  \"Medical\",\r\n  \"Music & Audio\",\r\n  \"Navigation & Maps\",\r\n  \"News & Magazines\",\r\n  \"Personalization\",\r\n  \"Productivity\",\r\n  \"Real Estate\",\r\n  \"Scheduler\",\r\n  \"Shopping\",\r\n  \"Social Network\",\r\n  \"Sports\",\r\n  \"Telecom\",\r\n  \"Tools\",\r\n  \"Transportation\",\r\n  \"Translation\",\r\n  \"Travel & Local\",\r\n  \"Weather\",\r\n  \"Others\"\r\n]",
@@ -26,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:07:50 GMT"
+          "Tue, 12 Dec 2017 21:53:42 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "4d6dbd52-6e2b-42b7-a437-6794a6335be5"
+          "3fb4bc1d-c90b-4511-a23e-509f7ab783b6"
         ],
         "Request-Id": [
-          "4d6dbd52-6e2b-42b7-a437-6794a6335be5"
+          "3fb4bc1d-c90b-4511-a23e-509f7ab783b6"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

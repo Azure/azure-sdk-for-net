@@ -14,7 +14,7 @@
                 var result = await client.Permissions.ListAsync(appId);
 
                 Assert.Equal("owner.user@microsoft.com", result.Owner);
-                Assert.Equal(new string[] { "guest@outlook.com" }, result.Emails);
+                Assert.Equal(new string[] { "guest@outlook.com", "invited.user@live.com" }, result.Emails);
             });
         }
 

@@ -170,7 +170,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalEntityModel hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the hierarchical entity models.
         /// </summary>
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='versionId'>
         /// The version ID.
         /// </param>
-        /// <param name='hierarchicalModelCreateObject'>
+        /// <param name='compositeModelCreateObject'>
         /// A model containing the name and children of the new entity
         /// extractor.
         /// </param>
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalModelCreateObject hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, CompositeEntityModel compositeModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the composite entity models.
         /// </summary>
@@ -495,10 +495,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an intent classifier from the application.
         /// </summary>
@@ -511,6 +514,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='intentId'>
         /// The intent classifier ID.
         /// </param>
+        /// <param name='deleteUtterances'>
+        /// Also delete the intent's utterances (true). Or move the utterances
+        /// to the None intent (false - the default value).
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -520,10 +527,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, bool? deleteUtterances = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the entity model.
         /// </summary>
@@ -576,10 +586,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an entity extractor from the application.
         /// </summary>
@@ -601,10 +614,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the hierarchical entity model.
         /// </summary>
@@ -657,10 +673,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalEntityModel hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a hierarchical entity extractor from the application
         /// version.
@@ -683,10 +702,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the composite entity model.
         /// </summary>
@@ -727,7 +749,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <param name='cEntityId'>
         /// The composite entity extractor ID.
         /// </param>
-        /// <param name='hierarchicalModelUpdateObject'>
+        /// <param name='compositeModelUpdateObject'>
         /// A model object containing the new entity extractor name and
         /// children.
         /// </param>
@@ -740,10 +762,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, HierarchicalModelUpdateObject hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, CompositeEntityModel compositeModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a composite entity extractor from the application.
         /// </summary>
@@ -765,10 +790,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information of a closed list model.
         /// </summary>
@@ -821,10 +849,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a batch of sublists to an existing closedlist.
         /// </summary>
@@ -849,10 +880,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> PatchClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> PatchClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a closed list model from the application.
         /// </summary>
@@ -874,10 +908,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the prebuilt entity model.
         /// </summary>
@@ -927,10 +964,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeletePrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeletePrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a sublist of a specific closed list model.
         /// </summary>
@@ -955,10 +995,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates one of the closed list's sublists.
         /// </summary>
@@ -987,10 +1030,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Suggests examples that would improve the accuracy of the intent
         /// model.
@@ -1271,10 +1317,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets information about the hierarchical entity child model.
         /// </summary>
@@ -1333,10 +1382,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a hierarchical entity extractor child from the application.
         /// </summary>
@@ -1361,10 +1413,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a single child in an existing hierarchical entity model.
         /// </summary>
@@ -1453,9 +1508,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteCompositeEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

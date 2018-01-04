@@ -46,13 +46,13 @@
                 var results = await client.Model.AddCustomPrebuiltDomainAsync(appId, version, prebuiltDomain);
                 var prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(appId, version);
 
-                Assert.True(prebuiltModels.Count > 0);
+                Assert.Contains(prebuiltModels, o => o.CustomPrebuiltDomainName == "Gaming");
 
                 await client.Model.DeleteCustomPrebuiltDomainAsync(appId, version, prebuiltDomain.DomainName);
 
                 prebuiltModels = await client.Model.ListCustomPrebuiltModelsAsync(appId, version);
 
-                Assert.True(prebuiltModels.Count == 0);
+                Assert.DoesNotContain(prebuiltModels, o => o.CustomPrebuiltDomainName == "Gaming");
             });
         }
 
@@ -129,6 +129,8 @@
 
                 var guidModel = await client.Model.AddCustomPrebuiltIntentAsync(appId, version, prebuiltModel);
                 var prebuiltIntents = await client.Model.ListCustomPrebuiltIntentsAsync(appId, version);
+
+                await client.Model.DeleteIntentAsync(appId, version, guidModel);
 
                 Assert.Contains(prebuiltIntents, entity => entity.Id == guidModel);
             });

@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "[\r\n  {\r\n    \"name\": \"English\",\r\n    \"code\": \"en-us\"\r\n  },\r\n  {\r\n    \"name\": \"Chinese\",\r\n    \"code\": \"zh-cn\"\r\n  },\r\n  {\r\n    \"name\": \"French\",\r\n    \"code\": \"fr-fr\"\r\n  },\r\n  {\r\n    \"name\": \"French Canadian\",\r\n    \"code\": \"fr-ca\"\r\n  },\r\n  {\r\n    \"name\": \"Spanish\",\r\n    \"code\": \"es-es\"\r\n  },\r\n  {\r\n    \"name\": \"Spanish Mexican\",\r\n    \"code\": \"es-mx\"\r\n  },\r\n  {\r\n    \"name\": \"Italian\",\r\n    \"code\": \"it-it\"\r\n  },\r\n  {\r\n    \"name\": \"German\",\r\n    \"code\": \"de-de\"\r\n  },\r\n  {\r\n    \"name\": \"Japanese\",\r\n    \"code\": \"ja-jp\"\r\n  },\r\n  {\r\n    \"name\": \"Brazilian Portuguese\",\r\n    \"code\": \"pt-br\"\r\n  },\r\n  {\r\n    \"name\": \"Korean\",\r\n    \"code\": \"ko-kr\"\r\n  },\r\n  {\r\n    \"name\": \"Dutch\",\r\n    \"code\": \"nl-nl\"\r\n  }\r\n]",
@@ -26,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:08:11 GMT"
+          "Tue, 12 Dec 2017 21:53:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "5c89cbd4-efa7-4de3-bc59-3c3d696a2837"
+          "f13664b5-502b-4bf7-88a3-3f029ab3ce79"
         ],
         "Request-Id": [
-          "5c89cbd4-efa7-4de3-bc59-3c3d696a2837"
+          "f13664b5-502b-4bf7-88a3-3f029ab3ce79"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

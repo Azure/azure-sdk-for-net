@@ -1,9 +1,8 @@
 ﻿namespace LUIS.Programmatic.Tests.Luis
 {
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using System;
     using System.Linq;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Xunit;
 
     public class ModelPrebuiltsTests : BaseTest
@@ -26,7 +25,13 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
+                var addedId = (await client.Model.AddPrebuiltAsync(appId, version, new string[]
+                {
+                    "number"
+                })).First().Id;
+
                 var prebuiltEntities = await client.Model.ListPrebuiltsAsync(appId, version);
+                await client.Model.DeletePrebuiltAsync(appId, version, addedId);
 
                 Assert.True(prebuiltEntities.Count > 0);
                 Assert.All(prebuiltEntities, e => e.ReadableType.Equals("Prebuilt Entity Extractor"));
@@ -45,6 +50,10 @@
                     "ordinal"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
+                foreach (var added in prebuiltEntitiesAdded)
+                {
+                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                }
 
                 Assert.All(prebuiltEntitiesAdded, e => prebuiltEntitiesToAdd.Contains(e.Name));
             });
@@ -56,11 +65,15 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
-                var prebuiltId = new Guid("a065c863-918e-4c56-a267-9aaae3c7dced");
+                var addedId = (await client.Model.AddPrebuiltAsync(appId, version, new string[]
+                {
+                    "number"
+                })).First().Id;
 
-                var prebuiltEntity = await client.Model.GetPrebuiltAsync(appId, version, prebuiltId);
+                var prebuiltEntity = await client.Model.GetPrebuiltAsync(appId, version, addedId);
+                await client.Model.DeletePrebuiltAsync(appId, version, addedId);
 
-                Assert.Equal(prebuiltId, prebuiltEntity.Id);
+                Assert.Equal(addedId, prebuiltEntity.Id);
             });
         }
 
@@ -70,12 +83,15 @@
             UseClientFor(async client =>
             {
                 var version = "0.1";
-                var prebuiltId = new Guid("1e14dc89-be04-46ef-ab26-2a9768fad89b");
+                var addedId = (await client.Model.AddPrebuiltAsync(appId, version, new string[]
+                {
+                    "number"
+                })).First().Id;
 
-                await client.Model.DeletePrebuiltAsync(appId, version, prebuiltId);
+                await client.Model.DeletePrebuiltAsync(appId, version, addedId);
                 var prebuiltEntitiesWithoutDeleted = await client.Model.ListPrebuiltsAsync(appId, version);
 
-                Assert.DoesNotContain(prebuiltEntitiesWithoutDeleted, e => e.Id.Equals(prebuiltId));
+                Assert.DoesNotContain(prebuiltEntitiesWithoutDeleted, e => e.Id.Equals(addedId));
             });
         }
     }

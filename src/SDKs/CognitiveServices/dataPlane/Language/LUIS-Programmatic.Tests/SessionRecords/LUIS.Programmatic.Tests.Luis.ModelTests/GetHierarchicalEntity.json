@@ -1,22 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities?skip=0&take=100",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2hpZXJhcmNoaWNhbGVudGl0aWVz",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"children\": [\r\n    \"ChildTest\"\r\n  ],\r\n  \"name\": \"HierarchicalTest\"\r\n}",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "74"
+        ],
         "Ocp-Apim-Subscription-Key": [
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"7d2dd1d4-dc52-43fa-8054-b3710c414f16\",\r\n    \"name\": \"MyHierarchicalEntity\",\r\n    \"typeId\": 3,\r\n    \"readableType\": \"Hierarchical Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"fdcb01f0-d3e4-488c-ab1a-be985f410478\",\r\n        \"name\": \"Child1\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "ResponseBody": "\"91dd02f6-775d-41a2-b6b6-6e1c07329e39\"",
       "ResponseHeaders": {
         "Content-Length": [
-          "210"
+          "38"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +32,77 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 23:12:12 GMT"
+          "Thu, 14 Dec 2017 21:04:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities/91dd02f6-775d-41a2-b6b6-6e1c07329e39"
+        ],
+        "Apim-Request-Id": [
+          "35210115-066f-40c7-bc7d-3ce37faa8ee1"
+        ],
+        "Request-Id": [
+          "35210115-066f-40c7-bc7d-3ce37faa8ee1"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities/91dd02f6-775d-41a2-b6b6-6e1c07329e39"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities/91dd02f6-775d-41a2-b6b6-6e1c07329e39",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2hpZXJhcmNoaWNhbGVudGl0aWVzLzkxZGQwMmY2LTc3NWQtNDFhMi1iNmI2LTZlMWMwNzMyOWUzOQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"91dd02f6-775d-41a2-b6b6-6e1c07329e39\",\r\n  \"name\": \"HierarchicalTest\",\r\n  \"typeId\": 3,\r\n  \"readableType\": \"Hierarchical Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"fc53a25c-dd17-4a0d-a22d-73ac07b1e604\",\r\n      \"name\": \"ChildTest\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "207"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:10 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "729356dd-534d-4fd5-a4a7-7593eb731f00"
+          "232c66d5-7e5f-4425-80fa-689ce37220f4"
         ],
         "Request-Id": [
-          "729356dd-534d-4fd5-a4a7-7593eb731f00"
+          "232c66d5-7e5f-4425-80fa-689ce37220f4"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -55,8 +123,9 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities/7d2dd1d4-dc52-43fa-8054-b3710c414f16",
-      "RequestMethod": "GET",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/hierarchicalentities/91dd02f6-775d-41a2-b6b6-6e1c07329e39",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2hpZXJhcmNoaWNhbGVudGl0aWVzLzkxZGQwMmY2LTc3NWQtNDFhMi1iNmI2LTZlMWMwNzMyOWUzOQ==",
+      "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
@@ -64,13 +133,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"7d2dd1d4-dc52-43fa-8054-b3710c414f16\",\r\n  \"name\": \"MyHierarchicalEntity\",\r\n  \"typeId\": 3,\r\n  \"readableType\": \"Hierarchical Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"fdcb01f0-d3e4-488c-ab1a-be985f410478\",\r\n      \"name\": \"Child1\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "208"
+          "51"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -79,16 +148,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 23:12:20 GMT"
+          "Thu, 14 Dec 2017 21:04:10 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "64577699-b9f4-471a-8b43-f2e6ae1dc2a7"
+          "dbb680ed-8442-4bd1-a832-81fac0c32232"
         ],
         "Request-Id": [
-          "64577699-b9f4-471a-8b43-f2e6ae1dc2a7"
+          "dbb680ed-8442-4bd1-a832-81fac0c32232"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

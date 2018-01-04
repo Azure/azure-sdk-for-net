@@ -17,10 +17,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "\"7766d47f-d9b6-4a6c-9ff9-448b9e8c9043\"",
+      "ResponseBody": "\"c6bfb3bc-74be-4d3e-bb88-6c844a8756d5\"",
       "ResponseHeaders": {
         "Content-Length": [
           "38"
@@ -32,22 +32,22 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:07:56 GMT"
+          "Tue, 12 Dec 2017 21:54:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api.luis.ai/api/v2.0/apps/7766d47f-d9b6-4a6c-9ff9-448b9e8c9043"
+          "https://api.luis.ai/api/v2.0/apps/c6bfb3bc-74be-4d3e-bb88-6c844a8756d5"
         ],
         "Apim-Request-Id": [
-          "efde4f03-31f7-4af8-a079-d05ce5deb3cb"
+          "290df625-d3e6-4c44-b93f-fb44f085aa03"
         ],
         "Request-Id": [
-          "efde4f03-31f7-4af8-a079-d05ce5deb3cb"
+          "290df625-d3e6-4c44-b93f-fb44f085aa03"
         ],
         "Operation-Location": [
-          "https://api.luis.ai/api/v2.0/apps/7766d47f-d9b6-4a6c-9ff9-448b9e8c9043"
+          "https://api.luis.ai/api/v2.0/apps/c6bfb3bc-74be-4d3e-bb88-6c844a8756d5"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -68,8 +68,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/7766d47f-d9b6-4a6c-9ff9-448b9e8c9043/settings",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy83NzY2ZDQ3Zi1kOWI2LTRhNmMtOWZmOS00NDhiOWU4YzkwNDMvc2V0dGluZ3M=",
+      "RequestUri": "/luis/api/v2.0/apps/c6bfb3bc-74be-4d3e-bb88-6c844a8756d5/settings",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNmJmYjNiYy03NGJlLTRkM2UtYmI4OC02Yzg0NGE4NzU2ZDUvc2V0dGluZ3M=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"public\": true\r\n}",
       "RequestHeaders": {
@@ -84,28 +84,31 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:07:56 GMT"
+          "Tue, 12 Dec 2017 21:54:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "dd9b3e35-a8ab-4800-9921-a95c9948987d"
+          "6a387d2c-12d1-4b22-a66d-70dac3b64ba1"
         ],
         "Request-Id": [
-          "dd9b3e35-a8ab-4800-9921-a95c9948987d"
+          "6a387d2c-12d1-4b22-a66d-70dac3b64ba1"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -126,8 +129,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/7766d47f-d9b6-4a6c-9ff9-448b9e8c9043/settings",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy83NzY2ZDQ3Zi1kOWI2LTRhNmMtOWZmOS00NDhiOWU4YzkwNDMvc2V0dGluZ3M=",
+      "RequestUri": "/luis/api/v2.0/apps/c6bfb3bc-74be-4d3e-bb88-6c844a8756d5/settings",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNmJmYjNiYy03NGJlLTRkM2UtYmI4OC02Yzg0NGE4NzU2ZDUvc2V0dGluZ3M=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -136,10 +139,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"7766d47f-d9b6-4a6c-9ff9-448b9e8c9043\",\r\n  \"public\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"c6bfb3bc-74be-4d3e-bb88-6c844a8756d5\",\r\n  \"public\": true\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "59"
@@ -151,16 +154,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:07:57 GMT"
+          "Tue, 12 Dec 2017 21:54:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "03915d59-06a7-4bfc-9794-d4e1f5cbec75"
+          "347a6243-50e4-4074-a435-d30fdb18b3ad"
         ],
         "Request-Id": [
-          "03915d59-06a7-4bfc-9794-d4e1f5cbec75"
+          "347a6243-50e4-4074-a435-d30fdb18b3ad"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -181,8 +184,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/7766d47f-d9b6-4a6c-9ff9-448b9e8c9043",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy83NzY2ZDQ3Zi1kOWI2LTRhNmMtOWZmOS00NDhiOWU4YzkwNDM=",
+      "RequestUri": "/luis/api/v2.0/apps/c6bfb3bc-74be-4d3e-bb88-6c844a8756d5",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNmJmYjNiYy03NGJlLTRkM2UtYmI4OC02Yzg0NGE4NzU2ZDU=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -191,28 +194,31 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 04:07:58 GMT"
+          "Tue, 12 Dec 2017 21:54:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c563ce3e-b0df-4e39-b2fd-6bbeb701b80e"
+          "cf8e7486-3b47-4f4e-8305-a5ce80602e17"
         ],
         "Request-Id": [
-          "c563ce3e-b0df-4e39-b2fd-6bbeb701b80e"
+          "cf8e7486-3b47-4f4e-8305-a5ce80602e17"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

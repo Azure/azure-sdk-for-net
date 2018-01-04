@@ -2,6 +2,7 @@
   "Entries": [
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvcGVybWlzc2lvbnM=",
       "RequestMethod": "DELETE",
       "RequestBody": "{\r\n  \"email\": \"guest@outlook.com\"\r\n}",
       "RequestHeaders": {
@@ -16,28 +17,31 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 19:05:35 GMT"
+          "Thu, 14 Dec 2017 21:25:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "8b2bccb9-7eee-4af3-a5f6-7469c311ec10"
+          "13e1e8b5-f329-475c-8b55-be667d66a4ac"
         ],
         "Request-Id": [
-          "8b2bccb9-7eee-4af3-a5f6-7469c311ec10"
+          "13e1e8b5-f329-475c-8b55-be667d66a4ac"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -59,6 +63,7 @@
     },
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvcGVybWlzc2lvbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -67,13 +72,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"owner\": \"owner.user@microsoft.com\",\r\n  \"emails\": [\r\n    \"invited.user@outlook.com\",\r\n    \"invited.user@live.com\"\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"owner\": \"manx@southworks.com\",\r\n  \"emails\": [\r\n    \"invited.user@live.com\"\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "92"
+          "66"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -82,16 +87,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 19:05:35 GMT"
+          "Thu, 14 Dec 2017 21:25:03 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "5ae49f4e-095d-47a7-a046-6594ce6aa1f9"
+          "83bc1800-b802-4ebb-be2d-d57e00981d3f"
         ],
         "Request-Id": [
-          "5ae49f4e-095d-47a7-a046-6594ce6aa1f9"
+          "83bc1800-b802-4ebb-be2d-d57e00981d3f"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

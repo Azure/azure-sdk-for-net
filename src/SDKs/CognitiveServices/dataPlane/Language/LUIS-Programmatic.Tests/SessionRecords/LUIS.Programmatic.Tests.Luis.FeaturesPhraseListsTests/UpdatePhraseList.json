@@ -16,11 +16,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "603420",
+      "ResponseBody": "648648",
       "ResponseHeaders": {
         "Content-Length": [
           "6"
@@ -32,16 +32,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 17:03:44 GMT"
+          "Thu, 14 Dec 2017 17:05:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "90cf7970-43ce-4336-bf86-b349f2c9055b"
+          "792b3616-1a71-4500-8b99-334de84dec56"
         ],
         "Request-Id": [
-          "90cf7970-43ce-4336-bf86-b349f2c9055b"
+          "792b3616-1a71-4500-8b99-334de84dec56"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -62,10 +62,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/603420",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzYwMzQyMA==",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/648648",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzY0ODY0OA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"phrases\": \"january,february,march,april,may,june,july,august,september,october,november,december\",\r\n  \"name\": \"month\",\r\n  \"isActive\": false\r\n}",
+      "RequestBody": "{\r\n  \"phrases\": \"january,february,march,april,may,june,july,august,september,october,november,december\",\r\n  \"name\": \"Month\",\r\n  \"isActive\": false\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -77,29 +77,32 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 17:03:46 GMT"
+          "Thu, 14 Dec 2017 17:05:45 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "007d5de1-f3ed-47d2-83f3-93e1ab1f91b6"
+          "43bf310e-3d6d-40d8-a5cb-2725654f7341"
         ],
         "Request-Id": [
-          "007d5de1-f3ed-47d2-83f3-93e1ab1f91b6"
+          "43bf310e-3d6d-40d8-a5cb-2725654f7341"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -120,8 +123,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/603420",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzYwMzQyMA==",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/648648",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzY0ODY0OA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -129,11 +132,11 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": 603420,\r\n  \"name\": \"Month\",\r\n  \"phrases\": \"january,february,march,april,may,june,july,august,september,october,november,december\",\r\n  \"isExchangeable\": true,\r\n  \"isActive\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": 648648,\r\n  \"name\": \"Month\",\r\n  \"phrases\": \"january,february,march,april,may,june,july,august,september,october,november,december\",\r\n  \"isExchangeable\": true,\r\n  \"isActive\": false\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "165"
@@ -145,16 +148,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 17:03:46 GMT"
+          "Thu, 14 Dec 2017 17:05:47 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "6395c682-dcb2-437d-a7ec-74e34ba5f77d"
+          "79880530-46f1-4bd7-9895-c52f485191c3"
         ],
         "Request-Id": [
-          "6395c682-dcb2-437d-a7ec-74e34ba5f77d"
+          "79880530-46f1-4bd7-9895-c52f485191c3"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -175,8 +178,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/603420",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzYwMzQyMA==",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/phraselists/648648",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL3BocmFzZWxpc3RzLzY0ODY0OA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -184,29 +187,32 @@
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 17:03:48 GMT"
+          "Thu, 14 Dec 2017 17:05:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "f43ae6a2-f427-4dc0-a42a-72abd94ee048"
+          "7a0e3a3a-9f2f-4530-b5b8-9b6363ab28a3"
         ],
         "Request-Id": [
-          "f43ae6a2-f427-4dc0-a42a-72abd94ee048"
+          "7a0e3a3a-9f2f-4530-b5b8-9b6363ab28a3"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

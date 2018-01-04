@@ -115,9 +115,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IVersions operations, System.Guid appId, string versionId, TaskUpdateObject versionUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateAsync(this IVersions operations, System.Guid appId, string versionId, TaskUpdateObject versionUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(appId, versionId, versionUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(appId, versionId, versionUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -135,9 +138,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -208,9 +214,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteUnlabelledUtteranceAsync(this IVersions operations, System.Guid appId, string versionId, string utterance, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteUnlabelledUtteranceAsync(this IVersions operations, System.Guid appId, string versionId, string utterance, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteUnlabelledUtteranceWithHttpMessagesAsync(appId, versionId, utterance, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteUnlabelledUtteranceWithHttpMessagesAsync(appId, versionId, utterance, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

@@ -2,6 +2,7 @@
   "Entries": [
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/permissions",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvcGVybWlzc2lvbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,13 +11,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"owner\": \"owner.user@microsoft.com\",\r\n  \"emails\": [\r\n    \"guest@outlook.com\"\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"owner\": \"owner.user@microsoft.com\",\r\n  \"emails\": [\r\n    \"guest@outlook.com\",\r\n    \"invited.user@live.com\"\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "69"
+          "86"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Tue, 28 Nov 2017 14:49:26 GMT"
+          "Thu, 14 Dec 2017 21:25:29 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "8795d1b5-28c2-473c-ab95-cb69c62c543b"
+          "ef6768f1-582a-40ca-96d8-57c78c275207"
         ],
         "Request-Id": [
-          "8795d1b5-28c2-473c-ab95-cb69c62c543b"
+          "ef6768f1-582a-40ca-96d8-57c78c275207"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

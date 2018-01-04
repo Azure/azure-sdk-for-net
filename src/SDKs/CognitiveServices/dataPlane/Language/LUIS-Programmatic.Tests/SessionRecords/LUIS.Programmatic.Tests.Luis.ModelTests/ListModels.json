@@ -2,6 +2,7 @@
   "Entries": [
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/models?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL21vZGVscz9za2lwPTAmdGFrZT0xMDA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,13 +11,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"0c2cdd38-dca3-4372-93d0-ba40f5c703b7\",\r\n    \"name\": \"Calendar.Add\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Add\"\r\n  },\r\n  {\r\n    \"id\": \"3bb0aab7-f580-4603-b968-166c48c0ce7e\",\r\n    \"name\": \"Calendar.CheckAvailability\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"CheckAvailability\"\r\n  },\r\n  {\r\n    \"id\": \"d7a1eca0-64e4-4747-8462-8f2ae0002909\",\r\n    \"name\": \"Calendar.Delete\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Delete\"\r\n  },\r\n  {\r\n    \"id\": \"3b50e682-425a-4a82-a83c-bcf28c444d32\",\r\n    \"name\": \"Calendar.Edit\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Edit\"\r\n  },\r\n  {\r\n    \"id\": \"c08d92cb-bc09-4173-bf4a-bfcdfc4ca63c\",\r\n    \"name\": \"Calendar.Find\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Find\"\r\n  },\r\n  {\r\n    \"id\": \"d4e5a5a8-0348-4049-b5e7-35868274b850\",\r\n    \"name\": \"Calendar.Location\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Location\"\r\n  },\r\n  {\r\n    \"id\": \"bec8d17f-c778-45cc-babd-fccb8bb0e730\",\r\n    \"name\": \"Calendar.Subject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Subject\"\r\n  },\r\n  {\r\n    \"id\": \"a065c863-918e-4c56-a267-9aaae3c7dced\",\r\n    \"name\": \"datetimeV2\",\r\n    \"typeId\": 2,\r\n    \"readableType\": \"Prebuilt Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"01d07c96-2f5f-4578-bfcf-c99176c6b04f\",\r\n    \"name\": \"EnzoCano\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"d81d151e-59a1-49d0-bd2d-dce0533c7efe\",\r\n    \"name\": \"Hello\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"e5392131-603e-4d90-928d-3d7e6148343c\",\r\n    \"name\": \"None\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"de386b0f-8ef6-4f8f-a262-202e19960644\",\r\n    \"name\": \"number\",\r\n    \"typeId\": 2,\r\n    \"readableType\": \"Prebuilt Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"3560ffd5-2b58-407c-8fb8-80378577302c\",\r\n    \"name\": \"ordinal\",\r\n    \"typeId\": 2,\r\n    \"readableType\": \"Prebuilt Entity Extractor\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"f83dcca6-7bfc-44f9-9bbb-b6285c239da3\",\r\n    \"name\": \"Calendar.CheckAvailability\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"CheckAvailability\"\r\n  },\r\n  {\r\n    \"id\": \"da3f90e7-d21a-41a5-98a7-d733d1861ff9\",\r\n    \"name\": \"Calendar.Delete\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Delete\"\r\n  },\r\n  {\r\n    \"id\": \"5b4d2a57-727a-42d7-9e3d-a15aa28975e5\",\r\n    \"name\": \"Calendar.Edit\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Edit\"\r\n  },\r\n  {\r\n    \"id\": \"5511daf7-90d1-4c14-841d-7f20fece6d89\",\r\n    \"name\": \"Calendar.Location\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Location\"\r\n  },\r\n  {\r\n    \"id\": \"105cede3-6c7c-42ef-b878-7497cc72e08e\",\r\n    \"name\": \"Calendar.Subject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Subject\"\r\n  },\r\n  {\r\n    \"id\": \"2f3d2a83-30b6-40ea-9e82-4fff235d14ef\",\r\n    \"name\": \"Camera.AppName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Camera\",\r\n    \"customPrebuiltModelName\": \"AppName\"\r\n  },\r\n  {\r\n    \"id\": \"7fa94cf1-47a4-4761-9a43-ad3dffaca8e1\",\r\n    \"name\": \"Category\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"4bc77d32-40bb-4b05-8b0c-41e912dc223d\",\r\n    \"name\": \"Checkin\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n        \"name\": \"datetime\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"1a6c8585-d882-4370-987b-c07553781e93\",\r\n    \"name\": \"Checkout\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n        \"name\": \"datetime\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"8a09378c-64fc-4f63-a2cc-c19a4d44942b\",\r\n    \"name\": \"Code\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n    \"name\": \"datetime\",\r\n    \"typeId\": 2,\r\n    \"readableType\": \"Prebuilt Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"998b8d3d-a760-4093-87a9-74ce4f70cfc9\",\r\n    \"name\": \"email\",\r\n    \"typeId\": 2,\r\n    \"readableType\": \"Prebuilt Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"c0ec08db-e136-4798-823d-9bc9cbbb58ea\",\r\n    \"name\": \"FindAirportByCode\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"9d3cba7e-64dd-4205-9b23-e2642221b7fe\",\r\n    \"name\": \"FindHotels\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"d772d522-7cf6-4a4b-b628-c8d508a3805a\",\r\n    \"name\": \"FindHotels-ChangeLocation\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"76c92d38-2e8e-46f0-9645-5c5040c1bab1\",\r\n    \"name\": \"None\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"c9f080e0-d4ac-453e-8953-96fb3e7de2bd\",\r\n    \"name\": \"Renamed Entity\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n        \"name\": \"datetime\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"14c2528c-287d-45f4-939f-626d2a659aeb\",\r\n    \"name\": \"RoomType\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\"\r\n  },\r\n  {\r\n    \"id\": \"985650d4-52df-41a9-b536-2509a3994fca\",\r\n    \"name\": \"TimeInPlace\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"dbb1ece5-6703-4a54-97c1-e989b429aed8\",\r\n    \"name\": \"WeatherInPlace\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "2019"
+          "3002"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:51 GMT"
+          "Thu, 14 Dec 2017 21:04:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "eadcb5d1-7396-4c9a-bca8-a364dd15e8bb"
+          "16be3018-dab7-4683-baa5-a78ebb579db6"
         ],
         "Request-Id": [
-          "eadcb5d1-7396-4c9a-bca8-a364dd15e8bb"
+          "16be3018-dab7-4683-baa5-a78ebb579db6"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -55,7 +56,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/0c2cdd38-dca3-4372-93d0-ba40f5c703b7",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/f83dcca6-7bfc-44f9-9bbb-b6285c239da3",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2Y4M2RjY2E2LTdiZmMtNDRmOS05YmJiLWI2Mjg1YzIzOWRhMw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -64,64 +66,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"0c2cdd38-dca3-4372-93d0-ba40f5c703b7\",\r\n  \"name\": \"Calendar.Add\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Add\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "183"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Cache-Control": [
-          "no-store, proxy-revalidate, no-cache, max-age=0, private"
-        ],
-        "Date": [
-          "Fri, 01 Dec 2017 14:26:51 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Apim-Request-Id": [
-          "d2e1169a-67f1-41e8-bf35-844770e3180e"
-        ],
-        "Request-Id": [
-          "d2e1169a-67f1-41e8-bf35-844770e3180e"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/3bb0aab7-f580-4603-b968-166c48c0ce7e",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"3bb0aab7-f580-4603-b968-166c48c0ce7e\",\r\n  \"name\": \"Calendar.CheckAvailability\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"CheckAvailability\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"f83dcca6-7bfc-44f9-9bbb-b6285c239da3\",\r\n  \"name\": \"Calendar.CheckAvailability\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"CheckAvailability\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "211"
@@ -133,16 +81,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:51 GMT"
+          "Thu, 14 Dec 2017 21:04:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "4dd03d19-0e40-4989-82b9-3e67e74110a3"
+          "38cbabae-9e5f-4d58-8359-683df0c92858"
         ],
         "Request-Id": [
-          "4dd03d19-0e40-4989-82b9-3e67e74110a3"
+          "38cbabae-9e5f-4d58-8359-683df0c92858"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -163,7 +111,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/d7a1eca0-64e4-4747-8462-8f2ae0002909",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/da3f90e7-d21a-41a5-98a7-d733d1861ff9",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2RhM2Y5MGU3LWQyMWEtNDFhNS05OGE3LWQ3MzNkMTg2MWZmOQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -172,10 +121,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"d7a1eca0-64e4-4747-8462-8f2ae0002909\",\r\n  \"name\": \"Calendar.Delete\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Delete\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"da3f90e7-d21a-41a5-98a7-d733d1861ff9\",\r\n  \"name\": \"Calendar.Delete\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Delete\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "189"
@@ -187,16 +136,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:51 GMT"
+          "Thu, 14 Dec 2017 21:04:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "bdab9cca-cfba-44cf-8d32-c20884761dfe"
+          "64e77d91-0d31-402f-a423-e874d24f3a0b"
         ],
         "Request-Id": [
-          "bdab9cca-cfba-44cf-8d32-c20884761dfe"
+          "64e77d91-0d31-402f-a423-e874d24f3a0b"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -217,7 +166,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/3b50e682-425a-4a82-a83c-bcf28c444d32",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/5b4d2a57-727a-42d7-9e3d-a15aa28975e5",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzViNGQyYTU3LTcyN2EtNDJkNy05ZTNkLWExNWFhMjg5NzVlNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -226,10 +176,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"3b50e682-425a-4a82-a83c-bcf28c444d32\",\r\n  \"name\": \"Calendar.Edit\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Edit\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"5b4d2a57-727a-42d7-9e3d-a15aa28975e5\",\r\n  \"name\": \"Calendar.Edit\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Edit\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "185"
@@ -241,16 +191,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:52 GMT"
+          "Thu, 14 Dec 2017 21:04:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "b5cd5470-a8d5-4315-bb59-c7164e9e3faf"
+          "d3cd760f-81b1-46c9-8f5c-f7acbe650cfb"
         ],
         "Request-Id": [
-          "b5cd5470-a8d5-4315-bb59-c7164e9e3faf"
+          "d3cd760f-81b1-46c9-8f5c-f7acbe650cfb"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -271,7 +221,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/c08d92cb-bc09-4173-bf4a-bfcdfc4ca63c",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/5511daf7-90d1-4c14-841d-7f20fece6d89",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzU1MTFkYWY3LTkwZDEtNGMxNC04NDFkLTdmMjBmZWNlNmQ4OQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -280,64 +231,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"c08d92cb-bc09-4173-bf4a-bfcdfc4ca63c\",\r\n  \"name\": \"Calendar.Find\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Find\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "185"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Cache-Control": [
-          "no-store, proxy-revalidate, no-cache, max-age=0, private"
-        ],
-        "Date": [
-          "Fri, 01 Dec 2017 14:26:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Apim-Request-Id": [
-          "c005e3c8-44ac-4d71-b0c0-30342728d42c"
-        ],
-        "Request-Id": [
-          "c005e3c8-44ac-4d71-b0c0-30342728d42c"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/d4e5a5a8-0348-4049-b5e7-35868274b850",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"d4e5a5a8-0348-4049-b5e7-35868274b850\",\r\n  \"name\": \"Calendar.Location\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Location\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"5511daf7-90d1-4c14-841d-7f20fece6d89\",\r\n  \"name\": \"Calendar.Location\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Location\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "192"
@@ -349,16 +246,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:52 GMT"
+          "Thu, 14 Dec 2017 21:04:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "4de182ab-17d2-4740-97c0-23ff7181f247"
+          "bcd6c03b-e29d-42f0-93cb-914a33e3c47d"
         ],
         "Request-Id": [
-          "4de182ab-17d2-4740-97c0-23ff7181f247"
+          "bcd6c03b-e29d-42f0-93cb-914a33e3c47d"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -379,7 +276,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/bec8d17f-c778-45cc-babd-fccb8bb0e730",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/105cede3-6c7c-42ef-b878-7497cc72e08e",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzEwNWNlZGUzLTZjN2MtNDJlZi1iODc4LTc0OTdjYzcyZTA4ZQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -388,10 +286,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"bec8d17f-c778-45cc-babd-fccb8bb0e730\",\r\n  \"name\": \"Calendar.Subject\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Subject\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"105cede3-6c7c-42ef-b878-7497cc72e08e\",\r\n  \"name\": \"Calendar.Subject\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\",\r\n  \"customPrebuiltDomainName\": \"Calendar\",\r\n  \"customPrebuiltModelName\": \"Subject\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "190"
@@ -403,16 +301,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:53 GMT"
+          "Thu, 14 Dec 2017 21:04:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "0785e095-1b20-402c-a77c-873a13e1a473"
+          "3b74092f-503a-49a9-a417-30eb10b54e7f"
         ],
         "Request-Id": [
-          "0785e095-1b20-402c-a77c-873a13e1a473"
+          "3b74092f-503a-49a9-a417-30eb10b54e7f"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -433,7 +331,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/a065c863-918e-4c56-a267-9aaae3c7dced",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/2f3d2a83-30b6-40ea-9e82-4fff235d14ef",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzJmM2QyYTgzLTMwYjYtNDBlYS05ZTgyLTRmZmYyMzVkMTRlZg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -442,13 +341,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"a065c863-918e-4c56-a267-9aaae3c7dced\",\r\n  \"name\": \"datetimeV2\",\r\n  \"typeId\": 2,\r\n  \"readableType\": \"Prebuilt Entity Extractor\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"2f3d2a83-30b6-40ea-9e82-4fff235d14ef\",\r\n  \"name\": \"Camera.AppName\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\",\r\n  \"customPrebuiltDomainName\": \"Camera\",\r\n  \"customPrebuiltModelName\": \"AppName\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "119"
+          "186"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -457,16 +356,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:53 GMT"
+          "Thu, 14 Dec 2017 21:04:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "b8a7e38e-a01c-4248-b1d0-ccf58962cb82"
+          "442607cb-e382-4fee-8ae3-1d355192ba82"
         ],
         "Request-Id": [
-          "b8a7e38e-a01c-4248-b1d0-ccf58962cb82"
+          "442607cb-e382-4fee-8ae3-1d355192ba82"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -487,7 +386,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/01d07c96-2f5f-4578-bfcf-c99176c6b04f",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/7fa94cf1-47a4-4761-9a43-ad3dffaca8e1",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzdmYTk0Y2YxLTQ3YTQtNDc2MS05YTQzLWFkM2RmZmFjYThlMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -496,13 +396,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"01d07c96-2f5f-4578-bfcf-c99176c6b04f\",\r\n  \"name\": \"EnzoCano\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"7fa94cf1-47a4-4761-9a43-ad3dffaca8e1\",\r\n  \"name\": \"Category\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "109"
+          "108"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -511,16 +411,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:53 GMT"
+          "Thu, 14 Dec 2017 21:04:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "9cc2d16e-6925-4873-a932-2020e541bd99"
+          "5cb7fadf-088a-4150-92a8-7b1488d77b63"
         ],
         "Request-Id": [
-          "9cc2d16e-6925-4873-a932-2020e541bd99"
+          "5cb7fadf-088a-4150-92a8-7b1488d77b63"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -541,7 +441,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/d81d151e-59a1-49d0-bd2d-dce0533c7efe",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/4bc77d32-40bb-4b05-8b0c-41e912dc223d",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzRiYzc3ZDMyLTQwYmItNGIwNS04YjBjLTQxZTkxMmRjMjIzZA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -550,13 +451,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"d81d151e-59a1-49d0-bd2d-dce0533c7efe\",\r\n  \"name\": \"Hello\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"4bc77d32-40bb-4b05-8b0c-41e912dc223d\",\r\n  \"name\": \"Checkin\",\r\n  \"typeId\": 4,\r\n  \"readableType\": \"Composite Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n      \"name\": \"datetime\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "106"
+          "194"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -565,16 +466,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:53 GMT"
+          "Thu, 14 Dec 2017 21:04:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "e685c82d-fd5a-4a3c-b300-d00d95f36643"
+          "283e32c9-6335-447a-82b2-c8ccaa8a391f"
         ],
         "Request-Id": [
-          "e685c82d-fd5a-4a3c-b300-d00d95f36643"
+          "283e32c9-6335-447a-82b2-c8ccaa8a391f"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -595,7 +496,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/e5392131-603e-4d90-928d-3d7e6148343c",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/1a6c8585-d882-4370-987b-c07553781e93",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzFhNmM4NTg1LWQ4ODItNDM3MC05ODdiLWMwNzU1Mzc4MWU5Mw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -604,10 +506,395 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"e5392131-603e-4d90-928d-3d7e6148343c\",\r\n  \"name\": \"None\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"1a6c8585-d882-4370-987b-c07553781e93\",\r\n  \"name\": \"Checkout\",\r\n  \"typeId\": 4,\r\n  \"readableType\": \"Composite Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n      \"name\": \"datetime\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "195"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "97910781-f56c-42e0-93c4-4e78152516d9"
+        ],
+        "Request-Id": [
+          "97910781-f56c-42e0-93c4-4e78152516d9"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/8a09378c-64fc-4f63-a2cc-c19a4d44942b",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzhhMDkzNzhjLTY0ZmMtNGY2My1hMmNjLWMxOWE0ZDQ0OTQyYg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"8a09378c-64fc-4f63-a2cc-c19a4d44942b\",\r\n  \"name\": \"Code\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "104"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "dcaec578-867f-4809-9f57-e2d93647196e"
+        ],
+        "Request-Id": [
+          "dcaec578-867f-4809-9f57-e2d93647196e"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/e221132c-d612-4a6d-a7fe-769ebd8d6b00",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2UyMjExMzJjLWQ2MTItNGE2ZC1hN2ZlLTc2OWViZDhkNmIwMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n  \"name\": \"datetime\",\r\n  \"typeId\": 2,\r\n  \"readableType\": \"Prebuilt Entity Extractor\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "117"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "6092e2f7-2bea-4b50-b96a-d5e8821a2859"
+        ],
+        "Request-Id": [
+          "6092e2f7-2bea-4b50-b96a-d5e8821a2859"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/998b8d3d-a760-4093-87a9-74ce4f70cfc9",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzk5OGI4ZDNkLWE3NjAtNDA5My04N2E5LTc0Y2U0ZjcwY2ZjOQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"998b8d3d-a760-4093-87a9-74ce4f70cfc9\",\r\n  \"name\": \"email\",\r\n  \"typeId\": 2,\r\n  \"readableType\": \"Prebuilt Entity Extractor\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "114"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "5bac6680-128d-436b-b150-d9a617c39378"
+        ],
+        "Request-Id": [
+          "5bac6680-128d-436b-b150-d9a617c39378"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/c0ec08db-e136-4798-823d-9bc9cbbb58ea",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2MwZWMwOGRiLWUxMzYtNDc5OC04MjNkLTliYzljYmJiNThlYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"c0ec08db-e136-4798-823d-9bc9cbbb58ea\",\r\n  \"name\": \"FindAirportByCode\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "118"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "62dc31e7-ebdd-4b7f-b5e0-6be3dfdc89a8"
+        ],
+        "Request-Id": [
+          "62dc31e7-ebdd-4b7f-b5e0-6be3dfdc89a8"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/9d3cba7e-64dd-4205-9b23-e2642221b7fe",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzlkM2NiYTdlLTY0ZGQtNDIwNS05YjIzLWUyNjQyMjIxYjdmZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"9d3cba7e-64dd-4205-9b23-e2642221b7fe\",\r\n  \"name\": \"FindHotels\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "a19473cf-8286-43b8-b297-9b14c47a5713"
+        ],
+        "Request-Id": [
+          "a19473cf-8286-43b8-b297-9b14c47a5713"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/d772d522-7cf6-4a4b-b628-c8d508a3805a",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2Q3NzJkNTIyLTdjZjYtNGE0Yi1iNjI4LWM4ZDUwOGEzODA1YQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"d772d522-7cf6-4a4b-b628-c8d508a3805a\",\r\n  \"name\": \"FindHotels-ChangeLocation\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "126"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "f16b4279-8b83-4f87-9850-0190cb4378ad"
+        ],
+        "Request-Id": [
+          "f16b4279-8b83-4f87-9850-0190cb4378ad"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/76c92d38-2e8e-46f0-9645-5c5040c1bab1",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzc2YzkyZDM4LTJlOGUtNDZmMC05NjQ1LTVjNTA0MGMxYmFiMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"76c92d38-2e8e-46f0-9645-5c5040c1bab1\",\r\n  \"name\": \"None\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "105"
@@ -619,16 +906,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:54 GMT"
+          "Thu, 14 Dec 2017 21:04:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "1242e2bd-b5e8-49c3-967a-2102f889dc2c"
+          "8b4c6d44-2083-437c-9582-5acbb4627265"
         ],
         "Request-Id": [
-          "1242e2bd-b5e8-49c3-967a-2102f889dc2c"
+          "8b4c6d44-2083-437c-9582-5acbb4627265"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -649,7 +936,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/de386b0f-8ef6-4f8f-a262-202e19960644",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/c9f080e0-d4ac-453e-8953-96fb3e7de2bd",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2M5ZjA4MGUwLWQ0YWMtNDUzZS04OTUzLTk2ZmIzZTdkZTJiZA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -658,10 +946,175 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"de386b0f-8ef6-4f8f-a262-202e19960644\",\r\n  \"name\": \"number\",\r\n  \"typeId\": 2,\r\n  \"readableType\": \"Prebuilt Entity Extractor\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"c9f080e0-d4ac-453e-8953-96fb3e7de2bd\",\r\n  \"name\": \"Renamed Entity\",\r\n  \"typeId\": 4,\r\n  \"readableType\": \"Composite Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n      \"name\": \"datetime\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "201"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:43 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "6fc66278-19af-4679-b7eb-9f614997edec"
+        ],
+        "Request-Id": [
+          "6fc66278-19af-4679-b7eb-9f614997edec"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/14c2528c-287d-45f4-939f-626d2a659aeb",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzE0YzI1MjhjLTI4N2QtNDVmNC05MzlmLTYyNmQyYTY1OWFlYg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"14c2528c-287d-45f4-939f-626d2a659aeb\",\r\n  \"name\": \"RoomType\",\r\n  \"typeId\": 1,\r\n  \"readableType\": \"Entity Extractor\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:43 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "d2faef19-5807-4ecc-b6e5-e56ad22542a3"
+        ],
+        "Request-Id": [
+          "d2faef19-5807-4ecc-b6e5-e56ad22542a3"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/985650d4-52df-41a9-b536-2509a3994fca",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzLzk4NTY1MGQ0LTUyZGYtNDFhOS1iNTM2LTI1MDlhMzk5NGZjYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"985650d4-52df-41a9-b536-2509a3994fca\",\r\n  \"name\": \"TimeInPlace\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "112"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:43 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "a47b4eae-c86b-4db6-98cd-5ee7919d511d"
+        ],
+        "Request-Id": [
+          "a47b4eae-c86b-4db6-98cd-5ee7919d511d"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/dbb1ece5-6703-4a54-97c1-e989b429aed8",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2VudGl0aWVzL2RiYjFlY2U1LTY3MDMtNGE1NC05N2MxLWU5ODliNDI5YWVkOA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"dbb1ece5-6703-4a54-97c1-e989b429aed8\",\r\n  \"name\": \"WeatherInPlace\",\r\n  \"typeId\": 0,\r\n  \"readableType\": \"Intent Classifier\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "115"
@@ -673,70 +1126,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Fri, 01 Dec 2017 14:26:54 GMT"
+          "Thu, 14 Dec 2017 21:04:44 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "174966e9-1091-4f3c-87a8-b0499ec6f3ab"
+          "c401829e-4bb9-4cf6-9968-e7cecae47502"
         ],
         "Request-Id": [
-          "174966e9-1091-4f3c-87a8-b0499ec6f3ab"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "X-Frame-Options": [
-          "SAMEORIGIN"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/entities/3560ffd5-2b58-407c-8fb8-80378577302c",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"3560ffd5-2b58-407c-8fb8-80378577302c\",\r\n  \"name\": \"ordinal\",\r\n  \"typeId\": 2,\r\n  \"readableType\": \"Prebuilt Entity Extractor\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "116"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Cache-Control": [
-          "no-store, proxy-revalidate, no-cache, max-age=0, private"
-        ],
-        "Date": [
-          "Fri, 01 Dec 2017 14:26:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Apim-Request-Id": [
-          "38efd313-98b5-40dc-8f13-d07e8c2e2668"
-        ],
-        "Request-Id": [
-          "38efd313-98b5-40dc-8f13-d07e8c2e2668"
+          "c401829e-4bb9-4cf6-9968-e7cecae47502"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

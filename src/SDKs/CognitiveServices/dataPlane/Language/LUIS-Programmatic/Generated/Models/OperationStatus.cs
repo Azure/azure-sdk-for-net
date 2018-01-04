@@ -14,26 +14,28 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
     using System.Linq;
 
     /// <summary>
-    /// Response when adding a batch of labeled examples.
+    /// Response of an Operation status.
     /// </summary>
-    public partial class BatchLabelExample
+    public partial class OperationStatus
     {
         /// <summary>
-        /// Initializes a new instance of the BatchLabelExample class.
+        /// Initializes a new instance of the OperationStatus class.
         /// </summary>
-        public BatchLabelExample()
+        public OperationStatus()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BatchLabelExample class.
+        /// Initializes a new instance of the OperationStatus class.
         /// </summary>
-        public BatchLabelExample(LabelExampleResponse value = default(LabelExampleResponse), bool? hasError = default(bool?), OperationStatus error = default(OperationStatus))
+        /// <param name="code">Status Code. Possible values include: 'Failed',
+        /// 'FAILED', 'Success'</param>
+        /// <param name="message">Status details.</param>
+        public OperationStatus(string code = default(string), string message = default(string))
         {
-            Value = value;
-            HasError = hasError;
-            Error = error;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -43,19 +45,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets status Code. Possible values include: 'Failed',
+        /// 'FAILED', 'Success'
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public LabelExampleResponse Value { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
+        /// Gets or sets status details.
         /// </summary>
-        [JsonProperty(PropertyName = "hasError")]
-        public bool? HasError { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public OperationStatus Error { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }

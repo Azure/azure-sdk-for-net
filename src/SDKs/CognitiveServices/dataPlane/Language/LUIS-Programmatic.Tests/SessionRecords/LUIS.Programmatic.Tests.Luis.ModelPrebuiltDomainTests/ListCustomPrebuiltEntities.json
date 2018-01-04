@@ -2,6 +2,7 @@
   "Entries": [
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnM/c2tpcD0wJnRha2U9MTAw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,13 +11,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2017-11-29T18:46:10Z\",\r\n    \"lastModifiedDateTime\": \"2017-11-30T14:10:01Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": \"2017-11-29T19:32:55Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 18,\r\n    \"entitiesCount\": 17,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2017-02-09T14:01:45Z\",\r\n    \"lastModifiedDateTime\": \"2017-12-14T18:44:14Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": \"2017-12-12T21:59:37Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"11be6373fca44ded80fbe2afa8597c18\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": null\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 14,\r\n    \"entitiesCount\": 12,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  },\r\n  {\r\n    \"version\": \"0.2\",\r\n    \"createdDateTime\": \"2017-11-30T22:57:36Z\",\r\n    \"lastModifiedDateTime\": \"2017-11-30T22:57:41Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": null,\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 5,\r\n    \"entitiesCount\": 4,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "501"
+          "1015"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 14:34:15 GMT"
+          "Thu, 14 Dec 2017 18:44:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "2c3c9ff3-8325-455d-a095-e60c719872fc"
+          "cd1ebd13-aaaf-4105-8929-b01908c3c3ff"
         ],
         "Request-Id": [
-          "2c3c9ff3-8325-455d-a095-e60c719872fc"
+          "cd1ebd13-aaaf-4105-8929-b01908c3c3ff"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -56,6 +57,7 @@
     },
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/customprebuiltdomains",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZG9tYWlucw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"domainName\": \"Gaming\"\r\n}",
       "RequestHeaders": {
@@ -70,7 +72,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "[]",
@@ -85,16 +87,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 14:34:15 GMT"
+          "Thu, 14 Dec 2017 18:44:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "20069b60-dc2c-4fc5-a964-03e06b7228be"
+          "6248ac6c-ae9c-427b-a1f8-66f4f27e2493"
         ],
         "Request-Id": [
-          "20069b60-dc2c-4fc5-a964-03e06b7228be"
+          "6248ac6c-ae9c-427b-a1f8-66f4f27e2493"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -116,6 +118,7 @@
     },
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/customprebuiltentities",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZW50aXRpZXM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -124,13 +127,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"d02b2e38-6b3c-412e-bf9e-f6770a40c9a0\",\r\n    \"name\": \"Calendar.Location\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Location\"\r\n  },\r\n  {\r\n    \"id\": \"e04a5931-9b32-43f2-abc1-7ca28bd06205\",\r\n    \"name\": \"Calendar.Subject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Subject\"\r\n  },\r\n  {\r\n    \"id\": \"119b4574-1b34-4551-874c-7fd9c33cdb09\",\r\n    \"name\": \"Camera.AppName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Camera\",\r\n    \"customPrebuiltModelName\": \"AppName\"\r\n  },\r\n  {\r\n    \"id\": \"a7c741b2-3e9f-4e48-82af-8c18e54431dc\",\r\n    \"name\": \"Entertainment.ContentRating\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"ContentRating\"\r\n  },\r\n  {\r\n    \"id\": \"238bf141-42a5-410c-8759-d19d96f3a369\",\r\n    \"name\": \"Entertainment.Genre\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Genre\"\r\n  },\r\n  {\r\n    \"id\": \"47323e99-0204-41cb-84e6-135098d5f1b2\",\r\n    \"name\": \"Entertainment.Keyword\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Keyword\"\r\n  },\r\n  {\r\n    \"id\": \"b014c7e3-3a0b-436a-a327-d6c1eedcd6e9\",\r\n    \"name\": \"Entertainment.Language\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Language\"\r\n  },\r\n  {\r\n    \"id\": \"ca20d07f-9a04-4a42-b16b-52e7cf61ff07\",\r\n    \"name\": \"Entertainment.MediaFormat\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"MediaFormat\"\r\n  },\r\n  {\r\n    \"id\": \"f679433f-37ec-40f9-98cc-8cc826a0696e\",\r\n    \"name\": \"Entertainment.MediaSource\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"MediaSource\"\r\n  },\r\n  {\r\n    \"id\": \"bd01d780-e43d-485c-8cdb-f50c4f855f07\",\r\n    \"name\": \"Entertainment.MediaSubTypes\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"MediaSubTypes\"\r\n  },\r\n  {\r\n    \"id\": \"d1376f3e-ee8c-4189-9904-c85d0db3eb6a\",\r\n    \"name\": \"Entertainment.Nationality\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Nationality\"\r\n  },\r\n  {\r\n    \"id\": \"ec8bdc02-4320-43e3-b00c-ec486049c855\",\r\n    \"name\": \"Entertainment.Person\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Person\"\r\n  },\r\n  {\r\n    \"id\": \"ee36a58b-68f5-4258-8377-666fee7e508d\",\r\n    \"name\": \"Entertainment.Role\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Role\"\r\n  },\r\n  {\r\n    \"id\": \"d285d4b5-3c4c-422b-bbf2-f991b716d763\",\r\n    \"name\": \"Entertainment.Title\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Title\"\r\n  },\r\n  {\r\n    \"id\": \"05d52a3a-841c-48b5-865d-6e928b154dbf\",\r\n    \"name\": \"Entertainment.Type\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"Type\"\r\n  },\r\n  {\r\n    \"id\": \"ec6a9d0c-9438-4eef-aadb-fe14617950e6\",\r\n    \"name\": \"Entertainment.UserRating\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Entertainment\",\r\n    \"customPrebuiltModelName\": \"UserRating\"\r\n  },\r\n  {\r\n    \"id\": \"0212bfea-97b9-4229-be73-f33490048d39\",\r\n    \"name\": \"Gaming.Contact\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Gaming\",\r\n    \"customPrebuiltModelName\": \"Contact\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"5511daf7-90d1-4c14-841d-7f20fece6d89\",\r\n    \"name\": \"Calendar.Location\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Location\"\r\n  },\r\n  {\r\n    \"id\": \"105cede3-6c7c-42ef-b878-7497cc72e08e\",\r\n    \"name\": \"Calendar.Subject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Subject\"\r\n  },\r\n  {\r\n    \"id\": \"2f3d2a83-30b6-40ea-9e82-4fff235d14ef\",\r\n    \"name\": \"Camera.AppName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Camera\",\r\n    \"customPrebuiltModelName\": \"AppName\"\r\n  },\r\n  {\r\n    \"id\": \"f4501b58-fdd1-4cfa-ad66-edb88773654d\",\r\n    \"name\": \"Gaming.Contact\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Gaming\",\r\n    \"customPrebuiltModelName\": \"Contact\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "3406"
+          "759"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -139,16 +142,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 14:34:16 GMT"
+          "Thu, 14 Dec 2017 18:44:19 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "f882145f-e002-4ec9-8bef-94e021962e3d"
+          "99ed668c-553d-402d-ac30-7a21d657c981"
         ],
         "Request-Id": [
-          "f882145f-e002-4ec9-8bef-94e021962e3d"
+          "99ed668c-553d-402d-ac30-7a21d657c981"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

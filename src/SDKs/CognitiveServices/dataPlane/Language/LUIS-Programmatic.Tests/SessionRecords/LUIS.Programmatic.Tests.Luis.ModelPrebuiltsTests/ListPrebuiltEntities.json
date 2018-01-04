@@ -2,6 +2,7 @@
   "Entries": [
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/listprebuilts",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2xpc3RwcmVidWlsdHM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "[\r\n  {\r\n    \"name\": \"number\",\r\n    \"description\": \"A cardinal number in numeric or text form\",\r\n    \"examples\": \"ten, forty two, 3.141, 10K\"\r\n  },\r\n  {\r\n    \"name\": \"ordinal\",\r\n    \"description\": \"An ordinal number in numeric or text form\",\r\n    \"examples\": \"first, second, tenth, 1st, 2nd, 10th\"\r\n  },\r\n  {\r\n    \"name\": \"temperature\",\r\n    \"description\": \"A temperature in celsius or fahrenheit\",\r\n    \"examples\": \"32F, 34 degrees celsius, 2 deg C\"\r\n  },\r\n  {\r\n    \"name\": \"dimension\",\r\n    \"description\": \"Spacial dimensions, including length, distance, area, and volume\",\r\n    \"examples\": \"2 miles, 650 square kilometres, 9,350 feet\"\r\n  },\r\n  {\r\n    \"name\": \"money\",\r\n    \"description\": \"Monetary amounts, including currency\",\r\n    \"examples\": \"1000.00 US dollars, £20.00, $ 67.5 B\"\r\n  },\r\n  {\r\n    \"name\": \"age\",\r\n    \"description\": \"Age of a person or thing\",\r\n    \"examples\": \"10-month-old, 19 years old, 58 year-old\"\r\n  },\r\n  {\r\n    \"name\": \"geography\",\r\n    \"description\": \"Continents, Countries, Cities, Post codes, and other points of interest\",\r\n    \"examples\": \"Antarctica, Portugal, Dubai, Sanjiang County, Lake Pontchartrain, CB3 0DS\"\r\n  },\r\n  {\r\n    \"name\": \"encyclopedia\",\r\n    \"description\": \"People, organizations, products, and hundreds of other types found in an encyclopedia\",\r\n    \"examples\": \"Acer Aspire, Harvard Business School, Jagiellonian Rowing Club, Steve Miller Band, Beijing Capital International Airport, Amsterdam Light Festival, Microsoft\"\r\n  },\r\n  {\r\n    \"name\": \"percentage\",\r\n    \"description\": \"A percentage, using the symbol % or the word \\\"percent\\\"\",\r\n    \"examples\": \"10%, 5.6 percent\"\r\n  },\r\n  {\r\n    \"name\": \"datetime\",\r\n    \"description\": \"Dates and times, resolved to a canonical form\",\r\n    \"examples\": \"June 23, 1976, Jul 11 2012, 7 AM, 6:49 PM, tomorrow at 7 AM\"\r\n  },\r\n  {\r\n    \"name\": \"email\",\r\n    \"description\": \"Email addresses\",\r\n    \"examples\": \"user@site.net, user_name@mysite.com.eg, user.Name12@website.net\"\r\n  },\r\n  {\r\n    \"name\": \"url\",\r\n    \"description\": \"Websites URLs and links\",\r\n    \"examples\": \"www.website.com, http://website.net?name=my_name&age=10, https://www.mywebsite.net.eg/page\"\r\n  },\r\n  {\r\n    \"name\": \"phonenumber\",\r\n    \"description\": \"US phone numbers\",\r\n    \"examples\": \"123-456-7890, +1 123 456 789, (123)456-789\"\r\n  },\r\n  {\r\n    \"name\": \"datetimeV2\",\r\n    \"description\": \"Dates and times, resolved to a canonical form\",\r\n    \"examples\": \"June 23, 1976, Jul 11 2012, 7 AM, 6:49 PM, tomorrow at 7 AM\"\r\n  }\r\n]",
@@ -25,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 20:46:41 GMT"
+          "Thu, 14 Dec 2017 19:44:33 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "f6ae84c0-9b0b-4566-ad7c-87454ad05c68"
+          "7b1e5908-b8e3-43a5-8a53-aa692426adc2"
         ],
         "Request-Id": [
-          "f6ae84c0-9b0b-4566-ad7c-87454ad05c68"
+          "7b1e5908-b8e3-43a5-8a53-aa692426adc2"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

@@ -155,9 +155,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdatePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdatePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdatePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, phraselistUpdateObject, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdatePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, phraselistUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -178,9 +181,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeletePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeletePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeletePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeletePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

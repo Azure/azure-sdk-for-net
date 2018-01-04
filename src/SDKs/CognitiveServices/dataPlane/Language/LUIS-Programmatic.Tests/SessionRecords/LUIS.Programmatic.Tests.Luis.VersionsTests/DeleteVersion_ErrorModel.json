@@ -2,21 +2,22 @@
   "Entries": [
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnM/c2tpcD0wJnRha2U9MTAw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
+          "00000000000000000000000000000000 "
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2017-07-18T13:41:43Z\",\r\n    \"lastModifiedDateTime\": \"2017-07-20T19:22:55Z\",\r\n    \"lastTrainedDateTime\": \"2017-07-20T19:23:22Z\",\r\n    \"lastPublishedDateTime\": \"2017-07-20T19:23:23Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 5,\r\n    \"entitiesCount\": 0,\r\n    \"endpointHitsCount\": 21,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2017-02-09T14:01:45Z\",\r\n    \"lastModifiedDateTime\": \"2017-12-14T21:37:17Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": \"2017-12-12T21:59:37Z\",\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"00000000000000000000000000000000\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": null\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 9,\r\n    \"entitiesCount\": 11,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  },\r\n  {\r\n    \"version\": \"0.2\",\r\n    \"createdDateTime\": \"2017-11-30T22:57:36Z\",\r\n    \"lastModifiedDateTime\": \"2017-11-30T22:57:41Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": null,\r\n    \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"assignedEndpointKey\": {\r\n      \"SubscriptionKey\": \"\",\r\n      \"SubscriptionRegion\": \"westus\",\r\n      \"SubscriptionName\": \"\"\r\n    },\r\n    \"externalApiKeys\": {},\r\n    \"intentsCount\": 5,\r\n    \"entitiesCount\": 4,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "518"
+          "1014"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +26,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 19:47:29 GMT"
+          "Thu, 14 Dec 2017 21:37:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "091add03-ec66-45c7-bcdd-98345ad6c64b"
+          "426ff5b9-3775-4281-bdd1-53bd5b29ce64"
         ],
         "Request-Id": [
-          "091add03-ec66-45c7-bcdd-98345ad6c64b"
+          "426ff5b9-3775-4281-bdd1-53bd5b29ce64"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -56,15 +57,16 @@
     },
     {
       "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.10/",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xMC8=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "00000000000000000000000000000000"
+          "00000000000000000000000000000000 "
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"BadArgument\",\r\n    \"message\": \"Cannot find a task with the specified version ID\"\r\n  }\r\n}",
@@ -79,16 +81,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Tue, 05 Dec 2017 19:47:29 GMT"
+          "Thu, 14 Dec 2017 21:37:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "d9b8a853-4e21-4356-aa8e-5330ec005db6"
+          "0622ced3-ccdd-4779-8abb-68d3ddef38d8"
         ],
         "Request-Id": [
-          "d9b8a853-4e21-4356-aa8e-5330ec005db6"
+          "0622ced3-ccdd-4779-8abb-68d3ddef38d8"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"

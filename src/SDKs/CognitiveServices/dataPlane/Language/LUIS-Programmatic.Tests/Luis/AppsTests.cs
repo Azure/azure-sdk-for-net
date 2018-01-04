@@ -162,10 +162,10 @@
 
                 var result = await client.Apps.ListEndpointsAsync(testAppId);
 
-                Assert.Equal("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result.Westus);
-                Assert.Equal("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result.Eastus2);
-                Assert.Equal("https://westcentralus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result.Westcentralus);
-                Assert.Equal("https://southeastasia.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result.Southeastasia);
+                Assert.Equal("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Westus.ToString().ToLowerInvariant()]);
+                Assert.Equal("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Eastus2.ToString().ToLowerInvariant()]);
+                Assert.Equal("https://westcentralus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Westcentralus.ToString().ToLowerInvariant()]);
+                Assert.Equal("https://southeastasia.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Southeastasia.ToString().ToLowerInvariant()]);
 
                 // Cleanup
                 await client.Apps.DeleteAsync(testAppId);
@@ -355,8 +355,13 @@
                     Culture = "en-US",
                     DomainName = "Calendar"
                 };
+
                 var result = await client.Apps.AddCustomPrebuiltDomainAsync(domain);
 
+                // Cleanup
+                await client.Apps.DeleteAsync(result);
+
+                // Assert
                 Assert.True(result != Guid.Empty);
             });
         }

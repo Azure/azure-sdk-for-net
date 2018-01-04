@@ -1,9 +1,6 @@
 ﻿namespace LUIS.Programmatic.Tests.Luis
 {
-    using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.Models;
     using Newtonsoft.Json;
@@ -21,7 +18,7 @@
                 var app = await client.Versions.ExportAsync(appId, versionId);
 
                 Assert.NotNull(app);
-                Assert.Equal("LuisBot", app.Name);
+                Assert.Equal("LUIS BOT", app.Name);
             });
         }
 

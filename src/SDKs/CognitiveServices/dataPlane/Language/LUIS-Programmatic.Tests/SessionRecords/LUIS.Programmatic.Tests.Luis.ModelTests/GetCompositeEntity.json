@@ -1,23 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities?skip=0&take=100",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2NvbXBvc2l0ZWVudGl0aWVzP3NraXA9MCZ0YWtlPTEwMA==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2NvbXBvc2l0ZWVudGl0aWVz",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"children\": [\r\n    \"datetime\"\r\n  ],\r\n  \"name\": \"CompositeTest\"\r\n}",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "70"
+        ],
         "Ocp-Apim-Subscription-Key": [
           "00000000000000000000000000000000"
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"4bc77d32-40bb-4b05-8b0c-41e912dc223d\",\r\n    \"name\": \"Checkin\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n        \"name\": \"datetime\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"1a6c8585-d882-4370-987b-c07553781e93\",\r\n    \"name\": \"Checkout\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n        \"name\": \"datetime\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"c9f080e0-d4ac-453e-8953-96fb3e7de2bd\",\r\n    \"name\": \"Place\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"87df8945-7465-47bd-8166-de8ce2c956e8\",\r\n        \"name\": \"geography\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"id\": \"129b5789-af40-4991-be5f-cc73d09fc263\",\r\n    \"name\": \"Reservation\",\r\n    \"typeId\": 4,\r\n    \"readableType\": \"Composite Entity Extractor\",\r\n    \"children\": [\r\n      {\r\n        \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n        \"name\": \"datetime\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "ResponseBody": "\"ffb7bf58-23f7-42c3-815a-51c5fca55e26\"",
       "ResponseHeaders": {
         "Content-Length": [
-          "785"
+          "38"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -26,16 +32,77 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 00:13:37 GMT"
+          "Thu, 14 Dec 2017 21:04:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities/ffb7bf58-23f7-42c3-815a-51c5fca55e26"
+        ],
+        "Apim-Request-Id": [
+          "57e28592-b6b2-433b-8ac4-f526a3792876"
+        ],
+        "Request-Id": [
+          "57e28592-b6b2-433b-8ac4-f526a3792876"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities/ffb7bf58-23f7-42c3-815a-51c5fca55e26"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities/ffb7bf58-23f7-42c3-815a-51c5fca55e26",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2NvbXBvc2l0ZWVudGl0aWVzL2ZmYjdiZjU4LTIzZjctNDJjMy04MTVhLTUxYzVmY2E1NWUyNg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25815.04",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"ffb7bf58-23f7-42c3-815a-51c5fca55e26\",\r\n  \"name\": \"CompositeTest\",\r\n  \"typeId\": 4,\r\n  \"readableType\": \"Composite Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n      \"name\": \"datetime\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "200"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Thu, 14 Dec 2017 21:04:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c17d8a82-899b-4387-ba91-f4aee222329c"
+          "dd038afb-4554-494b-8d6d-55f7692c6727"
         ],
         "Request-Id": [
-          "c17d8a82-899b-4387-ba91-f4aee222329c"
+          "dd038afb-4554-494b-8d6d-55f7692c6727"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -56,9 +123,9 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities/129b5789-af40-4991-be5f-cc73d09fc263",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2NvbXBvc2l0ZWVudGl0aWVzLzEyOWI1Nzg5LWFmNDAtNDk5MS1iZTVmLWNjNzNkMDlmYzI2Mw==",
-      "RequestMethod": "GET",
+      "RequestUri": "/luis/api/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b/versions/0.1/compositeentities/ffb7bf58-23f7-42c3-815a-51c5fca55e26",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy84NjIyNmM1My1iN2E2LTQxNmYtODc2Yi0yMjZiMmI1YWIwN2IvdmVyc2lvbnMvMC4xL2NvbXBvc2l0ZWVudGl0aWVzL2ZmYjdiZjU4LTIzZjctNDJjMy04MTVhLTUxYzVmY2E1NWUyNg==",
+      "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
@@ -66,13 +133,13 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/2.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"129b5789-af40-4991-be5f-cc73d09fc263\",\r\n  \"name\": \"Reservation\",\r\n  \"typeId\": 4,\r\n  \"readableType\": \"Composite Entity Extractor\",\r\n  \"children\": [\r\n    {\r\n      \"id\": \"e221132c-d612-4a6d-a7fe-769ebd8d6b00\",\r\n      \"name\": \"datetime\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "198"
+          "51"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -81,16 +148,16 @@
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 30 Nov 2017 00:13:38 GMT"
+          "Thu, 14 Dec 2017 21:04:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "2b5a379d-1cb6-43c6-9d56-904d74f3fc41"
+          "7fad964c-f637-40e8-bfd0-19ac81052614"
         ],
         "Request-Id": [
-          "2b5a379d-1cb6-43c6-9d56-904d74f3fc41"
+          "7fad964c-f637-40e8-bfd0-19ac81052614"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
