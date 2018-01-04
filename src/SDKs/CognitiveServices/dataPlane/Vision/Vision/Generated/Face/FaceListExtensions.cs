@@ -13,6 +13,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -193,6 +194,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='faceListId'>
             /// Id referencing a Face List.
             /// </param>
+            /// <param name='image'>
+            /// An image stream.
+            /// </param>
             /// <param name='userData'>
             /// User-specified data about the face list for any purpose. The  maximum
             /// length is 1KB.
@@ -207,9 +211,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFaceResult> AddFaceFromStreamAsync(this IFaceList operations, string faceListId, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFaceResult> AddFaceFromStreamAsync(this IFaceList operations, string faceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(faceListId, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(faceListId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
