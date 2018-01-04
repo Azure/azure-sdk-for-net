@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <ProjectReference Include="..\LUIS-Programmatic\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.csproj" />
+    <ProjectReference Include="..\Programmatic\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

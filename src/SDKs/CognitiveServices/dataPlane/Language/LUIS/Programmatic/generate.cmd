@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/LUIS/Programmatic %*
+call %~dp0..\..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/LUIS/Programmatic %*

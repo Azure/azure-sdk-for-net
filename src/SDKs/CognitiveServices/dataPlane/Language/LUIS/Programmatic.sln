@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Programmatic", "LUIS-Programmatic\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.csproj", "{6734CDC4-4AC1-493E-B0ED-A8A393630E00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Programmatic", "Programmatic\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.csproj", "{6734CDC4-4AC1-493E-B0ED-A8A393630E00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests", "LUIS-Programmatic.Tests\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.csproj", "{05C55498-B076-4D61-9F16-4F853F3300F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests", "Programmatic.Tests\Microsoft.Azure.CognitiveServices.LUIS.Programmatic.Tests.csproj", "{05C55498-B076-4D61-9F16-4F853F3300F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

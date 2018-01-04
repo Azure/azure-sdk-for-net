@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LUIS-Runtime\Microsoft.Azure.CognitiveServices.LUIS.csproj" />
+    <ProjectReference Include="..\Runtime\Microsoft.Azure.CognitiveServices.LUIS.csproj" />
   </ItemGroup>
 
   <ItemGroup>
