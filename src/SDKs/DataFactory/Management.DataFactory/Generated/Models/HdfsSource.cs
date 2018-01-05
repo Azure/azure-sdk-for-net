@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the HdfsSource class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -39,8 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// with resultType boolean).</param>
         /// <param name="distcpSettings">Specifies Distcp-related
         /// settings.</param>
-        public HdfsSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object recursive = default(object), DistcpSettings distcpSettings = default(DistcpSettings))
-            : base(sourceRetryCount, sourceRetryWait)
+        public HdfsSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object recursive = default(object), DistcpSettings distcpSettings = default(DistcpSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
         {
             Recursive = recursive;
             DistcpSettings = distcpSettings;

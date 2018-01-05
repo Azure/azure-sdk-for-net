@@ -1,27 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />  
-  <PropertyGroup>
-    <Description>Microsoft Azure Consumption Management Library</Description>
-    <VersionPrefix>1.1.0-preview</VersionPrefix>
-    <Authors>Microsoft</Authors>
-    <AssemblyName>Microsoft.Azure.Management.Consumption</AssemblyName>
-    <PackageId>Microsoft.Azure.Management.Consumption</PackageId>
-    <PackageTags>Microsoft Azure Consumption management;Consumption;Consumption management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
-    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-  </ItemGroup>  
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.Consumption</PackageId>
+        <Description>Microsoft Azure Consumption Management Library</Description>
+        <VersionPrefix>2.1.0</VersionPrefix>    
+        <AssemblyName>Microsoft.Azure.Management.Consumption</AssemblyName>    
+        <PackageTags>Consumptionmanagement;Consumption;</PackageTags>
+      <PackageReleaseNotes>
+        <![CDATA[
+        This is a public release of the Azure Consunmption SDK that provides access to consumption resources for Azure Enterprise Subscriptions. Included with this release is to get reservations summaries and reservations details.
+      ]]>
+      </PackageReleaseNotes>
+    </PropertyGroup>
+  
+    <PropertyGroup>
+        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    </PropertyGroup>
+    
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

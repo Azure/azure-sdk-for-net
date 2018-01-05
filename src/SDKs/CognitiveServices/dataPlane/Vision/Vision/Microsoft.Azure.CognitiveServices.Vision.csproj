@@ -3,15 +3,20 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Vision APIs.</Description>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.1-preview</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision</AssemblyName>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;REST HTTP client;Face SDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services Vision SDK. Included with this release is support for Face API.</PackageReleaseNotes>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Face API;REST HTTP client;Face SDK;Computer Vision;Vision;netcore451511</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the Cognitive Services Vision SDK. Included with this release is support for Face API and Computer Vision API.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Generated\Face\Models\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

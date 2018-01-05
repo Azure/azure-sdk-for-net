@@ -28,15 +28,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Request body.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within user's subscription.
             /// </param>
-            public static SoftwareUpdateConfiguration Create(this ISoftwareUpdateConfigurationsOperations operations, SoftwareUpdateConfiguration parameters, string resourceGroupName)
+            /// <param name='parameters'>
+            /// Request body.
+            /// </param>
+            public static SoftwareUpdateConfiguration Create(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, SoftwareUpdateConfiguration parameters)
             {
-                return operations.CreateAsync(parameters, resourceGroupName).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,18 +46,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Request body.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group within user's subscription.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request body.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SoftwareUpdateConfiguration> CreateAsync(this ISoftwareUpdateConfigurationsOperations operations, SoftwareUpdateConfiguration parameters, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SoftwareUpdateConfiguration> CreateAsync(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, SoftwareUpdateConfiguration parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(parameters, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

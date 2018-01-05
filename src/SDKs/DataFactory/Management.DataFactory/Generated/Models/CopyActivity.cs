@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Activity name.</param>
         /// <param name="source">Copy activity source.</param>
         /// <param name="sink">Copy activity sink.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -64,8 +66,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// row settings when EnableSkipIncompatibleRow is true.</param>
         /// <param name="inputs">List of inputs for the activity.</param>
         /// <param name="outputs">List of outputs for the activity.</param>
-        public CopyActivity(string name, CopySource source, CopySink sink, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), CopyTranslator translator = default(CopyTranslator), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object cloudDataMovementUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), CopyTranslator translator = default(CopyTranslator), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object cloudDataMovementUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             Source = source;
             Sink = sink;

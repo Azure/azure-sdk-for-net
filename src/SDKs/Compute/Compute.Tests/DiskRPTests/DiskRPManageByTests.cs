@@ -45,7 +45,7 @@ namespace Compute.Tests.DiskRPTests
                 Disk diskFromVM = m_CrpClient.Disks.Get(rgName, vmDiskName);
 
                 //managedby should have format: "/subscriptions/{subId}/resourceGroups/{rg}/Microsoft.Compute/virtualMachines/vm1"
-                Assert.True(diskFromVM.ManagedBy.Contains(vmName));
+                Assert.Contains(vmName, diskFromVM.ManagedBy);
 
                 m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 m_CrpClient.VirtualMachines.Delete(rgName, createdVM.Name);

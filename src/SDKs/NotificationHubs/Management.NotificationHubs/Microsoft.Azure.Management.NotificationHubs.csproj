@@ -1,14 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.NotificationHubs</PackageId>
-    <Description>Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.</Description>
-    <AssemblyName>Microsoft.Azure.Management.NotificationHubs</AssemblyName>
-    <VersionPrefix>2.3.1-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure NotificationHubs Management;NotificationHubs;NotificationHubs management</PackageTags>
-  </PropertyGroup>
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
 
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.NotificationHubs</PackageId>
+		<Description>Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.</Description>
+		<AssemblyName>Microsoft.Azure.Management.NotificationHubs</AssemblyName>
+		<Version>2.3.1-preview</Version>
+		<PackageTags>Microsoft Azure NotificationHubs Management;NotificationHubs;NotificationHubs management;</PackageTags>
+		<PackageReleaseNotes/>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

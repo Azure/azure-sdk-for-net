@@ -9,11 +9,9 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:52 GMT",
-        "x-ms-request-id": "a2ceee34-efc9-410e-bf2a-576b12d4f073",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1187",
-        "x-ms-correlation-request-id": "d736737c-91db-4896-b734-6e50ca07b50f"
+        "Date": "Wed, 29 Nov 2017 04:14:01 GMT",
+        "x-ms-request-id": "4d936ea3-f235-46a1-98aa-5c3c0b46e0cb",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": {
         "name": "exampleIntegrationRuntime",
@@ -21,14 +19,17 @@
           "state": "NeedRegistration",
           "type": "SelfHosted",
           "typeProperties": {
-            "taskQueueId": "1baad24d-93e5-4074-8eeb-cd93fbb83b42",
+            "autoUpdate": "Off",
+            "taskQueueId": "00bb6126-79e3-46f1-a7ea-0d192a3efc26",
             "nodes": [],
+            "updateDelayOffset": "PT3H",
             "serviceUrls": [
-              "eu.frontend.clouddatahub.net",
+              "wu.frontend.int.clouddatahub-int.net",
               "*.servicebus.windows.net"
             ],
+            "versionStatus": "UpToDate",
             "capabilities": {},
-            "createTime": "2017-09-12T22:50:54.5851085Z"
+            "createTime": "2017-11-29T04:13:56.3605984Z"
           }
         }
       }

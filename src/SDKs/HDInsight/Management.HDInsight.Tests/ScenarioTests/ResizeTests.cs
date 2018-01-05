@@ -16,9 +16,8 @@
 namespace Management.HDInsight.Tests
 {
     using Xunit;
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Microsoft.HDInsight.Models;
-    using Microsoft.HDInsight;
     using System.Linq;
     using System;
 
