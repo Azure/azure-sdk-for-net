@@ -1,0 +1,79 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.ManagementPartner/partners/d14e8666-b43e-4f12-aa78-06c49c4859de?api-version=2018-02-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudFBhcnRuZXIvcGFydG5lcnMvZDE0ZTg2NjYtYjQzZS00ZjEyLWFhNzgtMDZjNDljNDg1OWRlP2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8ae01c6c-58ef-4929-a524-e27c65d21e66"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Gsm.ACEProvisioningGSMAPIClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.managementpartner/partners/d14e8666-b43e-4f12-aa78-06c49c4859de\",\r\n  \"type\": \"Microsoft.ManagementPartner/partner\",\r\n  \"name\": \"d14e8666-b43e-4f12-aa78-06c49c4859de\",\r\n  \"properties\": {\r\n    \"partnerId\": \"d14e8666-b43e-4f12-aa78-06c49c4859de\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 Jan 2018 06:13:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "request-id": [
+          "7a464e00-209a-43bc-8dc6-5300fc561470"
+        ],
+        "x-gsm": [
+          "7.12.0.39 (AD-CAB:stage.a2d589a85.180104-2237)"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "62ddd810-b5fa-4003-bd4d-6aba78cf4d7e"
+        ],
+        "x-ms-correlation-request-id": [
+          "62ddd810-b5fa-4003-bd4d-6aba78cf4d7e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20180105T061311Z:62ddd810-b5fa-4003-bd4d-6aba78cf4d7e"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "d14e8666-b43e-4f12-aa78-06c49c4859de"
+  }
+}
