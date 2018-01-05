@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.IO;
-using System.Linq;
-using Automation.Tests.Helpers;
-using Automation.Tests.TestSupport;
-using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json;
-using Xunit;
-
 namespace Automation.Tests.ScenarioTests
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Automation.Tests.Helpers;
+    using Automation.Tests.TestSupport;
+    using Microsoft.Azure.Management.Automation.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Newtonsoft.Json;
+    using Xunit;
+    using System.Threading;
+
     public class AutomationTest 
     {
         [Fact]
@@ -323,6 +324,73 @@ namespace Automation.Tests.ScenarioTests
                     });
                 }
             }
+        }
+
+        [Fact]
+        public void CanCreateUpdateDeleteAutomationModules()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+
+                    var moduleName = "HelloAndSum";
+                    // Content links don't have to be valid for playback. However, these are the actual module download locations used for recording.
+                    var contentLink1 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module1/HelloAndSum.zip";
+                    var contentLink2 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module2/HelloAndSum.zip";
+
+                    testFixture.DeleteModule(moduleName, true);
+
+                    var module = testFixture.CreateAutomationModule(moduleName, contentLink1);
+
+                    Assert.NotNull(module);                    
+                    Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
+                    EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture, out module);
+                    Assert.Equal(moduleName, module.Name);
+                    Assert.Equal("1.0", module.Version);
+
+                    // Update the module
+                    module = testFixture.CreateAutomationModule(moduleName, contentLink2);
+                    Assert.NotNull(module);
+                    Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
+                    EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture, out module);
+                    Assert.Equal(moduleName, module.Name);
+                    Assert.Equal("2.0", module.Version);
+
+                    // Delete the module
+                    bool deleteCompleted = false;
+                    testFixture.DeleteModule(moduleName);
+                    try
+                    {
+                        testFixture.GetAutomationModule(moduleName);
+                    }
+                    catch (ErrorResponseException)
+                    {
+                        // Exception expected
+                        deleteCompleted = true;
+                    }
+                    Assert.True(deleteCompleted);
+                }
+            }
+        }
+
+        private void EnsureModuleReachesSuccessProvisioningState(string moduleName, AutomationTestBase testFixture, out Module module)
+        {
+            // Wait for the module Provisioing state to reach Succeeded
+            var startTime = DateTime.Now;
+            var endTime = startTime.AddMinutes(5);
+            bool provisioningSucceeded = false;
+            do
+            {
+                Thread.Sleep(50); // Used 5 seconds polling delay in the record mode, using 50 ms in playback for test to complete fast
+                module = testFixture.GetAutomationModule(moduleName);
+                if (module.ProvisioningState == ModuleProvisioningState.Succeeded)
+                {
+                    provisioningSucceeded = true;
+                    break;
+                }
+            } while (DateTime.Now < endTime);
+            Assert.True(provisioningSucceeded);
         }
 
     }

@@ -76,6 +76,16 @@ namespace Microsoft.Azure.Management.Consumption
         IUsageDetailsOperations UsageDetails { get; }
 
         /// <summary>
+        /// Gets the IReservationsSummariesOperations.
+        /// </summary>
+        IReservationsSummariesOperations ReservationsSummaries { get; }
+
+        /// <summary>
+        /// Gets the IReservationsDetailsOperations.
+        /// </summary>
+        IReservationsDetailsOperations ReservationsDetails { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
