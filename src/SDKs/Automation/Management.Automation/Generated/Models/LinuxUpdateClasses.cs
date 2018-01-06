@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.Automation.Models
 {
 
     /// <summary>
-    /// Defines values for RunbookState.
+    /// Defines values for LinuxUpdateClasses.
     /// </summary>
-    public static class RunbookState
+    public static class LinuxUpdateClasses
     {
-        public const string New = "New";
-        public const string Edit = "Edit";
-        public const string Published = "Published";
+        public const string Unclassified = "Unclassified";
+        public const string Critical = "Critical";
+        public const string Security = "Security";
+        public const string Other = "Other";
     }
 }

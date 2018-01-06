@@ -8,7 +8,6 @@ using System.Text;
 using Automation.Tests.Helpers;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.Azure.Management.Automation.Testing;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
@@ -169,7 +168,7 @@ namespace Automation.Tests.TestSupport
         #region Module Methods
         public Module CreateAutomationModule(string moduleName, string contentLink)
         {
-            var module = AutomationClient.Module.CreateOrUpdate(ResourceGroup, AutomationAccount, moduleName,
+            var module = AutomationClient.Module.CreateOrUpdate(AutomationAccount, moduleName,
                 new ModuleCreateOrUpdateParameters
                 {
                     Name = moduleName,
@@ -182,7 +181,7 @@ namespace Automation.Tests.TestSupport
 
         public Module GetAutomationModule(string moduleName)
         {
-            var module = AutomationClient.Module.Get(ResourceGroup, AutomationAccount, moduleName);
+            var module = AutomationClient.Module.Get(AutomationAccount, moduleName);
             return module;
         }
 
@@ -190,7 +189,7 @@ namespace Automation.Tests.TestSupport
         {
             try
             {
-                AutomationClient.Module.Delete(ResourceGroup, AutomationAccount, moduleName);
+                AutomationClient.Module.Delete(AutomationAccount, moduleName);
             }
             catch (ErrorResponseException)
             {
@@ -208,7 +207,7 @@ namespace Automation.Tests.TestSupport
 
         public Job WaitForJobCompletion(Guid jobId, string expectedState = "Completed", int numRetries = 50)
         {
-            var job = AutomationClient.Job.Get(ResourceGroup, AutomationAccount, jobId);
+            var job = AutomationClient.Job.Get(AutomationAccount, jobId);
             var endStates = new[] {"Stopped", "Suspended", "Failed", "Completed"};
             var retry = 0;
             while (job.Status != expectedState && retry < numRetries && !Array.Exists(endStates, s => s == job.Status))

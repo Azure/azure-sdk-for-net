@@ -1,8 +1,9 @@
 ﻿namespace Automation.Tests.ScenarioTests.UpdateManagement
 {
     using Microsoft.Azure.Management.Automation;
-    using Microsoft.Azure.Management.Automation.Testing;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+    using Automation.Tests.Helpers;
 
     public class BaseTest
     {

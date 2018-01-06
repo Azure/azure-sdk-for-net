@@ -62,7 +62,7 @@
         public static async Task<SoftwareUpdateConfigurationRunListResult> ListByConfigurationNameAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string configurationName, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, ConfigurationNameProperty, configurationName);
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -113,7 +113,7 @@
         public static async Task<SoftwareUpdateConfigurationRunListResult> ListByOsTypeAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string osType, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, OsTypeProperty, osType);
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -164,7 +164,7 @@
         public static async Task<SoftwareUpdateConfigurationRunListResult> ListByStatusAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string status, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, StatusProperty, status);
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -215,7 +215,7 @@
         public static async Task<SoftwareUpdateConfigurationRunListResult> ListByStartTimeAsync(this ISoftwareUpdateConfigurationRunsOperations operations, DateTime startTime, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatGreaterEqual, StartTimeProperty, startTime.ToString("o"));
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

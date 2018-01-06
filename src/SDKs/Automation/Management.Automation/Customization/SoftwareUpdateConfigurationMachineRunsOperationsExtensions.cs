@@ -61,7 +61,7 @@
         public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByStatusAsync(this ISoftwareUpdateConfigurationMachineRunsOperations operations, string status, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, StatusProperty, status);
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -112,7 +112,7 @@
         public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByCorrelationIdAsync(this ISoftwareUpdateConfigurationMachineRunsOperations operations, Guid correlationId, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatEqual, CorrelationIdProperty, correlationId);
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -163,7 +163,7 @@
         public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByTargetComputerAsync(this ISoftwareUpdateConfigurationMachineRunsOperations operations, string targetComputer, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, TargetComputerProperty, targetComputer);
-            using (var _result = await operations.ListWithHttpMessagesAsync(skip, top, filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
