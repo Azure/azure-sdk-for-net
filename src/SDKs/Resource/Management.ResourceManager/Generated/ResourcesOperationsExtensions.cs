@@ -408,6 +408,78 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Updates a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group for the resource. The name is case
+            /// insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// The parent resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type of the resource to update.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource to update.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for updating the resource.
+            /// </param>
+            public static GenericResource Update(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group for the resource. The name is case
+            /// insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// The parent resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type of the resource to update.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource to update.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for updating the resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GenericResource> UpdateAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a resource.
             /// </summary>
             /// <param name='operations'>
@@ -603,6 +675,56 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<GenericResource> CreateOrUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates a resource by ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified ID of the resource, including the resource name and
+            /// resource type. Use the format,
+            /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update resource parameters.
+            /// </param>
+            public static GenericResource UpdateById(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters)
+            {
+                return operations.UpdateByIdAsync(resourceId, apiVersion, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a resource by ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified ID of the resource, including the resource name and
+            /// resource type. Use the format,
+            /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update resource parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GenericResource> UpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -898,6 +1020,78 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Updates a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group for the resource. The name is case
+            /// insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// The parent resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type of the resource to update.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource to update.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for updating the resource.
+            /// </param>
+            public static GenericResource BeginUpdate(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group for the resource. The name is case
+            /// insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// The parent resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type of the resource to update.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource to update.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for updating the resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GenericResource> BeginUpdateAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a resource by ID.
             /// </summary>
             /// <param name='operations'>
@@ -983,6 +1177,56 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<GenericResource> BeginCreateOrUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates a resource by ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified ID of the resource, including the resource name and
+            /// resource type. Use the format,
+            /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update resource parameters.
+            /// </param>
+            public static GenericResource BeginUpdateById(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters)
+            {
+                return operations.BeginUpdateByIdAsync(resourceId, apiVersion, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a resource by ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified ID of the resource, including the resource name and
+            /// resource type. Use the format,
+            /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for the operation.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update resource parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GenericResource> BeginUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

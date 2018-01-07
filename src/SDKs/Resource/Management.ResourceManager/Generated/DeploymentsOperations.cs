@@ -1841,6 +1841,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
+                // Must be manually edited - use Microsoft.Azure.Management.ResourceManager instead of Microsoft.Rest.Serialization.SafeJsonConvert
                 _requestContent = SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");

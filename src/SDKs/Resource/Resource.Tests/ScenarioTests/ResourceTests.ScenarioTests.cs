@@ -13,6 +13,7 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
 using Microsoft.Rest.Azure.OData;
+using System;
 
 namespace ResourceGroups.Tests
 {
@@ -20,6 +21,7 @@ namespace ResourceGroups.Tests
     {
         const string WebResourceProviderVersion = "2014-04-01";
         const string StoreResourceProviderVersion = "2014-04-01-preview";
+        const string SqlResourceProviderVersion = "2015-05-01-preview";
 
         string ResourceGroupLocation
         {
@@ -300,7 +302,7 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void CreatedAndDeleteResource()
+        public void CreateUpdateDeleteResource()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -312,43 +314,75 @@ namespace ResourceGroups.Tests
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
                 string location = this.GetWebsiteLocation(client);
+
+                // Create resource group
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
+
+                // Create resource
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(
                     groupName,
-                    "Microsoft.Web",
+                    "Microsoft.Sql",
                     "",
-                    "sites",
+                    "servers",
                     resourceName,
-                    WebResourceProviderVersion,
+                    SqlResourceProviderVersion,
                     new GenericResource
                     {
                         Location = location,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Properties = JObject.Parse($@"
+                            {{
+                                'administratorLogin':'{Guid.NewGuid().ToString()}',
+                                'administratorLoginPassword':'{Guid.NewGuid().ToString()}'
+                            }}")
                     }
                 );
 
-                var listResult = client.Resources.ListByResourceGroup(groupName);
+                // Get resource
+                var getResult = client.Resources.Get(
+                    groupName,
+                    "Microsoft.Sql",
+                    "",
+                    "servers",
+                    resourceName,
+                    SqlResourceProviderVersion);
+                Assert.Equal(resourceName, getResult.Name);
 
+                // Update resource
+                var updateResult = client.Resources.Update(
+                    groupName,
+                    "Microsoft.Sql",
+                    "",
+                    "servers",
+                    resourceName,
+                    SqlResourceProviderVersion,
+                    new GenericResource
+                    {
+                        Tags = new Dictionary<string, string> { { "a", "b" } }
+                    });
+
+                // List resource
+                var listResult = client.Resources.ListByResourceGroup(groupName);
                 Assert.Equal(resourceName, listResult.First().Name);
 
+                // Delete resource
                 client.Resources.Delete(
                     groupName,
-                    "Microsoft.Web",
+                    "Microsoft.Sql",
                     "",
-                    "sites",
+                    "servers",
                     resourceName,
-                    WebResourceProviderVersion);
+                    SqlResourceProviderVersion);
             }
         }
 
         [Fact]
-        public void CreatedAndDeleteResourceById()
+        public void CreateUpdateDeleteResourceById()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                string subscriptionId = "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505";
+                string subscriptionId = TestEnvironmentFactory.GetTestEnvironment().SubscriptionId;
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(context, handler);
@@ -356,25 +390,47 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
                 string location = this.GetWebsiteLocation(client);
 
-                string resourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}", subscriptionId, groupName, resourceName);
+                string resourceId = string.Format("subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}", subscriptionId, groupName, resourceName);
+
+                // Create resource group
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
+
+                // Create resource
                 var createOrUpdateResult = client.Resources.CreateOrUpdateById(
                     resourceId,
-                    WebResourceProviderVersion,
+                    SqlResourceProviderVersion,
                     new GenericResource
                     {
                         Location = location,
-                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                        Properties = JObject.Parse($@"
+                            {{
+                                'administratorLogin':'{Guid.NewGuid().ToString()}',
+                                'administratorLoginPassword':'{Guid.NewGuid().ToString()}'
+                            }}")
                     }
                 );
 
-                var listResult = client.Resources.ListByResourceGroup(groupName);
+                // Get resource
+                var getResult = client.Resources.GetById(resourceId, SqlResourceProviderVersion);
+                Assert.Equal(resourceName, getResult.Name);
 
+                // Update resource
+                var updateResult = client.Resources.UpdateById(
+                    resourceId,
+                    SqlResourceProviderVersion,
+                    new GenericResource
+                    {
+                        Tags = new Dictionary<string, string> { { "a", "b" } }
+                    });
+
+                // List resources
+                var listResult = client.Resources.ListByResourceGroup(groupName);
                 Assert.Equal(resourceName, listResult.First().Name);
 
+                // Delete resource
                 client.Resources.DeleteById(
                     resourceId,
-                    WebResourceProviderVersion);
+                    SqlResourceProviderVersion);
             }
         }
 

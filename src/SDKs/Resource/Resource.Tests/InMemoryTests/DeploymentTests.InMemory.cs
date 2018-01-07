@@ -135,6 +135,11 @@ namespace ResourceGroups.Tests
             Assert.True(result.Properties.Outputs.ToString().Contains("\"type\": \"string\""));
         }
 
+        /// <remarks>
+        /// If this test fails, it may be because you must manually edit
+        /// <see cref="DeploymentsOperations.BeginCreateOrUpdateWithHttpMessagesAsync(string, string, Deployment, Dictionary{string, List{string}}, System.Threading.CancellationToken)"/>
+        /// - see the comment in that method.
+        /// </remarks>
         [Fact]
         public void DeploymentTestsTemplateAsJsonString()
         {
