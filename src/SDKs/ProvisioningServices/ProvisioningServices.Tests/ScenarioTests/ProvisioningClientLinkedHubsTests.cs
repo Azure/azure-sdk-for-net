@@ -37,8 +37,9 @@ namespace ProvisioningServices.Tests.ScenarioTests
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                     testedService);
 
-                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.ConnectionString == connectionString);
+                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.ConnectionString.StartsWith($"HostName={iotHub.Name};"));
                 Assert.NotNull(returnedHub);
+                connectionString = returnedHub.ConnectionString;
 
                 var updatedApplyPolicy = !(returnedHub.ApplyAllocationPolicy ?? false);
                 returnedHub.ApplyAllocationPolicy = updatedApplyPolicy;
