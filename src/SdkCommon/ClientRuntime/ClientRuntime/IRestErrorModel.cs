@@ -5,7 +5,7 @@ using Microsoft.Rest;
 
 namespace Microsoft.Rest
 {
-    public interface IHttpRestErrorModel
+    public interface IRestErrorModel
     {
         void CreateAndThrowException(HttpRequestMessageWrapper reqMessage, HttpResponseMessageWrapper respMessage);
     }

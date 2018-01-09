@@ -1,45 +1,37 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using System;
 using System.Runtime.Serialization;
-
 namespace Microsoft.Rest
 {
-    /// <summary>
-    /// Generic exception for Microsoft Rest Client. 
-    /// </summary>
 #if FullNetFx
     [Serializable]
 #endif
-    public class RestException : Exception, IRestException
+    public class RestException<V> : System.Exception, IRestException, IHttpRestException<V>
     {
+        
         /// <summary>
-        /// Initializes a new instance of the RestException class.
+        /// Initializes a new instance of the ErrorModelException class.
         /// </summary>
         public RestException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the RestException class.
+        /// Initializes a new instance of the ErrorModelException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         public RestException(string message)
-            : this(message, null)
+            : base(message, null)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the RestException class.
-        /// </summary>
-        /// <param name="message">The exception message.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public RestException(string message, Exception innerException)
-            : base(message, innerException)
+        public RestException(string message, System.Exception innerException)
+        : base(message, innerException)
         {
         }
 
+        public V Body { get; private set; }
+        
         /// <summary>
         /// Gets information about the associated HTTP request.
         /// </summary>
@@ -54,7 +46,12 @@ namespace Microsoft.Rest
         /// the status code returned by server
         /// </summary>
         public int StatusCode { get; set; }
-        
+
+        public virtual void SetErrorModel(V model)
+        {
+            Body = model;
+        }
+
 #if FullNetFx
         /// <summary>
         /// Initializes a new instance of the RestException class.

@@ -7,24 +7,21 @@ using System.Net.Http;
 namespace Microsoft.Rest.Azure
 {
     /// <summary>
+    /// delegate used by CloudException to return the exception message
+    /// </summary>
+    public delegate string ExceptionMessageGetter();
+
+    /// <summary>
     /// An exception generated from an http response returned from a Microsoft Azure service
     /// </summary>
     public class CloudException : RestException
     {
         /// <summary>
-        /// Gets information about the associated HTTP request.
-        /// </summary>
-        public HttpRequestMessageWrapper Request { get; set; }
-
-        /// <summary>
-        /// Gets information about the associated HTTP response.
-        /// </summary>
-        public HttpResponseMessageWrapper Response { get; set; }
-
-        /// <summary>
         /// Gets or sets the response object.
         /// </summary>
         public CloudError Body { get; set; }
+
+        private ExceptionMessageGetter MessageGetter;
 
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request 
@@ -37,6 +34,7 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public CloudException() : base()
         {
+            InitializeDefaultMessageGetter(null);
         }
 
         /// <summary>
@@ -45,6 +43,7 @@ namespace Microsoft.Rest.Azure
         /// <param name="message">A message describing the error.</param>
         public CloudException(string message) : base(message)
         {
+            InitializeDefaultMessageGetter(null);
         }
 
         /// <summary>
@@ -54,6 +53,31 @@ namespace Microsoft.Rest.Azure
         /// <param name="innerException">The exception which caused the current exception.</param>
         public CloudException(string message, Exception innerException) : base(message, innerException)
         {
+            InitializeDefaultMessageGetter(null);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CloudException class with delegate that decides what should be the message displayed
+        /// </summary>
+        /// <param name="message">A description of the error.</param>
+        /// <param name="messageGetter">delegate to determine what message is returned</param>
+        public CloudException(string message, ExceptionMessageGetter messageGetter) : base(message)
+        {
+            InitializeDefaultMessageGetter(messageGetter);
+        }
+
+        public override string Message => MessageGetter();
+
+        private void InitializeDefaultMessageGetter(ExceptionMessageGetter messageGetter)
+        {
+            if (messageGetter == null)
+            {
+                this.MessageGetter = () => (string.IsNullOrEmpty(Body?.Message)) ? base.Message : Body.Message;
+            }
+            else
+            {
+                this.MessageGetter = messageGetter;
+            }
         }
     }
 }
