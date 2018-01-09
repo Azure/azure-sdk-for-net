@@ -58,7 +58,7 @@ namespace Compute.Tests
             }
         }
 
-        public void TestVMScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
+        private void TestVMScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
         {
             EnsureClientsInitialized(context);
 

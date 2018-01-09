@@ -69,14 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the state of the start task on the compute node.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// running - The start task is currently running.
-        /// completed - The start task has exited with exit code 0, or the
-        /// start task has failed and the retry limit has reached, or the start
-        /// task process did not run due to task preparation errors (such as
-        /// resource file download failures). Possible values include:
-        /// 'running', 'completed'
+        /// Possible values include: 'running', 'completed'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public StartTaskState State { get; set; }

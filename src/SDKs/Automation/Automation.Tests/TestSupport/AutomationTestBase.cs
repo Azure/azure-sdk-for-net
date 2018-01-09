@@ -3,451 +3,574 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Net;
-using Hyak.Common;
+using System.IO;
+using System.Text;
+using Automation.Tests.Helpers;
+using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.Azure.Management.Resources.Models;
-//using Microsoft.Azure.Test;
-using Newtonsoft.Json;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json;
+using HttpStatusCode = System.Net.HttpStatusCode;
 
-namespace Microsoft.Azure.Management.Automation.Testing
+namespace Automation.Tests.TestSupport
 {
     public class AutomationTestBase : TestBase, IDisposable
     {
-        private const string resourceGroup = "SDKTestResourceGroup";
-        private const string automationAccount = "SDKTestAccount";
-        private const string location = "East Us";
-        
+        private const string ResourceGroup = "automation-sdk-test";
+        private const string AutomationAccount = "automation-sdk-test-account";
+        private const string Location = "East US 2";
+
         public AutomationTestBase(MockContext context)
         {
             var handler = new RecordedDelegatingHandler();
             AutomationClient = ResourceGroupHelper.GetAutomationClient(context, handler);
-
-            ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourcesClient(context, handler);
+            var resourcesClient = ResourceGroupHelper.GetResourcesClient(context, handler);
 
             try
             {
-                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroup,
-                new ResourceGroup
-                {
-                    Location = location
-                });
-
-                AutomationClient.AutomationAccounts.CreateOrUpdate(resourceGroup, new AutomationAccountCreateOrUpdateParameters
-                {
-                    Name = automationAccount,
-                    Location = location,
-                    Properties = new AutomationAccountCreateOrUpdateProperties()
+                resourcesClient.ResourceGroups.CreateOrUpdate(ResourceGroup,
+                    new ResourceGroup
                     {
-                        Sku = new Sku() { Name = "Free", Family = "Test", Capacity = 1 }
-                    }
-                });
+                        Location = Location
+                    });
+
+                AutomationClient.AutomationAccount.CreateOrUpdate(
+                    ResourceGroup, AutomationAccount, new AutomationAccountCreateOrUpdateParameters
+                    {
+                        Name = AutomationAccount,
+                        Location = Location,
+                        Sku = new Sku {Name = "Free", Family = "Test", Capacity = 1}
+                    });
             }
             catch (CloudException ex)
             {
                 if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
             }
 
-
             // Clean up the automation account, delete runbooks, schedules, variables, etc.
-            this.CleanUpCredentials();
-            this.CleanUpRunbooks();
-            this.CleanUpSchedules();
-            this.CleanUpVariables();
-            this.CleanUpWebhooks();
+            CleanUpCredentials();
+            CleanUpRunbooks();
+            CleanUpSchedules();
+            CleanUpVariables();
+            CleanUpWebhooks();
         }
 
-        //public AutomationTestBase()
-        //{
-        //    var handler = new RecordedDelegatingHandler();
-        //    AutomationClient = ResourceGroupHelper.GetAutomationClient(handler);
-
-        //    ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
-
-        //    try
-        //    {
-        //        resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroup,
-        //        new ResourceGroup
-        //        {
-        //            Location = location
-        //        });
-
-        //        AutomationClient.AutomationAccounts.CreateOrUpdate(resourceGroup, new AutomationAccountCreateOrUpdateParameters
-        //        {
-        //            Name = automationAccount,
-        //            Location = location,
-        //            Properties = new AutomationAccountCreateOrUpdateProperties()
-        //            {
-        //                Sku = new Sku() { Name = "Free", Family = "Test", Capacity = 1 }
-        //            }
-        //        });
-        //    }
-        //    catch (CloudException ex)
-        //    {
-        //        if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
-        //    }
-            
-
-        //    // Clean up the automation account, delete runbooks, schedules, variables, etc.
-        //    this.CleanUpCredentials();
-        //    this.CleanUpRunbooks();
-        //    this.CleanUpSchedules();
-        //    this.CleanUpVariables();
-        //    this.CleanUpWebhooks();
-        //}
-
-        public AutomationManagementClient AutomationClient { get; private set; }
-
-        public void CleanUpCredentials()
-        {
-            IList<Credential> credentials = AutomationClient.PsCredentials.List(resourceGroup, automationAccount).Credentials;
-
-            foreach (Credential cr in credentials)
-            {
-                this.DeleteCredential(cr.Name);
-            }
-        }
+        public AutomationClient AutomationClient { get; private set; }
 
         public void CleanUpRunbooks()
         {
-            IList<Runbook> runbooks = AutomationClient.Runbooks.List(resourceGroup, automationAccount).Runbooks;
+            var runbooks = AutomationClient.Runbook.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
-            foreach (Runbook rb in runbooks)
+            foreach (var rb in runbooks)
             {
-                this.DeleteRunbook(rb.Name);
+                DeleteRunbook(rb.Name);
             }
         }
 
         public void CleanUpSchedules()
         {
-            IList<Schedule> schedules = this.AutomationClient.Schedules.List(resourceGroup, automationAccount).Schedules;
+            var schedules = AutomationClient.Schedule.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
-            foreach (Schedule schedule in schedules)
+            foreach (var schedule in schedules)
             {
-                this.DeleteSchedule(schedule.Name);
+                DeleteSchedule(schedule.Name);
             }
         }
 
         public void CleanUpVariables()
         {
-            IList<Variable> variables = this.AutomationClient.Variables.List(resourceGroup, automationAccount).Variables;
+            var variables = AutomationClient.Variable.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
-            foreach (Variable variable in variables)
+            foreach (var variable in variables)
             {
-                this.DeleteVariable(variable.Name);
+                DeleteVariable(variable.Name);
             }
         }
 
         public void CleanUpWebhooks()
         {
-            IList<Webhook> webhooks = this.AutomationClient.Webhooks.List(resourceGroup, automationAccount,null).Webhooks;
+            var webhooks =
+                AutomationClient.Webhook.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
             foreach (var webhook in webhooks)
             {
-                this.DeleteWebhook(webhook.Name);
+                DeleteWebhook(webhook.Name);
             }
         }
 
-        public Credential CreateCredential(string credentialName, string userName, string password, string description = null)
+        public Credential CreateCredential(string credentialName, string userName, string password,
+            string description = null)
         {
-            var response = AutomationClient.PsCredentials.CreateOrUpdate(resourceGroup, automationAccount, new CredentialCreateOrUpdateParameters
-            {
-                Name = credentialName,
-                Properties = new CredentialCreateOrUpdateProperties
-                {
-                    UserName = userName,
-                    Password = password,
-                    Description = description
-                }
-            });
-            return response.Credential;
+            var credential = AutomationClient.Credential.CreateOrUpdate(ResourceGroup, AutomationAccount,
+                credentialName,
+                new CredentialCreateOrUpdateParameters(credentialName,
+                    userName,
+                    password,
+                    description));
+            return credential;
         }
 
         public Webhook CreateWebhook(string webhookName, string runbookName, string uri, string description = null)
         {
-            var response = AutomationClient.Webhooks.CreateOrUpdate(resourceGroup, automationAccount, new WebhookCreateOrUpdateParameters
-            {
-                Name = webhookName,
-                Properties = new WebhookCreateOrUpdateProperties
+            var webhook = AutomationClient.Webhook.CreateOrUpdate(ResourceGroup, AutomationAccount, webhookName,
+                new WebhookCreateOrUpdateParameters
                 {
-                    Runbook =  new RunbookAssociationProperty
-                    {
-                        Name = runbookName
-                    },
+                    Name = webhookName,
+                    Runbook = new RunbookAssociationProperty {Name = runbookName},
                     Uri = uri,
                     IsEnabled = true,
                     ExpiryTime = DateTime.Now.AddYears(1)
-                }
-            });
-            return response.Webhook;
+                });
+            return webhook;
         }
 
         public string GenerateUriForWebhook()
         {
-            return AutomationClient.Webhooks.GenerateUri(resourceGroup, automationAccount).Uri;
+            return AutomationClient.Webhook.GenerateUri(ResourceGroup, AutomationAccount);
         }
 
         public void CreateRunbook(string runbookName, string runbookContent, string description = null)
         {
-            AutomationClient.Runbooks.CreateOrUpdateWithDraft(resourceGroup, automationAccount, new RunbookCreateOrUpdateDraftParameters 
-            {
-                Name = runbookName,
-                Location = location,
-                Properties = new RunbookCreateOrUpdateDraftProperties 
-                {
-                    Description = description,
-                    RunbookType = RunbookTypeEnum.Script,
-                    Draft = new RunbookDraft()
-                }
-            });
-
-            this.UpdateRunbookContent(runbookName, runbookContent);
-        }
-
-        public Schedule CreateHourlySchedule(string scheduleName, DateTimeOffset startTime, 
-            DateTimeOffset expiryTime, string description = null, byte hourInterval = 1)
-        {
-            var response = AutomationClient.Schedules.CreateOrUpdate(resourceGroup, automationAccount,  new ScheduleCreateOrUpdateParameters
-            {
-                Name = scheduleName,
-                Properties = new ScheduleCreateOrUpdateProperties
-                {
-                    StartTime = startTime.ToUniversalTime(),
-                    ExpiryTime = expiryTime.ToUniversalTime(),
-                    Description = description,
-                    Interval = hourInterval,
-                    Frequency = ScheduleFrequency.Hour.ToString()
-                }
-            });
-            return response.Schedule;
-        }
-
-        public Variable CreateVariable(string variableName, object value, string description = null)
-        {
-            var response = AutomationClient.Variables.CreateOrUpdate(resourceGroup, automationAccount, new VariableCreateOrUpdateParameters
-            {
-                Name = variableName,
-                Properties = new VariableCreateOrUpdateProperties
-                {
-                    Value = JsonConvert.SerializeObject(value),
-                    Description = description
-                }
-            });
-            return response.Variable;
-        }
-
-        public void DeleteCredential(string credentialName)
-        {
-            AutomationClient.PsCredentials.Delete(resourceGroup, automationAccount, credentialName);
-        }
-
-        public void DeleteRunbook(string runbookName)
-        {
-            AutomationClient.Runbooks.Delete(resourceGroup, automationAccount, runbookName);
-        }
-
-        public void DeleteSchedule(string scheduleName)
-        {
-            AutomationClient.Schedules.Delete(resourceGroup, automationAccount, scheduleName);
-        }
-
-        public void DeleteVariable(string variableName)
-        {
-            AutomationClient.Variables.Delete(resourceGroup, automationAccount, variableName);
-        }
-
-        public void DeleteWebhook(string webhookName)
-        {
-            AutomationClient.Webhooks.Delete(resourceGroup, automationAccount, webhookName);
-        }
-
-        public Credential GetCredential(string credentialName)
-        {
-            var response = AutomationClient.PsCredentials.Get(resourceGroup, automationAccount, credentialName);
-            return response.Credential;
-        }
-
-        public IList<Credential> GetCredentials()
-        {
-            var response = AutomationClient.PsCredentials.List(resourceGroup, automationAccount);
-            return response.Credentials;
-        }
-
-        public IList<JobStream> GetJobStreams(Guid jobId, string streamType, DateTime startTime)
-        {
-            var response = AutomationClient.JobStreams.List(resourceGroup, automationAccount, jobId, new JobStreamListParameters 
-                {
-                    Time = string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()),
-                    StreamType = streamType
-                });
-           
-            return response.JobStreams;
-        }
-
-        public Runbook GetRunbook(string runbookName)
-        {
-            var response = AutomationClient.Runbooks.Get(resourceGroup, automationAccount, runbookName);
-            return response.Runbook;
-        }
-
-        public string GetRunbookContent(string runbookName)
-        {
-            var response = AutomationClient.RunbookDraft.Content(resourceGroup, automationAccount, runbookName);
-            return response.Stream;
-        }
-
-        public Schedule GetSchedule(string scheduleName)
-        {
-            var response = AutomationClient.Schedules.Get(resourceGroup, automationAccount, scheduleName);
-            return response.Schedule;
-        }
-
-        public Variable GetVariable(string variableName)
-        {
-            var response = AutomationClient.Variables.Get(resourceGroup, automationAccount, variableName);
-            return response.Variable;
-        }
-
-        public IList<Variable> GetVariables()
-        {
-            var response = AutomationClient.Variables.List(resourceGroup, automationAccount);
-            return response.Variables;
-        }
-
-        public Webhook GetWebhook(string webhookName)
-        {
-            var response = AutomationClient.Webhooks.Get(resourceGroup, automationAccount, webhookName);
-            return response.Webhook;
-        }
-
-        public IList<Webhook> GetWebhooks(string runbookName = null)
-        {
-            var response = AutomationClient.Webhooks.List(resourceGroup, automationAccount, runbookName);
-            return response.Webhooks;
-        }
-        public void PublishRunbook(string runbookName)
-        {
-            var response = AutomationClient.RunbookDraft.BeginPublish(resourceGroup, automationAccount, new RunbookDraftPublishParameters
+            AutomationClient.Runbook.CreateOrUpdate(ResourceGroup, AutomationAccount, runbookName,
+                new RunbookCreateOrUpdateParameters
                 {
                     Name = runbookName,
-                    PublishedBy = "SDK_Tests"
+                    Description = description,
+                    Location = Location,
+                    RunbookType = RunbookTypeEnum.PowerShellWorkflow,
+                    Draft = new RunbookDraft()
                 });
+
+            UpdateRunbookContent(runbookName, runbookContent);
         }
 
-        public Job StartRunbook(string runbookName, IDictionary<string, string> parameters = null)
+        public Schedule CreateHourlySchedule(string scheduleName, DateTimeOffset startTime,
+            DateTimeOffset expiryTime, string description = null, byte hourInterval = 1)
         {
-            var response = AutomationClient.Jobs.Create(resourceGroup, automationAccount, new JobCreateParameters
+            var schedule = AutomationClient.Schedule.CreateOrUpdate(ResourceGroup, AutomationAccount, scheduleName,
+                new ScheduleCreateOrUpdateParameters
                 {
-                    Properties = new JobCreateProperties 
-                        {
-                            Runbook = new RunbookAssociationProperty
-                            {
-                                Name = runbookName
-                            },
-                            Parameters = parameters
-                        }
+                    Name = scheduleName,
+                    StartTime = startTime.DateTime,
+                    ExpiryTime = expiryTime.DateTime,
+                    Description = description,
+                    Interval = hourInterval,
+                    Frequency = ScheduleFrequency.Hour
                 });
-            return response.Job;
+            return schedule;
         }
 
-        public void UpdateCredential(Credential credential, string password = null)
+
+        #region Module Methods
+        public Module CreateAutomationModule(string moduleName, string contentLink)
         {
-            AutomationClient.PsCredentials.Patch(resourceGroup, automationAccount, new CredentialPatchParameters
-            {
-                Name = credential.Name,
-                Properties = new CredentialPatchProperties
+            var module = AutomationClient.Module.CreateOrUpdate(ResourceGroup, AutomationAccount, moduleName,
+                new ModuleCreateOrUpdateParameters
                 {
-                    UserName = credential.Properties.UserName,
-                    Password = password,
-                    Description = credential.Properties.Description
-                }
-            });
+                    Name = moduleName,
+                    ContentLink = new ContentLink(contentLink),
+                    Location = Location,
+                    Tags = new Dictionary<string, string>()
+                });
+            return module;
         }
 
-        public void UpdateRunbook(Runbook runbook)
+        public Module GetAutomationModule(string moduleName)
         {
-            AutomationClient.Runbooks.Patch(resourceGroup, automationAccount, new RunbookPatchParameters
+            var module = AutomationClient.Module.Get(ResourceGroup, AutomationAccount, moduleName);
+            return module;
+        }
+
+        public void DeleteModule(string moduleName, bool ignoreErrors = false)
+        {
+            try
             {
-                Name = runbook.Name,
-                Properties = new RunbookPatchProperties
-                {
-                    Description = runbook.Properties.Description,
-                    LogProgress = runbook.Properties.LogProgress,
-                    LogVerbose = runbook.Properties.LogVerbose
-                }
-            });
-
-        }
-
-        public void UpdateRunbookContent(string runbookName, string runbookContent)
-        {
-            AutomationClient.RunbookDraft.BeginUpdate(resourceGroup, automationAccount, new RunbookDraftUpdateParameters 
-            { 
-                Name = runbookName,
-                Stream = runbookContent
-            });
-        }
-
-        public void UpdateSchedule(Schedule schedule)
-        {
-            AutomationClient.Schedules.Patch(resourceGroup, automationAccount, new  SchedulePatchParameters
+                AutomationClient.Module.Delete(ResourceGroup, AutomationAccount, moduleName);
+            }
+            catch (ErrorResponseException)
             {
-                Name = schedule.Name,
-                Properties = new SchedulePatchProperties
+                if (!ignoreErrors)
                 {
-                    IsEnabled = schedule.Properties.IsEnabled,
-                    Description = schedule.Properties.Description
+                    throw;
                 }
-            });
+            }
         }
 
-        public void UpdateVariable(Variable variable)
-        {
-            AutomationClient.Variables.Patch(resourceGroup, automationAccount, new VariablePatchParameters
-            {
-                Name = variable.Name,
-                Properties = new VariablePatchProperties
-                {
-                    Value = variable.Properties.Value,
-                    Description = variable.Properties.Description
-                }
-            });
-        }
+        #endregion
 
-        public void UpdateWebhook(Webhook webhook)
-        {
-            AutomationClient.Webhooks.Patch(resourceGroup, automationAccount, new WebhookPatchParameters
-            {
-                Name = webhook.Name,
-                Properties = new WebhookPatchProperties
-                {
-                    IsEnabled = webhook.Properties.IsEnabled
-                }
-            });
-        }
+
+        #region Runbooks methods
 
         public Job WaitForJobCompletion(Guid jobId, string expectedState = "Completed", int numRetries = 50)
         {
-            var response = AutomationClient.Jobs.Get(resourceGroup, automationAccount, jobId);
-            string[] endStates = new string[4] { "Stopped", "Suspended", "Failed", "Completed" };
-            var job = response.Job;
+            var job = AutomationClient.Job.Get(ResourceGroup, AutomationAccount, jobId);
+            var endStates = new[] {"Stopped", "Suspended", "Failed", "Completed"};
             var retry = 0;
-            while (job.Properties.Status != expectedState && retry < numRetries && !Array.Exists(endStates, s => s == job.Properties.Status))
+            while (job.Status != expectedState && retry < numRetries && !Array.Exists(endStates, s => s == job.Status))
             {
                 TestUtilities.Wait(6000);
-                job = AutomationClient.Jobs.Get(resourceGroup, automationAccount, jobId).Job;
+                job = AutomationClient.Job.Get(ResourceGroup, AutomationAccount, jobId);
                 retry++;
             }
 
             return job;
         }
 
+        public void UpdateRunbook(Runbook runbook)
+        {
+            AutomationClient.Runbook.Update(ResourceGroup, AutomationAccount, runbook.Name, new RunbookUpdateParameters
+            {
+                Name = runbook.Name,
+                Description = runbook.Description,
+                LogProgress = runbook.LogProgress,
+                LogVerbose = runbook.LogVerbose
+            });
+        }
+
+        public void UpdateRunbookContent(string runbookName, string runbookContent)
+        {
+            var byteArray = Encoding.ASCII.GetBytes(runbookContent);
+            AutomationClient.RunbookDraft.BeginCreateOrUpdate(ResourceGroup, AutomationAccount, runbookName,
+                new MemoryStream(byteArray));
+        }
+
+        public void PublishRunbook(string runbookName)
+        {
+            AutomationClient.RunbookDraft.BeginPublish(ResourceGroup, AutomationAccount, runbookName);
+        }
+
+        public Job StartRunbook(string runbookName, IDictionary<string, string> parameters = null)
+        {
+            var job = AutomationClient.Job.Create(ResourceGroup, AutomationAccount, Guid.NewGuid(),
+                new JobCreateParameters
+                {
+                    Name = runbookName,
+                    Parameters = parameters
+                });
+            return job;
+        }
+
+        public IPage<JobStream> GetJobStreams(Guid jobId, string streamType, DateTime startTime)
+        {
+            var jobStreams = AutomationClient.JobStream.ListByJob(ResourceGroup, AutomationAccount, jobId.ToString());
+            return jobStreams;
+        }
+
+        public Runbook GetRunbook(string runbookName)
+        {
+            var runbook = AutomationClient.Runbook.Get(ResourceGroup, AutomationAccount, runbookName);
+            return runbook;
+        }
+
+        public Stream GetRunbookContent(string runbookName)
+        {
+            var runbookContentStream =
+                AutomationClient.RunbookDraft.GetContent(ResourceGroup, AutomationAccount, runbookName);
+            return runbookContentStream;
+        }
+
+        public void DeleteRunbook(string runbookName)
+        {
+            AutomationClient.Runbook.Delete(ResourceGroup, AutomationAccount, runbookName);
+        }
+
+        #endregion
+
+        #region Variables methods
+
+        public void UpdateVariable(Variable variable)
+        {
+            AutomationClient.Variable.Update(ResourceGroup, AutomationAccount,
+                variable.Name, new VariableUpdateParameters
+                {
+                    Value = variable.Value,
+                    Name = variable.Name,
+                    Description = variable.Description
+                });
+        }
+
+        public void DeleteVariable(string variableName)
+        {
+            AutomationClient.Variable.Delete(ResourceGroup, AutomationAccount, variableName);
+        }
+
+        #endregion
+
+        #region Schedules methods
+
+        public void UpdateSchedule(Schedule schedule)
+        {
+            AutomationClient.Schedule.Update(ResourceGroup, AutomationAccount, schedule.Name,
+                new ScheduleUpdateParameters
+                {
+                    Name = schedule.Name,
+                    IsEnabled = schedule.IsEnabled,
+                    Description = schedule.Description
+                });
+        }
+
+        public Schedule GetSchedule(string scheduleName)
+        {
+            var schedule = AutomationClient.Schedule.Get(ResourceGroup, AutomationAccount, scheduleName);
+            return schedule;
+        }
+
+        public void DeleteSchedule(string scheduleName)
+        {
+            AutomationClient.Schedule.Delete(ResourceGroup, AutomationAccount, scheduleName);
+        }
+
+        #endregion
+
+        #region Credentials methods
+
+        public Credential GetCredential(string credentialName)
+        {
+            return AutomationClient.Credential.Get(ResourceGroup, AutomationAccount, credentialName);
+        }
+
+        public IPage<Credential> GetCredentials()
+        {
+            IPage<Credential> credentials =
+                AutomationClient.Credential.ListByAutomationAccount(ResourceGroup, AutomationAccount);
+            return credentials;
+        }
+
+        public void UpdateCredential(Credential credential, string password = null, string userName = null)
+        {
+            AutomationClient.Credential.Update(ResourceGroup, AutomationAccount, credential.Name,
+                new CredentialUpdateParameters
+                {
+                    Name = userName,
+                    UserName = credential.UserName,
+                    Password = password,
+                    Description = credential.Description
+                });
+        }
+
+        public void CleanUpCredentials()
+        {
+            var credentials = AutomationClient.Credential.ListByAutomationAccount(ResourceGroup, AutomationAccount);
+
+            foreach (var cr in credentials)
+            {
+                DeleteCredential(cr.Name);
+            }
+        }
+
+        public Variable CreateVariable(string variableName, object value, string description = null)
+        {
+            var variable = AutomationClient.Variable.CreateOrUpdate(ResourceGroup, AutomationAccount, variableName,
+                new VariableCreateOrUpdateParameters
+                {
+                    Name = variableName,
+                    Value = JsonConvert.SerializeObject(value),
+                    Description = description,
+                    IsEncrypted = false
+                });
+            return variable;
+        }
+
+        public void DeleteCredential(string credentialName)
+        {
+            AutomationClient.Credential.Delete(ResourceGroup, AutomationAccount, credentialName);
+        }
+
+        #endregion
+
+        #region Webhook methods
+
+        public Variable GetVariable(string variableName)
+        {
+            var variable = AutomationClient.Variable.Get(ResourceGroup, AutomationAccount, variableName);
+            return variable;
+        }
+
+        public IPage<Variable> GetVariables()
+        {
+            var variables = AutomationClient.Variable.ListByAutomationAccount(ResourceGroup, AutomationAccount);
+            return variables;
+        }
+
+        public void DeleteWebhook(string webhookName)
+        {
+            AutomationClient.Webhook.Delete(ResourceGroup, AutomationAccount, webhookName);
+        }
+
+        public void UpdateWebhook(Webhook webhook)
+        {
+            AutomationClient.Webhook.Update(ResourceGroup, AutomationAccount, webhook.Name, new WebhookUpdateParameters
+            {
+                Name = webhook.Name,
+                IsEnabled = webhook.IsEnabled
+            });
+        }
+
+        public IPage<Webhook> GetWebhooks(string runbookName = null)
+        {
+            var odataFilter = new List<string>();
+            string filter = null;
+            if (runbookName != null)
+            {
+                odataFilter.Add("properties/runbook/name eq '" + Uri.EscapeDataString(runbookName) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                filter = string.Join(null, odataFilter);
+            }
+            var webhooks = AutomationClient.Webhook.ListByAutomationAccount(ResourceGroup, AutomationAccount, filter);
+            return webhooks;
+        }
+
+        public Webhook GetWebhook(string webhookName)
+        {
+            var webhook = AutomationClient.Webhook.Get(ResourceGroup, AutomationAccount, webhookName);
+            return webhook;
+        }
+
+        #endregion
+
+        #region DSC Configuration methods
+
+        public DscConfiguration CreateDscConfiguration(string configName, string configContent,
+            string description = null, string contentHashValue = null,
+            string contentHashAlgorithm = "sha256", string contentType = null)
+        {
+            return AutomationClient.DscConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount, configName,
+                new DscConfigurationCreateOrUpdateParameters
+                {
+                    Location = Location,
+                    Description = description,
+                    Source = new ContentSource
+                    {
+                        Value = configContent,
+                        Type = contentType,
+                        Hash = new ContentHash
+                        {
+                            Value = contentHashValue,
+                            Algorithm = contentHashAlgorithm
+                        }
+                    }
+                }
+            );
+        }
+
+        public DscConfiguration GetDscConfiguration(string configName)
+        {
+            return AutomationClient.DscConfiguration.Get(ResourceGroup, AutomationAccount, configName);
+        }
+
+        public IPage<DscConfiguration> GetDscConfigurations()
+        {
+            var dscConfigurations =
+                AutomationClient.DscConfiguration.ListByAutomationAccount(ResourceGroup, AutomationAccount);
+            return dscConfigurations;
+        }
+
+        public void DeleteDscConfiguration(string configName)
+        {
+            AutomationClient.DscConfiguration.Delete(ResourceGroup, AutomationAccount, configName);
+        }
+
+        public void UpdateDscConfiguration(DscConfiguration configuration, string configContent,
+            string description = null, string contentHashValue = null,
+            string contentHashAlgorithm = "sha256", string contentType = null)
+        {
+            AutomationClient.DscConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount, configuration.Name,
+                new DscConfigurationCreateOrUpdateParameters
+                {
+                    Description = configuration.Description,
+                    Source = new ContentSource
+                    {
+                        Value = configContent,
+                        Type = contentType,
+                        Hash = new ContentHash
+                        {
+                            Value = contentHashValue,
+                            Algorithm = contentHashAlgorithm
+                        }
+                    },
+                    Location = configuration.Location,
+                    Name = configuration.Name
+                });
+        }
+
+        #endregion
+
+        #region Dsc Node Configuration Methods
+
+        public DscNodeConfiguration CreateDscNodeConfiguration(string nodeConfigurationName, string configurationName,
+            string nodeConfigurationContent, string contentHashValue, string contentHashAlgorithm, string contentType,
+            string contentVersion)
+        {
+            return AutomationClient.DscNodeConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount,
+                nodeConfigurationName, new DscNodeConfigurationCreateOrUpdateParameters
+                {
+                    Name = nodeConfigurationName,
+                    Configuration = new DscConfigurationAssociationProperty(configurationName),
+                    Source = new ContentSource
+                    {
+                        Value = nodeConfigurationContent,
+                        Version = contentVersion,
+                        Hash = new ContentHash
+                        {
+                            Value = contentHashValue,
+                            Algorithm = contentHashAlgorithm
+                        },
+                        Type = contentType
+                    }
+                });
+        }
+
+        public DscNodeConfiguration GetDscNodeConfiguration(string nodeConfigName)
+        {
+            return AutomationClient.DscNodeConfiguration.Get(ResourceGroup, AutomationAccount, nodeConfigName);
+        }
+
+        public void UpdateDscNodeConfiguration(DscNodeConfiguration nodeConfig, string configContent,
+            string contentHashValue, string contentHashAlgorithm, string contentType, string contentVersion)
+        {
+            AutomationClient.DscNodeConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount,
+                nodeConfig.Name, new DscNodeConfigurationCreateOrUpdateParameters
+                {
+                    Name = nodeConfig.Name,
+                    Configuration = new DscConfigurationAssociationProperty(nodeConfig.Configuration.Name),
+                    Source = new ContentSource
+                    {
+                        Value = configContent,
+                        Version = contentVersion,
+                        Hash = new ContentHash
+                        {
+                            Value = contentHashValue,
+                            Algorithm = contentHashAlgorithm
+                        },
+                        Type = contentType
+                    }
+                });
+        }
+
+        public void DeleteDscNodeConfiguration(string configName)
+        {
+            AutomationClient.DscNodeConfiguration.Delete(ResourceGroup, AutomationAccount, configName);
+        }
+
+        public IPage<DscNodeConfiguration> GetDscNodeConfigurations()
+        {
+            return AutomationClient.DscNodeConfiguration.ListByAutomationAccount(ResourceGroup, AutomationAccount);
+        }
+
+        #endregion
+
+        #region Common Methods
+
         public void Dispose()
         {
             AutomationClient.Dispose();
         }
+
+        #endregion
     }
 }

@@ -103,13 +103,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// running - the task is currently running (including retrying).
-        /// completed - the task has exited with exit code 0, or the task has
-        /// exhausted its retry limit, or the Batch service was unable to start
-        /// the task due to task preparation errors (such as resource file
-        /// download failures). Possible values include: 'running', 'completed'
+        /// Possible values include: 'running', 'completed'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public JobPreparationTaskState State { get; set; }

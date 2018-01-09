@@ -106,7 +106,7 @@ namespace CognitiveServices.Tests.Helpers
             string accountName = TestUtilities.GenerateName("csa");
             CognitiveServicesAccountCreateParameters parameters = GetDefaultCognitiveServicesAccountParameters();
             if (!string.IsNullOrEmpty(kind)) parameters.Kind = kind;
-            var createRequest2 = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, accountName, parameters);
+            var createRequest2 = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
 
             return accountName;
         }
@@ -122,7 +122,7 @@ namespace CognitiveServices.Tests.Helpers
                 Location = location ?? DefaultLocation,
                 Properties = new object(),
             };
-            var account = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgName, accountName, parameters);
+            var account = cognitiveServicesMgmtClient.Accounts.Create(rgName, accountName, parameters);
             VerifyAccountProperties(account, false, accountType, skuName, location ?? DefaultLocation);
 
             return account;

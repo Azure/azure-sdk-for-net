@@ -1,89 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+
   <PropertyGroup>
-    <description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</description>
-    <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
-    <VersionPrefix>2.0.3</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
-    <tags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</tags>
+    <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
+    <Version>3.0.0-preview</Version>
+    <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
+    <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
+    <PackageTags>Automation;Runbook;</PackageTags>
+    <PackageReleaseNotes>Major version release: SDK rebuilt using the Swagger specs - Changes in the namespaces and interfaces. Still in preview mode and contains breaking changes.</PackageReleaseNotes>
   </PropertyGroup>
+
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Hyak.Common" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Azure.Common " Version="2.1.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
-    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.Tracing" Version="4.3.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.0.1" />
-    <PackageReference Include="System.Threading.Thread" Version="4.0.0" />
-    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Timer" Version="4.3.0" />
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.0" />
-  </ItemGroup>
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>
-
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3BC8F71C-6424-44F8-B553-BABC031F2AE7}</ProjectGuid>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Azure.Management.Automation</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
-    <OutputType>Library</OutputType>
-    <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>de17033c</NuGetPackageImportStamp>
-  </PropertyGroup>
-  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <PropertyGroup>
-    <TODO: generated code has memeber naming confliction with inherited ones, please fix spec and remove the warn suppression
-    <NoWarn>$(NoWarn);0108</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Customizations\ResponseWithSkipToken.cs" />
-    <Compile Include="Generated\**\*.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Customizations\AutomationManagementClient.Customization.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Automation.nuget.proj" />
-    <None Include="Microsoft.Azure.Management.Automation.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Hyak.Common">
-      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
-  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-</Project>
--->

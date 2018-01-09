@@ -1,17 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.DataLake.Store</PackageId>
-    <Description>Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.</Description>
-    <VersionPrefix>2.3.0-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
-    <PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management</PackageTags>
-    <PackageReleaseNotes>See https://aka.ms/adlsdotnetsdkchangelog for release notes.</PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Threading.Thread" Version="4.0.0" />
-  </ItemGroup>
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.DataLake.Store</PackageId>
+		<Description>Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.</Description>
+		<Version>2.3.3-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
+		<PackageTags>Data Lake Store management;DataLakeStore;</PackageTags>
+		<PackageReleaseNotes>See https://aka.ms/adlsdotnetsdkchangelog for release notes.</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+		<PackageReference Include="System.Threading.Thread" Version="4.0.0" />
+	</ItemGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

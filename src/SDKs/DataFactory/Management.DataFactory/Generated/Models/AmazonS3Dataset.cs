@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="bucketName">The name of the Amazon S3 bucket. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
@@ -54,8 +56,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="format">The format of files.</param>
         /// <param name="compression">The data compression method used for the
         /// Amazon S3 object.</param>
-        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object key = default(object), object prefix = default(object), object version = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
-            : base(linkedServiceName, description, structure, parameters)
+        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object key = default(object), object prefix = default(object), object version = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters)
         {
             BucketName = bucketName;
             Key = key;

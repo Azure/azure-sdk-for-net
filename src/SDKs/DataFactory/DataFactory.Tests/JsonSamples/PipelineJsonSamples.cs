@@ -2117,6 +2117,7 @@ namespace DataFactory.Tests.JsonSamples
           {
             ""type"": ""SalesforceSource"",
             ""query"":""select Id from table"",
+            ""readBehavior"": ""QueryAll""
           },
           ""sink"":
           {
@@ -2217,6 +2218,889 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
+        [JsonSample(version: "Copy")]
+        public const string CopyAmazonMWSToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyAmazonMWSToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""AmazonMWSSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""AmazonMWSDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyAzurePostgreSqlToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyAzurePostgreSqlToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""AzurePostgreSqlSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""AzurePostgreSqlDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyConcurToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyConcurToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""ConcurSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""ConcurDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyCouchbaseToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyCouchbaseToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""CouchbaseSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""CouchbaseDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyDrillToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyDrillToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""DrillSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""DrillDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyEloquaToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyEloquaToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""EloquaSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""EloquaDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyGoogleBigQueryToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyGoogleBigQueryToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""GoogleBigQuerySource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""GoogleBigQueryDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyGreenplumToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyGreenplumToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""GreenplumSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""GreenplumDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyHBaseToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyHBaseToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""HBaseSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""HBaseDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyHiveToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyHiveToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""HiveSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""HiveDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyHubspotToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyHubspotToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""HubspotSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""HubspotDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyImpalaToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyImpalaToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""ImpalaSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""ImpalaDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyJiraToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyJiraToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""JiraSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""JiraDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyMagentoToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyMagentoToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""MagentoSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""MagentoDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyMariaDBToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyMariaDBToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""MariaDBSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""MariaDBDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyMarketoToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyMarketoToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""MarketoSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""MarketoDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyPaypalToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyPaypalToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""PaypalSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""PaypalDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyPhoenixToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyPhoenixToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""PhoenixSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""PhoenixDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyPrestoToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyPrestoToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""PrestoSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""PrestoDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyQuickBooksToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyQuickBooksToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""QuickBooksSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""QuickBooksDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyServiceNowToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyServiceNowToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""ServiceNowSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""ServiceNowDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyShopifyToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyShopifyToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""ShopifySource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""ShopifyDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySparkToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopySparkToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""SparkSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""SparkDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySquareToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopySquareToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""SquareSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""SquareDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyXeroToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyXeroToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""XeroSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""XeroDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyZohoToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyZohoToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""ZohoSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""ZohoDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
         [JsonSample]
         public const string CopyFromBlobToSapC4C = @"{
     name: ""MyPipelineName"",

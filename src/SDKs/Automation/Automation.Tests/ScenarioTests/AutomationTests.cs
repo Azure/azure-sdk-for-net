@@ -1,60 +1,61 @@
-﻿
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
-//using Microsoft.Azure.Test;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json;
-using Xunit;
-
-namespace Microsoft.Azure.Management.Automation.Testing
+namespace Automation.Tests.ScenarioTests
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Automation.Tests.Helpers;
+    using Automation.Tests.TestSupport;
+    using Microsoft.Azure.Management.Automation.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Newtonsoft.Json;
+    using Xunit;
+    using System.Threading;
+
     public class AutomationTest 
     {
         [Fact]
         public void CanCreateUpdateDeleteRunbook()
         {
-            //using (var undoContext = UndoContext.Current)
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                //undoContext.Start();
-                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context))
                 {
-                    string runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
-                    string runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
+                    var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
+                    var runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
 
-                    _testFixture.CreateRunbook(runbookName, runbookContent);
-                    var runbook = _testFixture.GetRunbook(runbookName);
+                    testFixture.CreateRunbook(runbookName, runbookContent);
+                    var runbook = testFixture.GetRunbook(runbookName);
                     Assert.NotNull(runbook);
 
-                    _testFixture.PublishRunbook(runbook.Name);
-                    runbook = _testFixture.GetRunbook(runbookName);
-                    Assert.Equal("Published", runbook.Properties.State);
+                    testFixture.PublishRunbook(runbook.Name);
+                    runbook = testFixture.GetRunbook(runbookName);
+                    Assert.Equal("Published", runbook.State);
 
-                    var description = "description of runbook";
-                    runbook.Properties.LogProgress = true;
-                    runbook.Properties.Description = description;
+                    const string description = "description of runbook";
+                    runbook.LogProgress = true;
+                    runbook.Description = description;
 
-                    _testFixture.UpdateRunbook(runbook);
-                    var updatedRunbook = _testFixture.GetRunbook(runbookName);
-                    Assert.Equal(runbook.Properties.LogProgress, true);
-                    Assert.Equal(runbook.Properties.LogVerbose, false);
-                    Assert.Equal(runbook.Properties.Description, updatedRunbook.Properties.Description);
+                    testFixture.UpdateRunbook(runbook);
+                    var updatedRunbook = testFixture.GetRunbook(runbookName);
+                    Assert.True(runbook.LogProgress);
+                    Assert.False(runbook.LogVerbose);
+                    Assert.Equal(runbook.Description, updatedRunbook.Description);
 
-                    string runbookContentV2 = RunbookDefinition.TestFasterWorkflow_V2.PsScript;
-                    _testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
+                    var runbookContentV2 = RunbookDefinition.TestFasterWorkflowV2.PsScript;
+                    testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
 
-                    string updatedContent = _testFixture.GetRunbookContent(runbookName);
-                    Assert.Equal(runbookContentV2, updatedContent);
+                    var updatedContent = testFixture.GetRunbookContent(runbookName);
+                    var reader = new StreamReader(updatedContent);
+                    Assert.Equal(runbookContentV2, reader.ReadToEnd());
 
-                    _testFixture.DeleteRunbook(runbookName);
+                    testFixture.DeleteRunbook(runbookName);
 
-                    Assert.Throws<CloudException>(() =>
+                    Assert.Throws<ErrorResponseException>(() =>
                     {
-                        runbook = _testFixture.GetRunbook(runbookName);
+                        runbook = testFixture.GetRunbook(runbookName);
                     });
                 }
             }
@@ -63,38 +64,35 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteSchedule()
         {
-            //using (var undoContext = UndoContext.Current)
-            //{
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                //undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context))
                 {
                     var scheduleName = TestUtilities.GenerateName("hourlySche");
-                    var startTime = DateTimeOffset.Now.AddMinutes(30);
+                    var startTime = DateTimeOffset.Now.AddDays(1);
                     var expiryTime = startTime.AddDays(5);
 
-                    Schedule schedule = _testFixture.CreateHourlySchedule(scheduleName, startTime, expiryTime);
+                    var schedule = testFixture.CreateHourlySchedule(scheduleName, startTime, expiryTime);
                     Assert.NotNull(schedule);
 
-                    schedule = _testFixture.GetSchedule(schedule.Name);
+                    schedule = testFixture.GetSchedule(schedule.Name);
                     Assert.NotNull(schedule);
-                    Assert.Equal((byte)1, schedule.Properties.Interval);
-                    Assert.Equal(ScheduleFrequency.Hour.ToString(), schedule.Properties.Frequency);
 
-                    schedule.Properties.IsEnabled = false;
-                    schedule.Properties.Description = "hourly schedule";
-                    _testFixture.UpdateSchedule(schedule);
-                    var updatedSchedule = _testFixture.GetSchedule(schedule.Name);
-                    Assert.False(updatedSchedule.Properties.IsEnabled);
-                    Assert.Equal(schedule.Properties.Description, updatedSchedule.Properties.Description);
+                    Assert.Equal(1, (int)(long)schedule.Interval);
+                    Assert.Equal(ScheduleFrequency.Hour, schedule.Frequency);
 
-                    _testFixture.DeleteSchedule(schedule.Name);
+                    schedule.IsEnabled = false;
+                    schedule.Description = "hourly schedule";
+                    testFixture.UpdateSchedule(schedule);
+                    var updatedSchedule = testFixture.GetSchedule(schedule.Name);
+                    Assert.False(updatedSchedule.IsEnabled);
+                    Assert.Equal(schedule.Description, updatedSchedule.Description);
 
-                    Assert.Throws<CloudException>(() =>
+                    testFixture.DeleteSchedule(schedule.Name);
+
+                    Assert.Throws<ErrorResponseException>(() =>
                     {
-                        schedule = _testFixture.GetSchedule(schedule.Name);
+                        schedule = testFixture.GetSchedule(schedule.Name);
                     });
                 }
             }
@@ -103,39 +101,36 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteVariable()
         {
-            //using (var undoContext = UndoContext.Current)
-            //{
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                //undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context))
                 {
                     var variableName = TestUtilities.GenerateName("variable");
                     var value = 10;
 
-                    Variable variable = _testFixture.CreateVariable(variableName, value);
+                    var variable = testFixture.CreateVariable(variableName, value);
                     Assert.NotNull(variable);
 
-                    variable = _testFixture.GetVariable(variable.Name);
+                    variable = testFixture.GetVariable(variable.Name);
                     Assert.NotNull(variable);
-                    Assert.Equal(value, Convert.ToInt32(JsonConvert.DeserializeObject<object>(variable.Properties.Value)));
+                    Assert.Equal(value, Convert.ToInt32(JsonConvert.DeserializeObject<object>(variable.Value)));
 
                     value = 20;
-                    variable.Properties.Value = JsonConvert.SerializeObject(value);
-                    variable.Properties.Description = "int typed variable";
-                    _testFixture.UpdateVariable(variable);
-                    var variables = _testFixture.GetVariables();
-                    Assert.Equal(1, variables.Count);
-                    var updatedVariable = variables[0];
-                    Assert.Equal(value, Convert.ToInt32(JsonConvert.DeserializeObject<object>(updatedVariable.Properties.Value)));
-                    Assert.Equal(variable.Properties.Description, updatedVariable.Properties.Description);
+                    variable.Value = JsonConvert.SerializeObject(value);
+                    variable.Description = "int typed variable";
 
-                    _testFixture.DeleteVariable(variable.Name);
+                    testFixture.UpdateVariable(variable);
+                    var variables = testFixture.GetVariables();
+                    Assert.Single(variables.ToList());
+                    var updatedVariable = variables.ToList()[0];
+                    Assert.Equal(value, Convert.ToInt32(JsonConvert.DeserializeObject<object>(updatedVariable.Value)));
+                    Assert.Equal(variable.Description, updatedVariable.Description);
 
-                    Assert.Throws<CloudException>(() =>
+                    testFixture.DeleteVariable(variable.Name);
+
+                    Assert.Throws<ErrorResponseException>(() =>
                     {
-                        variable = _testFixture.GetVariable(variable.Name);
+                        variable = testFixture.GetVariable(variable.Name);
                     });
                 }
             }
@@ -144,50 +139,49 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteWebhook()
         {
-            //using (var undoContext = UndoContext.Current)
-            //{
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-                //undoContext.Start();
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context))
                 {
                     var webhookName = TestUtilities.GenerateName("webhook");
                     var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
                     var runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
 
-                    _testFixture.CreateRunbook(runbookName, runbookContent);
-                    _testFixture.PublishRunbook(runbookName);
-                    var runbook = _testFixture.GetRunbook(runbookName);
-                    Assert.Equal("Published", runbook.Properties.State);
+                    testFixture.CreateRunbook(runbookName, runbookContent);
+                    testFixture.PublishRunbook(runbookName);
+                    var runbook = testFixture.GetRunbook(runbookName);
+                    Assert.Equal("Published", runbook.State);
 
-                    var uri = _testFixture.GenerateUriForWebhook();
+                    var uri = testFixture.GenerateUriForWebhook();
 
-                    Webhook webhook = _testFixture.CreateWebhook(webhookName, runbookName, uri);
+                    var webhook = testFixture.CreateWebhook(webhookName, runbookName, uri);
                     Assert.NotNull(webhook);
 
-                    webhook = _testFixture.GetWebhook(webhook.Name);
+                    webhook = testFixture.GetWebhook(webhook.Name);
                     Assert.NotNull(webhook);
-                    Assert.Equal(runbookName, webhook.Properties.Runbook.Name);
+                    Assert.Equal(runbookName, webhook.Runbook.Name);
 
-                    webhook.Properties.IsEnabled = false;
-                    _testFixture.UpdateWebhook(webhook);
-                    var webhooks = _testFixture.GetWebhooks();
-                    Assert.Equal(1, webhooks.Count);
-                    var updatedWebhook = webhooks[0];
-                    Assert.False(updatedWebhook.Properties.IsEnabled);
+                    webhook.IsEnabled = false;
 
-                    webhooks = _testFixture.GetWebhooks(runbookName);
-                    Assert.Equal(1, webhooks.Count);
-                    updatedWebhook = webhooks[0];
-                    Assert.False(updatedWebhook.Properties.IsEnabled);
+                    testFixture.UpdateWebhook(webhook);
+                    var webhooks = testFixture.GetWebhooks();
 
-                    _testFixture.DeleteWebhook(webhook.Name);
-                    _testFixture.DeleteRunbook(runbookName);
+                    Assert.Single(webhooks.ToList());
+                    var updatedWebhook = webhooks.ToList()[0];
+                    Assert.False(updatedWebhook.IsEnabled);
 
-                    Assert.Throws<CloudException>(() =>
+                    webhooks = testFixture.GetWebhooks(runbookName);
+
+                    Assert.Single(webhooks.ToList());
+                    updatedWebhook = webhooks.ToList()[0];
+                    Assert.False(updatedWebhook.IsEnabled);
+
+                    testFixture.DeleteWebhook(webhook.Name);
+                    testFixture.DeleteRunbook(runbookName);
+
+                    Assert.Throws<ErrorResponseException>(() =>
                     {
-                        webhook = _testFixture.GetWebhook(webhook.Name);
+                        webhook = testFixture.GetWebhook(webhook.Name);
                     });
                 }
             }
@@ -196,45 +190,209 @@ namespace Microsoft.Azure.Management.Automation.Testing
         [Fact]
         public void CanCreateUpdateDeleteCredential()
         {
-            //using (var undoContext = UndoContext.Current)
-            //{
-            //undoContext.Start();
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(GetType().FullName))
             {
-
-                using (AutomationTestBase _testFixture = new AutomationTestBase(context))
+                using (var testFixture = new AutomationTestBase(context))
                 {
                     var credentialName = TestUtilities.GenerateName("credential");
                     var userName = "userName1";
                     var password = "pwd1";
 
-                    Credential credential = _testFixture.CreateCredential(credentialName, userName, password);
+                    var credential = testFixture.CreateCredential(credentialName, userName, password);
                     Assert.NotNull(credential);
 
-                    credential = _testFixture.GetCredential(credential.Name);
+                    credential = testFixture.GetCredential(credential.Name);
                     Assert.NotNull(credential);
-                    Assert.Equal(userName, credential.Properties.UserName);
+                    Assert.Equal(userName, credential.UserName);
 
                     userName = "userName2";
                     password = "pwd2";
-                    credential.Properties.UserName = userName;
-                    credential.Properties.Description = "description of credential";
-                    _testFixture.UpdateCredential(credential, password);
-                    var credentials = _testFixture.GetCredentials();
-                    Assert.Equal(1, credentials.Count);
-                    var updatedCredential = credentials[0];
-                    Assert.Equal(credential.Properties.UserName, updatedCredential.Properties.UserName);
-                    Assert.Equal(credential.Properties.Description, updatedCredential.Properties.Description);
 
-                    _testFixture.DeleteCredential(credential.Name);
+                    credential.Description = "description of credential";
+                    testFixture.UpdateCredential(credential, password, userName);
+                    var credentials = testFixture.GetCredentials();
 
-                    Assert.Throws<CloudException>(() =>
+                    Assert.Single(credentials.ToList());
+                    var updatedCredential = credentials.ToList()[0];
+                    Assert.Equal(credential.UserName, updatedCredential.UserName);
+                    Assert.Equal(credential.Description, updatedCredential.Description);
+
+                    testFixture.DeleteCredential(credential.Name);
+
+                    Assert.Throws<ErrorResponseException>(() =>
                     {
-                        credential = _testFixture.GetCredential(credential.Name);
+                        credential = testFixture.GetCredential(credential.Name);
                     });
                 }
             }
         }
+
+        [Fact]
+        public void CanCreateUpdateDeleteDscConfiguration()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+                    var configName = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ConfigurationName;
+                    var configContent = DscConfigurationDefinition.TestSimpleConfigurationDefinition.PsScript;
+                    var description = DscConfigurationDefinition.TestSimpleConfigurationDefinition.Description;
+                    var contentHashValue = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashValue;
+                    var contentHashAlgorithm = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashAlgorithm;
+                    var contentType = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ContentType;
+
+                    const string updatedDescription = "new sample configuration test";
+
+                    var configuration = testFixture.CreateDscConfiguration(configName, configContent,
+                        description, contentHashValue, contentHashAlgorithm, contentType);
+
+                    var config = testFixture.GetDscConfiguration(configName);
+                    Assert.NotNull(config);
+                    Assert.Equal(config.Name, configuration.Name);
+                    Assert.Equal(config.Description, configuration.Description);
+
+                    config.Description = updatedDescription;
+                    testFixture.UpdateDscConfiguration(config, configContent,
+                        description, contentHashValue, contentHashAlgorithm, contentType);
+
+                    var dscConfigurations = testFixture.GetDscConfigurations();
+                    Assert.NotNull(dscConfigurations);
+                    Assert.Single(dscConfigurations.ToList());
+                    configuration = dscConfigurations.ToList()[0];
+                    Assert.Equal(configName, configuration.Name);
+                    
+                    testFixture.DeleteDscConfiguration(configName);
+
+                    Assert.Throws<ErrorResponseException>(() =>
+                    {
+                        config = testFixture.GetDscConfiguration(configName);
+                    });
+                }
+            }
+        }
+
+        [Fact]
+        public void CanCreateUpdateDeleteDscNodeConfiguration()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+
+                    var configName = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ConfigurationName;
+                    var nodeConfigName = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.NodeConfigurationName;
+                    var nodeConfigurationContent = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.NodeConfigurationContent;
+                    var nodeConfigContentHashValue = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashValue;
+                    var nodeConfigContentHashAlgorithm = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashAlgorithm;
+                    var nodeConfigContentType = DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentType;
+                    var nodeConfigContentVersion = 
+                        DscNodeConfigurationDefinition.TestSimpleConfigurationDefinition.ContentVersion;
+                    const string updatedConfigurationVersion = "2.0";
+
+                    var configContent = DscConfigurationDefinition.TestSimpleConfigurationDefinition.PsScript;
+                    var description = DscConfigurationDefinition.TestSimpleConfigurationDefinition.Description;
+                    var contentHashValue = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashValue;
+                    var contentHashAlgorithm = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ContentHashAlgorithm;
+                    var contentType = DscConfigurationDefinition.TestSimpleConfigurationDefinition.ContentType;
+
+                    testFixture.CreateDscConfiguration(configName, configContent,
+                        description, contentHashValue, contentHashAlgorithm, contentType);
+
+                    var nodeConfiguration = testFixture.CreateDscNodeConfiguration(nodeConfigName, configName,
+                        nodeConfigurationContent, nodeConfigContentHashValue, nodeConfigContentHashAlgorithm, 
+                        nodeConfigContentType, nodeConfigContentVersion);
+
+                    var nodeConfig = testFixture.GetDscNodeConfiguration(nodeConfigName);
+                    Assert.NotNull(nodeConfig);
+                    Assert.Equal(nodeConfig.Name, nodeConfiguration.Name);
+
+                    testFixture.UpdateDscNodeConfiguration(nodeConfig, nodeConfigurationContent, 
+                        nodeConfigContentHashValue, nodeConfigContentHashAlgorithm, nodeConfigContentType,
+                        updatedConfigurationVersion);
+
+                    var dscConfigurations = testFixture.GetDscNodeConfigurations();
+                    Assert.NotNull(dscConfigurations);
+                    Assert.Single(dscConfigurations.ToList());
+                    nodeConfiguration = dscConfigurations.ToList()[0];
+                    Assert.Equal(nodeConfigName, nodeConfiguration.Name);
+
+                    testFixture.DeleteDscNodeConfiguration(nodeConfigName);
+
+                    Assert.Throws<ErrorResponseException>(() =>
+                    {
+                        nodeConfig = testFixture.GetDscNodeConfiguration(nodeConfigName);
+                    });
+                }
+            }
+        }
+
+        [Fact]
+        public void CanCreateUpdateDeleteAutomationModules()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new AutomationTestBase(context))
+                {
+
+                    var moduleName = "HelloAndSum";
+                    // Content links don't have to be valid for playback. However, these are the actual module download locations used for recording.
+                    var contentLink1 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module1/HelloAndSum.zip";
+                    var contentLink2 = "https://bhbrahmaprodtestingseau.blob.core.windows.net/module2/HelloAndSum.zip";
+
+                    testFixture.DeleteModule(moduleName, true);
+
+                    var module = testFixture.CreateAutomationModule(moduleName, contentLink1);
+
+                    Assert.NotNull(module);                    
+                    Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
+                    EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture, out module);
+                    Assert.Equal(moduleName, module.Name);
+                    Assert.Equal("1.0", module.Version);
+
+                    // Update the module
+                    module = testFixture.CreateAutomationModule(moduleName, contentLink2);
+                    Assert.NotNull(module);
+                    Assert.Equal(ModuleProvisioningState.Creating, module.ProvisioningState);
+                    EnsureModuleReachesSuccessProvisioningState(moduleName, testFixture, out module);
+                    Assert.Equal(moduleName, module.Name);
+                    Assert.Equal("2.0", module.Version);
+
+                    // Delete the module
+                    bool deleteCompleted = false;
+                    testFixture.DeleteModule(moduleName);
+                    try
+                    {
+                        testFixture.GetAutomationModule(moduleName);
+                    }
+                    catch (ErrorResponseException)
+                    {
+                        // Exception expected
+                        deleteCompleted = true;
+                    }
+                    Assert.True(deleteCompleted);
+                }
+            }
+        }
+
+        private void EnsureModuleReachesSuccessProvisioningState(string moduleName, AutomationTestBase testFixture, out Module module)
+        {
+            // Wait for the module Provisioing state to reach Succeeded
+            var startTime = DateTime.Now;
+            var endTime = startTime.AddMinutes(5);
+            bool provisioningSucceeded = false;
+            do
+            {
+                Thread.Sleep(50); // Used 5 seconds polling delay in the record mode, using 50 ms in playback for test to complete fast
+                module = testFixture.GetAutomationModule(moduleName);
+                if (module.ProvisioningState == ModuleProvisioningState.Succeeded)
+                {
+                    provisioningSucceeded = true;
+                    break;
+                }
+            } while (DateTime.Now < endTime);
+            Assert.True(provisioningSucceeded);
+        }
+
     }
 }
 

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,9 +31,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the TabularTranslator class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="columnMappings">Column mappings. Type: string (or
         /// Expression with resultType string).</param>
-        public TabularTranslator(object columnMappings = default(object))
+        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object))
+            : base(additionalProperties)
         {
             ColumnMappings = columnMappings;
             CustomInit();

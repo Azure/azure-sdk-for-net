@@ -1,26 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using AzureRedisCache.Tests.ScenarioTests;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace AzureRedisCache.Tests
 {
     public class RedisCacheManagementHelper
     {
+        public static string Location = "West Central US";
+        public static string SecondaryLocation = "East US 2 EUAP";
+
         private ResourceManagementClient _client;
         private MockContext _context;
         private TestBase _testBase;
@@ -64,7 +59,7 @@ namespace AzureRedisCache.Tests
                                     parameters: new RedisCreateParameters
                                     {
                                         Location = location,
-                                        Sku = new Sku()
+                                        Sku = new Microsoft.Azure.Management.Redis.Models.Sku()
                                         {
                                             Name = SkuName.Basic,
                                             Family = SkuFamily.C,

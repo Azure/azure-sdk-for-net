@@ -19,15 +19,16 @@ namespace AzureRedisCache.Tests
             {
                 var _redisCacheManagementHelper = new RedisCacheManagementHelper(this, context);
                 _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
-                var resourceGroupName = TestUtilities.GenerateName("redisCacheRG");
-                var redisCacheName = TestUtilities.GenerateName("sunnyprimary");
-                var location = "westus";
+
+                var resourceGroupName = TestUtilities.GenerateName("RedisReboot");
+                var redisCacheName = TestUtilities.GenerateName("RedisReboot");
+                
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
-                _redisCacheManagementHelper.TryCreateResourceGroup(resourceGroupName, location);
+                _redisCacheManagementHelper.TryCreateResourceGroup(resourceGroupName, RedisCacheManagementHelper.Location);
                 _client.Redis.Create(resourceGroupName, redisCacheName,
                                         parameters: new RedisCreateParameters
                                         {
-                                            Location = location,
+                                            Location = RedisCacheManagementHelper.Location,
                                             Sku = new Sku()
                                             {
                                                 Name = SkuName.Premium,

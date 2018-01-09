@@ -1,96 +1,33 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <Description>Test Project for Automation tests</Description>
-    <VersionPrefix>2.0.0-preview</VersionPrefix>
-    <AssemblyName>Automation.Tests</AssemblyName>
     <PackageId>Automation.Tests</PackageId>
-    <!--<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>-->
-    <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
+    <AssemblyName>Automation.Tests</AssemblyName>
+    <VersionPrefix>3.0.0-preview</VersionPrefix>
+    <Description>Test Project for Automation tests</Description>
   </PropertyGroup>
+  
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
     <TestProjectType>true</TestProjectType>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Automation" Version="2.0.3" />
-    
-    <PackageReference Include="Hyak.Common" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Azure.Common " Version="2.1.3" />
-    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.1.0-preview" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <ProjectReference Include="..\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.WebRequest" />
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-
+  
+  <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
+  </ItemGroup>  
 
-  <ItemGroup>
-    <None Update="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteCredential.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteRunbook.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteSchedule.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteVariable.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteWebhook.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
-  <!--
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ProjectGuid>{62F8139E-0CA4-4234-B5E3-6D2689ED743C}</ProjectGuid>
-    <RootNamespace>Automation.Tests</RootNamespace>
-    <AssemblyName>Automation.Tests</AssemblyName>
-  </PropertyGroup>
-  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
-  <ItemGroup>
-    <Compile Include="Customizations\ResponseWithSkipToken.cs" />
-    <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
-    <Compile Include="Helpers\ResourceGroupHelper.cs" />
-    <Compile Include="Helpers\RunbookDefinition.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Customizations\AutomationManagementClient.Customization.cs" />
-    <Compile Include="ScenarioTests\AutomationTests.cs" />
-    <Compile Include="TestSupport\AutomationTestBase.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteCredential.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteRunbook.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteSchedule.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteVariable.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Management.Automation.Testing.AutomationTest\CanCreateUpdateDeleteWebhook.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup />
-</Project>
--->

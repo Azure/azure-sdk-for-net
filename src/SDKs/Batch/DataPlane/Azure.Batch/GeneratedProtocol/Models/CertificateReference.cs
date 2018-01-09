@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node into which to install the certificate.
         /// </summary>
         /// <remarks>
-        /// The default value is currentUser. This property is applicable only
+        /// The default value is currentuser. This property is applicable only
         /// for pools configured with Windows nodes (that is, created with
         /// cloudServiceConfiguration, or with virtualMachineConfiguration
         /// using a Windows image reference). For Linux compute nodes, the
@@ -110,13 +110,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// access to the private data of the certificate.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// starttask - The user account under which the start task is run.
-        /// task - The accounts under which job tasks are run.
-        /// remoteuser - The accounts under which users remotely access the
-        /// node.
-        ///
         /// You can specify more than one visibility in this collection. The
         /// default is all accounts.
         /// </remarks>

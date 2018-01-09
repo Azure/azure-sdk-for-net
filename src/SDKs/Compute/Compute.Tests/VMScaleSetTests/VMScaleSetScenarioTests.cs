@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -59,7 +60,30 @@ namespace Compute.Tests
             }
         }
 
-        public void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true)
+        /// <summary>
+        /// To record this test case, you need to run it again zone supported regions like eastus2.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones")]
+        public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
+                {
+
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        private void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true, IList<string> zones = null)
         {
             EnsureClientsInitialized(context);
 
@@ -92,14 +116,15 @@ namespace Compute.Tests
                     out inputVMScaleSet,
                     useVmssExtension ? extensionProfile : null,
                     (vmScaleSet) => { vmScaleSet.Overprovision = true; },
-                    createWithManagedDisks: hasManagedDisks);
+                    createWithManagedDisks: hasManagedDisks,
+                    zones: zones);
 
                 ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks);
 
                 var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                 Assert.NotNull(getInstanceViewResponse);
                 ValidateVMScaleSetInstanceView(inputVMScaleSet, getInstanceViewResponse);
-                    
+
                 var listResponse = m_CrpClient.VirtualMachineScaleSets.List(rgName);
                 ValidateVMScaleSet(inputVMScaleSet, listResponse.FirstOrDefault(x => x.Name == vmssName), hasManagedDisks);
 
