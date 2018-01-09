@@ -72,10 +72,9 @@ namespace Microsoft.Rest.Azure
         /// <param name="message">A description of the error.</param>
         /// <param name="requestMessage">The request message.</param>
         /// <param name="responseMessage">The response message.</param>
-        public CloudException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage) : base(message)
+        public CloudException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage, int statusCode) : base(message, requestMessage, responseMessage, statusCode)
         {
-            Request = requestMessage;
-            Response = responseMessage;
+            InitializeDefaultMessageGetter(null);
         }
 
         public override string Message => MessageGetter();

@@ -23,6 +23,6 @@ namespace Microsoft.Rest
         /// <summary>
         /// the status code returned by server
         /// </summary>
-        int StatusCode { get; set; }
+        int ResponseStatusCode { get; set; }
     }
 }

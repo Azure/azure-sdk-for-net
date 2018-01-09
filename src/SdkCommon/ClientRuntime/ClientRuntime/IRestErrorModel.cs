@@ -7,6 +7,6 @@ namespace Microsoft.Rest
 {
     public interface IRestErrorModel
     {
-        void CreateAndThrowException(HttpRequestMessageWrapper reqMessage, HttpResponseMessageWrapper respMessage);
+        void CreateAndThrowException(HttpRequestMessageWrapper reqMessage, HttpResponseMessageWrapper respMessage, int statusCode);
     }
 }

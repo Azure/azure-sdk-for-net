@@ -53,8 +53,21 @@ namespace Microsoft.Rest
         /// <summary>
         /// the status code returned by server
         /// </summary>
-        public int StatusCode { get; set; }
-        
+        public int ResponseStatusCode { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the CloudException class caused by another exception.
+        /// </summary>
+        /// <param name="message">A description of the error.</param>
+        /// <param name="requestMessage">The request message.</param>
+        /// <param name="responseMessage">The response message.</param>
+        public RestException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage, int statusCode) : base(message)
+        {
+            Request = requestMessage;
+            Response = responseMessage;
+            ResponseStatusCode = statusCode;
+        }
+
 #if FullNetFx
         /// <summary>
         /// Initializes a new instance of the RestException class.
