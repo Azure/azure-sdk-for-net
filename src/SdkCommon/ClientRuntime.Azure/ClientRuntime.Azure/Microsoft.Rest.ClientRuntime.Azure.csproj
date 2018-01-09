@@ -25,12 +25,4 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>..\..\ClientRuntime\ClientRuntime\bin\Debug\netstandard1.4\Microsoft.Rest.ClientRuntime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
-  </ItemGroup>
 </Project>
