@@ -92,7 +92,7 @@ namespace Microsoft.Rest.Azure
 
             if (responseWithResource.Body == null)
             {
-                throw new CloudException(Resources.NoBody);
+                throw new CloudLroException(Resources.NoBody);
             }
 
             string responseContent = await responseWithResource.Response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -148,7 +148,7 @@ namespace Microsoft.Rest.Azure
 
             if (asyncOperationResponse.Body == null || asyncOperationResponse.Body.Status == null)
             {
-                throw new CloudException(Resources.NoBody);
+                throw new CloudLroException(Resources.NoBody);
             }
 
             string responseContent = await asyncOperationResponse.Response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -267,7 +267,7 @@ namespace Microsoft.Rest.Azure
                     Message = errorMessage
                 };
 
-                pollingState.CloudException = new CloudException(errorMessage)
+                pollingState.CloudException = new CloudLroException(errorMessage)
                 {
                     Body = asyncOperation?.Error,
                     Request = new HttpRequestMessageWrapper(pollingState.Request, null),
@@ -304,12 +304,12 @@ namespace Microsoft.Rest.Azure
                 }
                 else
                 {
-                    throw new CloudException("The response from long running operation does not have a valid status code.");
+                    throw new CloudLroException("The response from long running operation does not have a valid status code.");
                 }
             }
             else
             {
-                throw new CloudException("The response from long running operation does not have a valid status code.");
+                throw new CloudLroException("The response from long running operation does not have a valid status code.");
             }
 
             return pollingState;

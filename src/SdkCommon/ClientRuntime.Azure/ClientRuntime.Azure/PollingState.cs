@@ -118,7 +118,7 @@ namespace Microsoft.Rest.Azure
             {
                 if (value == null)
                 {
-                    throw new CloudException(Resources.NoProvisioningState);
+                    throw new CloudLroException(Resources.NoProvisioningState);
                 }
                 _status = value;
             }
@@ -285,7 +285,7 @@ namespace Microsoft.Rest.Azure
             {
                 if(_cloudException == null)
                 {
-                    _cloudException = new CloudException(string.Format(CultureInfo.InvariantCulture,
+                    _cloudException = new CloudLroException(string.Format(CultureInfo.InvariantCulture,
                                             Resources.LongRunningOperationFailed, Status))
                     {
                         Body = Error,

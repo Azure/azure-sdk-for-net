@@ -93,7 +93,7 @@ namespace Microsoft.Rest.Azure
             var initialRequestMethod = response.Request.Method;
             if (CheckResponseStatusCodeFailed(response))
             {
-                throw new CloudException(string.Format(
+                throw new CloudLroException(string.Format(
                     Resources.UnexpectedPollingStatus,
                     response.Response.StatusCode,
                     initialRequestMethod));
@@ -123,7 +123,7 @@ namespace Microsoft.Rest.Azure
                 }
                 else
                 {
-                    throw new CloudException("Location header is missing from long running operation.");
+                    throw new CloudLroException("Location header is missing from long running operation.");
                 }
             }
 
@@ -382,7 +382,7 @@ namespace Microsoft.Rest.Azure
 
               if (responseWithResource.Body == null)
               {
-                  throw new CloudException(Resources.NoBody);
+                  throw new CloudLroException(Resources.NoBody);
               }
 
               // In 202 pattern on PUT ProvisioningState may not be present in 
@@ -473,7 +473,7 @@ namespace Microsoft.Rest.Azure
               }
               else
               {
-                  throw new CloudException("The response from long running operation does not have a valid status code.");
+                  throw new CloudLroException("The response from long running operation does not have a valid status code.");
               }
 
               return;
@@ -503,7 +503,7 @@ namespace Microsoft.Rest.Azure
 
               if (asyncOperationResponse.Body == null || asyncOperationResponse.Body.Status == null)
               {
-                  throw new CloudException(Resources.NoBody);
+                  throw new CloudLroException(Resources.NoBody);
               }
 
               pollingState.Status = asyncOperationResponse.Body.Status;
@@ -643,7 +643,7 @@ namespace Microsoft.Rest.Azure
                     // failed to deserialize, return empty body
                 }
 
-                throw new CloudException(string.Format(CultureInfo.InvariantCulture,
+                throw new CloudLroException(string.Format(CultureInfo.InvariantCulture,
                     Resources.LongRunningOperationFailed, statusCode))
                 {
                     Body = errorBody,

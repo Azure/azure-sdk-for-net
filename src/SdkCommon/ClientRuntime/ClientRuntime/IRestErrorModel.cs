@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Rest;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Rest
 {
     public interface IRestErrorModel
     {
-        void CreateAndThrowException(HttpRequestMessageWrapper reqMessage, HttpResponseMessageWrapper respMessage, int statusCode);
+        void CreateAndThrowException(string errorMessage, HttpRequestMessageWrapper request, HttpResponseMessageWrapper response);
     }
 }
