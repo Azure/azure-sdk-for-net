@@ -4,7 +4,7 @@
     <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
     <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation.</Description>
     <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
-    <Version>3.3.10</Version>
+    <Version>3.3.11</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <ReleaseNotes>
@@ -29,5 +29,8 @@
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <HintPath>..\..\ClientRuntime\ClientRuntime\bin\Debug\netstandard1.4\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
   </ItemGroup>
 </Project>

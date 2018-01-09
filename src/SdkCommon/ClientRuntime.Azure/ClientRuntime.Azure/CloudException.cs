@@ -66,6 +66,18 @@ namespace Microsoft.Rest.Azure
             InitializeDefaultMessageGetter(messageGetter);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the CloudException class caused by another exception.
+        /// </summary>
+        /// <param name="message">A description of the error.</param>
+        /// <param name="requestMessage">The request message.</param>
+        /// <param name="responseMessage">The response message.</param>
+        public CloudException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage) : base(message)
+        {
+            Request = requestMessage;
+            Response = responseMessage;
+        }
+
         public override string Message => MessageGetter();
 
         private void InitializeDefaultMessageGetter(ExceptionMessageGetter messageGetter)
