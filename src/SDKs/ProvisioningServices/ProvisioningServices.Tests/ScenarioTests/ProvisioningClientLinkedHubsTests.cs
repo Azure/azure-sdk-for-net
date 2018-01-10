@@ -28,7 +28,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                     resourceGroup.Name,
                     iotHub.Name);
                 var key = keys.FirstOrDefault(x => x.Rights.HasFlag(AccessRights.ServiceConnect));
-                var connectionString = $"HostName={iotHub.Name};SharedAccessKeyName={key.KeyName};SharedAccessKey={key.PrimaryKey}";
+                var connectionString = $"HostName={iotHub.Name}.azure-devices.net;SharedAccessKeyName={key.KeyName};SharedAccessKey={key.PrimaryKey}";
                 testedService.Properties.IotHubs =
                     testedService.Properties.IotHubs ?? new List<IotHubDefinitionDescription>(1);
 
@@ -37,7 +37,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                     this.provisioningClient.IotDpsResource.CreateOrUpdate(resourceGroup.Name, testName,
                     testedService);
 
-                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.ConnectionString.StartsWith($"HostName={iotHub.Name};"));
+                var returnedHub = updatedInstance.Properties.IotHubs.FirstOrDefault(x => x.ConnectionString.StartsWith($"HostName={iotHub.Name}.azure-devices.net;"));
                 Assert.NotNull(returnedHub);
                 connectionString = returnedHub.ConnectionString;
 

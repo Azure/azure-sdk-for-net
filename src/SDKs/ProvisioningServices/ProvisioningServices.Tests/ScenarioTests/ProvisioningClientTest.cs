@@ -55,7 +55,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                 //verify item exists in list by resource group
                 var existingServices =
                     this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
-                Assert.Contains(existingServices.Value, x => x.Name == testName);
+                Assert.Contains(existingServices, x => x.Name == testName);
 
                 //verify can find
                 var foundInstance = this.provisioningClient.IotDpsResource.Get(testName, testName);
@@ -82,7 +82,7 @@ namespace ProvisioningServices.Tests.ScenarioTests
                     this.provisioningClient.IotDpsResource.ListByResourceGroup(testName);
 
                 //As long as it is gone or deleting, we're good
-                Assert.DoesNotContain(existingServices.Value, x => x.Name == testName && x.Properties.State != "Deleting");
+                Assert.DoesNotContain(existingServices, x => x.Name == testName && x.Properties.State != "Deleting");
             }
         }
 

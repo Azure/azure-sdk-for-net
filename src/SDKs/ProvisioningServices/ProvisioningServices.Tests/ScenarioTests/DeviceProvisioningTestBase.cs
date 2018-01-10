@@ -30,7 +30,6 @@ namespace ProvisioningServices.Tests.ScenarioTests
                         testEnv = TestEnvironmentFactory.GetTestEnvironment();
                         resourcesClient = GetClient<ResourceManagementClient>(context);
                         provisioningClient = GetClient<IotDpsClient>(context);
-                        provisioningClient.ApiVersion = Constants.ApiVersion;
                     }
                     initialized = true;
                 }
