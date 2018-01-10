@@ -10,19 +10,5 @@ namespace Microsoft.Rest
 {
     public interface IRestException
     {
-        /// <summary>
-        /// Gets information about the associated HTTP request.
-        /// </summary>
-        HttpRequestMessageWrapper Request { get; set; }
-
-        /// <summary>
-        /// Gets information about the associated HTTP response.
-        /// </summary>
-        HttpResponseMessageWrapper Response { get; set; }
-
-        /// <summary>
-        /// the status code returned by server
-        /// </summary>
-        int ResponseStatusCode { get; set; }
     }
 }

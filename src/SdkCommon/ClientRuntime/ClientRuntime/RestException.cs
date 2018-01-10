@@ -12,7 +12,7 @@ namespace Microsoft.Rest
 #if FullNetFx
     [Serializable]
 #endif
-    public class RestException : Exception, IRestException
+    public class RestException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the RestException class.
@@ -53,7 +53,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// the status code returned by server
         /// </summary>
-        public int ResponseStatusCode { get; set; }
+        //public int ResponseStatusCode { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the CloudException class caused by another exception.
@@ -65,7 +65,7 @@ namespace Microsoft.Rest
         {
             Request = requestMessage;
             Response = responseMessage;
-            ResponseStatusCode = statusCode;
+            //ResponseStatusCode = statusCode;
         }
 
 #if FullNetFx

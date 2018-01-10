@@ -41,7 +41,7 @@ namespace Microsoft.Rest
         {
             Request = requestMessage;
             Response = responseMessage;
-            ResponseStatusCode = statusCode;
+            //sResponseStatusCode = statusCode;
         }
 
         public V Body { get; private set; }
@@ -59,7 +59,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// the status code returned by server
         /// </summary>
-        public int ResponseStatusCode { get; set; }
+        //public int ResponseStatusCode => (int)Response?.StatusCode;
 
         public virtual void SetErrorModel(V model)
         {
