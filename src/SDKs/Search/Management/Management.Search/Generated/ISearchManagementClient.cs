@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Search
 
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IAdminKeysOperations.
         /// </summary>
         IAdminKeysOperations AdminKeys { get; }

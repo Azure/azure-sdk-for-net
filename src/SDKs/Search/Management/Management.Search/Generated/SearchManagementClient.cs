@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.Search
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IAdminKeysOperations.
         /// </summary>
         public virtual IAdminKeysOperations AdminKeys { get; private set; }
@@ -290,6 +295,7 @@ namespace Microsoft.Azure.Management.Search
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             AdminKeys = new AdminKeysOperations(this);
             QueryKeys = new QueryKeysOperations(this);
             Services = new ServicesOperations(this);

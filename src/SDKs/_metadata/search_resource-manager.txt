@@ -1,9 +1,9 @@
-2018-01-09 22:16:53 UTC
+2018-01-09 22:38:00 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: brjohnstmsft
 Branch:      update-search-mgmt-spec
-Commit:      84385fa1e6ada986582b2381660f737fd6fa9dc8
+Commit:      6a31c5b2391c99143fb762d48d4ebc5120df358d
 
 2) AutoRest information
 Requested version: latest
