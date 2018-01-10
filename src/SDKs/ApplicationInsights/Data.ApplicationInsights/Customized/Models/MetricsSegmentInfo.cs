@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.ApplicationInsights.Models
 {
-    public partial class MetricsSegmentInfo : BaseMetricInfo
+    public partial class MetricsSegmentInfo : BaseSegmentInfo
     {
         internal override IDictionary<string, object> GetAdditionalProperties()
         {

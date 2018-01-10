@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.ApplicationInsights.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// 'availabilityResults/availabilityPercentage',
         /// 'availabilityResults/duration', 'billing/telemetryCount',
         /// 'customEvents/count'</param>
-        public MetricsPostBodySchemaParameters(string metricId = default(string), string timespan = default(string), IList<string> aggregation = default(IList<string>), string interval = default(string), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string))
+        public MetricsPostBodySchemaParameters(string metricId, string timespan = default(string), IList<string> aggregation = default(IList<string>), string interval = default(string), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string))
         {
             MetricId = metricId;
             Timespan = timespan;
@@ -131,5 +132,18 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         [JsonProperty(PropertyName = "filter")]
         public string Filter { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MetricId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MetricId");
+            }
+        }
     }
 }

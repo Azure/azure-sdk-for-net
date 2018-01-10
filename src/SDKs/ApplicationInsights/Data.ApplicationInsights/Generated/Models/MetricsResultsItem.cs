@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.ApplicationInsights.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <param name="status">The HTTP status code of this metric
         /// query.</param>
         /// <param name="body">The results of this metric query.</param>
-        public MetricsResultsItem(string id = default(string), int? status = default(int?), MetricsResult body = default(MetricsResult))
+        public MetricsResultsItem(string id, int status, MetricsResult body)
         {
             Id = id;
             Status = status;
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the HTTP status code of this metric query.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public int? Status { get; set; }
+        public int Status { get; set; }
 
         /// <summary>
         /// Gets or sets the results of this metric query.
@@ -61,5 +62,22 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         [JsonProperty(PropertyName = "body")]
         public MetricsResult Body { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (Body == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Body");
+            }
+        }
     }
 }

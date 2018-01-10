@@ -332,11 +332,10 @@ namespace Microsoft.Azure.ApplicationInsights
         /// the response.
         /// </param>
         /// <param name='aggregation'>
-        /// The timespan over which to retrieve metric values. This is an ISO8601 time
-        /// period value. If timespan is omitted, a default time range of `PT12H`
-        /// ("last 12 hours") is used. The actual timespan that is queried may be
-        /// adjusted by the server based. In all cases, the actual time span used for
-        /// the query is included in the response.
+        /// The aggregation to use when computing the metric values. To retrieve more
+        /// than one aggregation at a time, separate them with a comma. If no
+        /// aggregation is specified, then the default aggregation for the metric is
+        /// used.
         /// </param>
         /// <param name='segment'>
         /// The name of the dimension to segment the metric values by. This dimension
@@ -379,7 +378,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, string timespan = "PT12H", string interval = default(string), string aggregation = "PT12H", IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, string timespan = "PT12H", string interval = default(string), IList<string> aggregation = default(IList<string>), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
@@ -388,6 +387,13 @@ namespace Microsoft.Azure.ApplicationInsights
             if (metricId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "metricId");
+            }
+            if (aggregation != null)
+            {
+                if (aggregation.Count < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "aggregation", 1);
+                }
             }
             if (segment != null)
             {
@@ -430,7 +436,7 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             if (aggregation != null)
             {
-                _queryParameters.Add(string.Format("aggregation={0}", System.Uri.EscapeDataString(aggregation)));
+                _queryParameters.Add(string.Format("aggregation={0}", System.Uri.EscapeDataString(string.Join(",", aggregation))));
             }
             if (segment != null)
             {

@@ -103,12 +103,10 @@ namespace Microsoft.Azure.ApplicationInsights
         /// used for the query is included in the response.
         /// </param>
         /// <param name='aggregation'>
-        /// The timespan over which to retrieve metric values. This is an
-        /// ISO8601 time period value. If timespan is omitted, a default time
-        /// range of `PT12H` ("last 12 hours") is used. The actual timespan
-        /// that is queried may be adjusted by the server based. In all cases,
-        /// the actual time span used for the query is included in the
-        /// response.
+        /// The aggregation to use when computing the metric values. To
+        /// retrieve more than one aggregation at a time, separate them with a
+        /// comma. If no aggregation is specified, then the default aggregation
+        /// for the metric is used.
         /// </param>
         /// <param name='segment'>
         /// The name of the dimension to segment the metric values by. This
@@ -136,7 +134,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, string timespan = "PT12H", string interval = default(string), string aggregation = "PT12H", IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, string timespan = "PT12H", string interval = default(string), IList<string> aggregation = default(IList<string>), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Retrieve metric data

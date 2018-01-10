@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.ApplicationInsights.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,8 +31,10 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// Initializes a new instance of the EventsResult class.
         /// </summary>
-        public EventsResult(EventsResultData value = default(EventsResultData))
+        /// <param name="aimessages">OData messages for this response.</param>
+        public EventsResult(IList<ErrorInfo> aimessages = default(IList<ErrorInfo>), EventsResultData value = default(EventsResultData))
         {
+            Aimessages = aimessages;
             Value = value;
             CustomInit();
         }
@@ -39,6 +43,12 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets oData messages for this response.
+        /// </summary>
+        [JsonProperty(PropertyName = "@ai.messages")]
+        public IList<ErrorInfo> Aimessages { get; set; }
 
         /// <summary>
         /// </summary>

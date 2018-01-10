@@ -8,27 +8,19 @@ namespace Microsoft.Azure.ApplicationInsights.Models
     {
         internal abstract IDictionary<string, object> GetAdditionalProperties();
 
-        public string MetricId { get; private set; }
+        public string MetricId { get; private set; } = null;
         public Dictionary<string, float> MetricValues { get; set; } = new Dictionary<string, float>();
 
-        public string SegmentId { get; private set; }
-        public string SegmentValue { get; private set; }
-
         [OnDeserialized]
-        internal void InitFields(StreamingContext context)
+        internal void InitMetricFields(StreamingContext context)
         {
             var additionalProperties = GetAdditionalProperties();
 
-            if (additionalProperties != null)
+            if (additionalProperties != null && additionalProperties.Count == 1)
             {
                 foreach (var additionalProp in additionalProperties)
                 {
-                    if (additionalProp.Value is string)
-                    {
-                        SegmentId = additionalProp.Key;
-                        SegmentValue = additionalProp.Value as string;
-                    }
-                    else if (additionalProp.Value is object)
+                    if (additionalProp.Value is object)
                     {
                         var dict = additionalProp.Value as JObject;
                         if (dict == null) continue;
@@ -41,6 +33,51 @@ namespace Microsoft.Azure.ApplicationInsights.Models
                         }
                     }
                 }
+            }
+        }
+
+        private float? GetAggregatedValue(string aggregation)
+        {
+            if (MetricValues.TryGetValue(aggregation, out var value))
+            {
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public float? GetSum()
+        {
+            return GetAggregatedValue("sum");
+        }
+
+        public float? GetAverage()
+        {
+            return GetAggregatedValue("average");
+        }
+
+        public float? GetMin()
+        {
+            return GetAggregatedValue("min");
+        }
+
+        public float? GetMax()
+        {
+            return GetAggregatedValue("max");
+        }
+
+        public int? GetCount()
+        {
+            var count = GetAggregatedValue("count");
+            if (count != null)
+            {
+                return (int) count;
+            }
+            else
+            {
+                return null;
             }
         }
     }

@@ -78,6 +78,10 @@ namespace Microsoft.Azure.ApplicationInsights.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Parameters");
             }
+            if (Parameters != null)
+            {
+                Parameters.Validate();
+            }
         }
     }
 }
