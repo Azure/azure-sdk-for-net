@@ -54,7 +54,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// [Azure Hybrid Use Benefit for Windows
         /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string))
+        /// <param name="priority">Specifies the priority for the virtual
+        /// machines in the scale set. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2017-10-30-preview. Possible values include: 'Regular',
+        /// 'Low'</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -62,6 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiagnosticsProfile = diagnosticsProfile;
             ExtensionProfile = extensionProfile;
             LicenseType = licenseType;
+            Priority = priority;
             CustomInit();
         }
 
@@ -123,6 +128,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
         public string LicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the priority for the virtual machines in the
+        /// scale set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2017-10-30-preview. Possible values include: 'Regular', 'Low'
+        /// </summary>
+        [JsonProperty(PropertyName = "priority")]
+        public string Priority { get; set; }
 
         /// <summary>
         /// Validate the object.
