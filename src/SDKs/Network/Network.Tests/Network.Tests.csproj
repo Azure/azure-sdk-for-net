@@ -39,5 +39,6 @@
   <ItemGroup>
     <Folder Include="SessionRecords\Network.Tests.Tests.AvailableProvidersListTests\" />
     <Folder Include="SessionRecords\Network.Tests.Tests.AzureReachabilityReportTests\" />
+    <Folder Include="SessionRecords\Network.Tests.Tests.ConnectionMonitorTests\" />
   </ItemGroup>
 </Project>
