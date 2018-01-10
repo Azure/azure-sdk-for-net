@@ -24,7 +24,7 @@ namespace DataLakeAnalytics.Tests
                 commonData = new CommonTestFixture(context, true);
                 var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
                 
-                // Ensure the account doesn't exist and that the account name is not available
+                // Ensure the account doesn't exist and that the account name is available
                 Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
 
                 var checkNameParam = new CheckNameAvailabilityParameters
