@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSqlDatabaseLinkedService(SecureString connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
+        public AzureSqlDatabaseLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             ConnectionString = connectionString;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the connection string.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecureString ConnectionString { get; set; }
+        public SecretBase ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -85,10 +85,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConnectionString == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
-            }
-            if (ConnectionString != null)
-            {
-                ConnectionString.Validate();
             }
         }
     }

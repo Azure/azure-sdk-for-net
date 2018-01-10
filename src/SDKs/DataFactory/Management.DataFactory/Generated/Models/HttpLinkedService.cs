@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="enableServerCertificateValidation">If true, validate
         /// the HTTPS server SSL certificate. Default value is true. Type:
         /// boolean (or Expression with resultType boolean).</param>
-        public HttpLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object embeddedCertData = default(object), object certThumbprint = default(object), object encryptedCredential = default(object), object enableServerCertificateValidation = default(object))
+        public HttpLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object embeddedCertData = default(object), object certThumbprint = default(object), object encryptedCredential = default(object), object enableServerCertificateValidation = default(object))
             : base(additionalProperties, connectVia, description)
         {
             Url = url;
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ClientCertificate with EmbeddedCertData authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets base64 encoded certificate data for ClientCertificate
@@ -165,10 +165,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Url");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }
