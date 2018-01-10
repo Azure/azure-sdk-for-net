@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System;
 using System.Runtime.Serialization;
 namespace Microsoft.Rest
@@ -7,7 +8,7 @@ namespace Microsoft.Rest
 #if FullNetFx
     [Serializable]
 #endif
-    public class RestException<V> : System.Exception, IRestException
+    public class RestException<T> : RestExceptionBase
     {
         
         /// <summary>
@@ -37,14 +38,13 @@ namespace Microsoft.Rest
         /// <param name="message">A description of the error.</param>
         /// <param name="requestMessage">The request message.</param>
         /// <param name="responseMessage">The response message.</param>
-        public RestException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage, int statusCode) : base(message)
+        public RestException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage) : base(message)
         {
             Request = requestMessage;
             Response = responseMessage;
-            //sResponseStatusCode = statusCode;
         }
 
-        public V Body { get; private set; }
+        public T ErrorBody { get; set; }
         
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -55,17 +55,7 @@ namespace Microsoft.Rest
         /// Gets information about the associated HTTP response.
         /// </summary>
         public HttpResponseMessageWrapper Response { get; set; }
-
-        /// <summary>
-        /// the status code returned by server
-        /// </summary>
-        //public int ResponseStatusCode => (int)Response?.StatusCode;
-
-        public virtual void SetErrorModel(V model)
-        {
-            Body = model;
-        }
-
+        
 #if FullNetFx
         /// <summary>
         /// Initializes a new instance of the RestException class.
