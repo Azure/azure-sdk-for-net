@@ -1,6 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  
+  <PropertyGroup>
+	<PackageId>Microsoft.Azure.Management.Automation</PackageId>
+    <description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</description>
+	<VersionPrefix>3.0.0-preview</VersionPrefix>
+    <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
+	<AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>    
+    <PackageTags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</PackageTags>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <Compile Remove="toKeep\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="toKeep\**" />
+    <None Remove="bin\**" />
+    <None Remove="toKeep\**" />
+  </ItemGroup>
+  
   <!-- Please do not move/edit code below this line -->
 
   <PropertyGroup>
