@@ -25,7 +25,7 @@ namespace DataLakeStore.Tests
                 commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
 
-                // Ensure that the account name is not available
+                // Ensure that the account name is available
                 var checkNameParam = new CheckNameAvailabilityParameters
                 {
                     Name = commonData.DataLakeStoreAccountName

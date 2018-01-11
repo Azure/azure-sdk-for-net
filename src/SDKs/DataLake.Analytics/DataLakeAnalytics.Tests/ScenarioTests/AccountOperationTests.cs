@@ -24,7 +24,7 @@ namespace DataLakeAnalytics.Tests
                 commonData = new CommonTestFixture(context, true);
                 var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
                 
-                // Ensure the account doesn't exist and that the account name is not available
+                // Ensure that the account doesn't exist and that the account name is available
                 Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
 
                 var checkNameParam = new CheckNameAvailabilityParameters
@@ -58,7 +58,7 @@ namespace DataLakeAnalytics.Tests
                             NewTier = TierType.Commitment100AUHours
                         });
 
-                // Verify the account exists and that the account name is no longer available
+                // Verify that the account exists and that the account name is no longer available
                 Assert.True(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
 
                 responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);

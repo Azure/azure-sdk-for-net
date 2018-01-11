@@ -4,7 +4,7 @@
 
 **Breaking changes**
 
-- Changed the `ODataQuery` parameter type from `DataLakeAnalyticsAccount` to `DataLakeAnalyticsAccountBasic` for these APIs:
+- Changed the `ODataQuery` parameter type from `DataLakeStoreAccount` to `DataLakeStoreAccountBasic` for these APIs:
     - Account_List
     - Account_ListByResourceGroup
 
