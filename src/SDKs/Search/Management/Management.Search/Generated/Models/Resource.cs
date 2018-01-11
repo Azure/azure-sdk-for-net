@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The geographic location of the resource.
         /// This must be one of the supported and registered Azure Geo Regions
-        /// (for example, West US, East US, Southeast Asia, and so
-        /// forth).</param>
+        /// (for example, West US, East US, Southeast Asia, and so forth). This
+        /// property is required when creating a new resource.</param>
         /// <param name="tags">Tags to help categorize the resource in the
         /// Azure portal.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
@@ -80,7 +80,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Gets or sets the geographic location of the resource. This must be
         /// one of the supported and registered Azure Geo Regions (for example,
-        /// West US, East US, Southeast Asia, and so forth).
+        /// West US, East US, Southeast Asia, and so forth). This property is
+        /// required when creating a new resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

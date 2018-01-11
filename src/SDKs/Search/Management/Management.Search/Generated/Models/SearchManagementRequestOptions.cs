@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// request. If specified, this will be included in response
         /// information as a way to track the request.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.Guid? ClientRequestId { get; set; }
 
     }

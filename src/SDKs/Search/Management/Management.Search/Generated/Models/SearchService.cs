@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The geographic location of the resource.
         /// This must be one of the supported and registered Azure Geo Regions
-        /// (for example, West US, East US, Southeast Asia, and so
-        /// forth).</param>
+        /// (for example, West US, East US, Southeast Asia, and so forth). This
+        /// property is required when creating a new resource.</param>
         /// <param name="tags">Tags to help categorize the resource in the
         /// Azure portal.</param>
         /// <param name="replicaCount">The number of replicas in the Search
@@ -91,7 +91,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// uses capacity that is already set up. Possible values include:
         /// 'succeeded', 'provisioning', 'failed'</param>
         /// <param name="sku">The SKU of the Search Service, which determines
-        /// price tier and capacity limits.</param>
+        /// price tier and capacity limits. This property is required when
+        /// creating a new Search Service.</param>
         public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), Sku sku = default(Sku))
             : base(id, name, type, location, tags)
         {
@@ -185,7 +186,8 @@ namespace Microsoft.Azure.Management.Search.Models
 
         /// <summary>
         /// Gets or sets the SKU of the Search Service, which determines price
-        /// tier and capacity limits.
+        /// tier and capacity limits. This property is required when creating a
+        /// new Search Service.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
