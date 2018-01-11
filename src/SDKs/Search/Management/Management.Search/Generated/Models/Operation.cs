@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an API key for a given Azure Search service that has
-    /// permissions for query operations only.
+    /// Describes a REST API operation.
     /// </summary>
-    public partial class QueryKey
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the QueryKey class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public QueryKey()
+        public Operation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryKey class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">The name of the query API key; may be
-        /// empty.</param>
-        /// <param name="key">The value of the query API key.</param>
-        public QueryKey(string name = default(string), string key = default(string))
+        /// <param name="name">The name of the operation. This name is of the
+        /// form {provider}/{resource}/{operation}.</param>
+        /// <param name="display">The object that describes the
+        /// operation.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
-            Key = key;
+            Display = display;
             CustomInit();
         }
 
@@ -46,16 +46,17 @@ namespace Microsoft.Azure.Management.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name of the query API key; may be empty.
+        /// Gets the name of the operation. This name is of the form
+        /// {provider}/{resource}/{operation}.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the value of the query API key.
+        /// Gets the object that describes the operation.
         /// </summary>
-        [JsonProperty(PropertyName = "key")]
-        public string Key { get; private set; }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; private set; }
 
     }
 }
