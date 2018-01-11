@@ -20,6 +20,6 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// The segments of data
         /// </summary>
-        public IList<MetricsBaseSegmentInfo> Segments { get; internal set; }
+        public IList<IMetricsBaseSegmentInfo> Segments { get; internal set; }
     }
 }

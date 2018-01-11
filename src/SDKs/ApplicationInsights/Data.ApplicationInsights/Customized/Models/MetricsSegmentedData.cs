@@ -3,8 +3,18 @@
     /// <summary>
     /// The metric values for a segment.
     /// </summary>
-    public class MetricsSegmentedData : MetricsBaseSegmentInfo
+    public class MetricsSegmentedData : IMetricsBaseSegmentInfo, IMetricData
     {
+        /// <summary>
+        /// The name of the segment.
+        /// </summary>
+        public string SegmentId { get; internal set; }
+
+        /// <summary>
+        /// The value of the segment.
+        /// </summary>
+        public string SegmentValue { get; internal set; }
+
         /// <summary>
         /// Gets sum of the metric (if requested).
         /// </summary>

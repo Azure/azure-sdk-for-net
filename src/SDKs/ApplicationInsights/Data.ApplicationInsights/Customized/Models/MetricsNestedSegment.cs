@@ -5,11 +5,21 @@ namespace Microsoft.Azure.ApplicationInsights.Models
     /// <summary>
     /// A nested segment.
     /// </summary>
-    public class MetricsNestedSegment : MetricsBaseSegmentInfo
+    public class MetricsNestedSegment : IMetricsBaseSegmentInfo
     {
+        /// <summary>
+        /// The name of the segment.
+        /// </summary>
+        public string SegmentId { get; internal set; }
+
+        /// <summary>
+        /// The value of the segment.
+        /// </summary>
+        public string SegmentValue { get; internal set; }
+
         /// <summary>
         /// The segments of data
         /// </summary>
-        public IList<MetricsBaseSegmentInfo> Segments { get; internal set; }
+        public IList<IMetricsBaseSegmentInfo> Segments { get; internal set; }
     }
 }

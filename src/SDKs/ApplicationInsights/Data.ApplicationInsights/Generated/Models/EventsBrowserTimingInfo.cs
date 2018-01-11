@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// load</param>
         /// <param name="processingDuration">The processing duration of the
         /// load</param>
-        public EventsBrowserTimingInfo(string urlPath = default(string), string urlHost = default(string), string name = default(string), string url = default(string), int? totalDuration = default(int?), string performanceBucket = default(string), int? networkDuration = default(int?), int? sendDuration = default(int?), int? receiveDuration = default(int?), int? processingDuration = default(int?))
+        public EventsBrowserTimingInfo(string urlPath = default(string), string urlHost = default(string), string name = default(string), string url = default(string), long? totalDuration = default(long?), string performanceBucket = default(string), long? networkDuration = default(long?), long? sendDuration = default(long?), long? receiveDuration = default(long?), long? processingDuration = default(long?))
         {
             UrlPath = urlPath;
             UrlHost = urlHost;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the total duration of the load
         /// </summary>
         [JsonProperty(PropertyName = "totalDuration")]
-        public int? TotalDuration { get; set; }
+        public long? TotalDuration { get; set; }
 
         /// <summary>
         /// Gets or sets the performance bucket of the load
@@ -103,25 +103,25 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the network duration of the load
         /// </summary>
         [JsonProperty(PropertyName = "networkDuration")]
-        public int? NetworkDuration { get; set; }
+        public long? NetworkDuration { get; set; }
 
         /// <summary>
         /// Gets or sets the send duration of the load
         /// </summary>
         [JsonProperty(PropertyName = "sendDuration")]
-        public int? SendDuration { get; set; }
+        public long? SendDuration { get; set; }
 
         /// <summary>
         /// Gets or sets the receive duration of the load
         /// </summary>
         [JsonProperty(PropertyName = "receiveDuration")]
-        public int? ReceiveDuration { get; set; }
+        public long? ReceiveDuration { get; set; }
 
         /// <summary>
         /// Gets or sets the processing duration of the load
         /// </summary>
         [JsonProperty(PropertyName = "processingDuration")]
-        public int? ProcessingDuration { get; set; }
+        public long? ProcessingDuration { get; set; }
 
     }
 }

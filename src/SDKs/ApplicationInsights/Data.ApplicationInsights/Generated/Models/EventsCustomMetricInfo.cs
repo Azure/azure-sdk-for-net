@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// metric</param>
         /// <param name="valueStdDev">The standard deviation of the custom
         /// metric</param>
-        public EventsCustomMetricInfo(string name = default(string), int? value = default(int?), int? valueSum = default(int?), int? valueCount = default(int?), int? valueMin = default(int?), int? valueMax = default(int?), int? valueStdDev = default(int?))
+        public EventsCustomMetricInfo(string name = default(string), double? value = default(double?), double? valueSum = default(double?), double? valueCount = default(double?), double? valueMin = default(double?), double? valueMax = default(double?), double? valueStdDev = default(double?))
         {
             Name = name;
             Value = value;
@@ -66,37 +66,37 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the value of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public int? Value { get; set; }
+        public double? Value { get; set; }
 
         /// <summary>
         /// Gets or sets the sum of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "valueSum")]
-        public int? ValueSum { get; set; }
+        public double? ValueSum { get; set; }
 
         /// <summary>
         /// Gets or sets the count of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "valueCount")]
-        public int? ValueCount { get; set; }
+        public double? ValueCount { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum value of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "valueMin")]
-        public int? ValueMin { get; set; }
+        public double? ValueMin { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum value of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "valueMax")]
-        public int? ValueMax { get; set; }
+        public double? ValueMax { get; set; }
 
         /// <summary>
         /// Gets or sets the standard deviation of the custom metric
         /// </summary>
         [JsonProperty(PropertyName = "valueStdDev")]
-        public int? ValueStdDev { get; set; }
+        public double? ValueStdDev { get; set; }
 
     }
 }

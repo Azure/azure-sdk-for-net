@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <param name="type">The type of the dependency</param>
         /// <param name="name">The name of the dependency</param>
         /// <param name="id">The ID of the dependency</param>
-        public EventsDependencyInfo(string target = default(string), string data = default(string), string success = default(string), int? duration = default(int?), string performanceBucket = default(string), string resultCode = default(string), string type = default(string), string name = default(string), string id = default(string))
+        public EventsDependencyInfo(string target = default(string), string data = default(string), string success = default(string), long? duration = default(long?), string performanceBucket = default(string), string resultCode = default(string), string type = default(string), string name = default(string), string id = default(string))
         {
             Target = target;
             Data = data;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the duration of the dependency
         /// </summary>
         [JsonProperty(PropertyName = "duration")]
-        public int? Duration { get; set; }
+        public long? Duration { get; set; }
 
         /// <summary>
         /// Gets or sets the performance bucket of the dependency

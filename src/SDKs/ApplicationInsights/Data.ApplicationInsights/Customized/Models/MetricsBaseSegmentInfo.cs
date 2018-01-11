@@ -3,16 +3,16 @@
     /// <summary>
     /// Contains fields common between nested segmented data and segmented metric data.
     /// </summary>
-    public class MetricsBaseSegmentInfo
+    public interface IMetricsBaseSegmentInfo
     {
         /// <summary>
         /// The name of the segment.
         /// </summary>
-        public string SegmentId { get; internal set; }
+        string SegmentId { get; }
 
         /// <summary>
         /// The value of the segment.
         /// </summary>
-        public string SegmentValue { get; internal set; }
+        string SegmentValue { get; }
     }
 }

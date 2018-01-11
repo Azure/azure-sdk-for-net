@@ -3,7 +3,7 @@
     /// <summary>
     /// A metric summary result.
     /// </summary>
-    public class MetricsSummaryResult
+    public class MetricsSummaryResult : IMetricData
     {
         /// <summary>
         /// Gets start time of the metric.

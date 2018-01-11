@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <param name="method">The method of the stack entry</param>
         /// <param name="level">The level of the stack entry</param>
         /// <param name="line">The line of the stack entry</param>
-        public EventsExceptionDetailsParsedStack(string assembly = default(string), string method = default(string), int? level = default(int?), int? line = default(int?))
+        public EventsExceptionDetailsParsedStack(string assembly = default(string), string method = default(string), long? level = default(long?), long? line = default(long?))
         {
             Assembly = assembly;
             Method = method;
@@ -65,13 +65,13 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the level of the stack entry
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public int? Level { get; set; }
+        public long? Level { get; set; }
 
         /// <summary>
         /// Gets or sets the line of the stack entry
         /// </summary>
         [JsonProperty(PropertyName = "line")]
-        public int? Line { get; set; }
+        public long? Line { get; set; }
 
     }
 }

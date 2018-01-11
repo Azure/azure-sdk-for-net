@@ -3,7 +3,7 @@
     /// <summary>
     /// An intervaled metric result data.
     /// </summary>
-    public class MetricsIntervaledData
+    public class MetricsIntervaledData : IMetricData
     {
         /// <summary>
         /// Gets start time of the metric.

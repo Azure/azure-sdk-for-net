@@ -334,11 +334,11 @@ namespace Microsoft.Azure.ApplicationInsights
             };
         }
 
-        private static IList<MetricsBaseSegmentInfo> GetSegmentInfo(IList<MetricsSegmentInfo> segments)
+        private static IList<IMetricsBaseSegmentInfo> GetSegmentInfo(IList<MetricsSegmentInfo> segments)
         {
             return segments?.Select(seg =>
             {
-                MetricsBaseSegmentInfo result;
+                IMetricsBaseSegmentInfo result;
                 if (seg.Segments != null && seg.Segments.Count != 0)
                 {
                     result = new MetricsNestedSegment()

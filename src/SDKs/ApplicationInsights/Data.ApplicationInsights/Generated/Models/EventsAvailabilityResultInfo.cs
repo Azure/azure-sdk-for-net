@@ -44,7 +44,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// result</param>
         /// <param name="id">The ID of the availability result</param>
         /// <param name="size">The size of the availability result</param>
-        public EventsAvailabilityResultInfo(string name = default(string), string success = default(string), int? duration = default(int?), string performanceBucket = default(string), string message = default(string), string location = default(string), string id = default(string), string size = default(string))
+        public EventsAvailabilityResultInfo(string name = default(string), string success = default(string), long? duration = default(long?), string performanceBucket = default(string), string message = default(string), string location = default(string), string id = default(string), string size = default(string))
         {
             Name = name;
             Success = success;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the duration of the availability result
         /// </summary>
         [JsonProperty(PropertyName = "duration")]
-        public int? Duration { get; set; }
+        public long? Duration { get; set; }
 
         /// <summary>
         /// Gets or sets the performance bucket of the availability result

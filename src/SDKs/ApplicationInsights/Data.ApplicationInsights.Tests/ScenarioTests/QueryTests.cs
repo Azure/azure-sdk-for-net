@@ -79,7 +79,7 @@ namespace Data.ApplicationInsights.Tests
                 {
                     Assert.Equal(System.Net.HttpStatusCode.GatewayTimeout, e.Response.StatusCode);
                     Assert.Equal("GatewayTimeout", e.Body.Error.Code);
-                    Assert.Equal("ServiceError", e.Body.Error.Innererror.Code);
+                    Assert.Equal("GatewayTimeout", e.Body.Error.Innererror.Code);
                 }
                 catch (Exception e)
                 {

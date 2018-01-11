@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/v1/apps/DEMO_APP/metrics/requests%2Fduration?timespan=PT12H&aggregation=avg&segment=request%2Fname%2Crequest%2FresultCode",
+      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvbWV0cmljcy9yZXF1ZXN0cyUyRmR1cmF0aW9uP3RpbWVzcGFuPVBUMTJIJmFnZ3JlZ2F0aW9uPWF2ZyZzZWdtZW50PXJlcXVlc3QlMkZuYW1lJTJDcmVxdWVzdCUyRnJlc3VsdENvZGU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-api-key": [
+          "DEMO_KEY"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+        ],
+        "prefer": [
+          "response-v1=true"
+        ],
+        "x-ms-app": [
+          "csharpsdk"
+        ],
+        "x-ms-client-request-id": [
+          "31181874-61c5-45f8-9d0d-7e65de5f3829"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-01-11T06:45:15.176Z\",\r\n    \"end\": \"2018-01-11T18:45:15.176Z\",\r\n    \"segments\": [\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/GetLogEntries\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 5983.14\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Customers/Delete\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1429.27\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Employees/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1286.05\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Customers/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1024.09\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Reports/Employees\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 734.66\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Home/Index\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 727.26\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/Create\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 675.5\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"HEAD Home/Index\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 605.51\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Reports/Tickets\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 563.46\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 410.08\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Date": [
+          "Thu, 11 Jan 2018 18:45:15 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Via": [
+          "1.1 draft-ai-green.71239b29-f6e2-11e7-81e8-70b3d5800002"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "Vary": [
+          "Accept",
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Retry-After,Age,WWW-Authenticate"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

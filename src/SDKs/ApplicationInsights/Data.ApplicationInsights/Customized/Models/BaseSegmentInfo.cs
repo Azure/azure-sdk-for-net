@@ -19,7 +19,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         {
             var additionalProperties = GetAdditionalProperties();
 
-            if (additionalProperties != null && additionalProperties.Count == 1)
+            if (additionalProperties != null)
             {
                 foreach (var additionalProp in additionalProperties)
                 {
