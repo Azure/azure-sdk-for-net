@@ -148,30 +148,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
 
         #endregion VaultUsages
 
-        #region Vault Config
-
-        public BackupVaultConfig GetVaultConfig(string vaultName)
-        {
-            return VaultClient.BackupVaultConfigs.Get(resourceGroup, vaultName);
-        }
-
-        public BackupVaultConfig UpdateVaultConfig(string vaultName, BackupVaultConfig backupVaultConfig)
-        {
-            return VaultClient.BackupVaultConfigs.Update(resourceGroup, vaultName, backupVaultConfig);
-        }
-
-        #endregion
-
-        public BackupStorageConfig GetStorageConfig(string vaultName)
-        {
-            return VaultClient.BackupStorageConfigs.Get(resourceGroup, vaultName);
-        }
-
-        public void UpdateStorageConfig(string vaultName, BackupStorageConfig backupStorageConfig)
-        {
-            VaultClient.BackupStorageConfigs.Update(resourceGroup, vaultName, backupStorageConfig);
-        }
-
         public void DisposeVaults()
         {
             var vaults = VaultClient.Vaults.ListByResourceGroup(resourceGroup);
