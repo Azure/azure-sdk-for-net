@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.Search", "Management\Management.Search\Management.Search.csproj", "{A52AF58B-7383-416B-9A7E-601B9C628CDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search", "Management\Management.Search\Microsoft.Azure.Management.Search.csproj", "{A52AF58B-7383-416B-9A7E-601B9C628CDA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Management", "Management", "{248E962E-D501-4153-8B38-459B7DCD6871}"
 EndProject
