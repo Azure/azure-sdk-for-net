@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "da5d82a6-2c97-4e85-9c0e-025e228caf75"
+          "6f95f5ff-2122-472a-9bbf-19075bcaaa77"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:45:44 GMT"
+          "Sat, 13 Jan 2018 01:10:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14986"
         ],
         "x-ms-request-id": [
-          "bf30c491-eeb0-48a1-9567-0b1ae0cabec3"
+          "e3285f1e-6da2-45d6-981b-75e6ce58997d"
         ],
         "x-ms-correlation-request-id": [
-          "bf30c491-eeb0-48a1-9567-0b1ae0cabec3"
+          "e3285f1e-6da2-45d6-981b-75e6ce58997d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234544Z:bf30c491-eeb0-48a1-9567-0b1ae0cabec3"
+          "WESTUS2:20180113T011013Z:e3285f1e-6da2-45d6-981b-75e6ce58997d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,7 +62,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3bdb5e92-ed19-4e29-845a-05685ab9d7cb"
+          "d86fc1d4-7e0c-4e87-9e92-73ab73c8be05"
         ],
         "accept-language": [
           "en-US"
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:45:44 GMT"
+          "Sat, 13 Jan 2018 01:10:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -93,16 +93,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "14985"
         ],
         "x-ms-request-id": [
-          "377941b0-0ecb-4397-811a-a89cca7e3a22"
+          "68ae32cf-3e20-488a-a414-9e6e4894fdf3"
         ],
         "x-ms-correlation-request-id": [
-          "377941b0-0ecb-4397-811a-a89cca7e3a22"
+          "68ae32cf-3e20-488a-a414-9e6e4894fdf3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234545Z:377941b0-0ecb-4397-811a-a89cca7e3a22"
+          "WESTUS2:20180113T011013Z:68ae32cf-3e20-488a-a414-9e6e4894fdf3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,14 +117,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "875729f9-82df-4155-9a8e-aaa86259d5d8"
+          "926d32cf-39c3-4f56-8983-f5ad5900371b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventGrid Resource Provider\",\r\n        \"operation\": \"Registers the EventGrid Resource Provider\",\r\n        \"description\": \"Registers the eventSubscription for the EventGrid resource provider and enables the creation of Event Grid subscriptions.\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Write EventSubscription\",\r\n        \"description\": \"Create or update a eventSubscription\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Read EventSubscription\",\r\n        \"description\": \"Read a eventSubscription\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Delete EventSubscription\",\r\n        \"description\": \"Delete a eventSubscription\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/getFullUrl/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"eventSubscriptions\",\r\n        \"operation\": \"Get full url\",\r\n        \"description\": \"Get full url for the event subscription\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Write Topic\",\r\n        \"description\": \"Create or update a topic\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Read Topic\",\r\n        \"description\": \"Read a topic\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Delete Topic\",\r\n        \"description\": \"Delete a topic\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/listKeys/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"List keys\",\r\n        \"description\": \"List keys for the topic\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/regenerateKey/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"topics\",\r\n        \"operation\": \"Regenerate key\",\r\n        \"description\": \"Regenerate key for the topic\"\r\n      },\r\n      \"origin\": \"User,System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Metrics\",\r\n        \"operation\": \"Read topic metric definitions\",\r\n        \"description\": \"Gets the available metrics for topics\"\r\n      },\r\n      \"origin\": \"System\",\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"PublishedEvents\",\r\n              \"displayName\": \"Count of events published to this topic\",\r\n              \"displayDescription\": \"Count of events published to this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"UnmatchedEvents\",\r\n              \"displayName\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"displayDescription\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/providers/Microsoft.Insights/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Read diagnostic setting\",\r\n        \"description\": \"Gets the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": \"System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/topics/providers/Microsoft.Insights/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Write diagnostic setting\",\r\n        \"description\": \"Creates or updates the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": \"System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventSubscription Metrics\",\r\n        \"operation\": \"Read eventSubscription metric definitions\",\r\n        \"description\": \"Gets the available metrics for eventSubscriptions\"\r\n      },\r\n      \"origin\": \"System\",\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"MatchedEvents\",\r\n              \"displayName\": \"Count of events matching this event subscription\",\r\n              \"displayDescription\": \"Count of events matching this event subscription\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"DeliveredEvents\",\r\n              \"displayName\": \"Count of events delivered for this event subscription\",\r\n              \"displayDescription\": \"Count of events delivered for this event subscription\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"FailedDeliveryAttempts\",\r\n              \"displayName\": \"Count of failed delivery attempts for this event subscription\",\r\n              \"displayDescription\": \"Count of failed delivery attempts for this event subscription\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/providers/Microsoft.Insights/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventSubscription Diagnostics\",\r\n        \"operation\": \"Read diagnostic setting\",\r\n        \"description\": \"Gets the diagnostic setting for event subscriptions\"\r\n      },\r\n      \"origin\": \"System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/eventSubscriptions/providers/Microsoft.Insights/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"EventSubscription Diagnostics\",\r\n        \"operation\": \"Write diagnostic setting\",\r\n        \"description\": \"Creates or updates the diagnostic setting for event subscriptions\"\r\n      },\r\n      \"origin\": \"System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/extensionTopics/providers/Microsoft.Insights/metricDefinitions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Metrics\",\r\n        \"operation\": \"Read topic metric definitions\",\r\n        \"description\": \"Gets the available metrics for topics\"\r\n      },\r\n      \"origin\": \"System\",\r\n      \"properties\": {\r\n        \"serviceSpecification\": {\r\n          \"metricSpecifications\": [\r\n            {\r\n              \"name\": \"PublishedEvents\",\r\n              \"displayName\": \"Count of events published to this topic\",\r\n              \"displayDescription\": \"Count of events published to this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            },\r\n            {\r\n              \"name\": \"UnmatchedEvents\",\r\n              \"displayName\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"displayDescription\": \"Count of events not matching any of the event subscriptions for this topic\",\r\n              \"unit\": \"Count\",\r\n              \"aggregationType\": \"Total\",\r\n              \"fillGapWithZero\": true\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/extensionTopics/providers/Microsoft.Insights/diagnosticSettings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Read diagnostic setting\",\r\n        \"description\": \"Gets the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": \"System\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.EventGrid/extensionTopics/providers/Microsoft.Insights/diagnosticSettings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Event Grid\",\r\n        \"resource\": \"Topics Diagnostics\",\r\n        \"operation\": \"Write diagnostic setting\",\r\n        \"description\": \"Creates or updates the diagnostic setting for topics\"\r\n      },\r\n      \"origin\": \"System\"\r\n    }\r\n  ]\r\n}",
@@ -139,7 +139,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:45:44 GMT"
+          "Sat, 13 Jan 2018 01:10:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -157,13 +157,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "38dad59b-d759-419e-8454-09c39c954ea3"
+          "d83d20ee-ad2b-463a-82ef-d0c0ca16f22b"
         ],
         "x-ms-correlation-request-id": [
-          "38dad59b-d759-419e-8454-09c39c954ea3"
+          "d83d20ee-ad2b-463a-82ef-d0c0ca16f22b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234545Z:38dad59b-d759-419e-8454-09c39c954ea3"
+          "WESTUS2:20180113T011013Z:d83d20ee-ad2b-463a-82ef-d0c0ca16f22b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -172,8 +172,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -184,20 +184,20 @@
           "127"
         ],
         "x-ms-client-request-id": [
-          "6e659f01-52a2-44e4-84ff-314387b0eb36"
+          "9909a72e-fcb7-4cb6-800a-e3a60fd8b679"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"endpoint\": null\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"endpoint\": null\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "354"
+          "352"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -209,7 +209,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:45:46 GMT"
+          "Sat, 13 Jan 2018 01:10:14 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -221,19 +221,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/3B45506B-419B-4AAB-99D2-0C12A07DBAF3?api-version=2018-01-01"
+          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/7A40EF9D-72EF-46B0-B3A5-AE5C897070EE?api-version=2018-01-01"
         ],
         "x-ms-request-id": [
-          "aad78076-5784-43d0-bec6-8231d2fdba87"
+          "20652ad9-14e8-4cda-a01a-2c0e3011e35d"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "f1ca340e-7886-42f0-92bb-d4936b87c94c"
+          "7343db44-ad6a-41dd-9be6-4e011b6d9c44"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234546Z:f1ca340e-7886-42f0-92bb-d4936b87c94c"
+          "WESTUS2:20180113T011014Z:7343db44-ad6a-41dd-9be6-4e011b6d9c44"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -242,8 +242,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"replacedTag1\": \"replacedValue1\",\r\n    \"replacedTag2\": \"replacedValue2\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -254,20 +254,20 @@
           "127"
         ],
         "x-ms-client-request-id": [
-          "d39cb1b8-11b6-43e3-85f5-9af502b52bfa"
+          "7c05d4c8-1ae7-4ea2-9fa8-0715bef5ae82"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"endpoint\": null\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"replacedTag1\": \"replacedValue1\",\r\n    \"replacedTag2\": \"replacedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"endpoint\": null\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"replacedTag1\": \"replacedValue1\",\r\n    \"replacedTag2\": \"replacedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "354"
+          "352"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -279,7 +279,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:02 GMT"
+          "Sat, 13 Jan 2018 01:10:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -291,19 +291,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/A451B74F-B99C-4D0B-A89B-3003B36A38BD?api-version=2018-01-01"
+          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/43439894-54B3-4884-9998-6AA75F5E22AD?api-version=2018-01-01"
         ],
         "x-ms-request-id": [
-          "9cadce73-eea1-4f37-85f5-53d2a65b3629"
+          "dd269aba-f16c-4ce5-a2bb-4c6be7233966"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "06b25d54-1ad2-45f8-9556-d288c1390ef1"
+          "e33f0503-39b4-4aab-a35c-c9991dff8213"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234602Z:06b25d54-1ad2-45f8-9556-d288c1390ef1"
+          "WESTUS2:20180113T011030Z:e33f0503-39b4-4aab-a35c-c9991dff8213"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -312,17 +312,17 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/3B45506B-419B-4AAB-99D2-0C12A07DBAF3?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvM0I0NTUwNkItNDE5Qi00QUFCLTk5RDItMEMxMkEwN0RCQUYzP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/7A40EF9D-72EF-46B0-B3A5-AE5C897070EE?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvN0E0MEVGOUQtNzJFRi00NkIwLUIzQTUtQUU1Qzg5NzA3MEVFP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/3B45506B-419B-4AAB-99D2-0C12A07DBAF3?api-version=2018-01-01\",\r\n  \"name\": \"3b45506b-419b-4aab-99d2-0c12a07dbaf3\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/7A40EF9D-72EF-46B0-B3A5-AE5C897070EE?api-version=2018-01-01\",\r\n  \"name\": \"7a40ef9d-72ef-46b0-b3a5-ae5c897070ee\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -334,7 +334,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:45:56 GMT"
+          "Sat, 13 Jan 2018 01:10:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -349,16 +349,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "8f29f30d-2dff-493a-a463-f7f1435eb8d9"
+          "7dbe3ba4-39e8-4eeb-9eef-45fe630ea508"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14985"
+          "14969"
         ],
         "x-ms-correlation-request-id": [
-          "2c98ee07-38f8-461d-b057-a07d80aab5ab"
+          "1bb5e49a-2a0d-4902-93be-66f704bdbc57"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234556Z:2c98ee07-38f8-461d-b057-a07d80aab5ab"
+          "WESTUS2:20180113T011024Z:1bb5e49a-2a0d-4902-93be-66f704bdbc57"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -367,17 +367,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -389,7 +389,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:45:56 GMT"
+          "Sat, 13 Jan 2018 01:10:24 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -404,16 +404,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "0136f20a-5eb0-449b-89e7-79ad87501161"
+          "3d92ed7c-7550-48f5-a9aa-d73ad214da07"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
+          "14968"
         ],
         "x-ms-correlation-request-id": [
-          "92de29d1-cca1-48f1-8e05-9c876dd88545"
+          "044fcd6c-028c-4beb-9f5c-493a048a5e25"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234557Z:92de29d1-cca1-48f1-8e05-9c876dd88545"
+          "WESTUS2:20180113T011024Z:044fcd6c-028c-4beb-9f5c-493a048a5e25"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -422,23 +422,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a100d672-c1ac-410e-b4aa-e775778ac8c6"
+          "659510ed-a840-4a82-8517-203ada54b84e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -450,7 +450,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:02 GMT"
+          "Sat, 13 Jan 2018 01:10:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -465,16 +465,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "032a4a93-1764-462d-9783-95dd591eece0"
+          "19b4035d-b102-459e-b56d-e8a61161aa67"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
+          "14967"
         ],
         "x-ms-correlation-request-id": [
-          "6f3626fd-d8d0-4dd1-941e-5c46d1edd70f"
+          "2498310d-1fe4-4195-b1c2-2f04d739b429"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234602Z:6f3626fd-d8d0-4dd1-941e-5c46d1edd70f"
+          "WESTUS2:20180113T011029Z:2498310d-1fe4-4195-b1c2-2f04d739b429"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -483,23 +483,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6a6e9901-2813-44e0-a30b-c6664b3d7fdc"
+          "663ccf7d-a31c-48be-8be3-c46244e745eb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"originalTag1\": \"originalValue1\",\r\n    \"originalTag2\": \"originalValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -511,7 +511,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:02 GMT"
+          "Sat, 13 Jan 2018 01:10:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -526,16 +526,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "5ede378c-6652-4060-9b0a-c12f482de6fe"
+          "2e407780-c5a0-4b97-8fb6-335a6fbb66a2"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14982"
+          "14966"
         ],
         "x-ms-correlation-request-id": [
-          "4af1fc82-e4ac-4296-aaf9-21f8d7d8224f"
+          "3ef621fc-d025-46c8-b590-7f8fd4eb84f5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234602Z:4af1fc82-e4ac-4296-aaf9-21f8d7d8224f"
+          "WESTUS2:20180113T011029Z:3ef621fc-d025-46c8-b590-7f8fd4eb84f5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -544,17 +544,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"replacedTag1\": \"replacedValue1\",\r\n    \"replacedTag2\": \"replacedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"replacedTag1\": \"replacedValue1\",\r\n    \"replacedTag2\": \"replacedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -566,7 +566,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:12 GMT"
+          "Sat, 13 Jan 2018 01:10:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -581,16 +581,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "4563835f-acae-450e-8e62-0fcbb80034b1"
+          "44df3854-66f7-49cc-aced-9f949ce5d561"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "14962"
         ],
         "x-ms-correlation-request-id": [
-          "6919dbc3-6046-4d42-ac90-6ef2713bc72c"
+          "ae1cd618-f9e4-4e09-911c-d6c7357c67b7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234612Z:6919dbc3-6046-4d42-ac90-6ef2713bc72c"
+          "WESTUS2:20180113T011040Z:ae1cd618-f9e4-4e09-911c-d6c7357c67b7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -599,17 +599,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"updatedTag1\": \"updatedValue1\",\r\n    \"updatedTag2\": \"updatedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"updatedTag1\": \"updatedValue1\",\r\n    \"updatedTag2\": \"updatedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -621,7 +621,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:22 GMT"
+          "Sat, 13 Jan 2018 01:10:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -636,16 +636,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "3d0bd699-f483-4261-afc5-8b0a5d71049d"
+          "77450522-f71c-4b20-8e4b-b91277b26712"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14976"
+          "14960"
         ],
         "x-ms-correlation-request-id": [
-          "1d9a0a84-d77d-43ad-aa70-05a2e9771020"
+          "95bf8d1b-86fe-43b2-931a-8456ac6033b6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234623Z:1d9a0a84-d77d-43ad-aa70-05a2e9771020"
+          "WESTUS2:20180113T011051Z:95bf8d1b-86fe-43b2-931a-8456ac6033b6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -660,17 +660,17 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0677d239-2e45-417a-a91c-8a3a9f7c0fc8"
+          "94158437-64e7-4136-9ffb-fed51de4a1e0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-8424.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"updatedTag1\": \"updatedValue1\",\r\n        \"updatedTag2\": \"updatedValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-8424\",\r\n      \"name\": \"sdk-Topic-8424\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-3407.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3407\",\r\n      \"name\": \"sdk-Topic-3407\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-7795.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-7795\",\r\n      \"name\": \"sdk-Topic-7795\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n      \"name\": \"sdk-Topic-3781\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-8424.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"updatedTag1\": \"updatedValue1\",\r\n        \"updatedTag2\": \"updatedValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-8424\",\r\n      \"name\": \"sdk-Topic-8424\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-3407.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3407\",\r\n      \"name\": \"sdk-Topic-3407\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-7795.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-7795\",\r\n      \"name\": \"sdk-Topic-7795\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n      \"name\": \"sdk-Topic-730\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -682,7 +682,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:02 GMT"
+          "Sat, 13 Jan 2018 01:10:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -697,16 +697,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "8e11275b-9c47-4f14-b37d-2b90128670af"
+          "eda314ca-c2ac-4c42-92c5-bd6677be7ca1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14981"
+          "14965"
         ],
         "x-ms-correlation-request-id": [
-          "c225636c-f1b2-4a59-ba35-e2349cb21356"
+          "c4b5e46b-590b-4d98-856e-dc6508bee0ba"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234602Z:c225636c-f1b2-4a59-ba35-e2349cb21356"
+          "WESTUS2:20180113T011029Z:c4b5e46b-590b-4d98-856e-dc6508bee0ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -721,17 +721,17 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5c7adcf6-4656-4804-a0ee-9b4bf8828aa0"
+          "42c78409-5745-4c38-ae24-ef0a1fc377f9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://vinsugridsbintegration913.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/vinsutestgrid/providers/Microsoft.EventGrid/topics/vinsugridsbintegration913\",\r\n      \"name\": \"vinsugridsbintegration913\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsps2.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsps2\",\r\n      \"name\": \"kalsps2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk3367.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5524/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk3367\",\r\n      \"name\": \"PSTestTopic-onesdk3367\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk1189.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test2\",\r\n        \"Dept\": \"IT2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2400/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk1189\",\r\n      \"name\": \"PSTestTopic-onesdk1189\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk3671.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test2\",\r\n        \"Dept\": \"IT2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2400/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk3671\",\r\n      \"name\": \"PSTestTopic-onesdk3671\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk4682.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk1442/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk4682\",\r\n      \"name\": \"PSTestTopic-onesdk4682\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk1826.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9145/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk1826\",\r\n      \"name\": \"PSTestTopic-onesdk1826\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk5668.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9145/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk5668\",\r\n      \"name\": \"PSTestTopic-onesdk5668\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk4194.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7416/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk4194\",\r\n      \"name\": \"PSTestTopic-onesdk4194\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk8325.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7416/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk8325\",\r\n      \"name\": \"PSTestTopic-onesdk8325\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk8636.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4376/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk8636\",\r\n      \"name\": \"PSTestTopic-onesdk8636\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsclitop3.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsclitop3\",\r\n      \"name\": \"kalsclitop3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalspshome1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/KalsPSHome1\",\r\n      \"name\": \"KalsPSHome1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsnewtest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsnewtest1\",\r\n      \"name\": \"kalsnewtest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest3.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest3\",\r\n      \"name\": \"kalstest3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsvmt1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsvmt1\",\r\n      \"name\": \"kalsvmt1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsclinew11.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsclinew11\",\r\n      \"name\": \"kalsclinew11\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalspssigned.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalspssigned\",\r\n      \"name\": \"kalspssigned\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://ahamadtest3example5customtopic.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AhamadTest3ResourceGoup/providers/Microsoft.EventGrid/topics/AhamadTest3Example5CustomTopic\",\r\n      \"name\": \"AhamadTest3Example5CustomTopic\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-8424.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"updatedTag1\": \"updatedValue1\",\r\n        \"updatedTag2\": \"updatedValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-8424\",\r\n      \"name\": \"sdk-Topic-8424\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kishtesttopic.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kishtesttopic\",\r\n      \"name\": \"kishtesttopic\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps83.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9211/providers/Microsoft.EventGrid/topics/PSTestTopic-ps83\",\r\n      \"name\": \"PSTestTopic-ps83\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps2705.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5740/providers/Microsoft.EventGrid/topics/PSTestTopic-ps2705\",\r\n      \"name\": \"PSTestTopic-ps2705\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps6766.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8948/providers/Microsoft.EventGrid/topics/PSTestTopic-ps6766\",\r\n      \"name\": \"PSTestTopic-ps6766\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsknack1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsknack1\",\r\n      \"name\": \"kalsknack1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps7909.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"test1\": \"testval1\",\r\n        \"test2\": \"testval2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps4688/providers/Microsoft.EventGrid/topics/PSTestTopic-ps7909\",\r\n      \"name\": \"PSTestTopic-ps7909\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps9824.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps3364/providers/Microsoft.EventGrid/topics/PSTestTopic-ps9824\",\r\n      \"name\": \"PSTestTopic-ps9824\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps5357.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8164/providers/Microsoft.EventGrid/topics/PSTestTopic-ps5357\",\r\n      \"name\": \"PSTestTopic-ps5357\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps1112.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps720/providers/Microsoft.EventGrid/topics/PSTestTopic-ps1112\",\r\n      \"name\": \"PSTestTopic-ps1112\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps232.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8804/providers/Microsoft.EventGrid/topics/PSTestTopic-ps232\",\r\n      \"name\": \"PSTestTopic-ps232\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps8345.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9932/providers/Microsoft.EventGrid/topics/PSTestTopic-ps8345\",\r\n      \"name\": \"PSTestTopic-ps8345\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalspstest11.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalspstest11\",\r\n      \"name\": \"kalspstest11\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsptest.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsptest\",\r\n      \"name\": \"kalsptest\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-3407.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3407\",\r\n      \"name\": \"sdk-Topic-3407\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-7795.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-7795\",\r\n      \"name\": \"sdk-Topic-7795\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://esnew1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/esnew1\",\r\n      \"name\": \"esnew1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"'dept\": \"tagtest'\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest1\",\r\n      \"name\": \"tagstest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest2.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"dept\": \"tagtest\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest2\",\r\n      \"name\": \"tagstest2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest3.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"dept\": \"tagtest,name=mytag\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest3\",\r\n      \"name\": \"tagstest3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest4.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"NewKey\": \"LatestValue\",\r\n        \"dept\": \"tagtest\",\r\n        \"name\": \"mytag\",\r\n        \"foo\": \"bar\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest4\",\r\n      \"name\": \"tagstest4\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest1\",\r\n      \"name\": \"kalsgentest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest4.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest4\",\r\n      \"name\": \"kalsgentest4\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest5.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest5\",\r\n      \"name\": \"kalsgentest5\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest6.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest6\",\r\n      \"name\": \"kalsgentest6\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest7.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest7\",\r\n      \"name\": \"kalsgentest7\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://gutest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Dept3\": \"IT3\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/gutest1\",\r\n      \"name\": \"gutest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalscli24test1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalscli24test1\",\r\n      \"name\": \"kalscli24test1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sanariel-customtopic.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sanariel-test/providers/Microsoft.EventGrid/topics/sanariel-customtopic\",\r\n      \"name\": \"sanariel-customtopic\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest212.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest212\",\r\n      \"name\": \"kalstest212\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest213.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest213\",\r\n      \"name\": \"kalstest213\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest214.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest214\",\r\n      \"name\": \"kalstest214\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest215.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest215\",\r\n      \"name\": \"kalstest215\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest216.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest216\",\r\n      \"name\": \"kalstest216\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest217.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest217\",\r\n      \"name\": \"kalstest217\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n      \"name\": \"sdk-Topic-3781\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsprodps1.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsprodps1\",\r\n      \"name\": \"kalsprodps1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://icmtest3.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/icmtest3\",\r\n      \"name\": \"icmtest3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsptest2.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"NewTag2\": \"NewValue44\",\r\n        \"NewTag3\": \"NewOne\",\r\n        \"NewTag\": \"NewValue\",\r\n        \"Environment\": \"Test2\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsptest2\",\r\n      \"name\": \"kalsptest2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsknacktest1.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsknacktest1\",\r\n      \"name\": \"kalsknacktest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest2.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"Environment3\": \"Test2\",\r\n        \"Dept3\": \"IT2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest2\",\r\n      \"name\": \"kalsgentest2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest8.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest8\",\r\n      \"name\": \"kalsgentest8\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://vinsugridsbintegration913.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/vinsutestgrid/providers/Microsoft.EventGrid/topics/vinsugridsbintegration913\",\r\n      \"name\": \"vinsugridsbintegration913\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsps2.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsps2\",\r\n      \"name\": \"kalsps2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk3367.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5524/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk3367\",\r\n      \"name\": \"PSTestTopic-onesdk3367\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk1189.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test2\",\r\n        \"Dept\": \"IT2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2400/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk1189\",\r\n      \"name\": \"PSTestTopic-onesdk1189\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk3671.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test2\",\r\n        \"Dept\": \"IT2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2400/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk3671\",\r\n      \"name\": \"PSTestTopic-onesdk3671\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk4682.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk1442/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk4682\",\r\n      \"name\": \"PSTestTopic-onesdk4682\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk1826.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9145/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk1826\",\r\n      \"name\": \"PSTestTopic-onesdk1826\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk5668.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9145/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk5668\",\r\n      \"name\": \"PSTestTopic-onesdk5668\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk4194.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7416/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk4194\",\r\n      \"name\": \"PSTestTopic-onesdk4194\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk8325.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7416/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk8325\",\r\n      \"name\": \"PSTestTopic-onesdk8325\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-onesdk8636.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4376/providers/Microsoft.EventGrid/topics/PSTestTopic-onesdk8636\",\r\n      \"name\": \"PSTestTopic-onesdk8636\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsclitop3.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsclitop3\",\r\n      \"name\": \"kalsclitop3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalspshome1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/KalsPSHome1\",\r\n      \"name\": \"KalsPSHome1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsnewtest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsnewtest1\",\r\n      \"name\": \"kalsnewtest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest3.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest3\",\r\n      \"name\": \"kalstest3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsvmt1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsvmt1\",\r\n      \"name\": \"kalsvmt1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsclinew11.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsclinew11\",\r\n      \"name\": \"kalsclinew11\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalspssigned.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalspssigned\",\r\n      \"name\": \"kalspssigned\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://ahamadtest3example5customtopic.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AhamadTest3ResourceGoup/providers/Microsoft.EventGrid/topics/AhamadTest3Example5CustomTopic\",\r\n      \"name\": \"AhamadTest3Example5CustomTopic\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-8424.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"updatedTag1\": \"updatedValue1\",\r\n        \"updatedTag2\": \"updatedValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-8424\",\r\n      \"name\": \"sdk-Topic-8424\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kishtesttopic.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kishtesttopic\",\r\n      \"name\": \"kishtesttopic\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps83.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9211/providers/Microsoft.EventGrid/topics/PSTestTopic-ps83\",\r\n      \"name\": \"PSTestTopic-ps83\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps2705.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5740/providers/Microsoft.EventGrid/topics/PSTestTopic-ps2705\",\r\n      \"name\": \"PSTestTopic-ps2705\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps6766.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8948/providers/Microsoft.EventGrid/topics/PSTestTopic-ps6766\",\r\n      \"name\": \"PSTestTopic-ps6766\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsknack1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsknack1\",\r\n      \"name\": \"kalsknack1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps7909.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"test1\": \"testval1\",\r\n        \"test2\": \"testval2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps4688/providers/Microsoft.EventGrid/topics/PSTestTopic-ps7909\",\r\n      \"name\": \"PSTestTopic-ps7909\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps9824.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps3364/providers/Microsoft.EventGrid/topics/PSTestTopic-ps9824\",\r\n      \"name\": \"PSTestTopic-ps9824\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps5357.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8164/providers/Microsoft.EventGrid/topics/PSTestTopic-ps5357\",\r\n      \"name\": \"PSTestTopic-ps5357\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps1112.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps720/providers/Microsoft.EventGrid/topics/PSTestTopic-ps1112\",\r\n      \"name\": \"PSTestTopic-ps1112\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps232.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8804/providers/Microsoft.EventGrid/topics/PSTestTopic-ps232\",\r\n      \"name\": \"PSTestTopic-ps232\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://pstesttopic-ps8345.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9932/providers/Microsoft.EventGrid/topics/PSTestTopic-ps8345\",\r\n      \"name\": \"PSTestTopic-ps8345\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalspstest11.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalspstest11\",\r\n      \"name\": \"kalspstest11\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsptest.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsptest\",\r\n      \"name\": \"kalsptest\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-3407.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3407\",\r\n      \"name\": \"sdk-Topic-3407\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-7795.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-7795\",\r\n      \"name\": \"sdk-Topic-7795\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://esnew1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/esnew1\",\r\n      \"name\": \"esnew1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"'dept\": \"tagtest'\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest1\",\r\n      \"name\": \"tagstest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest2.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"dept\": \"tagtest\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest2\",\r\n      \"name\": \"tagstest2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest3.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"dept\": \"tagtest,name=mytag\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest3\",\r\n      \"name\": \"tagstest3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://tagstest4.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"NewKey\": \"LatestValue\",\r\n        \"dept\": \"tagtest\",\r\n        \"name\": \"mytag\",\r\n        \"foo\": \"bar\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/tagstest4\",\r\n      \"name\": \"tagstest4\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest1\",\r\n      \"name\": \"kalsgentest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest4.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest4\",\r\n      \"name\": \"kalsgentest4\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest5.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest5\",\r\n      \"name\": \"kalsgentest5\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest6.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest6\",\r\n      \"name\": \"kalsgentest6\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest7.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest7\",\r\n      \"name\": \"kalsgentest7\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://gutest1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": {\r\n        \"Dept3\": \"IT3\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/gutest1\",\r\n      \"name\": \"gutest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalscli24test1.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalscli24test1\",\r\n      \"name\": \"kalscli24test1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sanariel-customtopic.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sanariel-test/providers/Microsoft.EventGrid/topics/sanariel-customtopic\",\r\n      \"name\": \"sanariel-customtopic\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest212.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest212\",\r\n      \"name\": \"kalstest212\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest213.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest213\",\r\n      \"name\": \"kalstest213\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest214.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest214\",\r\n      \"name\": \"kalstest214\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest215.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest215\",\r\n      \"name\": \"kalstest215\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest216.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest216\",\r\n      \"name\": \"kalstest216\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalstest217.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalstest217\",\r\n      \"name\": \"kalstest217\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"West US 2\",\r\n      \"tags\": {\r\n        \"originalTag1\": \"originalValue1\",\r\n        \"originalTag2\": \"originalValue2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n      \"name\": \"sdk-Topic-730\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsprodps1.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"Environment\": \"Test\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsprodps1\",\r\n      \"name\": \"kalsprodps1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://icmtest3.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/icmtest3\",\r\n      \"name\": \"icmtest3\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsptest2.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"NewTag2\": \"NewValue44\",\r\n        \"NewTag3\": \"NewOne\",\r\n        \"NewTag\": \"NewValue\",\r\n        \"Environment\": \"Test2\",\r\n        \"Dept\": \"IT\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsptest2\",\r\n      \"name\": \"kalsptest2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsknacktest1.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsknacktest1\",\r\n      \"name\": \"kalsknacktest1\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest2.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"Environment3\": \"Test2\",\r\n        \"Dept3\": \"IT2\"\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest2\",\r\n      \"name\": \"kalsgentest2\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"endpoint\": \"https://kalsgentest8.westcentralus-1.eventgrid.azure.net/api/events\"\r\n      },\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/kalsgentest8\",\r\n      \"name\": \"kalsgentest8\",\r\n      \"type\": \"Microsoft.EventGrid/topics\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -743,7 +743,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:02 GMT"
+          "Sat, 13 Jan 2018 01:10:29 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -752,20 +752,20 @@
           "Accept-Encoding"
         ],
         "x-ms-original-request-ids": [
-          "d2647ff4-0d7b-4f3f-82fd-55affce05f82",
-          "c97a2dd6-1050-45e6-91b4-f26a6bdb4969"
+          "fe058d5a-cf87-403a-93e8-e0bb3337ec03",
+          "44a1902d-f661-48e9-b4dd-75ae33173ee9"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14980"
+          "14964"
         ],
         "x-ms-request-id": [
-          "e3e3ae85-f723-48a4-9255-2375992a79ec"
+          "47141c7d-99c4-4c6e-9e2a-92106d66f522"
         ],
         "x-ms-correlation-request-id": [
-          "e3e3ae85-f723-48a4-9255-2375992a79ec"
+          "47141c7d-99c4-4c6e-9e2a-92106d66f522"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234602Z:e3e3ae85-f723-48a4-9255-2375992a79ec"
+          "WESTUS2:20180113T011030Z:47141c7d-99c4-4c6e-9e2a-92106d66f522"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -774,17 +774,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/A451B74F-B99C-4D0B-A89B-3003B36A38BD?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvQTQ1MUI3NEYtQjk5Qy00RDBCLUE4OUItMzAwM0IzNkEzOEJEP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/43439894-54B3-4884-9998-6AA75F5E22AD?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvNDM0Mzk4OTQtNTRCMy00ODg0LTk5OTgtNkFBNzVGNUUyMkFEP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/A451B74F-B99C-4D0B-A89B-3003B36A38BD?api-version=2018-01-01\",\r\n  \"name\": \"a451b74f-b99c-4d0b-a89b-3003b36a38bd\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/43439894-54B3-4884-9998-6AA75F5E22AD?api-version=2018-01-01\",\r\n  \"name\": \"43439894-54b3-4884-9998-6aa75f5e22ad\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -796,7 +796,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:12 GMT"
+          "Sat, 13 Jan 2018 01:10:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -811,16 +811,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "90a7cf77-6510-455b-8d65-34a6ea73238e"
+          "c543bb7a-99bd-4899-827c-f88907dfaf4a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14979"
+          "14963"
         ],
         "x-ms-correlation-request-id": [
-          "806e5a97-a3a9-47db-a104-666b464654ad"
+          "f0bddd0b-24fb-434b-aefb-42e932376afd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234612Z:806e5a97-a3a9-47db-a104-666b464654ad"
+          "WESTUS2:20180113T011040Z:f0bddd0b-24fb-434b-aefb-42e932376afd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -829,8 +829,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"tags\": {\r\n    \"updatedTag1\": \"updatedValue1\",\r\n    \"updatedTag2\": \"updatedValue2\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -841,20 +841,20 @@
           "95"
         ],
         "x-ms-client-request-id": [
-          "94e162be-cca3-4f98-aa94-7996db38aacd"
+          "afa77989-64aa-437d-9346-b8403a992d69"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"endpoint\": \"https://sdk-topic-3781.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"updatedTag1\": \"updatedValue1\",\r\n    \"updatedTag2\": \"updatedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781\",\r\n  \"name\": \"sdk-Topic-3781\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"endpoint\": \"https://sdk-topic-730.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"updatedTag1\": \"updatedValue1\",\r\n    \"updatedTag2\": \"updatedValue2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730\",\r\n  \"name\": \"sdk-Topic-730\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "411"
+          "408"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -866,7 +866,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:12 GMT"
+          "Sat, 13 Jan 2018 01:10:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -878,19 +878,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/B7311495-60E5-483E-A4F1-4822029F2F62?api-version=2018-01-01"
+          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/3C90AFAC-9345-476A-AF66-F4AFA9D2AE27?api-version=2018-01-01"
         ],
         "x-ms-request-id": [
-          "baf9cf56-b31f-412a-bc4c-226b3c7b4663"
+          "d8ad76bc-bf54-4741-a98f-62e24c04a8ab"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "deb3e3e0-45ce-48fb-a7d7-47da6ccfc656"
+          "76a436e6-6a1c-4707-a8ae-dd556b03dc8f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234613Z:deb3e3e0-45ce-48fb-a7d7-47da6ccfc656"
+          "WESTUS2:20180113T011040Z:76a436e6-6a1c-4707-a8ae-dd556b03dc8f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -899,17 +899,17 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/B7311495-60E5-483E-A4F1-4822029F2F62?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvQjczMTE0OTUtNjBFNS00ODNFLUE0RjEtNDgyMjAyOUYyRjYyP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/3C90AFAC-9345-476A-AF66-F4AFA9D2AE27?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvM0M5MEFGQUMtOTM0NS00NzZBLUFGNjYtRjRBRkE5RDJBRTI3P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/B7311495-60E5-483E-A4F1-4822029F2F62?api-version=2018-01-01\",\r\n  \"name\": \"b7311495-60e5-483e-a4f1-4822029f2f62\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/3C90AFAC-9345-476A-AF66-F4AFA9D2AE27?api-version=2018-01-01\",\r\n  \"name\": \"3c90afac-9345-476a-af66-f4afa9d2ae27\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -921,7 +921,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:22 GMT"
+          "Sat, 13 Jan 2018 01:10:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -936,16 +936,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "eedf06ef-f9e3-4cb9-8401-87aad0cf89a2"
+          "c6d2dcc1-3c99-4e6f-b461-0915b2da861e"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14977"
+          "14961"
         ],
         "x-ms-correlation-request-id": [
-          "da12e5a1-f28b-43b8-95f3-9e93f0966794"
+          "270b04f7-c634-4312-878b-c4fecb67124e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234623Z:da12e5a1-f28b-43b8-95f3-9e93f0966794"
+          "WESTUS2:20180113T011051Z:270b04f7-c634-4312-878b-c4fecb67124e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -954,20 +954,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-3781?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtMzc4MT9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-730?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNzMwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e4b3e9e7-a231-49df-b361-07c35769821e"
+          "49625907-6eed-4744-af08-f90ef841c9fb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
       "ResponseBody": "",
@@ -982,13 +982,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:23 GMT"
+          "Sat, 13 Jan 2018 01:10:50 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/4541F2C0-68B7-4236-92A4-68A4AB2DE383?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/667EC904-ABF6-400E-B3E1-D97D72F69459?api-version=2018-01-01"
         ],
         "Retry-After": [
           "10"
@@ -997,16 +997,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1191"
         ],
         "x-ms-request-id": [
-          "3d0be8df-be9f-4226-a093-173ec9c2be73"
+          "d3887854-b732-47c6-922f-537c0bf1f1c4"
         ],
         "x-ms-correlation-request-id": [
-          "3d0be8df-be9f-4226-a093-173ec9c2be73"
+          "d3887854-b732-47c6-922f-537c0bf1f1c4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234623Z:3d0be8df-be9f-4226-a093-173ec9c2be73"
+          "WESTUS2:20180113T011051Z:d3887854-b732-47c6-922f-537c0bf1f1c4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1015,14 +1015,14 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/4541F2C0-68B7-4236-92A4-68A4AB2DE383?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvNDU0MUYyQzAtNjhCNy00MjM2LTkyQTQtNjhBNEFCMkRFMzgzP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/667EC904-ABF6-400E-B3E1-D97D72F69459?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvNjY3RUM5MDQtQUJGNi00MDBFLUIzRTEtRDk3RDcyRjY5NDU5P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.2.0.0"
         ]
       },
       "ResponseBody": "",
@@ -1037,7 +1037,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 12 Jan 2018 23:46:32 GMT"
+          "Sat, 13 Jan 2018 01:11:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1046,16 +1046,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "5b072309-10f8-4671-84ad-816e0df32099"
+          "bcbe005d-aed1-4bdc-b7ff-ccd0340cd4bb"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14975"
+          "14959"
         ],
         "x-ms-correlation-request-id": [
-          "b5f2ee0a-472d-4212-bcbd-f564226b5d09"
+          "b4299084-6fc7-4bcb-be53-5f1c508d1aa2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180112T234633Z:b5f2ee0a-472d-4212-bcbd-f564226b5d09"
+          "WESTUS2:20180113T011101Z:b4299084-6fc7-4bcb-be53-5f1c508d1aa2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1066,7 +1066,7 @@
   ],
   "Names": {
     "TopicCreateGetUpdateDelete": [
-      "sdk-Topic-3781"
+      "sdk-Topic-730"
     ]
   },
   "Variables": {
