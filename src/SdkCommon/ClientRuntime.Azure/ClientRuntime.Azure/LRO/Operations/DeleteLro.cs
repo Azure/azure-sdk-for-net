@@ -3,15 +3,17 @@
 namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 {
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.Properties;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// DELETE Azure LRO Operation
+    /// </summary>
+    /// <typeparam name="TResourceBody"></typeparam>
+    /// <typeparam name="TRequestHeaders"></typeparam>
     internal class DeleteLro<TResourceBody, TRequestHeaders> : AzureLRO<TResourceBody, TRequestHeaders>
             where TResourceBody : class
             where TRequestHeaders : class
@@ -23,11 +25,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             CancellationToken cancellationToken) : base(client, response, customHeaders, cancellationToken)
         { }
 
+        /// <summary>
+        /// For DELETE
+        /// Async-Operation is preferred
+        /// In absence of Async-operation, fall back on location header
+        /// If both (Async-Operation, LocationHeader) provided, we will use Async-Operation for driving LRO
+        /// Will perform final GET on the provided LocationHeader to get calculation results
+        /// </summary>
         protected override void InitializeAsyncHeadersToUse()
         {
             base.InitializeAsyncHeadersToUse();
 
-            // 201
+            // 201 (status code)
             if (CurrentPollingState.CurrentStatusCode == System.Net.HttpStatusCode.Created)
             {
                 if (string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink))
@@ -40,7 +49,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 }
             }
 
-            // For 202, we prefer AzureAsyncOperation header, else we fallback on LocationHeader
+            // For 202 (status code), we prefer AzureAsyncOperation header, else we fallback on LocationHeader
             if (CurrentPollingState.CurrentStatusCode == System.Net.HttpStatusCode.Accepted)
             {
                 if (!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink))
@@ -68,6 +77,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override bool IsCheckingProvisioningStateApplicable()
         {
             // For POST check Provisioning for 200 and 201

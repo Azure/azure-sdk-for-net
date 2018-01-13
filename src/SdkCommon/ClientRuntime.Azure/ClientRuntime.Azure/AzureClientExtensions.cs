@@ -74,16 +74,11 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
-            if (File.Exists(@"C:\myFork\newway.txt"))
-            {
-                IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
-                await lro.BeginLROAsync();
-                return await lro.GetLROResults();
-            }
-            else
-            {
-                return await GetOldway<TBody, THeader>(client, response, customHeaders, cancellationToken);
-            }
+            IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
+            await lro.BeginLROAsync();
+            return await lro.GetLROResults();
+
+            //return await LegacyLro<TBody, THeader>(client, response, customHeaders, cancellationToken);
         }
 
         internal static IAzureLRO<TResourceBody, TRequestHeaders> ScheduleLRO<TResourceBody, TRequestHeaders>(
@@ -493,7 +488,7 @@ namespace Microsoft.Rest.Azure
         #endregion
 
 
-        private static async Task<AzureOperationResponse<TBody, THeader>> GetOldway<TBody, THeader>(IAzureClient client, 
+        private static async Task<AzureOperationResponse<TBody, THeader>> LegacyLro<TBody, THeader>(IAzureClient client, 
             AzureOperationResponse<TBody, THeader> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
