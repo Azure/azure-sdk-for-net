@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "baa7882d-0486-4107-8349-292bafd04c9f"
+          "5568f55c-5f52-4400-a381-184c6275e61f"
         ],
         "accept-language": [
           "en-US"
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid\",\r\n  \"namespace\": \"Microsoft.EventGrid\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4962773b-9cdb-44cf-a8bf-237846a00ab7\",\r\n      \"roleDefinitionId\": \"7FE036D8-246F-48BF-A78F-AB3EE699C8F3\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/eventSubscriptions\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"eventSubscriptions\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"topics\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"topicTypes\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationsStatus\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/topicTypes\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"extensionTopics\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operationsStatus\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid\",\r\n  \"namespace\": \"Microsoft.EventGrid\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4962773b-9cdb-44cf-a8bf-237846a00ab7\",\r\n      \"roleDefinitionId\": \"7FE036D8-246F-48BF-A78F-AB3EE699C8F3\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/eventSubscriptions\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"eventSubscriptions\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"topics\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"topicTypes\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationsStatus\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/topicTypes\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"extensionTopics\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operationsStatus\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 08 Dec 2017 00:11:41 GMT"
+          "Fri, 12 Jan 2018 23:45:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14975"
+          "14979"
         ],
         "x-ms-request-id": [
-          "2ab667f6-a0c8-4ead-97c0-40771b128012"
+          "6456db53-1da9-4dd1-a2eb-477301825060"
         ],
         "x-ms-correlation-request-id": [
-          "2ab667f6-a0c8-4ead-97c0-40771b128012"
+          "6456db53-1da9-4dd1-a2eb-477301825060"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171208T001142Z:2ab667f6-a0c8-4ead-97c0-40771b128012"
+          "WESTUS2:20180112T234538Z:6456db53-1da9-4dd1-a2eb-477301825060"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -56,13 +56,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes?api-version=2017-09-15-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXM/YXBpLXZlcnNpb249MjAxNy0wOS0xNS1wcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes?api-version=2018-01-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e3cb5462-d9cc-44d8-86dc-b581afe610f3"
+          "f3079905-d26b-4cb2-9c59-4a3797aa5589"
         ],
         "accept-language": [
           "en-US"
@@ -72,7 +72,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Eventhub\",\r\n        \"displayName\": \"EventHubs Namespace\",\r\n        \"description\": \"Microsoft EventHubs service events.\",\r\n        \"resourceRegionType\": \"RegionalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Eventhub.Namespaces\",\r\n      \"name\": \"Microsoft.Eventhub.Namespaces\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Storage\",\r\n        \"displayName\": \"Storage Accounts\",\r\n        \"description\": \"Microsoft Storage service events.\",\r\n        \"resourceRegionType\": \"RegionalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts\",\r\n      \"name\": \"Microsoft.Storage.StorageAccounts\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Resources\",\r\n        \"displayName\": \"Azure Subscriptions\",\r\n        \"description\": \"Resource management events under an Azure subscription\",\r\n        \"resourceRegionType\": \"GlobalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.Subscriptions\",\r\n      \"name\": \"Microsoft.Resources.Subscriptions\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Resources\",\r\n        \"displayName\": \"Resource Groups\",\r\n        \"description\": \"Resource management events under a resource group.\",\r\n        \"resourceRegionType\": \"GlobalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups\",\r\n      \"name\": \"Microsoft.Resources.ResourceGroups\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Eventhub\",\r\n        \"displayName\": \"EventHubs Namespace\",\r\n        \"description\": \"Microsoft EventHubs service events.\",\r\n        \"resourceRegionType\": \"RegionalResource\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"supportedLocations\": [\r\n          \"West US 2\",\r\n          \"West Central US\",\r\n          \"East US 2 EUAP\"\r\n        ]\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Eventhub.Namespaces\",\r\n      \"name\": \"Microsoft.Eventhub.Namespaces\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Storage\",\r\n        \"displayName\": \"Storage Accounts\",\r\n        \"description\": \"Microsoft Storage service events.\",\r\n        \"resourceRegionType\": \"RegionalResource\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"supportedLocations\": [\r\n          \"West US 2\",\r\n          \"West Central US\",\r\n          \"East US 2 EUAP\"\r\n        ]\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts\",\r\n      \"name\": \"Microsoft.Storage.StorageAccounts\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Resources\",\r\n        \"displayName\": \"Azure Subscriptions\",\r\n        \"description\": \"Resource management events under an Azure subscription\",\r\n        \"resourceRegionType\": \"GlobalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.Subscriptions\",\r\n      \"name\": \"Microsoft.Resources.Subscriptions\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"provider\": \"Microsoft.Resources\",\r\n        \"displayName\": \"Resource Groups\",\r\n        \"description\": \"Resource management events under a resource group.\",\r\n        \"resourceRegionType\": \"GlobalResource\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Resources.ResourceGroups\",\r\n      \"name\": \"Microsoft.Resources.ResourceGroups\",\r\n      \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 08 Dec 2017 00:11:41 GMT"
+          "Fri, 12 Jan 2018 23:45:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -102,13 +102,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "d3453d4d-4156-4dd7-8e6e-ba276472d093"
+          "025dfe51-85f9-45a0-9a2d-e18d0b0eeef1"
         ],
         "x-ms-correlation-request-id": [
-          "d3453d4d-4156-4dd7-8e6e-ba276472d093"
+          "025dfe51-85f9-45a0-9a2d-e18d0b0eeef1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171208T001142Z:d3453d4d-4156-4dd7-8e6e-ba276472d093"
+          "WESTUS2:20180112T234539Z:025dfe51-85f9-45a0-9a2d-e18d0b0eeef1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,13 +117,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts?api-version=2017-09-15-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LlN0b3JhZ2UuU3RvcmFnZUFjY291bnRzP2FwaS12ZXJzaW9uPTIwMTctMDktMTUtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts?api-version=2018-01-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LlN0b3JhZ2UuU3RvcmFnZUFjY291bnRzP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0334c5c6-55b7-4605-afcd-2cd04fb34e16"
+          "b8be2dd9-8967-42a1-bb5a-2675a3a377fc"
         ],
         "accept-language": [
           "en-US"
@@ -133,7 +133,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provider\": \"Microsoft.Storage\",\r\n    \"displayName\": \"Storage Accounts\",\r\n    \"description\": \"Microsoft Storage service events.\",\r\n    \"resourceRegionType\": \"RegionalResource\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts\",\r\n  \"name\": \"Microsoft.Storage.StorageAccounts\",\r\n  \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provider\": \"Microsoft.Storage\",\r\n    \"displayName\": \"Storage Accounts\",\r\n    \"description\": \"Microsoft Storage service events.\",\r\n    \"resourceRegionType\": \"RegionalResource\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"supportedLocations\": [\r\n      \"West US 2\",\r\n      \"West Central US\",\r\n      \"East US 2 EUAP\"\r\n    ]\r\n  },\r\n  \"id\": \"providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts\",\r\n  \"name\": \"Microsoft.Storage.StorageAccounts\",\r\n  \"type\": \"Microsoft.EventGrid/topicTypes\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -145,7 +145,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 08 Dec 2017 00:11:41 GMT"
+          "Fri, 12 Jan 2018 23:45:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -160,16 +160,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "6ce4cb48-1843-40da-b6b9-3eb79288f5f9"
+          "a015fb35-9860-4e1d-b9ee-e53a6e814445"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "e5e6b3ed-8953-442f-9d17-37590377c10d"
+          "c587175f-6d9f-4bbe-a333-3672a17758f1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171208T001142Z:e5e6b3ed-8953-442f-9d17-37590377c10d"
+          "WESTUS2:20180112T234539Z:c587175f-6d9f-4bbe-a333-3672a17758f1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -178,13 +178,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts/eventTypes?api-version=2017-09-15-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LlN0b3JhZ2UuU3RvcmFnZUFjY291bnRzL2V2ZW50VHlwZXM/YXBpLXZlcnNpb249MjAxNy0wOS0xNS1wcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.EventGrid/topicTypes/Microsoft.Storage.StorageAccounts/eventTypes?api-version=2018-01-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljVHlwZXMvTWljcm9zb2Z0LlN0b3JhZ2UuU3RvcmFnZUFjY291bnRzL2V2ZW50VHlwZXM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5c386ea9-45c2-4570-8026-3b2c4bfba6be"
+          "085e919c-6524-489e-b5ff-85879e91e920"
         ],
         "accept-language": [
           "en-US"
@@ -206,7 +206,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 08 Dec 2017 00:11:41 GMT"
+          "Fri, 12 Jan 2018 23:45:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -221,16 +221,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1030d1d1-5bb0-4fd8-8614-eb2a5e1955fa"
+          "5b0d7be6-53eb-407e-a3b3-3dacedf4083c"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "14997"
         ],
         "x-ms-correlation-request-id": [
-          "f756d133-da3e-48da-b13d-a75ecc797f7b"
+          "2d2a6d07-d0d4-4bb6-8776-3ddf4699e184"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171208T001142Z:f756d133-da3e-48da-b13d-a75ecc797f7b"
+          "WESTUS2:20180112T234539Z:2d2a6d07-d0d4-4bb6-8776-3ddf4699e184"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
