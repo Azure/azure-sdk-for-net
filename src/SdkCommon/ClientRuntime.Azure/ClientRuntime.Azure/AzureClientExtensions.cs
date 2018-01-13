@@ -16,6 +16,7 @@ namespace Microsoft.Rest.Azure
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.LRO;
+    using System.IO;
 
     public static partial class AzureClientExtensions
     {
@@ -73,13 +74,16 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
-//#if DEBUG
-            IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
-            await lro.BeginLROAsync();
-            return await lro.GetLROResults();
-//#else
-//            return await GetOldway<TBody, THeader>(client, response, customHeaders, cancellationToken);
-//#endif
+            if (File.Exists(@"C:\myFork\newway.txt"))
+            {
+                IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
+                await lro.BeginLROAsync();
+                return await lro.GetLROResults();
+            }
+            else
+            {
+                return await GetOldway<TBody, THeader>(client, response, customHeaders, cancellationToken);
+            }
         }
 
         internal static IAzureLRO<TResourceBody, TRequestHeaders> ScheduleLRO<TResourceBody, TRequestHeaders>(

@@ -88,18 +88,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         internal async Task UpdateResourceFromPollingUri(Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
         {
-            RawResponse = await GetRawAsync(customHeaders, cancellationToken).ConfigureAwait(false);
-            
             TResourceBody resourceBody = null;
-
-            //if (result.Body == null || result.Body.HasValues == false)
-            //{
-            //    throw new CloudException(Resources.NoBody);
-            //    //if(this.PollingUrlToUse.Equals(this.AzureAsyncOperationHeaderLink, StringComparison.OrdinalIgnoreCase))
-            //    //{
-            //    //    throw new CloudException(Resources.NoBody);
-            //    //}
-            //}
+            RawResponse = await GetRawAsync(customHeaders, cancellationToken).ConfigureAwait(false);
 
             // For Locaiton header case or where there are no LRO headers, this will be resource body (e.g. PUT with no location/async headers)
             resourceBody = DeserializeToObject<TResourceBody>(() => RawResponse.Body);            
@@ -108,7 +98,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             {
                 this.ResponseContent = await RawResponse.Response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
-            
 
             // We now try to check if the response was due to polling on AzureAsyncOperatoin header
             // as we eliminated two code paths for different headers that were being used earlier.

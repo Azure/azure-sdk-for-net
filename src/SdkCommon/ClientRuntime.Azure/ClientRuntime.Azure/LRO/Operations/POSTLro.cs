@@ -4,6 +4,7 @@
 namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 {
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.Properties;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -86,20 +87,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                         // We want to call the one last time the original URI that will give you the required resource
                         if (!string.IsNullOrEmpty(CurrentPollingState.FinalGETUrlToUser))
                         {
-                            CurrentPollingState.PollingUrlToUse = CurrentPollingState.FinalGETUrlToUser;
+                            CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
                         }
 
-                        if (!string.IsNullOrEmpty(CurrentPollingState.PollingUrlToUse))
-                        {
-                            await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
-                        }
+                        await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                     }
                 }
             }
         }
     }
-
-    /*
-     *
-    */
 }

@@ -142,10 +142,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 InitializeAsyncHeadersToUse();
             }
         }
-        protected virtual void VerifyLROHeadersOnEveryPolling()
-        {
-
-        }
 
         protected virtual void UpdatePollingState()
         {
@@ -210,16 +206,21 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 throw CurrentPollingState.CloudException;
             }
 
-            //if (CurrentPollingState.AzureOperationResponse.Body == null)
-            //{
-            //    if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
-            //    {
-            //        throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
-            //    }
-            //}
+            if (CurrentPollingState.PollingUrlToUse.Equals(CurrentPollingState.AzureAsyncOperationHeaderLink, StringComparison.OrdinalIgnoreCase))
+            {
+                if (CurrentPollingState.AsyncOperationResponseBody?.Status == null || CurrentPollingState.RawBody == null)
+                {
+                    throw new CloudException(Resources.NoBody);
+                }
+
+                if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
+                {
+                    throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
+                }
+            }
         }
 
-        protected virtual string GetValidAbsoluteUri(string url)
+        protected virtual string GetValidAbsoluteUri(string url, bool throwForInvalidUri = false)
         {
             string absoluteUri = string.Empty;
             Uri givenUri = null;
@@ -228,38 +229,16 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 absoluteUri = givenUri.AbsoluteUri;
             }
 
+            if(throwForInvalidUri)
+            {
+                if(string.IsNullOrEmpty(absoluteUri))
+                {
+                    throw new CloudException(Resources.InValidUri);
+                }
+            }
+
             return absoluteUri;
         }
         #endregion
-
-        #region private functions
-        private void UpdateLROState(string newState)
-        {
-            //TODO: this needs to be thread safe
-            LROState = newState;
-        }
-        #endregion
-
-        /*
-         //private void UpdateAsyncHeaders()
-        //{
-        //    string headerValue = string.Empty;
-
-        //    if (CurrentPollingState.Response.Headers.Contains("Azure-AsyncOperation"))
-        //    {
-        //        headerValue = CurrentPollingState.Response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-
-        //        if (!CurrentPollingState.AzureAsyncOperationHeaderLink.Equals(headerValue, StringComparison.OrdinalIgnoreCase))
-        //        {
-        //            CurrentPollingState.AzureAsyncOperationHeaderLink = headerValue;
-        //        }
-        //    }
-
-        //    if (CurrentPollingState.Response.Headers.Contains("Location"))
-        //    {
-        //        CurrentPollingState.LocationHeaderLink = CurrentPollingState.Response.Headers.GetValues("Location").FirstOrDefault();
-        //    }
-        //}
-        */
     }
 }

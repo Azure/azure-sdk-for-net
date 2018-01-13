@@ -60,7 +60,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 }
                 else if (!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink))
                 {
-                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.LocationHeaderLink;
+                    CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.LocationHeaderLink);
                 }
 
                 if (string.IsNullOrEmpty(CurrentPollingState.PollingUrlToUse))
@@ -84,7 +84,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             {
                 if ((!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink) || CurrentPollingState.Resource == null))
                 {
-                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.InitialResponse.Request.RequestUri.AbsoluteUri;
+                    CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.InitialResponse.Request.RequestUri.AbsoluteUri, throwForInvalidUri: true);
+
                     await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                 }
             }

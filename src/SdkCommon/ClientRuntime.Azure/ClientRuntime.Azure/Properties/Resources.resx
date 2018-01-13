@@ -212,6 +212,6 @@ Parameter name: {0}</value>
     <value>Unable to deserilize body '{0}'</value>
   </data>
   <data name="InValidUri" xml:space="preserve">
-    <value>Provide URI '{0}' is not a valid URI.</value>
+    <value>Provided URI '{0}' is not a valid URI.</value>
   </data>
 </root>

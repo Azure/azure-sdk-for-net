@@ -37,7 +37,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 if ((!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink) || CurrentPollingState.Resource == null))
                 {
                     // We want to call the one last time the original URI that will give you the required resource
-                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.FinalGETUrlToUser;
+                    CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
                     await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                 }
             }
@@ -46,14 +46,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         protected override void CheckForErrors()
         {
             base.CheckForErrors();
-
-            if(CurrentPollingState.PollingUrlToUse.Equals(CurrentPollingState.AzureAsyncOperationHeaderLink, StringComparison.OrdinalIgnoreCase))
-            {
-                if(CurrentPollingState.RawResponse.Body == null || CurrentPollingState.RawResponse.Body.HasValues == false)
-                {
-                    throw new CloudException(Resources.NoBody);
-                }
-            }
 
             // with 200 without any headers, if body is null, fail
             if ((string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink)) &&

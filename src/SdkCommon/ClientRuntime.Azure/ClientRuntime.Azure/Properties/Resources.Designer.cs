@@ -234,7 +234,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provide URI &apos;{0}&apos; is not a valid URI..
+        ///   Looks up a localized string similar to Provided URI &apos;{0}&apos; is not a valid URI..
         /// </summary>
         internal static string InValidUri {
             get {
