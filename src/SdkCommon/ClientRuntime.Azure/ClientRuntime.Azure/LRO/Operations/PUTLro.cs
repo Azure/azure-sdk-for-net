@@ -11,17 +11,36 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// PUT Azure Lro operation
+    /// </summary>
+    /// <typeparam name="TResourceBody"></typeparam>
+    /// <typeparam name="TRequestHeaders"></typeparam>
     internal class PutLRO<TResourceBody, TRequestHeaders> : AzureLRO<TResourceBody, TRequestHeaders>
             where TResourceBody : class
             where TRequestHeaders : class
     {
+        /// <summary>
+        /// REST Operation Verb
+        /// </summary>
         public override string RESTOperationVerb { get => "PUT"; }
 
+        /// <summary>
+        /// Initializes PUT LRO Operation
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="response"></param>
+        /// <param name="customHeaders"></param>
+        /// <param name="cancellationToken"></param>
         public PutLRO(IAzureClient client, AzureOperationResponse<TResourceBody, TRequestHeaders> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) : base(client, response, customHeaders, cancellationToken)
         { }
-        
+
+        /// <summary>
+        /// Check if Provisioning state needs to be checked
+        /// </summary>
+        /// <returns></returns>
         protected override bool IsCheckingProvisioningStateApplicable()
         {
             // check Provisioning for 200 and 201
@@ -29,6 +48,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                      (CurrentPollingState.CurrentStatusCode == HttpStatusCode.Created));
         }
 
+        /// <summary>
+        /// Function that allows you to make tweaks before finishing LRO operation and return back to the client
+        /// </summary>
+        /// <returns></returns>
         protected override async Task PostPollingAsync()
         {
             //We do an additional Get to get the resource for PUT requests

@@ -10,17 +10,45 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// PATCH Azure LRO operation
+    /// </summary>
+    /// <typeparam name="TResourceBody"></typeparam>
+    /// <typeparam name="TRequestHeaders"></typeparam>
     internal class PATCHLro<TResourceBody, TRequestHeaders> : AzureLRO<TResourceBody, TRequestHeaders>
             where TResourceBody : class
             where TRequestHeaders : class
     {
+        /// <summary>
+        /// REST Operation Verb
+        /// </summary>
         public override string RESTOperationVerb { get => "PATCH"; }
 
+        /// <summary>
+        /// Initializes PATCH LRO Operation
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="response"></param>
+        /// <param name="customHeaders"></param>
+        /// <param name="cancellationToken"></param>
         public PATCHLro(IAzureClient client, AzureOperationResponse<TResourceBody, TRequestHeaders> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) : base(client, response, customHeaders, cancellationToken)
         { }
 
+        /// <summary>
+        /// Initialize which URL to use for polling
+        /// 
+        /// First responose status code 201
+        /// Either we use Async-operatino header for polling
+        /// Or fall back on original URL to poll
+        /// 
+        /// First response status code 202
+        /// We prefer Async-operation
+        /// or we will fall back on location header
+        /// 
+        /// At the end of the polling we will use the original URL to do the final GET
+        /// </summary>
         protected override void InitializeAsyncHeadersToUse()
         {
             base.InitializeAsyncHeadersToUse();
@@ -70,6 +98,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             }
         }
 
+        /// <summary>
+        /// Function to check if checking provisioning state is applicable during polling
+        /// </summary>
+        /// <returns></returns>
         protected override bool IsCheckingProvisioningStateApplicable()
         {
             // For PATCH check Provisioning for 200 and 201
@@ -77,6 +109,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                      (CurrentPollingState.CurrentStatusCode == HttpStatusCode.Created));
         }
 
+        /// <summary>
+        /// Function that allows you to make tweaks before finishing LRO operation and return back to the client
+        /// </summary>
+        /// <returns></returns>
         protected override async Task PostPollingAsync()
         {
             // We do an additional Get to get the resource for PATCH requests

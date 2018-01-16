@@ -18,8 +18,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             where TResourceBody : class
             where TRequestHeaders : class
     {
+        /// <summary>
+        /// REST Operation Verb
+        /// </summary>
         public override string RESTOperationVerb { get => "DELETE"; }
 
+        /// <summary>
+        /// Initializes DELETE LRO Operation
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="response"></param>
+        /// <param name="customHeaders"></param>
+        /// <param name="cancellationToken"></param>
         public DeleteLro(IAzureClient client, AzureOperationResponse<TResourceBody, TRequestHeaders> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) : base(client, response, customHeaders, cancellationToken)
@@ -27,10 +37,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
         /// <summary>
         /// For DELETE
-        /// Async-Operation is preferred
         /// In absence of Async-operation, fall back on location header
+        /// 
         /// If both (Async-Operation, LocationHeader) provided, we will use Async-Operation for driving LRO
-        /// Will perform final GET on the provided LocationHeader to get calculation results
+        /// Will perform final GET on the provided LocationHeader to get calculation results.
+        /// 
+        /// If first response status code is 201 and location header is not provided, we throw
+        /// 
+        /// if first response status code is 202, we prefer Async-operation, else we will use Location header
         /// </summary>
         protected override void InitializeAsyncHeadersToUse()
         {
@@ -78,16 +92,28 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         }
 
         /// <summary>
+        /// Is checking provisioning state applicable for DELTE during LRO operation
+        /// If response code is 200/204 (regardless of header and first response code)
         /// 
+        /// This does not mean that for 200/204 the response WILL have provisioning state
+        /// This function only says to check provisioning state that is all.
         /// </summary>
         /// <returns></returns>
         protected override bool IsCheckingProvisioningStateApplicable()
         {
-            // For POST check Provisioning for 200 and 201
+            // For DELETE check Provisioning for 200 and 204
             return ((CurrentPollingState.CurrentStatusCode == HttpStatusCode.OK) ||
                      (CurrentPollingState.CurrentStatusCode == HttpStatusCode.NoContent));
         }
 
+        /// <summary>
+        /// If Azure Async-Operation URL is being used to poll and if the final response or any response returned Location header
+        /// We assume a final GET has to be done on provided location header
+        /// 
+        /// This funciton allows to make any tweaks to the final GET if applicable
+        /// In this case, using Location header to do the final GET
+        /// </summary>
+        /// <returns></returns>
         protected override async Task PostPollingAsync()
         {
             //We do an additional Get to get the resource for PUT requests

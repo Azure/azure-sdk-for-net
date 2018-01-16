@@ -4,25 +4,47 @@
 namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 {
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.Properties;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+
+    /// <summary>
+    /// POST Azure LRO operation
+    /// </summary>
+    /// <typeparam name="TResourceBody"></typeparam>
+    /// <typeparam name="TRequestHeaders"></typeparam>
     internal class POSTLro<TResourceBody, TRequestHeaders> : AzureLRO<TResourceBody, TRequestHeaders>
             where TResourceBody : class
             where TRequestHeaders : class
     {
+        /// <summary>
+        /// REST Operation Verb
+        /// </summary>
         public override string RESTOperationVerb { get => "POST"; }
 
+        /// <summary>
+        /// Initializes POST LRO Operation
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="response"></param>
+        /// <param name="customHeaders"></param>
+        /// <param name="cancellationToken"></param>
         public POSTLro(IAzureClient client, AzureOperationResponse<TResourceBody, TRequestHeaders> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) : base(client, response, customHeaders, cancellationToken)
         { }
 
+        /// <summary>
+        /// First response status is 201
+        /// Location header is required and we will throw if not provided
+        /// 
+        /// First response status is 202
+        /// We prefer Async-Operation, if not provided we will fall back on Location header
+        /// 
+        /// If we get both headers, we will use Location header to do the final GET at the end of the LRO operation
+        /// </summary>
         protected override void InitializeAsyncHeadersToUse()
         {
             base.InitializeAsyncHeadersToUse();
@@ -68,6 +90,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             }
         }
 
+        /// <summary>
+        /// Check if Provisioning state needs to be checked
+        /// </summary>
+        /// <returns></returns>
         protected override bool IsCheckingProvisioningStateApplicable()
         {
             // For POST check Provisioning for 200 and 204
@@ -75,6 +101,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                      (CurrentPollingState.CurrentStatusCode == HttpStatusCode.NoContent));
         }
 
+        /// <summary>
+        /// Function that allows you to make tweaks before finishing LRO operation and return back to the client
+        /// </summary>
+        /// <returns></returns>
         protected override async Task PostPollingAsync()
         {
             //We do an additional Get to get the resource for PUT requests
