@@ -9,9 +9,7 @@
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Added ability to honor Retry-After during LRO operation
-        2) Added support for LRO PATCH operation that returns 201 for polling
-        3) Multiple bug fixes for LRO operations
+        1) Ability to honor multiple LRO operation headers (Async-Operation/Location header)        
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -19,7 +17,7 @@
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
-    <DefineConstants>DEBUG;FullNetFx;LEGACY;NET452;newWay</DefineConstants>
+    <DefineConstants>DEBUG;FullNetFx;LEGACY;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
