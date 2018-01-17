@@ -9,7 +9,7 @@
 		<Version>1.2.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-		<PackageReleaseNotes>Added a new API to support updating of Event Grid topics.</PackageReleaseNotes>
+		<PackageReleaseNotes>EventSubscriptions.Create() is renamed to EventSubscriptions.CreateOrUpdate(). Also, the SDK is now based on API version 2018-01-01.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
