@@ -183,6 +183,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IPacketCapturesOperations PacketCaptures { get; private set; }
 
         /// <summary>
+        /// Gets the IConnectionMonitorsOperations.
+        /// </summary>
+        public virtual IConnectionMonitorsOperations ConnectionMonitors { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -475,6 +480,7 @@ namespace Microsoft.Azure.Management.Network
             DefaultSecurityRules = new DefaultSecurityRulesOperations(this);
             NetworkWatchers = new NetworkWatchersOperations(this);
             PacketCaptures = new PacketCapturesOperations(this);
+            ConnectionMonitors = new ConnectionMonitorsOperations(this);
             Operations = new Operations(this);
             PublicIPAddresses = new PublicIPAddressesOperations(this);
             RouteFilters = new RouteFiltersOperations(this);
@@ -569,7 +575,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2017-10-01";
+            string apiVersion = "2017-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

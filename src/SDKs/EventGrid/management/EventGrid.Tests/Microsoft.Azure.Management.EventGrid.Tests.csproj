@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.EventGrid.Tests</PackageId>
+    <VersionPrefix>1.2.0-preview</VersionPrefix>
+    <Description>EventGrid.Tests Class Library</Description>
+    <Authors>Microsoft Corporation</Authors>
+    <AssemblyName>Microsoft.Azure.Management.EventGrid.Tests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.EventGrid\Microsoft.Azure.Management.EventGrid.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\EventGrid.Tests.ScenarioTests.ScenarioTests\" />
+  </ItemGroup>
+</Project>
