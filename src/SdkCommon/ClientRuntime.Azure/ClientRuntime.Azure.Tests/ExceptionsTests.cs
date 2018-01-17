@@ -240,7 +240,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(ExceptionsTestsSuite.MockLROAsyncOperationFailedWith200());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var ex = Assert.Throws<CloudLroException>(() => fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
+            var ex = Assert.Throws<CloudException>(() => fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
             Assert.Contains("DeploymentDocument", ex.Message);
         }
         
@@ -269,7 +269,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(ExceptionsTestsSuite.MockDeleteOperaionWithNoRetryableErrorInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudLroException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
+            var error = Assert.Throws<CloudException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'BadRequest'.", error.Message);
             Assert.Equal(2, handler.Requests.Count);
         }
@@ -289,7 +289,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
                 Assert.False(true, "Expected exception was not thrown.");
             }
-            catch (CloudLroException ex)
+            catch (CloudException ex)
             {
                 Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
             }
