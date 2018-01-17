@@ -88,21 +88,20 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Create an event subscription
+            /// Create or update an event subscription
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new event subscription to the specified scope.
-            /// Existing event subscriptions cannot be updated with this API and should
-            /// instead use the Update event subscription API.
+            /// Asynchronously creates a new event subscription or updates an existing
+            /// event subscription based on the specified scope.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of the resource to which the event subscription needs to be
-            /// created. The scope can be a subscription, or a resource group, or a top
-            /// level resource belonging to a resource provider namespace, or an EventGrid
-            /// topic. For example, use '/subscriptions/{subscriptionId}/' for a
+            /// The identifier of the resource to which the event subscription needs to be
+            /// created or updated. The scope can be a subscription, or a resource group,
+            /// or a top level resource belonging to a resource provider namespace, or an
+            /// EventGrid topic. For example, use '/subscriptions/{subscriptionId}/' for a
             /// subscription,
             /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for a
             /// resource group, and
@@ -112,34 +111,33 @@ namespace Microsoft.Azure.Management.EventGrid
             /// for an EventGrid topic.
             /// </param>
             /// <param name='eventSubscriptionName'>
-            /// Name of the event subscription to be created. Event subscription names must
-            /// be between 3 and 64 characters in length and use alphanumeric letters only.
+            /// Name of the event subscription. Event subscription names must be between 3
+            /// and 64 characters in length and should use alphanumeric letters only.
             /// </param>
             /// <param name='eventSubscriptionInfo'>
             /// Event subscription properties containing the destination and filter
             /// information
             /// </param>
-            public static EventSubscription Create(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo)
+            public static EventSubscription CreateOrUpdate(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo)
             {
-                return operations.CreateAsync(scope, eventSubscriptionName, eventSubscriptionInfo).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscriptionInfo).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create an event subscription
+            /// Create or update an event subscription
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new event subscription to the specified scope.
-            /// Existing event subscriptions cannot be updated with this API and should
-            /// instead use the Update event subscription API.
+            /// Asynchronously creates a new event subscription or updates an existing
+            /// event subscription based on the specified scope.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of the resource to which the event subscription needs to be
-            /// created. The scope can be a subscription, or a resource group, or a top
-            /// level resource belonging to a resource provider namespace, or an EventGrid
-            /// topic. For example, use '/subscriptions/{subscriptionId}/' for a
+            /// The identifier of the resource to which the event subscription needs to be
+            /// created or updated. The scope can be a subscription, or a resource group,
+            /// or a top level resource belonging to a resource provider namespace, or an
+            /// EventGrid topic. For example, use '/subscriptions/{subscriptionId}/' for a
             /// subscription,
             /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for a
             /// resource group, and
@@ -149,8 +147,8 @@ namespace Microsoft.Azure.Management.EventGrid
             /// for an EventGrid topic.
             /// </param>
             /// <param name='eventSubscriptionName'>
-            /// Name of the event subscription to be created. Event subscription names must
-            /// be between 3 and 64 characters in length and use alphanumeric letters only.
+            /// Name of the event subscription. Event subscription names must be between 3
+            /// and 64 characters in length and should use alphanumeric letters only.
             /// </param>
             /// <param name='eventSubscriptionInfo'>
             /// Event subscription properties containing the destination and filter
@@ -159,9 +157,9 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventSubscription> CreateAsync(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EventSubscription> CreateOrUpdateAsync(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(scope, eventSubscriptionName, eventSubscriptionInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, eventSubscriptionName, eventSubscriptionInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -791,21 +789,20 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Create an event subscription
+            /// Create or update an event subscription
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new event subscription to the specified scope.
-            /// Existing event subscriptions cannot be updated with this API and should
-            /// instead use the Update event subscription API.
+            /// Asynchronously creates a new event subscription or updates an existing
+            /// event subscription based on the specified scope.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of the resource to which the event subscription needs to be
-            /// created. The scope can be a subscription, or a resource group, or a top
-            /// level resource belonging to a resource provider namespace, or an EventGrid
-            /// topic. For example, use '/subscriptions/{subscriptionId}/' for a
+            /// The identifier of the resource to which the event subscription needs to be
+            /// created or updated. The scope can be a subscription, or a resource group,
+            /// or a top level resource belonging to a resource provider namespace, or an
+            /// EventGrid topic. For example, use '/subscriptions/{subscriptionId}/' for a
             /// subscription,
             /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for a
             /// resource group, and
@@ -815,34 +812,33 @@ namespace Microsoft.Azure.Management.EventGrid
             /// for an EventGrid topic.
             /// </param>
             /// <param name='eventSubscriptionName'>
-            /// Name of the event subscription to be created. Event subscription names must
-            /// be between 3 and 64 characters in length and use alphanumeric letters only.
+            /// Name of the event subscription. Event subscription names must be between 3
+            /// and 64 characters in length and should use alphanumeric letters only.
             /// </param>
             /// <param name='eventSubscriptionInfo'>
             /// Event subscription properties containing the destination and filter
             /// information
             /// </param>
-            public static EventSubscription BeginCreate(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo)
+            public static EventSubscription BeginCreateOrUpdate(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo)
             {
-                return operations.BeginCreateAsync(scope, eventSubscriptionName, eventSubscriptionInfo).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscriptionInfo).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create an event subscription
+            /// Create or update an event subscription
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new event subscription to the specified scope.
-            /// Existing event subscriptions cannot be updated with this API and should
-            /// instead use the Update event subscription API.
+            /// Asynchronously creates a new event subscription or updates an existing
+            /// event subscription based on the specified scope.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of the resource to which the event subscription needs to be
-            /// created. The scope can be a subscription, or a resource group, or a top
-            /// level resource belonging to a resource provider namespace, or an EventGrid
-            /// topic. For example, use '/subscriptions/{subscriptionId}/' for a
+            /// The identifier of the resource to which the event subscription needs to be
+            /// created or updated. The scope can be a subscription, or a resource group,
+            /// or a top level resource belonging to a resource provider namespace, or an
+            /// EventGrid topic. For example, use '/subscriptions/{subscriptionId}/' for a
             /// subscription,
             /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for a
             /// resource group, and
@@ -852,8 +848,8 @@ namespace Microsoft.Azure.Management.EventGrid
             /// for an EventGrid topic.
             /// </param>
             /// <param name='eventSubscriptionName'>
-            /// Name of the event subscription to be created. Event subscription names must
-            /// be between 3 and 64 characters in length and use alphanumeric letters only.
+            /// Name of the event subscription. Event subscription names must be between 3
+            /// and 64 characters in length and should use alphanumeric letters only.
             /// </param>
             /// <param name='eventSubscriptionInfo'>
             /// Event subscription properties containing the destination and filter
@@ -862,9 +858,9 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventSubscription> BeginCreateAsync(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EventSubscription> BeginCreateOrUpdateAsync(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(scope, eventSubscriptionName, eventSubscriptionInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(scope, eventSubscriptionName, eventSubscriptionInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
