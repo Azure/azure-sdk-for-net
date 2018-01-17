@@ -45,8 +45,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                   ""status"": ""Failed"",
                   ""error"":
                     {
-                                ""code"": ""InvalidDocumentErrorCode"",
-                                ""message"": ""DeploymentDocument 'HiveConfigurationValidator' failed the validation.Error: 'Cannot connect to Hive metastore using user provided connection string'""
+                        ""code"": ""InvalidDocumentErrorCode"",
+                        ""message"": ""DeploymentDocument 'HiveConfigurationValidator' failed the validation.Error: 'Cannot connect to Hive metastore using user provided connection string'""
                     }
                 }
             ")
@@ -204,6 +204,51 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
         }
 
+        static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithLocationHeaderAnd202()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("null")
+            };
+            response1.Headers.Add("Location", "http://custom/status");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            response2.Headers.Add("Location", "http://custom/locationstatus");
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            response3.Headers.Add("Location", "https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis");
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""location"": ""North US"",
+                    ""tags"": {
+                        ""key1"": ""value 1"",
+                        ""key2"": ""value 2""
+                        },
+    
+                    ""properties"": { 
+                        ""provisioningState"": ""Succeeded"",
+                        ""comment"": ""Resource defined structure""
+                    }
+                }")
+            };
+
+            yield return response4;
+        }
         #region Provisioning States
         static internal IEnumerable<HttpResponseMessage> MockAsyncOperaionWithMissingProvisioningState()
         {
@@ -287,7 +332,154 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
         }
 
         #endregion
-        
+
+        #region Retry-After
+
+        static internal IEnumerable<HttpResponseMessage> MockDeleteWithRetryAfterTwoTries()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "3");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"")
+            };
+
+            yield return response2;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockPatchWithRetryAfterTwoTries()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "3");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response2;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithDifferentRetryAfterValues()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""location"": ""North US"",
+                    ""tags"": {
+                        ""key1"": ""value 1"",
+                        ""key2"": ""value 2""
+                        },
+    
+                    ""properties"": { 
+                        ""provisioningState"": ""InProgerss"",
+                        ""comment"": ""Resource defined structure""
+                    }
+                }")
+            };
+            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
+            response1.Headers.Add("Retry-After", "2");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"" : ""InProgerss"", 
+                    ""properties"": { 
+                        ""provisioningState"": ""InProgerss"",
+                        ""comment"": ""Resource getting created""
+                    }
+                }")
+            };
+            response2.Headers.Add("Retry-After", "5");
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"" : ""Succeeded"", 
+                    ""properties"": {
+                        ""id"": ""100"",
+                        ""name"": ""foo""
+                    }
+                }")
+            };
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"" : ""Succeeded"", 
+                    ""properties"": {
+                        ""id"": ""100"",
+                        ""name"": ""foo""
+                    }
+                }")
+            };
+
+            yield return response4;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockCreateWithRetryAfterDefaultMin()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "0");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response2;
+        }
+
+        static internal IEnumerable<HttpResponseMessage> MockCreateWithRetryAfterDefaultMax()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+            response1.Headers.Add("Location", "http://custom/location/status");
+            response1.Headers.Add("Retry-After", "50");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response2;
+        }
+        #endregion
+
+        #region other LRO tests
         static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithoutHeaderInResponses()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.OK)
@@ -406,6 +598,24 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             yield return response2;
         }
 
+        static internal IEnumerable<HttpResponseMessage> MockAsyncOperaionWithNullBody()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = null
+            };
+
+            yield return response2;
+        }
+
         static internal IEnumerable<HttpResponseMessage> MockAsyncOperaionWithBadPayload()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
@@ -487,7 +697,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
-                Content = new StringContent("{ \"properties\": { \"provisioningState\": \"InProgress\"}, \"id\": \"100\", \"name\": \"foo\" }")
+                Content = new StringContent(@"
+                {
+                    ""properties"": {
+                    ""provisioningState"": ""InProgress""
+                    },
+                    ""id"": ""100"",
+                    ""name"": ""foo""
+                }
+              }")
             };
             response1.Headers.Add("Location", "http://custom/status");
 
@@ -642,53 +860,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
             yield return response3;
         }
-
-        static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithLocationHeaderAnd202()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("null")
-            };
-            response1.Headers.Add("Location", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response2.Headers.Add("Location", "http://custom/locationstatus");
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent("")
-            };
-            response3.Headers.Add("Location", "https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis");
-
-            yield return response3;
-
-            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response4;
-        }
-
+        
         static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithAsyncHeaderAnd202()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
@@ -1083,150 +1255,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
             yield return response2;
         }
-
-        static internal IEnumerable<HttpResponseMessage> MockDeleteWithRetryAfterTwoTries()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-            response1.Headers.Add("Retry-After", "3");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"")
-            };
-
-            yield return response2;
-        }
-
-        static internal IEnumerable<HttpResponseMessage> MockPatchWithRetryAfterTwoTries()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-            response1.Headers.Add("Retry-After", "3");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response2;
-        }
-
-        static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithDifferentRetryAfterValues()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgerss"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-            response1.Headers.Add("Retry-After", "2");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""InProgerss"", 
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgerss"",
-                        ""comment"": ""Resource getting created""
-                    }
-                }")
-            };            
-            response2.Headers.Add("Retry-After", "5");
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""properties"": {
-                        ""id"": ""100"",
-                        ""name"": ""foo""
-                    }
-                }")
-            };
-
-            yield return response3;
-
-            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""properties"": {
-                        ""id"": ""100"",
-                        ""name"": ""foo""
-                    }
-                }")
-            };
-
-            yield return response4;
-        }
-
-        static internal IEnumerable<HttpResponseMessage> MockCreateWithRetryAfterDefaultMin()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-            response1.Headers.Add("Retry-After", "0");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response2;
-        }
-
-        static internal IEnumerable<HttpResponseMessage> MockCreateWithRetryAfterDefaultMax()
-        {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"")
-            };
-            response1.Headers.Add("Location", "http://custom/location/status");
-            response1.Headers.Add("Retry-After", "50");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent("{ \"properties\": { }, \"id\": \"100\", \"name\": \"foo\" }")
-            };
-
-            yield return response2;
-        }
-
+        
         static internal IEnumerable<HttpResponseMessage> MockPutWebAppLRO()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Created)
@@ -1387,10 +1416,76 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
             yield return response3;
         }
+        #endregion
     }
 
     static class LROOperationPatchTestResponses
     {
+
+        static internal IEnumerable<HttpResponseMessage> ServiceCustomResponse()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                {
+                     ""properties"": {
+                            ""topic"": ""/subscriptions/76fc5-4d01-b462-9f01b2d77/resourceGroups/rg-76fce8d7-1205-4d01-b462-9f01b2d70f67/providers/microsoft.eventgrid/topics/topic-76fce8d7-1205-4d01-b462-9f01b2d70f67"",
+                            ""provisioningState"": ""Updating"",
+                            ""destination"": {
+                              ""properties"": {
+                                ""endpointUrl"": null,
+                                ""endpointBaseUrl"": ""https://subscriber-76fce8d7-1205-4d01-b462-9f01b2d70f67.eventgrid-int.azure.net:782/""
+                              },
+                              ""endpointType"": ""WebHook""
+                            },
+                            ""filter"": {
+                              ""subjectBeginsWith"": """",
+                              ""subjectEndsWith"": """",
+                              ""includedEventTypes"": [ ""All"" ]
+                            },
+                            ""labels"": null
+                          },
+                  ""id"": ""/subscriptions/76fc5-4d01-b462-9f01b2d77/resourceGroups/rg-76fce8d7-12d01-b462-9f01b2d70f67/providers/Microsoft.EventGrid/topics/topic-76fce8d7-1205-4d01-b462-9f01b2d70f67/providers/Microsoft.EventGrid/eventSubscriptions/subscription-8da8b80f-a198-42f0-af01-99bc0c08d563"",
+                  ""name"": ""subscription-8da8b80f-a198-42f0-af01-99bc0c08d563"",
+                  ""type"": ""Microsoft.EventGrid/eventSubscriptions""
+                }")
+            };
+            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""status"": ""Succeeded"",
+	                ""properties"": {
+		                ""provisioningState"": ""Succeeded"",
+		                ""state"": ""Active""
+                        }
+                }
+                ")
+            };
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""id"": ""34adfa4f-cedf-4dc0-ba29-b6d1a69ab345"",             
+	                ""name"": ""test_account"",
+	                ""type"": ""test_type"",
+	                ""location"": ""test_location"",
+	                ""tags"": { 
+		                ""test_key"": ""test_value""                    
+	                }
+                }
+                ")
+            };
+            yield return response3;
+
+        }
         static internal IEnumerable<HttpResponseMessage> MockPatchWithAzureAsyncOperationHeader()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Created)
@@ -1528,17 +1623,95 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             yield return response2;
 
 
-            //var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            //{
-            //    Content = new StringContent(@"
-            //    {
-            //      ""status"": ""Failed""
-            //    }
-            //")
-            //};
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                  ""https://mdsbrketwprodsn1prod.blob.core.windows.net/cmakexe/abbd1dc4-44eb-4a66-9d90-156f7e5191a7/vpnclientconfiguration.zip?sv=2015-04-05&sr=b&sig=Ec6g2tlP0xktQSipQCTO55mnNjwOxTsge4Ot3sjX8Z8%3D&st=2017-08-28T21%3A25%3A34Z&se=2017-08-28T22%3A25%3A34Z&sp=r&fileExtension=.zip""
+                }
+            ")
+            };
 
-            //yield return response2;
+            yield return response3;
 
         }
+    }
+
+    static class LROOperationMultipleHeaderResponses
+    {
+        static internal IEnumerable<HttpResponseMessage> MockLROLocationHeaderAndAsyncOperation()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""location"": ""East US"",
+                      ""etag"": ""9d8d7ed9-7422-46be-82b3-94c5345f6099"",
+                      ""tags"": {},
+                      ""properties"": {
+                            ""clusterVersion"": ""0.0.1000.0"",
+                            ""osType"": ""Linux"",                            
+                            ""provisioningState"": ""InProgress"",
+                            ""clusterState"": ""Accepted"",
+                            ""createdDate"": ""2017-07-25T21:48:17.427"",
+                            ""quotaInfo"": 
+                                {
+                                    ""coresUsed"": ""200""
+                                },
+                            }
+                    }
+            ")
+            };
+            response1.Headers.Add("Location", "https://management.azure.com:090/subscriptions/947c-43bc-83d3-6b3186c7305/resourceGroups/hdisdk106/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview");
+
+            yield return response1;
+
+            // Even if Async-Operation header is passed, but initially LocationHeader was used
+            // we cache it and use it because for 202, we prefere Location header over Async-Operation
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"
+                {
+                    ""location"": ""North US"",                    
+                    ""id"": ""100"",
+                    ""name"": ""foo"",
+                    ""properties"": {
+                        ""provisioningState"": ""InProgress""
+                    }
+              }")
+            };
+            response2.Headers.Add("Azure-AsyncOperation", "http://custom/AsyncOperation");
+            response2.Headers.Add("Retry-After", "12");
+
+            yield return response2;
+
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                        ""status"": ""Succeeded"",
+	                    ""properties"": {
+		                    ""provisioningState"": ""Succeeded"",
+		                    ""state"": ""Active""
+                        }
+                    }")
+            };
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""location"": ""North US"",
+                    ""id"": ""100""
+                }")
+            };
+
+            yield return response4;
+
+        }
+
     }
 }

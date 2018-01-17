@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="name">Name of the operation</param>
         /// <param name="display">Display name of the operation</param>
-        /// <param name="origin">Origin of the operation. Possible values
-        /// include: 'User', 'System', 'UserAndSystem'</param>
+        /// <param name="origin">Origin of the operation</param>
         /// <param name="properties">Properties of the operation</param>
         public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), object properties = default(object))
         {
@@ -61,8 +60,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public OperationInfo Display { get; set; }
 
         /// <summary>
-        /// Gets or sets origin of the operation. Possible values include:
-        /// 'User', 'System', 'UserAndSystem'
+        /// Gets or sets origin of the operation
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }
