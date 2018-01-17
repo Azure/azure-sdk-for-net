@@ -18,7 +18,6 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
     <ProjectReference Include="..\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
   </ItemGroup>
 

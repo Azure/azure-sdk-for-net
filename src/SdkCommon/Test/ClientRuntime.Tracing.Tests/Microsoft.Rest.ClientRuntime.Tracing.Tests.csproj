@@ -20,7 +20,6 @@
 	
     <ProjectReference Include="..\..\ClientRuntime.Etw\Microsoft.Rest.ClientRuntime.Etw.csproj" />    
     <ProjectReference Include="..\..\ClientRuntime.Log4Net\Microsoft.Rest.ClientRuntime.Log4Net.csproj" />    
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />    
   </ItemGroup>
 
   <!--Do not remove until VS Test Tools fixes #472-->

@@ -14,7 +14,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\net452\Microsoft.Rest.ClientRuntime.Etw.xml</DocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />-->
   </ItemGroup>
 </Project>

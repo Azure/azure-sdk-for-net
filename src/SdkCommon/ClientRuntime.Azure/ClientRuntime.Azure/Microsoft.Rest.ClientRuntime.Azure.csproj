@@ -16,8 +16,6 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
     <DefineConstants>DEBUG;FullNetFx;LEGACY;</DefineConstants>
   </PropertyGroup>

@@ -19,8 +19,4 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.13.9]" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
-    <ProjectReference Include="..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
-  </ItemGroup>
 </Project>
