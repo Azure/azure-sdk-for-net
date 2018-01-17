@@ -77,7 +77,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
                 this.CloudException = new CloudException(errorMessage)
                 {
-                    Body = AsyncOperationResponseBody?.Error,
+                    ErrorBody = AsyncOperationResponseBody?.Error,
                     Request = new HttpRequestMessageWrapper(this.Request, null),
                     Response = new HttpResponseMessageWrapper(this.Response, this.ResponseContent)
                 };
@@ -231,7 +231,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 throw new CloudException(string.Format(CultureInfo.InvariantCulture,
                     Resources.LongRunningOperationFailed, statusCode))
                 {
-                    Body = errorBody,
+                    ErrorBody = errorBody,
                     Request = new HttpRequestMessageWrapper(httpRequest, null),
                     Response = new HttpResponseMessageWrapper(httpResponse, responseContent)
                 };

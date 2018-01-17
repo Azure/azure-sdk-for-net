@@ -305,7 +305,7 @@ namespace Microsoft.Rest.Azure
                     _cloudException = new CloudLroException(string.Format(CultureInfo.InvariantCulture,
                                             Resources.LongRunningOperationFailed, Status))
                     {
-                        Body = Error,
+                        ErrorBody = Error,
                         Request = new HttpRequestMessageWrapper(Request, Request.Content.AsString()),
                         Response = new HttpResponseMessageWrapper(Response, Response.Content.AsString())
                     };
