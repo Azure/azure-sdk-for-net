@@ -36,8 +36,4 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="SessionRecords\Network.Tests.Tests.AvailableProvidersListTests\" />
-    <Folder Include="SessionRecords\Network.Tests.Tests.AzureReachabilityReportTests\" />
-  </ItemGroup>
 </Project>

@@ -4,7 +4,9 @@
 
 namespace Microsoft.Azure.Management.Search.Tests
 {
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using Microsoft.Azure.Management.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Rest.Azure;
@@ -111,7 +113,8 @@ namespace Microsoft.Azure.Management.Search.Tests
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
-                CheckNameAvailabilityOutput result = searchMgmt.Services.CheckNameAvailability(InvalidServiceName);
+                CheckNameAvailabilityOutput result =
+                    searchMgmt.Services.CheckNameAvailability(InvalidServiceName);
 
                 Assert.False(string.IsNullOrEmpty(result.Message));
                 Assert.Equal(UnavailableNameReason.Invalid, result.Reason);
@@ -167,23 +170,151 @@ namespace Microsoft.Azure.Management.Search.Tests
             Run(() =>
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
-                SearchService service = CreateServiceForSku(searchMgmt, SkuName.Basic);
+                SearchService service = CreateServiceForSku(searchMgmt, SkuName.Standard);
 
-                service = WaitForProvisioningToComplete(searchMgmt, service);
+                WaitForProvisioningToComplete(searchMgmt, service);
 
-                // Scale up to 2 replicas.
-                service.ReplicaCount = 2;
-                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, service.Name, service);
+                // Scale up to 2 replicas x 2 partitions.
+                service =
+                    searchMgmt.Services.Update(
+                        Data.ResourceGroupName, 
+                        service.Name, 
+                        new SearchService() { ReplicaCount = 2, PartitionCount = 2 });
+
                 service = WaitForProvisioningToComplete(searchMgmt, service);
                 Assert.Equal(2, service.ReplicaCount);
+                Assert.Equal(2, service.PartitionCount);
 
-                // Scale back down to 1 replica.
-                service.ReplicaCount = 1;
-                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, service.Name, service);
+                // Scale back down to 1 replica x 1 partition.
+                service =
+                    searchMgmt.Services.Update(
+                        Data.ResourceGroupName, 
+                        service.Name, 
+                        new SearchService() { ReplicaCount = 1, PartitionCount = 1 });
+
                 service = WaitForProvisioningToComplete(searchMgmt, service);
                 Assert.Equal(1, service.ReplicaCount);
+                Assert.Equal(1, service.PartitionCount);
 
                 searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CreateStandardServicePollsAutomatically()
+        {
+            Run(() =>
+            {
+                // Create an S1 with multiple replicas so that the operation will take some time.
+                SearchService service = DefineServiceWithSku(SkuName.Standard);
+                service.ReplicaCount = 2;
+
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                string serviceName = SearchTestUtilities.GenerateServiceName();
+
+                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+
+                // Unlike BeginCreateOrUpdate, CreateOrUpdate should have already polled until
+                // provisioning is complete.
+                Assert.Equal(ProvisioningState.Succeeded, service.ProvisioningState);
+                Assert.Equal(SearchServiceStatus.Running, service.Status);
+
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CanUpdateTags()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                SearchService service = CreateFreeService(searchMgmt);
+
+                var testTags =
+                    new Dictionary<string, string>()
+                    {
+                        ["testTag"] = "testValue",
+                        ["anotherTag"] = "anotherValue"
+                    };
+
+                // Add some tags.
+                service =
+                    searchMgmt.Services.Update(
+                        Data.ResourceGroupName,
+                        service.Name,
+                        new SearchService() { Tags = testTags });
+
+                Assert.Equal(testTags, service.Tags);
+
+                // Modify a tag.
+                testTags["anotherTag"] = "differentValue";
+
+                service =
+                    searchMgmt.Services.Update(
+                        Data.ResourceGroupName,
+                        service.Name,
+                        new SearchService() { Tags = testTags });
+
+                Assert.Equal(testTags, service.Tags);
+
+                // Remove the second tag.
+                testTags.Remove("anotherTag");
+
+                service =
+                    searchMgmt.Services.Update(
+                        Data.ResourceGroupName,
+                        service.Name,
+                        new SearchService() { Tags = testTags });
+
+                Assert.Equal(testTags, service.Tags);
+            });
+        }
+
+        [Fact]
+        public void UpdatingImmutablePropertiesThrowsCloudException()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                SearchService service = CreateFreeService(searchMgmt);
+
+                CloudException e =
+                    Assert.Throws<CloudException>(() =>
+                        searchMgmt.Services.Update(
+                            Data.ResourceGroupName,
+                            service.Name,
+                            new SearchService() { HostingMode = HostingMode.HighDensity }));
+
+                Assert.Equal("Updating HostingMode of an existing search service is not allowed.", e.Message);
+
+                // There is currently a validation bug in the Azure Search management API, so we can't
+                // test for an exception yet. Instead, just make sure the location doesn't actually change.
+                SearchService updatedService =
+                    searchMgmt.Services.Update(
+                        Data.ResourceGroupName,
+                        service.Name,
+                        new SearchService() { Location = "East US" });  // We run live tests in West US.
+
+                Assert.Equal(service.Location, updatedService.Location);
+
+                /*e =
+                    Assert.Throws<CloudException>(() =>
+                        searchMgmt.Services.Update(
+                            Data.ResourceGroupName,
+                            service.Name,
+                            new SearchService() { Location = "East US" }));  // We run live tests in West US.
+
+                    Assert.Equal("Updating Location of an existing search service is not allowed.", e.Message);*/
+
+                e =
+                    Assert.Throws<CloudException>(() =>
+                        searchMgmt.Services.Update(
+                            Data.ResourceGroupName,
+                            service.Name,
+                            new SearchService() { Sku = new Sku(SkuName.Basic) }));
+
+                Assert.Equal("Updating Sku of an existing search service is not allowed.", e.Message);
             });
         }
 
@@ -196,17 +327,35 @@ namespace Microsoft.Azure.Management.Search.Tests
                 SearchService service = DefineServiceWithSku(SkuName.Free);
 
                 CloudException e =
-                    Assert.Throws<CloudException>(() => searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, InvalidServiceName, service));
+                    Assert.Throws<CloudException>(() =>
+                        searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, InvalidServiceName, service));
 
                 string expectedMessage = 
-                    $"Service name '{InvalidServiceName}' is invalid: Service name must only contain lowercase letters, digits or dashes, cannot " +
-                    "start or end with or contain consecutive dashes and is limited to 60 characters.";
+                    $"Service name '{InvalidServiceName}' is invalid: Service name must only contain " +
+                    "lowercase letters, digits or dashes, cannot start or end with or contain consecutive " +
+                    "dashes and is limited to 60 characters.";
 
                 Assert.Equal(expectedMessage, e.Message);
             });
         }
 
-        private static void AssertServicesEqual(SearchService a, SearchService b) => Assert.Equal(a, b, new ModelComparer<SearchService>());
+        [Fact]
+        public void UpdateServiceWithInvalidNameGivesNotFound()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+
+                CloudException e =
+                    Assert.Throws<CloudException>(() =>
+                        searchMgmt.Services.Update(Data.ResourceGroupName, "missing", new SearchService()));
+
+                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+            });
+        }
+
+        private static void AssertServicesEqual(SearchService a, SearchService b) =>
+            Assert.Equal(a, b, new ModelComparer<SearchService>());
 
         private SearchService DefineServiceWithSku(SkuName sku)
         {
@@ -225,26 +374,29 @@ namespace Microsoft.Azure.Management.Search.Tests
 
             SearchService service = DefineServiceWithSku(sku);
 
-            service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+            service = searchMgmt.Services.BeginCreateOrUpdate(Data.ResourceGroupName, serviceName, service);
             Assert.NotNull(service);
 
             return service;
         }
 
-        private SearchService CreateFreeService(SearchManagementClient searchMgmt) => CreateServiceForSku(searchMgmt, SkuName.Free);
+        private SearchService CreateFreeService(SearchManagementClient searchMgmt) =>
+            CreateServiceForSku(searchMgmt, SkuName.Free);
 
         private void TestCreateService(SearchService service)
         {
             SearchManagementClient searchMgmt = GetSearchManagementClient();
             string serviceName = SearchTestUtilities.GenerateServiceName();
 
-            service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+            service = searchMgmt.Services.BeginCreateOrUpdate(Data.ResourceGroupName, serviceName, service);
             service = WaitForProvisioningToComplete(searchMgmt, service);
 
             searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
         }
 
-        private SearchService WaitForProvisioningToComplete(SearchManagementClient searchMgmt, SearchService service)
+        private SearchService WaitForProvisioningToComplete(
+            SearchManagementClient searchMgmt, 
+            SearchService service)
         {
             while (service.ProvisioningState == ProvisioningState.Provisioning)
             {
