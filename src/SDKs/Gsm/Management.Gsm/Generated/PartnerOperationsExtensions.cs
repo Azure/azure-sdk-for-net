@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Gsm
             /// Get a specific `Partner`.
             /// </summary>
             /// <remarks>
-            /// Get the details of the `PartnerId`.
+            /// Get the management partner using the partnerId, objectId and tenantId.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Gsm
             /// Get a specific `Partner`.
             /// </summary>
             /// <remarks>
-            /// Get the details of the `PartnerId`.
+            /// Get the management partner using the partnerId, objectId and tenantId.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,6 +52,157 @@ namespace Microsoft.Azure.Management.Gsm
             public static async Task<PartnerResponse> GetAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Add a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Add a management partner for the objectId and tenantId.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='partnerId'>
+            /// Id of the Partner
+            /// </param>
+            public static PartnerResponse Put(this IPartnerOperations operations, string partnerId)
+            {
+                return operations.PutAsync(partnerId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Add a management partner for the objectId and tenantId.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='partnerId'>
+            /// Id of the Partner
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PartnerResponse> PutAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PutWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Update the management partner for the objectId and tenantId.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='partnerId'>
+            /// Id of the Partner
+            /// </param>
+            public static PartnerResponse Patch(this IPartnerOperations operations, string partnerId)
+            {
+                return operations.PatchAsync(partnerId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Update the management partner for the objectId and tenantId.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='partnerId'>
+            /// Id of the Partner
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PartnerResponse> PatchAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PatchWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Delete the management partner for the objectId and tenantId.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='partnerId'>
+            /// Id of the Partner
+            /// </param>
+            public static void Delete(this IPartnerOperations operations, string partnerId)
+            {
+                operations.DeleteAsync(partnerId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Delete the management partner for the objectId and tenantId.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='partnerId'>
+            /// Id of the Partner
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Get the management partner using the objectId and tenantId..
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static PartnerResponse Get1(this IPartnerOperations operations)
+            {
+                return operations.Get1Async().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a specific `Partner`.
+            /// </summary>
+            /// <remarks>
+            /// Get the management partner using the objectId and tenantId..
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PartnerResponse> Get1Async(this IPartnerOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.Get1WithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

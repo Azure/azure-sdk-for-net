@@ -28,28 +28,30 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// </summary>
         /// <param name="id">Identifier of the partner</param>
         /// <param name="name">Name of the partner</param>
+        /// <param name="partnerId">This is the partner id</param>
         /// <param name="tenantId">This is the tenant id.</param>
         /// <param name="objectId">This is the object id.</param>
-        /// <param name="partnerId">This is the partner id</param>
-        /// <param name="createdDateTime">This is the DateTime when the partner
-        /// was created.</param>
-        /// <param name="modifiedDateTime">This is the DateTime when the
-        /// partner was created.</param>
-        /// <param name="deletedDateTime">This is the DateTime when the partner
-        /// was created.</param>
+        /// <param name="version">This is the version.</param>
+        /// <param name="updatedTime">This is the DateTime when the partner was
+        /// updated.</param>
+        /// <param name="createdTime">This is the DateTime when the partner was
+        /// created.</param>
+        /// <param name="managementPartnerState">Possible values include:
+        /// 'Active', 'Deleted'</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.ManagementPartner/partners"</param>
-        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string tenantId = default(string), string objectId = default(string), string partnerId = default(string), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? modifiedDateTime = default(System.DateTime?), System.DateTime? deletedDateTime = default(System.DateTime?), string type = default(string))
+        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string managementPartnerState = default(string), string type = default(string))
         {
             Etag = etag;
             Id = id;
             Name = name;
+            PartnerId = partnerId;
             TenantId = tenantId;
             ObjectId = objectId;
-            PartnerId = partnerId;
-            CreatedDateTime = createdDateTime;
-            ModifiedDateTime = modifiedDateTime;
-            DeletedDateTime = deletedDateTime;
+            Version = version;
+            UpdatedTime = updatedTime;
+            CreatedTime = createdTime;
+            ManagementPartnerState = managementPartnerState;
             Type = type;
             CustomInit();
         }
@@ -77,6 +79,12 @@ namespace Microsoft.Azure.Management.Gsm.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets or sets this is the partner id
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerId")]
+        public string PartnerId { get; set; }
+
+        /// <summary>
         /// Gets or sets this is the tenant id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantId")]
@@ -89,28 +97,28 @@ namespace Microsoft.Azure.Management.Gsm.Models
         public string ObjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets this is the partner id
+        /// Gets or sets this is the version.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.partnerId")]
-        public string PartnerId { get; set; }
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets this is the DateTime when the partner was updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updatedTime")]
+        public System.DateTime? UpdatedTime { get; set; }
 
         /// <summary>
         /// Gets or sets this is the DateTime when the partner was created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdDateTime")]
-        public System.DateTime? CreatedDateTime { get; set; }
+        [JsonProperty(PropertyName = "properties.createdTime")]
+        public System.DateTime? CreatedTime { get; set; }
 
         /// <summary>
-        /// Gets or sets this is the DateTime when the partner was created.
+        /// Gets or sets possible values include: 'Active', 'Deleted'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.modifiedDateTime")]
-        public System.DateTime? ModifiedDateTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets this is the DateTime when the partner was created.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deletedDateTime")]
-        public System.DateTime? DeletedDateTime { get; set; }
+        [JsonProperty(PropertyName = "properties.managementPartnerState")]
+        public string ManagementPartnerState { get; set; }
 
         /// <summary>
         /// Gets type of resource. "Microsoft.ManagementPartner/partners"

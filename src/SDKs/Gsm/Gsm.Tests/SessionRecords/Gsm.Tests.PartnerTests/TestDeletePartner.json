@@ -3,11 +3,11 @@
     {
       "RequestUri": "/providers/Microsoft.ManagementPartner/partners/d14e8666-b43e-4f12-aa78-06c49c4859de?api-version=2018-02-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudFBhcnRuZXIvcGFydG5lcnMvZDE0ZTg2NjYtYjQzZS00ZjEyLWFhNzgtMDZjNDljNDg1OWRlP2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
-      "RequestMethod": "GET",
+      "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f7f5583c-a6b7-47c7-b56f-905f0c923e2c"
+          "27786a29-f990-40d4-8020-e3f20859029f"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 Jan 2018 23:34:22 GMT"
+          "Tue, 16 Jan 2018 23:34:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -44,11 +44,11 @@
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1198"
         ],
         "request-id": [
-          "a4c20153-f0e1-4c80-a12e-90ccecde7b52"
+          "95c3d9c4-9b6a-445d-a247-72012f147fcc"
         ],
         "x-gsm": [
           "7.12.0.50 (AD-CAB:master.c0929e17c.180111-0227)"
@@ -60,13 +60,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "76d3a73a-4a35-4523-904f-2f31b14f21c0"
+          "f4b5d72d-364f-4584-8343-ad08dec6ccdc"
         ],
         "x-ms-correlation-request-id": [
-          "76d3a73a-4a35-4523-904f-2f31b14f21c0"
+          "f4b5d72d-364f-4584-8343-ad08dec6ccdc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180116T233422Z:76d3a73a-4a35-4523-904f-2f31b14f21c0"
+          "CENTRALUS:20180116T233424Z:f4b5d72d-364f-4584-8343-ad08dec6ccdc"
         ]
       },
       "StatusCode": 200
