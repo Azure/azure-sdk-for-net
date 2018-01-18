@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.ApplicationInsights.Models
 {
@@ -9,8 +10,8 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// </summary>
         public new IList<T> Value
         {
-            get { return (IList<T>) base.Value; }
-            internal set { base.Value = (IList<EventsResultData>)value; }
+            get { return base.Value.OfType<T>().ToList(); }
+            internal set { base.Value = value.OfType<EventsResultData>().ToList(); }
         }
     }
 }

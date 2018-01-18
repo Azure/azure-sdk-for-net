@@ -542,7 +542,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsTraceResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsTraceResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsTraceResult>().ToList(),
                 }
             };
         }
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsTraceResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsTraceResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsTraceResult>().ToList(),
                 }
             };
         }
@@ -652,7 +652,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsCustomEventResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsCustomEventResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsCustomEventResult>().ToList(),
                 }
             };
         }
@@ -692,7 +692,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsCustomEventResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsCustomEventResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsCustomEventResult>().ToList(),
                 }
             };
         }
@@ -762,7 +762,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsPageViewResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsPageViewResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsPageViewResult>().ToList(),
                 }
             };
         }
@@ -802,7 +802,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsPageViewResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsPageViewResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsPageViewResult>().ToList(),
                 }
             };
         }
@@ -872,7 +872,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsBrowserTimingResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsBrowserTimingResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsBrowserTimingResult>().ToList(),
                 }
             };
         }
@@ -912,7 +912,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsBrowserTimingResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsBrowserTimingResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsBrowserTimingResult>().ToList(),
                 }
             };
         }
@@ -982,7 +982,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsRequestResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsRequestResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsRequestResult>().ToList(),
                 }
             };
         }
@@ -1022,7 +1022,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsRequestResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsRequestResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsRequestResult>().ToList(),
                 }
             };
         }
@@ -1092,7 +1092,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsDependencyResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsDependencyResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsDependencyResult>().ToList(),
                 }
             };
         }
@@ -1132,7 +1132,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsDependencyResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsDependencyResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsDependencyResult>().ToList(),
                 }
             };
         }
@@ -1202,7 +1202,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsExceptionResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsExceptionResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsExceptionResult>().ToList(),
                 }
             };
         }
@@ -1242,7 +1242,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsExceptionResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsExceptionResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsExceptionResult>().ToList(),
                 }
             };
         }
@@ -1312,7 +1312,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsAvailabilityResultResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsAvailabilityResultResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsAvailabilityResultResult>().ToList(),
                 }
             };
         }
@@ -1352,7 +1352,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsAvailabilityResultResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsAvailabilityResultResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsAvailabilityResultResult>().ToList(),
                 }
             };
         }
@@ -1422,7 +1422,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsPerformanceCounterResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsPerformanceCounterResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsPerformanceCounterResult>().ToList(),
                 }
             };
         }
@@ -1462,7 +1462,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsPerformanceCounterResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsPerformanceCounterResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsPerformanceCounterResult>().ToList(),
                 }
             };
         }
@@ -1532,7 +1532,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsCustomMetricResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsCustomMetricResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsCustomMetricResult>().ToList(),
                 }
             };
         }
@@ -1572,7 +1572,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 Body = new EventsResults<EventsCustomMetricResult>
                 {
                     Aimessages = realBody.Aimessages,
-                    Value = (IList<EventsCustomMetricResult>)realBody.Value,
+                    Value = realBody.Value.OfType<EventsCustomMetricResult>().ToList(),
                 }
             };
         }

@@ -34,8 +34,6 @@ namespace Data.ApplicationInsights.Tests.Metrics
             }
         }
 
-        delegate void GetMetricAndSegmentValuesDelegate(MetricsResultInfo info);
-
         private void VerifyMetric(MetricsPostBodySchema expected, MetricsResultsItem actual, bool hasInterval = false, bool isSegmented = false)
         {
             Assert.Equal(expected.Id, actual.Id);

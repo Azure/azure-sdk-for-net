@@ -1,76 +1,13 @@
-﻿using Microsoft.Azure.ApplicationInsights;
+﻿using System.Collections.Generic;
 using Microsoft.Azure.ApplicationInsights.Models;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Xunit;
 
-namespace Data.ApplicationInsights.Tests
+namespace Data.ApplicationInsights.Tests.Events
 {
-    public class EventTests : DataPlaneTestBase
+    public class EventsTestBase : DataPlaneTestBase
     {
-        private const int TopCount = 10;
-        private const string Timespan = "P1D";
-
-        [Fact]
-        public async Task GetAllEvents()
-        {
-            using (var ctx = MockContext.Start(GetType().FullName))
-            {
-                var client = GetClient(ctx);
-                var events = await client.GetEventsAsync(EventType.All, timespan: Timespan, top: TopCount);
-
-                Assert.NotNull(events);
-                Assert.NotNull(events.Value);
-                Assert.True(events.Value.Count <= TopCount);
-
-                foreach (var evnt in events.Value)
-                {
-                    var eventType = GetEventType(evnt);
-                    if (!eventType.HasValue) continue; // This means there is a new type that we don't support here yet
-                    VerifyCommon(evnt, eventType.Value);
-                }
-            }
-        }
-
-        [Theory]
-        [InlineData(EventType.Traces)]
-        [InlineData(EventType.CustomEvents)]
-        [InlineData(EventType.PageViews)]
-        [InlineData(EventType.BrowserTimings)]
-        [InlineData(EventType.Requests)]
-        [InlineData(EventType.Dependencies)]
-        [InlineData(EventType.Exceptions)]
-        [InlineData(EventType.AvailabilityResults)]
-        [InlineData(EventType.PerformanceCounters)]
-        [InlineData(EventType.CustomMetrics)]
-        public async Task GetEventsByType(EventType eventType)
-        {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEventsByType.{eventType}"))
-            {
-                var client = GetClient(ctx);
-                var traces = await client.GetEventsAsync(eventType, timespan: Timespan, top: TopCount);
-
-                Assert.NotNull(traces);
-                Assert.NotNull(traces.Value);
-                Assert.True(traces.Value.Count <= TopCount);
-
-                var evnt = traces.Value[0];
-
-                VerifyCommon(evnt, eventType);
-
-                traces = await client.GetEventAsync(eventType, evnt.Id.Value);
-
-                Assert.NotNull(traces);
-                Assert.NotNull(traces.Value);
-                Assert.Equal(1, traces.Value.Count);
-
-                evnt = traces.Value[0];
-
-                VerifyCommon(evnt, eventType);
-            }
-        }
-
-        private EventType? GetEventType(EventsResultData evnt)
+        protected EventType? GetEventType(EventsResultData evnt)
         {
             if (evnt is EventsTraceResult) return EventType.Traces;
             else if (evnt is EventsCustomEventResult) return EventType.CustomEvents;
@@ -86,7 +23,7 @@ namespace Data.ApplicationInsights.Tests
             return null;
         }
 
-        private void VerifyCommon(EventsResultData evnt, EventType expectedType)
+        protected void AssertEvent(EventsResultData evnt, EventType expectedType)
         {
             Assert.NotNull(evnt);
             Assert.NotNull(evnt.Id.Value);
@@ -95,7 +32,7 @@ namespace Data.ApplicationInsights.Tests
             {
                 Assert.True(evnt.Count > 0);
             }
-            
+
             Assert.NotNull(evnt.Timestamp);
             // CustomDimensions & CustomMeasurements can be null
 
@@ -178,7 +115,7 @@ namespace Data.ApplicationInsights.Tests
             }
         }
 
-        private void VerifyTrace(EventsResultData evnt)
+        protected void VerifyTrace(EventsResultData evnt)
         {
             Assert.True(evnt is EventsTraceResult);
             var trace = evnt as EventsTraceResult;
@@ -187,7 +124,7 @@ namespace Data.ApplicationInsights.Tests
             Assert.True(trace.Trace.SeverityLevel >= 0 && trace.Trace.SeverityLevel <= 5);
         }
 
-        private void VerifyCustomEvent(EventsResultData evnt)
+        protected void VerifyCustomEvent(EventsResultData evnt)
         {
             Assert.True(evnt is EventsCustomEventResult);
             var customEvent = evnt as EventsCustomEventResult;
@@ -195,7 +132,7 @@ namespace Data.ApplicationInsights.Tests
             Assert.False(string.IsNullOrWhiteSpace(customEvent.CustomEvent.Name));
         }
 
-        private void VerifyPageView(EventsResultData evnt)
+        protected void VerifyPageView(EventsResultData evnt)
         {
             Assert.True(evnt is EventsPageViewResult);
             var pageView = evnt as EventsPageViewResult;
@@ -204,7 +141,7 @@ namespace Data.ApplicationInsights.Tests
             // All other page view fields can be null
         }
 
-        private void VerifyBrowserTiming(EventsResultData evnt)
+        protected void VerifyBrowserTiming(EventsResultData evnt)
         {
             Assert.True(evnt is EventsBrowserTimingResult);
             var browserTiming = evnt as EventsBrowserTimingResult;
@@ -225,7 +162,7 @@ namespace Data.ApplicationInsights.Tests
             Assert.False(string.IsNullOrWhiteSpace(browserTiming.ClientPerformance.Name));
         }
 
-        private void VerifyRequest(EventsResultData evnt)
+        protected void VerifyRequest(EventsResultData evnt)
         {
             Assert.True(evnt is EventsRequestResult);
             var request = evnt as EventsRequestResult;
@@ -240,7 +177,7 @@ namespace Data.ApplicationInsights.Tests
             // Source can be null
         }
 
-        private void VerifyDependency(EventsResultData evnt)
+        protected void VerifyDependency(EventsResultData evnt)
         {
             Assert.True(evnt is EventsDependencyResult);
             var dependency = evnt as EventsDependencyResult;
@@ -248,7 +185,7 @@ namespace Data.ApplicationInsights.Tests
             Assert.False(string.IsNullOrWhiteSpace(dependency.Dependency.Target));
             Assert.False(string.IsNullOrWhiteSpace(dependency.Dependency.Data));
             Assert.False(string.IsNullOrWhiteSpace(dependency.Dependency.Success));
-            Assert.True(dependency.Dependency.Duration >=0);
+            Assert.True(dependency.Dependency.Duration >= 0);
             Assert.False(string.IsNullOrWhiteSpace(dependency.Dependency.PerformanceBucket));
             Assert.False(string.IsNullOrWhiteSpace(dependency.Dependency.Type));
             Assert.False(string.IsNullOrWhiteSpace(dependency.Dependency.Name));
@@ -256,7 +193,7 @@ namespace Data.ApplicationInsights.Tests
             // ResultCode can be null
         }
 
-        private void VerifyException(EventsResultData evnt)
+        protected void VerifyException(EventsResultData evnt)
         {
             Assert.True(evnt is EventsExceptionResult);
             var exception = evnt as EventsExceptionResult;
@@ -265,21 +202,21 @@ namespace Data.ApplicationInsights.Tests
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Assembly));
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Type));
             Assert.NotNull(exception.Exception.Details);
-            Assert.True(exception.Exception.Details.Count >=0);
+            Assert.True(exception.Exception.Details.Count >= 0);
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Details[0].Id));
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Details[0].OuterId));
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Details[0].Type));
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Details[0].Message));
             Assert.NotNull(exception.Exception.Details[0].ParsedStack);
-            Assert.True(exception.Exception.Details[0].ParsedStack.Count >=0);
+            Assert.True(exception.Exception.Details[0].ParsedStack.Count >= 0);
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Details[0].ParsedStack[0].Assembly));
             Assert.False(string.IsNullOrWhiteSpace(exception.Exception.Details[0].ParsedStack[0].Method));
             Assert.True(exception.Exception.Details[0].ParsedStack[0].Level >= 0);
-            Assert.True(exception.Exception.Details[0].ParsedStack[0].Line>= 0);
+            Assert.True(exception.Exception.Details[0].ParsedStack[0].Line >= 0);
             // SeverityLevel, HandledAt, Message, Outer* & Inner* can be null
         }
 
-        private void VerifyAvailabilityResult(EventsResultData evnt)
+        protected void VerifyAvailabilityResult(EventsResultData evnt)
         {
             Assert.True(evnt is EventsAvailabilityResultResult);
             var availabilityResult = evnt as EventsAvailabilityResultResult;
@@ -293,7 +230,7 @@ namespace Data.ApplicationInsights.Tests
             // PerformanceBucket & Size can be null
         }
 
-        private void VerifyPerformanceCounter(EventsResultData evnt)
+        protected void VerifyPerformanceCounter(EventsResultData evnt)
         {
             Assert.True(evnt is EventsPerformanceCounterResult);
             var customEvent = evnt as EventsPerformanceCounterResult;
@@ -306,7 +243,7 @@ namespace Data.ApplicationInsights.Tests
             // InstanceName can be null
         }
 
-        private void VerifyCustomMetric(EventsResultData evnt)
+        protected void VerifyCustomMetric(EventsResultData evnt)
         {
             Assert.True(evnt is EventsCustomMetricResult);
             var customEvent = evnt as EventsCustomMetricResult;
