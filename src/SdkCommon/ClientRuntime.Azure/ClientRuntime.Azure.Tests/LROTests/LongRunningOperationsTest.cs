@@ -13,7 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using Xunit;
     using Microsoft.Azure;
     using Microsoft.Rest.Azure;
-    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
+    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationTestResponses;
     using LROPatchResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationPatchTestResponses;
     using LROFailedResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationFailedTestResponses;
     using LROMultipleHeaders = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationMultipleHeaderResponses;
@@ -623,6 +623,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                Assert.False(true, "Expected exception was not thrown.");
             }
             catch(Exception ex)
             {
@@ -643,6 +644,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                Assert.False(true, "Expected exception was not thrown.");
             }
             catch (Exception ex)
             {
@@ -664,6 +666,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                Assert.False(true, "Expected exception was not thrown.");
             }
             catch (Exception ex)
             {
@@ -886,6 +889,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                Assert.False(true, "Expected exception was not thrown.");
             }
             catch (Exception ex)
             {

@@ -13,152 +13,23 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.Test.Fakes;
 using Xunit;
 
-namespace Microsoft.Rest.ClientRuntime.Azure.Test
+namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 {
     static class ExceptionsTestsSuite
     {
         static internal IEnumerable<HttpResponseMessage> MockLROAsyncOperationFailedWith200()
         {
-            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
-            {
-                Content = new StringContent(@"
-                    {
-                    ""location"": ""East US"",
-                      ""etag"": ""9d8d7ed9-7422-46be-82b3-94c5345f6099"",
-                      ""tags"": {},
-                      ""properties"": {
-                            ""clusterVersion"": ""0.0.1000.0"",
-                            ""osType"": ""Linux"",                            
-                            ""provisioningState"": ""InProgress"",
-                            ""clusterState"": ""Accepted"",
-                            ""createdDate"": ""2017-07-25T21:48:17.427"",
-                            ""quotaInfo"": 
-                                {
-                                    ""coresUsed"": ""200""
-                                },
-                            }
-                    }
-            ")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "https://management.azure.com:090/subscriptions/434c10bb-83d3-6b318c6c7305/resourceGroups/hdisdk1706/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview");
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                  ""status"": ""Failed"",
-                  ""error"":
-                    {
-                                ""code"": ""InvalidDocumentErrorCode"",
-                                ""message"": ""DeploymentDocument 'HiveConfigurationValidator' failed the validation.Error: 'Cannot connect to Hive metastore using user provided connection string'""
-                    }
-                }
-            ")
-            };
-
-            yield return response2;
-
+            return LROOperationTestResponses.MockLROAsyncOperationFailedWith200();
         }
 
         static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithTwoTries()
         {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""InProgress"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-            response1.Headers.Add("Azure-AsyncOperation", "http://custom/status");
-
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""status"" : ""Succeeded"", 
-                    ""error"" : {
-                        ""code"": ""BadArgument"",  
-                        ""message"": ""The provided database ‘foo’ has an invalid username."" 
-                    }
-                }")
-            };
-
-            yield return response2;
-
-            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                    ""location"": ""North US"",
-                    ""tags"": {
-                        ""key1"": ""value 1"",
-                        ""key2"": ""value 2""
-                        },
-    
-                    ""properties"": { 
-                        ""provisioningState"": ""Succeeded"",
-                        ""comment"": ""Resource defined structure""
-                    }
-                }")
-            };
-
-            yield return response3;
+            return LROOperationTestResponses.MockCreateOrUpdateWithTwoTries();
         }
 
         static internal IEnumerable<HttpResponseMessage> MockLROLocationHeaderFailedWith200()
         {
-            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                    {
-                    ""location"": ""East US"",
-                      ""etag"": ""9d8d7ed9-7422-46be-82b3-94c5345f6099"",
-                      ""tags"": {},
-                      ""properties"": {
-                            ""clusterVersion"": ""0.0.1000.0"",
-                            ""osType"": ""Linux"",                            
-                            ""provisioningState"": ""InProgress"",
-                            ""clusterState"": ""Accepted"",
-                            ""createdDate"": ""2017-07-25T21:48:17.427"",
-                            ""quotaInfo"": 
-                                {
-                                    ""coresUsed"": ""200""
-                                },
-                            }
-                    }
-            ")
-            };
-            response1.Headers.Add("Location", "https://management.azure.com:090/subscriptions/947c-43bc-83d3-6b318c6c7305/resourceGroups/hdisdk1706/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview");
-            yield return response1;
-
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(@"
-                {
-                  ""status"": ""Failed"",
-                  ""error"":
-                    {
-                                ""code"": ""InvalidDocumentErrorCode"",
-                                ""message"": ""DeploymentDocument 'HiveConfigurationValidator' failed the validation.Error: 'Cannot connect to Hive metastore using user provided connection string'""
-                    }
-                }
-            ")
-            };
-
-            yield return response2;
-
+            return LROOperationTestResponses.MockLROLocationHeaderFailedWith200();
         }
 
         static internal IEnumerable<HttpResponseMessage> MockDeleteOperaionWithNoRetryableErrorInResponse()

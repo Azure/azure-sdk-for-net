@@ -19,4 +19,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.13.9]" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
+  </ItemGroup>
 </Project>

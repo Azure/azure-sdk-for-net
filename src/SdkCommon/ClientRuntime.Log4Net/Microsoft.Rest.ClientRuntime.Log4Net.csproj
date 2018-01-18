@@ -19,4 +19,8 @@
     <PackageReference Include="log4net" Version="2.0.3" />
     <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />-->
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
+  </ItemGroup>
 </Project>
