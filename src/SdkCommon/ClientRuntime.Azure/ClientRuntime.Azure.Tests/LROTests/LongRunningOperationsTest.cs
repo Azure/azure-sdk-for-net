@@ -884,7 +884,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     /// </summary>
     public class LRO_FailedTests
     {
-        [Fact /*(Skip = "Potential scenario that will have to be supported")*/]
+        [Fact /*(Skip = "Potential scenario that will have to be supported")*/ //]
         /* 
         public void TestLROAsynOperationFailureWith200()
         {
