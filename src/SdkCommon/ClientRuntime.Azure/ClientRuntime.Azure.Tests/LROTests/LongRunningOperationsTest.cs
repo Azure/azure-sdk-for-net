@@ -631,6 +631,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
+        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -652,7 +653,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 Assert.Contains("DeploymentDocument", ex.Message);
             }
         }
+        */
         
+        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -673,6 +676,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 Assert.Contains("preempted", ex.Message);
             }
         }
+        */
 
         /// <summary>
         /// Test
@@ -874,12 +878,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         }
     }
 
+    /* 
     /// <summary>
     /// LOR Failed test scenrios
     /// </summary>
     public class LRO_FailedTests
     {
         [Fact /*(Skip = "Potential scenario that will have to be supported")*/]
+        /* 
         public void TestLROAsynOperationFailureWith200()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
@@ -897,6 +903,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
     }
+    */
 
     /// <summary>
     /// 

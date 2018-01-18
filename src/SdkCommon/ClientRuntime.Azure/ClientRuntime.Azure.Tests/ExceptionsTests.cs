@@ -115,6 +115,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             Assert.Contains("DeploymentDocument", ex.Message);
         }
         
+        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -129,6 +130,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             // If the message changes in the response, this assert will also have to be updated.
             Assert.Contains("DeploymentDocument", ex.Message);
         }
+        */
         
         /// <summary>
         /// Test
@@ -166,6 +168,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             }
         }
 
+        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -186,7 +189,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.Response.StatusCode);
             }
         }
+        */
         
+        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -208,5 +213,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                 Assert.Null(ex.ErrorBody);
             }
         }
+        */
     }
 }
