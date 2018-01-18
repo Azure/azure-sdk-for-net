@@ -4,6 +4,7 @@
 
 ### Feature Additions
   * Add readBehavior to Salesforce Source
+  * Enable Azure Key Vault support for all data store linked services
 
 ## Version 0.3.0-preview
 

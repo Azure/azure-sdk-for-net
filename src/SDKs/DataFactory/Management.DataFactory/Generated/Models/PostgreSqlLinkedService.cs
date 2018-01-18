@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public PostgreSqlLinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object schema = default(object), object username = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
+        public PostgreSqlLinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object schema = default(object), object username = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             Server = server;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password for authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -127,10 +127,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Database == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Database");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

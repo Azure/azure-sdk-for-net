@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AmazonS3LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object accessKeyId = default(object), SecureString secretAccessKey = default(SecureString), object encryptedCredential = default(object))
+        public AmazonS3LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object accessKeyId = default(object), SecretBase secretAccessKey = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             AccessKeyId = accessKeyId;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Access Management (IAM) user.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.secretAccessKey")]
-        public SecureString SecretAccessKey { get; set; }
+        public SecretBase SecretAccessKey { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -94,10 +94,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (SecretAccessKey != null)
-            {
-                SecretAccessKey.Validate();
-            }
         }
     }
 }

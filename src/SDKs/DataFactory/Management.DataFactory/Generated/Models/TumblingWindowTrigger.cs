@@ -39,12 +39,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="pipeline">Pipeline for which runs are created when an
         /// event is fired for trigger window that is ready.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="description">Trigger description.</param>
-        /// <param name="runtimeState">Indicates if trigger is running or not.
-        /// Updated when Start/Stop APIs are called on the Trigger. Possible
-        /// values include: 'Started', 'Stopped', 'Disabled'</param>
         /// <param name="frequency">The frequency of the time windows. Possible
         /// values include: 'Minute', 'Hour'</param>
         /// <param name="interval">The interval of the time windows. The
@@ -52,6 +46,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="startTime">The start time for the time period for the
         /// trigger during which events are fired for windows that are ready.
         /// Only UTC time is currently supported.</param>
+        /// <param name="maxConcurrency">The max number of parallel time
+        /// windows (ready for execution) for which a new run is
+        /// triggered.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        /// <param name="description">Trigger description.</param>
+        /// <param name="runtimeState">Indicates if trigger is running or not.
+        /// Updated when Start/Stop APIs are called on the Trigger. Possible
+        /// values include: 'Started', 'Stopped', 'Disabled'</param>
         /// <param name="endTime">The end time for the time period for the
         /// trigger during which events are fired for windows that are ready.
         /// Only UTC time is currently supported.</param>
@@ -60,12 +63,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// end time. The default is 0. Type: string (or Expression with
         /// resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        /// <param name="maxConcurrency">The max number of parallel time
-        /// windows (ready for execution) for which a new run is
-        /// triggered.</param>
         /// <param name="retryPolicy">Retry policy that will be applied for
         /// failed pipeline runs.</param>
-        public TumblingWindowTrigger(TriggerPipelineReference pipeline, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), string frequency = default(string), int? interval = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), int? maxConcurrency = default(int?), RetryPolicy retryPolicy = default(RetryPolicy))
+        public TumblingWindowTrigger(TriggerPipelineReference pipeline, string frequency, int interval, System.DateTime startTime, int maxConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), RetryPolicy retryPolicy = default(RetryPolicy))
             : base(additionalProperties, description, runtimeState)
         {
             Pipeline = pipeline;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// allowed is 15 Minutes.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.interval")]
-        public int? Interval { get; set; }
+        public int Interval { get; set; }
 
         /// <summary>
         /// Gets or sets the start time for the time period for the trigger
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// time is currently supported.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time for the time period for the trigger
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// execution) for which a new run is triggered.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.maxConcurrency")]
-        public int? MaxConcurrency { get; set; }
+        public int MaxConcurrency { get; set; }
 
         /// <summary>
         /// Gets or sets retry policy that will be applied for failed pipeline
@@ -156,6 +156,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Pipeline == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Pipeline");
+            }
+            if (Frequency == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Frequency");
             }
             if (Pipeline != null)
             {
