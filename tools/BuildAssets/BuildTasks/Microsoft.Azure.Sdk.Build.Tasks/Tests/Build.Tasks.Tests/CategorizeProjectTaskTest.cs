@@ -26,6 +26,40 @@ namespace Build.Tasks.Tests
             //System.Environment.SetEnvironmentVariable("MSBuildSDKsPath", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Sdks");
         }
 
+
+        [Fact]
+        public void EmptyProjectExtList()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SearchProjectFileExt = null;
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"tools\ProjectTemplates\AzureDotNetSDK-TestProject";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 0);
+            }
+        }
+
+        [Fact]
+        public void GetProjectOutsideSourceDir()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SearchProjectFileExt = "*.xproj";
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"tools\ProjectTemplates\AzureDotNetSDK-TestProject";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+            
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 1);
+            }
+        }
+
+
         [Fact]
         public void IgnoreDirTokens()
         {

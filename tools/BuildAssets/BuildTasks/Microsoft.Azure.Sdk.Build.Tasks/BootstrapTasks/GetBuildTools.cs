@@ -136,7 +136,15 @@
 
             if (string.IsNullOrEmpty(RemoteRootDir))
             {
-                RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
+                string localCopyFrom = Path.Combine(LocalBranchRootDir, COPY_FROM_RELATIVEPATH);
+                if(!Directory.Exists(localCopyFrom))
+                {
+                    RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
+                }
+                else
+                {
+                    RemoteRootDir = LocalBranchRootDir;
+                }
             }
 
             if (RemoteRootDir.StartsWith("http"))

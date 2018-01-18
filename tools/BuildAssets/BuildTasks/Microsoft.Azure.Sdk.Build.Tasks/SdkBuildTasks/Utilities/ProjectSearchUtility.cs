@@ -173,7 +173,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         public List<string> GetScopedSDKProjects(string scopePath)
         {
             List<string> scopedProjects = new List<string>();
-            string searchProjInDirPath = Path.Combine(RootDirForSearch, scopePath);
+            //string searchProjInDirPath = Path.Combine(RootDirForSearch, scopePath);
+            string searchProjInDirPath = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchProjInDirPath))
             {
                 scopedProjects = SearchProjects(searchProjInDirPath);
@@ -192,7 +193,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         {
             List<string> testScopedProjects = new List<string>();
 
-            string searchDir = Path.Combine(RootDirForSearch, scopePath);
+            //string searchDir = Path.Combine(RootDirForSearch, scopePath);
+            string searchDir = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchDir))
             {
                 testScopedProjects = SearchTestProjects(searchDir);
@@ -234,6 +236,33 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
 
             return _testProjs;
+        }
+        #endregion
+
+        #region Private functions
+        /// <summary>
+        /// This function checks if the scope path (which is a relative path) is found under src directory
+        /// If not found, it will adjust the root directory from the actul root of repo (one level up)
+        /// Earlier: RootDirForSearch use to be <root>\src
+        /// But we adjust and move one level up and then search again (if prior attempt resulted in no matching directories)
+        /// </summary>
+        /// <param name="rootDir"></param>
+        /// <param name="scopePath"></param>
+        /// <returns></returns>
+        private string AdjustPathForScopedProjects(string rootDir, string scopePath)
+        {
+            string rootParentDir = Directory.GetParent(rootDir).FullName;
+            string searchProjInDirPath = Path.Combine(RootDirForSearch, scopePath);
+            if (!Directory.Exists(searchProjInDirPath))
+            {
+                searchProjInDirPath = Path.Combine(rootParentDir, scopePath);
+                if (!Directory.Exists(searchProjInDirPath))
+                {
+                    searchProjInDirPath = string.Empty;
+                }
+            }
+
+            return searchProjInDirPath;
         }
         #endregion
     }

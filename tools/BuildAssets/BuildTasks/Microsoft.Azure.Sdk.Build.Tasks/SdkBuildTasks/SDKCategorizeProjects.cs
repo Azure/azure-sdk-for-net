@@ -36,6 +36,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         #region fields
         private string KV_IGNOREDIRNAME = "Microsoft.Azure.KeyVault.Samples";
         private string _ignoreDirNameForSearchingProjects;
+        private string _searchProjectFileExt;
         #endregion
 
         public SDKCategorizeProjects()
@@ -79,9 +80,24 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         /// <summary>
         /// List of project file extension.
-        /// Currently only hard coded to .csproj files
         /// </summary>
-        private string SearchProjectFileExt { get; set; }
+        public string SearchProjectFileExt
+        {
+            get
+            {
+                if(_searchProjectFileExt == null)
+                {
+                    _searchProjectFileExt = string.Empty;
+                }
+
+                return _searchProjectFileExt;
+            }
+
+            set
+            {
+                _searchProjectFileExt = value;
+            }
+        }
 
         #region OUTPUT
         /// <summary>
@@ -123,6 +139,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// </summary>
         [Output]
         public ITaskItem[] WellKnowTestSDKNet452Projects { get; private set; }
+
+        public string[] UnFilteredProjects { get; private set; }
         #endregion
 
         /// <summary>
@@ -151,7 +169,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             {
                 ignorePathList.Add(KV_IGNOREDIRNAME);
             }
-            ProjectSearchUtility ProjUtil = new ProjectSearchUtility(SourceRootDirPath, ignorePathList);
+
+            string[] projExtList = SearchProjectFileExt?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ProjectSearchUtility ProjUtil = new ProjectSearchUtility(SourceRootDirPath, ignorePathList, projExtList);
             if (BuildScope.Equals("All", StringComparison.OrdinalIgnoreCase))
             {
                 sdkProjects = ProjUtil.GetAllSDKProjects();
@@ -190,6 +210,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             netCore11TestProjectsToBuild = testNetCore11Projects?.ToArray<ITaskItem>();
             net452TestProjectsToBuild = testNet452Projects?.ToArray<ITaskItem>();
             unSupportedProjectsToBuild = unSupportedProjects?.ToArray<ITaskItem>();
+            UnFilteredProjects = allProjects.ToArray<string>();
 
             return true;
         }
