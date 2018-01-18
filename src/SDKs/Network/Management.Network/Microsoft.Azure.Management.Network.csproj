@@ -7,9 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>16.1.0-preview</Version>
+		<Version>17.0.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
-		<PackageReleaseNotes>* Updated TopologyParameters with new optional properties: TargetVirtualNetwork, TargetSubnet; TargetResourceGroupName property changed to optional</PackageReleaseNotes>
+		<PackageReleaseNotes>
+		<![CDATA[
+			1) Added IPTags for Public IP;Updated LB InboundNatPool API
+			2) Removed extraneous tags field from RouteFilterRule
+        ]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
