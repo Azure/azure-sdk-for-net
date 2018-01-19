@@ -6,16 +6,11 @@ using System.Net.Http;
 
 namespace Microsoft.Rest.Azure
 {
-    public delegate string ExceptionMessageGetter();
-
     /// <summary>
     /// An exception generated from an http response returned from a Microsoft Azure service
     /// </summary>
     public class CloudException : RestException
     {
-
-        protected string _message;
-
         /// <summary>
         /// Gets information about the associated HTTP request.
         /// </summary>
@@ -29,22 +24,7 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets the response object.
         /// </summary>
-        [Obsolete]
-        public CloudError Body
-        {
-            get
-            {
-                return ErrorBody;
-            }
-
-            set
-            {
-                ErrorBody = value;
-            }
-        }
-        
-
-        public CloudError ErrorBody { get; set; }
+        public CloudError Body { get; set; }
 
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request 
@@ -65,7 +45,6 @@ namespace Microsoft.Rest.Azure
         /// <param name="message">A message describing the error.</param>
         public CloudException(string message) : base(message)
         {
-            _message = message;
         }
 
         /// <summary>
@@ -75,11 +54,6 @@ namespace Microsoft.Rest.Azure
         /// <param name="innerException">The exception which caused the current exception.</param>
         public CloudException(string message, Exception innerException) : base(message, innerException)
         {
-            _message = message;
         }
-        
-        public override string Message => string.IsNullOrEmpty(ErrorBody?.Message) ? _message : ErrorBody.Message;
-
-        protected string BaseExceptionMessage => base.Message;
     }
 }

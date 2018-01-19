@@ -13,7 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using Xunit;
     using Microsoft.Azure;
     using Microsoft.Rest.Azure;
-    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationTestResponses;
+    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
     using LROPatchResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationPatchTestResponses;
     using LROFailedResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationFailedTestResponses;
     using LROMultipleHeaders = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationMultipleHeaderResponses;
@@ -157,7 +157,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var error = Assert.Throws<CloudException>(() =>
                 fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'BadRequest'.", error.Message);
-            Assert.Null(error.ErrorBody);
+            Assert.Null(error.Body);
         }
 
         /// <summary>
@@ -591,7 +591,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
             catch (CloudException ex)
             {
-                Assert.Null(ex.ErrorBody);
+                Assert.Null(ex.Body);
             }
         }
 
@@ -623,7 +623,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-                Assert.False(true, "Expected exception was not thrown.");
             }
             catch(Exception ex)
             {
@@ -631,7 +630,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
 
-        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -645,7 +643,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-                Assert.False(true, "Expected exception was not thrown.");
             }
             catch (Exception ex)
             {
@@ -653,9 +650,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 Assert.Contains("DeploymentDocument", ex.Message);
             }
         }
-        */
         
-        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -669,14 +664,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-                Assert.False(true, "Expected exception was not thrown.");
             }
             catch (Exception ex)
             {
                 Assert.Contains("preempted", ex.Message);
             }
         }
-        */
 
         /// <summary>
         /// Test
@@ -878,14 +871,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         }
     }
 
-    /* 
     /// <summary>
     /// LOR Failed test scenrios
     /// </summary>
     public class LRO_FailedTests
     {
-        [Fact /*(Skip = "Potential scenario that will have to be supported")*/ //]
-        /* 
+        [Fact /*(Skip = "Potential scenario that will have to be supported")*/]
         public void TestLROAsynOperationFailureWith200()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
@@ -895,7 +886,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             try
             {
                 var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-                Assert.False(true, "Expected exception was not thrown.");
             }
             catch (Exception ex)
             {
@@ -903,7 +893,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
         }
     }
-    */
 
     /// <summary>
     /// 
