@@ -161,6 +161,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var result = message.ToString();
             Assert.Equal($"{{MessageId:{id}}}", result);
         }
+<<<<<<< HEAD
 
         [Fact]
         public async void LargeMessageShouldThrowMessageSizeExceededException()
@@ -183,5 +184,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await queueClient.CloseAsync();
             }
         }
+=======
+>>>>>>> Message tostring issue 407 (#408)
     }
 }
