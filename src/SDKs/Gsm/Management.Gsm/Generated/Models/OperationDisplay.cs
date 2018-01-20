@@ -9,6 +9,9 @@ namespace Microsoft.Azure.Management.Gsm.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// this is the management partner operation
+    /// </summary>
     public partial class OperationDisplay
     {
         /// <summary>

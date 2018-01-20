@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.ManagementPartner/partners/d14e8666-b43e-4f12-aa78-06c49c4859de?api-version=2018-02-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudFBhcnRuZXIvcGFydG5lcnMvZDE0ZTg2NjYtYjQzZS00ZjEyLWFhNzgtMDZjNDljNDg1OWRlP2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
+      "RequestUri": "/providers/Microsoft.ManagementPartner/partners/123457?api-version=2018-02-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudFBhcnRuZXIvcGFydG5lcnMvMTIzNDU3P2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
       "RequestMethod": "PATCH",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "87ead948-e9ac-4623-9817-263535afe12f"
+          "035834da-9c4e-4fe1-9e56-2421314e2d51"
         ],
         "accept-language": [
           "en-US"
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Gsm.ACEProvisioningGSMAPIClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.managementpartner/partners/d14e8666-b43e-4f12-aa78-06c49c4859de\",\r\n  \"type\": \"Microsoft.ManagementPartner/partner\",\r\n  \"name\": \"d14e8666-b43e-4f12-aa78-06c49c4859de\",\r\n  \"properties\": {\r\n    \"partnerId\": \"d14e8666-b43e-4f12-aa78-06c49c4859de\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.managementpartner/partners/123457\",\r\n  \"type\": \"Microsoft.ManagementPartner/partner\",\r\n  \"name\": \"123457\",\r\n  \"properties\": {\r\n    \"partnerId\": \"123457\",\r\n    \"tenantId\": \"1b1121dd-6900-412a-af73-e8d44f81e1c1\",\r\n    \"objectId\": \"2119ba66-2042-49a1-bc31-940691d21bf4\",\r\n    \"version\": 15,\r\n    \"updatedTime\": \"2018-01-20T06:12:09.9172811Z\",\r\n    \"createdTime\": \"2018-01-20T05:36:32.6851653Z\",\r\n    \"state\": \"Active\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 Jan 2018 23:34:21 GMT"
+          "Sat, 20 Jan 2018 06:12:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -48,10 +48,10 @@
           "1199"
         ],
         "request-id": [
-          "a67afefa-614c-47c5-8e8d-a703eeff7411"
+          "8f2ec321-5b4e-40a2-a5dd-5811472c87df"
         ],
         "x-gsm": [
-          "7.12.0.50 (AD-CAB:master.c0929e17c.180111-0227)"
+          "8.1.0.27 (AD-CAB-Provisioning:dev.1a97958dd.180119-1442)"
         ],
         "x-content-type-options": [
           "nosniff"
@@ -60,13 +60,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "689f9dad-9253-4ee5-84c4-46c2252ecae9"
+          "ddc28705-b1ec-4e25-b21e-9d034af9defb"
         ],
         "x-ms-correlation-request-id": [
-          "689f9dad-9253-4ee5-84c4-46c2252ecae9"
+          "ddc28705-b1ec-4e25-b21e-9d034af9defb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180116T233421Z:689f9dad-9253-4ee5-84c4-46c2252ecae9"
+          "CENTRALUS:20180120T061224Z:ddc28705-b1ec-4e25-b21e-9d034af9defb"
         ]
       },
       "StatusCode": 200

@@ -16,59 +16,75 @@ namespace Gsm.Tests
 {
     public class PartnerTests : TestBase
     {
-        private const string partnerId = "d14e8666-b43e-4f12-aa78-06c49c4859de";
 
-        private void ValidatePartner(PartnerResponse partner)
+        private void ValidatePartner(PartnerResponse partnerResponse)
         {
-            Assert.NotNull(partner);
-            Assert.NotNull(partner.Id);
-            Assert.NotNull(partner.Etag);
-            Assert.NotNull(partner.Name);
-            Assert.NotNull(partner.ObjectId);
-            Assert.NotNull(partner.TenantId);
-            Assert.NotNull(partner.PartnerId);
-            Assert.NotNull(partner.CreatedTime);
-            Assert.NotNull(partner.UpdatedTime);
-            Assert.NotNull(partner.Version);
-            Assert.NotNull(partner.Type);
+            Assert.NotNull(partnerResponse);
+            Assert.NotNull(partnerResponse.ObjectId);
+            Assert.NotNull(partnerResponse.TenantId);
+            Assert.NotNull(partnerResponse.CreatedTime);
+            Assert.NotNull(partnerResponse.UpdatedTime);
+            Assert.NotNull(partnerResponse.Version);
+            Assert.NotNull(partnerResponse.Type);
         }
         
         [Fact]
         public void TestGetPartner()
         {
+            string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partner = gsmClient.Partner.GetAsync(partnerId).Result;
+                var partnerResponse = gsmClient.Partner.GetAsync(partnerId).Result;
+                ValidatePartner(partnerResponse);
+            }
+        }
+
+        [Fact]
+        public void TestGetPartnerNoPartnerId()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var partnerResponse = gsmClient.PartnerNoId.GetAsync().Result;
+                ValidatePartner(partnerResponse);
             }
         }
 
         [Fact]
         public void TestPutPartner()
         {
+            string partnerId = "123456";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var partner = gsmClient.Partner.PutAsync(partnerId).Result;
+                ValidatePartner(partner);
+                Assert.NotNull(partner.PartnerId);
             }
         }
 
         [Fact]
         public void TestPatchPartner()
         {
+            string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var partner = gsmClient.Partner.PatchAsync(partnerId).Result;
+                ValidatePartner(partner);
+                Assert.NotNull(partner.PartnerId);
             }
         }
 
         [Fact]
         public void TestDeletePartner()
         {
+            string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {

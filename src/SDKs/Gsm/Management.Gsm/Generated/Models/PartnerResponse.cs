@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Management.Gsm.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// this is the management partner operations response
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PartnerResponse : IResource
     {
@@ -36,11 +39,11 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// updated.</param>
         /// <param name="createdTime">This is the DateTime when the partner was
         /// created.</param>
-        /// <param name="managementPartnerState">Possible values include:
-        /// 'Active', 'Deleted'</param>
+        /// <param name="state">Possible values include: 'Active',
+        /// 'Deleted'</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.ManagementPartner/partners"</param>
-        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string managementPartnerState = default(string), string type = default(string))
+        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string state = default(string), string type = default(string))
         {
             Etag = etag;
             Id = id;
@@ -51,7 +54,7 @@ namespace Microsoft.Azure.Management.Gsm.Models
             Version = version;
             UpdatedTime = updatedTime;
             CreatedTime = createdTime;
-            ManagementPartnerState = managementPartnerState;
+            State = state;
             Type = type;
             CustomInit();
         }
@@ -117,8 +120,8 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// <summary>
         /// Gets or sets possible values include: 'Active', 'Deleted'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.managementPartnerState")]
-        public string ManagementPartnerState { get; set; }
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; set; }
 
         /// <summary>
         /// Gets type of resource. "Microsoft.ManagementPartner/partners"

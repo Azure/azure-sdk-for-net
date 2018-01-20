@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.Gsm
             }
 
             /// <summary>
-            /// Add a specific `Partner`.
+            /// Create a specific `Partner`.
             /// </summary>
             /// <remarks>
-            /// Add a management partner for the objectId and tenantId.
+            /// Create a management partner for the objectId and tenantId.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,10 +75,10 @@ namespace Microsoft.Azure.Management.Gsm
             }
 
             /// <summary>
-            /// Add a specific `Partner`.
+            /// Create a specific `Partner`.
             /// </summary>
             /// <remarks>
-            /// Add a management partner for the objectId and tenantId.
+            /// Create a management partner for the objectId and tenantId.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,40 +172,6 @@ namespace Microsoft.Azure.Management.Gsm
             public static async Task DeleteAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get a specific `Partner`.
-            /// </summary>
-            /// <remarks>
-            /// Get the management partner using the objectId and tenantId..
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static PartnerResponse Get1(this IPartnerOperations operations)
-            {
-                return operations.Get1Async().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a specific `Partner`.
-            /// </summary>
-            /// <remarks>
-            /// Get the management partner using the objectId and tenantId..
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PartnerResponse> Get1Async(this IPartnerOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.Get1WithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
     }

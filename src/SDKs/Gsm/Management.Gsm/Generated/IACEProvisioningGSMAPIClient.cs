@@ -65,6 +65,11 @@ namespace Microsoft.Azure.Management.Gsm
         IPartnerOperations Partner { get; }
 
         /// <summary>
+        /// Gets the IPartnerNoIdOperations.
+        /// </summary>
+        IPartnerNoIdOperations PartnerNoId { get; }
+
+        /// <summary>
         /// Gets the IOperationOperations.
         /// </summary>
         IOperationOperations Operation { get; }

@@ -9,6 +9,9 @@ namespace Microsoft.Azure.Management.Gsm.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// this is the extended error info
+    /// </summary>
     public partial class ExtendedErrorInfo
     {
         /// <summary>

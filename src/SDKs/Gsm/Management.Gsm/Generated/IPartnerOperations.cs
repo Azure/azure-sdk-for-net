@@ -46,10 +46,10 @@ namespace Microsoft.Azure.Management.Gsm
         /// </exception>
         Task<AzureOperationResponse<PartnerResponse>> GetWithHttpMessagesAsync(string partnerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Add a specific `Partner`.
+        /// Create a specific `Partner`.
         /// </summary>
         /// <remarks>
-        /// Add a management partner for the objectId and tenantId.
+        /// Create a management partner for the objectId and tenantId.
         /// </remarks>
         /// <param name='partnerId'>
         /// Id of the Partner
@@ -117,27 +117,5 @@ namespace Microsoft.Azure.Management.Gsm
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string partnerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get a specific `Partner`.
-        /// </summary>
-        /// <remarks>
-        /// Get the management partner using the objectId and tenantId..
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<PartnerResponse>> Get1WithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
