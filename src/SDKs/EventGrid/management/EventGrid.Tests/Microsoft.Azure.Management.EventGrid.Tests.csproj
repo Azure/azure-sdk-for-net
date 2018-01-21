@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <PackageId>EventGrid.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <PackageId>Microsoft.Azure.Management.EventGrid.Tests</PackageId>
+    <VersionPrefix>1.2.0-preview</VersionPrefix>
     <Description>EventGrid.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
-    <AssemblyName>EventGrid.Tests</AssemblyName>
+    <AssemblyName>Microsoft.Azure.Management.EventGrid.Tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>

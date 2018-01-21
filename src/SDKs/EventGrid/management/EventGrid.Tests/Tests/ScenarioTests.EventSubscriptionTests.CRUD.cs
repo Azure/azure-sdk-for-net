@@ -83,7 +83,7 @@ namespace EventGrid.Tests.ScenarioTests
                     }
                 };
 
-                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateAsync(scope, eventSubscriptionName, eventSubscription).Result;
+                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscription).Result;
                 Assert.NotNull(eventSubscriptionResponse);
                 Assert.Equal(eventSubscriptionResponse.Name, eventSubscriptionName);
 
@@ -173,7 +173,7 @@ namespace EventGrid.Tests.ScenarioTests
                         "TestLabel2"
                     }
                 };
-                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateAsync(scope, eventSubscriptionName, eventSubscription).Result;
+                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscription).Result;
 
                 Assert.NotNull(eventSubscriptionResponse);
                 Assert.Equal(eventSubscriptionResponse.Name, eventSubscriptionName);
@@ -240,7 +240,7 @@ namespace EventGrid.Tests.ScenarioTests
                         "TestLabel2"
                     }
                 };
-                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateAsync(scope, eventSubscriptionName, eventSubscription).Result;
+                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscription).Result;
 
                 Assert.NotNull(eventSubscriptionResponse);
                 Assert.Equal(eventSubscriptionResponse.Name, eventSubscriptionName);
