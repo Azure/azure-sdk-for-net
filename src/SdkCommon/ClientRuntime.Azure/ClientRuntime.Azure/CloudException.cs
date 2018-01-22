@@ -29,7 +29,6 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets the response object.
         /// </summary>
-        [Obsolete]
         public CloudError Body
         {
             get
