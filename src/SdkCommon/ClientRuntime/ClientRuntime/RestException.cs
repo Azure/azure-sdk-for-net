@@ -12,7 +12,7 @@ namespace Microsoft.Rest
 #if FullNetFx
     [Serializable]
 #endif
-    public class RestException : RestExceptionBase
+    public class RestException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the RestException class.

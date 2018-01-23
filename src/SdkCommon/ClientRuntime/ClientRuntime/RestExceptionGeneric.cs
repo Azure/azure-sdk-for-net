@@ -8,7 +8,7 @@ namespace Microsoft.Rest
 #if FullNetFx
     [Serializable]
 #endif
-    public class RestException<T> : RestExceptionBase
+    public class RestException<T> : RestException
     {
         
         /// <summary>
