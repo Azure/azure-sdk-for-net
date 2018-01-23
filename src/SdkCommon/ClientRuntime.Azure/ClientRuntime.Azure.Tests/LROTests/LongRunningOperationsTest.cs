@@ -157,7 +157,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var error = Assert.Throws<CloudException>(() =>
                 fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'BadRequest'.", error.Message);
-            Assert.Null(error.ErrorBody);
+            Assert.Null(error.Body);
         }
 
         /// <summary>
@@ -591,7 +591,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
             catch (CloudException ex)
             {
-                Assert.Null(ex.ErrorBody);
+                Assert.Null(ex.Body);
             }
         }
 

@@ -440,7 +440,7 @@ namespace Microsoft.Rest.Azure
                 throw new CloudLroException(string.Format(CultureInfo.InvariantCulture,
                     Resources.LongRunningOperationFailed, statusCode))
                 {
-                    ErrorBody = errorBody,
+                    Body = errorBody,
                     Request = new HttpRequestMessageWrapper(httpRequest, null),
                     Response = new HttpResponseMessageWrapper(httpResponse, responseContent)
                 };
@@ -837,7 +837,7 @@ namespace Microsoft.Rest.Azure
 
                 pollingState.CloudException = new CloudException(errorMessage)
                 {
-                    ErrorBody = asyncOperation?.Error,
+                    Body = asyncOperation?.Error,
                     Request = new HttpRequestMessageWrapper(pollingState.Request, null),
                     Response = new HttpResponseMessageWrapper(pollingState.Response, responseContent)
                 };

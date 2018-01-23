@@ -44,7 +44,7 @@ namespace Microsoft.Rest
             Response = responseMessage;
         }
 
-        public T ErrorBody { get; set; }
+        public T Body { get; set; }
         
         /// <summary>
         /// Gets information about the associated HTTP request.

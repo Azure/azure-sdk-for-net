@@ -6,8 +6,6 @@ using System.Net.Http;
 
 namespace Microsoft.Rest.Azure
 {
-    public delegate string ExceptionMessageGetter();
-
     /// <summary>
     /// An exception generated from an http response returned from a Microsoft Azure service
     /// </summary>
@@ -29,22 +27,8 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets or sets the response object.
         /// </summary>
-        public CloudError Body
-        {
-            get
-            {
-                return ErrorBody;
-            }
-
-            set
-            {
-                ErrorBody = value;
-            }
-        }
+        public CloudError Body { get; set; }
         
-
-        public CloudError ErrorBody { get; set; }
-
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request 
         /// made against the service.
@@ -77,8 +61,7 @@ namespace Microsoft.Rest.Azure
             _message = message;
         }
         
-        public override string Message => string.IsNullOrEmpty(ErrorBody?.Message) ? _message : ErrorBody.Message;
-
-        protected string BaseExceptionMessage => base.Message;
+        public override string Message => string.IsNullOrEmpty(Body?.Message) ? _message : Body.Message;
+       
     }
 }

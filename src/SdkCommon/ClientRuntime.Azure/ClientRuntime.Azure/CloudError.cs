@@ -42,7 +42,7 @@ namespace Microsoft.Rest.Azure
         {
             var ex = new CloudException(errorMessage)
             {
-                ErrorBody = this,
+                Body = this,
                 Request = request,
                 Response = response
             };
