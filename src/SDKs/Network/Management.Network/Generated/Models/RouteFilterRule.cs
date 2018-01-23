@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        /// <param name="tags">Resource tags.</param>
-        public RouteFilterRule(string access, IList<string> communities, string id = default(string), string provisioningState = default(string), string name = default(string), string location = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public RouteFilterRule(string access, IList<string> communities, string id = default(string), string provisioningState = default(string), string name = default(string), string location = default(string), string etag = default(string))
             : base(id)
         {
             Access = access;
@@ -58,7 +57,6 @@ namespace Microsoft.Azure.Management.Network.Models
             Name = name;
             Location = location;
             Etag = etag;
-            Tags = tags;
             CustomInit();
         }
         /// <summary>
@@ -114,12 +112,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
-
-        /// <summary>
-        /// Gets or sets resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// The rule type of the rule. Valid value is: 'Community'
