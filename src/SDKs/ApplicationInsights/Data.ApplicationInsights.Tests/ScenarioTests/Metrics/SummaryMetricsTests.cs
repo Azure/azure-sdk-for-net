@@ -13,7 +13,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
+                var timespan = new System.TimeSpan(12, 0, 0);
                 var aggregation = new[] {"avg"};
 
                 var client = GetClient(ctx);
@@ -29,7 +29,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
+                var timespan = new System.TimeSpan(12, 0, 0);
                 var aggregation = new[] { "avg", "count", "min", "max", "sum" };
 
                 var client = GetClient(ctx);

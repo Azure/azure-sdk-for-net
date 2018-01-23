@@ -4,6 +4,7 @@ using Microsoft.Azure.ApplicationInsights.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using Xunit;
+using System;
 
 namespace Data.ApplicationInsights.Tests.Events
 {
@@ -14,7 +15,7 @@ namespace Data.ApplicationInsights.Tests.Events
         {
             using (var ctx = MockContext.Start(GetType().FullName))
             {
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var top = 10;
 
                 var client = GetClient(ctx);

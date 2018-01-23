@@ -32,7 +32,14 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// Initializes a new instance of the QueryBody class.
         /// </summary>
-        public QueryBody(string query, string timespan = default(string), IList<string> applications = default(IList<string>))
+        /// <param name="query">The query to execute.</param>
+        /// <param name="timespan">Optional. The timespan over which to query
+        /// data. This is an ISO8601 time period value.  This timespan is
+        /// applied in addition to any that are specified in the query
+        /// expression.</param>
+        /// <param name="applications">A list of applications that are included
+        /// in the query.</param>
+        public QueryBody(string query, System.TimeSpan? timespan = default(System.TimeSpan?), IList<string> applications = default(IList<string>))
         {
             Query = query;
             Timespan = timespan;
@@ -46,16 +53,21 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the query to execute.
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public string Query { get; set; }
 
         /// <summary>
+        /// Gets or sets optional. The timespan over which to query data. This
+        /// is an ISO8601 time period value.  This timespan is applied in
+        /// addition to any that are specified in the query expression.
         /// </summary>
         [JsonProperty(PropertyName = "timespan")]
-        public string Timespan { get; set; }
+        public System.TimeSpan? Timespan { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of applications that are included in the query.
         /// </summary>
         [JsonProperty(PropertyName = "applications")]
         public IList<string> Applications { get; set; }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
     /// <summary>
     /// Events query result data.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("events-result-data")]
+    [Newtonsoft.Json.JsonObject("eventsResultData")]
     public partial class EventsResultData
     {
         /// <summary>

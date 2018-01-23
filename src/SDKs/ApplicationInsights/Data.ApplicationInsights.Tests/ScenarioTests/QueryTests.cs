@@ -14,7 +14,7 @@ namespace Data.ApplicationInsights.Tests
 
         private const int TakeCount = 25;
         private readonly string SimpleQuery = $"union * | take {TakeCount}";
-        private const string PastHourTimespan = "PT1H";
+        private readonly TimeSpan PastHourTimespan = new TimeSpan(1, 0, 0);
 
         [Fact]
         public async Task CanExecuteSimplePostQuery_DemoWorkspace()

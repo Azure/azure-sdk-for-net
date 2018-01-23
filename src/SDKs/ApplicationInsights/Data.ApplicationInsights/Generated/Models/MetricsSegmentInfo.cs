@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// interval was specified).</param>
         /// <param name="segments">Segmented metric data (if further
         /// segmented).</param>
-        public MetricsSegmentInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string start = default(string), string end = default(string), IList<MetricsSegmentInfo> segments = default(IList<MetricsSegmentInfo>))
+        public MetricsSegmentInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? start = default(System.DateTime?), System.DateTime? end = default(System.DateTime?), IList<MetricsSegmentInfo> segments = default(IList<MetricsSegmentInfo>))
         {
             AdditionalProperties = additionalProperties;
             Start = start;
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// interval was specified).
         /// </summary>
         [JsonProperty(PropertyName = "start")]
-        public string Start { get; set; }
+        public System.DateTime? Start { get; set; }
 
         /// <summary>
         /// Gets or sets start time of the metric segment (only when an
         /// interval was specified).
         /// </summary>
         [JsonProperty(PropertyName = "end")]
-        public string End { get; set; }
+        public System.DateTime? End { get; set; }
 
         /// <summary>
         /// Gets or sets segmented metric data (if further segmented).

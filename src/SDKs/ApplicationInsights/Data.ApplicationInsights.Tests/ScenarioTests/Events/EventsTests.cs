@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.ApplicationInsights;
 using Microsoft.Azure.ApplicationInsights.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -9,7 +10,7 @@ namespace Data.ApplicationInsights.Tests.Events
     public class EventsTests : EventsTestBase
     {
         private const int TopCount = 10;
-        private const string Timespan = "P1D";
+        private readonly TimeSpan Timespan = new TimeSpan(1, 0, 0, 0);
 
         [Fact]
         public async Task GetAllEvents()

@@ -28,7 +28,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         {
             using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
             {
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var top = 10;
 
                 var client = GetClient(ctx);
@@ -73,7 +73,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         {
             using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
             {
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var top = 10;
 
                 var client = GetClient(ctx);
@@ -102,11 +102,11 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
             }
         }
 
-        public delegate Task<EventsResults<T>> MultiQueryAsync<T>(ApplicationInsightsDataClient client, string timespan, int top) where T : EventsResultData;
-        public delegate Task<EventsResults<T>> SingleQueryAsync<T>(ApplicationInsightsDataClient client, Guid id, string timespan) where T : EventsResultData;
+        public delegate Task<EventsResults<T>> MultiQueryAsync<T>(ApplicationInsightsDataClient client, System.TimeSpan? timespan, int top) where T : EventsResultData;
+        public delegate Task<EventsResults<T>> SingleQueryAsync<T>(ApplicationInsightsDataClient client, Guid id, System.TimeSpan? timespan) where T : EventsResultData;
 
-        public delegate EventsResults<T> MultiQuery<T>(ApplicationInsightsDataClient client, string timespan, int top) where T : EventsResultData;
-        public delegate EventsResults<T> SingleQuery<T>(ApplicationInsightsDataClient client, Guid id, string timespan) where T : EventsResultData;
+        public delegate EventsResults<T> MultiQuery<T>(ApplicationInsightsDataClient client, System.TimeSpan? timespan, int top) where T : EventsResultData;
+        public delegate EventsResults<T> SingleQuery<T>(ApplicationInsightsDataClient client, Guid id, System.TimeSpan? timespan) where T : EventsResultData;
 
         private static readonly object[] TraceParams = new object[]
         {

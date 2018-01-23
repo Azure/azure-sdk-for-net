@@ -8,12 +8,12 @@
         /// <summary>
         /// Gets start time of the metric.
         /// </summary>
-        public string Start { get; internal set; }
+        public System.DateTime? Start { get; internal set; }
 
         /// <summary>
         /// Gets start time of the metric.
         /// </summary>
-        public string End { get; internal set; }
+        public System.DateTime? End { get; internal set; }
 
         /// <summary>
         /// Gets sum of the metric (if requested).

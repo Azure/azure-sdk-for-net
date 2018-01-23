@@ -54,7 +54,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// 'availabilityResults/availabilityPercentage',
         /// 'availabilityResults/duration', 'billing/telemetryCount',
         /// 'customEvents/count'</param>
-        public MetricsPostBodySchemaParameters(string metricId, string timespan = default(string), IList<string> aggregation = default(IList<string>), string interval = default(string), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string))
+        public MetricsPostBodySchemaParameters(string metricId, System.TimeSpan? timespan = default(System.TimeSpan?), IList<string> aggregation = default(IList<string>), System.TimeSpan? interval = default(System.TimeSpan?), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string))
         {
             MetricId = metricId;
             Timespan = timespan;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "timespan")]
-        public string Timespan { get; set; }
+        public System.TimeSpan? Timespan { get; set; }
 
         /// <summary>
         /// </summary>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "interval")]
-        public string Interval { get; set; }
+        public System.TimeSpan? Interval { get; set; }
 
         /// <summary>
         /// </summary>

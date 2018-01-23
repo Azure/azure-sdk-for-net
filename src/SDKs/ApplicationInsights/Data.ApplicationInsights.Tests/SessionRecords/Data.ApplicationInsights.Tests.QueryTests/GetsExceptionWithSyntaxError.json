@@ -17,7 +17,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.1.0-preview"
+          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -26,7 +26,7 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "1c773fc8-a886-4d55-b737-f139067b5bed"
+          "caf78f93-b483-45d3-b16c-0f4e38841ba0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The request had some invalid properties\",\r\n    \"code\": \"BadArgumentError\",\r\n    \"innererror\": {\r\n      \"code\": \"SyntaxError\",\r\n      \"message\": \"A recognition error occurred in the query.\",\r\n      \"innererror\": {\r\n        \"code\": \"SYN0002\",\r\n        \"message\": \"Query could not be parsed at 'foobar' on line [1,10]\",\r\n        \"line\": 1,\r\n        \"pos\": 10,\r\n        \"token\": \"foobar\"\r\n      }\r\n    }\r\n  }\r\n}",
@@ -41,10 +41,10 @@
           "keep-alive"
         ],
         "Date": [
-          "Wed, 08 Nov 2017 18:29:04 GMT"
+          "Tue, 23 Jan 2018 21:11:48 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.98334f48-c495-11e7-b56b-70b3d5800008"
+          "1.1 draft-ai-green.0950b5b9-0053-11e8-b7b8-70b3d5800008"
         ],
         "Server": [
           "nginx"

@@ -15,8 +15,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
-                var interval = "PT1H";
+                var timespan = new TimeSpan(12, 0, 0);
+                var interval = new TimeSpan(1, 0, 0);
                 var aggregation = new[] { "avg" };
                 var segments = new[] { "request/resultCode" };
 
@@ -49,8 +49,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
-                var interval = "PT1H";
+                var timespan = new TimeSpan(12, 0, 0);
+                var interval = new TimeSpan(1, 0, 0);
                 var aggregation = new[] { "avg", "count", "max", "min", "sum" };
                 var segments = new[] { "request/resultCode" };
 
@@ -83,8 +83,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
-                var interval = "PT1H";
+                var timespan = new TimeSpan(12, 0, 0);
+                var interval = new TimeSpan(1, 0, 0);
                 var aggregation = new[] { "avg" };
                 var segments = new[] { "request/name", "request/resultCode" };
 
@@ -126,8 +126,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
-                var interval = "PT1H";
+                var timespan = new TimeSpan(12, 0, 0);
+                var interval = new TimeSpan(1, 0, 0);
                 var aggregation = new[] { "avg", "count", "max", "min", "sum" };
                 var segments = new[] { "request/name", "request/resultCode" };
 

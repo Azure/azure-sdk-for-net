@@ -48,11 +48,6 @@ namespace Microsoft.Azure.ApplicationInsights
         public string AppId { get; set; }
 
         /// <summary>
-        /// Application IDs to include in cross-application queries.
-        /// </summary>
-        public IList<string> Applications { get; set; }
-
-        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
@@ -378,7 +373,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, string timespan = "PT12H", string interval = default(string), IList<string> aggregation = default(IList<string>), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, System.TimeSpan? timespan = default(System.TimeSpan?), System.TimeSpan? interval = default(System.TimeSpan?), IList<string> aggregation = default(IList<string>), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
@@ -428,11 +423,11 @@ namespace Microsoft.Azure.ApplicationInsights
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
-                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(timespan)));
+                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timespan, SerializationSettings).Trim('"'))));
             }
             if (interval != null)
             {
-                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(interval)));
+                _queryParameters.Add(string.Format("interval={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(interval, SerializationSettings).Trim('"'))));
             }
             if (aggregation != null)
             {
@@ -945,7 +940,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EventsResults>> GetEventsWithHttpMessagesAsync(EventType eventType, string timespan = default(string), string filter = default(string), string search = default(string), string orderby = default(string), string select = default(string), int? skip = default(int?), int? top = default(int?), string format = default(string), bool? count = default(bool?), string apply = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EventsResults>> GetEventsWithHttpMessagesAsync(EventType eventType, System.TimeSpan? timespan = default(System.TimeSpan?), string filter = default(string), string search = default(string), string orderby = default(string), string select = default(string), int? skip = default(int?), int? top = default(int?), string format = default(string), bool? count = default(bool?), string apply = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
@@ -980,7 +975,7 @@ namespace Microsoft.Azure.ApplicationInsights
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
-                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(timespan)));
+                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timespan, SerializationSettings).Trim('"'))));
             }
             if (filter != null)
             {
@@ -1165,7 +1160,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, System.Guid eventId, string timespan = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
@@ -1193,7 +1188,7 @@ namespace Microsoft.Azure.ApplicationInsights
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
-                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(timespan)));
+                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timespan, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1455,6 +1450,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// with an Analytics query.
         /// </remarks>
         /// <param name='query'>
+        /// The query to execute.
         /// </param>
         /// <param name='timespan'>
         /// Optional. The timespan over which to query data. This is an ISO8601 time
@@ -1462,8 +1458,12 @@ namespace Microsoft.Azure.ApplicationInsights
         /// specified in the query expression.
         /// </param>
         /// <param name='timespan1'>
+        /// Optional. The timespan over which to query data. This is an ISO8601 time
+        /// period value.  This timespan is applied in addition to any that are
+        /// specified in the query expression.
         /// </param>
         /// <param name='applications'>
+        /// A list of applications that are included in the query.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1486,7 +1486,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<QueryResults>> QueryWithHttpMessagesAsync(string query, string timespan = default(string), string timespan1 = default(string), IList<string> applications = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<QueryResults>> QueryWithHttpMessagesAsync(string query, System.TimeSpan? timespan = default(System.TimeSpan?), System.TimeSpan? timespan1 = default(System.TimeSpan?), IList<string> applications = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
@@ -1496,10 +1496,9 @@ namespace Microsoft.Azure.ApplicationInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
             }
-            QueryBody body = default(QueryBody);
+            QueryBody body = new QueryBody();
             if (query != null || timespan1 != null || applications != null)
             {
-                body = new QueryBody();
                 body.Query = query;
                 body.Timespan = timespan1;
                 body.Applications = applications;
@@ -1523,7 +1522,7 @@ namespace Microsoft.Azure.ApplicationInsights
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
-                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(timespan)));
+                _queryParameters.Add(string.Format("timespan={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timespan, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

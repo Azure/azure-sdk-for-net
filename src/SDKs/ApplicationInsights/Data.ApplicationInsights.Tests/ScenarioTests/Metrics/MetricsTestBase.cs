@@ -13,7 +13,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 {
                     MetricId = "requests/duration",
                     Aggregation = new[] { "avg" },
-                    Timespan = "PT12H"
+                    Timespan = new System.TimeSpan(12, 0, 0)
                 }
             },
             false,
@@ -28,8 +28,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 {
                     MetricId = "requests/duration",
                     Aggregation = new[] { "avg" },
-                    Timespan = "PT12H",
-                    Interval = "PT3H"
+                    Timespan = new System.TimeSpan(12, 0, 0),
+                    Interval = new System.TimeSpan(3, 0, 0)
                 }
             },
             true,
@@ -44,7 +44,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 {
                     MetricId = "requests/duration",
                     Aggregation = new[] { "avg" },
-                    Timespan = "PT12H",
+                    Timespan = new System.TimeSpan(12, 0, 0),
                     Segment = new[] { "request/name" }
                 }
             },
@@ -60,8 +60,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 {
                     MetricId = "requests/duration",
                     Aggregation = new[] { "avg" },
-                    Timespan = "PT12H",
-                    Interval = "PT3H",
+                    Timespan = new System.TimeSpan(12, 0, 0),
+                    Interval = new System.TimeSpan(3, 0, 0),
                     Segment = new[] { "request/name" }
                 }
             },
@@ -77,8 +77,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 {
                     MetricId = "requests/duration",
                     Aggregation = new[] { "avg" },
-                    Timespan = "PT12H",
-                    Interval = "PT3H",
+                    Timespan = new System.TimeSpan(12, 0, 0),
+                    Interval = new System.TimeSpan(3, 0, 0),
                     Segment = new[] { "request/name", "request/success" }
                 }
             },

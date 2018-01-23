@@ -3,6 +3,7 @@ using Microsoft.Azure.ApplicationInsights;
 using Microsoft.Azure.ApplicationInsights.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using System;
 
 namespace Data.ApplicationInsights.Tests.Metrics
 {
@@ -14,7 +15,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var aggregation = new[] { "avg" };
                 var segments = new[] { "request/resultCode" };
 
@@ -41,7 +42,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var aggregation = new[] { "avg", "count", "max", "min", "sum" };
                 var segments = new[] { "request/resultCode" };
 
@@ -68,7 +69,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var aggregation = new[] { "avg" };
                 var segments = new[] { "request/name", "request/resultCode" };
 
@@ -104,7 +105,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = "PT12H";
+                var timespan = new TimeSpan(12, 0, 0);
                 var aggregation = new[] { "avg", "count", "max", "min", "sum" };
                 var segments = new[] { "request/name", "request/resultCode" };
 
