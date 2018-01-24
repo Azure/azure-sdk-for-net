@@ -352,13 +352,31 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 {
                     return true;
                 }
-                else if(CurrentPollingState.PollingUrlToUse.Equals(CurrentPollingState.AzureAsyncOperationHeaderLink, StringComparison.OrdinalIgnoreCase))
-                {
+                else if(IsUriEqual(CurrentPollingState.PollingUrlToUse, CurrentPollingState.AzureAsyncOperationHeaderLink))
+                {   
                     return true;
                 }
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Check URI for equality including differences in trailing slash and compare case insensitive 
+        /// </summary>
+        /// <param name="leftUrl">Url</param>
+        /// <param name="rightUrl">Url to compare against</param>
+        /// <returns></returns>
+        private bool IsUriEqual(string leftUrl, string rightUrl)
+        {
+            if (string.IsNullOrEmpty(leftUrl)) return false;
+            if (string.IsNullOrEmpty(rightUrl)) return false;
+
+            Uri left = new Uri(leftUrl);
+            Uri right = new Uri(rightUrl);
+
+            int result = Uri.Compare(left, right, UriComponents.Fragment, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase);
+            return (result == 0);
         }
 
         #endregion
