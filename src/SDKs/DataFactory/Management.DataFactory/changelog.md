@@ -1,9 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
-## Version 0.3.1-preview
+## Version 0.4.0-preview
 
 ### Feature Additions
   * Add readBehavior to Salesforce Source
+  * Enable Azure Key Vault support for all data store linked services
+  * Add license type property to Azure SSIS integration runtime
 
 ## Version 0.3.0-preview
 

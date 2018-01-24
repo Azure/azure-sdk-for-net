@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the FTP server SSL certificate when connect over SSL/TLS channel.
         /// Default value is true. Type: boolean (or Expression with resultType
         /// boolean).</param>
-        public FtpServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object), object enableSsl = default(object), object enableServerCertificateValidation = default(object))
+        public FtpServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object), object enableSsl = default(object), object enableServerCertificateValidation = default(object))
             : base(additionalProperties, connectVia, description)
         {
             Host = host;
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password to logon the FTP server.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -151,10 +151,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Host == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Host");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

@@ -16,6 +16,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
     using LROPatchResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationPatchTestResponses;
     using LROFailedResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationFailedTestResponses;
+    using LROMultipleHeaders = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationMultipleHeaderResponses;
 
     /// <summary>
     /// 
@@ -93,6 +94,21 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithEmptyBody());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            var error = Assert.Throws<CloudException>(() =>
+                fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
+            Assert.Equal("The response from long running operation does not contain a body.", error.Message);
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestAsyncOperationWithNullBody()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNullBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             var error = Assert.Throws<CloudException>(() =>
@@ -344,10 +360,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
             Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis",
                 handler.Requests[0].RequestUri.ToString());
+
             Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
             Assert.Equal("http://custom/status", handler.Requests[1].RequestUri.ToString());
+
             Assert.Equal(HttpMethod.Get, handler.Requests[2].Method);
             Assert.Equal("http://custom/locationstatus", handler.Requests[2].RequestUri.ToString());
+
             Assert.Equal(HttpMethod.Get, handler.Requests[3].Method);
             Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis", 
                 handler.Requests[3].RequestUri.ToString());
@@ -690,7 +709,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     /// </summary>
     public class LRO_RetryAfterTests
     {
-
         /// <summary>
         /// Test
         /// </summary>
@@ -787,6 +805,31 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         /// Test
         /// </summary>
         [Fact]
+        public void TestPatchWithAsyncHeaderServiceCustomResponse()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROPatchResponses.ServiceCustomResponse());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 2;
+            fakeClient.RedisOperations.Patch("rg", "redis", new RedisCreateOrUpdateParameters(), "76fc5-4d01-b462-9f01b2d77");
+
+            Assert.Equal(new HttpMethod("PATCH"), handler.Requests[0].Method);
+            Assert.Equal("https://management.azure.com/subscriptions/76fc5-4d01-b462-9f01b2d77/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis",
+                handler.Requests[0].RequestUri.ToString());
+            Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
+            Assert.Equal("http://custom/status",
+                handler.Requests[1].RequestUri.ToString());
+
+            Assert.Equal(HttpMethod.Get, handler.Requests[2].Method);
+            Assert.Equal("https://management.azure.com/subscriptions/76fc5-4d01-b462-9f01b2d77/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis",
+                handler.Requests[2].RequestUri.ToString());
+        }
+
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
         public void TestPatchWithAsyncHeader()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
@@ -833,7 +876,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     /// </summary>
     public class LRO_FailedTests
     {
-        [Fact(Skip = "Potential scenario that will have to be supported")]
+        [Fact /*(Skip = "Potential scenario that will have to be supported")*/]
         public void TestLROAsynOperationFailureWith200()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
@@ -846,8 +889,47 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
             catch (Exception ex)
             {
-                Assert.Contains("Long running operation failed with status", ex.Message);
+                Assert.Contains("Unable to deserilize body", ex.Message);
             }
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class LRO_MultipleHeaders
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void TestPUT_WithMultipleHeaders()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROMultipleHeaders.MockLROLocationHeaderAndAsyncOperation());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            var now = DateTime.Now;
+            var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(12));
+
+            Assert.Equal(4, handler.Requests.Count);
+            Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
+            Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis",
+                handler.Requests[0].RequestUri.ToString());
+
+            Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
+            Assert.Equal("https://management.azure.com:90/subscriptions/947c-43bc-83d3-6b3186c7305/resourceGroups/hdisdk106/providers/Microsoft.HDInsight/clusters/hdisdk-fail/azureasyncoperations/create?api-version=2015-03-01-preview", 
+                handler.Requests[1].RequestUri.ToString());
+
+            Assert.Equal(HttpMethod.Get, handler.Requests[2].Method);
+            Assert.Equal("http://custom/AsyncOperation", handler.Requests[2].RequestUri.ToString());
+
+            Assert.Equal(HttpMethod.Get, handler.Requests[3].Method);
+            Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis", handler.Requests[3].RequestUri.ToString());
+        }
+
+        
+
     }
 }
