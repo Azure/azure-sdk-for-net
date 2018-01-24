@@ -835,7 +835,7 @@ namespace Microsoft.Rest.Azure
                     Message = errorMessage
                 };
 
-                pollingState.CloudException = new CloudException(errorMessage)
+                pollingState.CloudException = new CloudLroException(errorMessage)
                 {
                     Body = asyncOperation?.Error,
                     Request = new HttpRequestMessageWrapper(pollingState.Request, null),

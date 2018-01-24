@@ -103,7 +103,7 @@ namespace Microsoft.Rest.Azure
 
         private string _status;
 
-        private CloudException _cloudException;
+        private CloudLroException _cloudException;
 
         /// <summary>
         /// Gets or sets polling status.
@@ -296,7 +296,7 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets CloudException from current instance.  
         /// </summary>
-        public CloudException CloudException
+        public CloudLroException CloudException
         {
             get
             {
