@@ -229,8 +229,8 @@ namespace AnalysisServices.Tests.ScenarioTests
                     Console.WriteLine(ex.ToString());
                 }
 
-                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
-                Assert.Equal(resultCreate.State, "Succeeded");
+                Assert.Equal("Succeeded", resultCreate.ProvisioningState);
+                Assert.Equal("Succeeded", resultCreate.State);
 
                 // get the server and ensure that all the values are properly set.
                 var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
@@ -552,7 +552,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 var listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup,
                             AnalysisServicesTestUtilities.DefaultServerName);
 
-                Assert.Equal(listGatewayStatus.Status, Status.Live);
+                Assert.Equal(Status.Live, listGatewayStatus.Status);
 
                 // Dissociate gateway.
                 client.Servers.DissociateGateway(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
