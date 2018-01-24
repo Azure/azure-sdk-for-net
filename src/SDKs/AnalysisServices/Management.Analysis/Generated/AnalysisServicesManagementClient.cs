@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Analysis
             Servers = new ServersOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-08-01-beta";
+            ApiVersion = "2017-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
