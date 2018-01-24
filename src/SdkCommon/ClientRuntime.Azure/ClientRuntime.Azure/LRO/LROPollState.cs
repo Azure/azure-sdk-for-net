@@ -243,6 +243,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 try
                 {
                     body = JObject.Parse(responseContent);
+
+                    // We only keep last serialization expcetion that occured in the last LRO poll cycle
+                    // even if we got serialziation exception in the last iteration but the next response does not result
+                    // 
+                    if(!string.IsNullOrEmpty(this.LastSerializationExceptionMessage))
+                    {
+                        this.LastSerializationExceptionMessage = string.Empty;
+                    }
                 }
                 catch(Exception ex)
                 {
