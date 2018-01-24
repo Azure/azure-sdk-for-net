@@ -24,7 +24,7 @@ namespace Microsoft.Azure.EventGrid
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Azure EventGrid Client
+    /// EventGrid Client
     /// </summary>
     public partial class EventGridClient : ServiceClient<EventGridClient>, IEventGridClient, IAzureClient
     {
