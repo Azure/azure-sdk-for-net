@@ -78,7 +78,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 {
                     if (CurrentPollingState.RawBody == null)
                     {
-                        throw new CloudException(Resources.NoBody);
+                        throw new CloudLroException(Resources.NoBody);
                     }
                 }
             }

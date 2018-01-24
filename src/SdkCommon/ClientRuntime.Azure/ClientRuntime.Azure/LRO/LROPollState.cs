@@ -75,7 +75,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     Message = errorMessage
                 };
 
-                this.CloudException = new CloudException(errorMessage)
+                this.CloudException = new CloudLroException(errorMessage)
                 {
                     Body = AsyncOperationResponseBody?.Error,
                     Request = new HttpRequestMessageWrapper(this.Request, null),
@@ -228,7 +228,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     // failed to deserialize, return empty body
                 }
 
-                throw new CloudException(string.Format(CultureInfo.InvariantCulture,
+                throw new CloudLroException(string.Format(CultureInfo.InvariantCulture,
                     Resources.LongRunningOperationFailed, statusCode))
                 {
                     Body = errorBody,
