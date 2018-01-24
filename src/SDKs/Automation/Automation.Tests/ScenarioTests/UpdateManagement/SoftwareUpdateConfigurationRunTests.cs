@@ -81,14 +81,14 @@
         [Fact]
         public void CanGetAllRunsByStartTime()
         {
-            var startTime = DateTime.Parse("2017-12-03T22:01:00-8");
+            var startTime = DateTime.Parse("2017-12-03T22:01:00-8").ToUniversalTime();
             using (var context = MockContext.Start(GetType().FullName))
             {
                 this.CreateAutomationClient(context);
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStartTime(startTime);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(2, runs.Value.Count);
+                Assert.Equal(3, runs.Value.Count);
             }
         }
     }

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecureString connectionString = default(SecureString), SecureString sasUri = default(SecureString), object encryptedCredential = default(object))
+        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase connectionString = default(SecretBase), SecretBase sasUri = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             ConnectionString = connectionString;
@@ -66,14 +66,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// sasUri property.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecureString ConnectionString { get; set; }
+        public SecretBase ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets SAS URI of the Azure Storage resource. It is mutually
         /// exclusive with connectionString property.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.sasUri")]
-        public SecureString SasUri { get; set; }
+        public SecretBase SasUri { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -92,14 +92,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (ConnectionString != null)
-            {
-                ConnectionString.Validate();
-            }
-            if (SasUri != null)
-            {
-                SasUri.Validate();
-            }
         }
     }
 }
