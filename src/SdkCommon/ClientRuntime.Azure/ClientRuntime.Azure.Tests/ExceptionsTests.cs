@@ -115,7 +115,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             Assert.Contains("DeploymentDocument", ex.Message);
         }
         
-        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -130,7 +129,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             // If the message changes in the response, this assert will also have to be updated.
             Assert.Contains("DeploymentDocument", ex.Message);
         }
-        */
         
         /// <summary>
         /// Test
@@ -142,7 +140,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             var handler = new PlaybackTestHandler(ExceptionsTestsSuite.MockDeleteOperaionWithNoRetryableErrorInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
+            var error = Assert.Throws<CloudLroException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'BadRequest'.", error.Message);
             Assert.Equal(2, handler.Requests.Count);
         }
@@ -168,7 +166,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             }
         }
 
-        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -189,9 +186,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.Response.StatusCode);
             }
         }
-        */
         
-        /* 
         /// <summary>
         /// Test
         /// </summary>
@@ -210,9 +205,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             }
             catch (CloudLroException ex)
             {
-                Assert.Null(ex.ErrorBody);
+                Assert.Null(ex.Body);
             }
         }
-        */
     }
 }
