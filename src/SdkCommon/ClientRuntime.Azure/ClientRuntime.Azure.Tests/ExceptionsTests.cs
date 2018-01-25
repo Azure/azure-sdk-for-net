@@ -111,7 +111,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             var handler = new PlaybackTestHandler(ExceptionsTestsSuite.MockLROAsyncOperationFailedWith200());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var ex = Assert.Throws<CloudException>(() => fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
+            var ex = Assert.Throws<CloudLroException>(() => fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
             Assert.Contains("DeploymentDocument", ex.Message);
         }
         
@@ -181,7 +181,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                 fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
                 Assert.False(true, "Expected exception was not thrown.");
             }
-            catch (CloudLroException ex)
+            catch (CloudException ex)
             {
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.Response.StatusCode);
             }
@@ -203,7 +203,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                 fakeClient.RedisOperations.Delete("rg", "redis", "1234");
                 Assert.False(true, "Expected exception was not thrown.");
             }
-            catch (CloudLroException ex)
+            catch (CloudException ex)
             {
                 Assert.Null(ex.Body);
             }
