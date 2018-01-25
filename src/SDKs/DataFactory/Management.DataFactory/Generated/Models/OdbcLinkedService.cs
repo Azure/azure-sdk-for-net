@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public OdbcLinkedService(SecureString connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object authenticationType = default(object), SecureString credential = default(SecureString), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
+        public OdbcLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object authenticationType = default(object), SecretBase credential = default(SecretBase), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             ConnectionString = connectionString;
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string as well as an optional encrypted credential.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecureString ConnectionString { get; set; }
+        public SecretBase ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets type of authentication used to connect to the ODBC
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// specified in driver-specific property-value format.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.credential")]
-        public SecureString Credential { get; set; }
+        public SecretBase Credential { get; set; }
 
         /// <summary>
         /// Gets or sets user name for Basic authentication. Type: string (or
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password for Basic authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -127,18 +127,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConnectionString == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
-            }
-            if (ConnectionString != null)
-            {
-                ConnectionString.Validate();
-            }
-            if (Credential != null)
-            {
-                Credential.Validate();
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }
