@@ -25,8 +25,10 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// <summary>
         /// Initializes a new instance of the ExtendedErrorInfo class.
         /// </summary>
-        /// <param name="code">Possible values include: 'NotFound', 'Conflict',
-        /// 'BadRequest'</param>
+        /// <param name="code">this is the error response code. Possible values
+        /// include: 'NotFound', 'Conflict', 'BadRequest'</param>
+        /// <param name="message">this is the extended error info
+        /// message</param>
         public ExtendedErrorInfo(string code = default(string), string message = default(string))
         {
             Code = code;
@@ -40,13 +42,14 @@ namespace Microsoft.Azure.Management.Gsm.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'NotFound', 'Conflict',
-        /// 'BadRequest'
+        /// Gets or sets this is the error response code. Possible values
+        /// include: 'NotFound', 'Conflict', 'BadRequest'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
+        /// Gets or sets this is the extended error info message
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

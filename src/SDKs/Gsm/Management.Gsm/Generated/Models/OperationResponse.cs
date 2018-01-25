@@ -25,6 +25,10 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// <summary>
         /// Initializes a new instance of the OperationResponse class.
         /// </summary>
+        /// <param name="name">this is the operation response name</param>
+        /// <param name="display">this is the operation display</param>
+        /// <param name="origin">the is operation response origin
+        /// information</param>
         public OperationResponse(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string))
         {
             Name = name;
@@ -39,16 +43,19 @@ namespace Microsoft.Azure.Management.Gsm.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets this is the operation response name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets this is the operation display
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
 
         /// <summary>
+        /// Gets or sets the is operation response origin information
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }

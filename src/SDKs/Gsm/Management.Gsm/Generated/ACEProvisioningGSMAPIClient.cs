@@ -70,11 +70,6 @@ namespace Microsoft.Azure.Management.Gsm
         public virtual IPartnerOperations Partner { get; private set; }
 
         /// <summary>
-        /// Gets the IPartnerNoIdOperations.
-        /// </summary>
-        public virtual IPartnerNoIdOperations PartnerNoId { get; private set; }
-
-        /// <summary>
         /// Gets the IOperationOperations.
         /// </summary>
         public virtual IOperationOperations Operation { get; private set; }
@@ -281,7 +276,6 @@ namespace Microsoft.Azure.Management.Gsm
         private void Initialize()
         {
             Partner = new PartnerOperations(this);
-            PartnerNoId = new PartnerNoIdOperations(this);
             Operation = new OperationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-02-01";

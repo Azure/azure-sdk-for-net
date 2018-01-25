@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// <summary>
         /// Initializes a new instance of the PartnerResponse class.
         /// </summary>
+        /// <param name="etag">Type of the partner</param>
         /// <param name="id">Identifier of the partner</param>
         /// <param name="name">Name of the partner</param>
         /// <param name="partnerId">This is the partner id</param>
@@ -39,8 +40,8 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// updated.</param>
         /// <param name="createdTime">This is the DateTime when the partner was
         /// created.</param>
-        /// <param name="state">Possible values include: 'Active',
-        /// 'Deleted'</param>
+        /// <param name="state">This is the partner state. Possible values
+        /// include: 'Active', 'Deleted'</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.ManagementPartner/partners"</param>
         public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string state = default(string), string type = default(string))
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Management.Gsm.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets type of the partner
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public int? Etag { get; set; }
@@ -118,7 +120,8 @@ namespace Microsoft.Azure.Management.Gsm.Models
         public System.DateTime? CreatedTime { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Active', 'Deleted'
+        /// Gets or sets this is the partner state. Possible values include:
+        /// 'Active', 'Deleted'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public string State { get; set; }

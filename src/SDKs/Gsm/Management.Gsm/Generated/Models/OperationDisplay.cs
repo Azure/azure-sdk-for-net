@@ -25,6 +25,11 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
+        /// <param name="provider">the is management partner provider</param>
+        /// <param name="resource">the is management partner resource</param>
+        /// <param name="operation">the is management partner operation</param>
+        /// <param name="description">the is management partner operation
+        /// description</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
@@ -40,21 +45,25 @@ namespace Microsoft.Azure.Management.Gsm.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the is management partner provider
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
+        /// Gets or sets the is management partner resource
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
+        /// Gets or sets the is management partner operation
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
+        /// Gets or sets the is management partner operation description
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

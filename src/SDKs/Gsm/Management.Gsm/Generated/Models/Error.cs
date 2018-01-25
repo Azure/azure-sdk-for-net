@@ -25,6 +25,8 @@ namespace Microsoft.Azure.Management.Gsm.Models
         /// <summary>
         /// Initializes a new instance of the Error class.
         /// </summary>
+        /// <param name="errorProperty">this is the ExtendedErrorInfo
+        /// property</param>
         public Error(ExtendedErrorInfo errorProperty = default(ExtendedErrorInfo))
         {
             ErrorProperty = errorProperty;
@@ -37,6 +39,7 @@ namespace Microsoft.Azure.Management.Gsm.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets this is the ExtendedErrorInfo property
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ExtendedErrorInfo ErrorProperty { get; set; }

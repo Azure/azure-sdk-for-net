@@ -42,40 +42,28 @@ namespace Gsm.Tests
         }
 
         [Fact]
-        public void TestGetPartnerNoPartnerId()
-        {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partnerResponse = gsmClient.PartnerNoId.GetAsync().Result;
-                ValidatePartner(partnerResponse);
-            }
-        }
-
-        [Fact]
-        public void TestPutPartner()
+        public void TestCreatePartner()
         {
             string partnerId = "123456";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partner = gsmClient.Partner.PutAsync(partnerId).Result;
+                var partner = gsmClient.Partner.CreateAsync(partnerId).Result;
                 ValidatePartner(partner);
                 Assert.NotNull(partner.PartnerId);
             }
         }
 
         [Fact]
-        public void TestPatchPartner()
+        public void TestUpdatePartner()
         {
             string partnerId = "123457";
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var gsmClient = GsmTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partner = gsmClient.Partner.PatchAsync(partnerId).Result;
+                var partner = gsmClient.Partner.UpdateAsync(partnerId).Result;
                 ValidatePartner(partner);
                 Assert.NotNull(partner.PartnerId);
             }

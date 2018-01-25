@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Gsm
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerResponse>> PutWithHttpMessagesAsync(string partnerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerResponse>> CreateWithHttpMessagesAsync(string partnerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a specific `Partner`.
         /// </summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Gsm
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerResponse>> PatchWithHttpMessagesAsync(string partnerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerResponse>> UpdateWithHttpMessagesAsync(string partnerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a specific `Partner`.
         /// </summary>

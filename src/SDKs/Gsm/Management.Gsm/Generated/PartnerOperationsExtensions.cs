@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.Gsm
             /// <param name='partnerId'>
             /// Id of the Partner
             /// </param>
-            public static PartnerResponse Put(this IPartnerOperations operations, string partnerId)
+            public static PartnerResponse Create(this IPartnerOperations operations, string partnerId)
             {
-                return operations.PutAsync(partnerId).GetAwaiter().GetResult();
+                return operations.CreateAsync(partnerId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.Gsm
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerResponse> PutAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerResponse> CreateAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -109,9 +109,9 @@ namespace Microsoft.Azure.Management.Gsm
             /// <param name='partnerId'>
             /// Id of the Partner
             /// </param>
-            public static PartnerResponse Patch(this IPartnerOperations operations, string partnerId)
+            public static PartnerResponse Update(this IPartnerOperations operations, string partnerId)
             {
-                return operations.PatchAsync(partnerId).GetAwaiter().GetResult();
+                return operations.UpdateAsync(partnerId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.Management.Gsm
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerResponse> PatchAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerResponse> UpdateAsync(this IPartnerOperations operations, string partnerId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
