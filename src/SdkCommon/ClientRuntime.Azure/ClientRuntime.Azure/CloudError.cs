@@ -38,13 +38,14 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public IList<CloudError> Details { get; private set; }
 
-        public void CreateAndThrowException(string errorMessage, HttpRequestMessageWrapper request, HttpResponseMessageWrapper response)
+        public void CreateAndThrowException(string errorMessage, HttpRequestMessageWrapper request, HttpResponseMessageWrapper response, int httpStatusCode)
         {
             var ex = new CloudException(errorMessage)
             {
                 Body = this,
                 Request = request,
-                Response = response
+                Response = response,
+                HttpStatusCode = httpStatusCode
             };
             throw ex;
         }

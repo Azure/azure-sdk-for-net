@@ -14,7 +14,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// Initializes a new instance of the ErrorModelException class.
         /// </summary>
-        public RestException()
+        public RestException() : base()
         {
         }
 
@@ -31,19 +31,7 @@ namespace Microsoft.Rest
         : base(message, innerException)
         {
         }
-
-        /// <summary>
-        /// Initializes a new instance of the CloudException class caused by another exception.
-        /// </summary>
-        /// <param name="message">A description of the error.</param>
-        /// <param name="requestMessage">The request message.</param>
-        /// <param name="responseMessage">The response message.</param>
-        public RestException(string message, HttpRequestMessageWrapper requestMessage, HttpResponseMessageWrapper responseMessage) : base(message)
-        {
-            Request = requestMessage;
-            Response = responseMessage;
-        }
-
+        
         public T Body { get; set; }
         
         /// <summary>
@@ -55,7 +43,17 @@ namespace Microsoft.Rest
         /// Gets information about the associated HTTP response.
         /// </summary>
         public HttpResponseMessageWrapper Response { get; set; }
-        
+
+        /// <summary>
+        /// Gets/Sets the HTTP status code returned by server.
+        /// </summary>
+        public int HttpStatusCode { get; set; }
+
+        /// <summary>
+        /// Gets/Sets request id of the operation.
+        /// </summary>
+        public string RequestId { get; set; }
+
 #if FullNetFx
         /// <summary>
         /// Initializes a new instance of the RestException class.

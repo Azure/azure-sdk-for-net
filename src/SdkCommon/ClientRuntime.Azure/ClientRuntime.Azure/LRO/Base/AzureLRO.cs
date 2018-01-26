@@ -223,7 +223,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 }
                 else
                 {
-                    throw new CloudLroException("The response from long running operation does not have a valid status code.");
+                    throw new CloudException("The response from long running operation does not have a valid status code.")
+                    {
+                        HttpStatusCode = (int)CurrentPollingState.CurrentStatusCode
+                    };
                 }
             }
             #endregion
@@ -265,12 +268,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             {
                 if (CurrentPollingState.AsyncOperationResponseBody?.Status == null || CurrentPollingState.RawBody == null)
                 {
-                    throw new CloudLroException(Resources.NoBody);
+                    throw new CloudException(Resources.NoBody);
                 }
 
                 if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
                 {
-                    throw new CloudLroException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
+                    throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
                 }
             }
         }
@@ -294,7 +297,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             {
                 if(string.IsNullOrEmpty(absoluteUri))
                 {
-                    throw new CloudLroException(Resources.InValidUri);
+                    throw new CloudException(Resources.InValidUri);
                 }
             }
 

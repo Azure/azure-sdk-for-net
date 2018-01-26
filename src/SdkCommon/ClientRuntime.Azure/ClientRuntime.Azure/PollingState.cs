@@ -103,7 +103,7 @@ namespace Microsoft.Rest.Azure
 
         private string _status;
 
-        private CloudLroException _cloudException;
+        private CloudException _cloudException;
 
         /// <summary>
         /// Gets or sets polling status.
@@ -117,7 +117,7 @@ namespace Microsoft.Rest.Azure
             {
                 if (value == null)
                 {
-                    throw new CloudLroException(Resources.NoProvisioningState);
+                    throw new CloudException(Resources.NoProvisioningState);
                 }
                 _status = value;
             }
@@ -296,13 +296,13 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Gets CloudException from current instance.  
         /// </summary>
-        public CloudLroException CloudException
+        public CloudException CloudException
         {
             get
             {
                 if(_cloudException == null)
                 {
-                    _cloudException = new CloudLroException(string.Format(CultureInfo.InvariantCulture,
+                    _cloudException = new CloudException(string.Format(CultureInfo.InvariantCulture,
                                             Resources.LongRunningOperationFailed, Status))
                     {
                         Body = Error,

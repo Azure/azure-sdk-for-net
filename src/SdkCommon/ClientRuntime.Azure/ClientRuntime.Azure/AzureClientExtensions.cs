@@ -437,7 +437,7 @@ namespace Microsoft.Rest.Azure
                     // failed to deserialize, return empty body
                 }
 
-                throw new CloudLroException(string.Format(CultureInfo.InvariantCulture,
+                throw new CloudException(string.Format(CultureInfo.InvariantCulture,
                     Resources.LongRunningOperationFailed, statusCode))
                 {
                     Body = errorBody,
@@ -518,7 +518,7 @@ namespace Microsoft.Rest.Azure
             var initialRequestMethod = response.Request.Method;
             if (CheckResponseStatusCodeFailed(response))
             {
-                throw new CloudLroException(string.Format(
+                throw new CloudException(string.Format(
                     Resources.UnexpectedPollingStatus,
                     response.Response.StatusCode,
                     initialRequestMethod));
@@ -548,7 +548,7 @@ namespace Microsoft.Rest.Azure
                 }
                 else
                 {
-                    throw new CloudLroException("Location header is missing from long running operation.");
+                    throw new CloudException("Location header is missing from long running operation.");
                 }
             }
 
@@ -660,7 +660,7 @@ namespace Microsoft.Rest.Azure
 
             if (responseWithResource.Body == null)
             {
-                throw new CloudLroException(Resources.NoBody);
+                throw new CloudException(Resources.NoBody);
             }
 
             string responseContent = await responseWithResource.Response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -835,7 +835,7 @@ namespace Microsoft.Rest.Azure
                     Message = errorMessage
                 };
 
-                pollingState.CloudException = new CloudLroException(errorMessage)
+                pollingState.CloudException = new CloudException(errorMessage)
                 {
                     Body = asyncOperation?.Error,
                     Request = new HttpRequestMessageWrapper(pollingState.Request, null),
@@ -872,12 +872,15 @@ namespace Microsoft.Rest.Azure
                 }
                 else
                 {
-                    throw new CloudLroException("The response from long running operation does not have a valid status code.");
+                    throw new CloudException("The response from long running operation does not have a valid status code.")
+                    {
+                        HttpStatusCode = (int)statusCode
+                    };
                 }
             }
             else
             {
-                throw new CloudLroException("The response from long running operation does not have a valid status code.");
+                throw new CloudException("The response from long running operation does not have a valid status code.");
             }
 
             return pollingState;

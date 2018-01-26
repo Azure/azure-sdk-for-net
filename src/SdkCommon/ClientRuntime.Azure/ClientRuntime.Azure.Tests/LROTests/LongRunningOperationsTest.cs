@@ -81,7 +81,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNoBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudLroException>(() => 
+            var error = Assert.Throws<CloudException>(() => 
                 fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
             Assert.Equal("The response from long running operation does not contain a body.", error.Message);
         }
@@ -96,7 +96,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithEmptyBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudLroException>(() =>
+            var error = Assert.Throws<CloudException>(() =>
                 fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234"));
             Assert.Equal("The response from long running operation does not contain a body.", error.Message);
         }
@@ -111,7 +111,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNullBody());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudLroException>(() =>
+            var error = Assert.Throws<CloudException>(() =>
                 fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("The response from long running operation does not contain a body.", error.Message);
         }
@@ -154,7 +154,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNonSuccessStatusAndInvalidResponseContent());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudLroException>(() =>
+            var error = Assert.Throws<CloudException>(() =>
                 fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'BadRequest'.", error.Message);
             Assert.Null(error.Body);
@@ -304,7 +304,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var handler = new PlaybackTestHandler(LROResponse.MockDeleteOperaionWithNoRetryableErrorInResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            var error = Assert.Throws<CloudLroException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
+            var error = Assert.Throws<CloudException>(() => fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'BadRequest'.", error.Message);
             Assert.Equal(2, handler.Requests.Count);
         }
@@ -544,7 +544,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
 
-            var ex = Assert.Throws<CloudLroException>(()=>fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
+            var ex = Assert.Throws<CloudException>(()=>fakeClient.RedisOperations.Delete("rg", "redis", "1234"));
             Assert.Equal("Long running operation failed with status 'InternalServerError'.", ex.Message);
         }
         
@@ -853,7 +853,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
 
-            Assert.Throws<CloudLroException>(() =>
+            Assert.Throws<CloudException>(() =>
             {
                 try
                 {
