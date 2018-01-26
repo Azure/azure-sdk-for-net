@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Gsm.Models
+namespace Microsoft.Azure.Management.ManagementPartner.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

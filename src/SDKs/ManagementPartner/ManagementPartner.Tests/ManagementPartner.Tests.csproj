@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Gsm.Tests</PackageId>
+    <PackageId>ManagementPartner.Tests</PackageId>
     <Description>Gsm.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
-    <AssemblyName>Gsm.Tests</AssemblyName>
+    <AssemblyName>ManagementPartner.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Management.Gsm\Microsoft.Azure.Management.Gsm.csproj" />
+    <ProjectReference Include="..\Management.ManagementPartner\Microsoft.Azure.Management.ManagementPartner.csproj" />
   </ItemGroup>
 
   <ItemGroup>
