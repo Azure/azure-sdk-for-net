@@ -6,10 +6,14 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Consumption</PackageId>
         <Description>Microsoft Azure Consumption Management Library</Description>
-        <VersionPrefix>2.0.0</VersionPrefix>    
+        <VersionPrefix>2.1.0</VersionPrefix>    
         <AssemblyName>Microsoft.Azure.Management.Consumption</AssemblyName>    
         <PackageTags>Consumptionmanagement;Consumption;</PackageTags>
-        <PackageReleaseNotes/>
+      <PackageReleaseNotes>
+        <![CDATA[
+        This is a public release of the Azure Consunmption SDK that provides access to consumption resources for Azure Enterprise Subscriptions. Included with this release is to get reservations summaries and reservations details.
+      ]]>
+      </PackageReleaseNotes>
     </PropertyGroup>
   
     <PropertyGroup>

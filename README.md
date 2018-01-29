@@ -1,4 +1,5 @@
 
+
 # Microsoft Azure SDK for .NET
  ----------
 The Microsoft Azure SDK for .NET allows you to build applications
@@ -29,10 +30,14 @@ src\SDKs\Compute
 ### To build:
 =======
 #### If you have recently cloned the repo or did a pull from upstream or did git clean -xdf you need to the following before you do anything else in order to build your projects
+
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
  3. execute MsBuild.exe build.proj (this will pull all the build related tools needed to build the repo)
- 4. Follow below steps to start building your repo/project
+ 4. Skip verification for the following dlls
+    - Sn -Vr Microsoft.Azure.Build.BootstrapTasks.dll
+    - Sn -Vr Microsoft.Azure.Sdk.Build.Tasks.dll
+ 5. Follow below steps to start building your repo/project
 
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
  1. Open any solution, eg "SDKs\Compute\Compute.sln"

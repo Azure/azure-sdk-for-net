@@ -81,6 +81,16 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IUsageDetailsOperations UsageDetails { get; private set; }
 
         /// <summary>
+        /// Gets the IReservationsSummariesOperations.
+        /// </summary>
+        public virtual IReservationsSummariesOperations ReservationsSummaries { get; private set; }
+
+        /// <summary>
+        /// Gets the IReservationsDetailsOperations.
+        /// </summary>
+        public virtual IReservationsDetailsOperations ReservationsDetails { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -287,6 +297,8 @@ namespace Microsoft.Azure.Management.Consumption
         private void Initialize()
         {
             UsageDetails = new UsageDetailsOperations(this);
+            ReservationsSummaries = new ReservationsSummariesOperations(this);
+            ReservationsDetails = new ReservationsDetailsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-11-30";

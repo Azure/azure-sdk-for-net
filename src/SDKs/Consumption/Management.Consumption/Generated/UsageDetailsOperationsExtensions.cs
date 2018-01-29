@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <summary>
             /// Lists the usage details for a scope by billing period. Usage details are
             /// available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/azure/billing/billing-enterprise-api" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <summary>
             /// Lists the usage details for a scope by billing period. Usage details are
             /// available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/azure/billing/billing-enterprise-api" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <summary>
             /// Lists the usage details for a scope by billing period. Usage details are
             /// available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/azure/billing/billing-enterprise-api" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <summary>
             /// Lists the usage details for a scope by billing period. Usage details are
             /// available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/azure/billing/billing-enterprise-api" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

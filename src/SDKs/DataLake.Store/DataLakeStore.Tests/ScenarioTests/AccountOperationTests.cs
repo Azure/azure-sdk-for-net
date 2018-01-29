@@ -25,6 +25,16 @@ namespace DataLakeStore.Tests
                 commonData = new CommonTestFixture(context);
                 var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
 
+                // Ensure that the account name is available
+                var checkNameParam = new CheckNameAvailabilityParameters
+                {
+                    Name = commonData.DataLakeStoreAccountName
+                };
+
+                var responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);
+
+                Assert.True(responseNameCheck.NameAvailable);
+
                 // Create a test account
                 var responseCreate =
                     clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: commonData.DataLakeStoreAccountName,
@@ -46,10 +56,15 @@ namespace DataLakeStore.Tests
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
 
-                // get the account and ensure that all the values are properly set.
+                // Verify that the account name is no longer available
+                responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);
+
+                Assert.False(responseNameCheck.NameAvailable);
+
+                // Get the account and ensure that all the values are properly set.
                 var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
 
-                // validate the account creation process
+                // Validate the account creation process
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.ProvisioningState);
                 Assert.NotNull(responseCreate.Id);
                 Assert.NotNull(responseGet.Id);
@@ -61,8 +76,8 @@ namespace DataLakeStore.Tests
                 Assert.Equal(TierType.Commitment1TB, responseGet.CurrentTier);
                 Assert.Equal(TierType.Commitment1TB, responseGet.NewTier);
 
-                // wait for provisioning state to be Succeeded
-                // we will wait a maximum of 15 minutes for this to happen and then report failures
+                // Wait for provisioning state to be Succeeded
+                // We will wait a maximum of 15 minutes for this to happen and then report failures
                 int timeToWaitInMinutes = 15;
                 int minutesWaited = 0;
                 while (responseGet.ProvisioningState != DataLakeStoreAccountStatus.Succeeded && responseGet.ProvisioningState != DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
@@ -84,16 +99,16 @@ namespace DataLakeStore.Tests
                 // Update the account and confirm the updates make it in.
                 var newAccount = responseGet;
                 newAccount.Tags = new Dictionary<string, string>
-            {
-                {"updatedKey", "updatedValue"}
-            };
+                {
+                    { "updatedKey", "updatedValue" }
+                };
 
                 var updateResponse = clientToUse.Account.Update(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName,
                 new DataLakeStoreAccountUpdateParameters
                 {
                     Tags = new Dictionary<string, string>
                     {
-                        {"updatedKey", "updatedValue"}
+                        { "updatedKey", "updatedValue" }
                     },
                     NewTier = TierType.Consumption
                 });
@@ -108,7 +123,7 @@ namespace DataLakeStore.Tests
                 Assert.Equal(newAccount.Name, updateResponseGet.Name);
                 Assert.Equal(responseGet.Type, updateResponseGet.Type);
 
-                // verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
+                // Verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
                 Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
 
                 Assert.Equal(TierType.Commitment1TB, updateResponseGet.CurrentTier);
@@ -127,25 +142,34 @@ namespace DataLakeStore.Tests
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
-                // now list by resource group:
+                // Now list by resource group:
                 listResponse = clientToUse.Account.ListByResourceGroup(commonData.ResourceGroupName);
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
-                // test that the account exists
+                // Test that the account exists
                 Assert.True(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
+
+                // Check that Locations_GetCapability and Operations_List are functional
+                var responseGetCapability = clientToUse.Locations.GetCapability("EastUS2");
+
+                Assert.NotNull(responseGetCapability);
+
+                var responseListOps = clientToUse.Operations.List();
+
+                Assert.NotNull(responseListOps);
 
                 // Delete the account and confirm that it is deleted.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
 
-                // delete the account again and make sure it continues to result in a succesful code.
+                // Delete the account again and make sure it continues to result in a succesful code.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
 
-                // delete the account with its old name, which should also succeed.
+                // Delete the account with its old name, which should also succeed.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
 
-                // test that the account is gone
+                // Test that the account is gone
                 Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
             }
         }
@@ -158,6 +182,8 @@ namespace DataLakeStore.Tests
                 var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
 
                 // Create a an account with trusted ID provider and firewall rules.
+                var adlsAccountName = TestUtilities.GenerateName("adlsacct");
+
                 var firewallStart = "127.0.0.1";
                 var firewallEnd = "127.0.0.2";
                 var firewallRuleName1 = TestUtilities.GenerateName("firerule1");
@@ -165,8 +191,6 @@ namespace DataLakeStore.Tests
                 var trustedId = TestUtilities.GenerateGuid();
                 var trustedUrl = string.Format("https://sts.windows.net/{0}", trustedId.ToString());
                 var trustedIdName = TestUtilities.GenerateName("trustedrule1");
-
-                var adlsAccountName = TestUtilities.GenerateName("adlsacct");
 
                 var responseCreate =
                     clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: adlsAccountName,
@@ -189,10 +213,10 @@ namespace DataLakeStore.Tests
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
 
-                // get the account and ensure that all the values are properly set.
+                // Get the account and ensure that all the values are properly set.
                 var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, adlsAccountName);
 
-                // validate the account creation process
+                // Validate the account creation process
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.ProvisioningState);
                 Assert.NotNull(responseCreate.Id);
                 Assert.NotNull(responseGet.Id);
@@ -202,17 +226,15 @@ namespace DataLakeStore.Tests
                 Assert.Equal(adlsAccountName, responseGet.Name);
                 Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.Type);
 
-                // validate firewall state
+                // Validate firewall state
                 Assert.Equal(FirewallState.Enabled, responseGet.FirewallState);
                 Assert.Equal(1, responseGet.FirewallRules.Count());
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
-                
-                // TODO: re-enable this once we support this in the server again.
-                // Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
+                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
 
-                // validate trusted identity provider state
+                // Validate trusted identity provider state
                 Assert.Equal(TrustedIdProviderState.Enabled, responseGet.TrustedIdProviderState);
                 Assert.Equal(1, responseGet.TrustedIdProviders.Count());
                 Assert.Equal(trustedUrl, responseGet.TrustedIdProviders[0].IdProvider);
@@ -220,10 +242,10 @@ namespace DataLakeStore.Tests
 
                 // Test getting the specific firewall rules
                 var firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+
                 Assert.Equal(firewallStart, firewallRule.StartIpAddress);
                 Assert.Equal(firewallEnd, firewallRule.EndIpAddress);
                 Assert.Equal(firewallRuleName1, firewallRule.Name);
-
 
                 var updatedFirewallStart = "192.168.0.0";
                 var updatedFirewallEnd = "192.168.0.1";
@@ -232,11 +254,12 @@ namespace DataLakeStore.Tests
 
                 // Update the firewall rule to change the start/end ip addresses
                 firewallRule = clientToUse.FirewallRules.CreateOrUpdate(commonData.ResourceGroupName, adlsAccountName,firewallRuleName1, firewallRule);
+
                 Assert.Equal(updatedFirewallStart, firewallRule.StartIpAddress);
                 Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
                 Assert.Equal(firewallRuleName1, firewallRule.Name);
 
-                // just update the firewall rule start IP
+                // Just update the firewall rule start IP
                 firewallRule = clientToUse.FirewallRules.Update(
                     commonData.ResourceGroupName,
                     adlsAccountName,
@@ -265,19 +288,20 @@ namespace DataLakeStore.Tests
 
                 // Test getting the specific trusted identity provider
                 var trustedIdProvider = clientToUse.TrustedIdProviders.Get(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+
                 Assert.Equal(trustedUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
-
 
                 var updatedIdUrl = string.Format("https://sts.windows.net/{0}", TestUtilities.GenerateGuid().ToString());
                 trustedIdProvider.IdProvider = updatedIdUrl;
 
                 // Update the trusted id provider
                 trustedIdProvider = clientToUse.TrustedIdProviders.CreateOrUpdate(commonData.ResourceGroupName, adlsAccountName, trustedIdName, trustedIdProvider);
+
                 Assert.Equal(updatedIdUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
 
-                // update it with a patch
+                // Update it with a patch
                 trustedIdProvider = clientToUse.TrustedIdProviders.Update(
                     commonData.ResourceGroupName,
                     adlsAccountName,
