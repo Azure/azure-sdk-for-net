@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Gsm.ACEProvisioningGSMAPIClient/0.0.0.0"
+          "Microsoft.Azure.Management.ManagementPartner.ACEProvisioningManagementPartnerAPIClient/0.0.0.0"
         ]
       },
       "ResponseBody": "",

@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd Gsm/resource-manager %*
+call %~dp0..\..\..\..\tools\generate.cmd managementpartner/resource-manager %*

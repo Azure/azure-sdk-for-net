@@ -12,14 +12,14 @@ namespace ManagementPartner.Tests.Helpers
 {
     public static class ManagementPartnerTestUtilities
     {
-        public static ACEProvisioningGSMAPIClient GetACEProvisioningGSMAPIClient(MockContext context, RecordedDelegatingHandler handler = null)
+        public static ACEProvisioningManagementPartnerAPIClient GetACEProvisioningManagementPartnerAPIClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)
             {
                 handler.IsPassThrough = true;
             }
 
-            var client = context.GetServiceClient<ACEProvisioningGSMAPIClient>(handlers:
+            var client = context.GetServiceClient<ACEProvisioningManagementPartnerAPIClient>(handlers:
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
             return client;
         }

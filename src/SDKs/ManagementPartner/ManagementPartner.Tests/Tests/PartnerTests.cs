@@ -35,8 +35,8 @@ namespace ManagementPartner.Tests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var gsmClient = ManagementPartnerTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partnerResponse = gsmClient.Partner.GetAsync(partnerId).Result;
+                var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var partnerResponse = managementPartnerClient.Partner.GetAsync(partnerId).Result;
                 ValidatePartner(partnerResponse);
             }
         }
@@ -48,8 +48,8 @@ namespace ManagementPartner.Tests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var gsmClient = ManagementPartnerTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partner = gsmClient.Partner.CreateAsync(partnerId).Result;
+                var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var partner = managementPartnerClient.Partner.CreateAsync(partnerId).Result;
                 ValidatePartner(partner);
                 Assert.NotNull(partner.PartnerId);
             }
@@ -62,8 +62,8 @@ namespace ManagementPartner.Tests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var gsmClient = ManagementPartnerTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var partner = gsmClient.Partner.UpdateAsync(partnerId).Result;
+                var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var partner = managementPartnerClient.Partner.UpdateAsync(partnerId).Result;
                 ValidatePartner(partner);
                 Assert.NotNull(partner.PartnerId);
             }
@@ -76,8 +76,8 @@ namespace ManagementPartner.Tests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var gsmClient = ManagementPartnerTestUtilities.GetACEProvisioningGSMAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                gsmClient.Partner.DeleteAsync(partnerId).Wait();
+                var managementPartnerClient = ManagementPartnerTestUtilities.GetACEProvisioningManagementPartnerAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                managementPartnerClient.Partner.DeleteAsync(partnerId).Wait();
             }
         }
 

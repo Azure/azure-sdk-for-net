@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Gsm.ACEProvisioningGSMAPIClient/0.0.0.0"
+          "Microsoft.Azure.Management.ManagementPartner.ACEProvisioningManagementParnterAPIClient/0.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/providers/microsoft.managementpartner/partners/123457\",\r\n  \"type\": \"Microsoft.ManagementPartner/partner\",\r\n  \"name\": \"123457\",\r\n  \"properties\": {\r\n    \"partnerId\": \"123457\",\r\n    \"tenantId\": \"1b1121dd-6900-412a-af73-e8d44f81e1c1\",\r\n    \"objectId\": \"2119ba66-2042-49a1-bc31-940691d21bf4\",\r\n    \"version\": 15,\r\n    \"updatedTime\": \"2018-01-20T06:12:09.9172811Z\",\r\n    \"createdTime\": \"2018-01-20T05:36:32.6851653Z\",\r\n    \"state\": \"Active\"\r\n  }\r\n}",
