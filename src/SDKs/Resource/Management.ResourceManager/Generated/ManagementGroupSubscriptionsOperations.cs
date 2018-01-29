@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ManagementGroupSubscriptionsOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<ManagementGroupsAPIClient>, IOperations
+    internal partial class ManagementGroupSubscriptionsOperations : IServiceOperations<ManagementGroupsAPIClient>, IManagementGroupSubscriptionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the ManagementGroupSubscriptionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(ManagementGroupsAPIClient client)
+        internal ManagementGroupSubscriptionsOperations(ManagementGroupsAPIClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ManagementGroupsAPIClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available Management REST API operations.
+        /// Associates existing subscription with the management group.
+        ///
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -62,9 +63,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -74,8 +72,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.GroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -88,11 +90,13 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}").ToString();
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -105,7 +109,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -186,30 +190,12 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
@@ -219,11 +205,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Lists all of the available Management REST API operations.
+        /// De-associates subscription from the management group.
+        ///
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -232,9 +216,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </param>
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
@@ -245,11 +226,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (nextPageLink == null)
+            if (Client.GroupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -258,14 +243,19 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}").ToString();
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -273,7 +263,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -354,30 +344,12 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Operation>>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {

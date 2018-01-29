@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// Exception thrown for an invalid response with ErrorResponse
     /// information.
     /// </summary>
-    public class ErrorResponseException : RestException
+    public partial class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.

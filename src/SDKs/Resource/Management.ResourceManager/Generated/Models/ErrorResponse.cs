@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates ARM is not able to process the incoming
-    /// request. The reason is provided in the error message.
+    /// The error object.
     /// </summary>
     public partial class ErrorResponse
     {
@@ -30,15 +29,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="httpStatus">Http status code.</param>
-        /// <param name="errorCode">Error code.</param>
-        /// <param name="errorMessage">Error message indicating why the
-        /// operation failed.</param>
-        public ErrorResponse(string httpStatus = default(string), string errorCode = default(string), string errorMessage = default(string))
+        /// <param name="error">Error</param>
+        public ErrorResponse(ErrorDetails error = default(ErrorDetails))
         {
-            HttpStatus = httpStatus;
-            ErrorCode = errorCode;
-            ErrorMessage = errorMessage;
+            Error = error;
             CustomInit();
         }
 
@@ -48,22 +42,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets http status code.
+        /// Gets or sets error
         /// </summary>
-        [JsonProperty(PropertyName = "httpStatus")]
-        public string HttpStatus { get; set; }
-
-        /// <summary>
-        /// Gets or sets error code.
-        /// </summary>
-        [JsonProperty(PropertyName = "errorCode")]
-        public string ErrorCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
-        /// </summary>
-        [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ErrorDetails Error { get; set; }
 
     }
 }

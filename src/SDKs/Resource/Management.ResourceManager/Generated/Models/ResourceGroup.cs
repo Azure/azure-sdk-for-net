@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="location">The location of the resource group. It
         /// cannot be changed after the resource group has been created. It
-        /// muct be one of the supported Azure locations.</param>
+        /// must be one of the supported Azure locations.</param>
         /// <param name="id">The ID of the resource group.</param>
         /// <param name="name">The name of the resource group.</param>
         /// <param name="managedBy">The ID of the resource that manages this
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the location of the resource group. It cannot be
-        /// changed after the resource group has been created. It muct be one
+        /// changed after the resource group has been created. It must be one
         /// of the supported Azure locations.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
