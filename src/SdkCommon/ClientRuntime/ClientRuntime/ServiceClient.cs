@@ -213,10 +213,17 @@ namespace Microsoft.Rest
             {
                 if (string.IsNullOrEmpty(_fxVersion))
                 {
-                    Assembly assembly = typeof(Object).GetTypeInfo().Assembly;                    
-                    AssemblyFileVersionAttribute fvAttribute =
-                                assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute)) as AssemblyFileVersionAttribute;
-                    _fxVersion = fvAttribute?.Version;
+                    try
+                    {
+                        Assembly assembly = typeof(Object).GetTypeInfo().Assembly;                    
+                        AssemblyFileVersionAttribute fvAttribute =
+                                    assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute)) as AssemblyFileVersionAttribute;
+                        _fxVersion = fvAttribute?.Version;
+                    }
+                    catch (AmbiguousMatchException)
+                    {
+                        // in case there are more then one attribute of the type
+                    }
                 }
         
                 return _fxVersion;
