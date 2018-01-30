@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ComputePolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ComputePolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ComputePolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, ComputePolicy parameters = default(ComputePolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ComputePolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

@@ -16,30 +16,34 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters used to add a new Azure Storage account.
+    /// The parameters used to add a new Azure Storage account while creating a
+    /// new Data Lake Analytics account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AddStorageAccountParameters
+    public partial class AddStorageAccountWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the AddStorageAccountParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// AddStorageAccountWithAccountParameters class.
         /// </summary>
-        public AddStorageAccountParameters()
+        public AddStorageAccountWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddStorageAccountParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// AddStorageAccountWithAccountParameters class.
         /// </summary>
+        /// <param name="name">The unique name of the Azure Storage account to
+        /// add.</param>
         /// <param name="accessKey">The access key associated with this Azure
         /// Storage account that will be used to connect to it.</param>
         /// <param name="suffix">The optional suffix for the storage
         /// account.</param>
-        public AddStorageAccountParameters(string accessKey, string suffix = default(string))
+        public AddStorageAccountWithAccountParameters(string name, string accessKey, string suffix = default(string))
         {
+            Name = name;
             AccessKey = accessKey;
             Suffix = suffix;
             CustomInit();
@@ -49,6 +53,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the unique name of the Azure Storage account to add.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the access key associated with this Azure Storage
@@ -71,6 +81,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
             if (AccessKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");

@@ -11,13 +11,14 @@
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The Sub Resource model definition.
+    /// The Resource model definition for a nested resource.
     /// </summary>
-    public partial class SubResource
+    public partial class SubResource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.
@@ -30,10 +31,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the SubResource class.
         /// </summary>
-        /// <param name="name">Resource name</param>
         /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SubResource(string name, string id = default(string), string type = default(string))
+        public SubResource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
@@ -53,10 +54,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource name
+        /// Gets resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets resource type
@@ -64,18 +65,5 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

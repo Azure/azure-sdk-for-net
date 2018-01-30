@@ -38,13 +38,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// DataLakeAnalyticsAccountUpdateParameters class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="maxDegreeOfParallelism">the maximum supported degree
+        /// <param name="maxDegreeOfParallelism">The maximum supported degree
         /// of parallelism for this account.</param>
-        /// <param name="queryStoreRetention">the number of days that job
+        /// <param name="queryStoreRetention">The number of days that job
         /// metadata is retained.</param>
-        /// <param name="maxJobCount">the maximum supported jobs running under
+        /// <param name="maxJobCount">The maximum supported jobs running under
         /// the account at the same time.</param>
-        /// <param name="newTier">the commitment tier to use for next month.
+        /// <param name="dataLakeStoreAccounts">The list of Data Lake Store
+        /// accounts associated with this account.</param>
+        /// <param name="storageAccounts">The list of Azure Blob storage
+        /// accounts associated with this account.</param>
+        /// <param name="newTier">The commitment tier to use for next month.
         /// Possible values include: 'Consumption', 'Commitment_100AUHours',
         /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
         /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
@@ -59,18 +63,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// include: 'Enabled', 'Disabled'</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this Data Lake Analytics account.</param>
-        /// <param name="maxDegreeOfParallelismPerJob">the maximum supported
+        /// <param name="maxDegreeOfParallelismPerJob">The maximum supported
         /// degree of parallelism per job for this account.</param>
-        /// <param name="minPriorityPerJob">the minimum supported priority per
+        /// <param name="minPriorityPerJob">The minimum supported priority per
         /// job for this account.</param>
-        /// <param name="computePolicies">the list of existing compute policies
-        /// to update in this account.</param>
-        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), TierType? newTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), IList<ComputePolicy> computePolicies = default(IList<ComputePolicy>))
+        /// <param name="computePolicies">The list of compute policies
+        /// associated with this account.</param>
+        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), IList<UpdateDataLakeStoreWithAccountParameters> dataLakeStoreAccounts = default(IList<UpdateDataLakeStoreWithAccountParameters>), IList<UpdateStorageAccountWithAccountParameters> storageAccounts = default(IList<UpdateStorageAccountWithAccountParameters>), TierType? newTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<UpdateFirewallRuleWithAccountParameters> firewallRules = default(IList<UpdateFirewallRuleWithAccountParameters>), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), IList<UpdateComputePolicyWithAccountParameters> computePolicies = default(IList<UpdateComputePolicyWithAccountParameters>))
         {
             Tags = tags;
             MaxDegreeOfParallelism = maxDegreeOfParallelism;
             QueryStoreRetention = queryStoreRetention;
             MaxJobCount = maxJobCount;
+            DataLakeStoreAccounts = dataLakeStoreAccounts;
+            StorageAccounts = storageAccounts;
             NewTier = newTier;
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
@@ -113,6 +119,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? MaxJobCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of Data Lake Store accounts associated with
+        /// this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataLakeStoreAccounts")]
+        public IList<UpdateDataLakeStoreWithAccountParameters> DataLakeStoreAccounts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of Azure Blob storage accounts associated
+        /// with this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccounts")]
+        public IList<UpdateStorageAccountWithAccountParameters> StorageAccounts { get; set; }
+
+        /// <summary>
         /// Gets or sets the commitment tier to use for next month. Possible
         /// values include: 'Consumption', 'Commitment_100AUHours',
         /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
@@ -145,7 +165,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Lake Analytics account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallRules")]
-        public IList<FirewallRule> FirewallRules { get; set; }
+        public IList<UpdateFirewallRuleWithAccountParameters> FirewallRules { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum supported degree of parallelism per job
@@ -162,11 +182,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? MinPriorityPerJob { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of existing compute policies to update in
-        /// this account.
+        /// Gets or sets the list of compute policies associated with this
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computePolicies")]
-        public IList<ComputePolicy> ComputePolicies { get; set; }
+        public IList<UpdateComputePolicyWithAccountParameters> ComputePolicies { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -192,13 +212,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxJobCount", 1);
             }
-            if (FirewallRules != null)
+            if (DataLakeStoreAccounts != null)
             {
-                foreach (var element in FirewallRules)
+                foreach (var element in DataLakeStoreAccounts)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (StorageAccounts != null)
+            {
+                foreach (var element1 in StorageAccounts)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+            if (FirewallRules != null)
+            {
+                foreach (var element2 in FirewallRules)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }
@@ -212,11 +252,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             }
             if (ComputePolicies != null)
             {
-                foreach (var element1 in ComputePolicies)
+                foreach (var element3 in ComputePolicies)
                 {
-                    if (element1 != null)
+                    if (element3 != null)
                     {
-                        element1.Validate();
+                        element3.Validate();
                     }
                 }
             }

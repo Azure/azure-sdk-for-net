@@ -32,17 +32,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="accessKey">the access key associated with this Azure
-        /// Storage account that will be used to connect to it.</param>
         /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="suffix">the optional suffix for the storage
+        /// <param name="suffix">The optional suffix for the storage
         /// account.</param>
-        public StorageAccountInfo(string name, string accessKey, string id = default(string), string type = default(string), string suffix = default(string))
-            : base(name, id, type)
+        public StorageAccountInfo(string id = default(string), string name = default(string), string type = default(string), string suffix = default(string))
+            : base(id, name, type)
         {
-            AccessKey = accessKey;
             Suffix = suffix;
             CustomInit();
         }
@@ -53,31 +50,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the access key associated with this Azure Storage
-        /// account that will be used to connect to it.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.accessKey")]
-        public string AccessKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets the optional suffix for the storage account.
+        /// Gets the optional suffix for the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.suffix")]
-        public string Suffix { get; set; }
+        public string Suffix { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-            if (AccessKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
-            }
-        }
     }
 }

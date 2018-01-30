@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageContainer class.
         /// </summary>
-        /// <param name="id">the unique identifier of the blob
+        /// <param name="id">The unique identifier of the blob
         /// container.</param>
-        /// <param name="name">the name of the blob container.</param>
-        /// <param name="type">the type of the blob container.</param>
-        /// <param name="lastModifiedTime">the last modified time of the blob
+        /// <param name="name">The name of the blob container.</param>
+        /// <param name="type">The type of the blob container.</param>
+        /// <param name="lastModifiedTime">The last modified time of the blob
         /// container.</param>
         public StorageContainer(string id = default(string), string name = default(string), string type = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?))
         {

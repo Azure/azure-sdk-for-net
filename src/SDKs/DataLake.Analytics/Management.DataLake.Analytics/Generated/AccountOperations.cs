@@ -760,7 +760,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Checks whether the specified account name is available or taken.
         /// </summary>
         /// <param name='location'>
-        /// The Resource location without whitespace.
+        /// The resource location without whitespace.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to check the Data Lake Analytics account name

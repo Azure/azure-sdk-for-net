@@ -16,32 +16,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters used to update a firewall rule.
+    /// The parameters used to update a firewall rule while updating a Data
+    /// Lake Analytics account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class UpdateFirewallRuleParameters
+    public partial class UpdateFirewallRuleWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the UpdateFirewallRuleParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// UpdateFirewallRuleWithAccountParameters class.
         /// </summary>
-        public UpdateFirewallRuleParameters()
+        public UpdateFirewallRuleWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpdateFirewallRuleParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// UpdateFirewallRuleWithAccountParameters class.
         /// </summary>
+        /// <param name="name">The unique name of the firewall rule to
+        /// update.</param>
         /// <param name="startIpAddress">The start IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
         /// <param name="endIpAddress">The end IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
-        public UpdateFirewallRuleParameters(string startIpAddress = default(string), string endIpAddress = default(string))
+        public UpdateFirewallRuleWithAccountParameters(string name, string startIpAddress = default(string), string endIpAddress = default(string))
         {
+            Name = name;
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
             CustomInit();
@@ -51,6 +55,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the unique name of the firewall rule to update.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the start IP address for the firewall rule. This can
@@ -67,5 +77,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

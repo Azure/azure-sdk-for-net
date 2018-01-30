@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ComputePolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ComputePolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the specified compute policy.
         /// </summary>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ComputePolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, ComputePolicy parameters = default(ComputePolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ComputePolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified compute policy from the specified Data Lake
         /// Analytics account

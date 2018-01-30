@@ -16,26 +16,32 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters used to add a new Data Lake Store account.
+    /// The parameters used to update a Data Lake Store account while updating
+    /// a Data Lake Analytics account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AddDataLakeStoreParameters
+    public partial class UpdateDataLakeStoreWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the AddDataLakeStoreParameters class.
+        /// Initializes a new instance of the
+        /// UpdateDataLakeStoreWithAccountParameters class.
         /// </summary>
-        public AddDataLakeStoreParameters()
+        public UpdateDataLakeStoreWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddDataLakeStoreParameters class.
+        /// Initializes a new instance of the
+        /// UpdateDataLakeStoreWithAccountParameters class.
         /// </summary>
+        /// <param name="name">The unique name of the Data Lake Store account
+        /// to update.</param>
         /// <param name="suffix">The optional suffix for the Data Lake Store
         /// account.</param>
-        public AddDataLakeStoreParameters(string suffix = default(string))
+        public UpdateDataLakeStoreWithAccountParameters(string name, string suffix = default(string))
         {
+            Name = name;
             Suffix = suffix;
             CustomInit();
         }
@@ -46,10 +52,30 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the unique name of the Data Lake Store account to
+        /// update.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
         /// Gets or sets the optional suffix for the Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.suffix")]
         public string Suffix { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

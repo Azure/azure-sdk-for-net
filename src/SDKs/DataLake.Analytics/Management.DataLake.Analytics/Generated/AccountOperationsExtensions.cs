@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The Resource location without whitespace.
+            /// The resource location without whitespace.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to check the Data Lake Analytics account name
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The Resource location without whitespace.
+            /// The resource location without whitespace.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to check the Data Lake Analytics account name

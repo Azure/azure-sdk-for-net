@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to create or update the firewall rule.
             /// </param>
-            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters)
+            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

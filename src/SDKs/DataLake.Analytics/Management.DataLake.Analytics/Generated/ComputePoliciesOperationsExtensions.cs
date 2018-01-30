@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// of parallelism per job property, min priority per job property, or both
             /// must be present.
             /// </param>
-            public static ComputePolicy CreateOrUpdate(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateParameters parameters)
+            public static ComputePolicy CreateOrUpdate(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, accountName, computePolicyName, parameters).GetAwaiter().GetResult();
             }
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputePolicy> CreateOrUpdateAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ComputePolicy> CreateOrUpdateAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, computePolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// Parameters supplied to update the compute policy.
             /// </param>
-            public static ComputePolicy Update(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, ComputePolicy parameters = default(ComputePolicy))
+            public static ComputePolicy Update(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters))
             {
                 return operations.UpdateAsync(resourceGroupName, accountName, computePolicyName, parameters).GetAwaiter().GetResult();
             }
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputePolicy> UpdateAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, ComputePolicy parameters = default(ComputePolicy), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ComputePolicy> UpdateAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, computePolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

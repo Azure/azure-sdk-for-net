@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccountInfo class.
         /// </summary>
-        /// <param name="name">Resource name</param>
         /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="suffix">the optional suffix for the Data Lake Store
+        /// <param name="suffix">The optional suffix for the Data Lake Store
         /// account.</param>
-        public DataLakeStoreAccountInfo(string name, string id = default(string), string type = default(string), string suffix = default(string))
-            : base(name, id, type)
+        public DataLakeStoreAccountInfo(string id = default(string), string name = default(string), string type = default(string), string suffix = default(string))
+            : base(id, name, type)
         {
             Suffix = suffix;
             CustomInit();
@@ -50,20 +50,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the optional suffix for the Data Lake Store account.
+        /// Gets the optional suffix for the Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.suffix")]
-        public string Suffix { get; set; }
+        public string Suffix { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

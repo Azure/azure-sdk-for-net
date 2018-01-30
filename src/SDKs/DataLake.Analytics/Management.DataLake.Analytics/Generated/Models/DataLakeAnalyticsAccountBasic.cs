@@ -42,16 +42,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">the provisioning status of the Data
+        /// <param name="provisioningState">The provisioning status of the Data
         /// Lake Analytics account. Possible values include: 'Failed',
         /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
         /// 'Resuming', 'Deleting', 'Deleted', 'Undeleting', 'Canceled'</param>
-        /// <param name="state">the state of the Data Lake Analytics account.
+        /// <param name="state">The state of the Data Lake Analytics account.
         /// Possible values include: 'Active', 'Suspended'</param>
-        /// <param name="creationTime">the account creation time.</param>
-        /// <param name="lastModifiedTime">the account last modified
+        /// <param name="creationTime">The account creation time.</param>
+        /// <param name="lastModifiedTime">The account last modified
         /// time.</param>
-        /// <param name="endpoint">the full CName endpoint for this
+        /// <param name="endpoint">The full CName endpoint for this
         /// account.</param>
         /// <param name="accountId">The unique identifier associated with this
         /// Data Lake Analytics account.</param>
