@@ -1468,7 +1468,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AclList>> ListAclsByDatabaseWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Acl>>> ListAclsByDatabaseWithHttpMessagesAsync(string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of access control list (ACL) entries for the
         /// Data Lake Analytics catalog.
@@ -1505,7 +1505,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AclList>> ListAclsWithHttpMessagesAsync(string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Acl>>> ListAclsWithHttpMessagesAsync(string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified database from the Data Lake Analytics
         /// catalog.
@@ -1571,6 +1571,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlDatabase>>> ListDatabasesWithHttpMessagesAsync(string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Grants an access control list (ACL) entry to the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to create or update an access control list
+        /// (ACL) entry for a Data Lake Analytics catalog.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> GrantAclWithHttpMessagesAsync(string accountName, AclCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Grants an access control list (ACL) entry to the database from the
         /// Data Lake Analytics catalog.
         /// </summary>
@@ -1599,6 +1624,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse> GrantAclToDatabaseWithHttpMessagesAsync(string accountName, string databaseName, AclCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Revokes an access control list (ACL) entry from the Data Lake
+        /// Analytics catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to delete an access control list (ACL) entry
+        /// from a Data Lake Analytics catalog.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RevokeAclWithHttpMessagesAsync(string accountName, AclDeleteParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Revokes an access control list (ACL) entry for the database from
         /// the Data Lake Analytics catalog.
         /// </summary>
@@ -1626,56 +1676,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> RevokeAclFromDatabaseWithHttpMessagesAsync(string accountName, string databaseName, AclDeleteParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Grants an access control list (ACL) entry to the Data Lake
-        /// Analytics catalog.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account upon which to execute catalog
-        /// operations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to create or update an access control list
-        /// (ACL) entry for a Data Lake Analytics catalog.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> GrantAclWithHttpMessagesAsync(string accountName, AclCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Revokes an access control list (ACL) entry from the Data Lake
-        /// Analytics catalog.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account upon which to execute catalog
-        /// operations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to delete an access control list (ACL) entry
-        /// from a Data Lake Analytics catalog.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> RevokeAclWithHttpMessagesAsync(string accountName, AclDeleteParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics
         /// catalog.
@@ -2087,6 +2087,52 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlView>>> ListViewsByDatabaseNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of access control list (ACL) entries for the
+        /// database from the Data Lake Analytics catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Acl>>> ListAclsByDatabaseNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of access control list (ACL) entries for the
+        /// Data Lake Analytics catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Acl>>> ListAclsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of databases from the Data Lake Analytics
         /// catalog.

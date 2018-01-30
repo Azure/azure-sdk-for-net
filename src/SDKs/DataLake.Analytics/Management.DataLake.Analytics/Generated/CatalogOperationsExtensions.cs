@@ -2431,7 +2431,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static AclList ListAclsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
+            public static IPage<Acl> ListAclsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
             {
                 return operations.ListAclsByDatabaseAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
             }
@@ -2465,7 +2465,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AclList> ListAclsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Acl>> ListAclsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAclsByDatabaseWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2496,7 +2496,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static AclList ListAcls(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
+            public static IPage<Acl> ListAcls(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
             {
                 return operations.ListAclsAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
@@ -2527,7 +2527,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AclList> ListAclsAsync(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Acl>> ListAclsAsync(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAclsWithHttpMessagesAsync(accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2638,6 +2638,49 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Grants an access control list (ACL) entry to the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update an access control list (ACL) entry
+            /// for a Data Lake Analytics catalog.
+            /// </param>
+            public static void GrantAcl(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters)
+            {
+                operations.GrantAclAsync(accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Grants an access control list (ACL) entry to the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update an access control list (ACL) entry
+            /// for a Data Lake Analytics catalog.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GrantAclAsync(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GrantAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Grants an access control list (ACL) entry to the database from the Data
             /// Lake Analytics catalog.
             /// </summary>
@@ -2687,6 +2730,49 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to delete an access control list (ACL) entry from a
+            /// Data Lake Analytics catalog.
+            /// </param>
+            public static void RevokeAcl(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters)
+            {
+                operations.RevokeAclAsync(accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to delete an access control list (ACL) entry from a
+            /// Data Lake Analytics catalog.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RevokeAclAsync(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RevokeAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Revokes an access control list (ACL) entry for the database from the Data
             /// Lake Analytics catalog.
             /// </summary>
@@ -2733,92 +2819,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task RevokeAclFromDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, AclDeleteParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RevokeAclFromDatabaseWithHttpMessagesAsync(accountName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Grants an access control list (ACL) entry to the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update an access control list (ACL) entry
-            /// for a Data Lake Analytics catalog.
-            /// </param>
-            public static void GrantAcl(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters)
-            {
-                operations.GrantAclAsync(accountName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Grants an access control list (ACL) entry to the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update an access control list (ACL) entry
-            /// for a Data Lake Analytics catalog.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task GrantAclAsync(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.GrantAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to delete an access control list (ACL) entry from a
-            /// Data Lake Analytics catalog.
-            /// </param>
-            public static void RevokeAcl(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters)
-            {
-                operations.RevokeAclAsync(accountName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to delete an access control list (ACL) entry from a
-            /// Data Lake Analytics catalog.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RevokeAclAsync(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RevokeAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -3448,6 +3448,78 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlView>> ListViewsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListViewsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the database
+            /// from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Acl> ListAclsByDatabaseNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListAclsByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the database
+            /// from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Acl>> ListAclsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAclsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Acl> ListAclsNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListAclsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Acl>> ListAclsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAclsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
