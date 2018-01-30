@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Subscription ID.
         /// </summary>
-        System.Guid SubscriptionId { get; set; }
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// Version of the API to be used with the client request. The current

@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Subscription ID.
         /// </summary>
-        public System.Guid SubscriptionId { get; set; }
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
@@ -320,6 +320,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -333,6 +334,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

@@ -12,12 +12,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// The management group details.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ManagementGroup : IResource
     {
         /// <summary>
@@ -38,13 +42,22 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// /providers/Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
-        /// <param name="properties">Properties</param>
-        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), ManagementGroupProperties properties = default(ManagementGroupProperties))
+        /// <param name="tenantId">The AAD Tenant ID associated with the
+        /// management group. For example,
+        /// 00000000-0000-0000-0000-000000000000</param>
+        /// <param name="displayName">The friendly name of the management
+        /// group.</param>
+        /// <param name="details">Details</param>
+        /// <param name="children">The list of children.</param>
+        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), ManagementGroupDetails details = default(ManagementGroupDetails), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
         {
             Id = id;
             Type = type;
             Name = name;
-            Properties = properties;
+            TenantId = tenantId;
+            DisplayName = displayName;
+            Details = details;
+            Children = children;
             CustomInit();
         }
 
@@ -75,10 +88,29 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets properties
+        /// Gets or sets the AAD Tenant ID associated with the management
+        /// group. For example, 00000000-0000-0000-0000-000000000000
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ManagementGroupProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the friendly name of the management group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets details
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.details")]
+        public ManagementGroupDetails Details { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of children.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.children")]
+        public IList<ManagementGroupChildInfo> Children { get; set; }
 
     }
 }

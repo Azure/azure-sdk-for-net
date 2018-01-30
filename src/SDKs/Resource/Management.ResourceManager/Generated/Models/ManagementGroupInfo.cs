@@ -10,12 +10,15 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The management group resource.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ManagementGroupInfo
     {
         /// <summary>
@@ -36,13 +39,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// /providers/Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
-        /// <param name="properties">Properties</param>
-        public ManagementGroupInfo(string id = default(string), string type = default(string), string name = default(string), ManagementGroupInfoProperties properties = default(ManagementGroupInfoProperties))
+        /// <param name="tenantId">The AAD Tenant ID associated with the
+        /// management group. For example,
+        /// 00000000-0000-0000-0000-000000000000</param>
+        /// <param name="displayName">The friendly name of the management
+        /// group.</param>
+        public ManagementGroupInfo(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string))
         {
             Id = id;
             Type = type;
             Name = name;
-            Properties = properties;
+            TenantId = tenantId;
+            DisplayName = displayName;
             CustomInit();
         }
 
@@ -73,10 +81,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets properties
+        /// Gets or sets the AAD Tenant ID associated with the management
+        /// group. For example, 00000000-0000-0000-0000-000000000000
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ManagementGroupInfoProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the friendly name of the management group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; set; }
 
     }
 }
