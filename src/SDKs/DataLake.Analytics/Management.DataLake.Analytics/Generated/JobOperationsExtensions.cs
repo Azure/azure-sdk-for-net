@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<JobInformationBasic> List(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?))
+            public static IPage<JobInformationBasic> List(this IJobOperations operations, string accountName, ODataQuery<JobInformationBasic> odataQuery = default(ODataQuery<JobInformationBasic>), string select = default(string), bool? count = default(bool?))
             {
                 return operations.ListAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobInformationBasic>> ListAsync(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobInformationBasic>> ListAsync(this IJobOperations operations, string accountName, ODataQuery<JobInformationBasic> odataQuery = default(ODataQuery<JobInformationBasic>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {

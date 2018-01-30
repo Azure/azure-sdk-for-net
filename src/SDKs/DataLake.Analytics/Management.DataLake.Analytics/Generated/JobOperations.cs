@@ -1160,7 +1160,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<JobInformationBasic>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<JobInformationBasic>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformationBasic> odataQuery = default(ODataQuery<JobInformationBasic>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {

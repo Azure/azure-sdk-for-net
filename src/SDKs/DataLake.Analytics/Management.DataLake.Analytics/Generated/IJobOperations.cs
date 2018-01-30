@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JobInformationBasic>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobInformationBasic>>> ListWithHttpMessagesAsync(string accountName, ODataQuery<JobInformationBasic> odataQuery = default(ODataQuery<JobInformationBasic>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Cancels the running job specified by the job ID.
         /// </summary>
