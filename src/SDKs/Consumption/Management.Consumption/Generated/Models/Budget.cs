@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the Budget class.
         /// </summary>
+        /// <param name="category">The category of the budget, whether the
+        /// budget tracks cost or usage. Possible values include: 'Cost',
+        /// 'Usage'</param>
         /// <param name="amount">The total amount of cost to track with the
         /// budget</param>
         /// <param name="timeGrain">The time covered by a budget. Tracking of
@@ -51,32 +54,36 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="eTag">eTag of the resource. To handle concurrent
         /// update scenarion, this field will be used to determine whether the
         /// user is updating the latest version or not.</param>
+        /// <param name="filters">May be used to filter budgets by resource
+        /// group, resource, or meter.</param>
         /// <param name="currentSpend">The current amount of cost which is
         /// being tracked for a budget.</param>
         /// <param name="notifications">Dictionary of notifications associated
         /// with the budget. Budget can have up to five notifications.</param>
-        public Budget(decimal amount, string timeGrain, BudgetTimePeriod timePeriod, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), CurrentSpend currentSpend = default(CurrentSpend), IDictionary<string, Notification> notifications = default(IDictionary<string, Notification>))
+        public Budget(string category, decimal amount, string timeGrain, BudgetTimePeriod timePeriod, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), Filters filters = default(Filters), CurrentSpend currentSpend = default(CurrentSpend), IDictionary<string, Notification> notifications = default(IDictionary<string, Notification>))
             : base(id, name, type, eTag)
         {
+            Category = category;
             Amount = amount;
             TimeGrain = timeGrain;
             TimePeriod = timePeriod;
+            Filters = filters;
             CurrentSpend = currentSpend;
             Notifications = notifications;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Budget class.
-        /// </summary>
-        static Budget()
-        {
-            Category = "Cost";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the category of the budget, whether the budget tracks
+        /// cost or usage. Possible values include: 'Cost', 'Usage'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.category")]
+        public string Category { get; set; }
 
         /// <summary>
         /// Gets or sets the total amount of cost to track with the budget
@@ -104,6 +111,13 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public BudgetTimePeriod TimePeriod { get; set; }
 
         /// <summary>
+        /// Gets or sets may be used to filter budgets by resource group,
+        /// resource, or meter.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.filters")]
+        public Filters Filters { get; set; }
+
+        /// <summary>
         /// Gets the current amount of cost which is being tracked for a
         /// budget.
         /// </summary>
@@ -118,13 +132,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public IDictionary<string, Notification> Notifications { get; set; }
 
         /// <summary>
-        /// The category of the budget, whether the budget tracks cost or
-        /// something else.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.category")]
-        public static string Category { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -132,6 +139,10 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Category == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Category");
+            }
             if (TimeGrain == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "TimeGrain");
@@ -143,6 +154,10 @@ namespace Microsoft.Azure.Management.Consumption.Models
             if (TimePeriod != null)
             {
                 TimePeriod.Validate();
+            }
+            if (Filters != null)
+            {
+                Filters.Validate();
             }
             if (Notifications != null)
             {

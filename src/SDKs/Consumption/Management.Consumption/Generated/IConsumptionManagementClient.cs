@@ -53,6 +53,16 @@ namespace Microsoft.Azure.Management.Consumption
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Azure Resource Group Name.
+        /// </summary>
+        string ResourceGroupName { get; set; }
+
+        /// <summary>
+        /// Budget Name.
+        /// </summary>
+        string BudgetName { get; set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -99,6 +109,11 @@ namespace Microsoft.Azure.Management.Consumption
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPriceSheetOperations.
+        /// </summary>
+        IPriceSheetOperations PriceSheet { get; }
 
     }
 }

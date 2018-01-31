@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReservationsSummariesOperations operations.
+    /// PriceSheetOperations operations.
     /// </summary>
-    internal partial class ReservationsSummariesOperations : IServiceOperations<ConsumptionManagementClient>, IReservationsSummariesOperations
+    internal partial class PriceSheetOperations : IServiceOperations<ConsumptionManagementClient>, IPriceSheetOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ReservationsSummariesOperations class.
+        /// Initializes a new instance of the PriceSheetOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ReservationsSummariesOperations(ConsumptionManagementClient client)
+        internal PriceSheetOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {
@@ -51,19 +51,19 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the reservations summaries for daily or monthly grain.
+        /// Lists the price sheet for a scope by subscriptionId. Price sheets are
+        /// available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='reservationOrderId'>
-        /// Order Id of the reservation
+        /// <param name='expand'>
+        /// May be used to expand the properties/meterDetails within a price sheet. By
+        /// default, these fields are not included when returning price sheet.
         /// </param>
-        /// <param name='grain'>
-        /// Can be daily or monthly. Possible values include: 'DailyGrain',
-        /// 'MonthlyGrain'
-        /// </param>
-        /// <param name='filter'>
-        /// Required only for daily grain. The properties/UsageDate for start date and
-        /// end date. The filter supports 'le' and  'ge'
+        /// <param name='skiptoken'>
+        /// Skiptoken is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the
+        /// nextLink element will include a skiptoken parameter that specifies a
+        /// starting point to use for subsequent calls.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -86,15 +86,11 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<ReservationSummaries>>> ListByReservationOrderWithHttpMessagesAsync(string reservationOrderId, string grain, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PriceSheetListResult>> ListWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (reservationOrderId == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
-            }
-            if (grain == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "grain");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (Client.ApiVersion == null)
             {
@@ -107,24 +103,23 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("reservationOrderId", reservationOrderId);
-                tracingParameters.Add("grain", grain);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByReservationOrder", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries").ToString();
-            _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (grain != null)
+            if (expand != null)
             {
-                _queryParameters.Add(string.Format("grain={0}", System.Uri.EscapeDataString(grain)));
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
             }
-            if (filter != null)
+            if (skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
             }
             if (Client.ApiVersion != null)
             {
@@ -218,7 +213,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<ReservationSummaries>>();
+            var _result = new AzureOperationResponse<PriceSheetListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -231,7 +226,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ReservationSummaries>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PriceSheetListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -251,22 +246,22 @@ namespace Microsoft.Azure.Management.Consumption
         }
 
         /// <summary>
-        /// Lists the reservations summaries for daily or monthly grain.
+        /// Lists the price sheet for a scope by subscriptionId and billing period.
+        /// Price sheets are available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='reservationOrderId'>
-        /// Order Id of the reservation
+        /// <param name='billingPeriodName'>
+        /// Billing Period Name.
         /// </param>
-        /// <param name='reservationId'>
-        /// Id of the reservation
+        /// <param name='expand'>
+        /// May be used to expand the properties/meterDetails within a price sheet. By
+        /// default, these fields are not included when returning price sheet.
         /// </param>
-        /// <param name='grain'>
-        /// Can be daily or monthly. Possible values include: 'DailyGrain',
-        /// 'MonthlyGrain'
-        /// </param>
-        /// <param name='filter'>
-        /// Required only for daily grain. The properties/UsageDate for start date and
-        /// end date. The filter supports 'le' and  'ge'
+        /// <param name='skiptoken'>
+        /// Skiptoken is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the
+        /// nextLink element will include a skiptoken parameter that specifies a
+        /// starting point to use for subsequent calls.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -289,23 +284,19 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<ReservationSummaries>>> ListByReservationOrderAndReservationWithHttpMessagesAsync(string reservationOrderId, string reservationId, string grain, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PriceSheetListResult>> ListByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (reservationOrderId == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
-            }
-            if (reservationId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reservationId");
-            }
-            if (grain == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "grain");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (billingPeriodName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingPeriodName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -314,26 +305,25 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("reservationOrderId", reservationOrderId);
-                tracingParameters.Add("reservationId", reservationId);
-                tracingParameters.Add("grain", grain);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("skiptoken", skiptoken);
+                tracingParameters.Add("billingPeriodName", billingPeriodName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByReservationOrderAndReservation", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingPeriod", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries").ToString();
-            _url = _url.Replace("{reservationOrderId}", System.Uri.EscapeDataString(reservationOrderId));
-            _url = _url.Replace("{reservationId}", System.Uri.EscapeDataString(reservationId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{billingPeriodName}", System.Uri.EscapeDataString(billingPeriodName));
             List<string> _queryParameters = new List<string>();
-            if (grain != null)
+            if (expand != null)
             {
-                _queryParameters.Add(string.Format("grain={0}", System.Uri.EscapeDataString(grain)));
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
             }
-            if (filter != null)
+            if (skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
             }
             if (Client.ApiVersion != null)
             {
@@ -427,7 +417,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<ReservationSummaries>>();
+            var _result = new AzureOperationResponse<PriceSheetListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -440,7 +430,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ReservationSummaries>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PriceSheetListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

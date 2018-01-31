@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="usageEnd">The end of the date time range covered by
         /// the usage detail.</param>
         /// <param name="resourceRate">The marketplace resource rate.</param>
-        /// <param name="offerName">The name of offer.</param>
+        /// <param name="offerName">The type of offer.</param>
         /// <param name="resourceGroup">The name of resource group.</param>
         /// <param name="orderNumber">The order number.</param>
         /// <param name="instanceName">The name of the resource instance that
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public decimal? ResourceRate { get; private set; }
 
         /// <summary>
-        /// Gets the name of offer.
+        /// Gets the type of offer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.offerName")]
         public string OfferName { get; private set; }

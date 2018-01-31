@@ -19,20 +19,25 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReservationsDetailsOperations operations.
+    /// PriceSheetOperations operations.
     /// </summary>
-    public partial interface IReservationsDetailsOperations
+    public partial interface IPriceSheetOperations
     {
         /// <summary>
-        /// Lists the reservations details for provided date range.
+        /// Lists the price sheet for a scope by subscriptionId. Price sheets
+        /// are available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='reservationOrderId'>
-        /// Order Id of the reservation
+        /// <param name='expand'>
+        /// May be used to expand the properties/meterDetails within a price
+        /// sheet. By default, these fields are not included when returning
+        /// price sheet.
         /// </param>
-        /// <param name='filter'>
-        /// Filter reservation details by date range. The properties/UsageDate
-        /// for start date and end date. The filter supports 'le' and  'ge'
+        /// <param name='skiptoken'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,20 +54,26 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<ReservationDetails>>> ListByReservationOrderWithHttpMessagesAsync(string reservationOrderId, string filter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PriceSheetListResult>> ListWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the reservations details for provided date range.
+        /// Lists the price sheet for a scope by subscriptionId and billing
+        /// period. Price sheets are available via this API only for May 1,
+        /// 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='reservationOrderId'>
-        /// Order Id of the reservation
+        /// <param name='billingPeriodName'>
+        /// Billing Period Name.
         /// </param>
-        /// <param name='reservationId'>
-        /// Id of the reservation
+        /// <param name='expand'>
+        /// May be used to expand the properties/meterDetails within a price
+        /// sheet. By default, these fields are not included when returning
+        /// price sheet.
         /// </param>
-        /// <param name='filter'>
-        /// Filter reservation details by date range. The properties/UsageDate
-        /// for start date and end date. The filter supports 'le' and  'ge'
+        /// <param name='skiptoken'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,6 +90,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<ReservationDetails>>> ListByReservationOrderAndReservationWithHttpMessagesAsync(string reservationOrderId, string reservationId, string filter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PriceSheetListResult>> ListByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

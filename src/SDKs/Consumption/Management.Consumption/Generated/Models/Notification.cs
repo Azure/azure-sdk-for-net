@@ -44,13 +44,16 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// notification to when the threshold is exceeded.</param>
         /// <param name="contactRoles">Contact roles to send the budget
         /// notification to when the threshold is exceeded.</param>
-        public Notification(bool enabled, string operatorProperty, decimal threshold, IList<string> contactEmails, IList<string> contactRoles = default(IList<string>))
+        /// <param name="contactGroups">Action groups to send the budget
+        /// notification to when the threshold is exceeded.</param>
+        public Notification(bool enabled, string operatorProperty, decimal threshold, IList<string> contactEmails, IList<string> contactRoles = default(IList<string>), IList<string> contactGroups = default(IList<string>))
         {
             Enabled = enabled;
             OperatorProperty = operatorProperty;
             Threshold = threshold;
             ContactEmails = contactEmails;
             ContactRoles = contactRoles;
+            ContactGroups = contactGroups;
             CustomInit();
         }
 
@@ -95,6 +98,13 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public IList<string> ContactRoles { get; set; }
 
         /// <summary>
+        /// Gets or sets action groups to send the budget notification to when
+        /// the threshold is exceeded.
+        /// </summary>
+        [JsonProperty(PropertyName = "contactGroups")]
+        public IList<string> ContactGroups { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -119,6 +129,17 @@ namespace Microsoft.Azure.Management.Consumption.Models
                 if (ContactEmails.Count < 1)
                 {
                     throw new ValidationException(ValidationRules.MinItems, "ContactEmails", 1);
+                }
+            }
+            if (ContactGroups != null)
+            {
+                if (ContactGroups.Count > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "ContactGroups", 50);
+                }
+                if (ContactGroups.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "ContactGroups", 0);
                 }
             }
         }

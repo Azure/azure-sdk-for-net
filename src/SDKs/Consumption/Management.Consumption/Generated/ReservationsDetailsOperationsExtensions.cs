@@ -30,18 +30,16 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// The scope of the reservation details. The scope can be
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}' or
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}/reservations/{ReservationId}'
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
             /// </param>
             /// <param name='filter'>
             /// Filter reservation details by date range. The properties/UsageDate for
             /// start date and end date. The filter supports 'le' and  'ge'
             /// </param>
-            public static IEnumerable<ReservationDetails> List(this IReservationsDetailsOperations operations, string scope, string filter)
+            public static IEnumerable<ReservationDetails> ListByReservationOrder(this IReservationsDetailsOperations operations, string reservationOrderId, string filter)
             {
-                return operations.ListAsync(scope, filter).GetAwaiter().GetResult();
+                return operations.ListByReservationOrderAsync(reservationOrderId, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,10 +49,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// The scope of the reservation details. The scope can be
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}' or
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}/reservations/{ReservationId}'
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
             /// </param>
             /// <param name='filter'>
             /// Filter reservation details by date range. The properties/UsageDate for
@@ -63,9 +59,59 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<ReservationDetails>> ListAsync(this IReservationsDetailsOperations operations, string scope, string filter, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<ReservationDetails>> ListByReservationOrderAsync(this IReservationsDetailsOperations operations, string reservationOrderId, string filter, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByReservationOrderWithHttpMessagesAsync(reservationOrderId, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the reservations details for provided date range.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the reservation
+            /// </param>
+            /// <param name='filter'>
+            /// Filter reservation details by date range. The properties/UsageDate for
+            /// start date and end date. The filter supports 'le' and  'ge'
+            /// </param>
+            public static IEnumerable<ReservationDetails> ListByReservationOrderAndReservation(this IReservationsDetailsOperations operations, string reservationOrderId, string reservationId, string filter)
+            {
+                return operations.ListByReservationOrderAndReservationAsync(reservationOrderId, reservationId, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the reservations details for provided date range.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the reservation
+            /// </param>
+            /// <param name='filter'>
+            /// Filter reservation details by date range. The properties/UsageDate for
+            /// start date and end date. The filter supports 'le' and  'ge'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<ReservationDetails>> ListByReservationOrderAndReservationAsync(this IReservationsDetailsOperations operations, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReservationOrderAndReservationWithHttpMessagesAsync(reservationOrderId, reservationId, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
