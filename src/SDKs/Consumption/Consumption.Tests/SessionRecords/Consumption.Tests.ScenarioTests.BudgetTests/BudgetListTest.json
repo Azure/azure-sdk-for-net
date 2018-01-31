@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets?api-version=2018-01-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uc3VtcHRpb24vYnVkZ2V0cz9hcGktdmVyc2lvbj0yMDE4LTAxLTMx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/test-Prod1\",\r\n      \"name\": \"test-Prod1\",\r\n      \"type\": \"Microsoft.Consumption/budgets\",\r\n      \"eTag\": \"\\\"1d3797b61326ace\\\"\",\r\n      \"properties\": {\r\n        \"timePeriod\": {\r\n          \"startDate\": \"2017-12-01T00:00:00Z\",\r\n          \"endDate\": \"2027-12-01T00:00:00Z\"\r\n        },\r\n        \"timeGrain\": \"Monthly\",\r\n        \"amount\": 100.0,\r\n        \"currentSpend\": {\r\n          \"amount\": 167.98052867365013,\r\n          \"unit\": \"USD\"\r\n        },\r\n        \"category\": \"Cost\",\r\n        \"notifications\": {\r\n          \"actual_GreaterThan_80_Percent\": {\r\n            \"enabled\": true,\r\n            \"operator\": \"GreaterThan\",\r\n            \"threshold\": 20.0,\r\n            \"contactEmails\": [\r\n              \"ansar@microsoft.com\",\r\n              \"sanwar@microsoft.com\"\r\n            ],\r\n            \"contactRoles\": [\r\n              \"Contributor\",\r\n              \"Reader\",\r\n              \"Owner\"\r\n            ],\r\n            \"contactGroups\": []\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/test-Prod2\",\r\n      \"name\": \"test-Prod2\",\r\n      \"type\": \"Microsoft.Consumption/budgets\",\r\n      \"eTag\": \"\\\"1d37b52cfc019e8\\\"\",\r\n      \"properties\": {\r\n        \"timePeriod\": {\r\n          \"startDate\": \"2017-12-01T00:00:00Z\",\r\n          \"endDate\": \"2027-12-01T00:00:00Z\"\r\n        },\r\n        \"timeGrain\": \"Monthly\",\r\n        \"amount\": 20.0,\r\n        \"currentSpend\": {\r\n          \"amount\": 167.98052867365013,\r\n          \"unit\": \"USD\"\r\n        },\r\n        \"category\": \"Cost\",\r\n        \"notifications\": {\r\n          \"actual_GreaterThan_80_Percent\": {\r\n            \"enabled\": true,\r\n            \"operator\": \"GreaterThan\",\r\n            \"threshold\": 1.0,\r\n            \"contactEmails\": [\r\n              \"ansar@microsoft.com\",\r\n              \"sanwar@microsoft.com\"\r\n            ],\r\n            \"contactRoles\": [\r\n              \"Contributor\",\r\n              \"Reader\",\r\n              \"Owner\"\r\n            ],\r\n            \"contactGroups\": []\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/test-Prod-Anirban\",\r\n      \"name\": \"test-Prod-Anirban\",\r\n      \"type\": \"Microsoft.Consumption/budgets\",\r\n      \"eTag\": \"\\\"1d3891200d1c5fc\\\"\",\r\n      \"properties\": {\r\n        \"timePeriod\": {\r\n          \"startDate\": \"2018-01-01T00:00:00Z\",\r\n          \"endDate\": \"2025-12-30T00:00:00Z\"\r\n        },\r\n        \"timeGrain\": \"Monthly\",\r\n        \"amount\": 10000.0,\r\n        \"currentSpend\": {\r\n          \"amount\": 167.98052867365013,\r\n          \"unit\": \"USD\"\r\n        },\r\n        \"category\": \"Cost\",\r\n        \"notifications\": {}\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget\",\r\n      \"name\": \"NETSDKTestBudget\",\r\n      \"type\": \"Microsoft.Consumption/budgets\",\r\n      \"eTag\": \"\\\"1d39ae594114419\\\"\",\r\n      \"properties\": {\r\n        \"timePeriod\": {\r\n          \"startDate\": \"2018-01-01T00:00:00Z\",\r\n          \"endDate\": \"2018-11-01T00:00:00Z\"\r\n        },\r\n        \"timeGrain\": \"Monthly\",\r\n        \"amount\": 50.0,\r\n        \"currentSpend\": {\r\n          \"amount\": 167.98052867365013,\r\n          \"unit\": \"USD\"\r\n        },\r\n        \"category\": \"Cost\",\r\n        \"notifications\": {}\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 31 Jan 2018 23:04:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "session-id": [
+          "ed1c04c6-8c44-473a-a7f3-6a31de512639"
+        ],
+        "x-ms-request-id": [
+          "948e5cb4-7f96-4024-9199-29d28f960c74"
+        ],
+        "x-ms-correlation-request-id": [
+          "03935c5d-b416-48a1-8937-ea3e1997c5ae"
+        ],
+        "x-ms-client-request-id": [
+          "2b54fbb4-1b11-4db0-acd0-970f6bc6646c"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180131T230420Z:03935c5d-b416-48a1-8937-ea3e1997c5ae"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0df534ff-f8e2-49c4-acd1-3ec9dd9b8213"
+  }
+}
