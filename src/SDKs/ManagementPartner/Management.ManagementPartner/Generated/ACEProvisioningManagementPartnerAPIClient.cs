@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DataFactory
+namespace Microsoft.Azure.Management.ManagementPartner
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -22,10 +22,9 @@ namespace Microsoft.Azure.Management.DataFactory
     using System.Net.Http;
 
     /// <summary>
-    /// The Azure Data Factory V2 management API provides a RESTful set of web
-    /// services that interact with Azure Data Factory V2 services.
+    /// This API describe ACE Provisioning ManagementPartner
     /// </summary>
-    public partial class DataFactoryManagementClient : ServiceClient<DataFactoryManagementClient>, IDataFactoryManagementClient, IAzureClient
+    public partial class ACEProvisioningManagementPartnerAPIClient : ServiceClient<ACEProvisioningManagementPartnerAPIClient>, IACEProvisioningManagementPartnerAPIClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -48,12 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The subscription identifier.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version.
+        /// Supported version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -75,68 +69,28 @@ namespace Microsoft.Azure.Management.DataFactory
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IPartnerOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IPartnerOperations Partner { get; private set; }
 
         /// <summary>
-        /// Gets the IFactoriesOperations.
+        /// Gets the IOperationOperations.
         /// </summary>
-        public virtual IFactoriesOperations Factories { get; private set; }
+        public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
-        /// Gets the IIntegrationRuntimesOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
-
-        /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        public virtual IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; private set; }
-
-        /// <summary>
-        /// Gets the ILinkedServicesOperations.
-        /// </summary>
-        public virtual ILinkedServicesOperations LinkedServices { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatasetsOperations.
-        /// </summary>
-        public virtual IDatasetsOperations Datasets { get; private set; }
-
-        /// <summary>
-        /// Gets the IPipelinesOperations.
-        /// </summary>
-        public virtual IPipelinesOperations Pipelines { get; private set; }
-
-        /// <summary>
-        /// Gets the IPipelineRunsOperations.
-        /// </summary>
-        public virtual IPipelineRunsOperations PipelineRuns { get; private set; }
-
-        /// <summary>
-        /// Gets the IActivityRunsOperations.
-        /// </summary>
-        public virtual IActivityRunsOperations ActivityRuns { get; private set; }
-
-        /// <summary>
-        /// Gets the ITriggersOperations.
-        /// </summary>
-        public virtual ITriggersOperations Triggers { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataFactoryManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected ACEProvisioningManagementPartnerAPIClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -144,13 +98,13 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataFactoryManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected ACEProvisioningManagementPartnerAPIClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -161,7 +115,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected DataFactoryManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected ACEProvisioningManagementPartnerAPIClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -171,7 +125,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -185,7 +139,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected DataFactoryManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected ACEProvisioningManagementPartnerAPIClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -195,7 +149,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -206,7 +160,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public DataFactoryManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ACEProvisioningManagementPartnerAPIClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -220,7 +174,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -234,7 +188,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public DataFactoryManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ACEProvisioningManagementPartnerAPIClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -248,7 +202,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -262,7 +216,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public DataFactoryManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ACEProvisioningManagementPartnerAPIClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -281,7 +235,7 @@ namespace Microsoft.Azure.Management.DataFactory
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataFactoryManagementClient class.
+        /// Initializes a new instance of the ACEProvisioningManagementPartnerAPIClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -298,7 +252,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public DataFactoryManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ACEProvisioningManagementPartnerAPIClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -325,18 +279,10 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
-            Factories = new FactoriesOperations(this);
-            IntegrationRuntimes = new IntegrationRuntimesOperations(this);
-            IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);
-            LinkedServices = new LinkedServicesOperations(this);
-            Datasets = new DatasetsOperations(this);
-            Pipelines = new PipelinesOperations(this);
-            PipelineRuns = new PipelineRunsOperations(this);
-            ActivityRuns = new ActivityRunsOperations(this);
-            Triggers = new TriggersOperations(this);
+            Partner = new PartnerOperations(this);
+            Operation = new OperationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-09-01-preview";
+            ApiVersion = "2018-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -366,34 +312,6 @@ namespace Microsoft.Azure.Management.DataFactory
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretBase>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretBase>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntime>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<IntegrationRuntime>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntimeStatus>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<IntegrationRuntimeStatus>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedService>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedService>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Dataset>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Dataset>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Activity>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Activity>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Trigger>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyTranslator>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySink>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeProperties>("authorizationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeProperties>("authorizationType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
