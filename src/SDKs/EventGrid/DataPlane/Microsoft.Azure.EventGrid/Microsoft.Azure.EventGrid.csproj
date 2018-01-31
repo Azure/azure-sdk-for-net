@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.EventGrid</PackageId>
 		<Description>Provides developers with a library to publish events to Azure Event Grid. </Description>
-		<Version>1.0.0-preview</Version>
+		<Version>1.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
-		<PackageReleaseNotes>First version of Azure EventGrid library</PackageReleaseNotes>
+		<PackageReleaseNotes>Added definitions for the event types being published to EventGrid.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
