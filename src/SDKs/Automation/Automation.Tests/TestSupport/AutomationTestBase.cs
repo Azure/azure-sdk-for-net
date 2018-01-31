@@ -164,6 +164,44 @@ namespace Automation.Tests.TestSupport
         }
 
 
+        #region Module Methods
+        public Module CreateAutomationModule(string moduleName, string contentLink)
+        {
+            var module = AutomationClient.Module.CreateOrUpdate(ResourceGroup, AutomationAccount, moduleName,
+                new ModuleCreateOrUpdateParameters
+                {
+                    Name = moduleName,
+                    ContentLink = new ContentLink(contentLink),
+                    Location = Location,
+                    Tags = new Dictionary<string, string>()
+                });
+            return module;
+        }
+
+        public Module GetAutomationModule(string moduleName)
+        {
+            var module = AutomationClient.Module.Get(ResourceGroup, AutomationAccount, moduleName);
+            return module;
+        }
+
+        public void DeleteModule(string moduleName, bool ignoreErrors = false)
+        {
+            try
+            {
+                AutomationClient.Module.Delete(ResourceGroup, AutomationAccount, moduleName);
+            }
+            catch (ErrorResponseException)
+            {
+                if (!ignoreErrors)
+                {
+                    throw;
+                }
+            }
+        }
+
+        #endregion
+
+
         #region Runbooks methods
 
         public Job WaitForJobCompletion(Guid jobId, string expectedState = "Completed", int numRetries = 50)

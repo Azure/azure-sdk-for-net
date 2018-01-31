@@ -51,7 +51,7 @@ namespace DataLakeAnalytics.Tests
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
         {
-            // get the resource group first
+            // Get the resource group first
             bool exists = false;
             ResourceGroup newlyCreatedGroup = null;
             try
@@ -61,7 +61,7 @@ namespace DataLakeAnalytics.Tests
             }
             catch
             {
-                // do nothing because it means it doesn't exist
+                // Do nothing because it means it doesn't exist
             }
 
             if (!exists)
@@ -96,7 +96,7 @@ namespace DataLakeAnalytics.Tests
             }
             catch
             {
-                // do nothing because it doesn't exist
+                // Do nothing because it doesn't exist
             }
 
 
@@ -108,8 +108,8 @@ namespace DataLakeAnalytics.Tests
                 accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
                     accountName);
 
-                // wait for provisioning state to be Succeeded
-                // we will wait a maximum of 15 minutes for this to happen and then report failures
+                // Wait for provisioning state to be Succeeded
+                // We will wait a maximum of 15 minutes for this to happen and then report failures
                 int minutesWaited = 0;
                 int timeToWaitInMinutes = 15;
                 while (accountGetResponse.ProvisioningState !=
@@ -147,14 +147,14 @@ namespace DataLakeAnalytics.Tests
             };
 
 
-            // retrieve the storage account
+            // Retrieve the storage account
             storageManagementClient.StorageAccounts.Create(resourceGroupName, storageAccountName, stoInput);
 
-            // retrieve the storage account primary access key
+            // Retrieve the storage account primary access key
             var accessKey = storageManagementClient.StorageAccounts.ListKeys(resourceGroupName, storageAccountName).Keys[0].Value;
             ThrowIfTrue(string.IsNullOrEmpty(accessKey), "storageManagementClient.StorageAccounts.ListKeys returned null.");
 
-            // set the storage account suffix
+            // Set the storage account suffix
             var getResponse = storageManagementClient.StorageAccounts.GetProperties(resourceGroupName, storageAccountName);
             storageAccountSuffix = getResponse.PrimaryEndpoints.Blob.ToString();
             storageAccountSuffix = storageAccountSuffix.Replace("https://", "").TrimEnd('/');
@@ -191,8 +191,8 @@ namespace DataLakeAnalytics.Tests
             var accountGetResponse = dataLakeAnalyticsManagementClient.Account.Get(resourceGroupName,
                 accountName);
 
-            // wait for provisioning state to be Succeeded
-            // we will wait a maximum of 15 minutes for this to happen and then report failures
+            // Wait for provisioning state to be Succeeded
+            // We will wait a maximum of 15 minutes for this to happen and then report failures
             int timeToWaitInMinutes = 15;
             int minutesWaited = 0;
             while (accountGetResponse.ProvisioningState !=
@@ -218,7 +218,7 @@ namespace DataLakeAnalytics.Tests
         public Guid CreateCatalog(string resourceGroupName, string dataLakeAnalyticsAccountName, string dbName,
             string tableName, string tvfName, string viewName, string procName)
         {
-            // build a simple catalog that can be used to retrieve items.
+            // Build a simple catalog that can be used to retrieve items.
             var scriptToRun = string.Format(@"
 DROP DATABASE IF EXISTS {0}; CREATE DATABASE {0}; 
 //Create Table
@@ -341,7 +341,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
             int curWaitInSeconds = 0;
             while (getJobResponse.State != JobState.Ended && curWaitInSeconds < maxWaitInSeconds)
             {
-                // wait 5 seconds before polling again
+                // Wait 5 seconds before polling again
                 TestUtilities.Wait(5000);
                 curWaitInSeconds += 5;
                 getJobResponse = jobClient.Job.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
@@ -357,6 +357,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     getJobResponse.JobId, getJobResponse.State, getJobResponse.Result,
                     getJobResponse.ErrorMessage != null && getJobResponse.ErrorMessage.Count > 0 ? getJobResponse.ErrorMessage[0].Details : "no error information returned"));
+
             return getJobResponse.JobId.GetValueOrDefault();
         }
     }

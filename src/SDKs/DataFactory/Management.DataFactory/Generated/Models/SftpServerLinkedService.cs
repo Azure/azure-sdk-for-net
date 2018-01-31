@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// SFTP server. When SkipHostKeyValidation is false,
         /// HostKeyFingerprint should be specified. Type: string (or Expression
         /// with resultType string).</param>
-        public SftpServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object), object privateKeyPath = default(object), SecureString privateKeyContent = default(SecureString), SecureString passPhrase = default(SecureString), object skipHostKeyValidation = default(object), object hostKeyFingerprint = default(object))
+        public SftpServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object), object privateKeyPath = default(object), SecretBase privateKeyContent = default(SecretBase), SecretBase passPhrase = default(SecretBase), object skipHostKeyValidation = default(object), object hostKeyFingerprint = default(object))
             : base(additionalProperties, connectVia, description)
         {
             Host = host;
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -160,14 +160,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// be specified. SSH private key should be OpenSSH format.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.privateKeyContent")]
-        public SecureString PrivateKeyContent { get; set; }
+        public SecretBase PrivateKeyContent { get; set; }
 
         /// <summary>
         /// Gets or sets the password to decrypt the SSH private key if the SSH
         /// private key is encrypted.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.passPhrase")]
-        public SecureString PassPhrase { get; set; }
+        public SecretBase PassPhrase { get; set; }
 
         /// <summary>
         /// Gets or sets if true, skip the SSH host key validation. Default
@@ -197,18 +197,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Host == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Host");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
-            }
-            if (PrivateKeyContent != null)
-            {
-                PrivateKeyContent.Validate();
-            }
-            if (PassPhrase != null)
-            {
-                PassPhrase.Validate();
             }
         }
     }

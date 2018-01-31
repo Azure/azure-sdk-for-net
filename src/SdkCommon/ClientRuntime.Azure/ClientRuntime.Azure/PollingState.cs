@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using Microsoft.Rest.ClientRuntime.Azure.Properties;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-
 namespace Microsoft.Rest.Azure
 {
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using Microsoft.Rest.ClientRuntime.Azure.Properties;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using System;
     /// <summary>
     /// Defines long running operation polling state.
     /// </summary>
@@ -151,15 +150,28 @@ namespace Microsoft.Rest.Azure
                     {
                         AzureAsyncOperationHeaderLink = _response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    //else
+                    //{
+                    //    AzureAsyncOperationHeaderLink = string.Empty;
+                    //}
 
                     if (_response.Headers.Contains("Location"))
                     {
                         LocationHeaderLink = _response.Headers.GetValues("Location").FirstOrDefault();
                     }
-                    
+                    //else
+                    //{
+                    //    LocationHeaderLink = string.Empty;
+                    //}
+
                     if (_response.Headers.Contains("Retry-After"))
                     {
-                        RetryAfterInSeconds = int.Parse(_response.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        string retryValue = _response.Headers.GetValues("Retry-After").FirstOrDefault();
+                        RetryAfterInSeconds = int.Parse(retryValue, CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        RetryAfterInSeconds = LROTimeoutSetByClient;
                     }
                 }
             }
@@ -255,7 +267,12 @@ namespace Microsoft.Rest.Azure
                     currentValue = DEFAULT_MAX_DELAY_SECONDS;
 
                 if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)
-                    currentValue = TEST_MIN_DELAY_SECONDS;
+                {
+                    if(currentValue == LROTimeoutSetByClient)
+                    {
+                        currentValue = TEST_MIN_DELAY_SECONDS;
+                    }
+                }   
             }
             else
             {

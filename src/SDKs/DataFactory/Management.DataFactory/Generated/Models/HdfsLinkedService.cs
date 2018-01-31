@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="userName">User name for Windows authentication. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="password">Password for Windows authentication.</param>
-        public HdfsLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object authenticationType = default(object), object encryptedCredential = default(object), object userName = default(object), SecureString password = default(SecureString))
+        public HdfsLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object authenticationType = default(object), object encryptedCredential = default(object), object userName = default(object), SecretBase password = default(SecretBase))
             : base(additionalProperties, connectVia, description)
         {
             Url = url;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password for Windows authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -117,10 +117,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Url");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

@@ -62,18 +62,17 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> GetWithHttpMessagesAsync(string scope, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an event subscription
+        /// Create or update an event subscription
         /// </summary>
         /// <remarks>
-        /// Asynchronously creates a new event subscription to the specified
-        /// scope. Existing event subscriptions cannot be updated with this API
-        /// and should instead use the Update event subscription API.
+        /// Asynchronously creates a new event subscription or updates an
+        /// existing event subscription based on the specified scope.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of the resource to which the event subscription needs to
-        /// be created. The scope can be a subscription, or a resource group,
-        /// or a top level resource belonging to a resource provider namespace,
-        /// or an EventGrid topic. For example, use
+        /// The identifier of the resource to which the event subscription
+        /// needs to be created or updated. The scope can be a subscription, or
+        /// a resource group, or a top level resource belonging to a resource
+        /// provider namespace, or an EventGrid topic. For example, use
         /// '/subscriptions/{subscriptionId}/' for a subscription,
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
         /// for a resource group, and
@@ -83,9 +82,9 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription to be created. Event subscription
-        /// names must be between 3 and 64 characters in length and use
-        /// alphanumeric letters only.
+        /// Name of the event subscription. Event subscription names must be
+        /// between 3 and 64 characters in length and should use alphanumeric
+        /// letters only.
         /// </param>
         /// <param name='eventSubscriptionInfo'>
         /// Event subscription properties containing the destination and filter
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EventSubscription>> CreateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventSubscription>> CreateOrUpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an event subscription
         /// </summary>
@@ -483,18 +482,17 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an event subscription
+        /// Create or update an event subscription
         /// </summary>
         /// <remarks>
-        /// Asynchronously creates a new event subscription to the specified
-        /// scope. Existing event subscriptions cannot be updated with this API
-        /// and should instead use the Update event subscription API.
+        /// Asynchronously creates a new event subscription or updates an
+        /// existing event subscription based on the specified scope.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of the resource to which the event subscription needs to
-        /// be created. The scope can be a subscription, or a resource group,
-        /// or a top level resource belonging to a resource provider namespace,
-        /// or an EventGrid topic. For example, use
+        /// The identifier of the resource to which the event subscription
+        /// needs to be created or updated. The scope can be a subscription, or
+        /// a resource group, or a top level resource belonging to a resource
+        /// provider namespace, or an EventGrid topic. For example, use
         /// '/subscriptions/{subscriptionId}/' for a subscription,
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
         /// for a resource group, and
@@ -504,9 +502,9 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription to be created. Event subscription
-        /// names must be between 3 and 64 characters in length and use
-        /// alphanumeric letters only.
+        /// Name of the event subscription. Event subscription names must be
+        /// between 3 and 64 characters in length and should use alphanumeric
+        /// letters only.
         /// </param>
         /// <param name='eventSubscriptionInfo'>
         /// Event subscription properties containing the destination and filter
@@ -527,7 +525,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EventSubscription>> BeginCreateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventSubscription>> BeginCreateOrUpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an event subscription
         /// </summary>

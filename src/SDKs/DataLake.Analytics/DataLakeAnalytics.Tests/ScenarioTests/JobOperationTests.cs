@@ -19,7 +19,7 @@ namespace DataLakeAnalytics.Tests
         private CommonTestFixture commonData;
 
         [Fact] 
-        public void SubmitGetListCancelTest()
+        public void USqlSubmitGetListCancelTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
@@ -27,13 +27,16 @@ namespace DataLakeAnalytics.Tests
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                
+
+                // Wait 5 minutes for the account setup
+                TestUtilities.Wait(300000);
+
                 var clientToUse = this.GetDataLakeAnalyticsJobManagementClient(context);
 
                 Guid jobId = TestUtilities.GenerateGuid();
-                var secondId = TestUtilities.GenerateGuid();
+                Guid secondId = TestUtilities.GenerateGuid();
 
-                // job relationship information
+                // Job relationship information
                 var recurrenceId = TestUtilities.GenerateGuid();
                 var recurrenceName = TestUtilities.GenerateName("recurrence");
 
@@ -43,14 +46,16 @@ namespace DataLakeAnalytics.Tests
                 var pipelineId = TestUtilities.GenerateGuid();
                 var pipelineName = TestUtilities.GenerateName("jobPipeline");
                 var pipelineUri = string.Format("https://{0}.contoso.com/myJob", TestUtilities.GenerateName("pipelineuri"));
-                // Submit a job to the account
+
+                // Submit a usql job to the account
                 var jobToSubmit = new CreateJobParameters
                 {
                     Name = "azure sdk data lake analytics job",
-                    DegreeOfParallelism = 2,
                     Type = JobType.USql,
+                    DegreeOfParallelism = 2,
                     Properties = new CreateUSqlJobProperties
                     {
+                        RuntimeVersion = "default",
                         Script = "DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;"
                     },
                     Related = new JobRelationshipProperties
@@ -64,41 +69,44 @@ namespace DataLakeAnalytics.Tests
                     }
                 };
 
-                // check to make sure the job doesn't already exist
+                // Check to make sure the usql job doesn't already exist
                 Assert.False(clientToUse.Job.Exists(commonData.SecondDataLakeAnalyticsAccountName, jobId));
+
+                // Submit the usql job
                 var jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, jobId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
-                // Cancel the job
-                clientToUse.Job.Cancel(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
-
-                // check to make sure the job does exist now
+                // Check to make sure the usql job does exist now
                 Assert.True(clientToUse.Job.Exists(commonData.SecondDataLakeAnalyticsAccountName, jobId));
 
-                // Get the job and ensure that it says it was cancelled.
+                // Cancel the usql job
+                clientToUse.Job.Cancel(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
+
+                // Get the usql job and ensure that it says it was cancelled
                 var getCancelledJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
 
                 Assert.Equal(JobResult.Cancelled, getCancelledJobResponse.Result);
                 Assert.NotNull(getCancelledJobResponse.ErrorMessage);
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
-                // Resubmit the job
-                // first update the runId to a new run
+                // Resubmit the usql job
+                // First update the runId to a new run
                 jobToSubmit.Related.RunId = runId02;
                 jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, secondId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
-                // Poll the job until it finishes
+                // Poll the usql job until it finishes
                 var getJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
+
                 Assert.NotNull(getJobResponse);
 
                 int maxWaitInSeconds = 180; // 3 minutes should be long enough
                 int curWaitInSeconds = 0;
                 while (getJobResponse.State != JobState.Ended && curWaitInSeconds < maxWaitInSeconds)
                 {
-                    // wait 5 seconds before polling again
+                    // Wait 5 seconds before polling again
                     TestUtilities.Wait(5000);
                     curWaitInSeconds += 5;
                     getJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
@@ -107,13 +115,13 @@ namespace DataLakeAnalytics.Tests
 
                 Assert.True(curWaitInSeconds <= maxWaitInSeconds);
 
-                // Verify the job completes successfully
+                // Verify the usql job completes successfully
                 Assert.True(
                     getJobResponse.State == JobState.Ended && getJobResponse.Result == JobResult.Succeeded,
                     string.Format("Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                         getJobResponse.JobId, getJobResponse.State, getJobResponse.Result, getJobResponse.ErrorMessage));
 
-                // validate job relationship info
+                // Validate usql job relationship info
                 Assert.Equal(runId02, getJobResponse.Related.RunId);
                 Assert.Equal(pipelineId, getJobResponse.Related.PipelineId);
                 Assert.Equal(pipelineName, getJobResponse.Related.PipelineName);
@@ -121,32 +129,62 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(recurrenceId, getJobResponse.Related.RecurrenceId);
                 Assert.Equal(pipelineUri, getJobResponse.Related.PipelineUri);
 
+                // Get the list of usql jobs and check that the submitted job exists
                 var listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, null);
-                Assert.NotNull(listJobResponse);
 
+                Assert.NotNull(listJobResponse);
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
-                // validate job relationship retrieval (get/list pipeline and get/list recurrence)
+                // Validate usql job relationship retrieval (get/list pipeline and get/list recurrence)
                 var getPipeline = clientToUse.Pipeline.Get(commonData.SecondDataLakeAnalyticsAccountName, pipelineId);
+
                 Assert.Equal(pipelineId, getPipeline.PipelineId);
                 Assert.Equal(pipelineName, getPipeline.PipelineName);
                 Assert.Equal(pipelineUri, getPipeline.PipelineUri);
                 Assert.True(getPipeline.Runs.Count() >= 2);
 
                 var listPipeline = clientToUse.Pipeline.List(commonData.SecondDataLakeAnalyticsAccountName);
+
                 Assert.Equal(1, listPipeline.Count());
                 Assert.True(listPipeline.Any(pipeline => pipeline.PipelineId == pipelineId));
 
-                // recurrence get/list
+                // Recurrence get/list
                 var getRecurrence = clientToUse.Recurrence.Get(commonData.SecondDataLakeAnalyticsAccountName, recurrenceId);
+
                 Assert.Equal(recurrenceId, getRecurrence.RecurrenceId);
                 Assert.Equal(recurrenceName, getRecurrence.RecurrenceName);
-                
+
                 var listRecurrence = clientToUse.Recurrence.List(commonData.SecondDataLakeAnalyticsAccountName);
+
                 Assert.Equal(1, listRecurrence.Count());
                 Assert.True(listRecurrence.Any(recurrence => recurrence.RecurrenceId == recurrenceId));
 
-                // Build a job to the account
+                // TODO: re-enable this after the next prod push
+                // List the usql jobs with only the jobId property filled
+                // listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, select: "jobId");
+                
+                // Assert.NotNull(listJobResponse);
+                // Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
+            }
+        }
+
+        [Fact]
+        public void USqlBuildTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                commonData.HostUrl =
+                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
+                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
+
+                // Wait 5 minutes for the account setup
+                TestUtilities.Wait(300000);
+
+                var clientToUse = this.GetDataLakeAnalyticsJobManagementClient(context);
+
+                // Compile a usql job, which requires a jobId in the job object
+                // Submit a usql job to the account
                 var jobToBuild = new BuildJobParameters
                 {
                     Name = "azure sdk data lake analytics job",
@@ -157,15 +195,16 @@ namespace DataLakeAnalytics.Tests
                     }
                 };
 
-                // Just compile the job, which requires a jobId in the job object
+                // Just compile the usql job, which requires a jobId in the job object
                 var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToBuild);
+
                 Assert.NotNull(compileResponse);
 
-                // now compile a broken job and verify diagnostics report an error
+                // Now compile a broken usql job and verify diagnostics report an error
                 jobToBuild.Properties.Script = "DROP DATABASE IF EXIST FOO; CREATE DATABASE FOO;";
                 compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToBuild);
-                Assert.NotNull(compileResponse);
 
+                Assert.NotNull(compileResponse);
                 Assert.Equal(1, ((USqlJobProperties)compileResponse.Properties).Diagnostics.Count);
                 Assert.Equal(SeverityTypes.Error, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Severity);
                 Assert.Equal(18, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].ColumnNumber);
@@ -173,13 +212,6 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(17, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Start);
                 Assert.Equal(1, ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].LineNumber);
                 Assert.Contains("E_CSC_USER_SYNTAXERROR", ((USqlJobProperties)compileResponse.Properties).Diagnostics[0].Message);
-
-                // TODO: re-enable this when the server side is fixed
-                // list the jobs both with a hand crafted query string and using the parameters
-                // listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, select:  "jobId" );
-                // Assert.NotNull(listJobResponse);
-
-                // Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
             }
         }
     }

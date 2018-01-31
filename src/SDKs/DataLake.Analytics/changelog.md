@@ -1,9 +1,35 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
+
+### Changes in 3.2.3-preview
+
+**Breaking changes**
+
+- Changed the `ODataQuery` parameter type from `DataLakeAnalyticsAccount` to `DataLakeAnalyticsAccountBasic` for these APIs:
+    - Account_List
+    - Account_ListByResourceGroup
+- For `USqlJobProperties`, fixed the property name of `TotalPauseTime` to `TotalPausedTime` 
+
+**Notes**
+
+- Added more properties to `JobStatisticsVertexStage`
+- Added two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled`
+- Added new Account APIs:
+    - Account_CheckNameAvailability
+    - Location_GetCapability
+    - Operation_List
+- Added new Catalog APIs:
+    - Catalog_ListAclsByDatabase
+    - Catalog_ListAcls
+    - Catalog_GrantAclToDatabase
+    - Catalog_RevokeAclFromDatabase
+    - Catalog_GrantAcl
+    - Catalog_RevokeAcl
+
 ### Changes in 3.1.2-preview
 
 **Notes**
 
-- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
+- Added a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
 
 ### Changes in 3.1.1-preview
 
@@ -57,7 +83,7 @@
 - This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
 - Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required. (this is addressed in version 3.1.0-preview)
 - Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class (this is addressed in version 3.1.2-preview)
-- Add two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled` (this will be addressed in an upcoming preview release)
+- Add two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled` (this is addressed in version 3.2.3-preview)
 
 ### Changes in 3.0.0
 - All previous preview changes (below) are now stable and part of the official release
