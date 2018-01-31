@@ -14,8 +14,8 @@ namespace Consumption.Tests.ScenarioTests
 {
     public class ReservationSummariesTests : TestBase
     {
-        protected const string reservationOrderIdScope = "providers/Microsoft.Capacity/reservationorders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b";
-        protected const string reservationOrderIdWithReservationIdScope = "providers/Microsoft.Capacity/reservationorders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640";
+        protected const string reservationOrderId = "ca69259e-bd4f-45c3-bf28-3f353f9cce9b";
+        protected const string reservationId = "f37f4b70-52ba-4344-a8bd-28abfd21d640";
 
         [Fact]
         public void ListReservationSummariesMonthlyWithReservationOrderIdTest()
@@ -24,7 +24,7 @@ namespace Consumption.Tests.ScenarioTests
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservationSummariesMonthly = consumptionMgmtClient.ReservationsSummaries.List(reservationOrderIdScope, grain: "monthly");
+                var reservationSummariesMonthly = consumptionMgmtClient.ReservationsSummaries.ListByReservationOrder(reservationOrderId, grain: "monthly");
 
                 Assert.NotNull(reservationSummariesMonthly);
                 Assert.True(reservationSummariesMonthly.Any());
@@ -42,7 +42,7 @@ namespace Consumption.Tests.ScenarioTests
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservationSummariesMonthly = consumptionMgmtClient.ReservationsSummaries.List(reservationOrderIdWithReservationIdScope, grain: "monthly");
+                var reservationSummariesMonthly = consumptionMgmtClient.ReservationsSummaries.ListByReservationOrderAndReservation(reservationOrderId, reservationId, grain: "monthly");
 
                 Assert.NotNull(reservationSummariesMonthly);
                 Assert.True(reservationSummariesMonthly.Any());
@@ -61,7 +61,7 @@ namespace Consumption.Tests.ScenarioTests
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var startEndDateFilter = "properties/UsageDate ge 2017-10-01 AND properties/UsageDate le 2017-12-07";
-                var reservationSummariesDaily = consumptionMgmtClient.ReservationsSummaries.List(reservationOrderIdScope, grain: "daily",filter: startEndDateFilter);
+                var reservationSummariesDaily = consumptionMgmtClient.ReservationsSummaries.ListByReservationOrder(reservationOrderId, grain: "daily",filter: startEndDateFilter);
 
                 Assert.NotNull(reservationSummariesDaily);
                 Assert.True(reservationSummariesDaily.Any());
@@ -80,7 +80,7 @@ namespace Consumption.Tests.ScenarioTests
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var startEndDateFilter = "properties/UsageDate ge 2017-10-01 AND properties/UsageDate le 2017-12-07";
-                var reservationSummariesDaily = consumptionMgmtClient.ReservationsSummaries.List(reservationOrderIdWithReservationIdScope, grain: "daily", filter: startEndDateFilter);
+                var reservationSummariesDaily = consumptionMgmtClient.ReservationsSummaries.ListByReservationOrderAndReservation(reservationOrderId, reservationId, grain: "daily", filter: startEndDateFilter);
 
                 Assert.NotNull(reservationSummariesDaily);
                 Assert.True(reservationSummariesDaily.Any());
@@ -91,9 +91,7 @@ namespace Consumption.Tests.ScenarioTests
             }
         }
 
-        private static void ValidateProperties(
-            ReservationSummaries item,
-            bool includeMeterDetails = false)
+        private static void ValidateProperties(ReservationSummaries item)
         {
             Assert.NotNull(item);
             Assert.NotNull(item.Id);
