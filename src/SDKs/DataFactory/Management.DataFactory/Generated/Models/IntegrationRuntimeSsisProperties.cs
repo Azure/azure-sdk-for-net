@@ -40,11 +40,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="licenseType">License type for bringing your own
         /// license scenario. Possible values include: 'BasePrice',
         /// 'LicenseIncluded'</param>
-        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string))
+        /// <param name="customSetupScriptProperties">Custom setup script
+        /// properties for a managed dedicated integration runtime.</param>
+        /// <param name="edition">The edition for the SSIS Integration Runtime.
+        /// Possible values include: 'Standard', 'Enterprise'</param>
+        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), string edition = default(string))
         {
             AdditionalProperties = additionalProperties;
             CatalogInfo = catalogInfo;
             LicenseType = licenseType;
+            CustomSetupScriptProperties = customSetupScriptProperties;
+            Edition = edition;
             CustomInit();
         }
 
@@ -75,6 +81,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string LicenseType { get; set; }
 
         /// <summary>
+        /// Gets or sets custom setup script properties for a managed dedicated
+        /// integration runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "customSetupScriptProperties")]
+        public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the edition for the SSIS Integration Runtime. Possible
+        /// values include: 'Standard', 'Enterprise'
+        /// </summary>
+        [JsonProperty(PropertyName = "edition")]
+        public string Edition { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -85,6 +105,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (CatalogInfo != null)
             {
                 CatalogInfo.Validate();
+            }
+            if (CustomSetupScriptProperties != null)
+            {
+                CustomSetupScriptProperties.Validate();
             }
         }
     }
