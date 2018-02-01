@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/resourceGroups/MyNewResourceGroup/providers/Microsoft.Consumption/budgets?api-version=2018-01-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Jlc291cmNlR3JvdXBzL015TmV3UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbnN1bXB0aW9uL2J1ZGdldHM/YXBpLXZlcnNpb249MjAxOC0wMS0zMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/2.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/resourceGroups/MyNewResourceGroup/providers/Microsoft.Consumption/budgets/NETSDKTestBudget\",\r\n      \"name\": \"NETSDKTestBudget\",\r\n      \"type\": \"Microsoft.Consumption/budgets\",\r\n      \"eTag\": \"\\\"1d39ba79c54d57a\\\"\",\r\n      \"properties\": {\r\n        \"timePeriod\": {\r\n          \"startDate\": \"2018-02-01T00:00:00Z\",\r\n          \"endDate\": \"2018-11-01T00:00:00Z\"\r\n        },\r\n        \"timeGrain\": \"Monthly\",\r\n        \"amount\": 60.0,\r\n        \"currentSpend\": {\r\n          \"amount\": 0.0,\r\n          \"unit\": \"USD\"\r\n        },\r\n        \"category\": \"Cost\",\r\n        \"notifications\": {},\r\n        \"filters\": {\r\n          \"resourceGroups\": [],\r\n          \"resources\": [],\r\n          \"meters\": []\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 01 Feb 2018 22:15:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "session-id": [
+          "5a8b011d-d60c-412b-8fa0-6e4bb66682a0"
+        ],
+        "x-ms-request-id": [
+          "f88f0bdf-6a52-4e17-9260-1b57f1da3b58"
+        ],
+        "x-ms-correlation-request-id": [
+          "96ca4458-1ddc-49af-a76c-447a343c863b"
+        ],
+        "x-ms-client-request-id": [
+          "449874f1-f591-4fd8-84f5-0f4b335e4267"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180201T221545Z:96ca4458-1ddc-49af-a76c-447a343c863b"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0df534ff-f8e2-49c4-acd1-3ec9dd9b8213"
+  }
+}

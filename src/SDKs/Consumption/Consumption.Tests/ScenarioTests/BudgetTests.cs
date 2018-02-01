@@ -21,6 +21,7 @@ namespace Consumption.Tests.ScenarioTests
         protected const string subscriptionId = "1caaa5a3-2b66-438e-8ab4-bce37d518c5d";
         protected const string billingPeriodName = "201710";
         protected const string budgetName = "NETSDKTestBudget";
+        protected const string resourceGroupName = "MyNewResourceGroup";
 
         [Fact]
         public void BudgetCreateOrUpdateTest()
@@ -88,6 +89,83 @@ namespace Consumption.Tests.ScenarioTests
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
 
                 var budgets = consumptionMgmtClient.Budgets.List();
+
+                Assert.NotNull(budgets);
+                Assert.True(budgets.Any());
+                foreach (var b in budgets)
+                {
+                    ValidateProperties(b, true);
+                }
+            }
+        }
+
+        [Fact]
+        public void BudgetCreateOrUpdateByResourceGroupNameTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
+                    context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
+
+                var timePeriod = new BudgetTimePeriod
+                {
+                    StartDate = new DateTime(2018, 2, 1),
+                    EndDate = new DateTime(2018, 11, 1),
+                };
+
+                var budget = new Budget("Cost", 60, "Monthly", timePeriod) { ETag = "\"1d39ba79c54d57a\"" };
+
+                var budgetResponse = consumptionMgmtClient.Budgets.CreateOrUpdateByResourceGroupName(resourceGroupName, budgetName, budget);
+
+                ValidateProperties(budgetResponse);
+
+                Assert.Equal(budget.Amount, budgetResponse.Amount);
+                Assert.Equal(budget.Category, budgetResponse.Category);
+                Assert.Equal(budget.TimeGrain, budgetResponse.TimeGrain);
+                Assert.Equal(budget.TimePeriod.StartDate, budgetResponse.TimePeriod.StartDate);
+                Assert.Equal(budget.TimePeriod.EndDate, budgetResponse.TimePeriod.EndDate);
+            }
+        }
+
+        [Fact]
+        public void BudgetDeleteByResourceGroupNameTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
+                    context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
+
+                consumptionMgmtClient.Budgets.DeleteByResourceGroupName(resourceGroupName, "SDKTestBudget");
+            }
+        }
+
+        [Fact]
+        public void BudgetGetByResourceGroupNameTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
+                    context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
+
+                var budget = consumptionMgmtClient.Budgets.GetByResourceGroupName(resourceGroupName, budgetName);
+
+                ValidateProperties(budget, true);
+            }
+        }
+
+        [Fact]
+        public void BudgetListByResourceGroupNameTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
+                    context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
+
+                var budgets = consumptionMgmtClient.Budgets.ListByResourceGroupName(resourceGroupName);
 
                 Assert.NotNull(budgets);
                 Assert.True(budgets.Any());
