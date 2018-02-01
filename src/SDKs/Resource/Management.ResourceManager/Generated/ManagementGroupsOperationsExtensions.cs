@@ -28,6 +28,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
             /// <param name='skiptoken'>
             /// Page continuation token is only used if a previous operation returned a
             /// partial result.
@@ -36,9 +39,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// point to use for subsequent calls.
             ///
             /// </param>
-            public static IPage<ManagementGroupInfo> List(this IManagementGroupsOperations operations, string skiptoken = default(string))
+            public static IPage<ManagementGroupInfo> List(this IManagementGroupsOperations operations, string cacheControl = "no-cache", string skiptoken = default(string))
             {
-                return operations.ListAsync(skiptoken).GetAwaiter().GetResult();
+                return operations.ListAsync(cacheControl, skiptoken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,6 +50,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
             /// </param>
             /// <param name='skiptoken'>
             /// Page continuation token is only used if a previous operation returned a
@@ -59,9 +65,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ManagementGroupInfo>> ListAsync(this IManagementGroupsOperations operations, string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ManagementGroupInfo>> ListAsync(this IManagementGroupsOperations operations, string cacheControl = "no-cache", string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(skiptoken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(cacheControl, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -74,6 +80,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
             /// <param name='expand'>
             /// The $expand=children query string parameter allows clients to request
             /// inclusion of children in the response payload. Possible values include:
@@ -83,9 +92,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The $recurse=true query string parameter allows clients to request
             /// inclusion of entire hierarchy in the response payload.
             /// </param>
-            public static ManagementGroup Get(this IManagementGroupsOperations operations, string expand = default(string), bool? recurse = default(bool?))
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static ManagementGroup Get(this IManagementGroupsOperations operations, string groupId, string expand = default(string), bool? recurse = default(bool?), string cacheControl = "no-cache")
             {
-                return operations.GetAsync(expand, recurse).GetAwaiter().GetResult();
+                return operations.GetAsync(groupId, expand, recurse, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -95,6 +107,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
             /// <param name='expand'>
             /// The $expand=children query string parameter allows clients to request
             /// inclusion of children in the response payload. Possible values include:
@@ -104,12 +119,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The $recurse=true query string parameter allows clients to request
             /// inclusion of entire hierarchy in the response payload.
             /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagementGroup> GetAsync(this IManagementGroupsOperations operations, string expand = default(string), bool? recurse = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementGroup> GetAsync(this IManagementGroupsOperations operations, string groupId, string expand = default(string), bool? recurse = default(bool?), string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(expand, recurse, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(groupId, expand, recurse, cacheControl, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -125,12 +143,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
             /// <param name='createGroupRequest'>
             /// Management group creation parameters.
             /// </param>
-            public static ManagementGroup CreateOrUpdate(this IManagementGroupsOperations operations, CreateGroupRequest createGroupRequest)
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static ManagementGroup CreateOrUpdate(this IManagementGroupsOperations operations, string groupId, CreateGroupRequest createGroupRequest, string cacheControl = "no-cache")
             {
-                return operations.CreateOrUpdateAsync(createGroupRequest).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(groupId, createGroupRequest, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -143,15 +167,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
             /// <param name='createGroupRequest'>
             /// Management group creation parameters.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagementGroup> CreateOrUpdateAsync(this IManagementGroupsOperations operations, CreateGroupRequest createGroupRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementGroup> CreateOrUpdateAsync(this IManagementGroupsOperations operations, string groupId, CreateGroupRequest createGroupRequest, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(createGroupRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(groupId, createGroupRequest, cacheControl, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -164,12 +194,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
             /// <param name='createGroupRequest'>
             /// Management group creation parameters.
             /// </param>
-            public static ManagementGroup Update(this IManagementGroupsOperations operations, CreateGroupRequest createGroupRequest)
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static ManagementGroup Update(this IManagementGroupsOperations operations, string groupId, CreateGroupRequest createGroupRequest, string cacheControl = "no-cache")
             {
-                return operations.UpdateAsync(createGroupRequest).GetAwaiter().GetResult();
+                return operations.UpdateAsync(groupId, createGroupRequest, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -179,15 +215,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
             /// <param name='createGroupRequest'>
             /// Management group creation parameters.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagementGroup> UpdateAsync(this IManagementGroupsOperations operations, CreateGroupRequest createGroupRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementGroup> UpdateAsync(this IManagementGroupsOperations operations, string groupId, CreateGroupRequest createGroupRequest, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(createGroupRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(groupId, createGroupRequest, cacheControl, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -201,9 +243,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Delete(this IManagementGroupsOperations operations)
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static void Delete(this IManagementGroupsOperations operations, string groupId, string cacheControl = "no-cache")
             {
-                operations.DeleteAsync().GetAwaiter().GetResult();
+                operations.DeleteAsync(groupId, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,12 +262,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IManagementGroupsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IManagementGroupsOperations operations, string groupId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(groupId, cacheControl, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -232,9 +286,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ManagementGroupInfo> ListNext(this IManagementGroupsOperations operations, string nextPageLink)
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static IPage<ManagementGroupInfo> ListNext(this IManagementGroupsOperations operations, string nextPageLink, string cacheControl = "no-cache")
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -247,12 +304,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ManagementGroupInfo>> ListNextAsync(this IManagementGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ManagementGroupInfo>> ListNextAsync(this IManagementGroupsOperations operations, string nextPageLink, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, cacheControl, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

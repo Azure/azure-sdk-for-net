@@ -28,9 +28,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Create(this IManagementGroupSubscriptionsOperations operations)
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static void Create(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache")
             {
-                operations.CreateAsync().GetAwaiter().GetResult();
+                operations.CreateAsync(groupId, subscriptionId, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -40,12 +49,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IManagementGroupSubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CreateWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CreateWithHttpMessagesAsync(groupId, subscriptionId, cacheControl, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -55,9 +73,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Delete(this IManagementGroupSubscriptionsOperations operations)
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
+            public static void Delete(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache")
             {
-                operations.DeleteAsync().GetAwaiter().GetResult();
+                operations.DeleteAsync(groupId, subscriptionId, cacheControl).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,12 +94,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// Management Group ID.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription ID.
+            /// </param>
+            /// <param name='cacheControl'>
+            /// Indicates that the request shouldn't utilize any caches.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IManagementGroupSubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IManagementGroupSubscriptionsOperations operations, string groupId, string subscriptionId, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(groupId, subscriptionId, cacheControl, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

@@ -54,6 +54,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Associates existing subscription with the management group.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Subscription ID.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -72,15 +81,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.GroupId == null)
+            if (groupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
-            if (Client.SubscriptionId == null)
+            if (subscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
             if (Client.ApiVersion == null)
             {
@@ -93,14 +102,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupId", groupId);
+                tracingParameters.Add("subscriptionId", subscriptionId);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}").ToString();
-            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -119,6 +131,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -212,6 +232,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// De-associates subscription from the management group.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Subscription ID.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -230,15 +259,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.GroupId == null)
+            if (groupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
-            if (Client.SubscriptionId == null)
+            if (subscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
             if (Client.ApiVersion == null)
             {
@@ -251,14 +280,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupId", groupId);
+                tracingParameters.Add("subscriptionId", subscriptionId);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}").ToString();
-            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -277,6 +309,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {

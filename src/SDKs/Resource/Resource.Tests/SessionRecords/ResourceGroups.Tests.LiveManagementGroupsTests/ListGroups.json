@@ -1,55 +1,75 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2017-08-31-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMDgtMzEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2017-11-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7b6af4d0-999b-449b-b7c0-d92e23f481af"
+          "0678be31-cf7e-4442-bf37-8c17c4220a60"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2102.0",
-          "OSName/Windows10Enterprise",
-          "OSVersion/6.3.15063",
-          "Microsoft.Azure.Management.ResourceManager.ManagementGroupsAPIClient/1.6.0.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ManagementGroupsAPIClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"e16c61d4-c2c9-444d-9ee0-2f89561e6ef9\",\r\n      \"properties\": {\r\n        \"tenantId\": \"eddd1d84-0039-4ead-b954-e59a7a523f42\",\r\n        \"displayName\": \"SAB BVT (DO NOT USE)8\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"TestGroup123\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"TestGroup123->Child1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123Child1Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123Child1Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"TestGroup123->Child1->Child1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123Child2\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123Child2\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"TestGroup123->Child2\"\r\n      }\r\n    }\r\n  ],\r\n  \"@nextLink\": null\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "313"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "7f9052f8-b39d-4447-9316-6b7a583d0faa"
-        ],
-        "x-ms-correlation-request-id": [
-          "7f9052f8-b39d-4447-9316-6b7a583d0faa"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170928T214748Z:7f9052f8-b39d-4447-9316-6b7a583d0faa"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 28 Sep 2017 21:47:48 GMT"
+          "Tue, 30 Jan 2018 22:47:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "eastus:dead4226-3deb-4f54-9e0b-2f476eb4bd3b"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.477"
+        ],
+        "request-id": [
+          "e36bdf1c-a0ef-46b9-b844-216289839ea7"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "89af1579-1342-408b-b2dc-746debc8395d"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180130T224757Z:89af1579-1342-408b-b2dc-746debc8395d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ]
       },
       "StatusCode": 200
@@ -57,6 +77,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "740daabe-7d03-47ed-8657-6aaa1cee10a7"
+    "SubscriptionId": "394ae65d-9e71-4462-930f-3332dedf845c"
   }
 }

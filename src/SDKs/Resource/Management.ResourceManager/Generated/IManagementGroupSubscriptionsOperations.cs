@@ -27,6 +27,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Associates existing subscription with the management group.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Subscription ID.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -39,11 +48,20 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// De-associates subscription from the management group.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Subscription ID.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -56,6 +74,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

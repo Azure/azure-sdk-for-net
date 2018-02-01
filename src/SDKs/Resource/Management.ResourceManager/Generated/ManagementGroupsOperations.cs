@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// List management groups for the authenticated user.
         ///
         /// </summary>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='skiptoken'>
         /// Page continuation token is only used if a previous operation returned a
         /// partial result.
@@ -83,7 +86,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListWithHttpMessagesAsync(string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListWithHttpMessagesAsync(string cacheControl = "no-cache", string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -96,6 +99,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -125,6 +129,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -236,6 +248,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Get the details of the management group.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
         /// <param name='expand'>
         /// The $expand=children query string parameter allows clients to request
         /// inclusion of children in the response payload. Possible values include:
@@ -244,6 +259,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='recurse'>
         /// The $recurse=true query string parameter allows clients to request
         /// inclusion of entire hierarchy in the response payload.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -266,11 +284,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagementGroup>> GetWithHttpMessagesAsync(string expand = default(string), bool? recurse = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementGroup>> GetWithHttpMessagesAsync(string groupId, string expand = default(string), bool? recurse = default(bool?), string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.GroupId == null)
+            if (groupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
             if (Client.ApiVersion == null)
             {
@@ -283,15 +301,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupId", groupId);
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("recurse", recurse);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}").ToString();
-            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -318,6 +338,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -432,8 +460,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// updated.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
         /// <param name='createGroupRequest'>
         /// Management group creation parameters.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -456,11 +490,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagementGroup>> CreateOrUpdateWithHttpMessagesAsync(CreateGroupRequest createGroupRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementGroup>> CreateOrUpdateWithHttpMessagesAsync(string groupId, CreateGroupRequest createGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.GroupId == null)
+            if (groupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
             if (Client.ApiVersion == null)
             {
@@ -477,14 +511,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupId", groupId);
                 tracingParameters.Add("createGroupRequest", createGroupRequest);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}").ToString();
-            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -503,6 +539,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -620,8 +664,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Update a management group.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
         /// <param name='createGroupRequest'>
         /// Management group creation parameters.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -644,11 +694,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagementGroup>> UpdateWithHttpMessagesAsync(CreateGroupRequest createGroupRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagementGroup>> UpdateWithHttpMessagesAsync(string groupId, CreateGroupRequest createGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.GroupId == null)
+            if (groupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
             if (Client.ApiVersion == null)
             {
@@ -665,14 +715,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupId", groupId);
                 tracingParameters.Add("createGroupRequest", createGroupRequest);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}").ToString();
-            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -691,6 +743,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -809,6 +869,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// If a management group contains child resources, the request will fail.
         ///
         /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -827,11 +893,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.GroupId == null)
+            if (groupId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.GroupId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupId");
             }
             if (Client.ApiVersion == null)
             {
@@ -844,13 +910,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupId", groupId);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{groupId}").ToString();
-            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(Client.GroupId));
+            _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -869,6 +937,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -965,6 +1041,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -986,7 +1065,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListNextWithHttpMessagesAsync(string nextPageLink, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1000,6 +1079,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cacheControl", cacheControl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
@@ -1020,6 +1100,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (cacheControl != null)
+            {
+                if (_httpRequest.Headers.Contains("Cache-Control"))
+                {
+                    _httpRequest.Headers.Remove("Cache-Control");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Cache-Control", cacheControl);
             }
             if (Client.AcceptLanguage != null)
             {

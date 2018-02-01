@@ -45,16 +45,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Management Group ID.
-        /// </summary>
-        string GroupId { get; set; }
-
-        /// <summary>
-        /// Subscription ID.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// Version of the API to be used with the client request. The current
         /// version is 2017-11-01-preview.
         /// </summary>
