@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PriceSheetOperations operations.
+    /// PricesheetOperations operations.
     /// </summary>
-    public partial interface IPriceSheetOperations
+    public partial interface IPricesheetOperations
     {
         /// <summary>
-        /// Lists the price sheet for a scope by subscriptionId. Price sheets
-        /// are available via this API only for May 1, 2014 or later.
+        /// Gets the price sheet for a scope by subscriptionId. Price sheet is
+        /// available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='expand'>
@@ -54,11 +54,11 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PriceSheetListResult>> ListWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PriceSheetResult>> GetWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the price sheet for a scope by subscriptionId and billing
-        /// period. Price sheets are available via this API only for May 1,
-        /// 2014 or later.
+        /// Get the price sheet for a scope by subscriptionId and billing
+        /// period. Price sheet is available via this API only for May 1, 2014
+        /// or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingPeriodName'>
@@ -90,6 +90,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PriceSheetListResult>> ListByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PriceSheetResult>> GetByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

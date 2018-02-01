@@ -47,6 +47,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// Lists all budgets for a resource group under a subscription.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -62,11 +65,14 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Budget>>> ListByResourceGroupNameWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Budget>>> ListByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the budget for a subscription by budget name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -82,7 +88,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Budget>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Budget>> GetWithHttpMessagesAsync(string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to create or update a budget. Update operation
         /// requires latest eTag to be set in the request mandatorily. You may
@@ -90,6 +96,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// operation does not require eTag.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Budget operation.
         /// </param>
@@ -108,11 +117,14 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Budget>> CreateOrUpdateWithHttpMessagesAsync(Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Budget>> CreateOrUpdateWithHttpMessagesAsync(string budgetName, Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete a budget.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -125,12 +137,18 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the budget for a resource group under a subscription by budget
         /// name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -146,7 +164,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Budget>> GetByResourceGroupNameWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Budget>> GetByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to create or update a budget. Update operation
         /// requires latest eTag to be set in the request mandatorily. You may
@@ -154,6 +172,12 @@ namespace Microsoft.Azure.Management.Consumption
         /// operation does not require eTag.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Budget operation.
         /// </param>
@@ -172,11 +196,17 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Budget>> CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Budget>> CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, string budgetName, Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete a budget.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -189,6 +219,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteByResourceGroupNameWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

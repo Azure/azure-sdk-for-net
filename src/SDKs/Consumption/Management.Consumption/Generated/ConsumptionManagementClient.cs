@@ -59,16 +59,6 @@ namespace Microsoft.Azure.Management.Consumption
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Azure Resource Group Name.
-        /// </summary>
-        public string ResourceGroupName { get; set; }
-
-        /// <summary>
-        /// Budget Name.
-        /// </summary>
-        public string BudgetName { get; set; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -116,9 +106,9 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IPriceSheetOperations.
+        /// Gets the IPricesheetOperations.
         /// </summary>
-        public virtual IPriceSheetOperations PriceSheet { get; private set; }
+        public virtual IPricesheetOperations Pricesheet { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ConsumptionManagementClient class.
@@ -327,7 +317,7 @@ namespace Microsoft.Azure.Management.Consumption
             ReservationsDetails = new ReservationsDetailsOperations(this);
             Budgets = new BudgetsOperations(this);
             Operations = new Operations(this);
-            PriceSheet = new PriceSheetOperations(this);
+            Pricesheet = new PricesheetOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-01-31";
             AcceptLanguage = "en-US";

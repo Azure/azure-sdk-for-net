@@ -60,9 +60,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Budget> ListByResourceGroupName(this IBudgetsOperations operations)
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            public static IEnumerable<Budget> ListByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName)
             {
-                return operations.ListByResourceGroupNameAsync().GetAwaiter().GetResult();
+                return operations.ListByResourceGroupNameAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -72,12 +75,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Budget>> ListByResourceGroupNameAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Budget>> ListByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupNameWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -90,9 +96,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static Budget Get(this IBudgetsOperations operations)
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
+            public static Budget Get(this IBudgetsOperations operations, string budgetName)
             {
-                return operations.GetAsync().GetAwaiter().GetResult();
+                return operations.GetAsync(budgetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,12 +111,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> GetAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> GetAsync(this IBudgetsOperations operations, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(budgetName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -122,12 +134,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
-            public static Budget CreateOrUpdate(this IBudgetsOperations operations, Budget parameters)
+            public static Budget CreateOrUpdate(this IBudgetsOperations operations, string budgetName, Budget parameters)
             {
-                return operations.CreateOrUpdateAsync(parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(budgetName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -139,15 +154,18 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> CreateOrUpdateAsync(this IBudgetsOperations operations, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> CreateOrUpdateAsync(this IBudgetsOperations operations, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -160,9 +178,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Delete(this IBudgetsOperations operations)
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
+            public static void Delete(this IBudgetsOperations operations, string budgetName)
             {
-                operations.DeleteAsync().GetAwaiter().GetResult();
+                operations.DeleteAsync(budgetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -172,12 +193,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBudgetsOperations operations, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -187,9 +211,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static Budget GetByResourceGroupName(this IBudgetsOperations operations)
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
+            public static Budget GetByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName)
             {
-                return operations.GetByResourceGroupNameAsync().GetAwaiter().GetResult();
+                return operations.GetByResourceGroupNameAsync(resourceGroupName, budgetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,12 +229,18 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> GetByResourceGroupNameAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> GetByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByResourceGroupNameWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -219,12 +255,18 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
-            public static Budget CreateOrUpdateByResourceGroupName(this IBudgetsOperations operations, Budget parameters)
+            public static Budget CreateOrUpdateByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName, Budget parameters)
             {
-                return operations.CreateOrUpdateByResourceGroupNameAsync(parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateByResourceGroupNameAsync(resourceGroupName, budgetName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -236,15 +278,21 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> CreateOrUpdateByResourceGroupNameAsync(this IBudgetsOperations operations, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> CreateOrUpdateByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -257,9 +305,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void DeleteByResourceGroupName(this IBudgetsOperations operations)
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
+            public static void DeleteByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName)
             {
-                operations.DeleteByResourceGroupNameAsync().GetAwaiter().GetResult();
+                operations.DeleteByResourceGroupNameAsync(resourceGroupName, budgetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -269,12 +323,18 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Azure Resource Group Name.
+            /// </param>
+            /// <param name='budgetName'>
+            /// Budget Name.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteByResourceGroupNameAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteByResourceGroupNameWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

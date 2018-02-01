@@ -30,16 +30,15 @@ namespace Consumption.Tests.ScenarioTests
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
-                consumptionMgmtClient.BudgetName = budgetName;
 
                 var timePeriod = new BudgetTimePeriod
                 {
-                    StartDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1),
-                    EndDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month + 10, 1),
+                    StartDate = new DateTime(2018, 1, 1),
+                    EndDate = new DateTime(2018, 11, 1),
                 };
                 var budget = new Budget("Cost", 60, "Monthly", timePeriod) { ETag = "\"1d39ae594114419\"" };
 
-                var budgetResponse = consumptionMgmtClient.Budgets.CreateOrUpdate(budget);
+                var budgetResponse = consumptionMgmtClient.Budgets.CreateOrUpdate(budgetName, budget);
 
                 ValidateProperties(budgetResponse);
 
@@ -59,9 +58,8 @@ namespace Consumption.Tests.ScenarioTests
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
-                consumptionMgmtClient.BudgetName = "SDKTestBudget";
 
-                consumptionMgmtClient.Budgets.Delete();
+                consumptionMgmtClient.Budgets.Delete("SDKTestBudget");
             }
         }
 
@@ -73,9 +71,8 @@ namespace Consumption.Tests.ScenarioTests
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
-                consumptionMgmtClient.BudgetName = budgetName;
 
-                var budget = consumptionMgmtClient.Budgets.Get();
+                var budget = consumptionMgmtClient.Budgets.Get(budgetName);
 
                 ValidateProperties(budget, true);
             }

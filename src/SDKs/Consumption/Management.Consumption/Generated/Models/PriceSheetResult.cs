@@ -17,23 +17,23 @@ namespace Microsoft.Azure.Management.Consumption.Models
     /// price sheet result. It contains the pricesheet associated with billing
     /// period
     /// </summary>
-    public partial class PriceSheetListResult
+    public partial class PriceSheetResult
     {
         /// <summary>
-        /// Initializes a new instance of the PriceSheetListResult class.
+        /// Initializes a new instance of the PriceSheetResult class.
         /// </summary>
-        public PriceSheetListResult()
+        public PriceSheetResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PriceSheetListResult class.
+        /// Initializes a new instance of the PriceSheetResult class.
         /// </summary>
         /// <param name="value">Price sheet</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public PriceSheetListResult(object value = default(object), string nextLink = default(string))
+        public PriceSheetResult(object value = default(object), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;

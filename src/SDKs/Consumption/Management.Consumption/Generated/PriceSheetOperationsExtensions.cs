@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PriceSheetOperations.
+    /// Extension methods for PricesheetOperations.
     /// </summary>
-    public static partial class PriceSheetOperationsExtensions
+    public static partial class PricesheetOperationsExtensions
     {
             /// <summary>
-            /// Lists the price sheet for a scope by subscriptionId. Price sheets are
+            /// Gets the price sheet for a scope by subscriptionId. Price sheet is
             /// available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static PriceSheetListResult List(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string))
+            public static PriceSheetResult Get(this IPricesheetOperations operations, string expand = default(string), string skiptoken = default(string))
             {
-                return operations.ListAsync(expand, skiptoken).GetAwaiter().GetResult();
+                return operations.GetAsync(expand, skiptoken).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the price sheet for a scope by subscriptionId. Price sheets are
+            /// Gets the price sheet for a scope by subscriptionId. Price sheet is
             /// available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
@@ -65,17 +65,17 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PriceSheetListResult> ListAsync(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PriceSheetResult> GetAsync(this IPricesheetOperations operations, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the price sheet for a scope by subscriptionId and billing period.
-            /// Price sheets are available via this API only for May 1, 2014 or later.
+            /// Get the price sheet for a scope by subscriptionId and billing period. Price
+            /// sheet is available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -94,14 +94,14 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static PriceSheetListResult ListByBillingPeriod(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string))
+            public static PriceSheetResult GetByBillingPeriod(this IPricesheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string))
             {
-                return operations.ListByBillingPeriodAsync(billingPeriodName, expand, skiptoken).GetAwaiter().GetResult();
+                return operations.GetByBillingPeriodAsync(billingPeriodName, expand, skiptoken).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the price sheet for a scope by subscriptionId and billing period.
-            /// Price sheets are available via this API only for May 1, 2014 or later.
+            /// Get the price sheet for a scope by subscriptionId and billing period. Price
+            /// sheet is available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -123,9 +123,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PriceSheetListResult> ListByBillingPeriodAsync(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PriceSheetResult> GetByBillingPeriodAsync(this IPricesheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingPeriodWithHttpMessagesAsync(billingPeriodName, expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByBillingPeriodWithHttpMessagesAsync(billingPeriodName, expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

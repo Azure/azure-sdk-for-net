@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PriceSheetOperations operations.
+    /// PricesheetOperations operations.
     /// </summary>
-    internal partial class PriceSheetOperations : IServiceOperations<ConsumptionManagementClient>, IPriceSheetOperations
+    internal partial class PricesheetOperations : IServiceOperations<ConsumptionManagementClient>, IPricesheetOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PriceSheetOperations class.
+        /// Initializes a new instance of the PricesheetOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PriceSheetOperations(ConsumptionManagementClient client)
+        internal PricesheetOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the price sheet for a scope by subscriptionId. Price sheets are
+        /// Gets the price sheet for a scope by subscriptionId. Price sheet is
         /// available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PriceSheetListResult>> ListWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PriceSheetResult>> GetWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Consumption
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PriceSheetListResult>();
+            var _result = new AzureOperationResponse<PriceSheetResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PriceSheetListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PriceSheetResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -246,8 +246,8 @@ namespace Microsoft.Azure.Management.Consumption
         }
 
         /// <summary>
-        /// Lists the price sheet for a scope by subscriptionId and billing period.
-        /// Price sheets are available via this API only for May 1, 2014 or later.
+        /// Get the price sheet for a scope by subscriptionId and billing period. Price
+        /// sheet is available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingPeriodName'>
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PriceSheetListResult>> ListByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PriceSheetResult>> GetByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Consumption
                 tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("billingPeriodName", billingPeriodName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingPeriod", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByBillingPeriod", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -417,7 +417,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PriceSheetListResult>();
+            var _result = new AzureOperationResponse<PriceSheetResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PriceSheetListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PriceSheetResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

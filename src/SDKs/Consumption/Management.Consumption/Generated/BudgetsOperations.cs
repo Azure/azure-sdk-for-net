@@ -228,6 +228,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// Lists all budgets for a resource group under a subscription.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -249,7 +252,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<Budget>>> ListByResourceGroupNameWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Budget>>> ListByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -259,9 +262,9 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -270,6 +273,7 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroupName", tracingParameters);
             }
@@ -277,7 +281,7 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Consumption/budgets").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -407,6 +411,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// Gets the budget for a subscription by budget name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -428,7 +435,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Budget>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Budget>> GetWithHttpMessagesAsync(string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -438,9 +445,9 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.BudgetName == null)
+            if (budgetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BudgetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "budgetName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -449,6 +456,7 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("budgetName", budgetName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -456,7 +464,7 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Consumption/budgets/{budgetName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(Client.BudgetName));
+            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(budgetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -588,6 +596,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// eTag by performing a get operation. Create operation does not require eTag.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Budget operation.
         /// </param>
@@ -612,7 +623,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Budget>> CreateOrUpdateWithHttpMessagesAsync(Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Budget>> CreateOrUpdateWithHttpMessagesAsync(string budgetName, Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -622,9 +633,9 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.BudgetName == null)
+            if (budgetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BudgetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "budgetName");
             }
             if (parameters == null)
             {
@@ -641,6 +652,7 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("budgetName", budgetName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
@@ -649,7 +661,7 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Consumption/budgets/{budgetName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(Client.BudgetName));
+            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(budgetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -803,6 +815,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// The operation to delete a budget.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -821,7 +836,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -831,9 +846,9 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.BudgetName == null)
+            if (budgetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BudgetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "budgetName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -842,6 +857,7 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("budgetName", budgetName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -849,7 +865,7 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Consumption/budgets/{budgetName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(Client.BudgetName));
+            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(budgetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -961,6 +977,12 @@ namespace Microsoft.Azure.Management.Consumption
         /// Gets the budget for a resource group under a subscription by budget name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -982,7 +1004,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Budget>> GetByResourceGroupNameWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Budget>> GetByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -992,13 +1014,13 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.BudgetName == null)
+            if (budgetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BudgetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "budgetName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1007,6 +1029,8 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("budgetName", budgetName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetByResourceGroupName", tracingParameters);
             }
@@ -1014,8 +1038,8 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Consumption/budgets/{budgetName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(Client.BudgetName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(budgetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1147,6 +1171,12 @@ namespace Microsoft.Azure.Management.Consumption
         /// eTag by performing a get operation. Create operation does not require eTag.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Budget operation.
         /// </param>
@@ -1171,7 +1201,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Budget>> CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Budget>> CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, string budgetName, Budget parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1181,13 +1211,13 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.BudgetName == null)
+            if (budgetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BudgetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "budgetName");
             }
             if (parameters == null)
             {
@@ -1204,6 +1234,8 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("budgetName", budgetName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateByResourceGroupName", tracingParameters);
@@ -1212,8 +1244,8 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Consumption/budgets/{budgetName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(Client.BudgetName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(budgetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1367,6 +1399,12 @@ namespace Microsoft.Azure.Management.Consumption
         /// The operation to delete a budget.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Azure Resource Group Name.
+        /// </param>
+        /// <param name='budgetName'>
+        /// Budget Name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1385,7 +1423,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteByResourceGroupNameWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteByResourceGroupNameWithHttpMessagesAsync(string resourceGroupName, string budgetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1395,13 +1433,13 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.BudgetName == null)
+            if (budgetName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BudgetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "budgetName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1410,6 +1448,8 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("budgetName", budgetName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteByResourceGroupName", tracingParameters);
             }
@@ -1417,8 +1457,8 @@ namespace Microsoft.Azure.Management.Consumption
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Consumption/budgets/{budgetName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(Client.BudgetName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{budgetName}", System.Uri.EscapeDataString(budgetName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
