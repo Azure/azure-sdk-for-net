@@ -86,7 +86,7 @@ namespace Compute.Tests
                     };
 
                     // Create the VM, whose OS disk will be used in creating the image
-                    var createdVM = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
+                    var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
 
                     // Create the Image
                     var imageInput = new Image()

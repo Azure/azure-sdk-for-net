@@ -33,8 +33,8 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    var vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
-                    var vm2 = CreateVM_NoAsyncTracking(rg2Name, asName, storageAccountOutput, imageRef, out inputVM2);
+                    var vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
+                    var vm2 = CreateVM(rg2Name, asName, storageAccountOutput, imageRef, out inputVM2);
 
                     var listResponse = m_CrpClient.VirtualMachines.ListAll();
                     Assert.True(listResponse.Count() >= 2);
