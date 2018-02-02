@@ -14,27 +14,29 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// Detail of gateway errors.
+    /// A Consumption REST API operation.
     /// </summary>
-    public partial class GatewayError
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the GatewayError class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public GatewayError()
+        public Operation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GatewayError class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="code">Error code of list gateway.</param>
-        /// <param name="message">Error message of list gateway.</param>
-        public GatewayError(string code = default(string), string message = default(string))
+        /// <param name="name">Operation name:
+        /// {provider}/{resource}/{operation}.</param>
+        /// <param name="display">The object that represents the
+        /// operation.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
-            Code = code;
-            Message = message;
+            Name = name;
+            Display = display;
             CustomInit();
         }
 
@@ -44,16 +46,16 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code of list gateway.
+        /// Gets operation name: {provider}/{resource}/{operation}.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets error message of list gateway.
+        /// Gets or sets the object that represents the operation.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; set; }
 
     }
 }

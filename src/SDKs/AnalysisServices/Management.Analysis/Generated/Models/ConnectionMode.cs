@@ -16,37 +16,43 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Status.
+    /// Defines values for ConnectionMode.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Status
+    public enum ConnectionMode
     {
-        [EnumMember(Value = "Live")]
-        Live
+        [EnumMember(Value = "All")]
+        All,
+        [EnumMember(Value = "ReadOnly")]
+        ReadOnly
     }
-    internal static class StatusEnumExtension
+    internal static class ConnectionModeEnumExtension
     {
-        internal static string ToSerializedValue(this Status? value)
+        internal static string ToSerializedValue(this ConnectionMode? value)
         {
-            return value == null ? null : ((Status)value).ToSerializedValue();
+            return value == null ? null : ((ConnectionMode)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Status value)
+        internal static string ToSerializedValue(this ConnectionMode value)
         {
             switch( value )
             {
-                case Status.Live:
-                    return "Live";
+                case ConnectionMode.All:
+                    return "All";
+                case ConnectionMode.ReadOnly:
+                    return "ReadOnly";
             }
             return null;
         }
 
-        internal static Status? ParseStatus(this string value)
+        internal static ConnectionMode? ParseConnectionMode(this string value)
         {
             switch( value )
             {
-                case "Live":
-                    return Status.Live;
+                case "All":
+                    return ConnectionMode.All;
+                case "ReadOnly":
+                    return ConnectionMode.ReadOnly;
             }
             return null;
         }
