@@ -67,7 +67,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             InitializeAsyncHeadersToUse();
             await StartPollingAsync();
             await PostPollingAsync();
-            CheckForErrors();
+            CheckFinalErrors();
 
             IsLROTaskCompleted = true;
         }
@@ -88,7 +88,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         #endregion
 
         #region Protected functions
-        
+
+        /// <summary>
+        /// Check for errors at the end of LRO operation
+        /// Last chance to check any final errors
+        /// </summary>
+        protected virtual void CheckFinalErrors()
+        {
+            if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
+            {
+                throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
+            }
+        }
+
+
         /// <summary>
         /// Does basic validation on initial response from RP, prior to start LRO process
         /// </summary>
@@ -181,11 +194,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             #region Check provisionState
             CurrentPollingState.CurrentStatusCode = CurrentPollingState.Response.StatusCode;
 
-            if (!string.IsNullOrEmpty(CurrentPollingState.AsyncOperationResponseBody?.Status) 
-                && 
-                (!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink)))
+            if (IsAzureAsyncOperationResponseStateValid() == true)
             {
-                CurrentPollingState.Status = CurrentPollingState.AsyncOperationResponseBody.Status;
+                CurrentPollingState.Status = GetAzureAsyncResponseState();
             }
             else
             {
@@ -289,6 +300,85 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
             return absoluteUri;
         }
+
+        #endregion
+
+        #region Private functions
+        /// <summary>
+        /// Get Valid status
+        /// There are cases where there is an error sent from the service and in that case, the status should be one of the valid FailedStatuses
+        /// But there are cases where there is a customized error sent by service and they do not fall under Failed/Success statuses, in that case we fall back on response status
+        /// 
+        /// e.g. The response status is OK, but the error body has the status as "TestFailed" (which do not fall under valid failed status, so we fall back to OK)
+        /// </summary>
+        /// <returns></returns>
+        private string GetAzureAsyncResponseState()
+        {
+            string validStatus = string.Empty;
+            if (!string.IsNullOrEmpty(CurrentPollingState.AsyncOperationResponseBody?.Status))
+            {
+                if (AzureAsyncOperation.FailedStatuses.Any(
+                        s => s.Equals(CurrentPollingState.AsyncOperationResponseBody.Status, StringComparison.OrdinalIgnoreCase)))
+                {
+                    validStatus = CurrentPollingState.AsyncOperationResponseBody.Status;
+                }
+                else if (AzureAsyncOperation.TerminalStatuses.Any(s => s.Equals(CurrentPollingState.AsyncOperationResponseBody.Status, StringComparison.OrdinalIgnoreCase)))
+                {
+                    validStatus = CurrentPollingState.AsyncOperationResponseBody.Status;
+                }
+                else if (string.IsNullOrEmpty(validStatus))
+                {
+                    validStatus = CurrentPollingState.Response.StatusCode.ToString();
+                }
+            }
+
+            return validStatus;
+        }
+
+        /// <summary>
+        /// This function determines if you are running your polling under Azure-Async header or if the response status falls under terminal/failed status
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAzureAsyncOperationResponseStateValid()
+        {
+            if (CurrentPollingState?.AsyncOperationResponseBody != null && !string.IsNullOrEmpty(CurrentPollingState.AsyncOperationResponseBody?.Status))
+            {
+                if (AzureAsyncOperation.FailedStatuses.Any(
+                            s => s.Equals(CurrentPollingState.AsyncOperationResponseBody.Status, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return true;
+                }
+                else if (AzureAsyncOperation.TerminalStatuses.Any(s => s.Equals(CurrentPollingState.AsyncOperationResponseBody.Status, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return true;
+                }
+                else if(IsUriEqual(CurrentPollingState.PollingUrlToUse, CurrentPollingState.AzureAsyncOperationHeaderLink))
+                {   
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check URI for equality including differences in trailing slash and compare case insensitive 
+        /// </summary>
+        /// <param name="leftUrl">Url</param>
+        /// <param name="rightUrl">Url to compare against</param>
+        /// <returns></returns>
+        private bool IsUriEqual(string leftUrl, string rightUrl)
+        {
+            if (string.IsNullOrEmpty(leftUrl)) return false;
+            if (string.IsNullOrEmpty(rightUrl)) return false;
+
+            Uri left = new Uri(leftUrl);
+            Uri right = new Uri(rightUrl);
+
+            int result = Uri.Compare(left, right, UriComponents.Fragment, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase);
+            return (result == 0);
+        }
+
         #endregion
     }
 }
