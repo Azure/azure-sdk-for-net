@@ -126,6 +126,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
 
         /// <summary>
+        /// Gets the ILogAnalyticsOperations.
+        /// </summary>
+        ILogAnalyticsOperations LogAnalytics { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
