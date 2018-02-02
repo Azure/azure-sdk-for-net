@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Consumption
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -30,7 +28,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Budget> List(this IBudgetsOperations operations)
+            public static IPage<Budget> List(this IBudgetsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -45,7 +43,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Budget>> ListAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Budget>> ListAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -63,7 +61,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='resourceGroupName'>
             /// Azure Resource Group Name.
             /// </param>
-            public static IEnumerable<Budget> ListByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName)
+            public static IPage<Budget> ListByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupNameAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -81,7 +79,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Budget>> ListByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Budget>> ListByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -335,6 +333,78 @@ namespace Microsoft.Azure.Management.Consumption
             public static async Task DeleteByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all budgets for a subscription.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Budget> ListNext(this IBudgetsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all budgets for a subscription.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Budget>> ListNextAsync(this IBudgetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all budgets for a resource group under a subscription.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Budget> ListByResourceGroupNameNext(this IBudgetsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNameNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all budgets for a resource group under a subscription.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Budget>> ListByResourceGroupNameNextAsync(this IBudgetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

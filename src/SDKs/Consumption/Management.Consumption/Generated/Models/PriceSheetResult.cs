@@ -10,14 +10,18 @@
 
 namespace Microsoft.Azure.Management.Consumption.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// price sheet result. It contains the pricesheet associated with billing
-    /// period
+    /// An pricesheet resource.
     /// </summary>
-    public partial class PriceSheetResult
+    [Rest.Serialization.JsonTransformation]
+    public partial class PriceSheetResult : Resource
     {
         /// <summary>
         /// Initializes a new instance of the PriceSheetResult class.
@@ -30,12 +34,17 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the PriceSheetResult class.
         /// </summary>
-        /// <param name="value">Price sheet</param>
+        /// <param name="id">Resource Id.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="pricesheets">Price sheet</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public PriceSheetResult(object value = default(object), string nextLink = default(string))
+        public PriceSheetResult(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PriceSheetProperties> pricesheets = default(IList<PriceSheetProperties>), string nextLink = default(string))
+            : base(id, name, type, tags)
         {
-            Value = value;
+            Pricesheets = pricesheets;
             NextLink = nextLink;
             CustomInit();
         }
@@ -48,13 +57,13 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Gets price sheet
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public object Value { get; private set; }
+        [JsonProperty(PropertyName = "properties.pricesheets")]
+        public IList<PriceSheetProperties> Pricesheets { get; private set; }
 
         /// <summary>
         /// Gets the link (url) to the next page of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [JsonProperty(PropertyName = "properties.nextLink")]
         public string NextLink { get; private set; }
 
     }

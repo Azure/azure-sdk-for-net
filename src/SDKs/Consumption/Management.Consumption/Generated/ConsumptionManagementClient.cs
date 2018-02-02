@@ -106,9 +106,9 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IPricesheetOperations.
+        /// Gets the IPriceSheetOperations.
         /// </summary>
-        public virtual IPricesheetOperations Pricesheet { get; private set; }
+        public virtual IPriceSheetOperations PriceSheet { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ConsumptionManagementClient class.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Consumption
             ReservationsDetails = new ReservationsDetailsOperations(this);
             Budgets = new BudgetsOperations(this);
             Operations = new Operations(this);
-            Pricesheet = new PricesheetOperations(this);
+            PriceSheet = new PriceSheetOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-01-31";
             AcceptLanguage = "en-US";

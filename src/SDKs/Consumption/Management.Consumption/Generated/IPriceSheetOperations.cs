@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PricesheetOperations operations.
+    /// PriceSheetOperations operations.
     /// </summary>
-    public partial interface IPricesheetOperations
+    public partial interface IPriceSheetOperations
     {
         /// <summary>
         /// Gets the price sheet for a scope by subscriptionId. Price sheet is

@@ -10,34 +10,25 @@
 
 namespace Microsoft.Azure.Management.Consumption.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An pricesheet resource.
+    /// The properties of the price sheet.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class PriceSheetModel : Resource
+    public partial class PriceSheetProperties
     {
         /// <summary>
-        /// Initializes a new instance of the PriceSheetModel class.
+        /// Initializes a new instance of the PriceSheetProperties class.
         /// </summary>
-        public PriceSheetModel()
+        public PriceSheetProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PriceSheetModel class.
+        /// Initializes a new instance of the PriceSheetProperties class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
         /// <param name="billingPeriodId">The id of the billing period resource
         /// that the usage belongs to.</param>
         /// <param name="meterId">The meter id</param>
@@ -49,8 +40,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="partNumber">Part Number</param>
         /// <param name="unitPrice">Unit Price</param>
         /// <param name="currencyCode">Currency Code</param>
-        public PriceSheetModel(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), string meterId = default(string), MeterDetails meterDetails = default(MeterDetails), string unitOfMeasure = default(string), decimal? includedQuantity = default(decimal?), string partNumber = default(string), decimal? unitPrice = default(decimal?), string currencyCode = default(string))
-            : base(id, name, type, tags)
+        public PriceSheetProperties(string billingPeriodId = default(string), string meterId = default(string), MeterDetails meterDetails = default(MeterDetails), string unitOfMeasure = default(string), decimal? includedQuantity = default(decimal?), string partNumber = default(string), decimal? unitPrice = default(decimal?), string currencyCode = default(string))
         {
             BillingPeriodId = billingPeriodId;
             MeterId = meterId;
@@ -72,50 +62,50 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// Gets the id of the billing period resource that the usage belongs
         /// to.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingPeriodId")]
+        [JsonProperty(PropertyName = "billingPeriodId")]
         public string BillingPeriodId { get; private set; }
 
         /// <summary>
         /// Gets the meter id
         /// </summary>
-        [JsonProperty(PropertyName = "properties.meterId")]
+        [JsonProperty(PropertyName = "meterId")]
         public string MeterId { get; private set; }
 
         /// <summary>
         /// Gets the details about the meter. By default this is not populated,
         /// unless it's specified in $expand.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.meterDetails")]
+        [JsonProperty(PropertyName = "meterDetails")]
         public MeterDetails MeterDetails { get; private set; }
 
         /// <summary>
         /// Gets unit of measure
         /// </summary>
-        [JsonProperty(PropertyName = "properties.unitOfMeasure")]
+        [JsonProperty(PropertyName = "unitOfMeasure")]
         public string UnitOfMeasure { get; private set; }
 
         /// <summary>
         /// Gets included quality for an offer
         /// </summary>
-        [JsonProperty(PropertyName = "properties.includedQuantity")]
+        [JsonProperty(PropertyName = "includedQuantity")]
         public decimal? IncludedQuantity { get; private set; }
 
         /// <summary>
         /// Gets part Number
         /// </summary>
-        [JsonProperty(PropertyName = "properties.partNumber")]
+        [JsonProperty(PropertyName = "partNumber")]
         public string PartNumber { get; private set; }
 
         /// <summary>
         /// Gets unit Price
         /// </summary>
-        [JsonProperty(PropertyName = "properties.unitPrice")]
+        [JsonProperty(PropertyName = "unitPrice")]
         public decimal? UnitPrice { get; private set; }
 
         /// <summary>
         /// Gets currency Code
         /// </summary>
-        [JsonProperty(PropertyName = "properties.currencyCode")]
+        [JsonProperty(PropertyName = "currencyCode")]
         public string CurrencyCode { get; private set; }
 
     }

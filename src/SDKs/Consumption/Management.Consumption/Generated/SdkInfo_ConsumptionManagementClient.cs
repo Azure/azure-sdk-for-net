@@ -19,7 +19,7 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("Consumption", "Budgets", "2018-01-31"),
                 new Tuple<string, string, string>("Consumption", "Marketplaces", "2018-01-31"),
                 new Tuple<string, string, string>("Consumption", "Operations", "2018-01-31"),
-                new Tuple<string, string, string>("Consumption", "Pricesheet", "2018-01-31"),
+                new Tuple<string, string, string>("Consumption", "PriceSheet", "2018-01-31"),
                 new Tuple<string, string, string>("Consumption", "UsageDetails", "2018-01-31"),
             }.AsEnumerable();
         }

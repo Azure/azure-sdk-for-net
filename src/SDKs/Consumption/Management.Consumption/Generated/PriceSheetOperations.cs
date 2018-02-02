@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PricesheetOperations operations.
+    /// PriceSheetOperations operations.
     /// </summary>
-    internal partial class PricesheetOperations : IServiceOperations<ConsumptionManagementClient>, IPricesheetOperations
+    internal partial class PriceSheetOperations : IServiceOperations<ConsumptionManagementClient>, IPriceSheetOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PricesheetOperations class.
+        /// Initializes a new instance of the PriceSheetOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PricesheetOperations(ConsumptionManagementClient client)
+        internal PriceSheetOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {

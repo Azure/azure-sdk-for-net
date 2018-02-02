@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.Consumption
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IPricesheetOperations.
+        /// Gets the IPriceSheetOperations.
         /// </summary>
-        IPricesheetOperations Pricesheet { get; }
+        IPriceSheetOperations PriceSheet { get; }
 
     }
 }

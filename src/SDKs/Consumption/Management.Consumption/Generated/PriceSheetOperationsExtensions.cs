@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PricesheetOperations.
+    /// Extension methods for PriceSheetOperations.
     /// </summary>
-    public static partial class PricesheetOperationsExtensions
+    public static partial class PriceSheetOperationsExtensions
     {
             /// <summary>
             /// Gets the price sheet for a scope by subscriptionId. Price sheet is
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static PriceSheetResult Get(this IPricesheetOperations operations, string expand = default(string), string skiptoken = default(string))
+            public static PriceSheetResult Get(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string))
             {
                 return operations.GetAsync(expand, skiptoken).GetAwaiter().GetResult();
             }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PriceSheetResult> GetAsync(this IPricesheetOperations operations, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PriceSheetResult> GetAsync(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static PriceSheetResult GetByBillingPeriod(this IPricesheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string))
+            public static PriceSheetResult GetByBillingPeriod(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string))
             {
                 return operations.GetByBillingPeriodAsync(billingPeriodName, expand, skiptoken).GetAwaiter().GetResult();
             }
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PriceSheetResult> GetByBillingPeriodAsync(this IPricesheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PriceSheetResult> GetByBillingPeriodAsync(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetByBillingPeriodWithHttpMessagesAsync(billingPeriodName, expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
