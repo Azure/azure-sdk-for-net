@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -11,10 +15,6 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 using CM = Microsoft.Azure.Management.Compute.Models;
 
@@ -36,6 +36,22 @@ namespace Compute.Tests
             };
 
             return vmExtension;
+        }
+
+        protected VirtualMachineScaleSetExtension GetVmssServiceFabricExtension()
+        {
+            VirtualMachineScaleSetExtension sfExtension = new VirtualMachineScaleSetExtension
+            {
+                Name = "vmsssfext01",
+                Publisher = "Microsoft.Azure.ServiceFabric",
+                Type = "ServiceFabricNode",
+                TypeHandlerVersion = "1.0",
+                AutoUpgradeMinorVersion = true,
+                Settings = "{}",
+                ProtectedSettings = "{}"
+            };
+
+            return sfExtension;
         }
 
         protected VirtualMachineScaleSetExtension GetAzureDiskEncryptionExtension()

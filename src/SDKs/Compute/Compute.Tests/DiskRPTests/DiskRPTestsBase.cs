@@ -367,7 +367,7 @@ namespace Compute.Tests.DiskRPTests
             var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
             // Create the VM, whose OS disk will be used in creating the image
-            var createdVM = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
+            var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM);
             var listResponse = m_CrpClient.VirtualMachines.ListAll();
             Assert.True(listResponse.Count() >= 1);
             string[] id = createdVM.Id.Split('/');

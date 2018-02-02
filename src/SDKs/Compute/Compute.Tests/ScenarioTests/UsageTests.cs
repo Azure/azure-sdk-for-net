@@ -44,7 +44,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
                     // List Usages, and do weak validation to assure that some usages were returned.
                     var luResponse = m_CrpClient.Usage.List(vm1.Location);

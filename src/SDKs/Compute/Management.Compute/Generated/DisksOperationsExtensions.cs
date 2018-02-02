@@ -31,7 +31,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Put disk operation.
@@ -51,7 +53,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Put disk operation.
@@ -77,7 +81,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Patch disk operation.
@@ -97,7 +103,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Patch disk operation.
@@ -123,7 +131,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             public static Disk Get(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
@@ -140,7 +150,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -163,7 +175,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             public static OperationStatusResponse Delete(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
@@ -180,7 +194,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -265,7 +281,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get disk access operation.
@@ -285,7 +303,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get disk access operation.
@@ -311,7 +331,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             public static OperationStatusResponse RevokeAccess(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
@@ -328,7 +350,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -351,7 +375,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Put disk operation.
@@ -371,7 +397,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Put disk operation.
@@ -397,7 +425,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Patch disk operation.
@@ -417,7 +447,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='disk'>
             /// Disk object supplied in the body of the Patch disk operation.
@@ -443,7 +475,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             public static OperationStatusResponse BeginDelete(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
@@ -460,7 +494,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -483,7 +519,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get disk access operation.
@@ -503,7 +541,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get disk access operation.
@@ -529,7 +569,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             public static OperationStatusResponse BeginRevokeAccess(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
@@ -546,7 +588,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='diskName'>
-            /// The name of the disk within the given subscription and resource group.
+            /// The name of the managed disk that is being created. The name can't be
+            /// changed after the disk is created. Supported characters for the name are
+            /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

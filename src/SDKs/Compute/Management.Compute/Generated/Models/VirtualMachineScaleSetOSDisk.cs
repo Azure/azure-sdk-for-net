@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
         /// storage. ReadOnly for Premium storage**. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="writeAcceleratorEnabled">Specifies whether
+        /// writeAccelerator should be enabled or disabled on the disk.</param>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk if creating a VM from
         /// user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible
@@ -58,10 +60,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vhdContainers">Specifies the container urls that are
         /// used to store operating system disks for the scale set.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
+        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
         {
             Name = name;
             Caching = caching;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
             CreateOption = createOption;
             OsType = osType;
             Image = image;
@@ -93,6 +96,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether writeAccelerator should be enabled
+        /// or disabled on the disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
+        public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets specifies how the virtual machines in the scale set
