@@ -17,7 +17,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// Initializes a new instance of the RestException class.
         /// </summary>
-        public RestException()
+        public RestException() : base()
         {
         }
 
