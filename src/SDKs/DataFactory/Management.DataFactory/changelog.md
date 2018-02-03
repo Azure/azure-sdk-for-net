@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.X.X-preview [Next Release]
+
+### Feature Additions
+  * Support integration runtime sharing across subscription and data factory
+
 ## Version 0.4.0-preview
 
 ### Feature Additions
