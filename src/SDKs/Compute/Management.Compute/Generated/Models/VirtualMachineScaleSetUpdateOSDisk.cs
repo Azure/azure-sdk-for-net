@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="caching">The caching type. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="writeAcceleratorEnabled">Specifies whether
+        /// writeAccelerator should be enabled or disabled on the disk.</param>
         /// <param name="image">The Source User Image VirtualHardDisk. This
         /// VirtualHardDisk will be copied before using it to attach to the
         /// Virtual Machine. If SourceImage is provided, the destination
@@ -43,9 +45,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vhdContainers">The list of virtual hard disk container
         /// uris.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public VirtualMachineScaleSetUpdateOSDisk(CachingTypes? caching = default(CachingTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
+        public VirtualMachineScaleSetUpdateOSDisk(CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
         {
             Caching = caching;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
             Image = image;
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
@@ -63,6 +66,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether writeAccelerator should be enabled
+        /// or disabled on the disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
+        public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the Source User Image VirtualHardDisk. This
