@@ -16,22 +16,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// SAS token information.
     /// </summary>
-    public partial class SasTokenInfo
+    public partial class SasTokenInformation
     {
         /// <summary>
-        /// Initializes a new instance of the SasTokenInfo class.
+        /// Initializes a new instance of the SasTokenInformation class.
         /// </summary>
-        public SasTokenInfo()
+        public SasTokenInformation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SasTokenInfo class.
+        /// Initializes a new instance of the SasTokenInformation class.
         /// </summary>
         /// <param name="accessToken">The access token for the associated Azure
         /// Storage Container.</param>
-        public SasTokenInfo(string accessToken = default(string))
+        public SasTokenInformation(string accessToken = default(string))
         {
             AccessToken = accessToken;
             CustomInit();

@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
         /// <param name="startIpAddress">The start IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>

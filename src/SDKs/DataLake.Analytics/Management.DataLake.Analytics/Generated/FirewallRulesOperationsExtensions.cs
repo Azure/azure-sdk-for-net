@@ -22,29 +22,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     public static partial class FirewallRulesOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates the specified firewall rule. During update, the firewall
-            /// rule with the specified name will be replaced with this new firewall rule.
+            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+            /// Analytics account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account to add or replace the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to create or update.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update the firewall rule.
-            /// </param>
-            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters)
+            public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
+                return operations.ListByAccountAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
+            /// Analytics account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FirewallRule>> ListByAccountAsync(this IFirewallRulesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -54,13 +58,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to create or update.
             /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account to add or replace the firewall
-            /// rule.
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update the firewall rule.
+            /// </param>
+            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters)
+            {
+                return operations.CreateOrUpdateAsync(firewallRuleName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates the specified firewall rule. During update, the firewall
+            /// rule with the specified name will be replaced with this new firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to create or update.
@@ -71,9 +85,43 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the specified Data Lake Analytics firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to retrieve.
+            /// </param>
+            public static FirewallRule Get(this IFirewallRulesOperations operations, string firewallRuleName)
+            {
+                return operations.GetAsync(firewallRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified Data Lake Analytics firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to retrieve.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(firewallRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,23 +133,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account to which to update the firewall
-            /// rule.
-            /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to update the firewall rule.
             /// </param>
-            public static FirewallRule Update(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters))
+            public static FirewallRule Update(this IFirewallRulesOperations operations, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters))
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(firewallRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,14 +149,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account to which to update the firewall
-            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to update.
@@ -127,9 +159,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> UpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FirewallRule> UpdateAsync(this IFirewallRulesOperations operations, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -142,20 +174,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account from which to delete the
-            /// firewall rule.
-            /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to delete.
             /// </param>
-            public static void Delete(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
+            public static void Delete(this IFirewallRulesOperations operations, string firewallRuleName)
             {
-                operations.DeleteAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
+                operations.DeleteAsync(firewallRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -165,119 +189,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account from which to delete the
-            /// firewall rule.
-            /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IFirewallRulesOperations operations, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Analytics firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account from which to get the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
-            /// </param>
-            public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
-            {
-                return operations.GetAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Analytics firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account from which to get the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
-            /// Analytics account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account from which to get the firewall
-            /// rules.
-            /// </param>
-            public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Analytics firewall rules within the specified Data Lake
-            /// Analytics account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Analytics
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Analytics account from which to get the firewall
-            /// rules.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> ListByAccountAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

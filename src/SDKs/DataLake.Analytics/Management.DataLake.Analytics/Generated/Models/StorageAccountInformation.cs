@@ -16,28 +16,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store account information.
+    /// Azure Storage account information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataLakeStoreAccountInfo : SubResource
+    public partial class StorageAccountInformation : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the StorageAccountInformation class.
         /// </summary>
-        public DataLakeStoreAccountInfo()
+        public StorageAccountInformation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the StorageAccountInformation class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="suffix">The optional suffix for the Data Lake Store
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
+        /// <param name="suffix">The optional suffix for the storage
         /// account.</param>
-        public DataLakeStoreAccountInfo(string id = default(string), string name = default(string), string type = default(string), string suffix = default(string))
+        public StorageAccountInformation(string id = default(string), string name = default(string), string type = default(string), string suffix = default(string))
             : base(id, name, type)
         {
             Suffix = suffix;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the optional suffix for the Data Lake Store account.
+        /// Gets the optional suffix for the storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.suffix")]
         public string Suffix { get; private set; }

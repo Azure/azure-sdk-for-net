@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the ComputePolicy class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
         /// <param name="objectId">The AAD object identifier for the entity to
         /// create a policy for.</param>
         /// <param name="objectType">The type of AAD object the object

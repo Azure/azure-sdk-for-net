@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the display information for the operation.
+        /// Gets the display information for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        public OperationDisplay Display { get; private set; }
 
         /// <summary>
         /// Gets the intended executor of the operation. Possible values

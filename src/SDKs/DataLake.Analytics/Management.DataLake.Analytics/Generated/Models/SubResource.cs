@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The Resource model definition for a nested resource.
+    /// The resource model definition for a nested resource.
     /// </summary>
     public partial class SubResource : IResource
     {
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the SubResource class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
         public SubResource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
@@ -48,19 +48,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets the resource identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets the resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets the resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

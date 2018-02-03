@@ -48,6 +48,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The name of the Azure resource group.
+        /// </summary>
+        string ResourceGroupName { get; set; }
+
+        /// <summary>
+        /// The name of the Data Lake Analytics account.
+        /// </summary>
+        string AccountName { get; set; }
+
+        /// <summary>
         /// Client Api Version.
         /// </summary>
         string ApiVersion { get; }
@@ -71,6 +81,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
 
         /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        IAccountsOperations Accounts { get; }
+
+        /// <summary>
+        /// Gets the IDataLakeStoreAccountsOperations.
+        /// </summary>
+        IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; }
+
+        /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        IStorageAccountsOperations StorageAccounts { get; }
+
+        /// <summary>
         /// Gets the IComputePoliciesOperations.
         /// </summary>
         IComputePoliciesOperations ComputePolicies { get; }
@@ -81,29 +106,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
-        /// Gets the IStorageAccountsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IStorageAccountsOperations StorageAccounts { get; }
-
-        /// <summary>
-        /// Gets the IDataLakeStoreAccountsOperations.
-        /// </summary>
-        IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; }
-
-        /// <summary>
-        /// Gets the IAccountOperations.
-        /// </summary>
-        IAccountOperations Account { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
 
     }
 }

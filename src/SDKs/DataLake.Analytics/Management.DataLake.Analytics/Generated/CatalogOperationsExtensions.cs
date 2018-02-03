@@ -80,6 +80,58 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Gets the specified secret in the specified database. This is deprecated and
+            /// will be removed in the next release. Please use GetCredential instead.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the secret.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret to get
+            /// </param>
+            [System.Obsolete()]
+            public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
+            {
+                return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified secret in the specified database. This is deprecated and
+            /// will be removed in the next release. Please use GetCredential instead.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the secret.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret to get
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            [System.Obsolete()]
+            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Modifies the specified secret for use with external data sources in the
             /// specified database. This is deprecated and will be removed in the next
             /// release. Please use UpdateCredential instead.
@@ -188,58 +240,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
-            /// Gets the specified secret in the specified database. This is deprecated and
-            /// will be removed in the next release. Please use GetCredential instead.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the secret.
-            /// </param>
-            /// <param name='secretName'>
-            /// The name of the secret to get
-            /// </param>
-            [System.Obsolete()]
-            public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
-            {
-                return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified secret in the specified database. This is deprecated and
-            /// will be removed in the next release. Please use GetCredential instead.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the secret.
-            /// </param>
-            /// <param name='secretName'>
-            /// The name of the secret to get
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            [System.Obsolete()]
-            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes all secrets in the specified database. This is deprecated and will
             /// be removed in the next release. In the future, please only drop individual
             /// credentials using DeleteCredential
@@ -339,6 +339,54 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task CreateCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CreateCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieves the specified credential from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
+            /// </param>
+            /// <param name='credentialName'>
+            /// The name of the credential.
+            /// </param>
+            public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
+            {
+                return operations.GetCredentialAsync(accountName, databaseName, credentialName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the specified credential from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
+            /// </param>
+            /// <param name='credentialName'>
+            /// The name of the credential.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -455,54 +503,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task DeleteCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, parameters, cascade, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieves the specified credential from the Data Lake Analytics catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
-            /// <param name='credentialName'>
-            /// The name of the credential.
-            /// </param>
-            public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
-            {
-                return operations.GetCredentialAsync(accountName, databaseName, credentialName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves the specified credential from the Data Lake Analytics catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
-            /// <param name='credentialName'>
-            /// The name of the credential.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>
