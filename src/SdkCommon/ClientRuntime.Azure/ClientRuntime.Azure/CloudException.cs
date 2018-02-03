@@ -55,5 +55,10 @@ namespace Microsoft.Rest.Azure
         public CloudException(string message, Exception innerException) : base(message, innerException)
         {
         }
+
+        /// <summary>
+        /// Gets information about the HTTP status code returned.
+        /// </summary>
+        public int HttpStatusCode { get; set; }
     }
 }

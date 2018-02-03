@@ -872,7 +872,10 @@ namespace Microsoft.Rest.Azure
                 }
                 else
                 {
-                    throw new CloudException("The response from long running operation does not have a valid status code.");
+                    throw new CloudException("The response from long running operation does not have a valid status code.")
+                    {
+                        HttpStatusCode = (int)statusCode
+                    };
                 }
             }
             else

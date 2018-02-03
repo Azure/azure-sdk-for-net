@@ -13,7 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     using Xunit;
     using Microsoft.Azure;
     using Microsoft.Rest.Azure;
-    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOpertionTestResponses;
+    using LROResponse = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationTestResponses;
     using LROPatchResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationPatchTestResponses;
     using LROFailedResponses = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationFailedTestResponses;
     using LROMultipleHeaders = Microsoft.Rest.ClientRuntime.Azure.Tests.LROOperationMultipleHeaderResponses;

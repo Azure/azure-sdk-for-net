@@ -233,7 +233,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 {
                     Body = errorBody,
                     Request = new HttpRequestMessageWrapper(httpRequest, null),
-                    Response = new HttpResponseMessageWrapper(httpResponse, responseContent)
+                    Response = new HttpResponseMessageWrapper(httpResponse, responseContent),
+                    HttpStatusCode = (int)statusCode
                 };
             }
 
