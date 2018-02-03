@@ -31,7 +31,6 @@ namespace Compute.Tests
                 Assert.True(skus.Any(sku => sku.LocationInfo != null), "Assert that the sku list has non null location info in it.");
                 Assert.True(skus.All(sku => sku.LocationInfo.Count == 1), "There should be exactly one location info per entry.");
                 Assert.True(skus.Any(sku => sku.LocationInfo[0].Location.Equals("westus", StringComparison.Ordinal)), "Assert that it has entry for one of the CRP regions (randomly picked).");
-                Assert.True(skus.Any(sku => sku.Restrictions != null && sku.Restrictions[0].RestrictionInfo != null), "Assert that it has entry for some restriction and restriction info.");
             }
         }
     }
