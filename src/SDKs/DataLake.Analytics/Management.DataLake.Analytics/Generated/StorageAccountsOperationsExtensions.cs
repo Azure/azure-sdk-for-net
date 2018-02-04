@@ -30,6 +30,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
@@ -42,9 +48,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<StorageAccountInformation> ListByAccount(this IStorageAccountsOperations operations, ODataQuery<StorageAccountInformation> odataQuery = default(ODataQuery<StorageAccountInformation>), string select = default(string), bool? count = default(bool?))
+            public static IPage<StorageAccountInformation> ListByAccount(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccountInformation> odataQuery = default(ODataQuery<StorageAccountInformation>), string select = default(string), bool? count = default(bool?))
             {
-                return operations.ListByAccountAsync(odataQuery, select, count).GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,6 +61,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
@@ -70,9 +82,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageAccountInformation>> ListByAccountAsync(this IStorageAccountsOperations operations, ODataQuery<StorageAccountInformation> odataQuery = default(ODataQuery<StorageAccountInformation>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageAccountInformation>> ListByAccountAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccountInformation> odataQuery = default(ODataQuery<StorageAccountInformation>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,6 +97,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure Storage account to add
             /// </param>
@@ -92,9 +110,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the access key and optional suffix for the Azure
             /// Storage Account.
             /// </param>
-            public static void Add(this IStorageAccountsOperations operations, string storageAccountName, AddStorageAccountParameters parameters)
+            public static void Add(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters)
             {
-                operations.AddAsync(storageAccountName, parameters).GetAwaiter().GetResult();
+                operations.AddAsync(resourceGroupName, accountName, storageAccountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,6 +122,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure Storage account to add
             /// </param>
@@ -114,9 +138,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddAsync(this IStorageAccountsOperations operations, string storageAccountName, AddStorageAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AddWithHttpMessagesAsync(storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.AddWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -125,13 +149,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure Storage account for which to retrieve the details.
             /// </param>
-            public static StorageAccountInformation Get(this IStorageAccountsOperations operations, string storageAccountName)
+            public static StorageAccountInformation Get(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
-                return operations.GetAsync(storageAccountName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, storageAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,6 +170,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure Storage account for which to retrieve the details.
@@ -147,9 +183,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccountInformation> GetAsync(this IStorageAccountsOperations operations, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccountInformation> GetAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(storageAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -162,6 +198,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The Azure Storage account to modify
             /// </param>
@@ -169,9 +211,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The parameters containing the access key and suffix to update the storage
             /// account with, if any. Passing nothing results in no change.
             /// </param>
-            public static void Update(this IStorageAccountsOperations operations, string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters))
+            public static void Update(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters))
             {
-                operations.UpdateAsync(storageAccountName, parameters).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, accountName, storageAccountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -181,6 +223,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The Azure Storage account to modify
             /// </param>
@@ -191,9 +239,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IStorageAccountsOperations operations, string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -202,13 +250,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure Storage account to remove
             /// </param>
-            public static void Delete(this IStorageAccountsOperations operations, string storageAccountName)
+            public static void Delete(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
-                operations.DeleteAsync(storageAccountName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, storageAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -217,6 +271,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure Storage account to remove
@@ -224,9 +284,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IStorageAccountsOperations operations, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(storageAccountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -237,12 +297,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account from which to list blob containers.
             /// </param>
-            public static IPage<StorageContainer> ListStorageContainers(this IStorageAccountsOperations operations, string storageAccountName)
+            public static IPage<StorageContainer> ListStorageContainers(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
             {
-                return operations.ListStorageContainersAsync(storageAccountName).GetAwaiter().GetResult();
+                return operations.ListStorageContainersAsync(resourceGroupName, accountName, storageAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -253,15 +319,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account from which to list blob containers.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageContainer>> ListStorageContainersAsync(this IStorageAccountsOperations operations, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageContainer>> ListStorageContainersAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListStorageContainersWithHttpMessagesAsync(storageAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListStorageContainersWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -274,6 +346,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account from which to retrieve the blob
             /// container.
@@ -281,9 +359,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='containerName'>
             /// The name of the Azure storage container to retrieve
             /// </param>
-            public static StorageContainer GetStorageContainer(this IStorageAccountsOperations operations, string storageAccountName, string containerName)
+            public static StorageContainer GetStorageContainer(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
             {
-                return operations.GetStorageContainerAsync(storageAccountName, containerName).GetAwaiter().GetResult();
+                return operations.GetStorageContainerAsync(resourceGroupName, accountName, storageAccountName, containerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -292,6 +370,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account from which to retrieve the blob
@@ -303,9 +387,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageContainer> GetStorageContainerAsync(this IStorageAccountsOperations operations, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageContainer> GetStorageContainerAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetStorageContainerWithHttpMessagesAsync(storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStorageContainerWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -318,6 +402,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account for which the SAS token is being
             /// requested.
@@ -326,9 +416,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The name of the Azure storage container for which the SAS token is being
             /// requested.
             /// </param>
-            public static IPage<SasTokenInformation> ListSasTokens(this IStorageAccountsOperations operations, string storageAccountName, string containerName)
+            public static IPage<SasTokenInformation> ListSasTokens(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
             {
-                return operations.ListSasTokensAsync(storageAccountName, containerName).GetAwaiter().GetResult();
+                return operations.ListSasTokensAsync(resourceGroupName, accountName, storageAccountName, containerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -337,6 +427,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='storageAccountName'>
             /// The name of the Azure storage account for which the SAS token is being
@@ -349,9 +445,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SasTokenInformation>> ListSasTokensAsync(this IStorageAccountsOperations operations, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SasTokenInformation>> ListSasTokensAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSasTokensWithHttpMessagesAsync(storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSasTokensWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

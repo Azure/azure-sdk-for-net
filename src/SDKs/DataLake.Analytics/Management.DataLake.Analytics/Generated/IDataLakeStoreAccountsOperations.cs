@@ -29,6 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// specified Data Lake Analytics account. The response includes a link
         /// to the next page, if any.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
@@ -57,11 +63,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DataLakeStoreAccountInformation>>> ListByAccountWithHttpMessagesAsync(ODataQuery<DataLakeStoreAccountInformation> odataQuery = default(ODataQuery<DataLakeStoreAccountInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DataLakeStoreAccountInformation>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccountInformation> odataQuery = default(ODataQuery<DataLakeStoreAccountInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the specified Data Lake Analytics account to include the
         /// additional Data Lake Store account.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='dataLakeStoreAccountName'>
         /// The name of the Data Lake Store account to add.
         /// </param>
@@ -80,11 +92,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> AddWithHttpMessagesAsync(string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> AddWithHttpMessagesAsync(string resourceGroupName, string accountName, string dataLakeStoreAccountName, AddDataLakeStoreParameters parameters = default(AddDataLakeStoreParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the specified Data Lake Store account details in the specified
         /// Data Lake Analytics account.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='dataLakeStoreAccountName'>
         /// The name of the Data Lake Store account to retrieve
         /// </param>
@@ -103,11 +121,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataLakeStoreAccountInformation>> GetWithHttpMessagesAsync(string dataLakeStoreAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DataLakeStoreAccountInformation>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string dataLakeStoreAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the Data Lake Analytics account specified to remove the
         /// specified Data Lake Store account.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='dataLakeStoreAccountName'>
         /// The name of the Data Lake Store account to remove
         /// </param>
@@ -123,7 +147,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string dataLakeStoreAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string dataLakeStoreAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of Data Lake Store accounts linked to the
         /// specified Data Lake Analytics account. The response includes a link

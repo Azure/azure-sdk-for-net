@@ -83,6 +83,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
@@ -95,9 +98,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<DataLakeAnalyticsAccountBasic> ListByResourceGroup(this IAccountsOperations operations, ODataQuery<DataLakeAnalyticsAccountBasic> odataQuery = default(ODataQuery<DataLakeAnalyticsAccountBasic>), string select = default(string), bool? count = default(bool?))
+            public static IPage<DataLakeAnalyticsAccountBasic> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccountBasic> odataQuery = default(ODataQuery<DataLakeAnalyticsAccountBasic>), string select = default(string), bool? count = default(bool?))
             {
-                return operations.ListByResourceGroupAsync(odataQuery, select, count).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,6 +110,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
@@ -122,9 +128,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataLakeAnalyticsAccountBasic>> ListByResourceGroupAsync(this IAccountsOperations operations, ODataQuery<DataLakeAnalyticsAccountBasic> odataQuery = default(ODataQuery<DataLakeAnalyticsAccountBasic>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataLakeAnalyticsAccountBasic>> ListByResourceGroupAsync(this IAccountsOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccountBasic> odataQuery = default(ODataQuery<DataLakeAnalyticsAccountBasic>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -137,12 +143,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create a new Data Lake Analytics account.
             /// </param>
-            public static DataLakeAnalyticsAccount Create(this IAccountsOperations operations, CreateDataLakeAnalyticsAccountParameters parameters)
+            public static DataLakeAnalyticsAccount Create(this IAccountsOperations operations, string resourceGroupName, string accountName, CreateDataLakeAnalyticsAccountParameters parameters)
             {
-                return operations.CreateAsync(parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -152,15 +164,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create a new Data Lake Analytics account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> CreateAsync(this IAccountsOperations operations, CreateDataLakeAnalyticsAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> CreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CreateDataLakeAnalyticsAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -172,9 +190,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static DataLakeAnalyticsAccount Get(this IAccountsOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
+            public static DataLakeAnalyticsAccount Get(this IAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.GetAsync().GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,12 +207,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> GetAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> GetAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -201,12 +231,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
-            public static DataLakeAnalyticsAccount Update(this IAccountsOperations operations, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters))
+            public static DataLakeAnalyticsAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters))
             {
-                return operations.UpdateAsync(parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -216,15 +252,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> UpdateAsync(this IAccountsOperations operations, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -237,9 +279,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Delete(this IAccountsOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
+            public static void Delete(this IAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                operations.DeleteAsync().GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -249,12 +297,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -306,12 +360,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create a new Data Lake Analytics account.
             /// </param>
-            public static DataLakeAnalyticsAccount BeginCreate(this IAccountsOperations operations, CreateDataLakeAnalyticsAccountParameters parameters)
+            public static DataLakeAnalyticsAccount BeginCreate(this IAccountsOperations operations, string resourceGroupName, string accountName, CreateDataLakeAnalyticsAccountParameters parameters)
             {
-                return operations.BeginCreateAsync(parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,15 +381,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create a new Data Lake Analytics account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> BeginCreateAsync(this IAccountsOperations operations, CreateDataLakeAnalyticsAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> BeginCreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CreateDataLakeAnalyticsAccountParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -342,12 +408,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
-            public static DataLakeAnalyticsAccount BeginUpdate(this IAccountsOperations operations, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters))
+            public static DataLakeAnalyticsAccount BeginUpdate(this IAccountsOperations operations, string resourceGroupName, string accountName, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters))
             {
-                return operations.BeginUpdateAsync(parameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -357,15 +429,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update Data Lake Analytics account operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataLakeAnalyticsAccount> BeginUpdateAsync(this IAccountsOperations operations, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataLakeAnalyticsAccount> BeginUpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, UpdateDataLakeAnalyticsAccountParameters parameters = default(UpdateDataLakeAnalyticsAccountParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -378,9 +456,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void BeginDelete(this IAccountsOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
+            public static void BeginDelete(this IAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                operations.BeginDeleteAsync().GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -390,12 +474,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

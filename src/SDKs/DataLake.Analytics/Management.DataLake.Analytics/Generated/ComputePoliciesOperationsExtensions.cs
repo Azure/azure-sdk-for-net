@@ -28,9 +28,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ComputePolicy> ListByAccount(this IComputePoliciesOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
+            public static IPage<ComputePolicy> ListByAccount(this IComputePoliciesOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.ListByAccountAsync().GetAwaiter().GetResult();
+                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -40,12 +46,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ComputePolicy>> ListByAccountAsync(this IComputePoliciesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ComputePolicy>> ListByAccountAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -59,6 +71,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to create or update.
             /// </param>
@@ -67,9 +85,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// of parallelism per job property, min priority per job property, or both
             /// must be present.
             /// </param>
-            public static ComputePolicy CreateOrUpdate(this IComputePoliciesOperations operations, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters)
+            public static ComputePolicy CreateOrUpdate(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(computePolicyName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, computePolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -80,6 +98,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to create or update.
             /// </param>
@@ -91,9 +115,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputePolicy> CreateOrUpdateAsync(this IComputePoliciesOperations operations, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ComputePolicy> CreateOrUpdateAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, CreateOrUpdateComputePolicyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(computePolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, computePolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -105,12 +129,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to retrieve.
             /// </param>
-            public static ComputePolicy Get(this IComputePoliciesOperations operations, string computePolicyName)
+            public static ComputePolicy Get(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName)
             {
-                return operations.GetAsync(computePolicyName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, computePolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -119,15 +149,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputePolicy> GetAsync(this IComputePoliciesOperations operations, string computePolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ComputePolicy> GetAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(computePolicyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, computePolicyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -139,15 +175,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to update the compute policy.
             /// </param>
-            public static ComputePolicy Update(this IComputePoliciesOperations operations, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters))
+            public static ComputePolicy Update(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters))
             {
-                return operations.UpdateAsync(computePolicyName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, computePolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -155,6 +197,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
             /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to update.
@@ -165,9 +213,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComputePolicy> UpdateAsync(this IComputePoliciesOperations operations, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ComputePolicy> UpdateAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, UpdateComputePolicyParameters parameters = default(UpdateComputePolicyParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(computePolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, computePolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -180,12 +228,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to delete.
             /// </param>
-            public static void Delete(this IComputePoliciesOperations operations, string computePolicyName)
+            public static void Delete(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName)
             {
-                operations.DeleteAsync(computePolicyName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, computePolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -195,15 +249,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Analytics account.
+            /// </param>
             /// <param name='computePolicyName'>
             /// The name of the compute policy to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IComputePoliciesOperations operations, string computePolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IComputePoliciesOperations operations, string resourceGroupName, string accountName, string computePolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(computePolicyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, computePolicyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -48,16 +48,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The name of the Azure resource group.
-        /// </summary>
-        string ResourceGroupName { get; set; }
-
-        /// <summary>
-        /// The name of the Data Lake Analytics account.
-        /// </summary>
-        string AccountName { get; set; }
-
-        /// <summary>
         /// Client Api Version.
         /// </summary>
         string ApiVersion { get; }

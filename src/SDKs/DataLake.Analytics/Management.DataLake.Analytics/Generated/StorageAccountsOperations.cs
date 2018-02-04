@@ -56,6 +56,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// specified Data Lake Analytics account. The response includes a link to the
         /// next page, if any.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
@@ -89,19 +95,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<StorageAccountInformation>>> ListByAccountWithHttpMessagesAsync(ODataQuery<StorageAccountInformation> odataQuery = default(ODataQuery<StorageAccountInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<StorageAccountInformation>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<StorageAccountInformation> odataQuery = default(ODataQuery<StorageAccountInformation>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (Client.ApiVersion == null)
             {
@@ -115,6 +121,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("select", select);
                 tracingParameters.Add("count", count);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -124,8 +132,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -276,6 +284,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Updates the specified Data Lake Analytics account to add an Azure Storage
         /// account.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure Storage account to add
         /// </param>
@@ -301,19 +315,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> AddWithHttpMessagesAsync(string storageAccountName, AddStorageAccountParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AddWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, AddStorageAccountParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -338,6 +352,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -347,8 +363,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -472,6 +488,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Gets the specified Azure Storage account linked to the given Data Lake
         /// Analytics account.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure Storage account for which to retrieve the details.
         /// </param>
@@ -496,19 +518,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageAccountInformation>> GetWithHttpMessagesAsync(string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountInformation>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -525,6 +547,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -533,8 +557,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -670,6 +694,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Updates the Data Lake Analytics account to replace Azure Storage blob
         /// account details, such as the access key and/or suffix.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The Azure Storage account to modify
         /// </param>
@@ -695,19 +725,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, UpdateStorageAccountParameters parameters = default(UpdateStorageAccountParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -724,6 +754,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -733,8 +765,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -858,6 +890,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Updates the specified Data Lake Analytics account to remove an Azure
         /// Storage account.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure Storage account to remove
         /// </param>
@@ -879,19 +917,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -908,6 +946,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
@@ -916,8 +956,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1036,6 +1076,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Data Lake Analytics and Azure Storage account combination. The response
         /// includes a link to the next page of results, if any.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure storage account from which to list blob containers.
         /// </param>
@@ -1060,19 +1106,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<StorageContainer>>> ListStorageContainersWithHttpMessagesAsync(string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<StorageContainer>>> ListStorageContainersWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -1089,6 +1135,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListStorageContainers", tracingParameters);
@@ -1097,8 +1145,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}/containers").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1234,6 +1282,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Gets the specified Azure Storage container associated with the given Data
         /// Lake Analytics and Azure Storage accounts.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure storage account from which to retrieve the blob
         /// container.
@@ -1262,19 +1316,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageContainer>> GetStorageContainerWithHttpMessagesAsync(string storageAccountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageContainer>> GetStorageContainerWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -1295,6 +1349,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1304,8 +1360,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}/containers/{containerName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             _url = _url.Replace("{containerName}", System.Uri.EscapeDataString(containerName));
             List<string> _queryParameters = new List<string>();
@@ -1442,6 +1498,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Gets the SAS token associated with the specified Data Lake Analytics and
         /// Azure Storage account and container combination.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure storage account for which the SAS token is being
         /// requested.
@@ -1471,19 +1533,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SasTokenInformation>>> ListSasTokensWithHttpMessagesAsync(string storageAccountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SasTokenInformation>>> ListSasTokensWithHttpMessagesAsync(string resourceGroupName, string accountName, string storageAccountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.AccountName == null)
+            if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
             if (storageAccountName == null)
             {
@@ -1504,6 +1566,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1513,8 +1577,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}/containers/{containerName}/listSasTokens").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(Client.AccountName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{storageAccountName}", System.Uri.EscapeDataString(storageAccountName));
             _url = _url.Replace("{containerName}", System.Uri.EscapeDataString(containerName));
             List<string> _queryParameters = new List<string>();
