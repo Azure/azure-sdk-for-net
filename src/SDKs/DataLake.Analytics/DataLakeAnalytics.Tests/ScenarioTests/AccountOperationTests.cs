@@ -26,7 +26,7 @@ namespace DataLakeAnalytics.Tests
                 
                 // Ensure that the account doesn't exist and that the account name is available
                 Assert.False(
-                    clientToUse.Account.Exists(
+                    clientToUse.Accounts.Exists(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName
                     )
@@ -38,7 +38,7 @@ namespace DataLakeAnalytics.Tests
                 };
 
                 var responseNameCheck = 
-                    clientToUse.Account.CheckNameAvailability(
+                    clientToUse.Accounts.CheckNameAvailability(
                         commonData.Location.Replace(" ", ""), 
                         checkNameParam
                     );
@@ -47,10 +47,10 @@ namespace DataLakeAnalytics.Tests
 
                 // Create a test account
                 var responseCreate =
-                    clientToUse.Account.Create(
+                    clientToUse.Accounts.Create(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName,
-                        parameters: new DataLakeAnalyticsAccount
+                        parameters : new CreateDataLakeAnalyticsAccountParameters
                         {
                             Location = commonData.Location,
                             Tags = new Dictionary<string, string>
@@ -72,14 +72,14 @@ namespace DataLakeAnalytics.Tests
 
                 // Verify that the account exists and that the account name is no longer available
                 Assert.True(
-                    clientToUse.Account.Exists(
+                    clientToUse.Accounts.Exists(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName
                     )
                 );
 
                 responseNameCheck = 
-                    clientToUse.Account.CheckNameAvailability(
+                    clientToUse.Accounts.CheckNameAvailability(
                         commonData.Location.Replace(" ", ""), 
                         checkNameParam
                     );
@@ -88,7 +88,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Get the account and ensure that all the values are properly set.
                 var responseGet = 
-                    clientToUse.Account.Get(
+                    clientToUse.Accounts.Get(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName
                     );
@@ -115,7 +115,7 @@ namespace DataLakeAnalytics.Tests
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
                     minutesWaited++;
                     responseGet = 
-                        clientToUse.Account.Get(
+                        clientToUse.Accounts.Get(
                             commonData.ResourceGroupName, 
                             commonData.DataLakeAnalyticsAccountName
                         );
@@ -127,80 +127,68 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(TierType.Commitment100AUHours, responseGet.NewTier);
 
                 // Update the account and confirm that the updates make it in.
-                var newAccount = responseGet;
-                var firstStorageAccountName = newAccount.DataLakeStoreAccounts.ToList()[0].Name;
-                newAccount.Tags = new Dictionary<string, string>
-                {
-                    { "updatedKey", "updatedValue" }
-                };
-
-                // Need to null out deep properties to prevent an error
-                newAccount.DataLakeStoreAccounts = null;
-                newAccount.StorageAccounts = null;
-
-                var updateAccount = new DataLakeAnalyticsAccountUpdateParameters
-                {
-                    Tags = newAccount.Tags,
-                    NewTier = TierType.Consumption
-                };
-
-                var updateResponse = 
-                    clientToUse.Account.Update(
-                        commonData.ResourceGroupName, 
-                        commonData.DataLakeAnalyticsAccountName, 
-                        updateAccount
+                var responseUpdate =
+                    clientToUse.Accounts.Update(
+                        commonData.ResourceGroupName,
+                        commonData.DataLakeAnalyticsAccountName,
+                        parameters : new UpdateDataLakeAnalyticsAccountParameters
+                        {
+                            Tags = new Dictionary<string, string>
+                            {
+                                { "updatedKey", "updatedValue" }
+                            },
+                            NewTier = TierType.Consumption
+                        }
                     );
 
-                Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, updateResponse.ProvisioningState);
+                Assert.Equal(DataLakeAnalyticsAccountStatus.Succeeded, responseUpdate.ProvisioningState);
 
                 // Get the account and ensure that all the values are properly set.
-                var updateResponseGet = 
-                    clientToUse.Account.Get(
+                var responseUpdateGet = 
+                    clientToUse.Accounts.Get(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName
                     );
 
-                Assert.NotNull(updateResponse.Id);
-                Assert.Contains(responseGet.Id, updateResponseGet.Id);
-                Assert.Equal(responseGet.Location, updateResponseGet.Location);
-                Assert.Equal(newAccount.Name, updateResponseGet.Name);
-                Assert.Equal(responseGet.Type, updateResponseGet.Type);
+                Assert.NotNull(responseUpdate.Id);
+                Assert.Contains(responseGet.Id, responseUpdateGet.Id);
+                Assert.Equal(responseGet.Location, responseUpdateGet.Location);
+                Assert.Equal(responseGet.Name, responseUpdateGet.Name);
+                Assert.Equal(responseGet.Type, responseUpdateGet.Type);
 
-                // Verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
-                Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
-                Assert.True(updateResponseGet.DataLakeStoreAccounts.Count == 1);
-                Assert.Equal(updateResponseGet.DataLakeStoreAccounts.ToList()[0].Name, firstStorageAccountName);
-                Assert.Equal(TierType.Commitment100AUHours, updateResponseGet.CurrentTier);
-                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
+                // Verify the new tags and tier
+                Assert.True(responseUpdateGet.Tags.Count == 1);
+                Assert.True(responseUpdateGet.Tags.ContainsKey("updatedKey"));
+                Assert.True(responseUpdateGet.Tags.Values.Contains("updatedValue"));
+                Assert.Equal(TierType.Commitment100AUHours, responseUpdateGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, responseUpdateGet.NewTier);
 
                 // Create another account and ensure that list account returns both
-                responseGet = 
-                    clientToUse.Account.Get(
-                        commonData.ResourceGroupName, 
-                        commonData.DataLakeAnalyticsAccountName
-                    );
-
-                var accountToChange = responseGet;
-                var newAcctName = accountToChange.Name + "secondacct";
-
-                clientToUse.Account.Create(
-                    commonData.ResourceGroupName, 
-                    newAcctName, 
-                    new DataLakeAnalyticsAccount
+                clientToUse.Accounts.Create(
+                    commonData.ResourceGroupName,
+                    commonData.DataLakeAnalyticsAccountName + "secondacct", 
+                    new CreateDataLakeAnalyticsAccountParameters
                     {
-                        Location = accountToChange.Location,
-                        DefaultDataLakeStoreAccount = accountToChange.DefaultDataLakeStoreAccount,
-                        DataLakeStoreAccounts = accountToChange.DataLakeStoreAccounts
+                        Location = commonData.Location,
+                        DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
+                        DataLakeStoreAccounts = new List<AddDataLakeStoreWithAccountParameters>
+                        {
+                            new AddDataLakeStoreWithAccountParameters
+                            {
+                                Name = commonData.DataLakeStoreAccountName,
+                                Suffix = commonData.DataLakeStoreAccountSuffix
+                            }
+                        },
                     }
                 );
 
-                var listResponse = clientToUse.Account.List();
+                var listResponse = clientToUse.Accounts.List();
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
                 // Now list with the resource group
-                listResponse = clientToUse.Account.ListByResourceGroup(commonData.ResourceGroupName);
+                listResponse = clientToUse.Accounts.ListByResourceGroup(commonData.ResourceGroupName);
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
@@ -208,7 +196,7 @@ namespace DataLakeAnalytics.Tests
                 // Add, list and remove a data source to the first account
                 // Validate the data source doesn't exist first
                 Assert.False(
-                    clientToUse.Account.DataLakeStoreAccountExists(
+                    clientToUse.Accounts.DataLakeStoreAccountExists(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName, 
                         commonData.SecondDataLakeStoreAccountName
@@ -227,7 +215,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Verify that the store account does exist now
                 Assert.True(
-                    clientToUse.Account.DataLakeStoreAccountExists(
+                    clientToUse.Accounts.DataLakeStoreAccountExists(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName, 
                         commonData.SecondDataLakeStoreAccountName
@@ -268,12 +256,12 @@ namespace DataLakeAnalytics.Tests
                         commonData.DataLakeAnalyticsAccountName
                     );
 
-                Assert.Equal(1, getDataSourceResponse.Count());
+                Assert.True(getDataSourceResponse.Count() == 1);
 
                 // Add, list and remove an azure blob source to the first account
                 // Verify the blob doesn't exist
                 Assert.False(
-                    clientToUse.Account.StorageAccountExists(
+                    clientToUse.Accounts.StorageAccountExists(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName, 
                         commonData.StorageAccountName
@@ -293,7 +281,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Verify the blob exists now
                 Assert.True(
-                    clientToUse.Account.StorageAccountExists(
+                    clientToUse.Accounts.StorageAccountExists(
                         commonData.ResourceGroupName, 
                         commonData.DataLakeAnalyticsAccountName, 
                         commonData.StorageAccountName
@@ -307,7 +295,7 @@ namespace DataLakeAnalytics.Tests
                         commonData.DataLakeAnalyticsAccountName
                     );
 
-                Assert.Equal(1, getDataSourceBlobResponse.Count());
+                Assert.True(getDataSourceBlobResponse.Count() == 1);
 
                 // Get the specific data source we added and confirm that it has the same properties
                 var getSingleDataSourceBlobResponse = 
@@ -334,7 +322,7 @@ namespace DataLakeAnalytics.Tests
                         commonData.DataLakeAnalyticsAccountName
                     );
 
-                Assert.Equal(0, getDataSourceBlobResponse.Count());
+                Assert.True(getDataSourceBlobResponse.Count() == 0);
 
                 // Check that Locations_GetCapability and Operations_List are functional
                 var responseGetCapability = 
@@ -349,27 +337,21 @@ namespace DataLakeAnalytics.Tests
                 Assert.NotNull(responseListOps);
 
                 // Delete the account and confirm that it is deleted.
-                clientToUse.Account.Delete(
-                    commonData.ResourceGroupName, 
-                    newAccount.Name
+                clientToUse.Accounts.Delete(
+                    commonData.ResourceGroupName,
+                    commonData.DataLakeAnalyticsAccountName + "secondacct"
                 );
 
                 // Delete the account again and make sure it continues to result in a succesful code.
-                clientToUse.Account.Delete(
-                    commonData.ResourceGroupName, 
-                    newAccount.Name
+                clientToUse.Accounts.Delete(
+                    commonData.ResourceGroupName,
+                    commonData.DataLakeAnalyticsAccountName + "secondacct"
                 );
 
                 // Delete the account with its old name, which should also succeed.
-                clientToUse.Account.Delete(
+                clientToUse.Accounts.Delete(
                     commonData.ResourceGroupName, 
                     commonData.DataLakeAnalyticsAccountName
-                );
-
-                // Delete the second account that was created to ensure that we properly clean up after ourselves.
-                clientToUse.Account.Delete(
-                    commonData.ResourceGroupName, 
-                    accountToChange.Name
                 );
             }
         }
@@ -388,14 +370,19 @@ namespace DataLakeAnalytics.Tests
                 var adlaAccountName = TestUtilities.GenerateName("adlaacct1");
 
                 // Ensure the account doesn't exist
-                Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, adlaAccountName));
+                Assert.False(
+                    clientToUse.Accounts.Exists(
+                        commonData.ResourceGroupName, 
+                        adlaAccountName
+                    )
+                );
 
                 // Create a test account
                 var responseCreate =
-                    clientToUse.Account.Create(
+                    clientToUse.Accounts.Create(
                         commonData.ResourceGroupName, 
                         adlaAccountName,
-                        parameters: new DataLakeAnalyticsAccount
+                        parameters: new CreateDataLakeAnalyticsAccountParameters
                         {
                             Location = commonData.Location,
                             DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
@@ -424,7 +411,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Get the account and ensure that all the values are properly set.
                 var responseGet = 
-                    clientToUse.Account.Get(
+                    clientToUse.Accounts.Get(
                         commonData.ResourceGroupName, 
                         adlaAccountName
                     );
@@ -489,10 +476,10 @@ namespace DataLakeAnalytics.Tests
                         adlaAccountName
                     );
 
-                Assert.Equal(1, policyList.Count());
+                Assert.True(policyList.Count() == 1);
 
                 // Delete the account
-                clientToUse.Account.Delete(commonData.ResourceGroupName, adlaAccountName);
+                clientToUse.Accounts.Delete(commonData.ResourceGroupName, adlaAccountName);
             }
         }
 
@@ -512,10 +499,10 @@ namespace DataLakeAnalytics.Tests
                 
                 // Create a test account
                 var responseCreate =
-                    clientToUse.Account.Create(
+                    clientToUse.Accounts.Create(
                         commonData.ResourceGroupName, 
                         adlaAcocunt,
-                        parameters : new DataLakeAnalyticsAccount
+                        parameters : new CreateDataLakeAnalyticsAccountParameters
                         {
                             Location = commonData.Location,
                             DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
@@ -545,7 +532,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Get the account and ensure that all the values are properly set.
                 var responseGet = 
-                    clientToUse.Account.Get(
+                    clientToUse.Accounts.Get(
                         commonData.ResourceGroupName, 
                         adlaAcocunt
                     );
@@ -561,7 +548,7 @@ namespace DataLakeAnalytics.Tests
 
                 // Validate firewall state
                 Assert.Equal(FirewallState.Enabled, responseGet.FirewallState);
-                Assert.Equal(1, responseGet.FirewallRules.Count());
+                Assert.True(responseGet.FirewallRules.Count() == 1);
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);

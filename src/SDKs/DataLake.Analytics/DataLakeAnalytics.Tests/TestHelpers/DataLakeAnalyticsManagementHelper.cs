@@ -252,12 +252,13 @@ namespace DataLakeAnalytics.Tests
                 );
 
             var accountCreateResponse = 
-                dataLakeAnalyticsManagementClient.Account.Create(
+                dataLakeAnalyticsManagementClient.Accounts.Create(
                     resourceGroupName, 
                     accountName,
-                    new DataLakeAnalyticsAccount
+                    new CreateDataLakeAnalyticsAccountParameters
                     {
                         Location = location,
+                        DefaultDataLakeStoreAccount = dataLakeStoreAccountName,
                         DataLakeStoreAccounts = new List<AddDataLakeStoreWithAccountParameters>
                         {
                             new AddDataLakeStoreWithAccountParameters
@@ -265,13 +266,12 @@ namespace DataLakeAnalytics.Tests
                                 Name = dataLakeStoreAccountName,
                                 Suffix = datalakeStoreEndpoint.Replace(string.Format("{0}.", dataLakeStoreAccountName), "")
                             }
-                        },
-                        DefaultDataLakeStoreAccount = dataLakeStoreAccountName      
+                        }
                     }
                 );
 
             var accountGetResponse = 
-                dataLakeAnalyticsManagementClient.Account.Get(
+                dataLakeAnalyticsManagementClient.Accounts.Get(
                     resourceGroupName,
                     accountName
                 );
@@ -288,7 +288,7 @@ namespace DataLakeAnalytics.Tests
                 TestUtilities.Wait(60000); 
                 minutesWaited++;
                 accountGetResponse = 
-                    dataLakeAnalyticsManagementClient.Account.Get(
+                    dataLakeAnalyticsManagementClient.Accounts.Get(
                         resourceGroupName,
                         accountName
                     );
