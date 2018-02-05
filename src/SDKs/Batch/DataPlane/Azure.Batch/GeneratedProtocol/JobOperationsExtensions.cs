@@ -299,13 +299,8 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// What to do with active tasks associated with the job. Values are:
-            ///
-            /// requeue - Terminate running tasks and requeue them. The tasks will run
-            /// again when the job is enabled.
-            /// terminate - Terminate running tasks. The tasks will not run again.
-            /// wait - Allow currently running tasks to complete. Possible values include:
-            /// 'requeue', 'terminate', 'wait'
+            /// What to do with active tasks associated with the job. Possible values
+            /// include: 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
             /// Additional parameters for the operation
@@ -335,13 +330,8 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the job to disable.
             /// </param>
             /// <param name='disableTasks'>
-            /// What to do with active tasks associated with the job. Values are:
-            ///
-            /// requeue - Terminate running tasks and requeue them. The tasks will run
-            /// again when the job is enabled.
-            /// terminate - Terminate running tasks. The tasks will not run again.
-            /// wait - Allow currently running tasks to complete. Possible values include:
-            /// 'requeue', 'terminate', 'wait'
+            /// What to do with active tasks associated with the job. Possible values
+            /// include: 'requeue', 'terminate', 'wait'
             /// </param>
             /// <param name='jobDisableOptions'>
             /// Additional parameters for the operation

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,10 +38,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="baseUrl">The base URL of the Azure Key Vault. e.g.
         /// https://myakv.vault.azure.net Type: string (or Expression with
         /// resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
-        public AzureKeyVaultLinkedService(object baseUrl, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
-            : base(connectVia, description)
+        public AzureKeyVaultLinkedService(object baseUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
+            : base(additionalProperties, connectVia, description)
         {
             BaseUrl = baseUrl;
             CustomInit();

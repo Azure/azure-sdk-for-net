@@ -110,6 +110,38 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestRenameDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create database only required parameters
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                Database db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
+                {
+                    Location = server.Location,
+                });
+                Assert.NotNull(db1);
+
+                // Rename
+                string newSuffix = "_renamed";
+                string newName = db1.Name + newSuffix;
+                string newId = db1.Id + newSuffix;
+                sqlClient.Databases.Rename(resourceGroup.Name, server.Name, dbName, new ResourceMoveDefinition
+                {
+                    Id = newId
+                });
+
+                // Get database at its new id
+                Database db2 = sqlClient.Databases.Get(resourceGroup.Name, server.Name, newName);
+                Assert.Equal(newId, db2.Id);
+            }
+        }
+
+        [Fact]
         public void TestUpdateDatabaseWithCreateOrUpdate()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))

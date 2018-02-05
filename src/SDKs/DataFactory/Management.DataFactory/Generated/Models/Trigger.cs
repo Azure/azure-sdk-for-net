@@ -32,15 +32,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the Trigger class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Trigger description.</param>
-        /// <param name="pipelines">Pipelines that need to be started.</param>
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
-        public Trigger(string description = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string runtimeState = default(string))
+        public Trigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string))
         {
+            AdditionalProperties = additionalProperties;
             Description = description;
-            Pipelines = pipelines;
             RuntimeState = runtimeState;
             CustomInit();
         }
@@ -51,16 +52,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets trigger description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets pipelines that need to be started.
-        /// </summary>
-        [JsonProperty(PropertyName = "pipelines")]
-        public IList<TriggerPipelineReference> Pipelines { get; set; }
 
         /// <summary>
         /// Gets indicates if trigger is running or not. Updated when

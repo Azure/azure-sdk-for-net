@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// with resultType string).</param>
         /// <param name="jarFilePath">Jar path. Type: string (or Expression
         /// with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -55,8 +57,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="jarLibs">Jar libs.</param>
         /// <param name="defines">Allows user to specify defines for the
         /// MapReduce job request.</param>
-        public HDInsightMapReduceActivity(string name, object className, object jarFilePath, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), LinkedServiceReference jarLinkedService = default(LinkedServiceReference), IList<object> jarLibs = default(IList<object>), IDictionary<string, object> defines = default(IDictionary<string, object>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public HDInsightMapReduceActivity(string name, object className, object jarFilePath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), LinkedServiceReference jarLinkedService = default(LinkedServiceReference), IList<object> jarLibs = default(IList<object>), IDictionary<string, object> defines = default(IDictionary<string, object>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;

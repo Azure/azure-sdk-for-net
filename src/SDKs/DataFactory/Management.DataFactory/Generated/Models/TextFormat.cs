@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the TextFormat class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="serializer">Serializer. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="deserializer">Deserializer. Type: string (or
@@ -59,8 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// row of data as headers. When used as output,write the headers into
         /// the output as the first row of data. The default value is false.
         /// Type: boolean (or Expression with resultType boolean).</param>
-        public TextFormat(object serializer = default(object), object deserializer = default(object), object columnDelimiter = default(object), object rowDelimiter = default(object), object escapeChar = default(object), object quoteChar = default(object), object nullValue = default(object), object encodingName = default(object), object treatEmptyAsNull = default(object), object skipLineCount = default(object), object firstRowAsHeader = default(object))
-            : base(serializer, deserializer)
+        public TextFormat(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object serializer = default(object), object deserializer = default(object), object columnDelimiter = default(object), object rowDelimiter = default(object), object escapeChar = default(object), object quoteChar = default(object), object nullValue = default(object), object encodingName = default(object), object treatEmptyAsNull = default(object), object skipLineCount = default(object), object firstRowAsHeader = default(object))
+            : base(additionalProperties, serializer, deserializer)
         {
             ColumnDelimiter = columnDelimiter;
             RowDelimiter = rowDelimiter;

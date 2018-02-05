@@ -60,7 +60,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// define dependencies on each other. The default is false.</param>
         public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
         {
-            PoolInfo = new PoolInformation();
             Id = id;
             DisplayName = displayName;
             Priority = priority;
@@ -200,12 +199,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Manager task; if you want to use automatic job termination without
         /// a Job Manager, you should initially set onAllTasksComplete to
         /// noAction and update the job properties to set onAllTasksComplete to
-        /// terminateJob once you have finished adding tasks. Permitted values
-        /// are: noAction - do nothing. The job remains active unless
-        /// terminated or disabled by some other means. terminateJob -
-        /// terminate the job. The job's terminateReason is set to
-        /// 'AllTasksComplete'. The default is noAction. Possible values
-        /// include: 'noAction', 'terminateJob'
+        /// terminateJob once you have finished adding tasks. The default is
+        /// noAction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
@@ -218,12 +213,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// A task is considered to have failed if has a failureInfo. A
         /// failureInfo is set if the task completes with a non-zero exit code
         /// after exhausting its retry count, or if there was an error starting
-        /// the task, for example due to a resource file download error.
-        /// noAction - do nothing. performExitOptionsJobAction - take the
-        /// action associated with the task exit condition in the task's
-        /// exitConditions collection. (This may still result in no action
-        /// being taken, if that is what the task specifies.) The default is
-        /// noAction. Possible values include: 'noAction',
+        /// the task, for example due to a resource file download error. The
+        /// default is noAction. Possible values include: 'noAction',
         /// 'performExitOptionsJobAction'
         /// </remarks>
         [JsonProperty(PropertyName = "onTaskFailure")]

@@ -15,4 +15,8 @@
 		<Reference Include="System.Net.Http" />
 		<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
 	</ItemGroup>
+	<PropertyGroup>
+		<EnablePreBuildTarget Condition=" '$(EnablePreBuildTarget)' == '' ">true</EnablePreBuildTarget>
+		<EnablePostBuildTarget Condition=" '$(EnablePostBuildTarget)' == '' ">true</EnablePostBuildTarget>
+	</PropertyGroup>
 </Project>

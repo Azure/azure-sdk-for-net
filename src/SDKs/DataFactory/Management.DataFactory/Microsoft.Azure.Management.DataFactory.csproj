@@ -1,18 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
-    <Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-    <VersionPrefix>0.2.1-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
-    <PackageTags>Microsoft Azure resource management;Data Factory;ADF;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-        This is the initial preview offering for Azure Data Factory V2.  
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
+		<Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
+		<Version>0.4.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
+		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+        This release enables Azure Key Vault support for all data store linked services, new readBehavior property on Salesforce Source and new license type property for Azure SSIS Integration Runtime.
       ]]>
-    </PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

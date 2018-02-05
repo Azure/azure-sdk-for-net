@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.ManagementPartner</PackageId>
+    <Description>Microsoft.Azure.Management.Gsm Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.ManagementPartner</AssemblyName>
+    <Version>1.0.0-preview</Version>
+    <PackageTags>ManagementPartner;;;;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[This is a public preview release of the Azure Gsm SDK. Included with this release is all operation to get/modify partner id for tenant]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.Management.ManagementPartner</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

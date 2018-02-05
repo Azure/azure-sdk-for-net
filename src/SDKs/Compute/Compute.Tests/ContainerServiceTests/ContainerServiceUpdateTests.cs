@@ -57,7 +57,7 @@ namespace Compute.Tests
                     ValidateContainerService(inputContainerService, containerService);
 
                     var listResult = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
-                    Assert.True(listResult.Any(a => a.Name == containerService.Name));
+                    Assert.Contains(listResult, a => a.Name == containerService.Name);
                     m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                     var listResultAfterDeletion = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(!listResultAfterDeletion.Any());

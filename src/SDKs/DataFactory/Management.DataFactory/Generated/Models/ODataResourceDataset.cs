@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ODataResourceDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
@@ -44,8 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="path">The OData resource path. Type: string (or
         /// Expression with resultType string).</param>
-        public ODataResourceDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object path = default(object))
-            : base(linkedServiceName, description, structure, parameters)
+        public ODataResourceDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object path = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters)
         {
             Path = path;
             CustomInit();

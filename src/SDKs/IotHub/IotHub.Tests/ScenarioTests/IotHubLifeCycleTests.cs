@@ -8,8 +8,8 @@ namespace IotHub.Tests.ScenarioTests
 {
     using System;
     using System.Net;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Azure.Management.IotHub;
     using Microsoft.Azure.Management.IotHub.Models;
@@ -129,6 +129,17 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultIotHubName,
                     IotHubTestUtilities.EventsEndpointName,
                     "testConsumerGroup");
+
+                // Get all of the available IoT Hub REST API operations
+                var operationList = this.iotHubClient.Operations.List();
+                Assert.True(operationList.Count() > 0);
+                Assert.True(operationList.Any(e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase)));
+
+                // Get IoT Hub REST API read operation
+                var hubReadOperation = operationList.Where(e => e.Name.Equals("Microsoft.Devices/iotHubs/Read", StringComparison.OrdinalIgnoreCase));
+                Assert.True(hubReadOperation.Count().Equals(1));
+                Assert.True(hubReadOperation.First().Display.Provider.Equals("Microsoft Devices", StringComparison.OrdinalIgnoreCase));
+                Assert.True(hubReadOperation.First().Display.Operation.Equals("Get IotHub(s)", StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -179,7 +190,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 iotHub.Properties.Routing = this.GetIotHubRoutingProperties(resourceGroup);
                 retIotHub = this.UpdateIotHub(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName);
-
+                
                 Assert.NotNull(retIotHub);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
                 Assert.Equal(retIotHub.Properties.Routing.Routes.Count, 4);
@@ -210,6 +221,66 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count, 1);
                 Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count, 1);
                 Assert.Equal(retIotHub.Properties.Routing.Routes[0].Name, "route1");
+            }
+        }
+
+        [Fact]
+        public void TestIotHubCertificateLifeCycle()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.Initialize(context);
+
+                // Create Resource Group
+                var resourceGroup = this.CreateResourceGroup(IotHubTestUtilities.DefaultCertificateResourceGroupName);
+
+                // Check if Hub Exists and Delete
+                var operationInputs = new OperationInputs()
+                {
+                    Name = IotHubTestUtilities.DefaultCertificateIotHubName
+                };
+
+                var iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
+
+                if (!(bool)iotHubNameAvailabilityInfo.NameAvailable)
+                {
+                    this.iotHubClient.IotHubResource.Delete(
+                        IotHubTestUtilities.DefaultCertificateResourceGroupName,
+                        IotHubTestUtilities.DefaultCertificateIotHubName);
+
+                    iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
+                    Assert.Equal(true, iotHubNameAvailabilityInfo.NameAvailable);
+                }
+
+                // Create Hub
+                var iotHub = this.CreateIotHub(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultCertificateIotHubName, null);
+                
+                // Upload Certificate to the Hub
+                var newCertificateDescription = this.CreateCertificate(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, IotHubTestUtilities.DefaultIotHubCertificateContent);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, newCertificateDescription.Name);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateSubject, newCertificateDescription.Properties.Subject);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateThumbprint, newCertificateDescription.Properties.Thumbprint);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, newCertificateDescription.Type);
+                Assert.False(newCertificateDescription.Properties.IsVerified);
+
+                // Get all certificates
+                var certificateList = this.GetCertificates(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName);
+                Assert.True(certificateList.Value.Count().Equals(1));
+
+                // Get certificate
+                var certificate = this.GetCertificate(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, certificate.Name);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateSubject, certificate.Properties.Subject);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateThumbprint, certificate.Properties.Thumbprint);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, certificate.Type);
+                Assert.False(certificate.Properties.IsVerified);
+
+                // Delete certificate
+                this.DeleteCertificate(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, certificate.Etag);
+
+                // Get all certificate after delete
+                var certificateListAfterDelete = this.GetCertificates(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName);
+                Assert.True(certificateListAfterDelete.Value.Count().Equals(0));
             }
         }
 

@@ -1,21 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Sql</PackageId>
-    <Description>Azure SQL Management SDK library</Description>
-    <AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-    <VersionPrefix>1.8.0-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure SQL Management;SQL;SQL Management</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <PackageReleaseNotes>
-      <![CDATA[
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
+		<Description>Azure SQL Management SDK library</Description>
+		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
+		<Version>1.11.0-preview</Version>
+		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
 New features:
-- Added support for state and migration flag properties for SQL Vnet rules
-- Added zone redundancy property for databases, elastic pools and capability editions
-- Added support for Server DNS Aliases
+- Updated available service objectives & editions
+- Added BackupLongTermRetentionVaults.ListByServer and BackupLongTermRetentionPolicies.ListByDatabase
       ]]>
-    </PackageReleaseNotes>
-  </PropertyGroup>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

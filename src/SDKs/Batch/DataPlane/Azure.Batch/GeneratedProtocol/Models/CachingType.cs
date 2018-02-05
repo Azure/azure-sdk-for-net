@@ -21,11 +21,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CachingType
     {
+        /// <summary>
+        /// The caching mode for the disk is not enabled.
+        /// </summary>
         [EnumMember(Value = "none")]
         None,
-        [EnumMember(Value = "readOnly")]
+        /// <summary>
+        /// The caching mode for the disk is read only.
+        /// </summary>
+        [EnumMember(Value = "readonly")]
         ReadOnly,
-        [EnumMember(Value = "readWrite")]
+        /// <summary>
+        /// The caching mode for the disk is read and write.
+        /// </summary>
+        [EnumMember(Value = "readwrite")]
         ReadWrite
     }
     internal static class CachingTypeEnumExtension
@@ -42,9 +51,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case CachingType.None:
                     return "none";
                 case CachingType.ReadOnly:
-                    return "readOnly";
+                    return "readonly";
                 case CachingType.ReadWrite:
-                    return "readWrite";
+                    return "readwrite";
             }
             return null;
         }
@@ -55,9 +64,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 case "none":
                     return CachingType.None;
-                case "readOnly":
+                case "readonly":
                     return CachingType.ReadOnly;
-                case "readWrite":
+                case "readwrite":
                     return CachingType.ReadWrite;
             }
             return null;

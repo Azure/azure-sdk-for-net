@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="entryFilePath">The relative path to the root folder of
         /// the code/package to be executed. Type: string (or Expression with
         /// resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -59,8 +61,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the job. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="sparkConfig">Spark configuration property.</param>
-        public HDInsightSparkActivity(string name, object rootPath, object entryFilePath, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), LinkedServiceReference sparkJobLinkedService = default(LinkedServiceReference), string className = default(string), object proxyUser = default(object), IDictionary<string, object> sparkConfig = default(IDictionary<string, object>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public HDInsightSparkActivity(string name, object rootPath, object entryFilePath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), LinkedServiceReference sparkJobLinkedService = default(LinkedServiceReference), string className = default(string), object proxyUser = default(object), IDictionary<string, object> sparkConfig = default(IDictionary<string, object>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             RootPath = rootPath;
             EntryFilePath = entryFilePath;

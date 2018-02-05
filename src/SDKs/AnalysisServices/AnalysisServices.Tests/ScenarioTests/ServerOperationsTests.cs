@@ -229,8 +229,8 @@ namespace AnalysisServices.Tests.ScenarioTests
                     Console.WriteLine(ex.ToString());
                 }
 
-                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
-                Assert.Equal(resultCreate.State, "Succeeded");
+                Assert.Equal("Succeeded", resultCreate.ProvisioningState);
+                Assert.Equal("Succeeded", resultCreate.State);
 
                 // get the server and ensure that all the values are properly set.
                 var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
@@ -279,6 +279,223 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.True(resultGet.Tags.ContainsKey("key1"));
                 Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+
+                // delete the server with its old name, which should also succeed.
+                client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+            }
+        }
+
+        [Fact]
+        public void ScaleOutTest()
+        {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var defaultScaleOutCap = 2;
+            var s1SKU = "S1";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = this.GetAnalysisServicesClient(context);
+
+                AnalysisServicesServer analysisServicesServer = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+                SkuEnumerationForNewResourceResult skusListForNew = client.Servers.ListSkusForNew();
+                analysisServicesServer.Sku = skusListForNew.Value.Where((s) => s.Name == s1SKU).First();
+                analysisServicesServer.Sku.Capacity = defaultScaleOutCap;
+
+                AnalysisServicesServer resultCreate = null;
+                try
+                {
+                    // Create a test server
+                    resultCreate =
+                        client.Servers.Create(
+                            AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName,
+                            analysisServicesServer);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                Assert.Equal("Succeeded", resultCreate.ProvisioningState);
+                Assert.Equal("Succeeded", resultCreate.State);
+
+                // get the server and ensure that all the values are properly set.
+                var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(analysisServicesServer.Sku.Name, resultGet.Sku.Name);
+                Assert.Equal(2, resultGet.Tags.Count);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+                Assert.Equal(2, resultGet.Sku.Capacity);
+
+                // Confirm that the server creation did succeed
+                Assert.True(resultGet.ProvisioningState == "Succeeded");
+                Assert.True(resultGet.State == "Succeeded");
+
+                // Scale in the server and verify             
+                ResourceSku newSku = resultGet.Sku;
+                newSku.Capacity = 1;
+
+                AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
+                {
+                    Sku = newSku
+                };
+
+                var resultUpdate = client.Servers.Update(
+                    AnalysisServicesTestUtilities.DefaultResourceGroup,
+                    AnalysisServicesTestUtilities.DefaultServerName,
+                    updateParameters);
+
+                Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                Assert.Equal("Succeeded", resultUpdate.State);
+                Assert.Equal(1, resultUpdate.Sku.Capacity);
+
+                // get the server and ensure that all the values are properly set.
+                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(newSku.Name, resultGet.Sku.Name);
+                Assert.Equal(newSku.Tier, resultGet.Sku.Tier);
+                Assert.Equal(2, resultGet.Tags.Count);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+                Assert.Equal(1, resultGet.Sku.Capacity);
+
+                // delete the server with its old name, which should also succeed.
+                client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+            }
+        }
+
+        [Fact]
+        public void FirewallTest()
+        {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            var s1SKU = "S1";
+            var sampleIPV4FirewallSetting = new IPv4FirewallSettings()
+            {
+                EnablePowerBIService = "True",
+                FirewallRules = new List<IPv4FirewallRule>()
+                    {
+                        new IPv4FirewallRule()
+                        {
+                            FirewallRuleName = "rule1",
+                            RangeStart = "0.0.0.0",
+                            RangeEnd = "255.255.255.255"
+                        },
+                        new IPv4FirewallRule()
+                        {
+                            FirewallRuleName = "rule2",
+                            RangeStart = "7.7.7.7",
+                            RangeEnd = "8.8.8.8"
+                        },
+                    }
+            };
+
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = this.GetAnalysisServicesClient(context);
+
+                AnalysisServicesServer analysisServicesServer = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+                SkuEnumerationForNewResourceResult skusListForNew = client.Servers.ListSkusForNew();
+                analysisServicesServer.Sku = skusListForNew.Value.Where((s) => s.Name == s1SKU).First();
+                analysisServicesServer.IpV4FirewallSettings = sampleIPV4FirewallSetting;
+
+                AnalysisServicesServer resultCreate = null;
+                try
+                {
+                    Console.Out.Write(analysisServicesServer.Sku.Capacity);
+                    // Create a test server
+                    resultCreate =
+                        client.Servers.Create(
+                            AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName,
+                            analysisServicesServer);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                Assert.Equal("Succeeded", resultCreate.ProvisioningState);
+                Assert.Equal("Succeeded", resultCreate.State);
+
+                // get the server and ensure that all the values are properly set.
+                var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(analysisServicesServer.Sku.Name, resultGet.Sku.Name);
+                Assert.Equal(2, resultGet.Tags.Count);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+                Assert.Equal(sampleIPV4FirewallSetting.EnablePowerBIService, resultGet.IpV4FirewallSettings.EnablePowerBIService);
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.Count(), resultGet.IpV4FirewallSettings.FirewallRules.Count());
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.First().FirewallRuleName, resultGet.IpV4FirewallSettings.FirewallRules.First().FirewallRuleName);
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.First().RangeStart, resultGet.IpV4FirewallSettings.FirewallRules.First().RangeStart);
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.First().RangeEnd, resultGet.IpV4FirewallSettings.FirewallRules.First().RangeEnd);
+
+                // Confirm that the server creation did succeed
+                Assert.True(resultGet.ProvisioningState == "Succeeded");
+                Assert.True(resultGet.State == "Succeeded");
+                
+                // Update firewall and verify          
+                ResourceSku newSku = resultGet.Sku;
+                sampleIPV4FirewallSetting.EnablePowerBIService = "False";
+                sampleIPV4FirewallSetting.FirewallRules = new List<IPv4FirewallRule>()
+                    {
+                        new IPv4FirewallRule()
+                        {
+                            FirewallRuleName = "rule3",
+                            RangeStart = "6.6.6.6",
+                            RangeEnd = "255.255.255.255"
+                        }
+                    };
+                
+                AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
+                {
+                    IpV4FirewallSettings = sampleIPV4FirewallSetting
+                };
+
+                var resultUpdate = client.Servers.Update(
+                    AnalysisServicesTestUtilities.DefaultResourceGroup,
+                    AnalysisServicesTestUtilities.DefaultServerName,
+                    updateParameters);
+
+                Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                Assert.Equal("Succeeded", resultUpdate.State);
+
+                // get the server and ensure that all the values are properly set.
+                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(newSku.Name, resultGet.Sku.Name);
+                Assert.Equal(newSku.Tier, resultGet.Sku.Tier);
+                Assert.Equal(2, resultGet.Tags.Count);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(2, resultGet.AsAdministrators.Members.Count);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+                Assert.Equal(1, resultGet.Sku.Capacity);
+                Assert.Equal(sampleIPV4FirewallSetting.EnablePowerBIService, resultGet.IpV4FirewallSettings.EnablePowerBIService);
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.Count(), resultGet.IpV4FirewallSettings.FirewallRules.Count());
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.First().FirewallRuleName, resultGet.IpV4FirewallSettings.FirewallRules.First().FirewallRuleName);
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.First().RangeStart, resultGet.IpV4FirewallSettings.FirewallRules.First().RangeStart);
+                Assert.Equal(sampleIPV4FirewallSetting.FirewallRules.First().RangeEnd, resultGet.IpV4FirewallSettings.FirewallRules.First().RangeEnd);
 
                 // delete the server with its old name, which should also succeed.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
@@ -335,7 +552,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 var listGatewayStatus = client.Servers.ListGatewayStatus(AnalysisServicesTestUtilities.DefaultResourceGroup,
                             AnalysisServicesTestUtilities.DefaultServerName);
 
-                Assert.Equal(listGatewayStatus.Status, Status.Live);
+                Assert.Equal(Status.Live, listGatewayStatus.Status);
 
                 // Dissociate gateway.
                 client.Servers.DissociateGateway(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);

@@ -40,12 +40,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Activity name.</param>
         /// <param name="items">Collection to iterate.</param>
         /// <param name="activities">List of activities to execute .</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="isSequential">Should the loop be executed in sequence
         /// or in parallel (max 20)</param>
-        public ForEachActivity(string name, Expression items, IList<Activity> activities, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), bool? isSequential = default(bool?))
-            : base(name, description, dependsOn)
+        public ForEachActivity(string name, Expression items, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), bool? isSequential = default(bool?))
+            : base(name, additionalProperties, description, dependsOn)
         {
             IsSequential = isSequential;
             Items = items;

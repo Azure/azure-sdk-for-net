@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the TriggerRun class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="triggerRunId">Trigger run id.</param>
         /// <param name="triggerName">Trigger name.</param>
         /// <param name="triggerType">Trigger type.</param>
@@ -42,8 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// trigger run. Name, value pair depends on type of trigger.</param>
         /// <param name="triggeredPipelines">List of pipeline name and run Id
         /// triggered by the trigger run.</param>
-        public TriggerRun(string triggerRunId = default(string), string triggerName = default(string), string triggerType = default(string), System.DateTime? triggerRunTimestamp = default(System.DateTime?), string status = default(string), string message = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>), IDictionary<string, string> triggeredPipelines = default(IDictionary<string, string>))
+        public TriggerRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string triggerRunId = default(string), string triggerName = default(string), string triggerType = default(string), System.DateTime? triggerRunTimestamp = default(System.DateTime?), string status = default(string), string message = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>), IDictionary<string, string> triggeredPipelines = default(IDictionary<string, string>))
         {
+            AdditionalProperties = additionalProperties;
             TriggerRunId = triggerRunId;
             TriggerName = triggerName;
             TriggerType = triggerType;
@@ -59,6 +62,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets trigger run id.
