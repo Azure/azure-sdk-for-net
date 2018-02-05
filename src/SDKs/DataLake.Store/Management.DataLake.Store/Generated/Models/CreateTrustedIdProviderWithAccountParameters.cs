@@ -11,40 +11,39 @@
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store account name availability check parameters.
+    /// The parameters used to create a new trusted identity provider while
+    /// creating a new Data Lake Store account.
     /// </summary>
-    public partial class CheckNameAvailabilityParameters
+    [Rest.Serialization.JsonTransformation]
+    public partial class CreateTrustedIdProviderWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// CreateTrustedIdProviderWithAccountParameters class.
         /// </summary>
-        public CheckNameAvailabilityParameters()
+        public CreateTrustedIdProviderWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CheckNameAvailabilityParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// CreateTrustedIdProviderWithAccountParameters class.
         /// </summary>
-        /// <param name="name">The Data Lake Store name to check availability
-        /// for.</param>
-        public CheckNameAvailabilityParameters(string name)
+        /// <param name="name">The unique name of the trusted identity provider
+        /// to create.</param>
+        /// <param name="idProvider">The URL of this trusted identity
+        /// provider.</param>
+        public CreateTrustedIdProviderWithAccountParameters(string name, string idProvider)
         {
             Name = name;
+            IdProvider = idProvider;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for CheckNameAvailabilityParameters class.
-        /// </summary>
-        static CheckNameAvailabilityParameters()
-        {
-            Type = "Microsoft.DataLakeStore/accounts";
         }
 
         /// <summary>
@@ -53,17 +52,17 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Data Lake Store name to check availability for.
+        /// Gets or sets the unique name of the trusted identity provider to
+        /// create.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The resource type. Note: This should not be set by the user, as the
-        /// constant value is Microsoft.DataLakeStore/accounts
+        /// Gets or sets the URL of this trusted identity provider.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.idProvider")]
+        public string IdProvider { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -76,6 +75,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (IdProvider == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "IdProvider");
             }
         }
     }

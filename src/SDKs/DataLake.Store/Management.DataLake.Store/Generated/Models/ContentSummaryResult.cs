@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the content summary for the specified path
         /// </summary>
-        [JsonProperty(PropertyName = "ContentSummary")]
+        [JsonProperty(PropertyName = "contentSummary")]
         public ContentSummary ContentSummary { get; private set; }
 
     }
