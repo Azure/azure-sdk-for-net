@@ -362,6 +362,46 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Upload Azure Batch service log files from the specified compute
+        /// node.
+        /// </summary>
+        /// <remarks>
+        /// This is for gathering Azure Batch service log files in an automated
+        /// fashion from nodes if you are experiencing an error and wish to
+        /// escalate to Azure support. The Azure Batch service log files should
+        /// be shared with Azure support to aid in debugging issues with the
+        /// Batch service.
+        /// </remarks>
+        /// <param name='poolId'>
+        /// The ID of the pool that contains the compute node.
+        /// </param>
+        /// <param name='nodeId'>
+        /// The ID of the compute node from which you want to upload the Azure
+        /// Batch service log files.
+        /// </param>
+        /// <param name='uploadBatchServiceLogsConfiguration'>
+        /// The Azure Batch service log files upload configuration.
+        /// </param>
+        /// <param name='computeNodeUploadBatchServiceLogsOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<UploadBatchServiceLogsResult,ComputeNodeUploadBatchServiceLogsHeaders>> UploadBatchServiceLogsWithHttpMessagesAsync(string poolId, string nodeId, UploadBatchServiceLogsConfiguration uploadBatchServiceLogsConfiguration, ComputeNodeUploadBatchServiceLogsOptions computeNodeUploadBatchServiceLogsOptions = default(ComputeNodeUploadBatchServiceLogsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the compute nodes in the specified pool.
         /// </summary>
         /// <param name='poolId'>

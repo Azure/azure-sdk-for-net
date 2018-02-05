@@ -2591,6 +2591,285 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
+        /// Upload Azure Batch service log files from the specified compute node.
+        /// </summary>
+        /// <remarks>
+        /// This is for gathering Azure Batch service log files in an automated fashion
+        /// from nodes if you are experiencing an error and wish to escalate to Azure
+        /// support. The Azure Batch service log files should be shared with Azure
+        /// support to aid in debugging issues with the Batch service.
+        /// </remarks>
+        /// <param name='poolId'>
+        /// The ID of the pool that contains the compute node.
+        /// </param>
+        /// <param name='nodeId'>
+        /// The ID of the compute node from which you want to upload the Azure Batch
+        /// service log files.
+        /// </param>
+        /// <param name='uploadBatchServiceLogsConfiguration'>
+        /// The Azure Batch service log files upload configuration.
+        /// </param>
+        /// <param name='computeNodeUploadBatchServiceLogsOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<UploadBatchServiceLogsResult,ComputeNodeUploadBatchServiceLogsHeaders>> UploadBatchServiceLogsWithHttpMessagesAsync(string poolId, string nodeId, UploadBatchServiceLogsConfiguration uploadBatchServiceLogsConfiguration, ComputeNodeUploadBatchServiceLogsOptions computeNodeUploadBatchServiceLogsOptions = default(ComputeNodeUploadBatchServiceLogsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (poolId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
+            }
+            if (nodeId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nodeId");
+            }
+            if (uploadBatchServiceLogsConfiguration == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "uploadBatchServiceLogsConfiguration");
+            }
+            if (uploadBatchServiceLogsConfiguration != null)
+            {
+                uploadBatchServiceLogsConfiguration.Validate();
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            int? timeout = default(int?);
+            if (computeNodeUploadBatchServiceLogsOptions != null)
+            {
+                timeout = computeNodeUploadBatchServiceLogsOptions.Timeout;
+            }
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (computeNodeUploadBatchServiceLogsOptions != null)
+            {
+                clientRequestId = computeNodeUploadBatchServiceLogsOptions.ClientRequestId;
+            }
+            bool? returnClientRequestId = default(bool?);
+            if (computeNodeUploadBatchServiceLogsOptions != null)
+            {
+                returnClientRequestId = computeNodeUploadBatchServiceLogsOptions.ReturnClientRequestId;
+            }
+            System.DateTime? ocpDate = default(System.DateTime?);
+            if (computeNodeUploadBatchServiceLogsOptions != null)
+            {
+                ocpDate = computeNodeUploadBatchServiceLogsOptions.OcpDate;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("poolId", poolId);
+                tracingParameters.Add("nodeId", nodeId);
+                tracingParameters.Add("uploadBatchServiceLogsConfiguration", uploadBatchServiceLogsConfiguration);
+                tracingParameters.Add("timeout", timeout);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("returnClientRequestId", returnClientRequestId);
+                tracingParameters.Add("ocpDate", ocpDate);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UploadBatchServiceLogs", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs").ToString();
+            _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
+            _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (timeout != null)
+            {
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
+            }
+            if (returnClientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("return-client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("return-client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
+            }
+            if (ocpDate != null)
+            {
+                if (_httpRequest.Headers.Contains("ocp-date"))
+                {
+                    _httpRequest.Headers.Remove("ocp-date");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(uploadBatchServiceLogsConfiguration != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(uploadBatchServiceLogsConfiguration, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; odata=minimalmetadata; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new BatchErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<UploadBatchServiceLogsResult,ComputeNodeUploadBatchServiceLogsHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<UploadBatchServiceLogsResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ComputeNodeUploadBatchServiceLogsHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Lists the compute nodes in the specified pool.
         /// </summary>
         /// <param name='poolId'>

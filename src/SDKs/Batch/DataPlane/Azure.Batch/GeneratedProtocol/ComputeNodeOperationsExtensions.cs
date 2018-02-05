@@ -624,6 +624,72 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
+            /// Upload Azure Batch service log files from the specified compute node.
+            /// </summary>
+            /// <remarks>
+            /// This is for gathering Azure Batch service log files in an automated fashion
+            /// from nodes if you are experiencing an error and wish to escalate to Azure
+            /// support. The Azure Batch service log files should be shared with Azure
+            /// support to aid in debugging issues with the Batch service.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='poolId'>
+            /// The ID of the pool that contains the compute node.
+            /// </param>
+            /// <param name='nodeId'>
+            /// The ID of the compute node from which you want to upload the Azure Batch
+            /// service log files.
+            /// </param>
+            /// <param name='uploadBatchServiceLogsConfiguration'>
+            /// The Azure Batch service log files upload configuration.
+            /// </param>
+            /// <param name='computeNodeUploadBatchServiceLogsOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static UploadBatchServiceLogsResult UploadBatchServiceLogs(this IComputeNodeOperations operations, string poolId, string nodeId, UploadBatchServiceLogsConfiguration uploadBatchServiceLogsConfiguration, ComputeNodeUploadBatchServiceLogsOptions computeNodeUploadBatchServiceLogsOptions = default(ComputeNodeUploadBatchServiceLogsOptions))
+            {
+                return operations.UploadBatchServiceLogsAsync(poolId, nodeId, uploadBatchServiceLogsConfiguration, computeNodeUploadBatchServiceLogsOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upload Azure Batch service log files from the specified compute node.
+            /// </summary>
+            /// <remarks>
+            /// This is for gathering Azure Batch service log files in an automated fashion
+            /// from nodes if you are experiencing an error and wish to escalate to Azure
+            /// support. The Azure Batch service log files should be shared with Azure
+            /// support to aid in debugging issues with the Batch service.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='poolId'>
+            /// The ID of the pool that contains the compute node.
+            /// </param>
+            /// <param name='nodeId'>
+            /// The ID of the compute node from which you want to upload the Azure Batch
+            /// service log files.
+            /// </param>
+            /// <param name='uploadBatchServiceLogsConfiguration'>
+            /// The Azure Batch service log files upload configuration.
+            /// </param>
+            /// <param name='computeNodeUploadBatchServiceLogsOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UploadBatchServiceLogsResult> UploadBatchServiceLogsAsync(this IComputeNodeOperations operations, string poolId, string nodeId, UploadBatchServiceLogsConfiguration uploadBatchServiceLogsConfiguration, ComputeNodeUploadBatchServiceLogsOptions computeNodeUploadBatchServiceLogsOptions = default(ComputeNodeUploadBatchServiceLogsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UploadBatchServiceLogsWithHttpMessagesAsync(poolId, nodeId, uploadBatchServiceLogsConfiguration, computeNodeUploadBatchServiceLogsOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the compute nodes in the specified pool.
             /// </summary>
             /// <param name='operations'>
