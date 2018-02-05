@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// AccountOperations operations.
+    /// AccountsOperations operations.
     /// </summary>
-    internal partial class AccountOperations : IServiceOperations<DataLakeStoreAccountManagementClient>, IAccountOperations
+    internal partial class AccountsOperations : IServiceOperations<DataLakeStoreAccountManagementClient>, IAccountsOperations
     {
         /// <summary>
         /// Tests the existence of the specified Data Lake Store firewall rule.
