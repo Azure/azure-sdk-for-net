@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,6 +32,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the ActivityPolicy class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="timeout">Specifies the timeout for the activity to
         /// run. The default timeout is 7 days. Type: string (or Expression
         /// with resultType string), pattern:
@@ -39,8 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 0.</param>
         /// <param name="retryIntervalInSeconds">Interval between each retry
         /// attempt (in seconds). The default is 30 sec.</param>
-        public ActivityPolicy(object timeout = default(object), object retry = default(object), int? retryIntervalInSeconds = default(int?))
+        public ActivityPolicy(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object timeout = default(object), object retry = default(object), int? retryIntervalInSeconds = default(int?))
         {
+            AdditionalProperties = additionalProperties;
             Timeout = timeout;
             Retry = retry;
             RetryIntervalInSeconds = retryIntervalInSeconds;
@@ -51,6 +56,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the timeout for the activity to run. The

@@ -4,6 +4,8 @@ using Microsoft.Azure.Management.MachineLearningCompute;
 using Xunit.Abstractions;
 using Microsoft.Azure.Management.MachineLearningCompute.Models;
 using System.Linq;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using System;
 
 namespace MachineLearningCompute.Tests
@@ -101,7 +103,7 @@ namespace MachineLearningCompute.Tests
 
                 var clusterNames = testBase.Client.OperationalizationClusters.ListByResourceGroup(resourceGroup.Name).Select(cluster => cluster.Name);
 
-                Assert.True(clusterNames.Contains(createdCluster.Name));
+                Assert.Contains(createdCluster.Name, clusterNames);
             }
         }
 
@@ -116,7 +118,7 @@ namespace MachineLearningCompute.Tests
 
                 var clusterNames = testBase.Client.OperationalizationClusters.ListBySubscriptionId().Select(cluster => cluster.Name);
 
-                Assert.True(clusterNames.Contains(createdCluster.Name));
+                Assert.Contains(createdCluster.Name, clusterNames);
             }
         }
 
@@ -166,6 +168,21 @@ namespace MachineLearningCompute.Tests
                 Assert.Equal(OperationStatus.Succeeded, updateResponse.UpdateStatus);
                 Assert.NotNull(updateResponse.UpdateStartedOn);
                 Assert.NotNull(updateResponse.UpdateCompletedOn);
+            }
+        }
+
+        [Fact]
+        public void DeleteAllResources()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-deleteall"))
+            {
+                var resourceGroup = testBase.CreateResourceGroup();
+                var createdCluster = testBase.CreateCluster(clusterType: "Local");
+
+                var deleteResponse = testBase.Client.OperationalizationClusters.Delete(resourceGroup.Name, createdCluster.Name, deleteAll: true);
+
+                Assert.False(testBase.ResourcesClient.ResourceGroups.CheckExistence(testBase.ManagedByResourceGroupName));
             }
         }
     }

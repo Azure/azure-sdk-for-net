@@ -60,9 +60,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
            
-            Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.State, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.State);
+            Assert.Equal(2, result.Tags.Count);
         }
 
         [Fact]
@@ -99,9 +99,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.State, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.State);
+            Assert.Equal(2, result.Tags.Count);
             Assert.Equal(result.BackupBlobContainerUri, AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri);
         }
 
@@ -153,9 +153,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.State, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.State);
+            Assert.Equal(2, result.Tags.Count);
             Assert.Equal(result.BackupBlobContainerUri, AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri);
         }
 
@@ -442,6 +442,177 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal("/subscriptions/613192d9-5973f-477a-9cfe-4efc3ee2bd60/resourceGroups/TestRG/providers/Microsoft.AnalysisServices/servers/server2", server2.Id);
             Assert.NotEmpty(server2.ServerFullName);
             Assert.True(server2.Tags.ContainsKey("Key1"));
+        }
+
+        [Fact]
+        public void OperationCheckNameAvailabilityValidateMessage()
+        {
+            var checknameResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                                'nameAvailable': true
+                                            }")
+            };
+
+            checknameResponse.Headers.Add("x-ms-request-id", "1");
+
+            // all accounts under sub and empty next link
+            var handler = new RecordedDelegatingHandler(checknameResponse) { StatusCodeToReturn = HttpStatusCode.OK };
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
+            var result = client.Servers.CheckNameAvailability("West US", new CheckServerNameAvailabilityParameters("azsdktest", "Microsoft.AnalysisServices/servers"));
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            Assert.True(result.NameAvailable);
+        }
+
+        [Fact]
+        public void OperationCheckNameNotAvailableValidateMessage()
+        {
+            var checknameResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                                'nameAvailable': false,
+                                                'reason': 'The name is not available.',
+                                                'message': 'The name is not available in the region.'
+                                            }")
+            };
+
+            checknameResponse.Headers.Add("x-ms-request-id", "1");
+
+            // all accounts under sub and empty next link
+            var handler = new RecordedDelegatingHandler(checknameResponse) { StatusCodeToReturn = HttpStatusCode.OK };
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
+            var result = client.Servers.CheckNameAvailability("West US", new CheckServerNameAvailabilityParameters("azsdktest", "Microsoft.AnalysisServices/servers"));
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            Assert.False(result.NameAvailable);
+            Assert.NotEmpty(result.Message);
+            Assert.NotEmpty(result.Reason);
+        }
+
+        [Fact]
+        public void OperationStatusesValidateMessage()
+        {
+            var opearationStatusesResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                                'id': '/subscriptions/id/locations/westus/operationstatuses/testoperationid',
+                                                'name': 'testoperationid',
+                                                'startTime': '2017-01-01T13:13:13.933Z',
+                                                'status': 'Running'
+                                            }")
+            };
+
+            opearationStatusesResponse.Headers.Add("x-ms-request-id", "1");
+
+            // all accounts under sub and empty next link
+            var handler = new RecordedDelegatingHandler(opearationStatusesResponse) { StatusCodeToReturn = HttpStatusCode.OK };
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
+            var result = client.Servers.ListOperationStatuses("West US", "/subscriptions/id/locations/westus/operationstatuses/testoperationid");
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            Assert.Equal("/subscriptions/id/locations/westus/operationstatuses/testoperationid", result.Id);
+            Assert.NotEmpty(result.Name);
+            Assert.NotEmpty(result.StartTime);
+            Assert.NotEmpty(result.Status);
+        }
+
+        [Fact]
+        public void OperationStatusesFailedValidateMessage()
+        {
+            var opearationStatusesResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                                'id': '/subscriptions/id/locations/westus/operationstatuses/testoperationid',
+                                                'name': 'testoperationid',
+                                                'startTime': '2017-01-01T13:13:13.933Z',
+                                                'endTime': '2017-01-01T13:13:13.933Z',
+                                                'status': 'Failed',
+                                                'error': {
+                                                   'code': 'Test error code',
+                                                   'message': 'Running out of memory.'
+                                                }
+                                            }")
+            };
+
+            opearationStatusesResponse.Headers.Add("x-ms-request-id", "1");
+
+            // all accounts under sub and empty next link
+            var handler = new RecordedDelegatingHandler(opearationStatusesResponse) { StatusCodeToReturn = HttpStatusCode.OK };
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
+            var result = client.Servers.ListOperationStatuses("West US", "/subscriptions/id/locations/westus/operationstatuses/testoperationid");
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            Assert.Equal("/subscriptions/id/locations/westus/operationstatuses/testoperationid", result.Id);
+            Assert.NotEmpty(result.Name);
+            Assert.NotEmpty(result.StartTime);
+            Assert.NotEmpty(result.Status);
+            Assert.Equal("Failed", result.Status);
+            Assert.NotNull(result.Error);
+            Assert.NotEmpty(result.Error.Code);
+            Assert.NotEmpty(result.Error.Message);
+        }
+
+        [Fact]
+        public void OperationResultCompletedValidateMessage()
+        {
+            var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"")
+            };
+
+            okResponse.Headers.Add("x-ms-request-id", "1");
+
+            // all accounts under sub and empty next link
+            var handler = new RecordedDelegatingHandler(okResponse) { StatusCodeToReturn = HttpStatusCode.OK };
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
+            client.Servers.ListOperationResults("West US", "/subscriptions/id/locations/westus/operationstatuses/testoperationid");
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            Assert.Equal(HttpStatusCode.OK, handler.StatusCodeToReturn);
+        }
+
+        [Fact]
+        public void OperationResultRunningValidateMessage()
+        {
+            var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+
+            acceptedResponse.Headers.Add("x-ms-request-id", "1");
+
+            // all accounts under sub and empty next link
+            var handler = new RecordedDelegatingHandler(acceptedResponse) { StatusCodeToReturn = HttpStatusCode.Accepted };
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
+            client.Servers.ListOperationResults("West US", "/subscriptions/id/locations/westus/operationstatuses/testoperationid");
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            Assert.Equal(HttpStatusCode.Accepted, handler.StatusCodeToReturn);
         }
 
         private static void VerifyServersEqual(AnalysisServicesServer createdResource, AnalysisServicesServer referenceResource)

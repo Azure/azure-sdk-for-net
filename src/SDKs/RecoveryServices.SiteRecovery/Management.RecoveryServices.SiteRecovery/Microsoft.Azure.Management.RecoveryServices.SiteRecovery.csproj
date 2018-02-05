@@ -1,19 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
-    <Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-    <VersionPrefix>1.0.2-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
-    <PackageTags>Microsoft Azure resource management</PackageTags>
-    <PackageReleaseNotes>Additional event search, migration support and Replication Health for site recovery.</PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Customizations\**" />
-    <EmbeddedResource Remove="Customizations\**" />
-    <None Remove="Customizations\**" />
-  </ItemGroup>
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
+		<Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
+		<Version>1.0.3-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
+		<PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
+		<PackageReleaseNotes>Additional event search, migration support and Replication Health for site recovery.</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

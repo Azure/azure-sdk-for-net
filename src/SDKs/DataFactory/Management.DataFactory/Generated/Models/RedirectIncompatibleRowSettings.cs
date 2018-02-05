@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,15 +34,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the RedirectIncompatibleRowSettings
         /// class.
         /// </summary>
-        /// <param name="linkedServiceName">Name of the Azure Storage or
-        /// Storage SAS linked service used for redirecting incompatible row.
-        /// Must be specified if redirectIncompatibleRowSettings is specified.
-        /// Type: string (or Expression with resultType string).</param>
-        /// <param name="path">The path to storage for storing the redirect
-        /// incompatible row data Type: string (or Expression with resultType
+        /// <param name="linkedServiceName">Name of the Azure Storage, Storage
+        /// SAS, or Azure Data Lake Store linked service used for redirecting
+        /// incompatible row. Must be specified if
+        /// redirectIncompatibleRowSettings is specified. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        /// <param name="path">The path for storing the redirect incompatible
+        /// row data. Type: string (or Expression with resultType
         /// string).</param>
-        public RedirectIncompatibleRowSettings(object linkedServiceName, object path = default(object))
+        public RedirectIncompatibleRowSettings(object linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object path = default(object))
         {
+            AdditionalProperties = additionalProperties;
             LinkedServiceName = linkedServiceName;
             Path = path;
             CustomInit();
@@ -52,18 +58,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the Azure Storage or Storage SAS linked
-        /// service used for redirecting incompatible row. Must be specified if
-        /// redirectIncompatibleRowSettings is specified. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the Azure Storage, Storage SAS, or Azure Data
+        /// Lake Store linked service used for redirecting incompatible row.
+        /// Must be specified if redirectIncompatibleRowSettings is specified.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "linkedServiceName")]
         public object LinkedServiceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to storage for storing the redirect
-        /// incompatible row data Type: string (or Expression with resultType
-        /// string).
+        /// Gets or sets the path for storing the redirect incompatible row
+        /// data. Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public object Path { get; set; }

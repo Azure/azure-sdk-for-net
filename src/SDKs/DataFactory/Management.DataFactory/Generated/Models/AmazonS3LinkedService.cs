@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,6 +35,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AmazonS3LinkedService class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="accessKeyId">The access key identifier of the Amazon
@@ -44,8 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AmazonS3LinkedService(IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object accessKeyId = default(object), SecureString secretAccessKey = default(SecureString), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AmazonS3LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object accessKeyId = default(object), SecretBase secretAccessKey = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -71,7 +75,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Access Management (IAM) user.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.secretAccessKey")]
-        public SecureString SecretAccessKey { get; set; }
+        public SecretBase SecretAccessKey { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -90,10 +94,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (SecretAccessKey != null)
-            {
-                SecretAccessKey.Validate();
-            }
         }
     }
 }

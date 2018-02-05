@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="url">URL for Azure Search service. Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="key">Admin Key for Azure Search service</param>
@@ -42,8 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSearchLinkedService(object url, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecureString key = default(SecureString), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AzureSearchLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase key = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Url = url;
             Key = key;
@@ -67,7 +71,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets admin Key for Azure Search service
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.key")]
-        public SecureString Key { get; set; }
+        public SecretBase Key { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -89,10 +93,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Url");
-            }
-            if (Key != null)
-            {
-                Key.Validate();
             }
         }
     }

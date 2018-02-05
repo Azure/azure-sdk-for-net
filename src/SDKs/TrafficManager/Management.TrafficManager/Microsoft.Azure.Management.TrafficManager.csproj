@@ -1,13 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.TrafficManager</PackageId>
-    <Description>Microsoft Azure Management TrafficManager Library</Description>
-    <AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
-    <VersionPrefix>2.3.0-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management</PackageTags>    
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.TrafficManager</PackageId>
+		<Description>Microsoft Azure Management TrafficManager Library</Description>
+		<AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
+		<Version>2.3.0-preview</Version>
+		<PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management;</PackageTags>
+		<PackageReleaseNotes/>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

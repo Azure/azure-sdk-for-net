@@ -49,12 +49,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// trainedModelLinkedService to represent the .ilearner file that will
         /// be uploaded by the update operation.  Type: string (or Expression
         /// with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
-        public AzureMLUpdateResourceActivity(string name, object trainedModelName, LinkedServiceReference trainedModelLinkedServiceName, object trainedModelFilePath, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public AzureMLUpdateResourceActivity(string name, object trainedModelName, LinkedServiceReference trainedModelLinkedServiceName, object trainedModelFilePath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             TrainedModelName = trainedModelName;
             TrainedModelLinkedServiceName = trainedModelLinkedServiceName;

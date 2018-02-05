@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="identity">Managed service identity of the
         /// factory.</param>
         /// <param name="provisioningState">Factory provisioning state, example
@@ -46,9 +48,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="createTime">Time the factory was created in ISO8601
         /// format.</param>
         /// <param name="version">Version of the factory.</param>
-        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string))
+        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string))
             : base(id, name, type, location, tags)
         {
+            AdditionalProperties = additionalProperties;
             Identity = identity;
             ProvisioningState = provisioningState;
             CreateTime = createTime;
@@ -60,6 +63,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets managed service identity of the factory.

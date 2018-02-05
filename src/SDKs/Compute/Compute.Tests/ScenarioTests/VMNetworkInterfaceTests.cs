@@ -324,8 +324,8 @@ namespace Compute.Tests
                     // multi CA Assertions
                     Assert.Equal(2, getNicResponse1.IpConfigurations.Count);
                     Assert.Equal(2, getNicResponse2.IpConfigurations.Count);
-                    Assert.Equal(1, getNicResponse1.IpConfigurations.Where(x => x.Primary == true).Count());
-                    Assert.Equal(1, getNicResponse2.IpConfigurations.Where(x => x.Primary == true).Count());
+                    Assert.Single(getNicResponse1.IpConfigurations.Where(x => x.Primary == true));
+                    Assert.Single(getNicResponse2.IpConfigurations.Where(x => x.Primary == true));
                 }
                 finally
                 {

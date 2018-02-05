@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="url">The URL of the OData service endpoint. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="authenticationType">Type of authentication used to
@@ -47,8 +51,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public ODataLinkedService(object url, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public ODataLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             Url = url;
             AuthenticationType = authenticationType;
@@ -88,7 +92,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password of the OData service.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -110,10 +114,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Url");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

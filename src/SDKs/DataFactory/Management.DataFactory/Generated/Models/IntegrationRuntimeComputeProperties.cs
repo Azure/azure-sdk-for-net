@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,6 +34,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// IntegrationRuntimeComputeProperties class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="location">The location for managed integration
         /// runtime. The supported regions could be found on
         /// https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities</param>
@@ -43,8 +47,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// executions count per node for managed integration runtime.</param>
         /// <param name="vNetProperties">VNet properties for managed
         /// integration runtime.</param>
-        public IntegrationRuntimeComputeProperties(string location = default(string), string nodeSize = default(string), int? numberOfNodes = default(int?), int? maxParallelExecutionsPerNode = default(int?), IntegrationRuntimeVNetProperties vNetProperties = default(IntegrationRuntimeVNetProperties))
+        public IntegrationRuntimeComputeProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string location = default(string), string nodeSize = default(string), int? numberOfNodes = default(int?), int? maxParallelExecutionsPerNode = default(int?), IntegrationRuntimeVNetProperties vNetProperties = default(IntegrationRuntimeVNetProperties))
         {
+            AdditionalProperties = additionalProperties;
             Location = location;
             NodeSize = nodeSize;
             NumberOfNodes = numberOfNodes;
@@ -57,6 +62,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the location for managed integration runtime. The

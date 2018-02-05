@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/contentmoderator/moderate/v1.0/ProcessText/DetectLanguage",
+      "EncodedRequestUri": "L2NvbnRlbnRtb2RlcmF0b3IvbW9kZXJhdGUvdjEuMC9Qcm9jZXNzVGV4dC9EZXRlY3RMYW5ndWFnZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "\"Ciao buongiorno stronzo\"",
+      "RequestHeaders": {
+        "Content-Type": [
+          "text/plain"
+        ],
+        "Content-Length": [
+          "25"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2600.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.16299",
+          "Microsoft.CognitiveServices.ContentModerator.ContentModeratorClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"DetectedLanguage\": \"eng\",\r\n  \"Status\": {\r\n    \"Code\": 3000,\r\n    \"Description\": \"OK\",\r\n    \"Exception\": null\r\n  },\r\n  \"TrackingId\": \"5e7b225a-9c00-43d4-b717-ab905ce755e9\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "137"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "apim-request-id": [
+          "c52f5cf6-ebb7-4752-bf33-5a74491894a6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Dec 2017 22:18:36 GMT"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

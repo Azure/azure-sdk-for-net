@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,6 +34,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the IntegrationRuntimeConnectionInfo
         /// class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="serviceToken">The token generated in service. Callers
         /// use this token to authenticate to integration runtime.</param>
         /// <param name="identityCertThumbprint">The integration runtime SSL
@@ -45,8 +49,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// runtime.</param>
         /// <param name="isIdentityCertExprired">Whether the identity
         /// certificate is expired.</param>
-        public IntegrationRuntimeConnectionInfo(string serviceToken = default(string), string identityCertThumbprint = default(string), string hostServiceUri = default(string), string version = default(string), string publicKey = default(string), bool? isIdentityCertExprired = default(bool?))
+        public IntegrationRuntimeConnectionInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string serviceToken = default(string), string identityCertThumbprint = default(string), string hostServiceUri = default(string), string version = default(string), string publicKey = default(string), bool? isIdentityCertExprired = default(bool?))
         {
+            AdditionalProperties = additionalProperties;
             ServiceToken = serviceToken;
             IdentityCertThumbprint = identityCertThumbprint;
             HostServiceUri = hostServiceUri;
@@ -60,6 +65,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets the token generated in service. Callers use this token to

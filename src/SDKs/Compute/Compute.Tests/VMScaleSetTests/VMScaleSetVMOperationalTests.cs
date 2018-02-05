@@ -7,13 +7,28 @@ using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace Compute.Tests
 {
-    public class VMScaleSetVMOperationalTests : VMScaleSetVMTestsBase 
+    public class VMScaleSetVMOperationalTests : VMScaleSetVMTestsBase
     {
+        private string rgName, vmssName, storageAccountName, instanceId;
+        private ImageReference imageRef;
+        private VirtualMachineScaleSet inputVMScaleSet;
+
+        private void InitializeCommon(MockContext context)
+        {
+            EnsureClientsInitialized(context);
+
+            imageRef = GetPlatformVMImage(useWindowsImage: true);
+            rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+            vmssName = TestUtilities.GenerateName("vmss");
+            storageAccountName = TestUtilities.GenerateName(TestPrefix);
+        }
+
         /// <summary>
         /// Covers following Operations:
         /// Create RG
@@ -68,18 +83,10 @@ namespace Compute.Tests
             }
         }
 
-        public void TestVMScaleSetVMOperationsInternal(MockContext context, bool hasManagedDisks = false)
+        private void TestVMScaleSetVMOperationsInternal(MockContext context, bool hasManagedDisks = false)
         {
-            EnsureClientsInitialized(context);
-
-            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-
-            // Create resource group
-            string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
-            string vmssName = TestUtilities.GenerateName("vmss");
-            string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-            const string instanceId = "0";
-            VirtualMachineScaleSet inputVMScaleSet;
+            InitializeCommon(context);
+            instanceId = "0";
 
             bool passed = false;
             try
@@ -135,6 +142,118 @@ namespace Compute.Tests
             }
 
             Assert.True(passed);
+        }
+
+        /// <summary>
+        /// Covers following Operations for a VMSS VM with managed disks:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VMScaleSet
+        /// Get VMScaleSetVM Model View
+        /// Create DataDisk
+        /// Update VirtualMachineScaleVM to Attach Disk
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_Put()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                InitializeCommon(context);
+                bool passed = false;
+                instanceId = "0";
+
+                m_location = "southcentralus"; // Right now some regions are in hotfix that do not have this API
+
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+
+                    VirtualMachineScaleSetVM vmssVM = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId);
+
+                    VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks: true);
+                    ValidateVMScaleSetVM(vmScaleSetVMModel, vmScaleSet.Sku.Name, vmssVM, hasManagedDisks: true);
+
+                    AttachDataDiskToVMScaleSetVM(vmssVM, vmScaleSetVMModel, 2);
+
+                    VirtualMachineScaleSetVM vmssVMReturned = m_CrpClient.VirtualMachineScaleSetVMs.Update(rgName, vmScaleSet.Name, vmssVM.InstanceId, vmssVM);
+                    ValidateVMScaleSetVM(vmScaleSetVMModel, vmScaleSet.Sku.Name, vmssVMReturned, hasManagedDisks: true);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        private Disk CreateDataDisk(string diskName)
+        {
+            var disk = new Disk
+            {
+                Location = m_location,
+                DiskSizeGB = 10,
+            };
+            disk.Sku = new DiskSku()
+            {
+                Name = StorageAccountTypes.StandardLRS
+            };
+            disk.CreationData = new CreationData()
+            {
+                CreateOption = DiskCreateOption.Empty
+            };
+
+            return m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+        }
+
+        private DataDisk CreateModelDataDisk(Disk disk)
+        {
+            var modelDisk = new DataDisk
+            {
+                DiskSizeGB = disk.DiskSizeGB,
+                CreateOption = DiskCreateOptionTypes.Attach
+            };
+
+            return modelDisk;
+        }
+
+        private void AttachDataDiskToVMScaleSetVM(VirtualMachineScaleSetVM vmssVM, VirtualMachineScaleSetVM vmModel, int lun)
+        {
+            if(vmssVM.StorageProfile.DataDisks == null)
+                vmssVM.StorageProfile.DataDisks = new List<DataDisk>();
+
+            if (vmModel.StorageProfile.DataDisks == null)
+                vmModel.StorageProfile.DataDisks = new List<DataDisk>();
+
+            var diskName = TestPrefix + "dataDisk" + lun;
+
+            var disk = CreateDataDisk(diskName);
+
+            var dd = new DataDisk
+            {
+                CreateOption = DiskCreateOptionTypes.Attach,
+                Lun = lun,
+                Name = diskName,
+                ManagedDisk = new ManagedDiskParameters()
+                {
+                    Id = disk.Id,
+                    StorageAccountType = disk.Sku.Name
+                }
+            };
+
+            vmssVM.StorageProfile.DataDisks.Add(dd);
+
+            // Add the data disk to the model for validation later
+            vmModel.StorageProfile.DataDisks.Add(CreateModelDataDisk(disk));
         }
     }
 }

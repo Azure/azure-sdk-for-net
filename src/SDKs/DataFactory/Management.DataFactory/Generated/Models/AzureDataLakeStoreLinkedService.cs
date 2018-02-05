@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="dataLakeStoreUri">Data Lake Store service URI. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="servicePrincipalId">The ID of the application used to
@@ -59,8 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDataLakeStoreLinkedService(object dataLakeStoreUri, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object tenant = default(object), object accountName = default(object), object subscriptionId = default(object), object resourceGroupName = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AzureDataLakeStoreLinkedService(object dataLakeStoreUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object accountName = default(object), object subscriptionId = default(object), object resourceGroupName = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description)
         {
             DataLakeStoreUri = dataLakeStoreUri;
             ServicePrincipalId = servicePrincipalId;
@@ -98,7 +102,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// against the Azure Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
-        public SecureString ServicePrincipalKey { get; set; }
+        public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
         /// Gets or sets the name or ID of the tenant to which the service
@@ -151,10 +155,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (DataLakeStoreUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DataLakeStoreUri");
-            }
-            if (ServicePrincipalKey != null)
-            {
-                ServicePrincipalKey.Validate();
             }
         }
     }

@@ -41,7 +41,7 @@ namespace Compute.Tests
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                     VirtualMachine inputVM;
-                    CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM,
+                    CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM,
                         (vm) =>
                         {
                             vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountOutput.Name);

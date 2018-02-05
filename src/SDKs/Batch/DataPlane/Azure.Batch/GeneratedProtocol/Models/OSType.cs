@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OSType
     {
+        /// <summary>
+        /// The Linux operating system.
+        /// </summary>
         [EnumMember(Value = "linux")]
         Linux,
+        /// <summary>
+        /// The Windows operating system.
+        /// </summary>
         [EnumMember(Value = "windows")]
         Windows
     }
