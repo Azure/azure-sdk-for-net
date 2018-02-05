@@ -3198,5 +3198,72 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample(version: "Copy")]
+        public const string CopyNetezzaToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyNetezzaToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""NetezzaSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""NetezzaDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyVerticaToBlob = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                type: ""Copy"",
+                name: ""CopyVerticaToBlob"",
+                description: ""Test activity description"", 
+                typeProperties: {
+                    source: {
+                        type: ""VerticaSource"",
+                        query: ""select * from a table""
+                    },
+                    sink: {
+                        type: ""BlobSink""
+                    }
+                },
+                inputs: [
+                    {
+                        referenceName: ""VerticaDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: [
+                    {
+                        referenceName: ""BlobDataset"", type: ""DatasetReference""
+                    }
+                ]
+            }
+        ]
+    }
+}";
     }
 }

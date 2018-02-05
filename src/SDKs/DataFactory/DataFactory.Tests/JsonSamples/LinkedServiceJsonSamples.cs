@@ -1038,6 +1038,14 @@ namespace DataFactory.Tests.JsonSamples
                 type: ""SecureString"",
                 value: ""some secret""
             },
+            clientId : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
             useSystemTrustStore : true
         }
     }
@@ -1436,6 +1444,36 @@ namespace DataFactory.Tests.JsonSamples
             useEncryptedEndpoints : true,
             useHostVerification : true,
             usePeerVerification : true
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string NetezzaLinkedService = @"
+{
+    name: ""NetezzaLinkedService"",
+    properties: {
+        type: ""Netezza"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string VerticaLinkedService = @"
+{
+    name: ""VerticaLinkedService"",
+    properties: {
+        type: ""Vertica"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
         }
     }
 }
