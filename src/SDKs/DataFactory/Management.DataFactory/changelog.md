@@ -19,6 +19,7 @@
   * Support round tripping of new properties using additionalProperties for some types
   * Add new integration runtime API's: patch integration runtime; patch integration runtime node; upgrade integration runtime, get node IP address
   * Add integration runtime naming validation
+  * Add LinkedService, Dataset, Source for Vertica, Netezza connector, and update LinkedService definition for Google BigQuery
 
 ## Version 0.2.1-preview
 
