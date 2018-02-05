@@ -1,9 +1,9 @@
-2018-02-05 00:11:29 UTC
+2018-02-05 18:05:31 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: ro-joowan
 Branch:      revert-path-parameters
-Commit:      570176c379abfa4b3f10b988d9b8ad9bfb776ea4
+Commit:      feeb7c588bb1499c06a18170bec89e8475006e47
 
 2) AutoRest information
 Requested version: latest
