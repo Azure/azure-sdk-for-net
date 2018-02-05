@@ -758,7 +758,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/getStatistics";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/GetStatistics";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaJobDnsSuffix}", Client.AdlaJobDnsSuffix);
             _url = _url.Replace("{jobIdentity}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(jobIdentity, Client.SerializationSettings).Trim('"')));
@@ -951,7 +951,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/getDebugDataPath";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/GetDebugDataPath";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaJobDnsSuffix}", Client.AdlaJobDnsSuffix);
             _url = _url.Replace("{jobIdentity}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(jobIdentity, Client.SerializationSettings).Trim('"')));
@@ -1599,7 +1599,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/cancelJob";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/CancelJob";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaJobDnsSuffix}", Client.AdlaJobDnsSuffix);
             _url = _url.Replace("{jobIdentity}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(jobIdentity, Client.SerializationSettings).Trim('"')));
@@ -1773,7 +1773,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/yieldJob";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobIdentity}/YieldJob";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlaJobDnsSuffix}", Client.AdlaJobDnsSuffix);
             _url = _url.Replace("{jobIdentity}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(jobIdentity, Client.SerializationSettings).Trim('"')));
