@@ -135,7 +135,7 @@ namespace ResourceGroups.Tests
             Assert.True(result.Properties.Outputs.ToString().Contains("\"type\": \"string\""));
         }
 
-        [Fact(Skip = "Failing Deployment Test")]
+        [Fact]
         public void DeploymentTestsTemplateAsJsonString()
         {
             var responseBody = @"{
