@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget?api-version=2018-01-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uc3VtcHRpb24vYnVkZ2V0cy9ORVRTREtUZXN0QnVkZ2V0P2FwaS12ZXJzaW9uPTIwMTgtMDEtMzE=",
+      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget30?api-version=2018-01-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uc3VtcHRpb24vYnVkZ2V0cy9ORVRTREtUZXN0QnVkZ2V0MzA/YXBpLXZlcnNpb249MjAxOC0wMS0zMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/2.1.0.0"
+          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget\",\r\n  \"name\": \"NETSDKTestBudget\",\r\n  \"type\": \"Microsoft.Consumption/budgets\",\r\n  \"eTag\": \"\\\"1d39ae594114419\\\"\",\r\n  \"properties\": {\r\n    \"timePeriod\": {\r\n      \"startDate\": \"2018-01-01T00:00:00Z\",\r\n      \"endDate\": \"2018-11-01T00:00:00Z\"\r\n    },\r\n    \"timeGrain\": \"Monthly\",\r\n    \"amount\": 50.0,\r\n    \"currentSpend\": {\r\n      \"amount\": 167.98052867365013,\r\n      \"unit\": \"USD\"\r\n    },\r\n    \"category\": \"Cost\",\r\n    \"notifications\": {}\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget30\",\r\n  \"name\": \"NETSDKTestBudget30\",\r\n  \"type\": \"Microsoft.Consumption/budgets\",\r\n  \"eTag\": \"\\\"1d39ed545a88544\\\"\",\r\n  \"properties\": {\r\n    \"timePeriod\": {\r\n      \"startDate\": \"2018-02-01T00:00:00Z\",\r\n      \"endDate\": \"2018-11-01T00:00:00Z\"\r\n    },\r\n    \"timeGrain\": \"Monthly\",\r\n    \"amount\": 60.0,\r\n    \"currentSpend\": {\r\n      \"amount\": 2.2374146615315338,\r\n      \"unit\": \"USD\"\r\n    },\r\n    \"category\": \"Cost\",\r\n    \"notifications\": {},\r\n    \"filters\": {\r\n      \"resourceGroups\": [],\r\n      \"resources\": [],\r\n      \"meters\": []\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,7 +23,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 31 Jan 2018 23:02:00 GMT"
+          "Mon, 05 Feb 2018 23:07:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "session-id": [
-          "cb60a208-5604-44a7-a0f9-9299da90bac7"
+          "66200ac1-bee7-423f-a7b4-f1510dec299e"
         ],
         "x-ms-request-id": [
-          "66b27fad-e15e-4aba-87df-24f69df4c97c"
+          "ce271081-0ad1-4034-afef-37c153c86387"
         ],
         "x-ms-correlation-request-id": [
-          "601f7cde-85ea-4f56-b097-01a6232b1a92"
+          "a6212fb3-56a5-4fa0-9d49-f1a6935240d4"
         ],
         "x-ms-client-request-id": [
-          "77f0f59b-80e7-4ddc-b8a6-de0da234baea"
+          "65d9a6a9-e2dc-4a5b-8235-7e986e24a2ca"
         ],
         "x-content-type-options": [
           "nosniff"
@@ -62,7 +62,7 @@
           "14999"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180131T230200Z:601f7cde-85ea-4f56-b097-01a6232b1a92"
+          "WESTUS2:20180205T230741Z:a6212fb3-56a5-4fa0-9d49-f1a6935240d4"
         ]
       },
       "StatusCode": 200

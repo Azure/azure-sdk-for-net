@@ -17,8 +17,7 @@ namespace Consumption.Tests.ScenarioTests
     {
         protected const int NumberOfItems = 10;
         protected const string subscriptionId = "1caaa5a3-2b66-438e-8ab4-bce37d518c5d";
-        protected const string billingPeriodName = "201710";
-        protected const string budgetName = "NETSDKTestBudget";
+        protected const string budgetName = "NETSDKTestBudget30";
         protected const string resourceGroupName = "MyNewResourceGroup";
 
         [Fact]
@@ -32,10 +31,10 @@ namespace Consumption.Tests.ScenarioTests
 
                 var timePeriod = new BudgetTimePeriod
                 {
-                    StartDate = new DateTime(2018, 1, 1),
+                    StartDate = new DateTime(2018, 2, 1),
                     EndDate = new DateTime(2018, 11, 1),
                 };
-                var budget = new Budget("Cost", 60, "Monthly", timePeriod) { ETag = "\"1d39ae594114419\"" };
+                var budget = new Budget("Cost", 60, "Monthly", timePeriod);
 
                 var budgetResponse = consumptionMgmtClient.Budgets.CreateOrUpdate(budgetName, budget);
 
@@ -58,7 +57,7 @@ namespace Consumption.Tests.ScenarioTests
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
 
-                consumptionMgmtClient.Budgets.Delete("SDKTestBudget");
+                consumptionMgmtClient.Budgets.Delete("NETSDKTestBudget");
             }
         }
 
@@ -112,7 +111,7 @@ namespace Consumption.Tests.ScenarioTests
                     EndDate = new DateTime(2018, 11, 1),
                 };
 
-                var budget = new Budget("Cost", 60, "Monthly", timePeriod) { ETag = "\"1d39ba79c54d57a\"" };
+                var budget = new Budget("Cost", 60, "Monthly", timePeriod);
 
                 var budgetResponse = consumptionMgmtClient.Budgets.CreateOrUpdateByResourceGroupName(resourceGroupName, budgetName, budget);
 
@@ -135,7 +134,7 @@ namespace Consumption.Tests.ScenarioTests
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 consumptionMgmtClient.SubscriptionId = subscriptionId;
 
-                consumptionMgmtClient.Budgets.DeleteByResourceGroupName(resourceGroupName, "SDKTestBudget");
+                consumptionMgmtClient.Budgets.DeleteByResourceGroupName(resourceGroupName, "NETSDKTestBudget");
             }
         }
 

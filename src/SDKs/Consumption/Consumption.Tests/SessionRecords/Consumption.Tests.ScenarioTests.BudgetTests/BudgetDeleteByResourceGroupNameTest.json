@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/resourceGroups/MyNewResourceGroup/providers/Microsoft.Consumption/budgets/SDKTestBudget?api-version=2018-01-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Jlc291cmNlR3JvdXBzL015TmV3UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbnN1bXB0aW9uL2J1ZGdldHMvU0RLVGVzdEJ1ZGdldD9hcGktdmVyc2lvbj0yMDE4LTAxLTMx",
+      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/resourceGroups/MyNewResourceGroup/providers/Microsoft.Consumption/budgets/NETSDKTestBudget?api-version=2018-01-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Jlc291cmNlR3JvdXBzL015TmV3UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbnN1bXB0aW9uL2J1ZGdldHMvTkVUU0RLVGVzdEJ1ZGdldD9hcGktdmVyc2lvbj0yMDE4LTAxLTMx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/2.1.0.0"
+          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/3.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -23,7 +23,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Feb 2018 22:02:11 GMT"
+          "Mon, 05 Feb 2018 23:09:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -32,16 +32,16 @@
           "Microsoft-IIS/8.5"
         ],
         "session-id": [
-          "89159317-04a4-4c99-bfb4-5c03448afef2"
+          "c8684e29-edde-40bd-94a4-b723cf6c03ba"
         ],
         "x-ms-request-id": [
-          "7f766690-4bc3-4e01-b2d0-d21c658aaf55"
+          "92f1387f-ba47-4f37-90c6-72b4f0b415e3"
         ],
         "x-ms-correlation-request-id": [
-          "e61ef8ad-b86c-4142-a16a-cf53044a361f"
+          "cc9782b0-7816-4fc7-9075-9eeeff1ecf20"
         ],
         "x-ms-client-request-id": [
-          "d425fcf2-84fe-4bba-ba45-aa27a48124a4"
+          "b05dc983-6968-4a93-890d-a67c01d45d44"
         ],
         "x-content-type-options": [
           "nosniff"
@@ -56,7 +56,7 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180201T220211Z:e61ef8ad-b86c-4142-a16a-cf53044a361f"
+          "WESTUS2:20180205T230942Z:cc9782b0-7816-4fc7-9075-9eeeff1ecf20"
         ]
       },
       "StatusCode": 200

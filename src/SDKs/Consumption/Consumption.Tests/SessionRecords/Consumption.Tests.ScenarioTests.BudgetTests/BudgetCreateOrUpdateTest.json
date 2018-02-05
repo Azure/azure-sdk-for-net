@@ -1,24 +1,27 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget?api-version=2018-01-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uc3VtcHRpb24vYnVkZ2V0cy9ORVRTREtUZXN0QnVkZ2V0P2FwaS12ZXJzaW9uPTIwMTgtMDEtMzE=",
+      "RequestUri": "/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget30?api-version=2018-01-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWNhYWE1YTMtMmI2Ni00MzhlLThhYjQtYmNlMzdkNTE4YzVkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29uc3VtcHRpb24vYnVkZ2V0cy9ORVRTREtUZXN0QnVkZ2V0MzA/YXBpLXZlcnNpb249MjAxOC0wMS0zMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"category\": \"Cost\",\r\n    \"amount\": 60.0,\r\n    \"timeGrain\": \"Monthly\",\r\n    \"timePeriod\": {\r\n      \"startDate\": \"2018-01-01T00:00:00Z\",\r\n      \"endDate\": \"2018-11-01T00:00:00Z\"\r\n    }\r\n  },\r\n  \"eTag\": \"\\\"1d39ae594114419\\\"\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"category\": \"Cost\",\r\n    \"amount\": 60.0,\r\n    \"timeGrain\": \"Monthly\",\r\n    \"timePeriod\": {\r\n      \"startDate\": \"2018-02-01T00:00:00Z\",\r\n      \"endDate\": \"2018-11-01T00:00:00Z\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "250"
+          "216"
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/2.1.0.0"
+          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget\",\r\n  \"name\": \"NETSDKTestBudget\",\r\n  \"type\": \"Microsoft.Consumption/budgets\",\r\n  \"eTag\": \"\\\"1d39ae86d1bb20c\\\"\",\r\n  \"properties\": {\r\n    \"timePeriod\": {\r\n      \"startDate\": \"2018-01-01T00:00:00Z\",\r\n      \"endDate\": \"2018-11-01T00:00:00Z\"\r\n    },\r\n    \"timeGrain\": \"Monthly\",\r\n    \"amount\": 60.0,\r\n    \"currentSpend\": null,\r\n    \"category\": \"Cost\",\r\n    \"notifications\": {}\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget30\",\r\n  \"name\": \"NETSDKTestBudget30\",\r\n  \"type\": \"Microsoft.Consumption/budgets\",\r\n  \"eTag\": \"\\\"1d39ed545a88544\\\"\",\r\n  \"properties\": {\r\n    \"timePeriod\": {\r\n      \"startDate\": \"2018-02-01T00:00:00Z\",\r\n      \"endDate\": \"2018-11-01T00:00:00Z\"\r\n    },\r\n    \"timeGrain\": \"Monthly\",\r\n    \"amount\": 60.0,\r\n    \"currentSpend\": null,\r\n    \"category\": \"Cost\",\r\n    \"notifications\": {},\r\n    \"filters\": {\r\n      \"resourceGroups\": [],\r\n      \"resources\": [],\r\n      \"meters\": []\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "464"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
@@ -29,31 +32,28 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 31 Jan 2018 23:08:37 GMT"
+          "Mon, 05 Feb 2018 23:01:36 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
+        "Location": [
+          "https://consumption.azure.com/subscriptions/1caaa5a3-2b66-438e-8ab4-bce37d518c5d/providers/Microsoft.Consumption/budgets/NETSDKTestBudget30?api-version=2018-01-31"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "session-id": [
-          "df6620c3-6c6d-414f-9923-964701402051"
+          "bbee04fb-1379-4fd5-a938-b0509ae3c270"
         ],
         "x-ms-request-id": [
-          "e563a803-c397-4e35-a8e2-375b15a82959"
+          "51369ca6-4fae-482e-bd83-d57f5e20e9c4"
         ],
         "x-ms-correlation-request-id": [
-          "5e53eecf-fb79-4b0d-a93e-dfe664d17d29"
+          "7a2ab365-b24e-4d6a-8a9e-70abd93709e4"
         ],
         "x-ms-client-request-id": [
-          "2b764281-de0c-4ca8-b3fa-06265a324824"
+          "a6675edf-8b61-4147-9c61-4bcdf1dc866a"
         ],
         "x-content-type-options": [
           "nosniff"
@@ -68,10 +68,10 @@
           "1199"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180131T230838Z:5e53eecf-fb79-4b0d-a93e-dfe664d17d29"
+          "WESTUS2:20180205T230136Z:7a2ab365-b24e-4d6a-8a9e-70abd93709e4"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     }
   ],
   "Names": {},
