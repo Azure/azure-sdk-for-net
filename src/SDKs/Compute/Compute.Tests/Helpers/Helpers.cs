@@ -71,7 +71,7 @@ namespace Compute.Tests
             {
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize()
                 {
-                    Name = "Standard_M64s",
+                    Name = VirtualMachineSizeTypes.StandardM64s,
                     MemoryInMB = 1024000,
                     NumberOfCores = 64,
                     OsDiskSizeInMB = 1047552,
@@ -80,7 +80,7 @@ namespace Compute.Tests
                 });
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize()
                 {
-                    Name = "Standard_M64-16ms",
+                    Name = VirtualMachineSizeTypes.StandardM6416ms,
                     MemoryInMB = 1792000,
                     NumberOfCores = 64,
                     OsDiskSizeInMB = 1047552,
