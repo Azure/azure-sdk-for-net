@@ -7,28 +7,29 @@
 namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The logs.
+    /// The response containing the usage data
     /// </summary>
-    public partial class Logs
+    public partial class UsageListResult
     {
         /// <summary>
-        /// Initializes a new instance of the Logs class.
+        /// Initializes a new instance of the UsageListResult class.
         /// </summary>
-        public Logs()
+        public UsageListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Logs class.
+        /// Initializes a new instance of the UsageListResult class.
         /// </summary>
-        /// <param name="content">The content of the log.</param>
-        public Logs(string content = default(string))
+        public UsageListResult(IList<Usage> value = default(IList<Usage>))
         {
-            Content = content;
+            Value = value;
             CustomInit();
         }
 
@@ -38,10 +39,9 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the content of the log.
         /// </summary>
-        [JsonProperty(PropertyName = "content")]
-        public string Content { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Usage> Value { get; private set; }
 
     }
 }

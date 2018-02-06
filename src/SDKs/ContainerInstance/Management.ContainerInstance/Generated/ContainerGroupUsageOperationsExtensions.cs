@@ -13,33 +13,39 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for ContainerGroupUsageOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class ContainerGroupUsageOperationsExtensions
     {
             /// <summary>
-            /// List the operations for Azure Container Instance service.
+            /// Get the usage for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static OperationListResult List(this IOperations operations)
+            /// <param name='location'>
+            /// The identifier for the physical azure location.
+            /// </param>
+            public static UsageListResult List(this IContainerGroupUsageOperations operations, string location)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List the operations for Azure Container Instance service.
+            /// Get the usage for a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The identifier for the physical azure location.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationListResult> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsageListResult> ListAsync(this IContainerGroupUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

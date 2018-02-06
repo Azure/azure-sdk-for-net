@@ -10,35 +10,33 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using System.Linq;
 
     /// <summary>
-    /// A container group or container instance event.
+    /// A container instance event.
     /// </summary>
-    public partial class EventModel
+    public partial class ContainerEvent
     {
         /// <summary>
-        /// Initializes a new instance of the EventModel class.
+        /// Initializes a new instance of the ContainerEvent class.
         /// </summary>
-        public EventModel()
+        public ContainerEvent()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventModel class.
+        /// Initializes a new instance of the ContainerEvent class.
         /// </summary>
         /// <param name="count">The count of the event.</param>
         /// <param name="firstTimestamp">The date-time of the earliest logged
         /// event.</param>
         /// <param name="lastTimestamp">The date-time of the latest logged
         /// event.</param>
-        /// <param name="name">The event name.</param>
         /// <param name="message">The event message.</param>
         /// <param name="type">The event type.</param>
-        public EventModel(int? count = default(int?), System.DateTime? firstTimestamp = default(System.DateTime?), System.DateTime? lastTimestamp = default(System.DateTime?), string name = default(string), string message = default(string), string type = default(string))
+        public ContainerEvent(int? count = default(int?), System.DateTime? firstTimestamp = default(System.DateTime?), System.DateTime? lastTimestamp = default(System.DateTime?), string message = default(string), string type = default(string))
         {
             Count = count;
             FirstTimestamp = firstTimestamp;
             LastTimestamp = lastTimestamp;
-            Name = name;
             Message = message;
             Type = type;
             CustomInit();
@@ -66,12 +64,6 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastTimestamp")]
         public System.DateTime? LastTimestamp { get; set; }
-
-        /// <summary>
-        /// Gets or sets the event name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the event message.

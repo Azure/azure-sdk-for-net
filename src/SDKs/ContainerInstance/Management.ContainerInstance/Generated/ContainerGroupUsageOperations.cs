@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ContainerGroupUsageOperations operations.
     /// </summary>
-    internal partial class Operations : IServiceOperations<ContainerInstanceManagementClient>, IOperations
+    internal partial class ContainerGroupUsageOperations : IServiceOperations<ContainerInstanceManagementClient>, IContainerGroupUsageOperations
     {
         /// <summary>
-        /// Initializes a new instance of the Operations class.
+        /// Initializes a new instance of the ContainerGroupUsageOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal Operations(ContainerInstanceManagementClient client)
+        internal ContainerGroupUsageOperations(ContainerInstanceManagementClient client)
         {
             if (client == null)
             {
@@ -47,8 +47,11 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public ContainerInstanceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List the operations for Azure Container Instance service.
+        /// Get the usage for a subscription
         /// </summary>
+        /// <param name='location'>
+        /// The identifier for the physical azure location.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -70,8 +73,16 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsageListResult>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -83,12 +94,15 @@ namespace Microsoft.Azure.Management.ContainerInstance
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.ContainerInstance/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -187,7 +201,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationListResult>();
+            var _result = new AzureOperationResponse<UsageListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -200,7 +214,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<UsageListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

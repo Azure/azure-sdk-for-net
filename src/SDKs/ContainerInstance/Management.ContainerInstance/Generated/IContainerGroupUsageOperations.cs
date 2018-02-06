@@ -15,13 +15,16 @@ namespace Microsoft.Azure.Management.ContainerInstance
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// ContainerGroupUsageOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface IContainerGroupUsageOperations
     {
         /// <summary>
-        /// List the operations for Azure Container Instance service.
+        /// Get the usage for a subscription
         /// </summary>
+        /// <param name='location'>
+        /// The identifier for the physical azure location.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -37,6 +40,6 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageListResult>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
