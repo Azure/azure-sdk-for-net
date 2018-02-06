@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 namespace Microsoft.Rest
 {
+    
     /// <summary>
     /// Generic RestException class with a generic body 
     /// Inherited by all custom exceptions and leveraged 
