@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Search
     using Microsoft.Azure.Search.Models;
     using Microsoft.Spatial;
     using Newtonsoft.Json.Serialization;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Builds field definitions for an Azure Search index by reflecting over a user-defined model type.
@@ -53,17 +54,22 @@ namespace Microsoft.Azure.Search
             var fields = new List<Field>();
             foreach (JsonProperty prop in contract.Properties)
             {
+                IList<Attribute> attributes = prop.AttributeProvider.GetAttributes(true);
+                if (attributes.Any(attr => attr is JsonIgnoreAttribute))
+                {
+                    continue;
+                }
+
                 DataType dataType = GetDataType(prop.PropertyType, prop.PropertyName);
 
                 var field = new Field(prop.PropertyName, dataType);
-
-                IList<Attribute> attributes = prop.AttributeProvider.GetAttributes(true);
+                                
                 foreach (Attribute attribute in attributes)
                 {
                     IsRetrievableAttribute isRetrievableAttribute;
                     AnalyzerAttribute analyzerAttribute;
                     SearchAnalyzerAttribute searchAnalyzerAttribute;
-                    IndexAnalyzerAttribute indexAnalyzerAttribute;
+                    IndexAnalyzerAttribute indexAnalyzerAttribute;                    
                     if (attribute is IsSearchableAttribute)
                     {
                         field.IsSearchable = true;
