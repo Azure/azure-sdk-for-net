@@ -11,7 +11,7 @@
         <PackageTags>Consumptionmanagement;Consumption;</PackageTags>
       <PackageReleaseNotes>
         <![CDATA[
-        This is a public release of the Azure Consunmption SDK that provides access to consumption resources for Azure Enterprise Subscriptions. Included with this release is to get reservations summaries and reservations details.
+        This is a public release of the Azure Consunmption SDK that provides access to consumption resources for Azure Enterprise Subscriptions. Included with this release is addding Marketplace, Budget and Pricesheet APIs.
       ]]>
       </PackageReleaseNotes>
     </PropertyGroup>
