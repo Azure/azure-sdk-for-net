@@ -11,34 +11,31 @@
 namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The operation list response that contains all operations for Azure
-    /// Container Instance service.
+    /// The name object of the resource
     /// </summary>
-    public partial class OperationListResult
+    public partial class UsageName
     {
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the UsageName class.
         /// </summary>
-        public OperationListResult()
+        public UsageName()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the UsageName class.
         /// </summary>
-        /// <param name="value">The list of operations.</param>
-        /// <param name="nextLink">The URI to fetch the next page of
-        /// operations.</param>
-        public OperationListResult(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
+        /// <param name="value">The name of the resource</param>
+        /// <param name="localizedValue">The localized name of the
+        /// resource</param>
+        public UsageName(string value = default(string), string localizedValue = default(string))
         {
             Value = value;
-            NextLink = nextLink;
+            LocalizedValue = localizedValue;
             CustomInit();
         }
 
@@ -48,16 +45,16 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of operations.
+        /// Gets the name of the resource
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Operation> Value { get; set; }
+        public string Value { get; private set; }
 
         /// <summary>
-        /// Gets or sets the URI to fetch the next page of operations.
+        /// Gets the localized name of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; set; }
+        [JsonProperty(PropertyName = "localizedValue")]
+        public string LocalizedValue { get; private set; }
 
     }
 }

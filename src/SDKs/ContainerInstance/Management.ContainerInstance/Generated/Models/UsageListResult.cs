@@ -16,29 +16,24 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using System.Linq;
 
     /// <summary>
-    /// The operation list response that contains all operations for Azure
-    /// Container Instance service.
+    /// The response containing the usage data
     /// </summary>
-    public partial class OperationListResult
+    public partial class UsageListResult
     {
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the UsageListResult class.
         /// </summary>
-        public OperationListResult()
+        public UsageListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the UsageListResult class.
         /// </summary>
-        /// <param name="value">The list of operations.</param>
-        /// <param name="nextLink">The URI to fetch the next page of
-        /// operations.</param>
-        public OperationListResult(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
+        public UsageListResult(IList<Usage> value = default(IList<Usage>))
         {
             Value = value;
-            NextLink = nextLink;
             CustomInit();
         }
 
@@ -48,16 +43,9 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of operations.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Operation> Value { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URI to fetch the next page of operations.
-        /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; set; }
+        public IList<Usage> Value { get; private set; }
 
     }
 }
