@@ -24,17 +24,41 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     public partial interface IFirewallRulesOperations
     {
         /// <summary>
+        /// Lists the Data Lake Analytics firewall rules within the specified
+        /// Data Lake Analytics account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<FirewallRule>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates or updates the specified firewall rule. During update, the
         /// firewall rule with the specified name will be replaced with this
         /// new firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Analytics account.
+        /// The name of the Azure resource group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to add or replace the
-        /// firewall rule.
+        /// The name of the Data Lake Analytics account.
         /// </param>
         /// <param name='firewallRuleName'>
         /// The name of the firewall rule to create or update.
@@ -57,17 +81,43 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FirewallRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FirewallRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the specified Data Lake Analytics firewall rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Analytics account.
+        /// </param>
+        /// <param name='firewallRuleName'>
+        /// The name of the firewall rule to retrieve.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<FirewallRule>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the specified firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Analytics account.
+        /// The name of the Azure resource group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to which to update the
-        /// firewall rule.
+        /// The name of the Data Lake Analytics account.
         /// </param>
         /// <param name='firewallRuleName'>
         /// The name of the firewall rule to update.
@@ -96,12 +146,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics account
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Analytics account.
+        /// The name of the Azure resource group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account from which to delete
-        /// the firewall rule.
+        /// The name of the Data Lake Analytics account.
         /// </param>
         /// <param name='firewallRuleName'>
         /// The name of the firewall rule to delete.
@@ -119,64 +167,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the specified Data Lake Analytics firewall rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Analytics account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account from which to get the
-        /// firewall rule.
-        /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to retrieve.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<FirewallRule>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the Data Lake Analytics firewall rules within the specified
-        /// Data Lake Analytics account.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Analytics account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account from which to get the
-        /// firewall rules.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<FirewallRule>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Data Lake Analytics firewall rules within the specified
         /// Data Lake Analytics account.

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Analytics account name availability check parameters
+    /// Data Lake Analytics account name availability check parameters.
     /// </summary>
     public partial class CheckNameAvailabilityParameters
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the CheckNameAvailabilityParameters
         /// class.
         /// </summary>
-        /// <param name="name">the Data Lake Analytics name to check
+        /// <param name="name">The Data Lake Analytics name to check
         /// availability for.</param>
         public CheckNameAvailabilityParameters(string name)
         {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// the Resource type. Note: This should not be set by the user, as the
+        /// The resource type. Note: This should not be set by the user, as the
         /// constant value is Microsoft.DataLakeAnalytics/accounts
         /// </summary>
         [JsonProperty(PropertyName = "type")]

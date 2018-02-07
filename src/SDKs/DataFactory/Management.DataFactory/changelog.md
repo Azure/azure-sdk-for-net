@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.5.0-preview
+
+### Feature Additions
+  * Enable AAD auth via service principal and management service identity for Azure SQL DB/DW linked service types
+
 ## Version 0.4.0-preview
 
 ### Feature Additions

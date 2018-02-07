@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage account parameters for a storage account being updated in a
-    /// Data Lake Analytics account.
+    /// The parameters used to update an Azure Storage account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class UpdateStorageAccountParameters
@@ -35,9 +34,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the UpdateStorageAccountParameters
         /// class.
         /// </summary>
-        /// <param name="accessKey">the updated access key associated with this
+        /// <param name="accessKey">The updated access key associated with this
         /// Azure Storage account that will be used to connect to it.</param>
-        /// <param name="suffix">the optional suffix for the storage
+        /// <param name="suffix">The optional suffix for the storage
         /// account.</param>
         public UpdateStorageAccountParameters(string accessKey = default(string), string suffix = default(string))
         {
