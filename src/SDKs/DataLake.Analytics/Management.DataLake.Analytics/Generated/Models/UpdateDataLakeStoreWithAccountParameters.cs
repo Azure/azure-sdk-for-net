@@ -16,30 +16,32 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store account information.
+    /// The parameters used to update a Data Lake Store account while updating
+    /// a Data Lake Analytics account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataLakeStoreAccountInfo : SubResource
+    public partial class UpdateDataLakeStoreWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the
+        /// UpdateDataLakeStoreWithAccountParameters class.
         /// </summary>
-        public DataLakeStoreAccountInfo()
+        public UpdateDataLakeStoreWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the
+        /// UpdateDataLakeStoreWithAccountParameters class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="suffix">the optional suffix for the Data Lake Store
+        /// <param name="name">The unique name of the Data Lake Store account
+        /// to update.</param>
+        /// <param name="suffix">The optional suffix for the Data Lake Store
         /// account.</param>
-        public DataLakeStoreAccountInfo(string name, string id = default(string), string type = default(string), string suffix = default(string))
-            : base(name, id, type)
+        public UpdateDataLakeStoreWithAccountParameters(string name, string suffix = default(string))
         {
+            Name = name;
             Suffix = suffix;
             CustomInit();
         }
@@ -48,6 +50,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the unique name of the Data Lake Store account to
+        /// update.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the optional suffix for the Data Lake Store account.
@@ -61,9 +70,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
         }
     }
 }

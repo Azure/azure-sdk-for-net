@@ -16,33 +16,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Analytics firewall rule information.
+    /// The parameters used to create a new firewall rule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class FirewallRule : SubResource
+    public partial class CreateOrUpdateFirewallRuleParameters
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallRule class.
+        /// Initializes a new instance of the
+        /// CreateOrUpdateFirewallRuleParameters class.
         /// </summary>
-        public FirewallRule()
+        public CreateOrUpdateFirewallRuleParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FirewallRule class.
+        /// Initializes a new instance of the
+        /// CreateOrUpdateFirewallRuleParameters class.
         /// </summary>
-        /// <param name="id">The resource identifier.</param>
-        /// <param name="name">The resource name.</param>
-        /// <param name="type">The resource type.</param>
         /// <param name="startIpAddress">The start IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
         /// <param name="endIpAddress">The end IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
-        public FirewallRule(string id = default(string), string name = default(string), string type = default(string), string startIpAddress = default(string), string endIpAddress = default(string))
-            : base(id, name, type)
+        public CreateOrUpdateFirewallRuleParameters(string startIpAddress, string endIpAddress)
         {
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
@@ -55,18 +53,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the start IP address for the firewall rule. This can be either
-        /// ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Gets or sets the start IP address for the firewall rule. This can
+        /// be either ipv4 or ipv6. Start and End should be in the same
+        /// protocol.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startIpAddress")]
-        public string StartIpAddress { get; private set; }
+        public string StartIpAddress { get; set; }
 
         /// <summary>
-        /// Gets the end IP address for the firewall rule. This can be either
-        /// ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Gets or sets the end IP address for the firewall rule. This can be
+        /// either ipv4 or ipv6. Start and End should be in the same protocol.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endIpAddress")]
-        public string EndIpAddress { get; private set; }
+        public string EndIpAddress { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (StartIpAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StartIpAddress");
+            }
+            if (EndIpAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EndIpAddress");
+            }
+        }
     }
 }

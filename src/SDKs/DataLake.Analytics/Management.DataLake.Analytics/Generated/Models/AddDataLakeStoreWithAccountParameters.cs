@@ -16,33 +16,32 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure Storage account information.
+    /// The parameters used to add a new Data Lake Store account while creating
+    /// a new Data Lake Analytics account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageAccountInfo : SubResource
+    public partial class AddDataLakeStoreWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the StorageAccountInfo class.
+        /// Initializes a new instance of the
+        /// AddDataLakeStoreWithAccountParameters class.
         /// </summary>
-        public StorageAccountInfo()
+        public AddDataLakeStoreWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageAccountInfo class.
+        /// Initializes a new instance of the
+        /// AddDataLakeStoreWithAccountParameters class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="accessKey">the access key associated with this Azure
-        /// Storage account that will be used to connect to it.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="suffix">the optional suffix for the storage
+        /// <param name="name">The unique name of the Data Lake Store account
+        /// to add.</param>
+        /// <param name="suffix">The optional suffix for the Data Lake Store
         /// account.</param>
-        public StorageAccountInfo(string name, string accessKey, string id = default(string), string type = default(string), string suffix = default(string))
-            : base(name, id, type)
+        public AddDataLakeStoreWithAccountParameters(string name, string suffix = default(string))
         {
-            AccessKey = accessKey;
+            Name = name;
             Suffix = suffix;
             CustomInit();
         }
@@ -53,14 +52,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the access key associated with this Azure Storage
-        /// account that will be used to connect to it.
+        /// Gets or sets the unique name of the Data Lake Store account to add.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.accessKey")]
-        public string AccessKey { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the optional suffix for the storage account.
+        /// Gets or sets the optional suffix for the Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.suffix")]
         public string Suffix { get; set; }
@@ -71,12 +69,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (AccessKey == null)
+            if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
         }
     }

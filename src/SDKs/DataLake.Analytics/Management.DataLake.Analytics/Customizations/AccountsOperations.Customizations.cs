@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     /// <summary>
     /// AccountOperations operations.
     /// </summary>
-    internal partial class AccountOperations : IServiceOperations<DataLakeAnalyticsAccountManagementClient>, IAccountOperations
+    internal partial class AccountsOperations : IServiceOperations<DataLakeAnalyticsAccountManagementClient>, IAccountsOperations
     {
         /// <summary>
         /// Tests whether the specified Azure Storage account is linked to the given Data

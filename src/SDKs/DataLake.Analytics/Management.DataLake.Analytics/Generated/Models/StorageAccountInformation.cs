@@ -11,34 +11,36 @@
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a nested resource.
+    /// Azure Storage account information.
     /// </summary>
-    public partial class SubResource : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class StorageAccountInformation : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the StorageAccountInformation class.
         /// </summary>
-        public SubResource()
+        public StorageAccountInformation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the StorageAccountInformation class.
         /// </summary>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
-        public SubResource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="suffix">The optional suffix for the storage
+        /// account.</param>
+        public StorageAccountInformation(string id = default(string), string name = default(string), string type = default(string), string suffix = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Suffix = suffix;
             CustomInit();
         }
 
@@ -48,22 +50,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the resource identifier.
+        /// Gets the optional suffix for the storage account.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.suffix")]
+        public string Suffix { get; private set; }
 
     }
 }

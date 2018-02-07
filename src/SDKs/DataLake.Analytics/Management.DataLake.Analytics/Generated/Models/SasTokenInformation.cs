@@ -11,30 +11,29 @@
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A Data Lake Analytics catalog access control list (ACL).
+    /// SAS token information.
     /// </summary>
-    public partial class AclList
+    public partial class SasTokenInformation
     {
         /// <summary>
-        /// Initializes a new instance of the AclList class.
+        /// Initializes a new instance of the SasTokenInformation class.
         /// </summary>
-        public AclList()
+        public SasTokenInformation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AclList class.
+        /// Initializes a new instance of the SasTokenInformation class.
         /// </summary>
-        /// <param name="value">the access control list (ACL).</param>
-        public AclList(IList<Acl> value = default(IList<Acl>))
+        /// <param name="accessToken">The access token for the associated Azure
+        /// Storage Container.</param>
+        public SasTokenInformation(string accessToken = default(string))
         {
-            Value = value;
+            AccessToken = accessToken;
             CustomInit();
         }
 
@@ -44,10 +43,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the access control list (ACL).
+        /// Gets the access token for the associated Azure Storage Container.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<Acl> Value { get; private set; }
+        [JsonProperty(PropertyName = "accessToken")]
+        public string AccessToken { get; private set; }
 
     }
 }

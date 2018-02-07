@@ -37,33 +37,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the DataLakeAnalyticsAccountBasic
         /// class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">the provisioning status of the Data
+        /// <param name="id">The resource identifer.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
+        /// <param name="location">The resource location.</param>
+        /// <param name="tags">The resource tags.</param>
+        /// <param name="accountId">The unique identifier associated with this
+        /// Data Lake Analytics account.</param>
+        /// <param name="provisioningState">The provisioning status of the Data
         /// Lake Analytics account. Possible values include: 'Failed',
         /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
         /// 'Resuming', 'Deleting', 'Deleted', 'Undeleting', 'Canceled'</param>
-        /// <param name="state">the state of the Data Lake Analytics account.
+        /// <param name="state">The state of the Data Lake Analytics account.
         /// Possible values include: 'Active', 'Suspended'</param>
-        /// <param name="creationTime">the account creation time.</param>
-        /// <param name="lastModifiedTime">the account last modified
+        /// <param name="creationTime">The account creation time.</param>
+        /// <param name="lastModifiedTime">The account last modified
         /// time.</param>
-        /// <param name="endpoint">the full CName endpoint for this
+        /// <param name="endpoint">The full CName endpoint for this
         /// account.</param>
-        /// <param name="accountId">The unique identifier associated with this
-        /// Data Lake Analytics account.</param>
-        public DataLakeAnalyticsAccountBasic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), System.Guid? accountId = default(System.Guid?))
-            : base(location, id, name, type, tags)
+        public DataLakeAnalyticsAccountBasic(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? accountId = default(System.Guid?), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string))
+            : base(id, name, type, location, tags)
         {
+            AccountId = accountId;
             ProvisioningState = provisioningState;
             State = state;
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             Endpoint = endpoint;
-            AccountId = accountId;
             CustomInit();
         }
 
@@ -71,6 +71,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the unique identifier associated with this Data Lake Analytics
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accountId")]
+        public System.Guid? AccountId { get; private set; }
 
         /// <summary>
         /// Gets the provisioning status of the Data Lake Analytics account.
@@ -106,22 +113,5 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; private set; }
 
-        /// <summary>
-        /// Gets the unique identifier associated with this Data Lake Analytics
-        /// account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.accountId")]
-        public System.Guid? AccountId { get; private set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

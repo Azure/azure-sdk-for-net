@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// AccountOperations operations.
+    /// AccountsOperations operations.
     /// </summary>
-    public partial interface IAccountOperations
+    public partial interface IAccountsOperations
     {
         /// <summary>
         /// Tests whether the specified Azure Storage account is linked to the given Data

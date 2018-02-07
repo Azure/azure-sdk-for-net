@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// Extension methods for AccountOperations.
+    /// Extension methods for AccountsOperations.
     /// </summary>
-    public static partial class AccountOperationsExtensions
+    public static partial class AccountsOperationsExtensions
     {
         /// <summary>
         /// Tests whether the specified Azure Storage account is linked to the given Data
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='storageAccountName'>
         /// The name of the Azure Storage account for which to test for existence.
         /// </param>
-        public static bool StorageAccountExists(this IAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName)
+        public static bool StorageAccountExists(this IAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName)
         {
-            return Task.Factory.StartNew(s => ((IAccountOperations)s).StorageAccountExistsAsync(resourceGroupName, accountName, storageAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IAccountsOperations)s).StorageAccountExistsAsync(resourceGroupName, accountName, storageAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<bool> StorageAccountExistsAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<bool> StorageAccountExistsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.StorageAccountExistsWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false))
             {
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='containerName'>
         /// The name of the Azure storage container to test for existence.
         /// </param>
-        public static bool StorageContainerExists(this IAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
+        public static bool StorageContainerExists(this IAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName)
         {
-            return Task.Factory.StartNew(s => ((IAccountOperations)s).StorageContainerExistsAsync(resourceGroupName, accountName, storageAccountName, containerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IAccountsOperations)s).StorageContainerExistsAsync(resourceGroupName, accountName, storageAccountName, containerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<bool> StorageContainerExistsAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<bool> StorageContainerExistsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.StorageContainerExistsWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false))
             {
@@ -149,9 +149,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='dataLakeStoreAccountName'>
         /// The name of the Data Lake Store account to test for existence
         /// </param>
-        public static bool DataLakeStoreAccountExists(this IAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
+        public static bool DataLakeStoreAccountExists(this IAccountsOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
         {
-            return Task.Factory.StartNew(s => ((IAccountOperations)s).DataLakeStoreAccountExistsAsync(resourceGroupName, accountName, dataLakeStoreAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IAccountsOperations)s).DataLakeStoreAccountExistsAsync(resourceGroupName, accountName, dataLakeStoreAccountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<bool> DataLakeStoreAccountExistsAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<bool> DataLakeStoreAccountExistsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.DataLakeStoreAccountExistsWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, null, cancellationToken).ConfigureAwait(false))
             {
@@ -196,9 +196,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='accountName'>
         /// The name of the Data Lake Analytics account to test existence of.
         /// </param>
-        public static bool Exists(this IAccountOperations operations, string resourceGroupName, string accountName)
+        public static bool Exists(this IAccountsOperations operations, string resourceGroupName, string accountName)
         {
-            return Task.Factory.StartNew(s => ((IAccountOperations)s).ExistsAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IAccountsOperations)s).ExistsAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<bool> ExistsAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<bool> ExistsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ExistsWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
             {

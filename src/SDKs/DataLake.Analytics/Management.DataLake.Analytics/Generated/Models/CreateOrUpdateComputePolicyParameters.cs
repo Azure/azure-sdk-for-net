@@ -16,36 +16,37 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Analytics compute policy information.
+    /// The parameters used to create a new compute policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ComputePolicy : SubResource
+    public partial class CreateOrUpdateComputePolicyParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ComputePolicy class.
+        /// Initializes a new instance of the
+        /// CreateOrUpdateComputePolicyParameters class.
         /// </summary>
-        public ComputePolicy()
+        public CreateOrUpdateComputePolicyParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputePolicy class.
+        /// Initializes a new instance of the
+        /// CreateOrUpdateComputePolicyParameters class.
         /// </summary>
-        /// <param name="id">The resource identifier.</param>
-        /// <param name="name">The resource name.</param>
-        /// <param name="type">The resource type.</param>
         /// <param name="objectId">The AAD object identifier for the entity to
         /// create a policy for.</param>
         /// <param name="objectType">The type of AAD object the object
         /// identifier refers to. Possible values include: 'User', 'Group',
         /// 'ServicePrincipal'</param>
         /// <param name="maxDegreeOfParallelismPerJob">The maximum degree of
-        /// parallelism per job this user can use to submit jobs.</param>
+        /// parallelism per job this user can use to submit jobs. This
+        /// property, the min priority per job property, or both must be
+        /// passed.</param>
         /// <param name="minPriorityPerJob">The minimum priority per job this
-        /// user can use to submit jobs.</param>
-        public ComputePolicy(string id = default(string), string name = default(string), string type = default(string), System.Guid? objectId = default(System.Guid?), string objectType = default(string), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?))
-            : base(id, name, type)
+        /// user can use to submit jobs. This property, the max degree of
+        /// parallelism per job property, or both must be passed.</param>
+        public CreateOrUpdateComputePolicyParameters(System.Guid objectId, string objectType, int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?))
         {
             ObjectId = objectId;
             ObjectType = objectType;
@@ -60,31 +61,34 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the AAD object identifier for the entity to create a policy
-        /// for.
+        /// Gets or sets the AAD object identifier for the entity to create a
+        /// policy for.
         /// </summary>
         [JsonProperty(PropertyName = "properties.objectId")]
-        public System.Guid? ObjectId { get; private set; }
+        public System.Guid ObjectId { get; set; }
 
         /// <summary>
-        /// Gets the type of AAD object the object identifier refers to.
-        /// Possible values include: 'User', 'Group', 'ServicePrincipal'
+        /// Gets or sets the type of AAD object the object identifier refers
+        /// to. Possible values include: 'User', 'Group', 'ServicePrincipal'
         /// </summary>
         [JsonProperty(PropertyName = "properties.objectType")]
-        public string ObjectType { get; private set; }
+        public string ObjectType { get; set; }
 
         /// <summary>
-        /// Gets the maximum degree of parallelism per job this user can use to
-        /// submit jobs.
+        /// Gets or sets the maximum degree of parallelism per job this user
+        /// can use to submit jobs. This property, the min priority per job
+        /// property, or both must be passed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxDegreeOfParallelismPerJob")]
-        public int? MaxDegreeOfParallelismPerJob { get; private set; }
+        public int? MaxDegreeOfParallelismPerJob { get; set; }
 
         /// <summary>
-        /// Gets the minimum priority per job this user can use to submit jobs.
+        /// Gets or sets the minimum priority per job this user can use to
+        /// submit jobs. This property, the max degree of parallelism per job
+        /// property, or both must be passed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.minPriorityPerJob")]
-        public int? MinPriorityPerJob { get; private set; }
+        public int? MinPriorityPerJob { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -94,6 +98,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (ObjectType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectType");
+            }
             if (MaxDegreeOfParallelismPerJob < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxDegreeOfParallelismPerJob", 1);
