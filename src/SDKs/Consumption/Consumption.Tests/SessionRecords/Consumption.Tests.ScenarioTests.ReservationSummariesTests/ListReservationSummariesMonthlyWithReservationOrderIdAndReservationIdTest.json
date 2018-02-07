@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationorders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries?grain=monthly&api-version=2017-11-30",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25vcmRlcnMvY2E2OTI1OWUtYmQ0Zi00NWMzLWJmMjgtM2YzNTNmOWNjZTliL3Jlc2VydmF0aW9ucy9mMzdmNGI3MC01MmJhLTQzNDQtYThiZC0yOGFiZmQyMWQ2NDAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25zdW1wdGlvbi9yZXNlcnZhdGlvblN1bW1hcmllcz9ncmFpbj1tb250aGx5JmFwaS12ZXJzaW9uPTIwMTctMTEtMzA=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationorders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries?grain=monthly&api-version=2018-01-31",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25vcmRlcnMvY2E2OTI1OWUtYmQ0Zi00NWMzLWJmMjgtM2YzNTNmOWNjZTliL3Jlc2VydmF0aW9ucy9mMzdmNGI3MC01MmJhLTQzNDQtYThiZC0yOGFiZmQyMWQ2NDAvcHJvdmlkZXJzL01pY3Jvc29mdC5Db25zdW1wdGlvbi9yZXNlcnZhdGlvblN1bW1hcmllcz9ncmFpbj1tb250aGx5JmFwaS12ZXJzaW9uPTIwMTgtMDEtMzE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/2.0.0.0"
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.Management.Consumption.ConsumptionManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20170901\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20170901\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 288.0,\r\n        \"usageDate\": \"2017-09-01T00:00:00Z\",\r\n        \"usedHours\": 288.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20171001\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20171001\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 744.0,\r\n        \"usageDate\": \"2017-10-01T00:00:00Z\",\r\n        \"usedHours\": 744.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20171101\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20171101\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 720.0,\r\n        \"usageDate\": \"2017-11-01T00:00:00Z\",\r\n        \"usedHours\": 720.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20171201\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20171201\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 744.0,\r\n        \"usageDate\": \"2017-12-01T00:00:00Z\",\r\n        \"usedHours\": 743.0,\r\n        \"minUtilizationPercentage\": 0.0,\r\n        \"avgUtilizationPercentage\": 99.87,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20180101\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20180101\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 40.0,\r\n        \"usageDate\": \"2018-01-01T00:00:00Z\",\r\n        \"usedHours\": 40.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20170901\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20170901\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 288.0,\r\n        \"usageDate\": \"2017-09-01T00:00:00Z\",\r\n        \"usedHours\": 288.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20171001\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20171001\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 744.0,\r\n        \"usageDate\": \"2017-10-01T00:00:00Z\",\r\n        \"usedHours\": 744.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20171101\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20171101\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 720.0,\r\n        \"usageDate\": \"2017-11-01T00:00:00Z\",\r\n        \"usedHours\": 720.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20171201\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20171201\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 744.0,\r\n        \"usageDate\": \"2017-12-01T00:00:00Z\",\r\n        \"usedHours\": 743.0,\r\n        \"minUtilizationPercentage\": 0.0,\r\n        \"avgUtilizationPercentage\": 99.87,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20180101\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20180101\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 744.0,\r\n        \"usageDate\": \"2018-01-01T00:00:00Z\",\r\n        \"usedHours\": 744.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"providers/Microsoft.Capacity/reservationOrders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640/providers/Microsoft.Consumption/reservationSummaries/20180201\",\r\n      \"name\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b_f37f4b70-52ba-4344-a8bd-28abfd21d640_20180201\",\r\n      \"type\": \"Microsoft.Consumption/reservationSummaries\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"reservationOrderId\": \"ca69259e-bd4f-45c3-bf28-3f353f9cce9b\",\r\n        \"reservationId\": \"f37f4b70-52ba-4344-a8bd-28abfd21d640\",\r\n        \"skuName\": \"Standard_DS2_v2\",\r\n        \"reservedHours\": 94.0,\r\n        \"usageDate\": \"2018-02-01T00:00:00Z\",\r\n        \"usedHours\": 94.0,\r\n        \"minUtilizationPercentage\": 100.0,\r\n        \"avgUtilizationPercentage\": 100.0,\r\n        \"maxUtilizationPercentage\": 100.0\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; odata.metadata=none"
@@ -23,7 +23,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 03 Jan 2018 19:42:18 GMT"
+          "Mon, 05 Feb 2018 23:36:57 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "session-id": [
-          "e11fd93a-752f-428b-a3c2-07256dde9e18"
+          "c051a4d6-7901-47b7-ba36-f09f01fb71d2"
         ],
         "x-ms-request-id": [
-          "5bf78627-cc4f-4f8f-8b0d-7c0b31618d1e"
+          "d5ff52ef-394a-4509-8038-961cfe1083ad"
         ],
         "x-ms-correlation-request-id": [
-          "cbe6aa23-d772-4d22-982e-888346d5c10a"
+          "53eddbab-afa1-43be-9ed9-5acc28963ea9"
         ],
         "x-ms-client-request-id": [
-          "aed22704-63d0-475d-b2d8-705532b368b6"
+          "c6ccd98c-1947-41de-940e-cb6d6636cb96"
         ],
         "OData-Version": [
           "4.0"
@@ -62,10 +62,10 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14983"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180103T194218Z:cbe6aa23-d772-4d22-982e-888346d5c10a"
+          "WESTUS2:20180205T233657Z:53eddbab-afa1-43be-9ed9-5acc28963ea9"
         ]
       },
       "StatusCode": 200
@@ -73,6 +73,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "a98d6dc5-eb8f-46cf-8938-f1fb08f03706"
+    "SubscriptionId": "0df534ff-f8e2-49c4-acd1-3ec9dd9b8213"
   }
 }

@@ -14,8 +14,8 @@ namespace Consumption.Tests.ScenarioTests
 {
     public class ReservationDetailsTests : TestBase
     {
-        protected const string reservationOrderIdScope = "providers/Microsoft.Capacity/reservationorders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b";
-        protected const string reservationOrderIdWithReservationIdScope = "providers/Microsoft.Capacity/reservationorders/ca69259e-bd4f-45c3-bf28-3f353f9cce9b/reservations/f37f4b70-52ba-4344-a8bd-28abfd21d640";
+        protected const string reservationOrderId = "ca69259e-bd4f-45c3-bf28-3f353f9cce9b";
+        protected const string reservationId = "f37f4b70-52ba-4344-a8bd-28abfd21d640";
         protected const string startEndDateFilter = "properties/UsageDate ge 2017-10-01 AND properties/UsageDate le 2017-12-07";
         [Fact]
         public void ListReservationDetailsWithReservationOrderIdTest()
@@ -24,8 +24,7 @@ namespace Consumption.Tests.ScenarioTests
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-               
-                var reservationDetails = consumptionMgmtClient.ReservationsDetails.List(reservationOrderIdScope, startEndDateFilter);
+                var reservationDetails = consumptionMgmtClient.ReservationsDetails.ListByReservationOrder(reservationOrderId, startEndDateFilter);
 
                 Assert.NotNull(reservationDetails);
                 Assert.True(reservationDetails.Any());
@@ -44,7 +43,7 @@ namespace Consumption.Tests.ScenarioTests
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var reservationDetails = consumptionMgmtClient.ReservationsDetails.List(reservationOrderIdWithReservationIdScope, startEndDateFilter);
+                var reservationDetails = consumptionMgmtClient.ReservationsDetails.ListByReservationOrderAndReservation(reservationOrderId, reservationId, startEndDateFilter);
 
                 Assert.NotNull(reservationDetails);
                 Assert.True(reservationDetails.Any());
@@ -54,9 +53,7 @@ namespace Consumption.Tests.ScenarioTests
                 }
             }
         }
-        private static void ValidateProperties(
-            ReservationDetails item,
-            bool includeMeterDetails = false)
+        private static void ValidateProperties(ReservationDetails item)
         {
             Assert.NotNull(item);
             Assert.NotNull(item.Id);
