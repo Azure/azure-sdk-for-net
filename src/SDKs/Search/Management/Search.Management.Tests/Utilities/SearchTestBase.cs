@@ -8,8 +8,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     using System.Runtime.CompilerServices;
     using Microsoft.Azure.Management.Search;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
 
     public abstract class SearchTestBase<TTestFixture> : TestBase where TTestFixture : IResourceFixture, new()
     {
@@ -40,16 +38,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 Data = new TTestFixture();
                 Data.Initialize(mockContext);
 
-                Func<JsonSerializerSettings> oldDefault = JsonConvert.DefaultSettings;
-
-                // This should ensure that the SDK doesn't depend on global JSON.NET settings.
-                JsonConvert.DefaultSettings = () =>
-                    new JsonSerializerSettings() 
-                    {
-                        Converters = new[] { new InvalidJsonConverter() },
-                        ContractResolver = new InvalidContractResolver()
-                    };
-
                 try
                 {
                     testBody();
@@ -57,34 +45,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 finally
                 {
                     Data.Cleanup();
-                    JsonConvert.DefaultSettings = oldDefault;
                 }
-            }
-        }
-
-        private class InvalidContractResolver : IContractResolver
-        {
-            public JsonContract ResolveContract(Type type)
-            {
-                throw new InvalidOperationException(JsonErrorMessage);
-            }
-        }
-
-        private class InvalidJsonConverter : JsonConverter
-        {
-            public override bool CanConvert(Type objectType)
-            {
-                throw new InvalidOperationException(JsonErrorMessage);
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                throw new InvalidOperationException(JsonErrorMessage);
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                throw new InvalidOperationException(JsonErrorMessage);
             }
         }
     }
