@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public HDInsightLinkedService(object clusterUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object userName = default(object), SecureString password = default(SecureString), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object encryptedCredential = default(object))
+        public HDInsightLinkedService(object clusterUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object userName = default(object), SecretBase password = default(SecretBase), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             ClusterUri = clusterUri;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets hDInsight cluster password.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure Storage linked service reference.
@@ -122,10 +122,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ClusterUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClusterUri");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
             if (LinkedServiceName != null)
             {
