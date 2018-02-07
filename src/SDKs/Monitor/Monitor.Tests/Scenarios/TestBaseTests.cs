@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using Monitor.Tests.Helpers;
 using Microsoft.Azure.Management.Monitor;
 using Microsoft.Azure.Management.Monitor.Models;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Rest;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -29,41 +27,8 @@ namespace Monitor.Tests.Scenarios
             // HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(ignoreResourcesClient: true, providers: providers);
 
             // Set the path to find the recorded session files (only works in VS locally for .net452)
-            // HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
+            HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
             this.IsRecording = false;
-        }
-
-        protected MonitorClient GetMonitorClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            if (handler != null)
-            {
-                handler.IsPassThrough = true;
-            }
-
-            MonitorClient client;
-            string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-            if (string.Equals(testMode, "record", StringComparison.OrdinalIgnoreCase))
-            {
-                this.IsRecording = true;
-                string subId = Environment.GetEnvironmentVariable("AZURE_TEST_SUBSCRIPTIONID");
-                subId = string.IsNullOrWhiteSpace(subId) ? "07c0b09d-9f69-4e6e-8d05-f59f67299cb2" : subId;
-
-                TestEnvironment env = new TestEnvironment(connectionString: "SubscriptionId=" + subId); // ;AADTenant=72f988bf-86f1-41af-91ab-2d7cd011db47;UserId=gucalder@microsoft.com");
-                client = context.GetServiceClient<MonitorClient>(
-                    currentEnvironment: env,
-                    handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
-
-                this.SetResourceManagementClient(env: env, context: context, handler: handler);
-            }
-            else
-            {
-                client = context.GetServiceClient<MonitorClient>(
-                    handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
-
-                this.SetResourceManagementClient(env: null, context: context, handler: handler);
-            }
-
-            return client;
         }
 
         protected MonitorManagementClient GetMonitorManagementClient(MockContext context, RecordedDelegatingHandler handler)
