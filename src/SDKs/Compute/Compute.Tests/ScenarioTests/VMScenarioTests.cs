@@ -57,7 +57,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: "Standard_M64s", hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64s, hasManagedDisks: true,
                     storageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true);
             }
             finally
