@@ -10,7 +10,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <PackageId>Azure.Batch</PackageId>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <VersionPrefix>8.0.1</VersionPrefix>
+    <VersionPrefix>8.1.0</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
